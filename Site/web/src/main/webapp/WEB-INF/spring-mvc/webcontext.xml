@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:context="http://www.springframework.org/schema/context" 
+       xmlns:mvc="http://www.springframework.org/schema/mvc" 
+       xmlns:p="http://www.springframework.org/schema/p" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd    
+            http://www.springframework.org/schema/context 
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd     
+            http://www.springframework.org/schema/mvc 
+            http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+				 
+    
+    
+    <context:component-scan base-package="com.dynamia" />
+    
+    <mvc:annotation-driven/>
+    
+    
+    <!-- Internationalization support -->
+
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en_US" />
+    </bean>
+ 
+    <bean id="localeChangeInterceptor"
+          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="language" />
+    </bean>
+ 
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" >
+        <property name="interceptors">
+            <list>
+                <ref bean="localeChangeInterceptor" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="locale/messages" />
+    </bean>
+
+    <!-- **************************************************************** -->
+    <!-- THYMELEAF-SPECIFIC ARTIFACTS -->
+    <!-- TemplateResolver <- TemplateEngine <- ViewResolver -->
+    <!-- **************************************************************** -->
+
+    <bean id="templateResolver"  class="com.dynamia.cms.site.templates.TemplateResolver">        
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML5" />
+        <property name="cacheable" value="false"/>
+    </bean>
+
+    <bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+    </bean>
+
+    <bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        
+    </bean>
+</beans>
