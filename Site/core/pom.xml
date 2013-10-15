@@ -8,7 +8,7 @@
         <version>0.1</version>
     </parent>
     <groupId>com.dynamia.cms</groupId>
-    <artifactId>com.dynamia.cms.core</artifactId>
+    <artifactId>com.dynamia.cms.site.core</artifactId>
     <name>DynamiaCMS Site - Core (${project.version})</name>
     <version>0.1</version>
     <url>http://www.dynamiasoluciones.com</url>
@@ -24,4 +24,5 @@
             </plugin>
         </plugins>
     </build>
+ 
 </project>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>com.dynamia.cms.admin.parent</artifactId>
+        <groupId>com.dynamia.cms</groupId>
+        <version>0.1</version>
+    </parent>
+    <groupId>com.dynamia.cms</groupId>
+    <artifactId>com.dynamia.cms.admin.web</artifactId>
+    <packaging>war</packaging>
+    <version>0.1</version>
+    <name>DynamiaCMS Admin - Web (${project.version}})</name>
+    <url>http://www.dynamiasoluciones.com</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>${project.groupId}.admin.core.zk</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>cms-admin</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <!-- Jetty Configuration -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.0.6.v20130930</version>
+
+                <configuration>
+
+                    <jettyConfig>conf/jetty.xml</jettyConfig>
+                    <!--Disable auto scen -->
+                    <scanIntervalSeconds>0</scanIntervalSeconds>
+                    <webAppConfig>
+                        <contextPath>/</contextPath>
+                    </webAppConfig>
+
+                    <stopPort>9001</stopPort>
+                    <stopKey>jetty-stop</stopKey>
+
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                            <port>8080</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                        </connector>
+                    </connectors>
+
+
+                </configuration>
+
+                <dependencies>
+                    <!-- JDBC Drivers -->
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.14</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>hsqldb</groupId>
+                        <artifactId>hsqldb</artifactId>
+                        <version>1.8.0.10</version>
+                    </dependency>
+
+                    <!-- JavaMail -->
+                    <dependency>
+                        <groupId>javax.mail</groupId>
+                        <artifactId>mail</artifactId>
+                        <version>1.4.2</version>
+                    </dependency>
+
+
+                </dependencies>
+            </plugin>
+        </plugins>
+
+    </build>
+
+</project>

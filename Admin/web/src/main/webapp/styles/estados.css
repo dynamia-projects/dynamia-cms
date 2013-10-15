@@ -1,0 +1,14 @@
+.NO_VENDIDA{
+    color:red;
+}
+.SEPARADA{
+
+    color: green;
+    font-weight: bold;
+}
+.VENDIDA{
+    color:aqua;
+}
+.A_DESISTIR{
+    color:yellow;
+}

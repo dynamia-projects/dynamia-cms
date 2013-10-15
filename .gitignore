@@ -1,3 +1,11 @@
 /Site/core/target/
 /Site/web/target/
 /Site/templates/target/
+/.project
+/Site/pages/target/
+/Site/menus/target/
+/Site/core-api/target/
+/Site/admin/target/
+/Admin/core/target/
+/Admin/core-zk/target/
+/Admin/web/target/

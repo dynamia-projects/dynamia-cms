@@ -7,7 +7,7 @@
         <version>0.1</version>
     </parent>
     <groupId>com.dynamia.cms</groupId>
-    <artifactId>com.dynamia.cms.web</artifactId>
+    <artifactId>com.dynamia.cms.site.web</artifactId>
     <packaging>war</packaging>
     <version>0.1</version>
     <name>DynamiaCMS Site - Web (${project.version})</name>
@@ -28,6 +28,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>com.dynamia.cms.templates</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.pages</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?page title="TodoMar - Sistema de Gestion"?>
+
+<?link rel="stylesheet" type="text/css" href="styles/default.css"?>
+<?link rel="stylesheet" type="text/css" href="styles/estados.css"?>
+<?link rel="stylesheet" type="text/css" href="styles/zkstyles.css"?>
+<?link rel="stylesheet" type="text/css" href="styles/crosstab.css"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="lgn" apply="${login}"  height="100%">
+
+        <borderlayout id="main">
+            <north sclass="z-toolbar header">
+                <div>
+                    <div sclass="logo"></div>
+                </div>
+            </north>
+
+            <center sclass="content">
+                <div align="center">
+                    <div style="margin-top:100px">
+                        <div sclass="loginDialog" align="center">
+
+                            <vbox sclass="loginForm">
+                                <label value="Usuario" sclass="loginLbl"/>
+                                <textbox value="@{lgn$composer.username}" sclass="loginTxt" />
+
+                                <label value="Password" sclass="loginLbl"/>
+                                <textbox type="password" value="@{lgn$composer.password}"   onOK="lgn$composer.doLogin()"  sclass="loginTxt"/>
+
+                                <toolbarbutton onClick="lgn$composer.doLogin()" label="Entrar" sclass="login" image="/images/seguridad.png" />
+                                <label value="@{lgn$composer.message}" sclass="loginMsg"/>
+                            </vbox>
+
+                        </div>
+
+                    </div>
+                </div>
+            </center>
+
+            <south sclass="z-toolbar footer">
+
+
+                <div align="right" style="padding:10px">
+                    <toolbarbutton label="Dynamia Soluciones I.T." href="http://www.dynamiasoluciones.com" target="blank"/>
+                </div>
+            </south>
+
+        </borderlayout>
+
+
+
+    </window>
+</zk>

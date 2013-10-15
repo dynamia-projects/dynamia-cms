@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?page title="Dynamia Project"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+
+
+<?link rel="stylesheet" type="text/css" href="styles/default.css"?>
+<?link rel="stylesheet" type="text/css" href="styles/estados.css"?>
+<?link rel="stylesheet" type="text/css" href="styles/zkstyles.css"?>
+<?link rel="stylesheet" type="text/css" href="styles/crosstab.css"?>
+<?link rel="stylesheet" type="text/css" href="styles/viewers.css"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul ">
+
+
+	<borderlayout id="main" apply="${navComposer}" visible="true">
+		<north sclass="z-toolbar header">
+			<div>
+				<hbox sclass="menu topMenu" spacing="5">
+					<toolbarbutton label="${usuarioActual.nombre}"
+						onClick="usuarios.showCambiarPassword()" />
+					|
+					<toolbarbutton label="cerrar sesion" onClick="login.doLogout()" />
+				</hbox>
+				<div sclass="logo"></div>
+			</div>
+		</north>
+
+		<west sclass="menu" size="250px" collapsible="true" title="Modulos"
+			splittable="true" autoscroll="true">
+			<div height="100%">
+				<borderlayout height="100%">
+
+					<center autoscroll="true" apply="${navBuilder}" />
+
+					<south title="Calendario" collapsible="true">
+						<calendar width="100%" />
+					</south>
+
+				</borderlayout>
+
+			</div>
+		</west>
+
+		<center sclass="content" autoscroll="true">
+			<window id="workspace" height="100%" />
+		</center>
+
+		<south sclass="z-toolbar footer">
+			<toolbarbutton id="dynamia" label="Dynamia Soluciones I.T."
+				href="http://www.dynamiasoluciones.com" target="blank" />
+
+		</south>
+	</borderlayout>
+
+</zk>

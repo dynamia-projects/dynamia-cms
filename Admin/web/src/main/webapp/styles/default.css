@@ -1,0 +1,208 @@
+html, body{
+    overflow:hidden;
+    margin:0;
+    padding:0;
+}
+
+/*================ TEMPLATE =================*/
+
+.header{        
+}
+
+.menu{
+    background-color: #f7f6f6;
+}
+
+.menu a:link, .menu a:visited{    
+    color: #53778a;
+    text-decoration:none;    
+}
+
+.menu a:hover{
+    color: #2a3845;        
+    text-decoration:underline;
+
+}
+
+.menu .z-tab-accordion-text{
+    font-weight:bold;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 8pt;
+}
+
+
+
+.menuPanel{
+    background-color:white;
+}
+
+.topMenu{
+    float:right;
+    padding:5px;
+    background-color:transparent;
+
+}
+
+.content{
+
+}
+
+.pageContent{
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+
+.footer{    
+    
+}
+
+.logo{
+    background-image: url(../images/logo.png);
+    width:273px;
+    height:55px;
+    float:left;
+
+}
+
+.bigtitle, .bigtitle *{
+    font-size:15pt;
+    font-family: Arial,Helvetica,sans-serif;
+    color: #0162a0;
+    border-bottom-style: solid;
+    width:100%;
+    margin-bottom:10px;
+}
+
+.bold{
+    font-weight:bold;
+}
+
+
+.transparent, .transparent .z-combobox-inp{
+    background: transparent;
+    border:0;
+}
+
+.modificado, .modificado *{
+
+    background-color: #fefdce;
+}
+
+
+.noBorder, .noBorder div.z-grid, .noBorder tr.z-row td.z-row-inner {
+    border:0px solid transparent;
+    padding:2px;
+}
+
+.loginDialog{
+    width: 507px;
+    height: 257px;
+    background-image: url(../images/login.png);
+}
+
+.loginForm{    
+    width: 200px;
+    text-align: right;
+    padding: 0px;
+    position: relative;
+    top:80px;
+    left:100px;
+}
+
+.loginLbl{
+    float: right;
+
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+}
+
+.loginTxt{
+    float: right;
+    width: 100%;
+    text-align: center;    
+    font-family: Arial,Helvetica,sans-serif;
+    color: #0d456a;
+}
+
+.loginForm a:link, .loginForm a:visited{
+    text-decoration: none;
+    color: #0d456a;
+}
+
+.loginForm a:hover{
+    text-decoration: none;
+    color: orange;
+}
+
+.loginMsg{
+    color:maroon;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+
+.userReportHeader{
+    padding: 8px;
+}
+
+.userReportTitle{
+    font-size: 18pt;
+    font-family: Arial,Helvetica,sans-serif;
+    color: #ff9200;
+    font-weight: bold;
+}
+
+.userReportDesc{
+    font-size: 14pt;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.userReport a:link, .userReport a:visited{
+    color: black;
+    text-decoration: none;
+}
+
+.userReport a:hover{    
+    color: #3e8afe;
+}
+
+.neg-title{
+
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 16pt;
+    font-weight: bold;
+    color: #033457;
+    padding-top: 20px;
+}
+
+.neg-compromisos *{
+    padding: 5px;
+    background-color: #ad2929;
+    color: #fefefe;
+    font-family: Arial,Helvetica,sans-serif;
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+.neg-pagos * {
+    padding: 5px;
+    background-color: #528822;
+    color: #fefefe;
+    font-family: Arial,Helvetica,sans-serif;
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+.neg-intereses *{
+    padding: 5px;
+    background-color: #656565;
+    color: #fefefe;
+    font-family: Arial,Helvetica,sans-serif;
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+.disabled, .disabled *{
+    color: black;
+    font-weight: bold;
+}

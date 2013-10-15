@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : zk.xml
+    Created on : 30 de julio de 2009, 04:12 PM
+    Author     : mario
+    Description:
+        Purpose of the document follows.
+-->
+
+<zk>
+    <listener>
+        <description>ThreadLocal Synchronization Listener</description>
+        <listener-class>org.zkoss.zkplus.util.ThreadLocalListener</listener-class>
+    </listener>
+
+    <listener>
+        <description>Spring JPA Open EntityManager in view</description>
+        <listener-class>com.dynamia.tools.web.OpenEntityManagerInViewListener</listener-class>
+    </listener>
+
+    <preference>
+        <name>ThreadLocal</name>
+        <value>
+        	org.springframework.transaction.support.TransactionSynchronizationManager=resources,synchronizations,currentTransactionName,currentTransactionReadOnly,actualTransactionActive;		
+            org.springframework.web.context.request.RequestContextHolder=requestAttributesHolder,inheritableRequestAttributesHolder;
+            org.springframework.security.core.context.ThreadLocalSecurityContextHolderStrategy=contextHolder;
+        </value>
+    </preference>
+
+
+    <system-config>
+        <disable-event-thread>false</disable-event-thread>
+    </system-config>
+  
+    <session-config>
+        <device-type>ajax</device-type>
+        <automatic-timeout/> <!-- the same as <automatic-timeout>true</automatic-timeout> -->
+        <timeout-uri>/login.zul</timeout-uri>
+    </session-config>
+
+    <library-property>
+        <name>org.zkoss.zul.include.mode</name>
+        <value>defer</value>
+    </library-property>
+    
+</zk>

@@ -29,16 +29,8 @@
         <servlet-name>SpringMVC</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
-    <!--Spring Security Configuration 
-      <filter>
-          <filter-name>springSecurityFilterChain</filter-name>
-          <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-      </filter>
-      <filter-mapping>
-          <filter-name>springSecurityFilterChain</filter-name>
-          <url-pattern>/*</url-pattern>
-      </filter-mapping>
-    -->
+
+    
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
