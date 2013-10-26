@@ -4,18 +4,29 @@
  */
 package com.dynamia.cms.site.core.domain;
 
+import com.dynamia.tools.domain.SimpleEntity;
+import com.dynamia.tools.domain.contraints.NotEmpty;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  *
  * @author mario
  */
-public class Site {
+@Entity
+@Table(name = "cr_sites")
+public class Site extends SimpleEntity {
 
+    @NotEmpty
     private String name;
+    @Column(name = "site_key", unique = true)
+    @NotEmpty
     private String key;
     private String description;
     private boolean offline;
     private String offlineMessage;
-    private String template;
+    private String template="dynamical";
     private String metadataKeywords;
     private String metadataAuthor;
     private String metadataDescription;
@@ -99,5 +110,10 @@ public class Site {
 
     public void setMetadataRights(String metadataRights) {
         this.metadataRights = metadataRights;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%s)", name, key);
     }
 }

@@ -33,6 +33,8 @@
         <entityfiles.version>3.0</entityfiles.version>
         <comentarios.version>3.0</comentarios.version>
         
+        <site.cms.version>0.1</site.cms.version>
+        
     </properties>
 
     <dependencies>

@@ -24,4 +24,16 @@
             </plugin>
         </plugins>
     </build>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.site.core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.site.pages</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

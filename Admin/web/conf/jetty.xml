@@ -51,26 +51,6 @@
     </New>
 
 
-    <!-- JavaMail Resource -->
-    <New id="mail" class="org.eclipse.jetty.plus.naming.Resource">
-        <Arg>
-            <Ref id="wac" />
-        </Arg>
-        <Arg>mail/Session</Arg>
-        <Arg>
-            <New class="org.eclipse.naming.factories.MailSessionReference">
-                <Set name="user">fred</Set>
-                <Set name="password">OBF:1xmk1w261z0f1w1c1xmq</Set>
-                <Set name="properties">
-                    <New class="java.util.Properties">
-                        <Put name="mail.smtp.host">XXX</Put>
-                        <Put name="mail.from">me@me</Put>
-                        <Put name="mail.debug">true</Put>
-                    </New>
-                </Set>
-            </New>
-        </Arg>
-    </New>
 	
 	
     <!-- JMS Resource -->

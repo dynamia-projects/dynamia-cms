@@ -14,13 +14,9 @@ import java.util.List;
  */
 public interface CoreService {
 
-    void createNewSite(Site site);
-
     Site getMainSite();
-
-    void saveSite(Site site);
 
     List<Module> getInstalledModules();
 
-    void newModuleInstance(String name);
+    Site getSite(String key);
 }

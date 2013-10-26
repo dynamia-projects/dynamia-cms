@@ -54,15 +54,15 @@
                     <!--Disable auto scen -->
                     <scanIntervalSeconds>0</scanIntervalSeconds>
                     <webAppConfig>
-                        <contextPath>/</contextPath>
+                        <contextPath>/admin</contextPath>
                     </webAppConfig>
 
-                    <stopPort>9001</stopPort>
+                    <stopPort>9002</stopPort>
                     <stopKey>jetty-stop</stopKey>
 
-                    <connectors>
+                    <connectors>                        
                         <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <port>8080</port>
+                            <port>4848</port>
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>

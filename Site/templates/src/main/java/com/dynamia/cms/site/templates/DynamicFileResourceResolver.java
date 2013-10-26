@@ -18,11 +18,11 @@ import org.thymeleaf.resourceresolver.IResourceResolver;
  */
 public class DynamicFileResourceResolver implements IResourceResolver {
 
-
     @Override
     public String getName() {
         return DynamicFileResourceResolver.class.getName();
     }
+    
 
     @Override
     public InputStream getResourceAsStream(TemplateProcessingParameters tpp, String name) {
@@ -30,6 +30,10 @@ public class DynamicFileResourceResolver implements IResourceResolver {
         String currentTemplate = ApplicationParameters.get().getValue(Config.CURRENT_TEMPLATE, "dynamical");
         String fileName = dir + currentTemplate + "/" + name;
         File file = new File(fileName);
+        if (!file.exists()) {
+            fileName = dir + currentTemplate + "/views/" + name;
+            file = new File(fileName);
+        }
 
         try {
             return new FileInputStream(file);

@@ -4,18 +4,35 @@
  */
 package com.dynamia.cms.site.menus.domain;
 
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.tools.domain.SimpleEntity;
+import com.dynamia.tools.domain.contraints.NotEmpty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author mario
  */
-public class Menu implements Serializable{
+@Entity
+@Table(name = "mn_menus")
+public class Menu extends SimpleEntity implements Serializable {
 
+    @NotEmpty
     private String name;
+    @Column(name = "menuAlias")
     private String alias;
+    @OneToOne
+    @NotNull
+    private Site site;
+    @OneToMany(mappedBy = "menu")
     private List<MenuItem> items = new ArrayList<>();
 
     public Menu() {
@@ -24,6 +41,14 @@ public class Menu implements Serializable{
     public Menu(String name, String alias) {
         this.name = name;
         this.alias = alias;
+    }
+
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
     }
 
     public String getName() {
