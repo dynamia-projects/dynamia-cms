@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dynamia.cms</groupId>
     <artifactId>com.dynamia.cms.admin.parent</artifactId>
-    <name>DynamiaCMS Admin  (${project.version}})</name>
+    <name>DynamiaCMS Admin  (${project.version})</name>
     <packaging>pom</packaging>
     <version>0.1</version>
     <url>http://www.dynamiasoluciones.com</url>
@@ -21,16 +21,16 @@
         </plugins>
     </build>
     <properties>
-        <dynatools.version>2.1.0.Beta</dynatools.version>        
+        <dynatools.version>2.1.0.RC</dynatools.version>        
         <dynamia.icons.version>1.0</dynamia.icons.version>
         <hsql.version>1.8.0.10</hsql.version>
         <spring.version>3.2.4.RELEASE</spring.version>
         <hibernate.version>4.2.4.Final</hibernate.version>
         
         <!-- Versiones de Modulos -->
-        <seguridad.version>3.5.1</seguridad.version>
+        <seguridad.version>3.5.2</seguridad.version>
         
-        <entityfiles.version>3.0</entityfiles.version>
+        <entityfiles.version>3.1</entityfiles.version>
         <comentarios.version>3.0</comentarios.version>
         
         <site.cms.version>0.1</site.cms.version>

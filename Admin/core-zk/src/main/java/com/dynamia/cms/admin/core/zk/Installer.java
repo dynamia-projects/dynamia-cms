@@ -4,45 +4,37 @@
  */
 package com.dynamia.cms.admin.core.zk;
 
-import com.dynamia.cms.site.core.domain.ContentAuthor;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.pages.domain.PageCategory;
+import com.dynamia.cms.site.core.ext.AdminModule;
+import com.dynamia.cms.site.core.ext.AdminModuleOption;
 import org.springframework.stereotype.Component;
 
 import com.dynamia.tools.web.crud.CrudPage;
 import com.dynamia.tools.web.navigation.Module;
 import com.dynamia.tools.web.navigation.ModuleProvider;
 import com.dynamia.tools.web.navigation.PageGroup;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Component("CoreModule")
 public class Installer implements ModuleProvider {
+
+    @Autowired
+    private List<AdminModule> adminModules;
 
     @Override
     public Module getModule() {
         Module module = new Module("admin", "Administration");
         module.setPosition(10);
         module.setIcon("icons:module");
-        {
-            PageGroup pg = new PageGroup("sites", "Sites");
-            module.addPageGroup(pg);
-            {
-                pg.addPage(new CrudPage("sites", "Sites", Site.class));
 
+        if (adminModules != null) {
+            for (AdminModule am : adminModules) {
+                PageGroup pg = new PageGroup(am.getGroup(), am.getName());
+                module.addPageGroup(pg);
+                for (AdminModuleOption option : am.getOptions()) {
+                    pg.addPage(new CrudPage(option.getId(), option.getName(), option.getCoreClass()));
+                }
             }
-            pg = new PageGroup("content", "Content");
-            module.addPageGroup(pg);
-            {
-                pg.addPage(new CrudPage("authors", "Authors", ContentAuthor.class));
-                pg.addPage(new CrudPage("categories", "Pages Categories", PageCategory.class));
-                pg.addPage(new CrudPage("pages", "Pages Content", com.dynamia.cms.site.pages.domain.Page.class));
-            }
-
-            pg = new PageGroup("modules", "Modules");
-            module.addPageGroup(pg);
-            {
-                //pg.addPage(new CrudPage("menus", "Menus", Menu.class));
-            }
-
         }
 
         return module;

@@ -4,13 +4,15 @@
  */
 package com.dynamia.cms.site.core.ext;
 
-import com.dynamia.tools.viewers.ViewDescriptor;
+import com.dynamia.cms.site.core.domain.ModuleInstance;
 
 /**
  *
  * @author mario
  */
 public interface Module {
+    
+    String getID();
 
     String getName();
 
@@ -18,9 +20,7 @@ public interface Module {
 
     String getVersion();
 
-    ViewDescriptor getConfigDescriptor();
-
     ModuleInstance newInstance();
-    
+
     void init();
 }

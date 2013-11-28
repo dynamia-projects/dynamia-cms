@@ -1,0 +1,29 @@
+view: form
+beanClass: com.dynamia.cms.site.pages.domain.Page
+hidden: [id,uuid,creationDate]
+sortFields: [site,title,alias,category,author,layout,published,startDate,endDate,tags,content]
+
+fields:
+    
+    site:
+        params:
+            fields: key,name
+    
+    author:
+        params:
+            fields: firstName,lastName,email
+            
+    category:
+        params:
+            fields: name,description
+            
+    layout:
+        component: combobox
+        
+    content:
+        component: ckeditor
+        params:
+            height: 300px
+        
+layout:
+    columns: 1

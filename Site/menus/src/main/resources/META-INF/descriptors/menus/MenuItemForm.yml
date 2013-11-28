@@ -1,0 +1,16 @@
+view: form
+beanClass: com.dynamia.cms.site.menus.domain.MenuItem
+hidden: [id,menu,href]
+sortFields: [name,page,order]
+
+fields:
+    
+    page:
+        params:
+            fields: site.name,title
+          
+    
+    
+        
+layout:
+    columns: 1

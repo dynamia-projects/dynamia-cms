@@ -6,8 +6,11 @@ package com.dynamia.cms.site.pages.controllers;
 
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.CoreService;
+import com.dynamia.cms.site.pages.PageControllerListener;
 import com.dynamia.cms.site.pages.domain.Page;
 import com.dynamia.cms.site.pages.services.PageService;
+import com.dynamia.tools.integration.Containers;
+import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,8 +51,8 @@ public class PageController {
         ModelAndView mv = new ModelAndView("site/page");
 
         Site site = loadSite(siteKey, mv);
-        loadPage(site, pageAlias, mv);
-
+        Page page = loadPage(site, pageAlias, mv);
+        firePageControllerListeners(page, mv);
         return mv;
     }
 
@@ -69,14 +72,25 @@ public class PageController {
 
     }
 
-    private void loadPage(Site site, String pageAlias, ModelAndView mv) {
+    private Page loadPage(Site site, String pageAlias, ModelAndView mv) {
+        Page page = null;
         if (site != null) {
-            Page page = service.loadPage(site, pageAlias);
+            page = service.loadPage(site, pageAlias);
             mv.addObject("page", page);
 
             if (page == null) {
                 mv.setViewName("error/404");
                 mv.addObject("pageAlias", pageAlias);
+            }
+        }
+        return page;
+    }
+
+    private void firePageControllerListeners(Page page, ModelAndView mv) {
+        if (page != null && mv != null) {
+            Collection<PageControllerListener> listeners = Containers.get().findObjects(PageControllerListener.class);
+            for (PageControllerListener listener : listeners) {
+                listener.onPageLoaded(page, mv);
             }
         }
     }

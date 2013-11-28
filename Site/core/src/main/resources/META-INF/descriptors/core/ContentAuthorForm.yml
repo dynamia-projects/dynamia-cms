@@ -1,0 +1,9 @@
+view: form
+beanClass: com.dynamia.cms.site.core.domain.ContentAuthor
+hidden: [id]
+sortFields: [firstName,lastName,email]
+
+
+        
+layout:
+    columns: 1

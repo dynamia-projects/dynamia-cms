@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -33,6 +34,7 @@ public class Menu extends SimpleEntity implements Serializable {
     @NotNull
     private Site site;
     @OneToMany(mappedBy = "menu")
+    @OrderBy("order")
     private List<MenuItem> items = new ArrayList<>();
 
     public Menu() {

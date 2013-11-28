@@ -4,6 +4,7 @@
  */
 package com.dynamia.cms.site.core.services.impl;
 
+import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.ext.Module;
 import com.dynamia.cms.site.core.services.CoreService;
@@ -47,10 +48,15 @@ public class CoreServiceImpl implements CoreService {
         return modules;
     }
 
+    @Override
+    public List<ModuleInstance> getEnabledModulesInstances() {
+        return crudService.find(ModuleInstance.class, "enabled", true);
+    }
+
     @PostConstruct
     private void initMainSite() {
         if (getMainSite() == null) {
-            
+
         }
     }
 

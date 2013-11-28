@@ -1,0 +1,3 @@
+view: table
+beanClass: com.dynamia.cms.site.menus.domain.Menu
+sortFields: [id,name,alias,site]

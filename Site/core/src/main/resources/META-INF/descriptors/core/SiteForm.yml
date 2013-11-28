@@ -1,0 +1,49 @@
+view: form
+beanClass: com.dynamia.cms.site.core.domain.Site
+hidden: [id]
+sortFields: [name,key,description,template,offline,offlineMessage,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
+
+fields:
+    
+    key:
+        params:
+            width: 30px;
+    
+    description:
+        params:
+            multiline: true=boolean
+            height: 100px
+            
+    template:
+        component: templateSelector
+                
+    offlineMessage:
+        params:
+            multiline: true=boolean
+            height: 100px
+    
+    metadataKeywords:
+        label: Keywords
+        
+    metadataAuthor:
+        label: Author
+        
+    metadataDescription:
+        label: Description
+        
+    metadataRights:
+        label: Rights
+    
+groups:
+    
+    general:
+        label: Basic Settings
+        fields: [name,key,description,template,offline,offlineMessage]
+            
+    
+    metadata:
+        label: Metadata
+        fields: [metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
+        
+layout:
+    columns: 1

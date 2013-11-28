@@ -26,7 +26,7 @@ public class Site extends SimpleEntity {
     private String description;
     private boolean offline;
     private String offlineMessage;
-    private String template="dynamical";
+    private String template = "dynamical";
     private String metadataKeywords;
     private String metadataAuthor;
     private String metadataDescription;
@@ -116,4 +116,5 @@ public class Site extends SimpleEntity {
     public String toString() {
         return String.format("%s (%s)", name, key);
     }
+
 }

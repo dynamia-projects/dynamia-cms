@@ -5,9 +5,9 @@
 package com.dynamia.cms.site.pages.domain;
 
 import com.dynamia.tools.domain.SimpleEntity;
+import com.dynamia.tools.domain.contraints.NotEmpty;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "pg_categories")
 public class PageCategory extends SimpleEntity {
 
-    @NotNull
+    @NotEmpty(message = "Enter category name")
     private String name;
     private String description;
 

@@ -18,6 +18,17 @@
             <artifactId>com.dynamia.cms.admin.core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.zkoss.zkforge</groupId>
+            <artifactId>ckez</artifactId>
+            <version>4.1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.site.templates</artifactId>
+            <version>${site.cms.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

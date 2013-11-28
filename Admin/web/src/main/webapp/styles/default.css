@@ -47,14 +47,9 @@ html, body{
 
 }
 
-.pageContent{
-    margin: 0px;
-    padding: 0px;
-    border: 0px;
-}
 
 .footer{    
-    
+
 }
 
 .logo{
@@ -65,28 +60,10 @@ html, body{
 
 }
 
-.bigtitle, .bigtitle *{
-    font-size:15pt;
-    font-family: Arial,Helvetica,sans-serif;
-    color: #0162a0;
-    border-bottom-style: solid;
-    width:100%;
-    margin-bottom:10px;
-}
-
-.bold{
-    font-weight:bold;
-}
-
 
 .transparent, .transparent .z-combobox-inp{
     background: transparent;
     border:0;
-}
-
-.modificado, .modificado *{
-
-    background-color: #fefdce;
 }
 
 
@@ -139,70 +116,4 @@ html, body{
     font-weight: bold;
     text-align: center;
     width: 100%;
-}
-
-.userReportHeader{
-    padding: 8px;
-}
-
-.userReportTitle{
-    font-size: 18pt;
-    font-family: Arial,Helvetica,sans-serif;
-    color: #ff9200;
-    font-weight: bold;
-}
-
-.userReportDesc{
-    font-size: 14pt;
-    font-family: Arial,Helvetica,sans-serif;
-}
-
-.userReport a:link, .userReport a:visited{
-    color: black;
-    text-decoration: none;
-}
-
-.userReport a:hover{    
-    color: #3e8afe;
-}
-
-.neg-title{
-
-    font-family: Arial,Helvetica,sans-serif;
-    font-size: 16pt;
-    font-weight: bold;
-    color: #033457;
-    padding-top: 20px;
-}
-
-.neg-compromisos *{
-    padding: 5px;
-    background-color: #ad2929;
-    color: #fefefe;
-    font-family: Arial,Helvetica,sans-serif;
-    font-weight: bold;
-    font-size: 12pt;
-}
-
-.neg-pagos * {
-    padding: 5px;
-    background-color: #528822;
-    color: #fefefe;
-    font-family: Arial,Helvetica,sans-serif;
-    font-weight: bold;
-    font-size: 12pt;
-}
-
-.neg-intereses *{
-    padding: 5px;
-    background-color: #656565;
-    color: #fefefe;
-    font-family: Arial,Helvetica,sans-serif;
-    font-weight: bold;
-    font-size: 12pt;
-}
-
-.disabled, .disabled *{
-    color: black;
-    font-weight: bold;
 }

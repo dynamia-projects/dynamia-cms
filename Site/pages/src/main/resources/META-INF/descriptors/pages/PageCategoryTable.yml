@@ -1,0 +1,4 @@
+view: table
+beanClass: com.dynamia.cms.site.pages.domain.PageCategory
+hidden: [id]
+sortFields: [name,description]

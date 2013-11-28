@@ -10,7 +10,7 @@
     <artifactId>com.dynamia.cms.admin.web</artifactId>
     <packaging>war</packaging>
     <version>0.1</version>
-    <name>DynamiaCMS Admin - Web (${project.version}})</name>
+    <name>DynamiaCMS Admin - Web (${project.version})</name>
     <url>http://www.dynamiasoluciones.com</url>
 
     <dependencies>
@@ -19,7 +19,11 @@
             <artifactId>${project.groupId}.admin.core.zk</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.zkoss.theme</groupId>
+            <artifactId>atlantic</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

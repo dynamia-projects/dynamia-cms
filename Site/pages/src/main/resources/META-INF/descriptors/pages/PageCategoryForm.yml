@@ -1,0 +1,14 @@
+view: form
+beanClass: com.dynamia.cms.site.pages.domain.PageCategory
+hidden: [id]
+sortFields: [name,description]
+
+fields:
+       
+    description:
+        params:
+            multiline: true=boolean
+            height: 100px
+        
+layout:
+    columns: 1

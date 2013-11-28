@@ -22,7 +22,7 @@
     <preference>
         <name>ThreadLocal</name>
         <value>
-        	org.springframework.transaction.support.TransactionSynchronizationManager=resources,synchronizations,currentTransactionName,currentTransactionReadOnly,actualTransactionActive;		
+            org.springframework.transaction.support.TransactionSynchronizationManager=resources,synchronizations,currentTransactionName,currentTransactionReadOnly,actualTransactionActive;		
             org.springframework.web.context.request.RequestContextHolder=requestAttributesHolder,inheritableRequestAttributesHolder;
             org.springframework.security.core.context.ThreadLocalSecurityContextHolderStrategy=contextHolder;
         </value>
@@ -42,6 +42,11 @@
     <library-property>
         <name>org.zkoss.zul.include.mode</name>
         <value>defer</value>
+    </library-property>
+    
+    <library-property>
+        <name>org.zkoss.theme.preferred</name>
+        <value>atlantic</value>
     </library-property>
     
 </zk>

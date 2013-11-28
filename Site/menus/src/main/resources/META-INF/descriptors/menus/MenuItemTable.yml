@@ -1,0 +1,11 @@
+view: table
+beanClass: com.dynamia.cms.site.menus.domain.MenuItem
+hidden: [href]
+sortFields: [id,name,page,page.category,page.site]
+
+fields:
+    page.category:
+        label: Category
+        
+    page.site:
+        label: Page Site

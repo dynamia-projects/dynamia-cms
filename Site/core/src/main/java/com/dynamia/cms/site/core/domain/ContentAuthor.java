@@ -49,4 +49,10 @@ public class ContentAuthor extends SimpleEntity {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s", firstName, lastName);
+    }
+
 }

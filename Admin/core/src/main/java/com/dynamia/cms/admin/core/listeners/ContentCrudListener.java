@@ -19,9 +19,8 @@ public class ContentCrudListener extends CrudServiceListenerAdapter<Content> {
 
     @Override
     public void beforeCreate(Content entity) {
-        entity.setCreationDate(new Date());
-        entity.setUuid(UUID.randomUUID().toString());
-        entity.setAlias(entity.getAlias().replace(" ", "-").toLowerCase());
+
+        entity.setUuid(UUID.randomUUID().toString().toUpperCase());
 
     }
 }
