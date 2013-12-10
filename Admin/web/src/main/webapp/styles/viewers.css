@@ -71,10 +71,7 @@ input[disabled],input[readonly],select[disabled],select[readonly],checkbox[disab
     background-color: #D0FFD0
 }
 
-.pageContent .z-tab-text{
-    font-size: 13px;
-}
 
-.pageContent .z-tab{
-    line-height: 20px;
+.table-view .z-listitem .z-listcell{
+   // background: none;
 }

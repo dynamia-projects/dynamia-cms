@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
-<?page title="TodoMar - Sistema de Gestion"?>
+<?page title="DynamiaCMS"?>
+
 
 <?link rel="stylesheet" type="text/css" href="styles/default.css"?>
-<?link rel="stylesheet" type="text/css" href="styles/estados.css"?>
 <?link rel="stylesheet" type="text/css" href="styles/zkstyles.css"?>
-<?link rel="stylesheet" type="text/css" href="styles/crosstab.css"?>
+<?link rel="stylesheet" type="text/css" href="styles/viewers.css"?>
+
+<?link rel="shortcut icon" href="favicon.ico"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
-    <window id="lgn" apply="${login}"  height="100%">
+    <window id="lgn" apply="${login}"  height="100%" border="0" contentStyle="padding:0">
 
         <borderlayout id="main">
-            <north sclass="z-toolbar header">
-                <div>
-                    <div sclass="logo"></div>
-                </div>
-            </north>
+            <north sclass="z-menubar header">
+            <div>
+                 
+                <hlayout>
+                    <div class="logo"/>   
+                        
+                </hlayout>
+            </div>
+        </north>
 
             <center sclass="content">
-                <div align="center">
-                    <div style="margin-top:100px">
-                        <div sclass="loginDialog" align="center">
+                <window title="DynamiaCMS" mode="overlapped"  position="center" border="normal" width="400px" height="280px"  >
+                    
+                    <vlayout hflex="1">
+                        <label value="Usuario" />
+                        <textbox value="@{lgn$composer.username}"  hflex="1"/>
 
-                            <vbox sclass="loginForm">
-                                <label value="Usuario" sclass="loginLbl"/>
-                                <textbox value="@{lgn$composer.username}" sclass="loginTxt" />
+                        <label value="Password" />
+                        <textbox type="password" value="@{lgn$composer.password}"   onOK="lgn$composer.doLogin()"  hflex="1"/>
 
-                                <label value="Password" sclass="loginLbl"/>
-                                <textbox type="password" value="@{lgn$composer.password}"   onOK="lgn$composer.doLogin()"  sclass="loginTxt"/>
-
-                                <toolbarbutton onClick="lgn$composer.doLogin()" label="Entrar" sclass="login" image="/images/seguridad.png" />
-                                <label value="@{lgn$composer.message}" sclass="loginMsg"/>
-                            </vbox>
-
-                        </div>
-
-                    </div>
-                </div>
+                        <hlayout hflex="1">
+                            <div hflex="true" align="right">
+                            <button  onClick="lgn$composer.doLogin()" label="Iniciar Sesion" image="/images/seguridad.png" />
+                            </div>
+                        </hlayout>
+                        <label value="@{lgn$composer.message}" sclass="loginMsg"/>
+                    </vlayout>
+                </window>
+                
             </center>
 
             <south sclass="z-toolbar footer">

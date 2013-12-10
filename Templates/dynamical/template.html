@@ -33,11 +33,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Dynamia</a>
+                    <a class="navbar-brand" th:href='@{/}' href="#">Dynamia</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav" th:each="mi : ${menuitems}">                                                
-                        <li th:class="${activeMenu == mi}? 'active'"><a th:text="${mi.name}" th:href="@{/${mi.href}}" href="#">Menu Item</a></li>                        
+                        <li th:class="${activeMenu == mi? 'active':''}"><a th:text="${mi.name}" th:href="@{${mi.href}}" href="#">Menu Item</a></li>                        
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>

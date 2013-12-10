@@ -19,12 +19,19 @@ public class PageCrudListener extends CrudServiceListenerAdapter<Page> {
 
     @Override
     public void beforeCreate(Page entity) {
-        entity.setCreationDate(new Date());
+        if (entity.getId() == null) {
+            entity.setCreationDate(new Date());
+        }
         if (entity.getAlias() == null || entity.getAlias().isEmpty()) {
             entity.setAlias(entity.getTitle());
         }
         entity.setAlias(StringUtils.simplifiedString(entity.getAlias()));
 
+    }
+
+    @Override
+    public void beforeUpdate(Page entity) {
+        beforeCreate(entity);
     }
 
 }

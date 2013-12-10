@@ -15,13 +15,6 @@ http://www.springframework.org/schema/lang http://www.springframework.org/schema
 
     <import resource="classpath:META-INF/dynamia/zk-viewers.xml"/>
 
-    <bean id="messageDialog" class="com.dynamia.tools.web.ui.MessagePopup">
-        <constructor-arg>
-            <map>
-                <entry key="timeout" value="4000" />
-                <entry key="position" value="right,bottom"/>
-            </map>
-        </constructor-arg>
-    </bean>
+    <bean id="messageDialog" class="com.dynamia.tools.web.ui.MessageNotification"/>
 
 </beans>

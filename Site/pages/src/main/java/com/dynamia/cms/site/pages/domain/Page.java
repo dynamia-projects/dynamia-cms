@@ -140,7 +140,7 @@ public class Page extends Content {
 
     @Override
     public String toString() {
-        return alias;
+        return getTitle();
     }
 
 }

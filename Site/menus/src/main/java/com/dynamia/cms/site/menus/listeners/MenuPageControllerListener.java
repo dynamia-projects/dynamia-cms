@@ -29,7 +29,8 @@ public class MenuPageControllerListener implements PageControllerListener{
     public void onPageLoaded(Page page, ModelAndView mv) {
         
         Menu menu = service.getMainMenu(page.getSite());
-        mv.addObject("menus", menu.getItems());
+        mv.addObject("menu", menu);
+        mv.addObject("menuitems", menu.getItems());
         
         for (MenuItem menuItem : menu.getItems()) {
             if(page.equals(menuItem.getPage())){
