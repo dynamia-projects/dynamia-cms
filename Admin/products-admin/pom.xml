@@ -4,13 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.dynamia.cms</groupId>
-        <artifactId>com.dynamia.cms.site.parent</artifactId>
+        <artifactId>com.dynamia.cms.admin.parent</artifactId>
         <version>0.3</version>
     </parent>
-    <groupId>com.dynamia.cms.site</groupId>
-    <artifactId>com.dynamia.cms.site.products.api</artifactId>
+    <name>DynamiaCMS Admin - Products (${project.version})</name>
+    <groupId>com.dynamia.cms</groupId>
+    <artifactId>com.dynamia.cms.admin.products</artifactId>
     <version>0.3</version>
-    <name>DynamiaCMS Site - Products API (${project.version})</name>
+    
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,6 +22,11 @@
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.site.products</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

@@ -1,0 +1,99 @@
+
+
+
+
+.z-combobox-readonly, .z-textbox-readonly, .z-decimalbox-readonly{
+    background-color:white;
+}
+
+.z-decimalbox{
+    text-align:right;
+}
+
+.z-list-cell .z-decimalbox{
+    background:transparent;
+    border:0;
+}
+
+.picker, .picker .z-button-tl, .picker .z-button-tr,
+.picker .z-button-bl, .picker .z-button-br,
+.picker .z-button-tm, .picker .z-button-bm,
+.picker .z-button-cl, .picker .z-button-cr,
+.picker .z-button-cm {
+    border:0;
+    background:transparent;
+    margin:0px;
+    padding:0px;
+    background-image:none;
+}
+
+.z-toolbar-tabs-outer{
+    background:#E2E3E4 url(/zkau/web/8914214/theme-gray/zul/img/tab/tabs-bg.png) repeat-x scroll 0 top;    
+}
+
+
+.msg-popup{
+    width: 30%;
+    height: 100px;
+    border: 2px solid white;
+    background-color: #E2E3E4;
+    color: black;
+}
+
+.msg-popup-title{
+    color: black;
+    font-weight: bold;
+}
+.msg-popup-close{
+    background-image: url("/images/icons/16x16/delete-16.png");
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+}
+.msg-popup-icon{
+    background-image: url("/images/icons/32x32/message-32.png");
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+}
+.msg-popup-icon-warning{
+    background-image: url("/images/icons/32x32/alert-32.png");    
+}
+
+.msg-popup-warning{    
+    border: 2px solid orange;
+}
+
+.msg-popup-icon-error{
+    background-image: url("/images/icons/32x32/error-32.png");
+}
+
+.msg-popup-error{
+    border: 2px solid maroon;
+}
+
+.msg-popup-message{    
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.z-errbox *{
+    background-color: #eab54d;
+    border-right-color: #f25622;
+    border-left-color: #f25622;
+    border-bottom-color: #f25622;
+    border-top-color: #f25622;
+    border-right-width: 2px;
+    border-left-width: 2px;
+    border-bottom-width: 2px;
+    border-top-width: 2px;
+}
+
+
+.nav-pagegroup-title, .nav-pagegroup-title *{
+    color:white;
+    font-weight: normal;
+    padding: 2px;
+    background-color: #184d7e;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+}

@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.dynamia.cms</groupId>
         <artifactId>com.dynamia.cms.site.parent</artifactId>
-        <version>0.2</version>
+        <version>0.3</version>
     </parent>
     <groupId>com.dynamia.cms</groupId>
     <artifactId>com.dynamia.cms.site.products</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
     <name>DynamiaCMS Site - Products (${project.version})</name>
     <url>http://maven.apache.org</url>
     <properties>
@@ -25,12 +25,12 @@
         <dependency>
             <groupId>com.dynamia.cms.site</groupId>
             <artifactId>com.dynamia.cms.site.products.api</artifactId>
-            <version>0.2</version>
+            <version>0.3</version>
         </dependency>
         <dependency>
             <groupId>com.dynamia.cms</groupId>
             <artifactId>com.dynamia.cms.site.core</artifactId>
-            <version>0.2</version>
+            <version>0.3</version>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
