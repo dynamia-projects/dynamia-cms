@@ -1,7 +1,7 @@
 view: table
 beanClass: com.dynamia.cms.site.menus.domain.MenuItem
 hidden: [href,menu]
-sortFields: [id,name,page,page.category,page.site]
+sortFields: [id,name,icon,order,page,page.category,page.site]
 
 fields:
     page.category:
@@ -9,3 +9,6 @@ fields:
         
     page.site:
         label: Page Site
+        
+params:
+    orderBy: order

@@ -6,14 +6,14 @@
 package com.dynamia.cms.site.menus;
 
 import com.dynamia.cms.site.core.domain.ModuleInstance;
-import com.dynamia.cms.site.core.ext.InstallModule;
-import com.dynamia.cms.site.core.ext.Module;
+import com.dynamia.cms.site.core.api.CMSModule;
+import com.dynamia.cms.site.core.api.Module;
 
 /**
  *
  * @author mario
  */
-@InstallModule
+@CMSModule
 public class MenuModule implements Module {
 
     @Override

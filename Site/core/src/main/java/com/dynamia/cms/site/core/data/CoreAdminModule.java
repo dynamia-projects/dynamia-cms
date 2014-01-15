@@ -6,9 +6,9 @@
 package com.dynamia.cms.site.core.data;
 
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.core.ext.AdminModule;
-import com.dynamia.cms.site.core.ext.AdminModuleOption;
-import com.dynamia.cms.site.core.ext.InstallModule;
+import com.dynamia.cms.site.core.api.AdminModule;
+import com.dynamia.cms.site.core.api.AdminModuleOption;
+import com.dynamia.cms.site.core.api.CMSModule;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author mario
  */
-@InstallModule
+@CMSModule
 public class CoreAdminModule implements AdminModule {
 
     @Override

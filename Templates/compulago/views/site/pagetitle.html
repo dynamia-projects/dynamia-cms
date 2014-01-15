@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+    <div data-th-fragment="content">
+
+        <div class="titles">
+            <div class="pull-left">
+                <h1 th:text="${title}" class="headinglefttitle">Page title</h1>
+                <div th:text="${subtitle}" class="headingsubtitle"></div>
+            </div>
+            <i th:class="${'icon-'+icon}" class="icon-warning-sign"></i> 
+        </div>
+    </div>
+
+
+</html>

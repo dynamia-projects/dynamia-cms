@@ -4,8 +4,10 @@
  */
 package com.dynamia.cms.admin.core.zk;
 
-import com.dynamia.cms.site.core.ext.AdminModule;
-import com.dynamia.cms.site.core.ext.AdminModuleOption;
+import com.dynamia.cms.site.core.api.AdminModule;
+import com.dynamia.cms.site.core.api.AdminModuleOption;
+import com.dynamia.cms.site.core.api.ConfigAdminModuleOption;
+import com.dynamia.tools.web.cfg.ConfigPage;
 import org.springframework.stereotype.Component;
 
 import com.dynamia.tools.web.crud.CrudPage;
@@ -32,7 +34,12 @@ public class Installer implements ModuleProvider {
                 PageGroup pg = new PageGroup(am.getGroup(), am.getName());
                 module.addPageGroup(pg);
                 for (AdminModuleOption option : am.getOptions()) {
-                    pg.addPage(new CrudPage(option.getId(), option.getName(), option.getCoreClass()));
+                    if (option instanceof ConfigAdminModuleOption) {
+                        ConfigAdminModuleOption cfg = (ConfigAdminModuleOption) option;
+                        pg.addPage(new ConfigPage(cfg.getId(), cfg.getName(), cfg.getDescriptorID()));
+                    } else {
+                        pg.addPage(new CrudPage(option.getId(), option.getName(), option.getCoreClass()));
+                    }
                 }
             }
         }

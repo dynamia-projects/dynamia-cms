@@ -5,11 +5,13 @@
  */
 package com.dynamia.cms.site.templates;
 
+import com.dynamia.cms.site.core.DynamiaCMSException;
+
 /**
  *
  * @author mario
  */
-public class TemplateNotFoundException extends RuntimeException {
+public class TemplateNotFoundException extends DynamiaCMSException {
 
     public TemplateNotFoundException() {
     }

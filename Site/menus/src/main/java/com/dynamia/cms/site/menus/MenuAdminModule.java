@@ -5,16 +5,16 @@
  */
 package com.dynamia.cms.site.menus;
 
-import com.dynamia.cms.site.core.ext.AdminModule;
-import com.dynamia.cms.site.core.ext.AdminModuleOption;
-import com.dynamia.cms.site.core.ext.InstallModule;
+import com.dynamia.cms.site.core.api.AdminModule;
+import com.dynamia.cms.site.core.api.AdminModuleOption;
+import com.dynamia.cms.site.core.api.CMSModule;
 import com.dynamia.cms.site.menus.domain.Menu;
 
 /**
  *
  * @author mario
  */
-@InstallModule
+@CMSModule
 public class MenuAdminModule implements AdminModule {
 
     @Override

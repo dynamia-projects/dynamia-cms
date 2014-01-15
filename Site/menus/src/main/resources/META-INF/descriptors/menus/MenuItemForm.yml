@@ -1,7 +1,7 @@
 view: form
 beanClass: com.dynamia.cms.site.menus.domain.MenuItem
 hidden: [id,menu,href]
-sortFields: [name,page,order]
+sortFields: [name,page,icon,order]
 
 fields:
     

@@ -30,8 +30,17 @@ public class MenuItem extends SimpleEntity implements Serializable {
     private Page page;
     @ManyToOne
     private Menu menu;
+    private String icon;
     @Column(name = "itemOrder")
     private int order;
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
     public int getOrder() {
         return order;
@@ -54,7 +63,7 @@ public class MenuItem extends SimpleEntity implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;        
+        this.name = name;
     }
 
     public Page getPage() {
@@ -68,9 +77,9 @@ public class MenuItem extends SimpleEntity implements Serializable {
     public String getHref() {
         StringBuilder sb = new StringBuilder();
         if (!menu.getSite().getKey().equals("main")) {
-            sb.append("site/").append(menu.getSite().getKey()).append("/");
+            sb.append("/site/").append(menu.getSite().getKey()).append("/");
         }
-        sb.append(getPage().getAlias());        
+        sb.append(getPage().getAlias());
         return sb.toString();
     }
 

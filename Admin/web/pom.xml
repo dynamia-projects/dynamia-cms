@@ -4,12 +4,12 @@
     <parent>
         <artifactId>com.dynamia.cms.admin.parent</artifactId>
         <groupId>com.dynamia.cms</groupId>
-        <version>0.1</version>
+        <version>0.2</version>
     </parent>
     <groupId>com.dynamia.cms</groupId>
     <artifactId>com.dynamia.cms.admin.web</artifactId>
     <packaging>war</packaging>
-    <version>0.1</version>
+    <version>0.2</version>
     <name>DynamiaCMS Admin - Web (${project.version})</name>
     <url>http://www.dynamiasoluciones.com</url>
 
@@ -21,8 +21,37 @@
         </dependency>
         <dependency>
             <groupId>org.zkoss.theme</groupId>
-            <artifactId>atlantic</artifactId>
+            <artifactId>atlantic-green</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        
+        <!-- Modules -->
+        
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.site.core</artifactId>
+            <version>${site.cms.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.site.pages</artifactId>
+            <version>${site.cms.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.site.menus</artifactId>
+            <version>${site.cms.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.site.products</artifactId>
+            <version>${site.cms.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.admin.products</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -61,7 +90,7 @@
                         <contextPath>/admin</contextPath>
                     </webAppConfig>
 
-                    <stopPort>9002</stopPort>
+                    <stopPort>9484</stopPort>
                     <stopKey>jetty-stop</stopKey>
 
                     <connectors>                        
@@ -79,7 +108,7 @@
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.14</version>
+                        <version>5.1.26</version>
                     </dependency>
 
                     <dependency>

@@ -5,12 +5,12 @@
     <parent>
         <artifactId>com.dynamia.cms.site.parent</artifactId>
         <groupId>com.dynamia.cms</groupId>
-        <version>0.1</version>
+        <version>0.2</version>
     </parent>
     <groupId>com.dynamia.cms</groupId>
     <artifactId>com.dynamia.cms.site.pages</artifactId>
     <name>DynamiaCMS Site - Pages (${project.version})</name>
-    <version>0.1</version>
+    <version>0.2</version>
     <url>http://www.dynamiasoluciones.com</url>
     <build>
         <plugins>
@@ -29,6 +29,13 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>com.dynamia.cms.site.core</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>6.0</version>
+            <type>jar</type>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

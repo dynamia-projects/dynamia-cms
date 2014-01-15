@@ -12,10 +12,10 @@
         <title th:text="${name}">Dynamical Template</title>
 
         <!-- Bootstrap core CSS -->
-        <link href="css/bootstrap.css" rel="stylesheet"/>
+        <link th:href="@{/css/bootstrap.css}" href="css/bootstrap.css" rel="stylesheet"/>
 
         <!-- Custom styles for this template -->
-        <link href="css/template.css" rel="stylesheet"/>
+        <link th:href="@{/css/template.css}" href="css/template.css" rel="stylesheet"/>
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -33,7 +33,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" th:href='@{/}' href="#">Dynamia</a>
+                    <a class="navbar-brand" th:href='@{/main}' href="#">Dynamia</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav" th:each="mi : ${menuitems}">                                                
@@ -55,7 +55,7 @@
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="js/jquery.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <script th:src="@{/js/jquery.js}" src="js/jquery.js"></script>
+        <script th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
     </body>
 </html>

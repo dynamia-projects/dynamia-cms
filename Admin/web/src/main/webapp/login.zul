@@ -4,9 +4,9 @@
 <?page title="DynamiaCMS"?>
 
 
-<?link rel="stylesheet" type="text/css" href="styles/default.css"?>
-<?link rel="stylesheet" type="text/css" href="styles/zkstyles.css"?>
-<?link rel="stylesheet" type="text/css" href="styles/viewers.css"?>
+<?link rel="stylesheet" type="text/css" href="css/default.css"?>
+<?link rel="stylesheet" type="text/css" href="css/zkstyles.css"?>
+<?link rel="stylesheet" type="text/css" href="css/viewers.css"?>
 
 <?link rel="shortcut icon" href="favicon.ico"?>
 

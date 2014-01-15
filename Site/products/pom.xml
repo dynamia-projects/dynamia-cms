@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.dynamia.cms</groupId>
+        <artifactId>com.dynamia.cms.site.parent</artifactId>
+        <version>0.2</version>
+    </parent>
+    <groupId>com.dynamia.cms</groupId>
+    <artifactId>com.dynamia.cms.site.products</artifactId>
+    <version>0.2</version>
+    <name>DynamiaCMS Site - Products (${project.version})</name>
+    <url>http://maven.apache.org</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.dynamia.cms.site</groupId>
+            <artifactId>com.dynamia.cms.site.products.api</artifactId>
+            <version>0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dynamia.cms</groupId>
+            <artifactId>com.dynamia.cms.site.core</artifactId>
+            <version>0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.site.pages</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>

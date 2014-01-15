@@ -5,12 +5,12 @@
     <parent>
         <artifactId>com.dynamia.cms.site.parent</artifactId>
         <groupId>com.dynamia.cms</groupId>
-        <version>0.1</version>
+        <version>0.2</version>
     </parent>
     <groupId>com.dynamia.cms</groupId>
     <artifactId>com.dynamia.cms.site.templates</artifactId>
     <name>DynamiaCMS Site - Templates (${project.version})</name>
-    <version>0.1</version>
+    <version>0.2</version>
     <url>http://www.dynamiasoluciones.com</url>
     <build>
         <plugins>
@@ -34,6 +34,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>com.dynamia.cms.site.core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.site.pages</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

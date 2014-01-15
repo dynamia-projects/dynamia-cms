@@ -6,7 +6,7 @@
 package com.dynamia.cms.site.templates.services.impl;
 
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.templates.Config;
+import com.dynamia.cms.site.templates.TemplateJavaConfig;
 import com.dynamia.cms.site.templates.Template;
 import com.dynamia.cms.site.templates.TemplateNotFoundException;
 import com.dynamia.cms.site.templates.services.TemplateService;
@@ -36,7 +36,7 @@ public class TemplateServiceImpl implements TemplateService {
 
     private List<Template> loadTemplates() {
         final List<Template> templates = new ArrayList<>();
-        String dir = appParams.getValue(Config.TEMPLATES_LOCATION, "");
+        String dir = appParams.getValue(TemplateJavaConfig.TEMPLATES_LOCATION, "");
         File templateDir = new File(dir);
         if (templateDir.exists() && templateDir.isDirectory()) {
             templateDir.listFiles(new FileFilter() {

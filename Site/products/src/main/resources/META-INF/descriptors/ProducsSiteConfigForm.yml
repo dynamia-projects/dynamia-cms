@@ -1,0 +1,40 @@
+view: form
+beanClass: com.dynamia.cms.site.products.domain.ProductsSiteConfig
+hidden: [id,lastSync]
+sortFields: [site,datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceUsername,datasourcePassword]
+
+fields:
+    
+    site:
+        params:
+            span: 2
+    
+    datasourceURL:
+        label: URL
+    
+    datasourceImagesURL:
+        label: Images URL
+        
+    datasourceBrandImagesURL:
+        label: Brands Images URL
+    
+    
+    datasourceUsername:
+        label: Username
+    
+    datasourcePassword:
+        label: Password
+    
+groups:
+    
+    general:
+        label: Basic Settings
+        fields: [site]
+            
+    
+    datasource:
+        label: Datasource Settings
+        fields: [datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceUsername,datasourcePassword]
+        
+layout:
+    columns: 2

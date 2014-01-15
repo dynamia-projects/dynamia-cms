@@ -12,8 +12,8 @@ import org.thymeleaf.resourceresolver.IResourceResolver;
  */
 public class TemplateResolver extends org.thymeleaf.templateresolver.TemplateResolver {
 
-    public TemplateResolver() {
-        super();
+    public TemplateResolver() {        
+        System.out.println("Initializing DynamiaCMS TemplateResolver");
         super.setResourceResolver(new DynamicFileResourceResolver());
     }
 
@@ -21,4 +21,6 @@ public class TemplateResolver extends org.thymeleaf.templateresolver.TemplateRes
     public void setResourceResolver(IResourceResolver resourceResolver) {
         throw new IllegalArgumentException("Dont use this");
     }
+    
+    
 }

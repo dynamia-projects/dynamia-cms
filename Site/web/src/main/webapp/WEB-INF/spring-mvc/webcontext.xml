@@ -13,34 +13,20 @@
 				 
     
     
-    <context:component-scan base-package="com.dynamia" />
+    <context:component-scan base-package="com.dynamia.cms.site" >
+        <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+    </context:component-scan>
     
     <mvc:annotation-driven/>
     
     
-    <!-- Internationalization support -->
-
-    <bean id="localeResolver"
-          class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-        <property name="defaultLocale" value="en_US" />
-    </bean>
- 
-    <bean id="localeChangeInterceptor"
-          class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-        <property name="paramName" value="language" />
-    </bean>
- 
-    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" >
-        <property name="interceptors">
-            <list>
-                <ref bean="localeChangeInterceptor" />
-            </list>
-        </property>
-    </bean>
-
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basename" value="locale/messages" />
-    </bean>
+   
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+        <bean class="com.dynamia.cms.site.core.SiteHandleInterceptor"/> 
+    </mvc:interceptors>
+    
+    
 
     <!-- **************************************************************** -->
     <!-- THYMELEAF-SPECIFIC ARTIFACTS -->
@@ -66,6 +52,6 @@
 
     <bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine" />
-        
+        <property name="order" value="1" />
     </bean>
 </beans>

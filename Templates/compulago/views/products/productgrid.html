@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+
+    <div class="container" layout:fragment="content">
+
+        <div data-th-include="site/pagetitle::content"/>
+
+
+        <div class="row mt40">
+
+
+
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt40column">
+                <!--Sorting-->
+                <div data-th-include="products/sortform::content"/>
+
+
+
+                <!-- PRODUCTS -->
+
+                <div class="featureprojectcontianer mt40" id="productlist">
+                    <h2 class="heading1"><span class="maintext"> Featured Products</span></h2>
+                    <div class="featureprojectwrap latestprojectcontianer grid">
+
+                        <ul class="mt40 clearfix ">
+                            <!-- Product Data -->
+                            <li class="col-lg-4 col-md-4 col-sm-6 col-xs-12" data-th-each="prd : ${prd_products}">
+                                <div data-th-include="products/productdata::content"/>
+                            </li>
+                        </ul>
+
+
+                        <!-- Paging-->
+                        <div class="mt40 clearfix">
+                            <ul class="pagination pull-right">
+                                <li><a >Prev</a>
+                                </li>
+                                <li class="active">
+                                    <a >1</a>
+                                </li>
+                                <li><a >2</a>
+                                </li>
+                                <li><a >3</a>
+                                </li>
+                                <li><a >4</a>
+                                </li>
+                                <li><a >Next</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt40column"> 
+                <!--categories-->        
+                <div data-th-include="products/categorylist::content"/>
+            </div>
+        </div>
+    </div>
+
+</html>

@@ -4,12 +4,12 @@
     <parent>
         <artifactId>com.dynamia.cms.site.parent</artifactId>
         <groupId>com.dynamia.cms</groupId>
-        <version>0.1</version>
+        <version>0.2</version>
     </parent>
     <groupId>com.dynamia.cms</groupId>
     <artifactId>com.dynamia.cms.site.web</artifactId>
     <packaging>war</packaging>
-    <version>0.1</version>
+    <version>0.2</version>
     <name>DynamiaCMS Site - Web (${project.version})</name>
     <url>http://www.dynamiasoluciones.com</url>
 
@@ -34,6 +34,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>com.dynamia.cms.site.menus</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.site.products</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
@@ -77,7 +82,7 @@
                         <contextPath>/cms</contextPath>
                     </webAppConfig>
 
-                    <stopPort>9001</stopPort>
+                    <stopPort>9808</stopPort>
                     <stopKey>jetty-stop</stopKey>
 
                     <connectors>

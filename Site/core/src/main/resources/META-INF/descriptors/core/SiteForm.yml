@@ -7,7 +7,10 @@ fields:
     
     key:
         params:
-            width: 30px;
+            width: 100px
+            
+    acceptedDomains:
+        component: crudview
     
     description:
         params:
@@ -21,6 +24,10 @@ fields:
         params:
             multiline: true=boolean
             height: 100px
+            
+    resourcesLocation:
+        description: Server directory in wich site's resources will be saved
+        component: directorybox            
     
     metadataKeywords:
         label: Keywords
@@ -38,7 +45,7 @@ groups:
     
     general:
         label: Basic Settings
-        fields: [name,key,description,template,offline,offlineMessage]
+        fields: [name,key,description,template,offline,offlineMessage,resourcesLocation]
             
     
     metadata:

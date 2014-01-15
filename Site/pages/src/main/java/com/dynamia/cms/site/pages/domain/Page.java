@@ -29,12 +29,15 @@ public class Page extends Content {
 
     @NotEmpty(message = "Enter page title")
     private String title;
+    @Column(length = 1000)
+    private String subtitle;
     @Basic(fetch = FetchType.LAZY)
     @Lob
     private String content;
     @OneToOne
     private PageCategory category;
     private String layout;
+    private String type = "default";
 
     @Column(name = "pageAlias")
     private String alias;
@@ -49,6 +52,35 @@ public class Page extends Content {
     private Date endDate;
     private boolean published;
     private String tags;
+    private String icon;
+
+    public String getType() {
+        if (type == null) {
+
+            type = "default";
+        }
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
 
     public String getAlias() {
         return alias;

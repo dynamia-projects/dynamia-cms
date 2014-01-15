@@ -6,8 +6,10 @@ package com.dynamia.cms.site.core.domain;
 
 import com.dynamia.tools.domain.SimpleEntity;
 import com.dynamia.tools.domain.contraints.NotEmpty;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -23,6 +25,9 @@ public class Site extends SimpleEntity {
     @Column(name = "site_key", unique = true)
     @NotEmpty
     private String key;
+    @OneToMany(mappedBy = "site")
+    private List<SiteDomain> acceptedDomains;
+
     private String description;
     private boolean offline;
     private String offlineMessage;
@@ -31,6 +36,7 @@ public class Site extends SimpleEntity {
     private String metadataAuthor;
     private String metadataDescription;
     private String metadataRights;
+    private String resourcesLocation;
 
     public String getName() {
         return name;
@@ -38,6 +44,22 @@ public class Site extends SimpleEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<SiteDomain> getAcceptedDomains() {
+        return acceptedDomains;
+    }
+
+    public void setAcceptedDomains(List<SiteDomain> acceptedDomains) {
+        this.acceptedDomains = acceptedDomains;
+    }
+
+    public String getResourcesLocation() {
+        return resourcesLocation;
+    }
+
+    public void setResourcesLocation(String resourcesLocation) {
+        this.resourcesLocation = resourcesLocation;
     }
 
     public String getKey() {
