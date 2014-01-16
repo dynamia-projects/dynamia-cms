@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dynamia.cms.site.products.services.impl;
+package com.dynamia.cms.admin.products.services.impl;
 
+import com.dynamia.cms.admin.products.services.ProductsSyncService;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
@@ -16,7 +17,6 @@ import com.dynamia.cms.site.products.dto.ProductDTO;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import com.dynamia.cms.site.products.dto.ProductDetailDTO;
-import com.dynamia.cms.site.products.services.ProductsSyncService;
 import com.dynamia.tools.commons.logger.LoggingService;
 import com.dynamia.tools.commons.logger.SLF4JLoggingService;
 import com.dynamia.tools.domain.services.CrudService;
@@ -29,8 +29,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

@@ -19,7 +19,7 @@ public interface SiteService {
     Site getMainSite();
 
     List<Module> getInstalledModules();
-    
+
     List<ModuleInstance> getEnabledModulesInstances();
 
     Site getSite(String key);

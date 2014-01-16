@@ -10,6 +10,7 @@ import com.dynamia.cms.site.pages.services.PageService;
 import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,6 +24,7 @@ public class PageServiceImpl implements PageService {
     private CrudService crudService;
 
     @Override
+    @Cacheable("pages")
     public Page loadPage(Site site, String alias) {
         QueryParameters qp = QueryParameters.with("alias", alias);
         qp.add("site", site);
@@ -30,6 +32,7 @@ public class PageServiceImpl implements PageService {
     }
 
     @Override
+    @Cacheable("pages")
     public Page loadPageByUUID(String uuid) {
         return crudService.findSingle(Page.class, "uuid", uuid);
     }

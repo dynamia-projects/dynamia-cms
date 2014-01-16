@@ -207,7 +207,7 @@ $('.home8').revolution(
 	  $("<option />", {
 		 "selected": "selected",
 		 "value"   : "",
-		 "text"    : "Go to..."
+		 "text"    : "Menu Principal"
 	  }).appendTo("nav.subnav select");
       
 	// Populate dropdown with menu items

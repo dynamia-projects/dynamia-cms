@@ -19,9 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProductsInterceptor extends SiteRequestInterceptorAdapter {
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+    protected void afterRequest(Site site, ModelAndView mv) {        
         if (mv.getModel().get("prd_products") != null) {
             ProductsUtil.configureDefaultVariables(site, mv);
+            
         }
     }
 

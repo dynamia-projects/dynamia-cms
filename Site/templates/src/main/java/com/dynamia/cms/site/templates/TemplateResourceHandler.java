@@ -22,7 +22,7 @@ public class TemplateResourceHandler extends ResourceHttpRequestHandler {
     @Override
     protected Resource getResource(HttpServletRequest request) {
         SiteService coreService = Containers.get().findObject(SiteService.class);
-        Site site = coreService.getSiteByDomain(request.getServerName());
+        Site site = coreService.getSite(request);
         if(site==null){
             site = coreService.getMainSite();
         }

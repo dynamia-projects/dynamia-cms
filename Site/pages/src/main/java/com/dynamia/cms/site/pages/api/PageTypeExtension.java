@@ -6,7 +6,7 @@
 package com.dynamia.cms.site.pages.api;
 
 import com.dynamia.cms.site.pages.domain.Page;
-import org.springframework.web.servlet.ModelAndView;
+import java.util.Map;
 
 /**
  *
@@ -17,7 +17,9 @@ public interface PageTypeExtension {
     public String getName();
 
     public String getViewName();
+    
+    public String getDescriptorId();
 
-    public void setupPage(Page page, ModelAndView model);
+    public Map<String,Object> setupPage(Page page);
 
 }

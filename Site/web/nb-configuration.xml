@@ -26,4 +26,10 @@ Any value defined here will override the pom.xml file value but is only applicab
         <org-netbeans-modules-css-prep.less_2e_compiler_2e_options/>
         <org-netbeans-modules-web-clientproject-api.js_2e_libs_2e_folder>js/libs</org-netbeans-modules-web-clientproject-api.js_2e_libs_2e_folder>
     </properties>
+    <spring-data xmlns="http://www.netbeans.org/ns/spring-data/1">
+        <config-files>
+            <config-file>src/main/webapp/WEB-INF/spring/cache.xml</config-file>
+        </config-files>
+        <config-file-groups/>
+    </spring-data>
 </project-shared-configuration>

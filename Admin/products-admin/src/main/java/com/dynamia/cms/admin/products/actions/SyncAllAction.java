@@ -5,8 +5,8 @@
  */
 package com.dynamia.cms.admin.products.actions;
 
+import com.dynamia.cms.admin.products.services.ProductsSyncService;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import com.dynamia.cms.site.products.services.ProductsSyncService;
 import com.dynamia.tools.commons.ApplicableClass;
 import com.dynamia.tools.web.actions.InstallAction;
 import com.dynamia.tools.web.crud.AbstractCrudAction;
@@ -15,7 +15,6 @@ import com.dynamia.tools.web.crud.CrudState;
 import com.dynamia.tools.web.ui.MessageType;
 import com.dynamia.tools.web.ui.UIMessages;
 import com.dynamia.tools.web.util.Callback;
-import com.dynamia.tools.web.util.ZKUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

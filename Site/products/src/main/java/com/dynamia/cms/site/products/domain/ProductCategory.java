@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.BatchSize;
 
 /**
  *
@@ -26,6 +27,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "prd_categories")
+@BatchSize(size = 50)
 public class ProductCategory extends SimpleEntity {
 
     @OneToOne

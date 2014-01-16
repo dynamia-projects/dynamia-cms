@@ -10,8 +10,9 @@ import com.dynamia.cms.site.pages.domain.Page;
 import com.dynamia.cms.site.pages.api.PageTypeExtension;
 import com.dynamia.cms.site.products.ProductsUtil;
 import com.dynamia.cms.site.products.services.ProductsService;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -34,8 +35,15 @@ public class ProductsGridPageType implements PageTypeExtension {
     }
 
     @Override
-    public void setupPage(Page page, ModelAndView model) {
-        ProductsUtil.configureProductsVariable(service.getFeaturedProducts(page.getSite()), model);
+    public String getDescriptorId() {
+        return "ProductGridConfig";
+    }
+
+    @Override
+    public Map<String, Object> setupPage(Page page) {
+        Map<String, Object> map = new HashMap<>();
+        ProductsUtil.configureProductsVariable(service.getFeaturedProducts(page.getSite()), map);
+        return map;
     }
 
 }

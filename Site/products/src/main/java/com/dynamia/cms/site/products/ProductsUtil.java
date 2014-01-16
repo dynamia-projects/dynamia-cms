@@ -10,6 +10,7 @@ import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.tools.integration.Containers;
 import java.util.List;
+import java.util.Map;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -24,10 +25,17 @@ public class ProductsUtil {
         mv.addObject("prd_categories", service.getCategories(site));
         mv.addObject("prd_brands", service.getBrands(site));
         mv.addObject("prd_config", service.getSiteConfig(site));
+        if (mv.getModel().get("prd_searchForm") == null) {
+            mv.addObject("prd_searchForm", new ProductSearchForm());
+        }
     }
 
     public static void configureProductsVariable(List<Product> products, ModelAndView mv) {
         mv.addObject("prd_products", products);
+    }
+
+    public static void configureProductsVariable(List<Product> products, Map<String, Object> map) {
+        map.put("prd_products", products);
     }
 
 }

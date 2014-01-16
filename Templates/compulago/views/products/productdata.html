@@ -4,15 +4,18 @@
 
     <!-- Just a fragment -->
     <head><title>Product Fragment</title></head>
-    <body data-th-fragment="content">
+    <body th:fragment="content">
 
-        <div class="thumbnail tooltip-test" data-th-title="${prd.name}">
+        <div class="thumbnail tooltip-test" th:title="${prd.name.toUpperCase()}">
             <div class="relativediv">
                 <!-- Product Image -->
-                <div style="height:200px" >
-                    <img th:src="@{'/resources/products/images/'+${prd.image}}" src="img/product1a.jpg" alt="" />
+                <div style="height:200px">
+                    <a  th:href="@{'/store/product/'+${prd.id}}" href="#" style="vertical-align: middle">                
+                        <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=200,h=200)}" src="img/product1a.jpg" alt="" />
+                    </a>  
                 </div>
-                <!--<span class="sale tooltip-test" data-original-title="" title=""> <i class="icon-gift font24"></i> Sale</span>-->
+                <span th:if="${prd.sale}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-gift font24"></i>Oferta</span>
+                <span th:if="${prd.featured}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-star-empty font24"></i>Destacado</span>
 
                 <div class="viewicons">
                     <button  data-original-title="Cart" class="btn btn-inverse tooltip-test"> <i class="icon-shopping-cart icon-white"></i> </button>
@@ -21,11 +24,11 @@
                 </div>
             </div>
             <div class="caption">
-                <div style="height: 45px;overflow: hidden" data-th-title="${prd.name}" class="tooltip-test">
-                    <h3><a  data-th-href="@{'/products/'+${prd.sku}}" th:text="${prd.name}" href="#">Product Name</a></h3>
+                <div style="height: 45px;overflow: hidden" class="tooltip-test">
+                    <h3><a  th:href="@{'/store/'+${prd.sku}}" th:text="${prd.name}" href="#">Product Name</a></h3>
                 </div>
                 <div class="productratecart">
-                    <div class="pull-left"><span th:text="${prd.price}"  class="newprice">$4459.00</span><br/>
+                    <div class="pull-left"><span th:text="${cmsUtil.formatNumber(prd.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"  class="newprice">$4459.00</span><br/>
                         <div class="ratingstar pull-left"> <i class="icon-star orange"> </i><i class="icon-star orange"> </i><i class="icon-star orange"> </i> <i class="icon-star-empty"></i> <i class="icon-star-empty"></i></div>
                     </div>
                     <div class=" pull-right">

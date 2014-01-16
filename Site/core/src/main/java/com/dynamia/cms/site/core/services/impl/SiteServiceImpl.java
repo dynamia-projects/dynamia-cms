@@ -13,9 +13,9 @@ import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.integration.Containers;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,6 +29,7 @@ public class SiteServiceImpl implements SiteService {
     private CrudService crudService;
 
     @Override
+    @Cacheable(value = "sites", key = "#root.methodName")
     public Site getMainSite() {
         return crudService.findSingle(Site.class, "key", "main");
     }
@@ -39,18 +40,22 @@ public class SiteServiceImpl implements SiteService {
      * @return
      */
     @Override
+    @Cacheable("sites")
     public Site getSite(String key) {
         return crudService.findSingle(Site.class, "key", key);
     }
 
     @Override
+    @Cacheable("sites")
     public Site getSiteByDomain(String domainName) {
+        System.out.println("FINDING SITE FOR DOMAIN: " + domainName);
         SiteDomain domain = crudService.findSingle(SiteDomain.class, "name", domainName);
 
         return domain != null ? domain.getSite() : null;
     }
 
     @Override
+    @Cacheable(value = "sites", key = "#request.serverName")
     public Site getSite(HttpServletRequest request) {
         return getSiteByDomain(request.getServerName());
     }
@@ -65,13 +70,6 @@ public class SiteServiceImpl implements SiteService {
     @Override
     public List<ModuleInstance> getEnabledModulesInstances() {
         return crudService.find(ModuleInstance.class, "enabled", true);
-    }
-
-    @PostConstruct
-    private void initMainSite() {
-        if (getMainSite() == null) {
-
-        }
     }
 
 }

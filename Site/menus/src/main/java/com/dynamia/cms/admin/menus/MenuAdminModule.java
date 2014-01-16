@@ -3,38 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dynamia.cms.site.pages;
+package com.dynamia.cms.admin.menus;
 
-import com.dynamia.cms.site.core.domain.ContentAuthor;
 import com.dynamia.cms.site.core.api.AdminModule;
 import com.dynamia.cms.site.core.api.AdminModuleOption;
 import com.dynamia.cms.site.core.api.CMSModule;
-import com.dynamia.cms.site.pages.domain.Page;
-import com.dynamia.cms.site.pages.domain.PageCategory;
+import com.dynamia.cms.site.menus.domain.Menu;
 
 /**
  *
  * @author mario
  */
 @CMSModule
-public class ContentAdminModule implements AdminModule {
+public class MenuAdminModule implements AdminModule {
 
     @Override
     public String getGroup() {
-        return "Content";
+        return "Menu";
     }
 
     @Override
     public String getName() {
-        return "Pages and Content";
+        return "Menu";
     }
 
     @Override
     public AdminModuleOption[] getOptions() {
         return new AdminModuleOption[]{
-            new AdminModuleOption("authors", "Authors", ContentAuthor.class),
-            new AdminModuleOption("categories", "Categories", PageCategory.class),
-            new AdminModuleOption("pages", "Pages", Page.class)
+            new AdminModuleOption("menus", "Menus", Menu.class)
         };
     }
 

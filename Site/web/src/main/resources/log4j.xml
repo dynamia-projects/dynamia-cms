@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+   
+    <appender name="applicationFileLog" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="logs/cms.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{dd-MMM-yyyy HH:mm} [%-5p] %m %n"/>
+        </layout>
+    </appender>
+    
+    <appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{dd MMM yyyy HH:mm:ss} %5p %c{1} - %m%n"/>
+        </layout>
+    </appender>
+
+   
+
+    <logger name="com.dynamia.cms" additivity="false">
+        <level value="debug" />
+        <appender-ref ref="applicationFileLog" />
+        <appender-ref ref="consoleAppender" />
+    </logger>
+    
+
+ 
+    <root>
+        <priority value ="info" />
+        <appender-ref ref="consoleAppender" />
+    </root>
+
+</log4j:configuration>

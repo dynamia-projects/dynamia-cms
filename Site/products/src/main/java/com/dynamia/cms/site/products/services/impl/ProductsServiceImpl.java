@@ -16,8 +16,9 @@ import com.dynamia.tools.domain.query.QueryConditions;
 import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import java.util.List;
-import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,6 +32,7 @@ public class ProductsServiceImpl implements ProductsService {
     private CrudService crudService;
 
     @Override
+    @Cacheable(value = "products", key = "'cat'+#site.key")
     public List<ProductCategory> getCategories(Site site) {
         QueryParameters qp = QueryParameters.with("site", site);
         qp.add("parent", QueryConditions.isNull());
@@ -41,6 +43,7 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
+    @Cacheable(value = "products", key = "#category.id")
     public List<ProductCategory> getSubcategories(ProductCategory category) {
         QueryParameters qp = QueryParameters.with("site", category.getSite());
         qp.add("parent", category);
@@ -74,13 +77,11 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    public List<Product> filterProducts(Site site, Product example, Map<String, Object> params) {
-        QueryParameters qp = QueryParameters.with("active", true);
-        qp.add("site", site);
-        qp.orderBy("featured, name", true);
-        qp.paginate(new DataPaginator());
+    public List<Product> filterProducts(Site site, QueryParameters params) {
+        params.add("site", site);
+        params.orderBy("featured, name", true);
 
-        return crudService.find(Product.class, qp);
+        return crudService.find(Product.class, params);
     }
 
     @Override
@@ -108,6 +109,7 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
+    @Cacheable(value = "products", key = "#site.key")
     public List<ProductBrand> getBrands(Site site) {
         QueryParameters qp = QueryParameters.with("site", site);
 
@@ -119,6 +121,16 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public ProductsSiteConfig getSiteConfig(Site site) {
         return crudService.findSingle(ProductsSiteConfig.class, "site", site);
+    }
+
+    @Override
+    public List<Product> find(Site site, String query) {
+
+        QueryParameters qp = new QueryParameters();
+        qp.paginate(new DataPaginator());
+        qp.add("name", query);
+        qp.orderBy("featured,sale,name", true);
+        return crudService.find(Product.class, qp);
     }
 
 }

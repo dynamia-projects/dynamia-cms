@@ -8,13 +8,11 @@ package com.dynamia.cms.site.products.domain;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.tools.domain.SimpleEntity;
 import java.util.Date;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -29,6 +27,9 @@ public class ProductsSiteConfig extends SimpleEntity {
     @NotNull
     @JoinColumn(unique = true)
     private Site site;
+
+    private String pricePattern;
+    private String defaultCurrency;
 
     private String datasourceURL;
     private String datasourceUsername;
@@ -45,6 +46,14 @@ public class ProductsSiteConfig extends SimpleEntity {
 
     public void setSite(Site site) {
         this.site = site;
+    }
+
+    public String getDefaultCurrency() {
+        return defaultCurrency;
+    }
+
+    public void setDefaultCurrency(String defaultCurrency) {
+        this.defaultCurrency = defaultCurrency;
     }
 
     public Date getLastSync() {
@@ -93,6 +102,14 @@ public class ProductsSiteConfig extends SimpleEntity {
 
     public void setDatasourceBrandImagesURL(String datasourceBrandImagesURL) {
         this.datasourceBrandImagesURL = datasourceBrandImagesURL;
+    }
+
+    public String getPricePattern() {
+        return pricePattern;
+    }
+
+    public void setPricePattern(String pricePattern) {
+        this.pricePattern = pricePattern;
     }
 
 }

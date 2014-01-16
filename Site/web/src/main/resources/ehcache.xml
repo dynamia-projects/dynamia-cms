@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<ehcache>
+    <diskStore path="java.io.tmpdir"/>
+    
+    <defaultCache        
+        eternal="false"
+        timeToIdleSeconds="120"
+        timeToLiveSeconds="120" />
+    
+ 
+  
+    
+    <cache name="sites"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+           overflowToDisk="true"
+           maxElementsOnDisk="10000000"
+           diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120"
+           memoryStoreEvictionPolicy="LRU"/>
+    
+      <cache name="menus"
+           maxElementsInMemory="100"
+           eternal="false"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+           overflowToDisk="true"
+           maxElementsOnDisk="10000000"
+           diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120"
+           memoryStoreEvictionPolicy="LRU"/>
+    
+    <cache name="pages"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+           overflowToDisk="true"
+           maxElementsOnDisk="10000000"
+           diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120"
+           memoryStoreEvictionPolicy="LRU"/>
+      
+    <cache name="products"
+           maxElementsInMemory="2000"
+           eternal="false"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
+           overflowToDisk="true"
+           maxElementsOnDisk="10000000"
+           diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120"
+           memoryStoreEvictionPolicy="LRU"/>
+
+</ehcache>

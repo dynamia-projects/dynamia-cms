@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dynamia.cms.site.products.services;
+package com.dynamia.cms.admin.products.services;
 
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;

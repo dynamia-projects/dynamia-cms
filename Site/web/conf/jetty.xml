@@ -39,7 +39,7 @@
     <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
         <Arg></Arg>
         <Arg>hibernateShowSQL</Arg>
-        <Arg type="java.lang.Boolean">false</Arg>
+        <Arg type="java.lang.Boolean">true</Arg>
         <Arg type="boolean">true</Arg>
     </New>
 

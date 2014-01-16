@@ -7,7 +7,8 @@ package com.dynamia.cms.site.pages.api;
 
 import com.dynamia.cms.site.core.api.CMSExtension;
 import com.dynamia.cms.site.pages.domain.Page;
-import org.springframework.web.servlet.ModelAndView;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  *
@@ -27,8 +28,13 @@ public class DefaultPageType implements PageTypeExtension {
     }
 
     @Override
-    public void setupPage(Page page, ModelAndView model) {
+    public String getDescriptorId() {
+        return null;
+    }
 
+    @Override
+    public Map<String, Object> setupPage(Page page) {
+        return Collections.EMPTY_MAP;
     }
 
 }

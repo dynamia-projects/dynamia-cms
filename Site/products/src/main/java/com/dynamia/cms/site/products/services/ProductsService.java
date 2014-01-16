@@ -10,8 +10,8 @@ import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import com.dynamia.tools.domain.query.QueryParameters;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -27,7 +27,7 @@ public interface ProductsService {
 
     public List<Product> getProducts(ProductBrand brand);
 
-    public List<Product> filterProducts(Site site, Product example, Map<String, Object> params);
+    public List<Product> filterProducts(Site site, QueryParameters params);
 
     public List<Product> getFeaturedProducts(Site site);
 
@@ -36,5 +36,7 @@ public interface ProductsService {
     public List<ProductBrand> getBrands(Site site);
 
     public ProductsSiteConfig getSiteConfig(Site site);
+
+    List<Product> find(Site site, String query);
 
 }

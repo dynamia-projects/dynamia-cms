@@ -79,7 +79,7 @@
                     <!--Disable auto scen -->
                     <scanIntervalSeconds>0</scanIntervalSeconds>
                     <webAppConfig>
-                        <contextPath>/cms</contextPath>
+                        <contextPath>/</contextPath>
                     </webAppConfig>
 
                     <stopPort>9808</stopPort>

@@ -6,7 +6,7 @@ package com.dynamia.cms.site.pages.controllers;
 
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.cms.site.pages.PageControllerListener;
+import com.dynamia.cms.site.pages.SearchForm;
 import com.dynamia.cms.site.pages.domain.Page;
 import com.dynamia.cms.site.pages.api.PageTypeExtension;
 import com.dynamia.cms.site.pages.services.PageService;
@@ -15,6 +15,7 @@ import com.dynamia.tools.commons.logger.SLF4JLoggingService;
 import com.dynamia.tools.integration.Containers;
 import com.dynamia.tools.integration.ObjectMatcher;
 import java.util.Collection;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,13 +59,13 @@ public class PageController {
         ModelAndView mv = new ModelAndView("site/page");
 
         Site site = loadSite(domainName, mv);
-        Page page = loadPage(site, pageAlias, mv);
-        firePageControllerListeners(page, mv);
+        loadPage(site, pageAlias, mv);
+
         return mv;
     }
 
     private Site loadSite(String domainName, ModelAndView mv) {
-        Site site = coreService.getSiteByDomain(domainName);
+        Site site = coreService.getSite(domainName);
         if (site == null) {
             logger.info("Site for domain [" + domainName + "] not found. Using main site");
             site = coreService.getMainSite();
@@ -100,21 +101,13 @@ public class PageController {
                 String type = page.getType();
                 PageTypeExtension pageTypeExt = getExtension(type);
                 if (pageTypeExt != null) {
-                    pageTypeExt.setupPage(page, mv);
+                    Map<String, Object> params = pageTypeExt.setupPage(page);
+                    mv.addAllObjects(params);
                     mv.setViewName(pageTypeExt.getViewName());
                 }
             }
         }
         return page;
-    }
-
-    private void firePageControllerListeners(Page page, ModelAndView mv) {
-        if (mv != null) {
-            Collection<PageControllerListener> listeners = Containers.get().findObjects(PageControllerListener.class);
-            for (PageControllerListener listener : listeners) {
-                listener.onPageLoaded(page, mv);
-            }
-        }
     }
 
     private PageTypeExtension getExtension(final String type) {

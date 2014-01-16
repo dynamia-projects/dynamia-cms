@@ -1,7 +1,7 @@
 view: form
 beanClass: com.dynamia.cms.site.products.domain.ProductsSiteConfig
 hidden: [id,lastSync]
-sortFields: [site,datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceUsername,datasourcePassword]
+sortFields: [site,pricePattern,defaultCurrency, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceUsername,datasourcePassword]
 
 fields:
     
@@ -29,7 +29,7 @@ groups:
     
     general:
         label: Basic Settings
-        fields: [site]
+        fields: [site,pricePattern,defaultCurrency]
             
     
     datasource:

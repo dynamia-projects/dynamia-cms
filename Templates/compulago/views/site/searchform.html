@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+    <div th:fragment="content">
+
+        <form action="#" class="form-inline" th:action="@{/search}" th:object="${searchForm}" method="get">
+            <input type="search" placeholder="Busqueda" class="form-control" th:field="*{query}"/>
+            <button type="submit" data-original-title="Buscar" class="btn btn-orange btn-small tooltip-test"> <i class="icon-search icon-white"></i> </button>
+        </form>
+    </div>
+
+
+</html>

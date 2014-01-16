@@ -32,6 +32,7 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         Site site = service.getSite(request);
+      
         try {
             for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
                 interceptor.beforeRequest(site, request, response);
@@ -47,6 +48,7 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         Site site = service.getSite(request);
+
         try {
             for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
                 interceptor.afterRequest(site, request, response, modelAndView);

@@ -3,27 +3,32 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> 
     <head>
-        <title data-th-text="${name}">Simplepx - Responisve Multipurpose Bootstrap Template</title>
+        <title th:text="|${site.name} - ${title}|">Simplepx - Responisve Multipurpose Bootstrap Template</title>
 
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="description" content="Responisve, Bootstrap, Html5, Css3, Multipuropose, Blog, Portfolio, Ecommerce - All in One Template"/>
         <!-- CSS -->
-        <link data-th-href="@{/css/bootstrap.min.css}" href="css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+        <link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.min.css" rel="stylesheet" media="screen"/>
         <!-- Google Webfont -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'/>
         <!-- Main Css -->
-        <link data-th-href="@{/css/color2.css}" href="css/color2.css" rel="stylesheet" media="screen" id="color"/>
+        <link th:href="@{/css/color2.css}" href="css/color2.css" rel="stylesheet" media="screen" id="color"/>
 
         <!-- Font Icon -->
-        <link data-th-href="@{/css/font-awesome.min.css}" href="css/font-awesome.min.css" rel="stylesheet" media="screen"/>
+        <link th:href="@{/css/font-awesome.min.css}" href="css/font-awesome.min.css" rel="stylesheet" media="screen"/>
         <!-- Pop Up -->
-        <link data-th-href="@{/css/prettyPhoto.css}" href="css/prettyPhoto.css" rel="stylesheet" media="screen"/>
+        <link th:href="@{/css/prettyPhoto.css}" href="css/prettyPhoto.css" rel="stylesheet" media="screen"/>
         <!-- Animation -->
-        <link data-th-href="@{/css/animate.css}" href="css/animate.css" rel="stylesheet"/>
+        <link th:href="@{/css/animate.css}" href="css/animate.css" rel="stylesheet"/>
+
+        <!-- Template -->
+        <link th:href="@{/css/template.css}" href="css/template.css" rel="stylesheet"/>
+
+
         <!-- REVOLUTION BANNER CSS SETTINGS -->
-        <link data-th-href="@{/plugins/rs-plugin/css/responsive.css}" rel="stylesheet" type="text/css" href="plugins/rs-plugin/css/responsive.css" media="screen" />
-        <link data-th-href="@{/plugins/rs-plugin/css/settings.css}" rel="stylesheet" type="text/css" href="plugins/rs-plugin/css/settings.css" media="screen" />
+        <link th:href="@{/plugins/rs-plugin/css/responsive.css}" rel="stylesheet" type="text/css" href="plugins/rs-plugin/css/responsive.css" media="screen" />
+        <link th:href="@{/plugins/rs-plugin/css/settings.css}" rel="stylesheet" type="text/css" href="plugins/rs-plugin/css/settings.css" media="screen" />
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -34,10 +39,32 @@
     <body>
         <!-- Header Start -->
         <header>
+            <div class="headerstrip">
+                <div class="container">
+                    <div class="pull-left welcometxt"><a class="orange" href="#">Inicia Sesion</a> o <a class="orange" href="#">Crea una cuenta</a> </div>
+                    <!-- Top Nav Start -->
+                    <div class="pull-right">
+                        <div class="navbar" id="topnav">
+                            <div class="navbar-inner">
+                                <ul class="nav" >
+                                    <li><a class="home active" ><i class="icon-home"></i> Home </a> </li>
+                                    <li><a class="myaccount" ><i class="icon-user"></i> Mi Cuenta </a> </li>
+                                    <li><a class="shoppingcart" ><i class="icon-shopping-cart"></i> Carrito de Compras </a> </li>
+                                    <li><a class="checkout" ><i class="icon-ok-circle"></i> Pagar </a> </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Top Nav End -->
+
+
+                </div>
+            </div>
+
             <div class="headerdetails">
                 <div class="container"> 
-                    <a class="logo pull-left" href="#" data-th-href='@{/}'>
-                        <img data-th-title="${name}" data-th-alt="${name}" data-th-src="@{/img/logo.gif}" title="Simplepx" alt="Simplepx" src="img/logo.gif"/>
+                    <a class="logo pull-left" href="#" th:href='@{/}'>
+                        <img th:title="${name}" th:alt="${name}" th:src="@{/img/logo.gif}" title="Simplepx" alt="Simplepx" src="img/logo.gif"/>
                     </a> 
                     <!--Social -->
                     <div class="socialtop pull-right">
@@ -50,23 +77,19 @@
                         </ul>
                     </div>
                     <!--Top Search -->
-                    <div class="pull-right topsearch">
-                        <form class="form-inline">
-                            <input type="search" placeholder="Busqueda" class="form-control"/>
-                            <button data-original-title="Buscar" class="btn btn-orange btn-small tooltip-test"> <i class="icon-search icon-white"></i> </button>
-                        </form>
-                    </div>
+                    <div class="pull-right topsearch" th:include="site/searchform::content"/>
+
                 </div>
             </div>
-            <div id="mainmenu"  class="mb40"> 
+            <div id="mainmenu"  class="mb10"> 
                 <!-- Navigation -->
                 <nav class="subnav">
                     <div class="container menurelative">
                         <ul class="nav-pills mainmenucontain container">
 
-                            <li data-th-each="mi : ${menuitems}">
-                                <a  data-th-class="${activeMenu == mi? 'active':''}" data-th-href="@{${mi.href}}" href="#">
-                                    <i data-th-class="${'icon-'+mi.icon+' icon-white font18'}"  data-th-text="${mi.name}" class="icon-home icon-white font18">Menu Item</i>                                
+                            <li th:each="mi : ${menuitems}">
+                                <a  th:class="${activeMenu == mi? 'active':''}" th:href="@{'/'+${mi.href}}" href="#">
+                                    <i th:class="${'icon-'+mi.icon+' icon-white font18'}"  th:text="${mi.name}" class="icon-home icon-white font18">Menu Item</i>                                
                                 </a>
                             </li>                        
 
@@ -117,8 +140,8 @@
                     <div class="container">
                         <div class="row">
                             <ul class="quicklinks">                               
-                                <li  data-th-each="mi : ${menuitems}">
-                                    <a data-th-text="${mi.name}" data-th-href="@{${mi.href}}" href="#">Menu Item</a>
+                                <li  th:each="mi : ${menuitems}">
+                                    <a th:text="${mi.name}" th:href="@{${mi.href}}" href="#">Menu Item</a>
                                 </li>                        
                             </ul>
                         </div>
@@ -140,48 +163,48 @@
 
         <!-- Placed at the end of the document so the pages load faster -->
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-        <script data-th-src="@{/js/jquery.js}" src="js/jquery.js"></script> 
-        <script data-th-src="@{/js/jquery-migrate-1.2.1.js}" src="js/jquery-migrate-1.2.1.js"></script> 
-        <script data-th-src="@{/js/jquery.easing.js}" src="js/jquery.easing.js"></script>
+        <script th:src="@{/js/jquery.js}" src="js/jquery.js"></script> 
+        <script th:src="@{/js/jquery-migrate-1.2.1.js}" src="js/jquery-migrate-1.2.1.js"></script> 
+        <script th:src="@{/js/jquery.easing.js}" src="js/jquery.easing.js"></script>
 
         <!-- Include all compiled plugins (below), or include individual files as needed --> 
-        <script data-th-src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script> 
+        <script th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script> 
         <!-- jQuery Animation --> 
-        <script data-th-src="@{/js/inview.js}" src="js/inview.js"></script> 
+        <script th:src="@{/js/inview.js}" src="js/inview.js"></script> 
         <!-- include jQuery + carouFredSel plugin --> 
-        <script data-th-src="@{/js/jquery.carouFredSel-6.2.1-packed.js}" type="text/javascript" src="js/jquery.carouFredSel-6.2.1-packed.js"></script> 
+        <script th:src="@{/js/jquery.carouFredSel-6.2.1-packed.js}" type="text/javascript" src="js/jquery.carouFredSel-6.2.1-packed.js"></script> 
         <!-- optionally include helper plugins  for carouFredSel--> 
-        <script data-th-src="@{/js/jquery.mousewheel.min.js}" type="text/javascript" src="js/jquery.mousewheel.min.js"></script> 
-        <script data-th-src="@{/js/jquery.touchSwipe.min.js}" type="text/javascript" src="js/jquery.touchSwipe.min.js"></script> 
-        <script data-th-src="@{/js/jquery.transit.min.js}" type="text/javascript" src="js/jquery.transit.min.js"></script> 
+        <script th:src="@{/js/jquery.mousewheel.min.js}" type="text/javascript" src="js/jquery.mousewheel.min.js"></script> 
+        <script th:src="@{/js/jquery.touchSwipe.min.js}" type="text/javascript" src="js/jquery.touchSwipe.min.js"></script> 
+        <script th:src="@{/js/jquery.transit.min.js}" type="text/javascript" src="js/jquery.transit.min.js"></script> 
         <!-- Jquery Validation--> 
-        <script  data-th-src="@{/js/jquery.validate.js}" type="text/javascript" src="js/jquery.validate.js"></script> 
+        <script  th:src="@{/js/jquery.validate.js}" type="text/javascript" src="js/jquery.validate.js"></script> 
         <!-- Jquery Flexslider--> 
-        <script data-th-src="@{/js/jquery.flexslider.js}" defer="" src="js/jquery.flexslider.js"></script> 
+        <script th:src="@{/js/jquery.flexslider.js}" defer="" src="js/jquery.flexslider.js"></script> 
         <!-- Jquery Fancybox Popup--> 
-        <script data-th-src="@{/js/jquery.prettyPhoto.js}" src="js/jquery.prettyPhoto.js"></script> 
+        <script th:src="@{/js/jquery.prettyPhoto.js}" src="js/jquery.prettyPhoto.js"></script> 
         <!-- Jquery Latest Tweet--> 
-        <script data-th-src="@{/js/jquery.tweet.js}" type="text/javascript" src="js/jquery.tweet.js"></script> 
+        <script th:src="@{/js/jquery.tweet.js}" type="text/javascript" src="js/jquery.tweet.js"></script> 
         <!-- Jquery zoom on product page--> 
-        <script data-th-src="@{/js/zoomsl-3.0.min.js}" src="js/zoomsl-3.0.min.js"></script> 
+        <script th:src="@{/js/zoomsl-3.0.min.js}" src="js/zoomsl-3.0.min.js"></script> 
 
         <!-- Jquery Countdown--> 
-        <script data-th-src="@{/js/jquery.countdown.js}" type="text/javascript" src="js/jquery.countdown.js"></script> 
+        <script th:src="@{/js/jquery.countdown.js}" type="text/javascript" src="js/jquery.countdown.js"></script> 
         <!-- Social --> 
-        <script data-th-src="@{/js/socialstream.jquery.js}" type="text/javascript" src="js/socialstream.jquery.js"></script> 
+        <script th:src="@{/js/socialstream.jquery.js}" type="text/javascript" src="js/socialstream.jquery.js"></script> 
         <!-- Jquery Map  
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script> 
       
-        <script data-th-src="@{/js/jquery.gmap.js}" type="text/javascript" src="js/jquery.gmap.js"></script> 
+        <script th:src="@{/js/jquery.gmap.js}" type="text/javascript" src="js/jquery.gmap.js"></script> 
         -->
         <!-- Jquery CountDown --> 
         <!-- Revolution Slider --> 
-        <script data-th-src="@{/plugins/rs-plugin/js/jquery.themepunch.revolution.min.js}" type="text/javascript" src="plugins/rs-plugin/js/jquery.themepunch.revolution.min.js"></script> 
+        <script th:src="@{/plugins/rs-plugin/js/jquery.themepunch.revolution.min.js}" type="text/javascript" src="plugins/rs-plugin/js/jquery.themepunch.revolution.min.js"></script> 
         <!-- Ratina View --> 
-        <script data-th-src="@{/js/retina-1.1.0.min.js}" type="text/javascript" src="js/retina-1.1.0.min.js"></script> 
+        <script th:src="@{/js/retina-1.1.0.min.js}" type="text/javascript" src="js/retina-1.1.0.min.js"></script> 
 
         <!-- Custom --> 
-        <script data-th-src="@{/js/custom.js}" src="js/custom.js"></script> 
+        <script th:src="@{/js/custom.js}" src="js/custom.js"></script> 
 
     </body>
 </html>
