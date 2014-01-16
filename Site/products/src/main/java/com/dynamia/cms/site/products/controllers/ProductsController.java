@@ -65,11 +65,23 @@ public class ProductsController {
     public ModelAndView search(ProductSearchForm form, HttpServletRequest request) {
         Site site = siteService.getSite(request);
         QueryParameters qp = new QueryParameters();
-
-        qp.add("name", form.getName());
         qp.add("active", true);
-        qp.add("price", between(form.getMinPrice(), form.getMaxPrice()));
 
+        if (form.getName() != null && !form.getName().trim().isEmpty()) {
+            qp.add("name", form.getName());
+        }
+
+        if (form.getMaxPrice() != null && form.getMinPrice() == null) {
+            qp.add("price", leqt(form.getMaxPrice()));
+        }
+
+        if (form.getMaxPrice() == null && form.getMinPrice() != null) {
+            qp.add("price", geqt(form.getMinPrice()));
+        }
+
+        if (form.getMaxPrice() != null && form.getMinPrice() != null) {
+            qp.add("price", between(form.getMinPrice(), form.getMaxPrice()));
+        }
         if (form.getCategoryId() != null) {
             qp.add("category.parent.id", form.getCategoryId());
         }
@@ -81,16 +93,22 @@ public class ProductsController {
         if (form.isStock()) {
             qp.add("stock", gt(0));
         }
-
-        List<Product> products = service.filterProducts(site, qp);
+        List<Product> products = null;
+        if (qp.size() > 1) {
+            products = service.filterProducts(site, qp);
+        }
 
         ModelAndView mv = new ModelAndView("products/productquery");
-        ProductsUtil.configureProductsVariable(products, mv);
-        if (!products.isEmpty()) {
+        if (products == null) {
+            products = service.getFeaturedProducts(site);
+            mv.addObject("title", "Ingrese los campos de busqueda");
+
+        } else if (!products.isEmpty()) {
             mv.addObject("title", products.size() + " productos encontrados para busqueda avanzada");
         } else {
             mv.addObject("title", " No se encontraron productos para la busqueda avanzada");
         }
+        ProductsUtil.configureProductsVariable(products, mv);
         mv.addObject("prd_searchForm", form);
         return mv;
 

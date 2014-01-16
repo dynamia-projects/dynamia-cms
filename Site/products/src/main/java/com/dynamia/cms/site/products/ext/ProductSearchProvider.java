@@ -31,14 +31,20 @@ public class ProductSearchProvider implements SearchProvider {
         SearchResult rs = new SearchResult("products/productquery", false);
 
         System.out.println("SEARCHING PRODUCTS: " + form.getQuery());
-        List<Product> products = service.find(site, form.getQuery());
-        ProductsUtil.configureProductsVariable(products, rs.getEntries());
-        if (!products.isEmpty()) {
+        List<Product> products = null;
+        if (form.getQuery() != null && !form.getQuery().isEmpty()) {
+            products = service.find(site, form.getQuery());
+        }
+
+        if (products == null) {
+            rs.addEntry("title", "Ingrese nombre del producto a buscar");
+            products = service.getFeaturedProducts(site);
+        } else if (!products.isEmpty()) {
             rs.addEntry("title", products.size() + " productos encontrados para busqueda '" + form.getQuery() + "'");
         } else {
             rs.addEntry("title", " No se encontraron productos para la busqueda '" + form.getQuery() + "'");
-
         }
+        ProductsUtil.configureProductsVariable(products, rs.getEntries());
         return rs;
     }
 

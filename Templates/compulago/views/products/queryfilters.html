@@ -8,7 +8,7 @@
         <h2 class="heading1"><span class="maintext">Busqueda Avanzada</span></h2>
         <form class="form-horizontal" th:action="@{/store/search}" th:object="${prd_searchForm}" th:method="get">
             <fieldset>
-              
+
                 <!-- Text input-->
                 <div class="control-group">
                     <label class="control-label" for="nombre">Nombre</label>
@@ -41,7 +41,7 @@
                     <label class="control-label" for="category">Categoria</label>
                     <div class="controls">
                         <select th:field="*{categoryId}"  name="category" class="form-control">
-                            <option th:value="${null}">-seleccione categoria-</option>
+                            <option th:value="${null}">Todas las Categorias</option>
                             <option th:each="cat : ${prd_categories}" th:text="${cat.name}" th:value="${cat.id}">Option one</option>
 
                         </select>
@@ -53,31 +53,31 @@
                     <label class="control-label" for="brand">Fabricante</label>
                     <div class="controls">
                         <select th:field="*{brandId}"  name="brand" class="form-control" >
-                            <option  th:value="${null}">-seleccione fabricante-</option>
+                            <option  th:value="${null}">Todos los Fabricantes</option>
                             <option th:each="brd : ${prd_brands}" th:text="${brd.name}" th:value="${brd.id}">Option one</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- Multiple Checkboxes (inline) -->
+                <!-- Multiple Checkboxes (inline)
                 <div class="control-group">
 
                     <div class="controls">
-                        <label th:field="*{stock}" class="checkbox inline" for="checkboxes-0">
-                            <input type="checkbox" name="checkboxes" id="checkboxes-0" value="En Inventario"/>
-                            En Inventario
-                        </label>
+
+                        <input th:field="*{stock}" type="checkbox" value="En Inventario"/>
+                        En Inventario
+
                     </div>
                 </div>
-
+                -->
                 <!-- Button -->
                 <div class="control-group">
 
-                    <div class="controls">
-                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    <div class="controls input-group-lg">
+                        <button type="submit"  class="btn btn-orange btn-big" > Buscar <i class="icon-search icon-white"></i> </button>
+
                     </div>
                 </div>
-
             </fieldset>
         </form>
 
