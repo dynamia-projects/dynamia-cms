@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+
+    <div layout:fragment="content">        
+        <div class="container"> 
+
+            <!-- Main Title-->
+            <div class="titles">
+                <div class="pull-left">
+                    <h1 class="headinglefttitle">Error 404!</h1>
+                    <div class="headingsubtitle"> 
+                    </div>
+                </div>
+                <i class="icon-warning-sign"></i> 
+            </div>
+
+            <div class="container"> <br/>
+                <h2 class="error404"><span>Pagina no encontrada!</span></h2>
+
+                <br/>
+                <div class="container centeralign">
+                    <h2 class="font18">La pagina <b><span th:text="${pageAlias}">XXX</span></b> que esta buscando no se encuentra en este sitio. <br/> Por favor utilice el menu superior.</h2>
+
+                </div>
+
+                <div class="mt20">
+                    <a  th:href="@{/}" class="btn btn-danger"><i class="icon-home"></i> Volver a la pagina principal</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</html>

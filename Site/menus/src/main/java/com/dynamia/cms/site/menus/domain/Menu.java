@@ -10,8 +10,10 @@ import com.dynamia.tools.domain.contraints.NotEmpty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
@@ -33,7 +35,7 @@ public class Menu extends SimpleEntity implements Serializable {
     @OneToOne
     @NotNull
     private Site site;
-    @OneToMany(mappedBy = "menu")
+    @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @OrderBy("order")
     private List<MenuItem> items = new ArrayList<>();
 

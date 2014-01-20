@@ -7,15 +7,18 @@ package com.dynamia.cms.site.pages;
 
 import com.dynamia.tools.domain.contraints.NotEmpty;
 import java.io.Serializable;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
  * @author mario
  */
-public class SearchForm implements Serializable{
+public class SearchForm implements Serializable {
 
     @NotEmpty
     private String query;
+
+    private HttpServletRequest request;
 
     public String getQuery() {
         return query;
@@ -23,6 +26,14 @@ public class SearchForm implements Serializable{
 
     public void setQuery(String query) {
         this.query = query;
+    }
+
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
     }
 
 }

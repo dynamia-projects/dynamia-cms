@@ -6,16 +6,26 @@
 package com.dynamia.cms.site.products.services.impl;
 
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.products.ProductSearchForm;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.tools.domain.query.BooleanOp;
 import com.dynamia.tools.domain.query.DataPaginator;
 import com.dynamia.tools.domain.query.QueryConditions;
+import static com.dynamia.tools.domain.query.QueryConditions.between;
+import static com.dynamia.tools.domain.query.QueryConditions.geqt;
+import static com.dynamia.tools.domain.query.QueryConditions.gt;
+import static com.dynamia.tools.domain.query.QueryConditions.leqt;
 import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
+import com.dynamia.tools.domain.util.QueryBuilder;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -30,6 +40,9 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Autowired
     private CrudService crudService;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     @Cacheable(value = "products", key = "'cat'+#site.key")
@@ -62,6 +75,7 @@ public class ProductsServiceImpl implements ProductsService {
             qp.add("category.parent", category);
         }
 
+        qp.paginate(new DataPaginator(12));
         qp.orderBy("featured, name", true);
 
         return crudService.find(Product.class, qp);
@@ -79,9 +93,55 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public List<Product> filterProducts(Site site, QueryParameters params) {
         params.add("site", site);
-        params.orderBy("featured, name", true);
-
+       
         return crudService.find(Product.class, params);
+    }
+
+    @Override
+    public List<Product> filterProducts(Site site, ProductSearchForm form) {
+
+        QueryParameters qp = new QueryParameters();
+        qp.add("active", true);
+
+        if (form.getName() != null && !form.getName().trim().isEmpty()) {
+            qp.add("name", form.getName());
+        }
+
+        if (form.getMaxPrice() != null && form.getMinPrice() == null) {
+            qp.add("price", leqt(form.getMaxPrice()));
+        }
+
+        if (form.getMaxPrice() == null && form.getMinPrice() != null) {
+            qp.add("price", geqt(form.getMinPrice()));
+        }
+
+        if (form.getMaxPrice() != null && form.getMinPrice() != null) {
+            qp.add("price", between(form.getMinPrice(), form.getMaxPrice()));
+        }
+        if (form.getCategoryId() != null) {
+            qp.add("category.parent.id", form.getCategoryId());
+        }
+
+        if (form.getBrandId() != null) {
+            qp.add("brand.id", form.getBrandId());
+        }
+
+        if (form.isStock()) {
+            qp.add("stock", gt(0));
+        }
+        
+        if(form.getOrder()!=null){
+            qp.orderBy(form.getOrder().getField(), form.getOrder().isAsc());
+        }else{
+            qp.orderBy("name", true);
+        }
+
+        if (qp.size() > 1) {
+            qp.paginate(new DataPaginator(12)); 
+            return filterProducts(site, qp);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -111,11 +171,15 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     @Cacheable(value = "products", key = "#site.key")
     public List<ProductBrand> getBrands(Site site) {
-        QueryParameters qp = QueryParameters.with("site", site);
+        String sql = QueryBuilder.select(ProductBrand.class, "pb")
+                .where("pb.site=:site")
+                .and("pb.id in (select p.brand.id from Product p where p.site = :site)")
+                .orderBy("pb.name").toString();
 
-        qp.orderBy("name", true);
+        Query query = entityManager.createQuery(sql);
+        query.setParameter("site", site);
 
-        return crudService.find(ProductBrand.class, qp);
+        return query.getResultList();
     }
 
     @Override
@@ -127,10 +191,24 @@ public class ProductsServiceImpl implements ProductsService {
     public List<Product> find(Site site, String query) {
 
         QueryParameters qp = new QueryParameters();
-        qp.paginate(new DataPaginator());
-        qp.add("name", query);
+        qp.paginate(new DataPaginator(12));
+        qp.add("name", QueryConditions.like(query, true, BooleanOp.OR));
+        qp.add("category.parent.name",QueryConditions.like(query, true, BooleanOp.OR));
+      
         qp.orderBy("featured,sale,name", true);
         return crudService.find(Product.class, qp);
+    }
+
+    @Override
+    public List<Product> getRelatedProducts(Product product) {
+        StringBuilder tags = new StringBuilder();
+        tags.append(product.getTags());
+
+        if (product.getBrand() != null) {
+            tags.append(",").append(product.getBrand().getName());
+        }
+        String query = tags.toString();
+        return find(product.getSite(), query);
     }
 
 }

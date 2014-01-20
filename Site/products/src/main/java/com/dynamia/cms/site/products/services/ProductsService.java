@@ -6,6 +6,7 @@
 package com.dynamia.cms.site.products.services;
 
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.products.ProductSearchForm;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
@@ -38,5 +39,9 @@ public interface ProductsService {
     public ProductsSiteConfig getSiteConfig(Site site);
 
     List<Product> find(Site site, String query);
+
+    public List<Product> filterProducts(Site site, ProductSearchForm form);
+
+    public List<Product> getRelatedProducts(Product product);
 
 }

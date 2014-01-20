@@ -15,6 +15,7 @@ import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.services.ProductsService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -32,19 +33,25 @@ public class ProductSearchProvider implements SearchProvider {
 
         System.out.println("SEARCHING PRODUCTS: " + form.getQuery());
         List<Product> products = null;
-        if (form.getQuery() != null && !form.getQuery().isEmpty()) {
-            products = service.find(site, form.getQuery());
+        if (form.getRequest().getParameter("page") == null) {
+            if (form.getQuery() != null && !form.getQuery().isEmpty()) {
+                products = service.find(site, form.getQuery());
+            }
         }
+        ModelAndView mv = new ModelAndView();
+        products = ProductsUtil.setupPagination(products, form.getRequest(), mv);
 
         if (products == null) {
             rs.addEntry("title", "Ingrese nombre del producto a buscar");
             products = service.getFeaturedProducts(site);
         } else if (!products.isEmpty()) {
-            rs.addEntry("title", products.size() + " productos encontrados para busqueda '" + form.getQuery() + "'");
+            rs.addEntry("title", "Productos encontrados ");
         } else {
             rs.addEntry("title", " No se encontraron productos para la busqueda '" + form.getQuery() + "'");
         }
-        ProductsUtil.configureProductsVariable(products, rs.getEntries());
+
+        ProductsUtil.setupProductsVar(products, rs.getEntries());
+        rs.getEntries().putAll(mv.getModel());
         return rs;
     }
 

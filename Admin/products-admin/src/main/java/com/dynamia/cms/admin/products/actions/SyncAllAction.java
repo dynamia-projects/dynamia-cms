@@ -5,8 +5,8 @@
  */
 package com.dynamia.cms.admin.products.actions;
 
-import com.dynamia.cms.admin.products.services.ProductsSyncService;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import com.dynamia.cms.site.products.services.ProductsSyncService;
 import com.dynamia.tools.commons.ApplicableClass;
 import com.dynamia.tools.web.actions.InstallAction;
 import com.dynamia.tools.web.crud.AbstractCrudAction;

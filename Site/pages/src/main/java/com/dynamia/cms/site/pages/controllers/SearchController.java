@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,11 +31,12 @@ public class SearchController {
     private SiteService siteService;
 
     @RequestMapping("/search")
-    public ModelAndView search(@Valid SearchForm form, final BindingResult bindingResult, final ModelMap model, final HttpServletRequest request) {
+    public ModelAndView search(@Valid SearchForm form, BindingResult bindingResult, final HttpServletRequest request) {
         Site site = siteService.getSite(request);
 
         ModelAndView mv = new ModelAndView("site/page");
         mv.addObject("searchForm", form);
+        form.setRequest(request);
         Collection<SearchProvider> providers = Containers.get().findObjects(SearchProvider.class);
         for (SearchProvider searchProvider : providers) {
             SearchResult result = searchProvider.search(site, form);

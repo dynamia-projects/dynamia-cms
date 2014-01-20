@@ -20,6 +20,7 @@ public class ProductSearchForm implements Serializable {
     private Long categoryId;
     private Long brandId;
     private boolean stock;
+    private ProductSearchOrder order = ProductSearchOrder.NAME;
 
     public String getName() {
         return name;
@@ -67,6 +68,14 @@ public class ProductSearchForm implements Serializable {
 
     public void setStock(boolean stock) {
         this.stock = stock;
+    }
+
+    public ProductSearchOrder getOrder() {
+        return order;
+    }
+
+    public void setOrder(ProductSearchOrder order) {
+        this.order = order;
     }
 
 }

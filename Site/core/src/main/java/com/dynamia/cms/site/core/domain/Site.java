@@ -36,7 +36,6 @@ public class Site extends SimpleEntity {
     private String metadataAuthor;
     private String metadataDescription;
     private String metadataRights;
-    private String resourcesLocation;
 
     public String getName() {
         return name;
@@ -52,14 +51,6 @@ public class Site extends SimpleEntity {
 
     public void setAcceptedDomains(List<SiteDomain> acceptedDomains) {
         this.acceptedDomains = acceptedDomains;
-    }
-
-    public String getResourcesLocation() {
-        return resourcesLocation;
-    }
-
-    public void setResourcesLocation(String resourcesLocation) {
-        this.resourcesLocation = resourcesLocation;
     }
 
     public String getKey() {

@@ -6,8 +6,8 @@ package com.dynamia.cms.site.templates;
 
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.tools.domain.query.ApplicationParameters;
 import com.dynamia.tools.integration.Containers;
+import java.nio.file.Path;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -21,24 +21,11 @@ public class TemplateResourceHandler extends ResourceHttpRequestHandler {
 
     @Override
     protected Resource getResource(HttpServletRequest request) {
-        SiteService coreService = Containers.get().findObject(SiteService.class);
-        Site site = coreService.getSite(request);
-        if(site==null){
-            site = coreService.getMainSite();
-        }
+        SiteService service = Containers.get().findObject(SiteService.class);
 
-        String currentTemplate = null;
-        if (site != null) {
-            currentTemplate = site.getTemplate();
-        } else {
-            currentTemplate = ApplicationParameters.get().getValue(TemplateJavaConfig.CURRENT_TEMPLATE, "dynamical");
-        }
+        Site site = service.getSite(request);
 
-        String dir = ApplicationParameters.get().getValue(TemplateJavaConfig.TEMPLATES_LOCATION, "");
-
-        String name = request.getPathInfo();
-        String fileName = dir + currentTemplate + name;
-
-        return new FileSystemResource(fileName);
+        Path templateResource = TemplateResources.find(site, request.getPathInfo());
+        return new FileSystemResource(templateResource.toFile());
     }
 }

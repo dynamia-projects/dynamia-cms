@@ -5,8 +5,8 @@
  */
 package com.dynamia.cms.site.templates;
 
-import java.io.File;
 import java.io.Serializable;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -57,14 +57,14 @@ public class Template implements Serializable {
         return directoryName;
     }
 
-    public static Template build(Properties prop, File directory) {
+    public static Template build(Properties prop, Path directory) {
         Template t = new Template();
         t.name = prop.getProperty("name");
         t.author = prop.getProperty("author");
         t.date = prop.getProperty("date");
         t.version = prop.getProperty("version");
         t.description = prop.getProperty("description");
-        t.directoryName = directory.getName();
+        t.directoryName = directory.getFileName().toString();
 
         String pos = prop.getProperty("positions");
         if (pos != null && !pos.isEmpty()) {
@@ -87,4 +87,3 @@ public class Template implements Serializable {
     }
 
 }
-

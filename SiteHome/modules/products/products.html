@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+
+    <div class="container" layout:fragment="content">
+
+
+
+        <div class="row mt10">
+
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt40column">
+                <h2 th:text="${title}">Title</h2>
+                <!--Top Pagination -->
+                <div th:include="products/components/productpagination" />
+
+                <!-- Subcategories -->
+                <div th:include="products/components/subcategorylist"/>
+
+
+                <!-- PRODUCTS -->
+
+                <div class="featureprojectcontianer mt10" id="productlist">
+                    <div class="featureprojectwrap latestprojectcontianer grid">
+                        <!-- Grid -->
+                        <div th:include="products/components/productgrid"/>
+
+                        <!-- Paging-->
+                        <div class="mt40 clearfix">
+                            <div th:include="products/components/productpagination" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt40column"> 
+                <!--categories-->        
+                <div th:include="products/components/categorylist"/>
+            </div>
+        </div>
+    </div>
+
+</html>

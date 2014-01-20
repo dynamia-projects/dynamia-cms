@@ -54,6 +54,7 @@ public class Product extends SimpleEntity {
     private boolean featured;
     private boolean sale;
     private String image;
+    private int rate;
 
     @Column(length = 5000)
     private String tags;
@@ -82,6 +83,14 @@ public class Product extends SimpleEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
     }
 
     public String getDescription() {

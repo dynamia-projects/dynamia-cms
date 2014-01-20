@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
+
+
+    <body th:fragment="content">
+
+
+        <ul class="mt40 clearfix ">
+            <!-- Product Grid 1, 2 and 3 Columns -->
+            <li class="col-lg-4 col-md-4 col-sm-6 col-xs-12" th:each="prd : ${prd_products}">
+                <div th:include="products/components/productpanel::content"/>
+            </li>
+        </ul>
+
+    </body>
+
+</html>

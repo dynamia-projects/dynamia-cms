@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+    <!--Categories-->    
+    <body th:fragment="content">         
+
+        <h2 class="heading1"><span class="maintext">Categorias</span></h2>
+        <ul class="nav nav-list categories">
+            <li th:each="cat : ${prd_categories}">
+                <a th:href="@{'/store/category/'+${cat.id}+'/'+${cat.alias}}" 
+                   th:text="${cat.name}" href="#">Categoria ABC</a> 
+            </li>
+
+        </ul>
+
+
+    </body>
+
+</html>

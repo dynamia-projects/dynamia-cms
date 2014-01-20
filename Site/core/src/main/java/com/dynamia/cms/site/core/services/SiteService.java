@@ -27,4 +27,5 @@ public interface SiteService {
     Site getSiteByDomain(String domainName);
 
     Site getSite(HttpServletRequest request);
+
 }

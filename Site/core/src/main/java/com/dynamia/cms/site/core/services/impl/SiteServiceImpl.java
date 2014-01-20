@@ -9,12 +9,15 @@ import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.domain.SiteDomain;
 import com.dynamia.cms.site.core.api.Module;
 import com.dynamia.cms.site.core.services.SiteService;
+import com.dynamia.tools.commons.logger.LoggingService;
+import com.dynamia.tools.commons.logger.SLF4JLoggingService;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.integration.Containers;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,8 @@ public class SiteServiceImpl implements SiteService {
 
     @Autowired
     private CrudService crudService;
+
+    private LoggingService logger = new SLF4JLoggingService(SiteService.class);
 
     @Override
     @Cacheable(value = "sites", key = "#root.methodName")
@@ -72,4 +77,8 @@ public class SiteServiceImpl implements SiteService {
         return crudService.find(ModuleInstance.class, "enabled", true);
     }
 
+    @CacheEvict(value = "products", allEntries = true)
+    public void refresh() {
+        logger.info("Refresing Products DATA");
+    }
 }

@@ -12,17 +12,17 @@ import com.dynamia.cms.site.products.ProductsUtil;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.services.ProductsService;
-import com.dynamia.tools.domain.query.BooleanOp;
-import static com.dynamia.tools.domain.query.QueryConditions.*;
-import com.dynamia.tools.domain.query.QueryParameters;
+import com.dynamia.tools.commons.collect.PagedListDataSource;
 import com.dynamia.tools.domain.services.CrudService;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -30,8 +30,11 @@ import org.springframework.web.servlet.ModelAndView;
  * @author mario
  */
 @Controller
+@SessionAttributes("prd_searchForm")
 @RequestMapping("/store")
 public class ProductsController {
+
+    private static final String DATASOURCE = "productsDatasource";
 
     @Autowired
     private ProductsService service;
@@ -43,8 +46,8 @@ public class ProductsController {
     private CrudService crudService;
 
     @RequestMapping(value = "/category/{id}/{categoryAlias}", method = RequestMethod.GET)
-    public ModelAndView category(@PathVariable Long id, @PathVariable String categoryAlias) {
-        ModelAndView mv = new ModelAndView("products/productgrid");
+    public ModelAndView category(@PathVariable Long id, @PathVariable String categoryAlias, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("products/products");
 
         ProductCategory category = crudService.find(ProductCategory.class, id);
 
@@ -55,61 +58,83 @@ public class ProductsController {
         if (category.getParent() != null) {
             mv.addObject("prd_parentCategory", category.getParent());
         }
-        ProductsUtil.configureProductsVariable(products, mv);
+
+        products = ProductsUtil.setupPagination(products, request, mv);
+        ProductsUtil.setupProductsVar(products, mv);
 
         return mv;
 
     }
 
     @RequestMapping("/search")
-    public ModelAndView search(ProductSearchForm form, HttpServletRequest request) {
+    public ModelAndView search(ProductSearchForm form, BindingResult bindingResult, HttpServletRequest request) {
+        if (bindingResult.hasFieldErrors("maxPrice")) {
+            form.setMaxPrice(null);
+        }
+        if (bindingResult.hasFieldErrors("minPrice")) {
+            form.setMinPrice(null);
+        }
+
         Site site = siteService.getSite(request);
-        QueryParameters qp = new QueryParameters();
-        qp.add("active", true);
 
-        if (form.getName() != null && !form.getName().trim().isEmpty()) {
-            qp.add("name", form.getName());
-        }
-
-        if (form.getMaxPrice() != null && form.getMinPrice() == null) {
-            qp.add("price", leqt(form.getMaxPrice()));
-        }
-
-        if (form.getMaxPrice() == null && form.getMinPrice() != null) {
-            qp.add("price", geqt(form.getMinPrice()));
-        }
-
-        if (form.getMaxPrice() != null && form.getMinPrice() != null) {
-            qp.add("price", between(form.getMinPrice(), form.getMaxPrice()));
-        }
-        if (form.getCategoryId() != null) {
-            qp.add("category.parent.id", form.getCategoryId());
-        }
-
-        if (form.getBrandId() != null) {
-            qp.add("brand.id", form.getBrandId());
-        }
-
-        if (form.isStock()) {
-            qp.add("stock", gt(0));
-        }
-        List<Product> products = null;
-        if (qp.size() > 1) {
-            products = service.filterProducts(site, qp);
-        }
+        List<Product> products = service.filterProducts(site, form);
 
         ModelAndView mv = new ModelAndView("products/productquery");
         if (products == null) {
             products = service.getFeaturedProducts(site);
             mv.addObject("title", "Ingrese los campos de busqueda");
-
         } else if (!products.isEmpty()) {
             mv.addObject("title", products.size() + " productos encontrados para busqueda avanzada");
         } else {
             mv.addObject("title", " No se encontraron productos para la busqueda avanzada");
         }
-        ProductsUtil.configureProductsVariable(products, mv);
+
+        if (form.getCategoryId() != null) {
+            ProductCategory category = new ProductCategory();
+            category.setId(form.getCategoryId());
+            List<ProductCategory> subcategories = service.getSubcategories(category);
+            mv.addObject("prd_subcategories", subcategories);            
+        }
+
+        products = ProductsUtil.setupPagination(products, request, mv);
+        ProductsUtil.setupProductsVar(products, mv);
         mv.addObject("prd_searchForm", form);
+        return mv;
+    }
+
+    @RequestMapping("/products/page/{page}")
+    public ModelAndView paginate(@PathVariable int page, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("products/productquery");
+        PagedListDataSource datasource = (PagedListDataSource) request.getSession().getAttribute(DATASOURCE);
+
+        List<Product> products = null;
+        if (datasource != null) {
+            datasource.setActivePage(page);
+            products = datasource.getPageData();
+            mv.addObject(DATASOURCE, datasource);
+        } else {
+            Site site = siteService.getSite(request);
+            products = service.getFeaturedProducts(site);
+            products = ProductsUtil.setupPagination(products, request, mv);
+        }
+        ProductsUtil.setupProductsVar(products, mv);
+
+        return mv;
+
+    }
+
+    @RequestMapping("/products/{id}")
+    public ModelAndView product(@PathVariable Long id) {
+        ModelAndView mv = new ModelAndView("products/product");
+        Product product = crudService.find(Product.class, id);
+
+        if (product != null) {
+            List<Product> relatedProducts = service.getRelatedProducts(product);
+
+            ProductsUtil.setupProductVar(product, mv);
+            ProductsUtil.setupProductsVar(relatedProducts, mv);
+
+        }
         return mv;
 
     }

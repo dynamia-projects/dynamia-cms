@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+  
+    <body th:fragment="content">
+
+        <div class="thumbnail tooltip-test" th:title="${prd.name.toUpperCase()}">
+            <div class="relativediv">
+                <!-- Product Image -->
+                <div style="height:200px">
+                    <a  th:href="@{'/store/products/'+${prd.id}}" href="#" style="vertical-align: middle">                
+                        <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=200,h=200)}" src="img/product1a.jpg" alt="" />
+                    </a>  
+                </div>
+                <span th:if="${prd.sale}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-gift font24"></i>Oferta</span>
+                <span th:if="${prd.featured}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-star-empty font24"></i>Destacado</span>
+
+                <div class="viewicons">
+                    <button  data-original-title="Cart" class="btn btn-inverse tooltip-test"> <i class="icon-shopping-cart icon-white"></i> </button>
+                    <button  data-original-title="Wishlist" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-heart icon-white"></i> </button>
+                    <button  data-original-title="Compare" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-refresh icon-white"></i> </button>
+                </div>
+            </div>
+            <div class="caption">
+                <div style="height: 45px;overflow: hidden" class="tooltip-test">
+                    <h3><a  th:href="@{'/store/products/'+${prd.sku}}" th:text="${prd.name}" href="#">Product Name</a></h3>
+                </div>
+                <div class="productratecart">
+                    <div class="pull-left"><span th:text="${cmsUtil.formatNumber(prd.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"  class="newprice">$4459.00</span><br/>
+                        <div class="ratingstar pull-left"> <i class="icon-star orange"> </i><i class="icon-star orange"> </i><i class="icon-star orange"> </i> <i class="icon-star-empty"></i> <i class="icon-star-empty"></i></div>
+                    </div>
+                    <div class=" pull-right">
+                        <input  class="btn btn-orange btn-small  addtocartbutton pull-right" type="submit" value="Comprar"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </body>
+
+</html>

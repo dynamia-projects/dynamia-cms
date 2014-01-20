@@ -6,6 +6,7 @@ package com.dynamia.cms.site.pages.controllers;
 
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
+import com.dynamia.cms.site.pages.PageNotFoundException;
 import com.dynamia.cms.site.pages.SearchForm;
 import com.dynamia.cms.site.pages.domain.Page;
 import com.dynamia.cms.site.pages.api.PageTypeExtension;
@@ -88,24 +89,24 @@ public class PageController {
         Page page = null;
         if (site != null) {
             page = service.loadPage(site, pageAlias);
+
+            if (page == null) {
+                logger.debug("Page not found [" + pageAlias + "] in site " + site);
+                throw new PageNotFoundException(pageAlias, site.getKey());
+            }
+
             mv.addObject("page", page);
             mv.addObject("title", page.getTitle());
             mv.addObject("subtitle", page.getSubtitle());
             mv.addObject("icon", page.getIcon());
-
-            if (page == null) {
-                logger.debug("Page not found [" + pageAlias + "] in site " + site);
-                mv.setViewName("error/404");
-                mv.addObject("pageAlias", pageAlias);
-            } else {
-                String type = page.getType();
-                PageTypeExtension pageTypeExt = getExtension(type);
-                if (pageTypeExt != null) {
-                    Map<String, Object> params = pageTypeExt.setupPage(page);
-                    mv.addAllObjects(params);
-                    mv.setViewName(pageTypeExt.getViewName());
-                }
+            String type = page.getType();
+            PageTypeExtension pageTypeExt = getExtension(type);
+            if (pageTypeExt != null) {
+                Map<String, Object> params = pageTypeExt.setupPage(page);
+                mv.addAllObjects(params);
+                mv.setViewName(pageTypeExt.getViewName());
             }
+
         }
         return page;
     }

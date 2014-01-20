@@ -32,7 +32,9 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         Site site = service.getSite(request);
-      
+        if (site == null) {
+            site = service.getMainSite();
+        }
         try {
             for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
                 interceptor.beforeRequest(site, request, response);
@@ -48,14 +50,24 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         Site site = service.getSite(request);
-
-        try {
-            for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
-                interceptor.afterRequest(site, request, response, modelAndView);
-            }
-        } catch (Exception e) {
-            logger.error("Error calling Site interceptor", e);
+        if (site == null) {
+            site = service.getMainSite();
         }
+
+        if (site.isOffline()) {
+            modelAndView.clear();
+            modelAndView.addObject("site", site);
+            modelAndView.setViewName("site/offline");
+        } else {
+            try {
+                for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
+                    interceptor.afterRequest(site, request, response, modelAndView);
+                }
+            } catch (Exception e) {
+                logger.error("Error calling Site interceptor", e);
+            }
+        }
+
     }
 
 }

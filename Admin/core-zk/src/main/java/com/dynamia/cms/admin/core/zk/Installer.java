@@ -26,7 +26,7 @@ public class Installer implements ModuleProvider {
     @Override
     public Module getModule() {
         Module module = new Module("admin", "Administration");
-        module.setPosition(10);
+        module.setPosition(1);
         module.setIcon("icons:module");
 
         if (adminModules != null) {

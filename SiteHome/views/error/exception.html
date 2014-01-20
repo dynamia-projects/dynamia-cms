@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+
+    <div layout:fragment="content">        
+        <div class="container"> 
+
+            <!-- Main Title-->
+            <div class="titles">
+                <div class="pull-left">
+                    <h1 class="headinglefttitle">Uups!!</h1>
+                    <div class="headingsubtitle"> 
+                        <h3></h3>
+
+                    </div>
+                </div>
+                <i class="icon-meh"></i> 
+            </div>
+
+            <br/>
+
+
+            <div class="container"> <br/>
+                <h2 class="error404"><span>Error <span th:text="${statusCode}"></span>!</span></h2>
+
+                <br/>
+                <div class="container centeralign">
+                    <h2 class="font18">Ha ocurrido un error inesperado en el servidor. Por favor utilice el menu superior o recargue la pagina</h2>
+                </div>
+                <div class="mt20">
+                    <a  th:href="@{/}" class="btn btn-danger"><i class="icon-home"></i> Volver a la pagina principal</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+</html>

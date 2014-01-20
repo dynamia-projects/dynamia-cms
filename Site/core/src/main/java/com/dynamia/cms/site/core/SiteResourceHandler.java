@@ -8,6 +8,8 @@ import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.tools.integration.Containers;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -33,13 +35,15 @@ public class SiteResourceHandler extends ResourceHttpRequestHandler {
             throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.getServerName());
         }
 
-        String dir = site.getResourcesLocation();
+        Path dir = DynamiaCMS.getSitesResourceLocation(site);
 
-        String uri = request.getPathInfo();
-        uri = uri.substring("resources/".length());
-        File file = new File(dir + uri);
+        Path resource = Paths.get(request.getPathInfo());
+        resource = resource.subpath(1, resource.getNameCount());
+
+        File file = dir.resolve(resource).toFile();
+
         if (ImageUtil.isImage(file) && isThumbnail(request)) {
-            file = createOrLoadThumbnail(file, uri, request);
+            file = createOrLoadThumbnail(file, resource.toString(), request);
         }
 
         return new FileSystemResource(file);

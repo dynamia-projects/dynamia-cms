@@ -1,0 +1,16 @@
+id: CMSConfig
+view: config
+
+fields:
+    HomePath:
+        label: Home Path
+        component: directorybox
+        description: Application Home Folder
+        
+    DefaultTemplate:
+        component: templateSelector
+        description: Default Site Template
+        
+        
+layout:
+    columns: 1

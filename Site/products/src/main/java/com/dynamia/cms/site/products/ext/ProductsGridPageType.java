@@ -31,7 +31,7 @@ public class ProductsGridPageType implements PageTypeExtension {
 
     @Override
     public String getViewName() {
-        return "products/productgrid";
+        return "products/products";
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ProductsGridPageType implements PageTypeExtension {
     @Override
     public Map<String, Object> setupPage(Page page) {
         Map<String, Object> map = new HashMap<>();
-        ProductsUtil.configureProductsVariable(service.getFeaturedProducts(page.getSite()), map);
+        ProductsUtil.setupProductsVar(service.getFeaturedProducts(page.getSite()), map);
         return map;
     }
 

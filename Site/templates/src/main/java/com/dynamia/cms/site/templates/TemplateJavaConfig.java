@@ -17,8 +17,8 @@ import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 @Configuration
 public class TemplateJavaConfig {
 
-    public static final String TEMPLATES_LOCATION = "CMSTemplatesLocation";
-    public static final String CURRENT_TEMPLATE = "CMSCurrentTemplate";
+   
+    public static final String DEFAULT_TEMPLATE = "CMSCurrentTemplate";
 
     @Bean
     public SimpleUrlHandlerMapping templateResourcesMapping() {
