@@ -5,8 +5,7 @@
  */
 package com.dynamia.cms.site.pages.api;
 
-import com.dynamia.cms.site.pages.domain.Page;
-import java.util.Map;
+import com.dynamia.cms.site.pages.PageContext;
 
 /**
  *
@@ -14,12 +13,14 @@ import java.util.Map;
  */
 public interface PageTypeExtension {
 
+    public String getId();
+
     public String getName();
 
-    public String getViewName();
-    
+    public String getDescription();
+
     public String getDescriptorId();
 
-    public Map<String,Object> setupPage(Page page);
+    public void setupPage(PageContext context);
 
 }

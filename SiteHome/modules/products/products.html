@@ -12,7 +12,8 @@
         <div class="row mt10">
 
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt40column">
-                <h2 th:text="${title}">Title</h2>
+                 <div th:include="site/pagetitle::content"/>
+
                 <!--Top Pagination -->
                 <div th:include="products/components/productpagination" />
 

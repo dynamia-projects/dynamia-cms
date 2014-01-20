@@ -1,6 +1,6 @@
 view: form
 beanClass: com.dynamia.cms.site.pages.domain.Page
-hidden: [id,uuid,creationDate]
+hidden: [id,uuid,creationDate,parameter]
 sortFields: [site,alias,title,subtitle,type,category,author,layout,icon,published,startDate,endDate,tags,content]
 
 fields:
@@ -20,10 +20,16 @@ fields:
     layout:
         component: combobox
         
+    type:
+        component: pageTypeSelector
+        
     content:
         component: ckeditor
         params:
             height: 300px
+            
+    parameters:
+        component: crudview
         
 layout:
     columns: 1

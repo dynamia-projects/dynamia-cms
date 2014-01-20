@@ -9,6 +9,8 @@ import com.dynamia.cms.site.core.api.CMSExtension;
 import com.dynamia.cms.site.core.api.SiteRequestInterceptorAdapter;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.ProductsUtil;
+import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.tools.integration.Containers;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -19,11 +21,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProductsInterceptor extends SiteRequestInterceptorAdapter {
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {        
+    protected void afterRequest(Site site, ModelAndView mv) {
+
         if (mv.getModel().get("prd_products") != null) {
             ProductsUtil.setupDefaultVars(site, mv);
-            
         }
+
     }
 
 }

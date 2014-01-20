@@ -6,8 +6,8 @@ package com.dynamia.cms.site.pages.controllers;
 
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
+import com.dynamia.cms.site.pages.PageContext;
 import com.dynamia.cms.site.pages.PageNotFoundException;
-import com.dynamia.cms.site.pages.SearchForm;
 import com.dynamia.cms.site.pages.domain.Page;
 import com.dynamia.cms.site.pages.api.PageTypeExtension;
 import com.dynamia.cms.site.pages.services.PageService;
@@ -16,11 +16,9 @@ import com.dynamia.tools.commons.logger.SLF4JLoggingService;
 import com.dynamia.tools.integration.Containers;
 import com.dynamia.tools.integration.ObjectMatcher;
 import java.util.Collection;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,26 +39,27 @@ public class PageController {
     private LoggingService logger = new SLF4JLoggingService(PageController.class);
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView home(Model model, HttpServletRequest request) {
+    public ModelAndView home(HttpServletRequest request) {
         logger.debug("Loading site home page");
-        return page("index", model, request);
+        return page("index", request);
     }
 
     @RequestMapping(value = "/{page}", method = RequestMethod.GET)
-    public ModelAndView page(@PathVariable String page, Model model, HttpServletRequest request) {
+    public ModelAndView page(@PathVariable String page, HttpServletRequest request) {
 
         String domain = request.getServerName();
         logger.debug("Loading page [" + page + "] for domain [" + domain + "]");
 
-        return page(domain, page, model);
+        return page(domain, page, request);
     }
 
-    private ModelAndView page(String domainName, String pageAlias, Model model) {
+    private ModelAndView page(String domainName, String pageAlias, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("site/page");
 
         Site site = loadSite(domainName, mv);
-        loadPage(site, pageAlias, mv);
+        Page page = loadPage(site, pageAlias, mv);
+        configurePageType(page, site, mv, request);
 
         return mv;
     }
@@ -99,13 +98,6 @@ public class PageController {
             mv.addObject("title", page.getTitle());
             mv.addObject("subtitle", page.getSubtitle());
             mv.addObject("icon", page.getIcon());
-            String type = page.getType();
-            PageTypeExtension pageTypeExt = getExtension(type);
-            if (pageTypeExt != null) {
-                Map<String, Object> params = pageTypeExt.setupPage(page);
-                mv.addAllObjects(params);
-                mv.setViewName(pageTypeExt.getViewName());
-            }
 
         }
         return page;
@@ -116,7 +108,7 @@ public class PageController {
 
             @Override
             public boolean match(PageTypeExtension object) {
-                return object.getName().equals(type);
+                return object.getId().equals(type);
             }
         });
 
@@ -125,5 +117,15 @@ public class PageController {
         }
 
         return null;
+    }
+
+    private void configurePageType(Page page, Site site, ModelAndView mv, HttpServletRequest request) {
+        String type = page.getType();
+        PageTypeExtension pageTypeExt = getExtension(type);
+        if (pageTypeExt != null) {
+            PageContext context = new PageContext(page, site, mv, request);
+
+            pageTypeExt.setupPage(context);
+        }
     }
 }

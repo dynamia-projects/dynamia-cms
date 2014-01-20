@@ -5,7 +5,9 @@
  */
 package com.dynamia.cms.site.core;
 
+import com.dynamia.tools.commons.CollectionsUtils;
 import java.text.DecimalFormat;
+import java.util.Collection;
 
 /**
  *
@@ -13,12 +15,16 @@ import java.text.DecimalFormat;
  */
 public class CMSUtil {
 
-      
     public String formatNumber(Number number, String pattern) {
-        if(pattern==null){
+        if (pattern == null) {
             return String.valueOf(number);
         }
         DecimalFormat format = new DecimalFormat(pattern);
         return format.format(number);
     }
+
+    public Collection groupCollection(Collection collection, int groupSize) {
+        return CollectionsUtils.group(collection, groupSize);
+    }
+
 }

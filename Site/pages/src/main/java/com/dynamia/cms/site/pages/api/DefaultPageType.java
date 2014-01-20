@@ -6,9 +6,7 @@
 package com.dynamia.cms.site.pages.api;
 
 import com.dynamia.cms.site.core.api.CMSExtension;
-import com.dynamia.cms.site.pages.domain.Page;
-import java.util.Collections;
-import java.util.Map;
+import com.dynamia.cms.site.pages.PageContext;
 
 /**
  *
@@ -18,13 +16,18 @@ import java.util.Map;
 public class DefaultPageType implements PageTypeExtension {
 
     @Override
-    public String getName() {
+    public String getId() {
         return "default";
     }
 
     @Override
-    public String getViewName() {
-        return "site/page";
+    public String getName() {
+        return "Default Page";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Render the content in plain html";
     }
 
     @Override
@@ -33,8 +36,8 @@ public class DefaultPageType implements PageTypeExtension {
     }
 
     @Override
-    public Map<String, Object> setupPage(Page page) {
-        return Collections.EMPTY_MAP;
+    public void setupPage(PageContext context) {
+        context.getModelAndView().setViewName("site/page");
     }
 
 }

@@ -5,12 +5,12 @@
 
     <div th:fragment="content">
 
-        <div class="titles">
+        <div class="titles animated fadeInUp time3">
             <div class="pull-left">
                 <h1 th:text="${title}" class="headinglefttitle">Page title</h1>
                 <div th:text="${subtitle}" class="headingsubtitle"></div>
             </div>
-            <i th:class="${'icon-'+icon}" class="icon-warning-sign"></i> 
+            <i th:class="${'icon-'+icon+' animated flip time3'}" class="icon-warning-sign"></i> 
         </div>
     </div>
 

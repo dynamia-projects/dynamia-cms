@@ -1,0 +1,9 @@
+view: form
+beanClass: com.dynamia.cms.site.pages.domain.PageParameter
+hidden: [id,page]
+sortFields: [name,value,enabled]
+
+
+        
+layout:
+    columns: 1

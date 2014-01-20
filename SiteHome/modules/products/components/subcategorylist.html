@@ -7,7 +7,7 @@
 
         <ul class="nav nav-pills" th:if="${prd_subcategories!=null and not #lists.isEmpty(prd_subcategories)}">           
             <li th:each="cat : ${prd_subcategories}">
-                <a th:href="@{'/store/category/'+${cat.id}+'/'+${cat.alias}}" 
+                <a th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}}" 
                    th:text="${cat.name}" href="#">Categoria ABC</a> 
             </li>                      
         </ul>

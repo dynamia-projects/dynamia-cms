@@ -43,7 +43,7 @@ groups:
     
     general:
         label: Basic Settings
-        fields: [name,key,description,template,offline,offlineMessage,resourcesLocation]
+        fields: [name,key,description,template,offline,offlineMessage]
             
     
     metadata:
