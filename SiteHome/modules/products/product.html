@@ -4,106 +4,96 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="template">
 
-
-    <div class="container" layout:fragment="content">
-        <!-- Main Title-->
-        <div th:include="site/pagetitle::content"/>
+    <div class="maincontainer" layout:fragment="content">
 
 
-        <!-- Product Details-->
-        <div class="row mt40"> 
-            <!-- Left Image-->
-            <div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
-                <ul class="thumbnails mainimage clearfix">
-                    <li> <img th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="my-foto-container" src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}" title="Your Product Name" /> </li>
-                </ul>
+        <div class="container" >
+            <!-- Main Title-->
+            <div th:include="site/pagetitle::content"/>
 
-                <ul class="thumbnails mainimage clearfix">
-                    <li class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"> <img th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}" title="Your Product Name" /> </li>
-                    <li class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"> <img th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}" title="Your Product Name" /> </li>
-                    <li class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"> <img th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}" title="Your Product Name" /> </li>
-                    <li class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"> <img th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}" title="Your Product Name" /> </li>
-                </ul>
-            </div>
-            <!-- Right Details-->
-            <div class="col-lg-7 col-md-7 col-xs-12 col-sm-12 mt40column">
-                <div class="productprice">
-                    <div class="pull-right">
-                        <img th:src="@{'/resources/products/brands/'+${prd_product.brand.image}}" th:title="${prd_product.brand.name}" th:alt="${prd_product.brand.name}" class="tooltip-test" />
-                    </div>
-                    <div class="productpageprice"> <i class="icon-tags"></i><span th:text="${cmsUtil.formatNumber(prd_product.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> </div>
-                    <div th:if="${prd_product.price lt prd_product.lastPrice}" class="productpageoldprice">Antes <span th:text="${cmsUtil.formatNumber(prd_product.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> </div>
-                    <ul class="rate">
-                        <li class="on"></li>
-                        <li class="on"></li>
-                        <li class="on"></li>
-                        <li class="off"></li>
-                        <li class="off"></li>
+            <!-- Product-->
+            <div class="row mt40"> 
+                <!-- Left Image-->
+                <div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
+                    <ul class="thumbnails mainimage clearfix">
+                        <li> <img th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="my-foto-container" src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}" title="Your Product Name" /> </li>
+                    </ul>
+
+                    <ul class="thumbnails mainimage clearfix">
+                        <li th:if="${prd_product.image!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"> <img th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}" title="Your Product Name" /> </li>
+                        <li th:if="${prd_product.image2!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"> <img th:src="@{'/resources/products/images/'+${prd_product.image2}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image2}}" th:data-title="${prd_product.name}" title="Your Product Name" /> </li>
+                        <li th:if="${prd_product.image3!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"> <img th:src="@{'/resources/products/images/'+${prd_product.image3}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image3}}" th:data-title="${prd_product.name}" title="Your Product Name" /> </li>
+                        <li th:if="${prd_product.image4!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"> <img th:src="@{'/resources/products/images/'+${prd_product.image4}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image4}}" th:data-title="${prd_product.name}" title="Your Product Name" /> </li>
                     </ul>
                 </div>
 
-                <div class="">
-
-                    <span th:text="${prd_product.description}">description</span>
-
-
-
-                </div>
-
-
-
-                <!-- Product Description tab & comments-->
-                <div class="productdesc">
-                    <ul class="nav nav-tabs" id="myTab">                        
-                        <li class="active"><a href="#specification">Caracteristicas</a> </li>
-
-                        <li><a href="#producttag">Etiquetas</a> </li>
-                    </ul>
-                    <div class="tab-content">
-                        <!-- DESCRIPTION -->
-
-                        <div class="tab-pane active" id="specification">
-                            <ul class="productinfo">
-                                <li> 
-                                    <span th:text="${'Codigo: '}" class="productinfoleft">NAME</span><span th:text="${prd_product.sku}">VALUE</span> 
-                                </li>
-                                <li> 
-                                    <span th:text="${'Marca o Fabricante: '}" class="productinfoleft">NAME</span><span th:text="${prd_product.brand.name}">VALUE</span> 
-                                </li>
-
-                                <li th:each="det : ${prd_product.details}"> 
-                                    <span th:text="${det.name+': '}" class="productinfoleft">NAME</span><span th:text="${det.value}">VALUE</span> 
-                                </li>
-
-                            </ul>
+                <!-- Right Details-->
+                <div class="col-lg-7 col-md-7 col-xs-12 col-sm-12 mt40column">
+                    <div class="productprice">
+                        <div class="pull-right">
+                            <img  th:if="${prd_product.brand}" th:src="@{'/resources/products/brands/'+${prd_product.brand.image}}" th:title="${prd_product.brand.name}" th:alt="${prd_product.brand.name}" class="tooltip-test" />
                         </div>
+                        <div class="productpageprice"> <i class="icon-tags"></i><span th:text="${cmsUtil.formatNumber(prd_product.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> </div>
+                        <div th:if="${prd_product.price lt prd_product.lastPrice}" class="productpageoldprice">Antes <span th:text="${cmsUtil.formatNumber(prd_product.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> </div>
 
-                        <div class="tab-pane" id="producttag">
+                    </div>
 
-                            <ul class="tags">
-                                <li><a ><i class="icon-tag"></i> Webdesign</a> </li>
-                                <li><a ><i class="icon-tag"></i> html</a> </li>
-                                <li><a ><i class="icon-tag"></i> html</a> </li>
-                                <li><a ><i class="icon-tag"></i> css</a> </li>
-                                <li><a ><i class="icon-tag"></i> jquery</a> </li>
-                                <li><a ><i class="icon-tag"></i> css</a> </li>
-                                <li><a ><i class="icon-tag"></i> jquery</a> </li>
-                                <li><a ><i class="icon-tag"></i> Webdesign</a> </li>
-                                <li><a ><i class="icon-tag"></i> css</a> </li>
-                                <li><a ><i class="icon-tag"></i> jquery</a> </li>
-                                <li><a ><i class="icon-tag"></i> Webdesign</a> </li>
-                                <li><a ><i class="icon-tag"></i> html</a> </li>
-                            </ul>
+                    <div class="">
+                        <span th:text="${prd_product.description}">description</span>
+                    </div>
+
+
+                    <!-- Product Details tab & comments-->
+                    <div class="productdesc">
+                        <ul class="nav nav-tabs" id="myTab">                        
+                            <li class="active"><a href="#specification">Caracteristicas</a> </li>
+
+                            <li><a href="#producttag">Etiquetas</a> </li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- DESCRIPTION -->
+
+                            <div class="tab-pane active" id="specification">
+                                <ul class="productinfo">
+                                    <li> 
+                                        <span th:text="${'Codigo: '}" class="productinfoleft">NAME</span><span th:text="${prd_product.sku}">VALUE</span> 
+                                    </li>
+                                    <li th:if="${prd_product.brand}"> 
+                                        <span th:text="${'Marca o Fabricante: '}" class="productinfoleft">NAME</span><span th:text="${prd_product.brand.name}">VALUE</span> 
+                                    </li>
+
+                                    <li th:each="det : ${prd_product.details}"> 
+                                        <span th:text="${det.name+': '}" class="productinfoleft">NAME</span><span th:text="${det.value}">VALUE</span> 
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <div class="tab-pane" id="producttag">
+
+                                <ul class="tags" th:if="${prd_product.tags!=null}">
+                                    <li  th:each="tag : ${#strings.setSplit(prd_product.tags,',')}">
+                                        <a><i class="icon-tag"></i><span th:text="${tag}">Tag HERE</span></a> 
+                                    </li>
+
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Buttons -->
-                <div class="productbtn">
-                    <button class="btn btn-orange tooltip-test" data-original-title="Cart"> <i class="icon-shopping-cart icon-white"></i>Comprar</button>
-                    <button class="btn btn-orange btn-small tooltip-test" data-original-title="Wishlist"> <i class="icon-heart icon-white"></i> Favorito</button>
-                    <button class="btn btn-orange btn-small tooltip-test" data-original-title="Compare"> <i class="icon-refresh icon-white"></i> Comparar </button>
+                    <!-- Buttons -->
+                    <div class="productbtn">
+                        <button class="btn btn-orange tooltip-test" data-original-title="Proximamente"> <i class="icon-shopping-cart icon-white"></i>Comprar</button>
+                        <button class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-heart icon-white"></i> Favorito</button>
+                        <button class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-refresh icon-white"></i> Comparar </button>
+                    </div>
                 </div>
             </div>
+        </div>
+        <!-- Related Project-->
+        <div th:if="${prd_relatedProducts!=null and  not #lists.isEmpty(prd_relatedProducts)}" class="featureprojectcontianer container mt40">
+            <h2 class="heading1"><span class="maintext">Productos Relacionados</span></h2>
+            <th:block th:include="products/components/productcarousel::frag(${prd_relatedProducts})"/>
+
         </div>
     </div>
 </html>

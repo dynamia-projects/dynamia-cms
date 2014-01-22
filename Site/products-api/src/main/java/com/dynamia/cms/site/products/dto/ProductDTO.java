@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author mario
  */
-public class ProductDTO implements Serializable{
+public class ProductDTO implements Serializable {
 
     private String name;
 
@@ -31,7 +31,11 @@ public class ProductDTO implements Serializable{
     private boolean active;
     private boolean featured;
     private boolean sale;
+    private String status;
     private String image;
+    private String image2;
+    private String image3;
+    private String image4;
 
     private String tags;
 
@@ -40,6 +44,14 @@ public class ProductDTO implements Serializable{
     private ProductBrandDTO brand;
 
     private List<ProductDetailDTO> details = new ArrayList<>();
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getName() {
         return name;
@@ -135,6 +147,30 @@ public class ProductDTO implements Serializable{
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getImage2() {
+        return image2;
+    }
+
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
+
+    public String getImage3() {
+        return image3;
+    }
+
+    public void setImage3(String image3) {
+        this.image3 = image3;
+    }
+
+    public String getImage4() {
+        return image4;
+    }
+
+    public void setImage4(String image4) {
+        this.image4 = image4;
     }
 
     public ProductCategoryDTO getCategory() {

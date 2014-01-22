@@ -6,8 +6,9 @@
 package com.dynamia.cms.admin.products.actions;
 
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import com.dynamia.cms.site.products.services.ProductsSyncService;
+import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.tools.commons.ApplicableClass;
+import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.web.actions.ActionGroup;
 import com.dynamia.tools.web.actions.InstallAction;
 import com.dynamia.tools.web.crud.AbstractCrudAction;
@@ -23,36 +24,36 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author mario
  */
 @InstallAction
-public class SyncAllAction extends AbstractCrudAction {
+public class GenerateTokenAction extends AbstractCrudAction {
 
     @Autowired
-    private ProductsSyncService syncService;
+    private ProductsService service;
 
-    public SyncAllAction() {
-        setName("Sync All Products");
+    @Autowired
+    private CrudService crudService;
+
+    public GenerateTokenAction() {
+        setName("Generate Token");
         setGroup(ActionGroup.get("products"));
     }
 
     @Override
-    public void actionPerformed(CrudActionEvent evt) {
+    public void actionPerformed(final CrudActionEvent evt) {
         final ProductsSiteConfig cfg = (ProductsSiteConfig) evt.getData();
         if (cfg != null) {
-            UIMessages.showQuestion("This action make take several minutes", new Callback() {
+            UIMessages.showQuestion("¿Are you sure want generate a new toke for this site's configuration?", new Callback() {
 
                 @Override
                 public void doSomething() {
-                    long s = System.currentTimeMillis();
-                    syncService.synchronizeAll(cfg);
-                   
-                    long e = System.currentTimeMillis();
-                    long t = e-s;
-                    
-                     UIMessages.showMessage("Synchronization completed in "+t+"ms sucessfully!");
+                    service.generateToken(cfg);
+                    crudService.save(cfg);
+                    evt.getController().doQuery();
+                    UIMessages.showMessage("Token generated succesfully!!");
                 }
             });
 
         } else {
-            UIMessages.showMessage("Select product site configuration to sync.", MessageType.WARNING);
+            UIMessages.showMessage("Select product site configuration to generate new token.", MessageType.WARNING);
         }
 
     }

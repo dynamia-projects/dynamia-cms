@@ -26,7 +26,7 @@
                 <div class="featureprojectcontianer mt10" id="productlist">
                     <div class="featureprojectwrap latestprojectcontianer grid">
                         <!-- Grid -->
-                        <div th:include="products/components/productgrid"/>
+                        <div th:include="products/components/productgrid::frag(${prd_products})"/>
 
                         <!-- Paging-->
                         <div class="mt40 clearfix">

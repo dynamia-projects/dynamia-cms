@@ -5,3 +5,7 @@
 .productpageprice{
     width: auto;
 }
+
+.contact ul.productinfo li{
+   height: auto;
+}

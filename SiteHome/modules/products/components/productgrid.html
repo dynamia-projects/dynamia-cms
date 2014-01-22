@@ -3,13 +3,13 @@
       xmlns:th="http://www.thymeleaf.org" >
 
 
-    <body th:fragment="content">
+    <body th:fragment="frag (productlist)">
 
 
-        <ul class="mt40 clearfix " th:each="group : ${cmsUtil.groupCollection(prd_products,3)}">
+        <ul class="mt40 clearfix " th:each="group : ${cmsUtil.groupCollection(productlist,3)}">
          
             <li class="col-lg-4 col-md-4 col-sm-6 col-xs-12" th:each="prd : ${group.collection}">
-                <div th:include="products/components/productpanel::content"/>
+                <div th:include="products/components/productpanel::frag(${prd})"/>
             </li>
         </ul>
 

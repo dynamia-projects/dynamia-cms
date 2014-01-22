@@ -5,6 +5,7 @@
  */
 package com.dynamia.cms.products;
 
+import com.dynamia.cms.site.products.api.DataChangedEvent;
 import com.dynamia.cms.site.products.api.ProductsListener;
 import com.dynamia.cms.site.products.clients.ProductsListenerClient;
 import static org.junit.Assert.*;
@@ -29,8 +30,10 @@ public class ProductListenerTest {
     @Test
     public void testConnection() {
         ProductsListener listener = client.getProxy();
-        listener.productChanged(1L);
         assertNotNull(listener);
+        
+        listener.productChanged(new DataChangedEvent("123", 1L));
+        
     }
 
 }

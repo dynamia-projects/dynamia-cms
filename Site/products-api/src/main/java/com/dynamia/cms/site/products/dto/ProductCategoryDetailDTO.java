@@ -11,15 +11,31 @@ import java.io.Serializable;
  *
  * @author mario
  */
-
-public class ProductCategoryDetailDTO implements Serializable{
+public class ProductCategoryDetailDTO implements Serializable {
 
     private String name;
-  
+
     private String values;
     private Long externalRef;
+    private int order;
 
     private ProductCategoryDTO category;
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public ProductCategoryDTO getCategory() {
+        return category;
+    }
+
+    public void setCategory(ProductCategoryDTO category) {
+        this.category = category;
+    }
 
     public Long getExternalRef() {
         return externalRef;

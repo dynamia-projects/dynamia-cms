@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.Index;
 
 /**
  *
@@ -36,6 +37,8 @@ public class ProductsSiteConfig extends SimpleEntity {
     private String datasourcePassword;
     private String datasourceImagesURL;
     private String datasourceBrandImagesURL;
+    @Index(name = "token")
+    private String token;
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date lastSync;
@@ -110,6 +113,14 @@ public class ProductsSiteConfig extends SimpleEntity {
 
     public void setPricePattern(String pricePattern) {
         this.pricePattern = pricePattern;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
 }

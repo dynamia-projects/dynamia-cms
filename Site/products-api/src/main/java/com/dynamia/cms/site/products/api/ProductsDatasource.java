@@ -29,4 +29,6 @@ public interface ProductsDatasource {
     
     public List<ProductBrandDTO> getBrands();
 
+    public ProductBrandDTO getBrand(Long externalRef);
+
 }

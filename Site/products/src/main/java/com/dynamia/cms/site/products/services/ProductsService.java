@@ -44,4 +44,8 @@ public interface ProductsService {
 
     public List<Product> getRelatedProducts(Product product);
 
+    public void generateToken(ProductsSiteConfig config);
+
+    ProductsSiteConfig getSiteConfig(String token);
+
 }

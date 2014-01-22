@@ -71,7 +71,9 @@
                     </a> 
                     <!--Social -->
                     <div class="socialtop pull-right">
-                        <div class="call"><i class="icon-phone"></i> Llamanos : <span class="orange">+57 (5) 693 04 23 </span></div>
+                        <div class="call">
+                            <i class="icon-phone"></i> Llamanos : <span class="orange">+57 (5) 693 04 23 </span>  <br/> 
+                        </div>
                         <ul class="pull-right">
                             <li><a class="tooltip-test"  data-original-title="Facebook"  ><i class="icon-facebook"></i></a></li>
                             <li><a class="tooltip-test"  data-original-title="Twitter"  ><i class="icon-twitter"></i></a></li>
@@ -94,30 +96,11 @@
             </div>
 
             <!-- Newsletter-->
-            <section class="mt40 m0 newsletter" id="newslettersignup">
-                <div class="container">
-                    <div class="pull-left">
-                        <h2 class="heading2"><span class="maintext"><i class="icon-pencil"></i> Newsletters Signup</span></h2>
-                        Sign up to Our Newsletter &amp; get attractive Offers by subscribing to our newsletters. </div>
-                    <div class="pull-right mt20">
-                        <form class="form-inline">
-                            <div class="input-prepend">
-                                <input type="text" class="subscribeinput" id="inputIcon" placeholder="Subscribe to Newsletter"/>
-                                <input type="submit" class="btn btn-orange" value="Subscribe"/>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
+            <th:block th:include="tpl_newsletter"/>
             <!-- Footer -->
             <footer id="footer">
                 <section class="footersocial">
-                    <div class="container">
-                        <div class="row">
-
-
-                        </div>
-                    </div>
+                    <th:block th:include="tpl_contacts"/>
                 </section>
 
                 <section id="quicklink">
@@ -135,7 +118,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="pull-left">Todos los Derechos Reservados © 2014. </div>
-                            <div class="pull-right">Powered by: Dynamia Soluciones IT</div>
+                            <div class="pull-right">Powered by: <a href="http://www.dynamiasoluciones.com" target="blank" title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing" class="tooltip-test">Dynamia Soluciones IT</a></div>
                         </div>
                     </div>
                 </section>

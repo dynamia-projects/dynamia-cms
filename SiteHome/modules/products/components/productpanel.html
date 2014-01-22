@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
   
-    <body th:fragment="content">
+    <body th:fragment="frag (prd)">
 
         <div class="thumbnail tooltip-test" th:title="${prd.name.toUpperCase()}">
             <div class="relativediv">
@@ -17,9 +17,9 @@
                 <span th:if="${prd.featured}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-star-empty font24"></i>Destacado</span>
 
                 <div class="viewicons">
-                    <button  data-original-title="Agregar al Carrito" class="btn btn-inverse tooltip-test"> <i class="icon-shopping-cart icon-white"></i> </button>
-                    <button  data-original-title="Marcar como Favorito" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-heart icon-white"></i> </button>
-                    <button  data-original-title="Comparar" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-refresh icon-white"></i> </button>
+                    <button  data-original-title="Proximamente" class="btn btn-inverse tooltip-test"> <i class="icon-shopping-cart icon-white"></i> </button>
+                    <button  data-original-title="Proximamente" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-heart icon-white"></i> </button>
+                    <button  data-original-title="Proximamente" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-refresh icon-white"></i> </button>
                 </div>
             </div>
             <div class="caption">

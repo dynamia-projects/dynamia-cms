@@ -1,6 +1,6 @@
 view: form
 beanClass: com.dynamia.cms.site.products.domain.ProductsSiteConfig
-hidden: [id,lastSync]
+hidden: [id,lastSync,token]
 sortFields: [site,pricePattern,defaultCurrency, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceUsername,datasourcePassword]
 
 fields:

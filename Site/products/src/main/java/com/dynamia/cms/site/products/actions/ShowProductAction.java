@@ -8,10 +8,10 @@ package com.dynamia.cms.site.products.actions;
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
+import com.dynamia.cms.site.pages.PageNotFoundException;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.integration.Containers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,11 +39,18 @@ public class ShowProductAction implements SiteAction {
         Long id = (Long) evt.getData();
 
         Product product = crudService.find(Product.class, id);
+        if(product==null){
+            throw new PageNotFoundException("Product not found");
+        }
         mv.addObject("prd_product", product);
+        mv.addObject("prd_relatedProducts", service.getRelatedProducts(product));
         mv.addObject("prd_config", service.getSiteConfig(evt.getSite()));
         mv.addObject("title",product.getName().toUpperCase());
         mv.addObject("subtitle",product.getCategory().getName());
         mv.addObject("icon", "info-sign");
+        
+        
+        
     }
 
 }

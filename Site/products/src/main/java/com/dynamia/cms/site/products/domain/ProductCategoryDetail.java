@@ -6,6 +6,7 @@
 package com.dynamia.cms.site.products.domain;
 
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.products.dto.ProductCategoryDetailDTO;
 import com.dynamia.tools.domain.SimpleEntity;
 import com.dynamia.tools.domain.contraints.NotEmpty;
 import javax.persistence.Column;
@@ -31,9 +32,19 @@ public class ProductCategoryDetail extends SimpleEntity {
     @Column(name = "detvalues")
     private String values;
     private Long externalRef;
+    @Column(name = "detorder")
+    private int order;
 
     @ManyToOne
     private ProductCategory category;
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
 
     public Site getSite() {
         return site;
@@ -73,6 +84,13 @@ public class ProductCategoryDetail extends SimpleEntity {
 
     public void setValues(String values) {
         this.values = values;
+    }
+
+    public void sync(ProductCategoryDetailDTO dto) {
+        this.name = dto.getName();
+        this.values = dto.getValues();
+        this.externalRef = dto.getExternalRef();
+        this.order = dto.getOrder();
     }
 
 }

@@ -13,9 +13,11 @@ import com.dynamia.cms.site.products.domain.ProductDetail;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.api.ProductsDatasource;
 import com.dynamia.cms.site.products.clients.ProductsDatasourceClient;
+import com.dynamia.cms.site.products.domain.ProductCategoryDetail;
 import com.dynamia.cms.site.products.dto.ProductDTO;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
+import com.dynamia.cms.site.products.dto.ProductCategoryDetailDTO;
 import com.dynamia.cms.site.products.dto.ProductDetailDTO;
 import com.dynamia.cms.site.products.services.ProductsSyncService;
 import com.dynamia.tools.commons.logger.LoggingService;
@@ -30,6 +32,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -48,6 +52,9 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
     @Autowired
     private CrudService crudService;
+
+    @PersistenceContext
+    private EntityManager entityMgr;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -69,11 +76,13 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
         List<ProductCategoryDTO> categories = ds.getCategories();
         for (ProductCategoryDTO remoteCategory : categories) {
-            syncCategory(siteCfg, remoteCategory);
+            synchronizeCategory(siteCfg, remoteCategory);
         }
     }
 
-    private void syncCategory(ProductsSiteConfig siteCfg, ProductCategoryDTO remoteCategory) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void synchronizeCategory(ProductsSiteConfig siteCfg, ProductCategoryDTO remoteCategory) {
         ProductCategory localCategory = crudService.findSingle(ProductCategory.class, "externalRef", remoteCategory.getExternalRef());
         if (localCategory == null) {
             localCategory = new ProductCategory();
@@ -88,9 +97,11 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
         crudService.save(localCategory);
 
+        syncCategoryDetails(localCategory, remoteCategory);
+
         if (remoteCategory.getSubcategories() != null && !remoteCategory.getSubcategories().isEmpty()) {
             for (ProductCategoryDTO subcategory : remoteCategory.getSubcategories()) {
-                syncCategory(siteCfg, subcategory);
+                synchronizeCategory(siteCfg, subcategory);
             }
         }
     }
@@ -104,7 +115,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         for (ProductDTO remoteProduct : products) {
             logger.debug("Synchronizing product. Site:  " + siteCfg.getSite().getName() + " Name:" + remoteProduct.getName());
             try {
-                syncProduct(siteCfg, remoteProduct);
+                synchronizeProduct(siteCfg, remoteProduct);
             } catch (Exception e) {
                 logger.error("Error Synchronizing Product: " + remoteProduct.getName(), e);
             }
@@ -112,7 +123,9 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         }
     }
 
-    private void syncProduct(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void synchronizeProduct(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
         Product localProduct = crudService.findSingle(Product.class, "externalRef", remoteProduct.getExternalRef());
         if (localProduct == null) {
             localProduct = new Product();
@@ -128,28 +141,42 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
             localProduct.setBrand(crudService.findSingle(ProductBrand.class, "externalRef", remoteProduct.getBrand().getExternalRef()));
         }
 
-        if (localProduct.getDetails() != null) {
-            for (ProductDetail detail : localProduct.getDetails()) {
-                if (detail.getId() != null) {
-                    crudService.delete(detail);
-                }
-            }
-        }
-
         crudService.save(localProduct);
+        syncProductDetails(localProduct, remoteProduct);
+        downloadProductImages(siteCfg, localProduct);
 
+    }
+
+    private void syncProductDetails(Product localProduct, ProductDTO remoteProduct) {
+        deleteProductsDetails(localProduct);
         if (remoteProduct.getDetails() != null) {
+
             for (ProductDetailDTO remoteDetail : remoteProduct.getDetails()) {
+
                 ProductDetail localDetail = new ProductDetail();
-                localDetail.setSite(siteCfg.getSite());
+
+                localDetail.setSite(localProduct.getSite());
                 localDetail.setProduct(localProduct);
                 localDetail.sync(remoteDetail);
                 crudService.save(localDetail);
             }
         }
+    }
 
-        synchronizeProuctResources(siteCfg, localProduct);
+    private void syncCategoryDetails(ProductCategory localCategory, ProductCategoryDTO remoteCategory) {
 
+        if (remoteCategory.getDetails() != null) {
+            for (ProductCategoryDetailDTO remoteDetail : remoteCategory.getDetails()) {
+                ProductCategoryDetail localDetail = crudService.findSingle(ProductCategoryDetail.class, "externalRef", remoteDetail.getExternalRef());
+                if (localDetail == null) {
+                    localDetail = new ProductCategoryDetail();
+                }
+                localDetail.setSite(localCategory.getSite());
+                localDetail.setCategory(localCategory);
+                localDetail.sync(remoteDetail);
+                crudService.save(localDetail);
+            }
+        }
     }
 
     @Override
@@ -160,35 +187,41 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         ProductsDatasource ds = getDatasource(siteCfg);
         List<ProductBrandDTO> brands = ds.getBrands();
         for (ProductBrandDTO remoteBrand : brands) {
-            ProductBrand localBrand = crudService.findSingle(ProductBrand.class, "externalRef", remoteBrand.getExternalRef());
-            if (localBrand == null) {
-                localBrand = new ProductBrand();
-                localBrand.setSite(siteCfg.getSite());
-            }
-            localBrand.sync(remoteBrand);
-
-            crudService.save(localBrand);
-
-            String folder = DynamiaCMS.getSitesResourceLocation(siteCfg.getSite()).resolve(PRODUCTS_FOLDER + File.separator + "brands").toString();
-            try {
-                downloadImage(siteCfg.getDatasourceBrandImagesURL(), localBrand.getImage(), folder);
-            } catch (Exception ex) {
-                logger.error("Error downloading image for product's brand " + localBrand, ex);
-            }
+            synchronizeBrand(siteCfg, remoteBrand);
         }
-
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void synchronizeProuctResources(ProductsSiteConfig siteCfg, Product product) {
+    public void synchronizeBrand(ProductsSiteConfig siteCfg, ProductBrandDTO remoteBrand) {
+        ProductBrand localBrand = crudService.findSingle(ProductBrand.class, "externalRef", remoteBrand.getExternalRef());
+        if (localBrand == null) {
+            localBrand = new ProductBrand();
+            localBrand.setSite(siteCfg.getSite());
+        }
+        localBrand.sync(remoteBrand);
+
+        crudService.save(localBrand);
+
+        String folder = DynamiaCMS.getSitesResourceLocation(siteCfg.getSite()).resolve(PRODUCTS_FOLDER + File.separator + "brands").toString();
+        try {
+            downloadImage(siteCfg.getDatasourceBrandImagesURL(), localBrand.getImage(), folder);
+        } catch (Exception ex) {
+            logger.error("Error downloading image for product's brand " + localBrand, ex);
+        }
+    }
+
+    private void downloadProductImages(ProductsSiteConfig siteCfg, Product product) {
         try {
             String folder = DynamiaCMS.getSitesResourceLocation(siteCfg.getSite()).resolve(PRODUCTS_FOLDER + File.separator + "images").toString();
             downloadImage(siteCfg.getDatasourceImagesURL(), product.getImage(), folder);
+            downloadImage(siteCfg.getDatasourceImagesURL(), product.getImage2(), folder);
+            downloadImage(siteCfg.getDatasourceImagesURL(), product.getImage3(), folder);
+            downloadImage(siteCfg.getDatasourceImagesURL(), product.getImage4(), folder);
+
         } catch (Exception ex) {
             logger.error("Error downloading image from product " + product.getName() + " for Site: " + siteCfg.getSite().getName(), ex);
         }
-
     }
 
     private void downloadImage(String baseURL, final String imageName, final String localFolder) throws Exception {
@@ -223,17 +256,29 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
                     }
                 }
             });
-
         }
-
     }
 
-    private ProductsDatasource getDatasource(ProductsSiteConfig cfg) {
+    @Override
+    public ProductsDatasource getDatasource(ProductsSiteConfig cfg) {
         ProductsDatasourceClient client = new ProductsDatasourceClient();
         client.setServiceURL(cfg.getDatasourceURL());
         client.setUsername(cfg.getDatasourceUsername());
         client.setPassword(cfg.getDatasourcePassword());
         return client.getProxy();
+    }
+
+    private void deleteProductsDetails(Product product) {
+        if (product.getId() == null) {
+            return;
+        }
+        List<ProductDetail> details = crudService.find(ProductDetail.class, "product", product);
+        if (details != null) {
+            for (ProductDetail productDetail : details) {
+                crudService.delete(productDetail);
+            }
+        }
+
     }
 
 }

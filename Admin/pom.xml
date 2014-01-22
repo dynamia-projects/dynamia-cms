@@ -28,7 +28,7 @@
         <hibernate.version>4.2.4.Final</hibernate.version>
         
         <!-- Versiones de Modulos -->
-        <seguridad.version>3.5.2</seguridad.version>
+        <seguridad.version>3.5.3</seguridad.version>
         
         <entityfiles.version>3.1</entityfiles.version>
         <comentarios.version>3.0</comentarios.version>

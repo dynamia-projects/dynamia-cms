@@ -12,6 +12,7 @@ import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.tools.commons.StringUtils;
 import com.dynamia.tools.domain.query.BooleanOp;
 import com.dynamia.tools.domain.query.DataPaginator;
 import com.dynamia.tools.domain.query.QueryConditions;
@@ -43,6 +44,16 @@ public class ProductsServiceImpl implements ProductsService {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Override
+    public void generateToken(ProductsSiteConfig config) {
+        config.setToken(StringUtils.randomString());
+    }
+
+    @Override
+    public ProductsSiteConfig getSiteConfig(String token) {
+        return crudService.findSingle(ProductsSiteConfig.class, "token", token);
+    }
 
     @Override
     @Cacheable(value = "products", key = "'cat'+#site.key")
@@ -93,7 +104,7 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public List<Product> filterProducts(Site site, QueryParameters params) {
         params.add("site", site);
-       
+
         return crudService.find(Product.class, params);
     }
 
@@ -129,15 +140,15 @@ public class ProductsServiceImpl implements ProductsService {
         if (form.isStock()) {
             qp.add("stock", gt(0));
         }
-        
-        if(form.getOrder()!=null){
+
+        if (form.getOrder() != null) {
             qp.orderBy(form.getOrder().getField(), form.getOrder().isAsc());
-        }else{
+        } else {
             qp.orderBy("name", true);
         }
 
         if (qp.size() > 1) {
-            qp.paginate(new DataPaginator(12)); 
+            qp.paginate(new DataPaginator(12));
             return filterProducts(site, qp);
         } else {
             return null;
@@ -193,22 +204,36 @@ public class ProductsServiceImpl implements ProductsService {
         QueryParameters qp = new QueryParameters();
         qp.paginate(new DataPaginator(12));
         qp.add("name", QueryConditions.like(query, true, BooleanOp.OR));
-        qp.add("category.parent.name",QueryConditions.like(query, true, BooleanOp.OR));
-      
+        qp.add("category.parent.name", QueryConditions.like(query, true, BooleanOp.OR));
+
         qp.orderBy("featured,sale,name", true);
         return crudService.find(Product.class, qp);
     }
 
     @Override
     public List<Product> getRelatedProducts(Product product) {
-        StringBuilder tags = new StringBuilder();
-        tags.append(product.getTags());
-
+        QueryParameters qp = new QueryParameters();
+        QueryBuilder qb = QueryBuilder.select(Product.class, "p");
+      
         if (product.getBrand() != null) {
-            tags.append(",").append(product.getBrand().getName());
+            qp.add("brand", product.getBrand().getName());
+            qb.or("p.name like :brand");
         }
-        String query = tags.toString();
-        return find(product.getSite(), query);
+
+        if (product.getCategory() != null && product.getCategory().getParent() != null) {
+            qp.add("category", product.getCategory().getParent().getName());
+            qb.or("p.name like :category");
+        } else if (product.getCategory() != null) {
+            qp.add("category", product.getCategory().getName());
+            qb.or("p.name like :category");
+        }
+        
+        qb.orderBy("p.price asc");
+        String sql = qb.toString();
+        Query query = entityManager.createQuery(sql);
+        query.setMaxResults(50);
+        qp.applyTo(query);
+        return query.getResultList();
     }
 
 }

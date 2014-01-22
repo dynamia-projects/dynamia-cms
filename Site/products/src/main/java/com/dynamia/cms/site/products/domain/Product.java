@@ -53,6 +53,7 @@ public class Product extends SimpleEntity {
     private boolean active;
     private boolean featured;
     private boolean sale;
+    private String status;
     private String image;
     private String image2;
     private String image3;
@@ -71,6 +72,14 @@ public class Product extends SimpleEntity {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductDetail> details = new ArrayList<>();
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Site getSite() {
         return site;
@@ -251,6 +260,9 @@ public class Product extends SimpleEntity {
         externalRef = dto.getExternalRef();
         featured = dto.isFeatured();
         image = dto.getImage();
+        image2 = dto.getImage2();
+        image3 = dto.getImage3();
+        image4 = dto.getImage4();
         lastPrice = dto.getLastPrice();
         longDescription = dto.getLongDescription();
         name = dto.getName();
@@ -259,6 +271,7 @@ public class Product extends SimpleEntity {
         sku = dto.getSku();
         stock = dto.getStock();
         tags = dto.getTags();
+        status = dto.getStatus();
     }
 
 }

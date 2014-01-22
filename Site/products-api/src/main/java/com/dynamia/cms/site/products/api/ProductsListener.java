@@ -6,16 +6,16 @@
 package com.dynamia.cms.site.products.api;
 
 /**
- * This interface is used by remote datasources to notify DynamiaCMS that
- * some product or category as changed. ProductsListeners' implementation
- * should be running in the CMS side. 
- * 
+ * This interface is used by remote datasources to notify DynamiaCMS that some product or category as changed. ProductsListeners' implementation should be
+ * running in the CMS side.
+ *
  * @author mario
  */
 public interface ProductsListener {
 
-    public void productChanged(Long externalRef);
+    public void productChanged(DataChangedEvent evt);
 
-    public void categoryChanged(Long externalRef);
+    public void categoryChanged(DataChangedEvent evt);
 
+    public void brandChanged(DataChangedEvent evt);
 }
