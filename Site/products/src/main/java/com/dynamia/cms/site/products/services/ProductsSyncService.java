@@ -10,6 +10,7 @@ import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import com.dynamia.cms.site.products.dto.ProductDTO;
+import java.util.List;
 
 /**
  *
@@ -17,11 +18,9 @@ import com.dynamia.cms.site.products.dto.ProductDTO;
  */
 public interface ProductsSyncService {
 
-    public void synchronizeAll(ProductsSiteConfig siteCfg);
+    public List<ProductCategoryDTO> synchronizeCategories(ProductsSiteConfig siteCfg);
 
-    public void synchronizeCategories(ProductsSiteConfig siteCfg);
-
-    public void synchronizeProducts(ProductsSiteConfig siteCfg);
+    public List<ProductDTO> synchronizeProducts(ProductsSiteConfig siteCfg);
 
     public void synchronizeBrands(ProductsSiteConfig siteCfg);
 
@@ -33,5 +32,10 @@ public interface ProductsSyncService {
 
     ProductsDatasource getDatasource(ProductsSiteConfig cfg);
 
-    
+    void disableCategoriesNoInList(List<ProductCategoryDTO> categories);
+
+    void disableProductsNoInList(List<ProductDTO> products);
+
+    public void update(ProductsSiteConfig siteCfg);
+
 }

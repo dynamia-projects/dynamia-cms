@@ -9,14 +9,11 @@ import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.cms.site.products.ProductSearchForm;
 import com.dynamia.cms.site.products.ProductsUtil;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.services.ProductsService;
-import com.dynamia.tools.domain.services.CrudService;
-import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,7 +45,7 @@ public class SearchProductsAction implements SiteAction {
             products = service.getFeaturedProducts(site);
             mv.addObject("title", "Ingrese los campos de busqueda");
         } else if (!products.isEmpty()) {
-            mv.addObject("title", products.size() + " productos encontrados para busqueda avanzada");
+            mv.addObject("title", products.size() + " productos encontrados");
         } else {
             mv.addObject("title", " No se encontraron productos para la busqueda avanzada");
         }

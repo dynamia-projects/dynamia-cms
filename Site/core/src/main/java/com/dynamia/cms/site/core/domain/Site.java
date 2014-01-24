@@ -36,6 +36,9 @@ public class Site extends SimpleEntity {
     private String metadataAuthor;
     private String metadataDescription;
     private String metadataRights;
+    private String googleAnalyticsID;
+    private String googleAnalyticsDomain;
+    private String googleSiteVerification;
 
     public String getName() {
         return name;
@@ -67,6 +70,30 @@ public class Site extends SimpleEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getGoogleAnalyticsID() {
+        return googleAnalyticsID;
+    }
+
+    public void setGoogleAnalyticsID(String googleAnalyticsID) {
+        this.googleAnalyticsID = googleAnalyticsID;
+    }
+
+    public String getGoogleAnalyticsDomain() {
+        return googleAnalyticsDomain;
+    }
+
+    public void setGoogleAnalyticsDomain(String googleAnalyticsDomain) {
+        this.googleAnalyticsDomain = googleAnalyticsDomain;
+    }
+
+    public String getGoogleSiteVerification() {
+        return googleSiteVerification;
+    }
+
+    public void setGoogleSiteVerification(String googleSiteVerification) {
+        this.googleSiteVerification = googleSiteVerification;
     }
 
     public boolean isOffline() {

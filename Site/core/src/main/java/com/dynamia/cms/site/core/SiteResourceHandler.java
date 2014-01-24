@@ -41,9 +41,15 @@ public class SiteResourceHandler extends ResourceHttpRequestHandler {
         resource = resource.subpath(1, resource.getNameCount());
 
         File file = dir.resolve(resource).toFile();
-
-        if (ImageUtil.isImage(file) && isThumbnail(request)) {
-            file = createOrLoadThumbnail(file, resource.toString(), request);
+        if (ImageUtil.isImage(file)) {
+            
+            if (isThumbnail(request)) {
+                file = createOrLoadThumbnail(file, resource.toString(), request);
+            }
+            
+            if(!file.exists()){
+                file = dir.resolve("images/nophoto.jpg").toFile();
+            }
         }
 
         return new FileSystemResource(file);

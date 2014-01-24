@@ -11,7 +11,14 @@ import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.pages.PageNotFoundException;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.tools.commons.StringUtils;
 import com.dynamia.tools.domain.services.CrudService;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,18 +46,40 @@ public class ShowProductAction implements SiteAction {
         Long id = (Long) evt.getData();
 
         Product product = crudService.find(Product.class, id);
-        if(product==null){
+        if (product == null) {
             throw new PageNotFoundException("Product not found");
         }
         mv.addObject("prd_product", product);
         mv.addObject("prd_relatedProducts", service.getRelatedProducts(product));
         mv.addObject("prd_config", service.getSiteConfig(evt.getSite()));
-        mv.addObject("title",product.getName().toUpperCase());
-        mv.addObject("subtitle",product.getCategory().getName());
+        mv.addObject("title", product.getName().toUpperCase());
+        mv.addObject("subtitle", product.getCategory().getName());
         mv.addObject("icon", "info-sign");
-        
-        
-        
+
+        mv.addObject("metaDescription", product.getDescription());
+        if (product.getTags() != null && !product.getTags().isEmpty()) {
+            mv.addObject("metaKeywords", product.getTags());
+        }
+        try {
+            URL baseURL = new URL(evt.getRequest().getRequestURL().toString());
+            
+            String baseImageUrl = StringUtils.delete(baseURL.toString(),baseURL.getPath()) + "/resources/products/images/";
+            List<String> pageImages = new ArrayList<>();
+            pageImages.add(baseImageUrl + product.getImage());
+            if (product.getImage2() != null) {
+                pageImages.add(baseImageUrl + product.getImage2());
+            }
+            if (product.getImage3() != null) {
+                pageImages.add(baseImageUrl + product.getImage3());
+            }
+            if (product.getImage4() != null) {
+                pageImages.add(baseImageUrl + product.getImage4());
+            }
+            mv.addObject("pageImages", pageImages);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ShowProductAction.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

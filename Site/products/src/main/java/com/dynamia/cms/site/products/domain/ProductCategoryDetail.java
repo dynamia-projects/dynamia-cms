@@ -91,6 +91,7 @@ public class ProductCategoryDetail extends SimpleEntity {
         this.values = dto.getValues();
         this.externalRef = dto.getExternalRef();
         this.order = dto.getOrder();
+        
     }
 
 }

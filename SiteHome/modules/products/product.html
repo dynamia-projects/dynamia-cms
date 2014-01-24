@@ -30,9 +30,7 @@
                 <!-- Right Details-->
                 <div class="col-lg-7 col-md-7 col-xs-12 col-sm-12 mt40column">
                     <div class="productprice">
-                        <div class="pull-right">
-                            <img  th:if="${prd_product.brand}" th:src="@{'/resources/products/brands/'+${prd_product.brand.image}}" th:title="${prd_product.brand.name}" th:alt="${prd_product.brand.name}" class="tooltip-test" />
-                        </div>
+
                         <div class="productpageprice"> <i class="icon-tags"></i><span th:text="${cmsUtil.formatNumber(prd_product.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> </div>
                         <div th:if="${prd_product.price lt prd_product.lastPrice}" class="productpageoldprice">Antes <span th:text="${cmsUtil.formatNumber(prd_product.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> </div>
 
@@ -54,6 +52,10 @@
                             <!-- DESCRIPTION -->
 
                             <div class="tab-pane active" id="specification">
+                                <div class="pull-right">
+                                    <img  th:if="${prd_product.brand}" th:src="@{'/resources/products/brands/thumbnails/'+${prd_product.brand.image}(w=100,h=100)}" th:title="${prd_product.brand.name}" th:alt="${prd_product.brand.name}" class="tooltip-test" />
+                                </div>
+
                                 <ul class="productinfo">
                                     <li> 
                                         <span th:text="${'Codigo: '}" class="productinfoleft">NAME</span><span th:text="${prd_product.sku}">VALUE</span> 

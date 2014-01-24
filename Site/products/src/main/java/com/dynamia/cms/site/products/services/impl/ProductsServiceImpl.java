@@ -39,11 +39,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductsServiceImpl implements ProductsService {
 
+    private static final int DEFAULT_PAGE_SIZE=16;
+    
     @Autowired
     private CrudService crudService;
 
     @PersistenceContext
     private EntityManager entityManager;
+    
+    
 
     @Override
     public void generateToken(ProductsSiteConfig config) {
@@ -86,7 +90,7 @@ public class ProductsServiceImpl implements ProductsService {
             qp.add("category.parent", category);
         }
 
-        qp.paginate(new DataPaginator(12));
+        qp.paginate(new DataPaginator(DEFAULT_PAGE_SIZE));
         qp.orderBy("featured, name", true);
 
         return crudService.find(Product.class, qp);
@@ -144,11 +148,11 @@ public class ProductsServiceImpl implements ProductsService {
         if (form.getOrder() != null) {
             qp.orderBy(form.getOrder().getField(), form.getOrder().isAsc());
         } else {
-            qp.orderBy("name", true);
+            qp.orderBy("price asc, name", true);
         }
 
         if (qp.size() > 1) {
-            qp.paginate(new DataPaginator(12));
+            qp.paginate(new DataPaginator(DEFAULT_PAGE_SIZE));
             return filterProducts(site, qp);
         } else {
             return null;
@@ -202,7 +206,7 @@ public class ProductsServiceImpl implements ProductsService {
     public List<Product> find(Site site, String query) {
 
         QueryParameters qp = new QueryParameters();
-        qp.paginate(new DataPaginator(12));
+        qp.paginate(new DataPaginator(DEFAULT_PAGE_SIZE));
         qp.add("name", QueryConditions.like(query, true, BooleanOp.OR));
         qp.add("category.parent.name", QueryConditions.like(query, true, BooleanOp.OR));
 

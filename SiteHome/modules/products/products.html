@@ -12,13 +12,19 @@
         <div class="row mt10">
 
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt40column">
-                 <div th:include="site/pagetitle::content"/>
+                <div class="titles animated fadeInUp time3">
+                    <div class="pull-left">
+                        <h1 th:text="${title}" class="headinglefttitle">Page title</h1>
+
+                        <!-- Subcategories -->
+                        <div th:include="products/components/subcategorylist"/> 
+                    </div>
+                    <i th:class="${'icon-'+icon+' animated flip time3'}" class="icon-warning-sign"></i> 
+                </div> 
 
                 <!--Top Pagination -->
                 <div th:include="products/components/productpagination" />
 
-                <!-- Subcategories -->
-                <div th:include="products/components/subcategorylist"/>
 
 
                 <!-- PRODUCTS -->
@@ -39,6 +45,10 @@
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt40column"> 
                 <!--categories-->        
                 <div th:include="products/components/categorylist"/>
+            
+                <div class="mt40"></div>
+                <!--filters-->        
+                <div th:include="products/components/filtersform"/>
             </div>
         </div>
     </div>

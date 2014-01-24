@@ -54,7 +54,9 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
             site = service.getMainSite();
         }
 
-        if (site.isOffline()) {
+        loadSiteMetadata(site, modelAndView);
+
+        if (site != null && site.isOffline()) {
             modelAndView.clear();
             modelAndView.addObject("site", site);
             modelAndView.setViewName("site/offline");
@@ -68,6 +70,20 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
             }
         }
 
+    }
+
+    private void loadSiteMetadata(Site site, ModelAndView mv) {
+        if (site != null && mv != null) {
+            mv.addObject("metaAuthor", site.getMetadataAuthor());
+            mv.addObject("metaRights", site.getMetadataRights());
+            if (!mv.getModel().containsKey("metaDescription")) {
+                mv.addObject("metaDescription", site.getMetadataDescription());
+            }
+            if (!mv.getModel().containsKey("metaKeywords")) {
+                mv.addObject("metaKeywords", site.getMetadataKeywords());
+            }
+
+        }
     }
 
 }

@@ -20,20 +20,27 @@ import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDetailDTO;
 import com.dynamia.cms.site.products.dto.ProductDetailDTO;
 import com.dynamia.cms.site.products.services.ProductsSyncService;
+import com.dynamia.tools.commons.CollectionsUtils;
+import com.dynamia.tools.commons.collect.CollectionWrapper;
 import com.dynamia.tools.commons.logger.LoggingService;
 import com.dynamia.tools.commons.logger.SLF4JLoggingService;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.integration.scheduling.SchedulerUtil;
 import com.dynamia.tools.integration.scheduling.Task;
-import com.dynamia.tools.io.IOUtils;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -58,26 +65,19 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void synchronizeAll(ProductsSiteConfig siteCfg) {
-        synchronizeCategories(siteCfg);
-        synchronizeBrands(siteCfg);
-        synchronizeProducts(siteCfg);
-
-        siteCfg.setLastSync(new Date());
-        crudService.save(siteCfg);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void synchronizeCategories(ProductsSiteConfig siteCfg) {
+    public List<ProductCategoryDTO> synchronizeCategories(ProductsSiteConfig siteCfg) {
         logger.debug(">>>> STARTING PRODUCT'S CATEGORIES SYNCHRONIZATION FOR SITE " + siteCfg.getSite().getName() + " <<<<");
 
         ProductsDatasource ds = getDatasource(siteCfg);
 
         List<ProductCategoryDTO> categories = ds.getCategories();
+
         for (ProductCategoryDTO remoteCategory : categories) {
             synchronizeCategory(siteCfg, remoteCategory);
         }
+
+        return categories;
+
     }
 
     @Override
@@ -108,10 +108,11 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void synchronizeProducts(ProductsSiteConfig siteCfg) {
+    public List<ProductDTO> synchronizeProducts(ProductsSiteConfig siteCfg) {
         logger.debug(">>>> STARTING PRODUCTS SYNCHRONIZATION FOR SITE " + siteCfg.getSite().getName() + " <<<<");
         ProductsDatasource ds = getDatasource(siteCfg);
         List<ProductDTO> products = ds.getProducts();
+
         for (ProductDTO remoteProduct : products) {
             logger.debug("Synchronizing product. Site:  " + siteCfg.getSite().getName() + " Name:" + remoteProduct.getName());
             try {
@@ -119,8 +120,8 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
             } catch (Exception e) {
                 logger.error("Error Synchronizing Product: " + remoteProduct.getName(), e);
             }
-
         }
+        return products;
     }
 
     @Override
@@ -228,29 +229,27 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
         if (imageName != null && !imageName.isEmpty()) {
 
-            final URL url = new URL(baseURL + "/" + imageName);
-            final File folder = new File(localFolder);
-            final File localFile = new File(folder, imageName);
-
-            if (!folder.exists()) {
-                folder.mkdirs();
+            String separator = "/";
+            if (baseURL.endsWith("/")) {
+                separator = "";
             }
 
-            if (localFile.exists()) {
-                logger.info(" >Local file exists: Deleting..");
-                localFile.delete();
-            } else {
-                localFile.createNewFile();
+            final URL url = new URL(baseURL + separator + imageName);
+            final Path folder = Paths.get(localFolder);
+            final Path localFile = folder.resolve(imageName);
+
+            if (Files.notExists(folder)) {
+                Files.createDirectories(folder);
             }
-            final FileOutputStream fos = new FileOutputStream(localFile);
+
             SchedulerUtil.run(new Task() {
 
                 @Override
                 public void doWork() {
                     try {
                         logger.info("Downloading image " + imageName + " to " + localFolder);
+                        Files.copy(url.openStream(), localFile, StandardCopyOption.REPLACE_EXISTING);
 
-                        IOUtils.copy(url.openStream(), fos);
                     } catch (IOException ex) {
                         logger.error("Error downloading image " + imageName, ex);
                     }
@@ -279,6 +278,49 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
             }
         }
 
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void disableCategoriesNoInList(List<ProductCategoryDTO> categories) {
+        if (categories != null && !categories.isEmpty()) {
+            List<Long> ids = new ArrayList<>();
+            for (ProductCategoryDTO dto : categories) {
+                ids.add(dto.getExternalRef());
+            }
+
+            String sql = "update " + ProductCategory.class.getSimpleName() + " pc set active=false where pc.parent is null and pc.externalRef not in (:ids)";
+            Query query = entityMgr.createQuery(sql);
+            query.setParameter("ids", ids);
+
+            query.executeUpdate();
+
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void disableProductsNoInList(List<ProductDTO> products) {
+        if (products != null && !products.isEmpty()) {
+            List<Long> ids = new ArrayList<>();
+            for (ProductDTO dto : products) {
+                ids.add(dto.getExternalRef());
+            }
+
+            String sql = "update " + Product.class.getSimpleName() + " pc set active=false where pc.externalRef not in (:ids)";
+            Query query = entityMgr.createQuery(sql);
+            query.setParameter("ids", ids);
+            query.executeUpdate();
+
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void update(ProductsSiteConfig siteCfg) {
+        siteCfg = crudService.reload(siteCfg);
+        siteCfg.setLastSync(new Date());
+        crudService.update(siteCfg);
     }
 
 }

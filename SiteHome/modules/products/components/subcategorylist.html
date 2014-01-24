@@ -5,7 +5,7 @@
     <body th:fragment="content">
         <!--subcategories-->        
 
-        <ul class="nav nav-pills" th:if="${prd_subcategories!=null and not #lists.isEmpty(prd_subcategories)}">           
+        <ul class="nav nav-pills mainmenucontain subcategories" th:if="${prd_subcategories!=null and not #lists.isEmpty(prd_subcategories)}">           
             <li th:each="cat : ${prd_subcategories}">
                 <a th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}}" 
                    th:text="${cat.name}" href="#">Categoria ABC</a> 
@@ -14,7 +14,8 @@
 
 
         <ol class="breadcrumb" th:if="${prd_parentCategory!=null}">
-            <li><a th:text="${prd_parentCategory.name}" th:href="@{'/store/category/'+${prd_parentCategory.id}+'/'+${prd_parentCategory.alias}}" href="#">Home</a></li>
+
+            <li><a th:text="${prd_parentCategory.name}" th:href="@{'/store/categories/'+${prd_parentCategory.id}+'/'+${prd_parentCategory.alias}}" href="#">Home</a></li>
             <li class="active" th:text="${title}">Data</li>
         </ol>
 

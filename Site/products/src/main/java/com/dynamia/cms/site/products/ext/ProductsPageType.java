@@ -55,6 +55,7 @@ public class ProductsPageType implements PageTypeExtension {
         mv.addObject("subtitle", context.getPage().getSubtitle());
         
         PageParameter categoryParam = context.getParameter("category");
+        
         if (categoryParam != null) {
             Long id = new Long(categoryParam.getValue());
             SiteActionManager.performAction("loadProductCategory", mv, context.getRequest(), id);

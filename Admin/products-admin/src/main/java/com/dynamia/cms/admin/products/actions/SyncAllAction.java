@@ -5,7 +5,9 @@
  */
 package com.dynamia.cms.admin.products.actions;
 
+import com.dynamia.cms.admin.products.ProductsAutoSynchronizer;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import com.dynamia.cms.site.products.services.ProductsSynchronizer;
 import com.dynamia.cms.site.products.services.ProductsSyncService;
 import com.dynamia.tools.commons.ApplicableClass;
 import com.dynamia.tools.web.actions.ActionGroup;
@@ -26,7 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class SyncAllAction extends AbstractCrudAction {
 
     @Autowired
-    private ProductsSyncService syncService;
+    private ProductsSynchronizer synchronizer;
 
     public SyncAllAction() {
         setName("Sync All Products");
@@ -42,12 +44,12 @@ public class SyncAllAction extends AbstractCrudAction {
                 @Override
                 public void doSomething() {
                     long s = System.currentTimeMillis();
-                    syncService.synchronizeAll(cfg);
-                   
+                    synchronizer.synchronize(cfg);
+
                     long e = System.currentTimeMillis();
-                    long t = e-s;
-                    
-                     UIMessages.showMessage("Synchronization completed in "+t+"ms sucessfully!");
+                    long t = e - s;
+
+                    UIMessages.showMessage("Synchronization completed in " + t + "ms sucessfully!");
                 }
             });
 

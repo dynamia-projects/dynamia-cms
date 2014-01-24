@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <!-- Main Menu -->
+
+    <body th:fragment="content">
+        <div class="headerstrip navbar-fixed-top">
+            <div class="container">
+                <div class="pull-left welcometxt">Compulago</div>
+                <!-- Top Nav Start -->
+                <div class="pull-right">
+                    <div class="navbar" id="topnav">
+                        <div class="navbar-inner">
+                            <ul class="nav" >
+                                <li><a class="home active" th:href="@{/}" ><i class="icon-home"></i> Home </a> </li>
+                                <li><a class="myaccount" ><i class="icon-user"></i> Mi Cuenta </a> </li>
+                                </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Top Nav End -->
+
+
+            </div>
+        </div>
+    </body>
+
+</html>

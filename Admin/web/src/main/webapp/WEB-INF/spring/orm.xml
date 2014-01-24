@@ -17,7 +17,7 @@
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
  
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:annotation-driven transaction-manager="transactionManager"  />
 
 
     <!-- EntityManager Factory -->

@@ -124,7 +124,6 @@ public class PageController {
         PageTypeExtension pageTypeExt = getExtension(type);
         if (pageTypeExt != null) {
             PageContext context = new PageContext(page, site, mv, request);
-
             pageTypeExt.setupPage(context);
         }
     }

@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es"> 
     <head>
         <title th:text="|${site.name} - ${title}|">Simplepx - Responisve Multipurpose Bootstrap Template</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta name="description" content="Responisve, Bootstrap, Html5, Css3, Multipuropose, Blog, Portfolio, Ecommerce - All in One Template"/>
+        <meta name="description" th:content="${metaDescription}" content="Responisve, Bootstrap, Html5, Css3, Multipuropose, Blog, Portfolio, Ecommerce - All in One Template"/>
+        <meta name="author" th:content="${metaAuthor}" content=""/>
+        <meta name="keywords" th:content="${metaKeywords}" content=""/>
+        <meta name="copyright" th:content="${metaRights}" content=""/>
+        <meta name="robots" content="index, follow"/>
+        <meta th:content="|${site.name} - ${title}|" property="og:title" content="" />
+        <meta th:content="${metaDescription}" property="og:description" content="" />
+        <th:block th:each="pi : ${pageImages}">
+            <meta th:content="${pi}" property="og:image" content="" />
+        </th:block>
 
         <link th:href="@{/img/favicon.ico}" href="img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 
@@ -42,27 +51,7 @@
     <body>
         <!-- Header Start -->
         <header >
-            <div class="headerstrip navbar-fixed-top">
-                <div class="container">
-                    <div class="pull-left welcometxt"><a class="orange" href="#">Inicia Sesion</a> o <a class="orange" href="#">Crea una cuenta</a> </div>
-                    <!-- Top Nav Start -->
-                    <div class="pull-right">
-                        <div class="navbar" id="topnav">
-                            <div class="navbar-inner">
-                                <ul class="nav" >
-                                    <li><a class="home active" ><i class="icon-home"></i> Home </a> </li>
-                                    <li><a class="myaccount" ><i class="icon-user"></i> Mi Cuenta </a> </li>
-                                    <li><a class="shoppingcart" ><i class="icon-shopping-cart"></i> Carrito de Compras </a> </li>
-                                    <li><a class="checkout" ><i class="icon-ok-circle"></i> Pagar </a> </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Top Nav End -->
-
-
-                </div>
-            </div>
+            <th:block th:include="tpl_topmenu"/>
 
             <div class="headerdetails mt40">
                 <div class="container"> 
@@ -71,9 +60,9 @@
                     </a> 
                     <!--Social -->
                     <div class="socialtop pull-right">
-                        <div class="call">
-                            <i class="icon-phone"></i> Llamanos : <span class="orange">+57 (5) 693 04 23 </span>  <br/> 
-                        </div>
+                        <h4 class="call">
+                            <i class="icon-phone"></i> Llamanos : <a class="orange" href="tel:0356930423">+57 (5) 693 04 23</a><br/> 
+                        </h4>
                         <ul class="pull-right">
                             <li><a class="tooltip-test"  data-original-title="Facebook"  ><i class="icon-facebook"></i></a></li>
                             <li><a class="tooltip-test"  data-original-title="Twitter"  ><i class="icon-twitter"></i></a></li>
@@ -94,6 +83,8 @@
             <div id="content" layout:fragment="content">
 
             </div>
+
+            <th:block th:include="tpl_webchat"/>
 
             <!-- Newsletter-->
             <th:block th:include="tpl_newsletter"/>
@@ -117,12 +108,14 @@
                 <section class="copyrightbottom">
                     <div class="container">
                         <div class="row">
-                            <div class="pull-left">Todos los Derechos Reservados © 2014. </div>
-                            <div class="pull-right">Powered by: <a href="http://www.dynamiasoluciones.com" target="blank" title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing" class="tooltip-test">Dynamia Soluciones IT</a></div>
+                            <div class="pull-left">Powered by: <a href="http://www.dynamiasoluciones.com" target="blank" title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing" class="tooltip-test">Dynamia Soluciones IT</a></div>
                         </div>
                     </div>
                 </section>
             </footer>
+
+
+
             <!-- Got to top --> 
             <a id="gotop"><i class="icon-circle-arrow-up"></i></a> 
         </div>
@@ -172,6 +165,27 @@
 
         <!-- Custom --> 
         <script th:src="@{/js/custom.js}" src="js/custom.js"></script> 
+
+
+        <!-- Google Analytics -->
+        <script th:inline="javascript">
+
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', [[${site.googleAnalyticsID}]], [[${site.googleAnalyticsDomain}]]);
+                    ga('send', 'pageview');
+
+        </script>
 
     </body>
 </html>

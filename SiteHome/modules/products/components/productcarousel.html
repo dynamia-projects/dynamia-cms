@@ -6,7 +6,7 @@
     <!--Categories-->    
     <body th:fragment="frag (productlist)">         
 
-        <div class="column4 carousel">
+        <div class="column5 carousel">
             <ul class="mt40 slides">
                 <li th:each="prd : ${productlist}">
                     <th:block th:include="products/components/productpanel::frag(${prd})"/>

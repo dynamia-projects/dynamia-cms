@@ -1,7 +1,7 @@
 view: form
 beanClass: com.dynamia.cms.site.core.domain.Site
 hidden: [id]
-sortFields: [name,key,description,template,offline,offlineMessage,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
+sortFields: [name,key,description,template,offline,offlineMessage,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
 
 fields:
     
@@ -25,6 +25,14 @@ fields:
             multiline: true=boolean
             height: 100px
             
+    googleAnalyticsID:
+       label: ID (UA-XXXX)
+       
+    googleAnalyticsDomain:
+        label: Domain
+        
+    googleSiteVerification:
+        label: Site Verification
            
     
     metadataKeywords:
@@ -38,6 +46,8 @@ fields:
         
     metadataRights:
         label: Rights
+        
+        
     
 groups:
     
@@ -45,6 +55,11 @@ groups:
         label: Basic Settings
         fields: [name,key,description,template,offline,offlineMessage]
             
+    
+    general:
+        label: Google Analytics and Tools
+        fields: [googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification]
+           
     
     metadata:
         label: Metadata
