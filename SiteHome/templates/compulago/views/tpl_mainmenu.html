@@ -13,7 +13,8 @@
 
                         <li th:each="mi : ${menuitems}">
                             <a  th:class="${activeMenu == mi? 'active':''}" th:href="@{'/'+${mi.href}}" href="#">
-                                <i th:class="${'icon-'+mi.icon+' icon-white font18'}"  th:text="${mi.name}" class="icon-home icon-white font18">Menu Item</i>                                
+                                <i th:class="${'icon-'+mi.icon+' icon-white font18'}" class="icon-home icon-white font18"></i>                                
+                                <th:block th:text="${mi.name}"/>
                             </a>
                         </li>                        
 
