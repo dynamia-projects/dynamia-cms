@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dynamia.cms.site.products.ext;
+package com.dynamia.cms.site.products.listeners;
 
 import com.dynamia.cms.site.core.api.CMSListener;
-import com.dynamia.cms.site.products.domain.ProductCategory;
+import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.tools.commons.StringUtils;
 import com.dynamia.tools.domain.util.CrudServiceListenerAdapter;
 
@@ -15,19 +15,19 @@ import com.dynamia.tools.domain.util.CrudServiceListenerAdapter;
  * @author mario
  */
 @CMSListener
-public class CategoryCrudServiceListener extends CrudServiceListenerAdapter<ProductCategory> {
+public class BrandCrudServiceListener extends CrudServiceListenerAdapter<ProductBrand> {
 
     @Override
-    public void beforeCreate(ProductCategory entity) {
+    public void beforeCreate(ProductBrand entity) {
         generateAlias(entity);
     }
 
     @Override
-    public void beforeUpdate(ProductCategory entity) {
+    public void beforeUpdate(ProductBrand entity) {
         generateAlias(entity);
     }
 
-    private void generateAlias(ProductCategory entity) {
+    private void generateAlias(ProductBrand entity) {
         String name = entity.getName();
 
         name = StringUtils.simplifiedString(name);

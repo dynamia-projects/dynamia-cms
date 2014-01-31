@@ -16,9 +16,6 @@ import com.dynamia.cms.site.products.dto.ProductDTO;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.cms.site.products.services.ProductsSyncService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *

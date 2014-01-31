@@ -27,14 +27,12 @@
                     <span  th:text="${prd.brand!=null?prd.brand.name:''}">Brand</span>
                     <h3><a  th:href="@{'/store/products/'+${prd.id}}" th:text="${prd.name}" href="#">Product Name</a></h3>
                 </div>
+                
                 <div class="productratecart centered">
-                    <div>
-                        <h3><strong><span th:text="${cmsUtil.formatNumber(prd.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"  class=" orange">$4459.00</span></strong></h3>
-
-                        <div class="ratingstar"> <i class="icon-star orange"> </i><i class="icon-star orange"> </i><i class="icon-star orange"> </i> <i class="icon-star-empty"></i> <i class="icon-star-empty"></i></div>
-                    </div>
-
+                    <span th:if="${prd.price lt prd.lastPrice}" th:text="${cmsUtil.formatNumber(prd.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}" class="oldprice" >$4459.00</span>
+                    <h3><strong><span th:text="${cmsUtil.formatNumber(prd.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"  class=" orange">$4459.00</span></strong></h3>
                 </div>
+
             </div>
         </div>
 

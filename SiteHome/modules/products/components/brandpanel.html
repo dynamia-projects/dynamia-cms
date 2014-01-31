@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+    <body th:fragment="frag (brd)">
+
+        <div class="thumbnail">
+            <div class="relativediv">
+                <!-- Brand Image -->
+                <div style="height:170px;line-height: 170px">
+                    <a  th:href="@{'/store/brands/'+${brd.alias}}" href="#" style="vertical-align: middle;line-height: 1.5">                
+                        <img th:src="@{'/resources/products/brands/thumbnails/'+${brd.image}(w=180,h=180)}" src="img/product1a.jpg" alt="" />
+                    </a>  
+                </div>
+            </div>
+            <div class="caption">                
+                <div class="productratecart centered">
+                    <div>
+                        <h3><strong><span th:text="${brd.name}" class=" orange">Brand NAME</span></strong></h3>
+                        <a th:href="@{${cmsUtil.absoluteURL(brd.website)}}" target="_blank">Sitio Oficial</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </body>
+
+</html>

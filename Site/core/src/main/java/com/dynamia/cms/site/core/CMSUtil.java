@@ -16,6 +16,10 @@ import java.util.Collection;
 public class CMSUtil {
 
     public String formatNumber(Number number, String pattern) {
+        if(number==null){
+            return "";
+        }
+        
         if (pattern == null) {
             return String.valueOf(number);
         }
@@ -25,6 +29,18 @@ public class CMSUtil {
 
     public Collection groupCollection(Collection collection, int groupSize) {
         return CollectionsUtils.group(collection, groupSize);
+    }
+
+    public String absoluteURL(String url) {
+        if(url==null || url.isEmpty()){
+            return "#";
+        }
+        
+        if (!url.startsWith("http")) {
+            return "http://" + url;
+        } else {
+            return url;
+        }
     }
 
 }

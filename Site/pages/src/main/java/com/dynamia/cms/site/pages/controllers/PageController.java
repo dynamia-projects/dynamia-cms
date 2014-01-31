@@ -120,11 +120,13 @@ public class PageController {
     }
 
     private void configurePageType(Page page, Site site, ModelAndView mv, HttpServletRequest request) {
-        String type = page.getType();
-        PageTypeExtension pageTypeExt = getExtension(type);
-        if (pageTypeExt != null) {
-            PageContext context = new PageContext(page, site, mv, request);
-            pageTypeExt.setupPage(context);
+        if (page != null) {
+            String type = page.getType();
+            PageTypeExtension pageTypeExt = getExtension(type);
+            if (pageTypeExt != null) {
+                PageContext context = new PageContext(page, site, mv, request);
+                pageTypeExt.setupPage(context);
+            }
         }
     }
 }

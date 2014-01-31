@@ -48,4 +48,14 @@ public interface ProductsService {
 
     ProductsSiteConfig getSiteConfig(String token);
 
+    ProductCategory getCategoryByAlias(Site site, String alias);
+
+    ProductBrand getBrandByAlias(Site site, String alias);
+
+    public List<ProductBrand> getBrands(ProductCategory category);
+
+    List<ProductCategory> getSubcategories(ProductCategory category, ProductBrand brand);
+
+    List<ProductCategory> getCategories(ProductBrand brand);
+
 }

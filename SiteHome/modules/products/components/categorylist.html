@@ -10,7 +10,7 @@
         <ul class="nav nav-list categories">
             <li th:each="cat : ${prd_categories}">
                 <a th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}}" 
-                   th:class="${category!=null and cat.id==category.id?'active':''}"
+                   th:class="${prd_category!=null and cat.id==prd_category.id?'active':''}"
                    th:text="${cat.name}" href="#">Categoria ABC</a> 
             </li>
 

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <body th:fragment="frag(cat, brands)">
+        <!--subcategories-->        
+
+        <ul class="nav nav-pills subcategories" th:if="${brands!=null and not #lists.isEmpty(brands)}">           
+            <li th:each="brd : ${brands}">
+                <a th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}+'/'+${brd.alias}}" 
+                   th:text="${brd.name}" href="#">Brand ABC</a> 
+            </li>                      
+        </ul>
+
+    </body>
+
+</html>

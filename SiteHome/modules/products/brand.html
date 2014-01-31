@@ -13,17 +13,19 @@
 
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt40column">
                 <div class="titles animated fadeInUp time3">
-                    <div class="pull-left">
+                    <div class="pull-right">
+                        <a th:href="@{'/store/brands/'+${prd_brand.alias}}" title="Ver otros productos de esta marca" class="tooltip-test">
+                            <img th:src="@{'/resources/products/brands/thumbnails/'+${prd_brand.image}(w=120,h=120)}" src="img/product1a.jpg" alt="" />
+                        </a>
+                    </div>
+
+                    <div>
                         <h1 th:text="${title}" class="headinglefttitle">Page title</h1>
 
                         <!-- Subcategories -->
-                        <div th:include="products/components/subcategoriesmenu::content"/>                         
-
-                    </div>
-                    <i th:class="${'icon-'+icon+' animated flip time3'}" class="icon-warning-sign"></i> 
-                    <div class="clearfix" th:include="products/components/brandsmenu::frag(${prd_category},${prd_categoryBrands})"/> 
-
-                </div>
+                        <div th:include="products/components/brandsubcategoriesmenu"/> 
+                    </div>                  
+                </div> 
 
                 <!--Top Pagination -->
                 <div class="clearfix" th:include="products/components/productpagination" />

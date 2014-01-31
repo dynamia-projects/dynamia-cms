@@ -42,3 +42,7 @@ ul.subcategories > li + li > a{
 #webchat a{
     color: white;
 }
+
+.productratecart{
+    margin: 0px; 
+}

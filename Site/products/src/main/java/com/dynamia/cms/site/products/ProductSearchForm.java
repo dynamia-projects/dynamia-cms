@@ -21,6 +21,8 @@ public class ProductSearchForm implements Serializable {
     private Long brandId;
     private boolean stock;
     private ProductSearchOrder order = ProductSearchOrder.NAME;
+    
+    
 
     public String getName() {
         return name;

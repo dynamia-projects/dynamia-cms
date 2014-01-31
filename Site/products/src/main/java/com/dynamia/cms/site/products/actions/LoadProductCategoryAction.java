@@ -10,6 +10,7 @@ import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.products.ProductsUtil;
 import com.dynamia.cms.site.products.domain.Product;
+import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.tools.domain.services.CrudService;
@@ -41,17 +42,24 @@ class LoadProductCategoryAction implements SiteAction {
     public void actionPerformed(ActionEvent evt) {
         ModelAndView mv = evt.getModelAndView();
 
-        Long id = (Long) evt.getData();
-        ProductCategory category = crudService.find(ProductCategory.class, id);
+        ProductCategory category = null;
+        if (evt.getData() instanceof String) {
+            String alias = (String) evt.getData();
+            category = service.getCategoryByAlias(evt.getSite(), alias);
+        } else {
+            Long id = (Long) evt.getData();
+            category = crudService.find(ProductCategory.class, id);
+        }
 
         List<Product> products = service.getProducts(category);
         List<ProductCategory> subcategories = service.getSubcategories(category);
-        mv.addObject("title", category.getName());        
-        mv.addObject("category", category);
+        List<ProductBrand> categoryBrands = service.getBrands(category);
+
+        mv.addObject("title", category.getName());
+        mv.addObject("prd_category", category);
         mv.addObject("prd_subcategories", subcategories);
-        if (category.getParent() != null) {
-            mv.addObject("prd_parentCategory", category.getParent());
-        }
+        mv.addObject("prd_categoryBrands", categoryBrands);
+        mv.addObject("prd_parentCategory", category.getParent());
 
         products = ProductsUtil.setupPagination(products, evt.getRequest(), mv);
         ProductsUtil.setupProductsVar(products, mv);

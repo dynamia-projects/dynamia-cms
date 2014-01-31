@@ -14,6 +14,7 @@ import com.dynamia.cms.site.products.ProductsUtil;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.tools.domain.services.CrudService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +28,9 @@ public class SearchProductsAction implements SiteAction {
 
     @Autowired
     private ProductsService service;
+
+    @Autowired
+    private CrudService crudService;
 
     @Override
     public String getName() {
@@ -51,9 +55,11 @@ public class SearchProductsAction implements SiteAction {
         }
 
         if (form.getCategoryId() != null) {
-            ProductCategory category = new ProductCategory();
-            category.setId(form.getCategoryId());
+            ProductCategory category = crudService.find(ProductCategory.class, form.getCategoryId());
             List<ProductCategory> subcategories = service.getSubcategories(category);
+
+            mv.addObject("prd_category", category);
+            mv.addObject("prd_parentCategory", category.getParent());
             mv.addObject("prd_subcategories", subcategories);
         }
 

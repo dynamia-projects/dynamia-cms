@@ -64,6 +64,7 @@
                                         <span th:text="${'Marca o Fabricante: '}" class="productinfoleft">NAME</span><span th:text="${prd_product.brand.name}">VALUE</span> 
                                     </li>
 
+
                                     <li th:each="det : ${prd_product.details}"> 
                                         <span th:text="${det.name+': '}" class="productinfoleft">NAME</span><span th:text="${det.value}">VALUE</span> 
                                     </li>

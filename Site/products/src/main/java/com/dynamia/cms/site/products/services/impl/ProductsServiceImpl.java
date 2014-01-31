@@ -39,15 +39,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductsServiceImpl implements ProductsService {
 
-    private static final int DEFAULT_PAGE_SIZE=16;
-    
+    private static final int DEFAULT_PAGE_SIZE = 16;
+
     @Autowired
     private CrudService crudService;
 
     @PersistenceContext
     private EntityManager entityManager;
-    
-    
 
     @Override
     public void generateToken(ProductsSiteConfig config) {
@@ -57,6 +55,16 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public ProductsSiteConfig getSiteConfig(String token) {
         return crudService.findSingle(ProductsSiteConfig.class, "token", token);
+    }
+
+    @Override
+    @Cacheable(value = "products", key = "'cat'+#site.key+#alias")
+    public ProductCategory getCategoryByAlias(Site site, String alias) {
+        QueryParameters qp = QueryParameters.with("site", site);
+        qp.add("active", true);
+        qp.add("alias", QueryConditions.eq(alias));
+
+        return crudService.findSingle(ProductCategory.class, qp);
     }
 
     @Override
@@ -81,6 +89,33 @@ public class ProductsServiceImpl implements ProductsService {
         return crudService.find(ProductCategory.class, qp);
     }
 
+    public List<ProductCategory> getCategories(ProductBrand brand) {
+        String sql = QueryBuilder.select(ProductCategory.class, "pc")
+                .where("pc.site=:site")
+                .and("pc.id in (select p.category.parent.id from Product p where p.site = :site and p.brand = :brand  and p.active=true)")
+                .orderBy("pc.name").toString();
+
+        Query query = entityManager.createQuery(sql);
+        query.setParameter("site", brand.getSite());
+        query.setParameter("brand", brand);
+
+        return query.getResultList();
+    }
+
+    public List<ProductCategory> getSubcategories(ProductCategory category, ProductBrand brand) {
+        String sql = QueryBuilder.select(ProductCategory.class, "pc")
+                .where("pc.site=:site")
+                .and("pc.id in (select p.category.id from Product p where p.site = :site and p.brand = :brand and p.category.parent = :category and p.active=true)")
+                .orderBy("pc.name").toString();
+
+        Query query = entityManager.createQuery(sql);
+        query.setParameter("site", brand.getSite());
+        query.setParameter("brand", brand);
+        query.setParameter("category", category);
+
+        return query.getResultList();
+    }
+
     @Override
     public List<Product> getProducts(ProductCategory category) {
         QueryParameters qp = QueryParameters.with("active", true);
@@ -91,7 +126,7 @@ public class ProductsServiceImpl implements ProductsService {
         }
 
         qp.paginate(new DataPaginator(DEFAULT_PAGE_SIZE));
-        qp.orderBy("featured, name", true);
+        qp.orderBy("price", true);
 
         return crudService.find(Product.class, qp);
     }
@@ -100,8 +135,8 @@ public class ProductsServiceImpl implements ProductsService {
     public List<Product> getProducts(ProductBrand brand) {
         QueryParameters qp = QueryParameters.with("active", true);
         qp.add("brand", brand);
-        qp.orderBy("featured, name", true);
-
+        qp.orderBy("price", true);
+        qp.paginate(new DataPaginator(DEFAULT_PAGE_SIZE));
         return crudService.find(Product.class, qp);
     }
 
@@ -115,45 +150,46 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public List<Product> filterProducts(Site site, ProductSearchForm form) {
 
-        QueryParameters qp = new QueryParameters();
-        qp.add("active", true);
+        QueryParameters params = new QueryParameters();
+        params.add("active", true);
 
         if (form.getName() != null && !form.getName().trim().isEmpty()) {
-            qp.add("name", form.getName());
+            params.add("name", form.getName());
         }
 
         if (form.getMaxPrice() != null && form.getMinPrice() == null) {
-            qp.add("price", leqt(form.getMaxPrice()));
+            params.add("price", leqt(form.getMaxPrice()));
         }
 
         if (form.getMaxPrice() == null && form.getMinPrice() != null) {
-            qp.add("price", geqt(form.getMinPrice()));
+            params.add("price", geqt(form.getMinPrice()));
         }
 
         if (form.getMaxPrice() != null && form.getMinPrice() != null) {
-            qp.add("price", between(form.getMinPrice(), form.getMaxPrice()));
-        }
-        if (form.getCategoryId() != null) {
-            qp.add("category.parent.id", form.getCategoryId());
+            params.add("price", between(form.getMinPrice(), form.getMaxPrice()));
         }
 
         if (form.getBrandId() != null) {
-            qp.add("brand.id", form.getBrandId());
+            params.add("brand.id", form.getBrandId());
         }
 
         if (form.isStock()) {
-            qp.add("stock", gt(0));
+            params.add("stock", gt(0));
         }
 
         if (form.getOrder() != null) {
-            qp.orderBy(form.getOrder().getField(), form.getOrder().isAsc());
+            params.orderBy(form.getOrder().getField(), form.getOrder().isAsc());
         } else {
-            qp.orderBy("price asc, name", true);
+            params.orderBy("price", true);
         }
 
-        if (qp.size() > 1) {
-            qp.paginate(new DataPaginator(DEFAULT_PAGE_SIZE));
-            return filterProducts(site, qp);
+        if (params.size() > 1) {
+            params.paginate(new DataPaginator(DEFAULT_PAGE_SIZE));
+
+            QueryBuilder builder = QueryBuilder.fromParameters(Product.class, "p", params);
+            builder.and("(p.category.id = :category or p.category.parent.id = :category)", form.getCategoryId() != null);
+            params.add("category", form.getCategoryId());
+            return crudService.executeQuery(builder, params);
         } else {
             return null;
         }
@@ -188,13 +224,36 @@ public class ProductsServiceImpl implements ProductsService {
     public List<ProductBrand> getBrands(Site site) {
         String sql = QueryBuilder.select(ProductBrand.class, "pb")
                 .where("pb.site=:site")
-                .and("pb.id in (select p.brand.id from Product p where p.site = :site)")
+                .and("pb.id in (select p.brand.id from Product p where p.site = :site  and p.active=true)")
                 .orderBy("pb.name").toString();
 
         Query query = entityManager.createQuery(sql);
         query.setParameter("site", site);
 
         return query.getResultList();
+    }
+
+    @Override
+    public List<ProductBrand> getBrands(ProductCategory category) {
+        String sql = QueryBuilder.select(ProductBrand.class, "pb")
+                .where("pb.site=:site")
+                .and("pb.id in (select p.brand.id from Product p where p.site = :site and (p.category = :category or p.category.parent = :category  and p.active=true))")
+                .orderBy("pb.name").toString();
+
+        Query query = entityManager.createQuery(sql);
+        query.setParameter("site", category.getSite());
+        query.setParameter("category", category);
+
+        return query.getResultList();
+    }
+
+    @Override
+    @Cacheable(value = "products", key = "'brd'+#site.key+#alias")
+    public ProductBrand getBrandByAlias(Site site, String alias) {
+        QueryParameters qp = QueryParameters.with("site", site);
+        qp.add("alias", QueryConditions.eq(alias));
+
+        return crudService.findSingle(ProductBrand.class, qp);
     }
 
     @Override
@@ -218,7 +277,7 @@ public class ProductsServiceImpl implements ProductsService {
     public List<Product> getRelatedProducts(Product product) {
         QueryParameters qp = new QueryParameters();
         QueryBuilder qb = QueryBuilder.select(Product.class, "p");
-      
+
         if (product.getBrand() != null) {
             qp.add("brand", product.getBrand().getName());
             qb.or("p.name like :brand");
@@ -231,7 +290,7 @@ public class ProductsServiceImpl implements ProductsService {
             qp.add("category", product.getCategory().getName());
             qb.or("p.name like :category");
         }
-        
+
         qb.orderBy("p.price asc");
         String sql = qb.toString();
         Query query = entityManager.createQuery(sql);

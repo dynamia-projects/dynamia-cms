@@ -9,6 +9,7 @@ import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
 import com.dynamia.tools.domain.SimpleEntity;
 import com.dynamia.tools.domain.contraints.NotEmpty;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -34,6 +35,16 @@ public class ProductBrand extends SimpleEntity {
     private String description;
     private Long externalRef;
     private String image;
+    @Column(name = "brandAlias")
+    private String alias;
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
 
     public Site getSite() {
         return site;

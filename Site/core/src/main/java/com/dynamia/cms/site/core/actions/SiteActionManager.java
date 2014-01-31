@@ -64,6 +64,10 @@ public class SiteActionManager {
         performAction(actionName, evt);
     }
 
+    public static void performAction(String actionName, ModelAndView mv, HttpServletRequest request) {
+        performAction(actionName, mv, request, null);
+    }
+
     public static ActionEvent newEvent(Site site, ModelAndView mv, HttpServletRequest request, Object source, Object data) {
         return new ActionEvent(site, mv, request, source, data);
     }
