@@ -25,7 +25,7 @@ public class ShowCategoriesAction implements SiteAction{
     
     @Override
     public String getName() {
-        return "showCategories";
+        return "showProductCategories";
     }
 
     @Override

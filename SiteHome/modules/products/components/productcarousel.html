@@ -4,9 +4,9 @@
 
 
     <!--Categories-->    
-    <body th:fragment="frag (productlist)">         
+    <body th:fragment="frag (productlist,columns)">         
 
-        <div class="column5 carousel">
+        <div th:class="${'column'+columns+' carousel'}">
             <ul class="mt40 slides">
                 <li th:each="prd : ${productlist}">
                     <th:block th:include="products/components/productpanel::frag(${prd})"/>

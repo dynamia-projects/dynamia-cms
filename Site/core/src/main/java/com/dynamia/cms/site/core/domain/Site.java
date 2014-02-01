@@ -6,7 +6,9 @@ package com.dynamia.cms.site.core.domain;
 
 import com.dynamia.tools.domain.SimpleEntity;
 import com.dynamia.tools.domain.contraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -26,7 +28,10 @@ public class Site extends SimpleEntity {
     @NotEmpty
     private String key;
     @OneToMany(mappedBy = "site")
-    private List<SiteDomain> acceptedDomains;
+    private List<SiteDomain> acceptedDomains = new ArrayList<>();
+
+    @OneToMany(mappedBy = "site")
+    private List<SiteParameter> parameters = new ArrayList<>();
 
     private String description;
     private boolean offline;
@@ -54,6 +59,14 @@ public class Site extends SimpleEntity {
 
     public void setAcceptedDomains(List<SiteDomain> acceptedDomains) {
         this.acceptedDomains = acceptedDomains;
+    }
+
+    public List<SiteParameter> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(List<SiteParameter> parameters) {
+        this.parameters = parameters;
     }
 
     public String getKey() {

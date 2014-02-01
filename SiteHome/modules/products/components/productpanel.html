@@ -5,10 +5,13 @@
 
     <body th:fragment="frag (prd)">
 
-        <div class="thumbnail tooltip-test" data-placement="top" data-toogle="tooltip" th:title="${prd.name.toUpperCase()}">
+        <div class="thumbnail" style="height:262px" >
+
             <div class="relativediv">
+                <span class="brand" th:text="${prd.brand!=null?prd.brand.name.toUpperCase():''}">Brand</span>
+
                 <!-- Product Image -->
-                <div style="height:170px;line-height: 170px">
+                <div style="height:170px;line-height: 170px" class="tooltip-test" data-placement="top" data-toogle="tooltip" th:title="${cmsUtil.cropText(prd.description,140)}" >
                     <a  th:href="@{'/store/products/'+${prd.id}}" href="#" style="vertical-align: middle;line-height: 1.5">                
                         <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=180,h=180)}" src="img/product1a.jpg" alt="" />
                     </a>  
@@ -17,17 +20,16 @@
                 <span th:if="${prd.featured}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-star-empty font24"></i>Destacado</span>
 
                 <div class="viewicons">
-                    <button  data-original-title="Proximamente" class="btn btn-inverse tooltip-test"> <i class="icon-shopping-cart icon-white"></i> </button>
-                    <button  data-original-title="Proximamente" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-heart icon-white"></i> </button>
-                    <button  data-original-title="Proximamente" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-refresh icon-white"></i> </button>
+                    <button  data-original-title="Comprar" class="btn btn-inverse tooltip-test"> <i class="icon-shopping-cart icon-white"></i> </button>
+                    <button  data-original-title="Cotizar" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-external-link icon-white"></i> </button>
+                    <button  data-original-title="Recomendar" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-envelope icon-white"></i> </button>
                 </div>
             </div>
             <div class="caption">
-                <div style="height: 62px;overflow: hidden;text-align: left" class="tooltip-test">
-                    <span  th:text="${prd.brand!=null?prd.brand.name:''}">Brand</span>
-                    <h3><a  th:href="@{'/store/products/'+${prd.id}}" th:text="${prd.name}" href="#">Product Name</a></h3>
+                <div class="mt10 mb10 productname">
+                    <a  th:href="@{'/store/products/'+${prd.id}}" th:text="${prd.name}" href="#">Product Name</a>
                 </div>
-                
+
                 <div class="productratecart centered">
                     <span th:if="${prd.price lt prd.lastPrice}" th:text="${cmsUtil.formatNumber(prd.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}" class="oldprice" >$4459.00</span>
                     <h3><strong><span th:text="${cmsUtil.formatNumber(prd.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"  class=" orange">$4459.00</span></strong></h3>

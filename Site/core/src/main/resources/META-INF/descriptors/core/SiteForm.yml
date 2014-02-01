@@ -11,6 +11,9 @@ fields:
             
     acceptedDomains:
         component: crudview
+        
+    parameters:
+        component: crudview
     
     description:
         params:

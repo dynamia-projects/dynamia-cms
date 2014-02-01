@@ -49,6 +49,8 @@ public class ShowProductAction implements SiteAction {
         if (product == null) {
             throw new PageNotFoundException("Product not found");
         }
+        service.updateViewsCount(product);
+        
         mv.addObject("prd_product", product);
         mv.addObject("prd_relatedProducts", service.getRelatedProducts(product));
         mv.addObject("prd_config", service.getSiteConfig(evt.getSite()));

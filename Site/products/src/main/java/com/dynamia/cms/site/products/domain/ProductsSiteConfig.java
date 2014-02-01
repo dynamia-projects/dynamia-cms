@@ -43,12 +43,25 @@ public class ProductsSiteConfig extends SimpleEntity {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date lastSync;
 
+    private int productsPerPage;
+
     public Site getSite() {
         return site;
     }
 
     public void setSite(Site site) {
         this.site = site;
+    }
+
+    public int getProductsPerPage() {
+        if (productsPerPage <= 0) {
+            productsPerPage = 16;
+        }
+        return productsPerPage;
+    }
+
+    public void setProductsPerPage(int productsPerPage) {
+        this.productsPerPage = productsPerPage;
     }
 
     public String getDefaultCurrency() {

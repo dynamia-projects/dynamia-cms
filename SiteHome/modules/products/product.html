@@ -58,10 +58,18 @@
 
                                 <ul class="productinfo">
                                     <li> 
+                                        <span th:text="${'Visto '}" class="productinfoleft">NAME</span><span th:text="${prd_product.views+' veces'}">VALUE</span> 
+                                    </li>
+
+                                    <li> 
                                         <span th:text="${'Codigo: '}" class="productinfoleft">NAME</span><span th:text="${prd_product.sku}">VALUE</span> 
                                     </li>
                                     <li th:if="${prd_product.brand}"> 
-                                        <span th:text="${'Marca o Fabricante: '}" class="productinfoleft">NAME</span><span th:text="${prd_product.brand.name}">VALUE</span> 
+                                        <span th:text="${'Marca o Fabricante: '}" class="productinfoleft">NAME</span>
+                                        <span>
+                                            <span th:text="${prd_product.brand.name}">VALUE</span> 
+                                            <a class="orange ml10" title="Ir a sitio web del fabricante" th:href="@{${cmsUtil.absoluteURL(prd_product.brand.website)}}" target="_blank">(Sitio Web Oficial)</a>
+                                        </span>
                                     </li>
 
 
@@ -86,6 +94,8 @@
                     <!-- Buttons -->
                     <div class="productbtn">
                         <button class="btn btn-orange tooltip-test" data-original-title="Proximamente"> <i class="icon-shopping-cart icon-white"></i>Comprar</button>
+                        <button class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-external-link icon-white"></i>Cotizar</button>
+                        <button class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-envelope icon-white"></i>Recomendar</button>
                         <button class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-heart icon-white"></i> Favorito</button>
                         <button class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-refresh icon-white"></i> Comparar </button>
                     </div>
@@ -95,7 +105,7 @@
         <!-- Related Project-->
         <div th:if="${prd_relatedProducts!=null and  not #lists.isEmpty(prd_relatedProducts)}" class="featureprojectcontianer container mt40">
             <h2 class="heading1"><span class="maintext">Productos Relacionados</span></h2>
-            <th:block th:include="products/components/productcarousel::frag(${prd_relatedProducts})"/>
+            <th:block th:include="products/components/productcarousel::frag(${prd_relatedProducts},5)"/>
 
         </div>
     </div>

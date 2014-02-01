@@ -46,3 +46,29 @@ ul.subcategories > li + li > a{
 .productratecart{
     margin: 0px; 
 }
+
+.thumbnail .sale, .thumbnail .new, .thumbnail .offer{
+    left: auto;
+    right: 0px;
+}
+
+.brand{
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    z-index: 999;
+    background-color: white;
+    font-size: 12px;
+    opacity: 0.95;
+}
+
+.productname{    
+    height: 20px;
+    overflow: hidden;    
+    text-align: left;
+    font-size: 14px;
+}
+
+.productname a{
+    color: #424242;
+}

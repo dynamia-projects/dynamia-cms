@@ -59,6 +59,7 @@ public class Product extends SimpleEntity {
     private String image3;
     private String image4;
     private int rate;
+    private Long views;
 
     @Column(length = 5000)
     private String tags;
@@ -72,6 +73,17 @@ public class Product extends SimpleEntity {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductDetail> details = new ArrayList<>();
+
+    public Long getViews() {
+        if (views == null) {
+            views = 1L;
+        }
+        return views;
+    }
+
+    public void setViews(Long views) {
+        this.views = views;
+    }
 
     public String getStatus() {
         return status;

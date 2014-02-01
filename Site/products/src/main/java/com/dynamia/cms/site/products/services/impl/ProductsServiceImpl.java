@@ -13,8 +13,8 @@ import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.tools.commons.StringUtils;
+import com.dynamia.tools.commons.collect.PagedList;
 import com.dynamia.tools.domain.query.BooleanOp;
-import com.dynamia.tools.domain.query.DataPaginator;
 import com.dynamia.tools.domain.query.QueryConditions;
 import static com.dynamia.tools.domain.query.QueryConditions.between;
 import static com.dynamia.tools.domain.query.QueryConditions.geqt;
@@ -23,14 +23,19 @@ import static com.dynamia.tools.domain.query.QueryConditions.leqt;
 import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.domain.util.QueryBuilder;
+import com.dynamia.tools.integration.Containers;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.servlet.http.Cookie;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -38,8 +43,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProductsServiceImpl implements ProductsService {
-
-    private static final int DEFAULT_PAGE_SIZE = 16;
 
     @Autowired
     private CrudService crudService;
@@ -102,6 +105,7 @@ public class ProductsServiceImpl implements ProductsService {
         return query.getResultList();
     }
 
+    @Override
     public List<ProductCategory> getSubcategories(ProductCategory category, ProductBrand brand) {
         String sql = QueryBuilder.select(ProductCategory.class, "pc")
                 .where("pc.site=:site")
@@ -119,14 +123,14 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public List<Product> getProducts(ProductCategory category) {
         QueryParameters qp = QueryParameters.with("active", true);
-        if (category.getParent() != null) {
-            qp.add("category", category);
-        } else {
-            qp.add("category.parent", category);
+        String cat = "category";
+        if (category.getParent() == null) {
+            cat = "category.parent";
         }
+        qp.add(cat, category);
 
-        qp.paginate(new DataPaginator(DEFAULT_PAGE_SIZE));
-        qp.orderBy("price", true);
+        qp.paginate(getDefaultPageSize(category.getSite()));
+        qp.orderBy(cat + ".name, brand.name, price", true);
 
         return crudService.find(Product.class, qp);
     }
@@ -136,7 +140,7 @@ public class ProductsServiceImpl implements ProductsService {
         QueryParameters qp = QueryParameters.with("active", true);
         qp.add("brand", brand);
         qp.orderBy("price", true);
-        qp.paginate(new DataPaginator(DEFAULT_PAGE_SIZE));
+        qp.paginate(getDefaultPageSize(brand.getSite()));
         return crudService.find(Product.class, qp);
     }
 
@@ -184,7 +188,7 @@ public class ProductsServiceImpl implements ProductsService {
         }
 
         if (params.size() > 1) {
-            params.paginate(new DataPaginator(DEFAULT_PAGE_SIZE));
+            params.paginate(getDefaultPageSize(site));
 
             QueryBuilder builder = QueryBuilder.fromParameters(Product.class, "p", params);
             builder.and("(p.category.id = :category or p.category.parent.id = :category)", form.getCategoryId() != null);
@@ -196,26 +200,41 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
+    @Cacheable(value = "products", key = "'fea'+#site.key")
     public List<Product> getFeaturedProducts(Site site) {
         QueryParameters qp = QueryParameters.with("active", true);
         qp.add("featured", true);
-        qp.orderBy("featured, name", true);
-
-        return crudService.find(Product.class, qp);
+        qp.paginate(getDefaultPageSize(site) + 2);
+        qp.orderBy("brand.name, price", true);
+        PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp);
+        return list.getDataSource().getPageData();
     }
 
     @Override
-    public List<Product> getFeaturedProducts(ProductCategory category) {
+    @Cacheable(value = "products", key = "'sale'+#site.key")
+    public List<Product> getSaleProducts(Site site) {
         QueryParameters qp = QueryParameters.with("active", true);
-        qp.add("featured", true);
-        if (category.getParent() != null) {
-            qp.add("category", category);
-        } else {
-            qp.add("category.parent", category);
-        }
+        qp.add("sale", true);
+        qp.paginate(getDefaultPageSize(site) + 2);
+        qp.orderBy("brand.name, price", true);
+        PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp);
+        return list.getDataSource().getPageData();
+    }
 
-        qp.orderBy("featured, name", true);
+    @Override
+    @Cacheable(value = "products", key = "'views'+#site.key")
+    public List<Product> getMostViewedProducts(Site site) {
+        QueryParameters qp = QueryParameters.with("active", true);
+        qp.paginate(getDefaultPageSize(site) + 2);
+        qp.orderBy("views", false);
+        PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp);
+        return list.getDataSource().getPageData();
+    }
 
+    @Override
+    public List<Product> getProductsById(List<Long> ids) {
+        QueryParameters qp = QueryParameters.with("active", true);
+        qp.add("id", QueryConditions.in(ids));
         return crudService.find(Product.class, qp);
     }
 
@@ -257,6 +276,7 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
+    @Cacheable(value = "products", key = "'cfg'+#site.key")
     public ProductsSiteConfig getSiteConfig(Site site) {
         return crudService.findSingle(ProductsSiteConfig.class, "site", site);
     }
@@ -265,7 +285,7 @@ public class ProductsServiceImpl implements ProductsService {
     public List<Product> find(Site site, String query) {
 
         QueryParameters qp = new QueryParameters();
-        qp.paginate(new DataPaginator(DEFAULT_PAGE_SIZE));
+        qp.paginate(getDefaultPageSize(site));
         qp.add("name", QueryConditions.like(query, true, BooleanOp.OR));
         qp.add("category.parent.name", QueryConditions.like(query, true, BooleanOp.OR));
 
@@ -274,29 +294,38 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
+    @Cacheable(value = "products", key = "'rld'+#product.id")
     public List<Product> getRelatedProducts(Product product) {
         QueryParameters qp = new QueryParameters();
         QueryBuilder qb = QueryBuilder.select(Product.class, "p");
 
-        if (product.getBrand() != null) {
-            qp.add("brand", product.getBrand().getName());
-            qb.or("p.name like :brand");
-        }
+        qp.add("category", product.getCategory());
+        qb.and("p.category = :category");
 
-        if (product.getCategory() != null && product.getCategory().getParent() != null) {
-            qp.add("category", product.getCategory().getParent().getName());
-            qb.or("p.name like :category");
-        } else if (product.getCategory() != null) {
-            qp.add("category", product.getCategory().getName());
-            qb.or("p.name like :category");
+        if (product.getBrand() != null) {
+            qb.or("p.brand = :brand");
+            qp.add("brand", product.getBrand());
         }
 
         qb.orderBy("p.price asc");
         String sql = qb.toString();
         Query query = entityManager.createQuery(sql);
-        query.setMaxResults(50);
+        query.setMaxResults(getDefaultPageSize(product.getSite()));
         qp.applyTo(query);
         return query.getResultList();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Async
+    public void updateViewsCount(Product product) {
+        crudService.increaseCounter(product, "views");
+    }
+
+    private int getDefaultPageSize(Site site) {
+        ProductsService self = Containers.get().findObject(ProductsService.class);
+        return self.getSiteConfig(site).getProductsPerPage();
+
     }
 
 }

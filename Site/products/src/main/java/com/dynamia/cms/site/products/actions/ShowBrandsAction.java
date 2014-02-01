@@ -26,7 +26,7 @@ public class ShowBrandsAction implements SiteAction {
 
     @Override
     public String getName() {
-        return "showBrands";
+        return "showProductBrands";
     }
 
     @Override

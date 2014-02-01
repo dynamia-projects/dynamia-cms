@@ -53,16 +53,18 @@ public class ProductsPageType implements PageTypeExtension {
     public void setupPage(PageContext context) {
         ModelAndView mv = context.getModelAndView();
         mv.addObject("subtitle", context.getPage().getSubtitle());
-        
+
         PageParameter categoryParam = context.getParameter("category");
-        
+
         if (categoryParam != null) {
             Long id = new Long(categoryParam.getValue());
             SiteActionManager.performAction("loadProductCategory", mv, context.getRequest(), id);
             mv.setViewName("products/products");
         } else {
             ProductsUtil.setupProductsVar(service.getFeaturedProducts(context.getSite()), context.getModelAndView());
-            mv.setViewName("products/products");
+            mv.setViewName("products/main");
+            SiteActionManager.performAction("showMainProductPage", mv, context.getRequest());
+
         }
 
     }

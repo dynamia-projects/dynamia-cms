@@ -25,7 +25,7 @@
         <!-- Google Webfont -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'/>
         <!-- Main Css -->
-        <link th:href="@{/css/color2.css}" href="css/color2.css" rel="stylesheet" media="screen" id="color"/>
+        <link th:href="@{'/css/'+${#objects.nullSafe(siteParams['color'],'color2')}+'.css'}" href="css/color2.css" rel="stylesheet" media="screen" id="color"/>
 
         <!-- Font Icon -->
         <link th:href="@{/css/font-awesome.min.css}" href="css/font-awesome.min.css" rel="stylesheet" media="screen"/>
@@ -56,7 +56,7 @@
             <div class="headerdetails mt40">
                 <div class="container"> 
                     <a class="logo pull-left" href="#" th:href='@{/}'>
-                        <img th:title="${name}" th:alt="${name}" th:src="@{/img/logo.gif}" title="Simplepx" alt="Simplepx" src="img/logo.gif"/>
+                        <img th:title="${name}" th:alt="${name}" th:src="@{${#objects.nullSafe(siteParams['logo'],'/img/logo.gif')}}" title="Simplepx" alt="Simplepx" src="img/logo.gif"/>
                     </a> 
                     <!--Social -->
                     <div class="socialtop pull-right">
@@ -91,7 +91,7 @@
             <!-- Footer -->
             <footer id="footer">
                 <section class="footersocial">
-                    <th:block th:include="tpl_contacts::content"/>
+                    <th:block th:include="tpl_contacts::content"/>                    
                 </section>
 
                 <section id="quicklink">
@@ -110,8 +110,9 @@
                         <div class="row">
                             <div class="pull-left">Powered by: <a href="http://www.dynamiasoluciones.com" target="blank" title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing" class="tooltip-test">Dynamia Soluciones IT</a></div>
                         </div>
-                    </div>
+                    </div>                    
                 </section>
+
             </footer>
 
 

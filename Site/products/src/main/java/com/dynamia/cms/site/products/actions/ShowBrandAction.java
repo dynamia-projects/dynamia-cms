@@ -33,7 +33,7 @@ public class ShowBrandAction implements SiteAction {
 
     @Override
     public String getName() {
-        return "showBrand";
+        return "showProductBrand";
     }
 
     @Override

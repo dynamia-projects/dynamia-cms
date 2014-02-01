@@ -13,6 +13,7 @@ import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.tools.domain.query.QueryParameters;
 import java.util.List;
+import javax.servlet.http.Cookie;
 
 /**
  *
@@ -31,8 +32,6 @@ public interface ProductsService {
     public List<Product> filterProducts(Site site, QueryParameters params);
 
     public List<Product> getFeaturedProducts(Site site);
-
-    public List<Product> getFeaturedProducts(ProductCategory category);
 
     public List<ProductBrand> getBrands(Site site);
 
@@ -57,5 +56,13 @@ public interface ProductsService {
     List<ProductCategory> getSubcategories(ProductCategory category, ProductBrand brand);
 
     List<ProductCategory> getCategories(ProductBrand brand);
+
+    public void updateViewsCount(Product product);
+
+    public List<Product> getSaleProducts(Site site);
+
+    public List<Product> getMostViewedProducts(Site site);
+
+    List<Product> getProductsById(List<Long> ids);
 
 }

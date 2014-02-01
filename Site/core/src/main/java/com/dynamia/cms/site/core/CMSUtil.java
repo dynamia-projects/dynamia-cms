@@ -7,7 +7,10 @@ package com.dynamia.cms.site.core;
 
 import com.dynamia.tools.commons.CollectionsUtils;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Collection;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -15,11 +18,19 @@ import java.util.Collection;
  */
 public class CMSUtil {
 
-    public String formatNumber(Number number, String pattern) {
-        if(number==null){
+    public String formatNumber(Number number) {
+        if (number == null) {
             return "";
         }
-        
+
+        return NumberFormat.getIntegerInstance().format(number);
+    }
+
+    public String formatNumber(Number number, String pattern) {
+        if (number == null) {
+            return "";
+        }
+
         if (pattern == null) {
             return String.valueOf(number);
         }
@@ -32,10 +43,10 @@ public class CMSUtil {
     }
 
     public String absoluteURL(String url) {
-        if(url==null || url.isEmpty()){
+        if (url == null || url.isEmpty()) {
             return "#";
         }
-        
+
         if (!url.startsWith("http")) {
             return "http://" + url;
         } else {
@@ -43,4 +54,28 @@ public class CMSUtil {
         }
     }
 
+    public String cropText(String text, int size) {
+        if (text == null) {
+            return "";
+        }
+        text = text.replaceAll(",", " ");
+
+        if (text.length() <= size) {
+            return text;
+        } else {
+            return text.substring(0, size) + "...";
+        }
+    }
+    
+    public static Cookie getCookie(HttpServletRequest request, String cookieName){
+        Cookie cookies[] =  request.getCookies();
+        if(cookies!=null){
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals(cookieName)){
+                    return cookie;
+                }
+            }
+        }
+        return null;
+    }
 }
