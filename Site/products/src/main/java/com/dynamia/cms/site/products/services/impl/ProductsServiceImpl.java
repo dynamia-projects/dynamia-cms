@@ -222,7 +222,7 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    @Cacheable(value = "products", key = "'views'+#site.key")
+    
     public List<Product> getMostViewedProducts(Site site) {
         QueryParameters qp = QueryParameters.with("active", true);
         qp.paginate(getDefaultPageSize(site) + 2);
@@ -282,15 +282,23 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    public List<Product> find(Site site, String query) {
+    public List<Product> find(Site site, String param) {
 
+        QueryBuilder query = QueryBuilder.select(Product.class, "p")
+                .where("p.active = true")
+                .and("p.site = :site")
+                .and("(p.name like :param or p.category.parent.name like :param "
+                        + "or p.category.parent.name like :param or p.brand.name like :param "
+                        + "or p.description like :param)")
+                .orderBy("p.brand.name, p.price");
+        
+        
         QueryParameters qp = new QueryParameters();
+        qp.add("param",  param);
+        qp.add("site",site);
         qp.paginate(getDefaultPageSize(site));
-        qp.add("name", QueryConditions.like(query, true, BooleanOp.OR));
-        qp.add("category.parent.name", QueryConditions.like(query, true, BooleanOp.OR));
-
-        qp.orderBy("featured,sale,name", true);
-        return crudService.find(Product.class, qp);
+        
+        return crudService.executeQuery(query, qp);
     }
 
     @Override
@@ -317,7 +325,6 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    @Async
     public void updateViewsCount(Product product) {
         crudService.increaseCounter(product, "views");
     }
@@ -325,7 +332,40 @@ public class ProductsServiceImpl implements ProductsService {
     private int getDefaultPageSize(Site site) {
         ProductsService self = Containers.get().findObject(ProductsService.class);
         return self.getSiteConfig(site).getProductsPerPage();
+    }
 
+    @Override
+    @Cacheable(value = "products", key = "'specialCat'+#category.id")
+    public List<Product> getSpecialProducts(ProductCategory category) {
+        QueryBuilder query = QueryBuilder.select(Product.class, "p")
+                .where("p.active=true")
+                .and("(p.sale=true or p.featured=true)")
+                .and("(p.category = :category or p.category.parent=:category)")
+                .orderBy("p.price desc");
+
+        QueryParameters qp = new QueryParameters();
+        qp.add("category", category);
+        qp.paginate(getDefaultPageSize(category.getSite()));
+
+        PagedList list = (PagedList) crudService.executeQuery(query, qp);
+        return list.getDataSource().getPageData();
+    }
+
+    @Override
+    @Cacheable(value = "products", key = "'special'+#site.key")
+    public List<Product> getSpecialProducts(Site site) {
+        QueryBuilder query = QueryBuilder.select(Product.class, "p")
+                .where("p.active=true")
+                .and("(p.sale=true or p.featured=true)")
+                .and("p.site = :site")
+                .orderBy("p.price desc");
+
+        QueryParameters qp = new QueryParameters();
+        qp.add("site", site);
+        qp.paginate(getDefaultPageSize(site));
+
+        PagedList list = (PagedList) crudService.executeQuery(query, qp);
+        return list.getDataSource().getPageData();
     }
 
 }

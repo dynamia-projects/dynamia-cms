@@ -58,7 +58,6 @@ public class CMSUtil {
         if (text == null) {
             return "";
         }
-        text = text.replaceAll(",", " ");
 
         if (text.length() <= size) {
             return text;
@@ -66,12 +65,12 @@ public class CMSUtil {
             return text.substring(0, size) + "...";
         }
     }
-    
-    public static Cookie getCookie(HttpServletRequest request, String cookieName){
-        Cookie cookies[] =  request.getCookies();
-        if(cookies!=null){
+
+    public static Cookie getCookie(HttpServletRequest request, String cookieName) {
+        Cookie cookies[] = request.getCookies();
+        if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if(cookie.getName().equals(cookieName)){
+                if (cookie.getName().equals(cookieName)) {
                     return cookie;
                 }
             }

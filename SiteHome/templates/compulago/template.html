@@ -51,27 +51,24 @@
     <body>
         <!-- Header Start -->
         <header >
+            <th:block th:include="tpl_mobilemenu::content"/>
             <th:block th:include="tpl_topmenu::content"/>
 
-            <div class="headerdetails mt40">
+            <div class="headerdetails mt40  hidden-xs hidden-sm">
                 <div class="container"> 
-                    <a class="logo pull-left" href="#" th:href='@{/}'>
+                    <a class="logo pull-left " href="#" th:href='@{/}'>
                         <img th:title="${name}" th:alt="${name}" th:src="@{${#objects.nullSafe(siteParams['logo'],'/img/logo.gif')}}" title="Simplepx" alt="Simplepx" src="img/logo.gif"/>
                     </a> 
                     <!--Social -->
                     <div class="socialtop pull-right">
+                        <div class="pull-right" th:include="tpl_payment::content"/>
                         <h4 class="call">
                             <i class="icon-phone"></i> Llamanos : <a class="orange" href="tel:0356930423">+57 (5) 693 04 23</a><br/> 
-                        </h4>
-                        <ul class="pull-right">
-                            <li><a class="tooltip-test"  data-original-title="Facebook"  ><i class="icon-facebook"></i></a></li>
-                            <li><a class="tooltip-test"  data-original-title="Twitter"  ><i class="icon-twitter"></i></a></li>
-
-                            <li><a class="tooltip-test"  data-original-title="Skype"  ><i class="icon-skype"></i></a></li>
-                        </ul>
+                        </h4>                        
                     </div>
                     <!--Top Search -->
                     <div class="pull-right topsearch" th:include="site/searchform::content"/>
+                    
 
                 </div>
             </div>

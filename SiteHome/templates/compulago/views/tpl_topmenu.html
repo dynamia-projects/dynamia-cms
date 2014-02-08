@@ -5,17 +5,33 @@
     <!-- Main Menu -->
 
     <body th:fragment="content">
-        <div class="headerstrip navbar-fixed-top">
+        <div class="headerstrip navbar-fixed-top hidden-xs hidden-sm">
             <div class="container">
-                <div class="pull-left welcometxt">Compulago</div>
+                <div class="pull-left welcometxt">
+                    <div class="navbar" id="topnav">
+                        <div class="navbar-inner">
+                            <ul class="nav" >
+                                <li><a class="" th:href="@{/}" ><i class="icon-home"></i> Compulago </a> </li>
+                                <li><a class="tooltip-test" data-placement="bottom"  data-original-title="Facebook"  ><i class="icon-facebook"></i></a></li>
+                                <li><a class="tooltip-test" data-placement="bottom" data-original-title="Twitter"  ><i class="icon-twitter"></i></a></li>
+                                <li><a class="tooltip-test" data-placement="bottom" data-original-title="Skype"  ><i class="icon-skype"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                 
+                </div>
                 <!-- Top Nav Start -->
                 <div class="pull-right">
                     <div class="navbar" id="topnav">
                         <div class="navbar-inner">
-                            <ul class="nav" >
-                                <li><a class="home active" th:href="@{/}" ><i class="icon-home"></i> Home </a> </li>
+                            <ul class="nav" >                               
+                                <li><a class="" th:href="@{/store/brands}" ><i class=""></i>Marcas</a> </li>
+                                <li><a class="" href="#contacts" ><i class=""></i>Tiendas</a> </li>
+                                <li><a class="" href="mailito:servicioalcliente@compulago.net" ><i class=""></i>Quejas y Sugerencias</a> </li>
+                                <li><a class="" th:href="@{/empresa}" ><i class="group"></i>Nuestra Empresa</a> </li>
                                 <li><a class="myaccount" ><i class="icon-user"></i> Mi Cuenta </a> </li>
-                                </ul>
+                            </ul>
                         </div>
                     </div>
                 </div>

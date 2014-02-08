@@ -52,6 +52,7 @@ class LoadProductCategoryAction implements SiteAction {
         }
 
         List<Product> products = service.getProducts(category);
+        List<Product> specialProducts = service.getSpecialProducts(category);
         List<ProductCategory> subcategories = service.getSubcategories(category);
         List<ProductBrand> categoryBrands = service.getBrands(category);
 
@@ -60,6 +61,7 @@ class LoadProductCategoryAction implements SiteAction {
         mv.addObject("prd_subcategories", subcategories);
         mv.addObject("prd_categoryBrands", categoryBrands);
         mv.addObject("prd_parentCategory", category.getParent());
+        mv.addObject("prd_specialProducts", specialProducts);
 
         products = ProductsUtil.setupPagination(products, evt.getRequest(), mv);
         ProductsUtil.setupProductsVar(products, mv);

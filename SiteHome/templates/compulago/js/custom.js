@@ -178,6 +178,7 @@ $(document).ready(function() {
             }
     );
 
+/*
 // Main Menu mobile
     $("<select />").appendTo(".menurelative");
 
@@ -201,7 +202,7 @@ $(document).ready(function() {
     $("nav.subnav select").change(function() {
         window.location = $(this).find("option:selected").val();
     });
-
+*/
 
 // Fancybox 
     $('a.prettyphotpopup').prettyPhoto({animation_speed: 'normal', theme: 'light_square', slideshow: 3000, autoplay_slideshow: false, allow_expand: false});

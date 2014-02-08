@@ -9,7 +9,17 @@
 
         <div class="container" >
             <!-- Main Title-->
-            <div th:include="site/pagetitle::content"/>
+            <div class="titles animated fadeInUp time3">
+                <div class="pull-left">
+                    <h1 th:text="${title}" class="headinglefttitle">Page title</h1>
+                    <div th:text="${subtitle}" class="headingsubtitle"></div>
+                </div>
+                <div class="pull-right mt20">
+                    <a th:href="@{'/store/brands/'+${prd_product.brand.alias}}">
+                        <img class="animated flip time3"  th:if="${prd_product.brand}" th:src="@{'/resources/products/brands/thumbnails/'+${prd_product.brand.image}(w=100,h=100)}" th:title="${prd_product.brand.name}" th:alt="${prd_product.brand.name}"  />
+                    </a>
+                </div>                
+            </div>
 
             <!-- Product-->
             <div class="row mt40"> 
@@ -52,9 +62,7 @@
                             <!-- DESCRIPTION -->
 
                             <div class="tab-pane active" id="specification">
-                                <div class="pull-right">
-                                    <img  th:if="${prd_product.brand}" th:src="@{'/resources/products/brands/thumbnails/'+${prd_product.brand.image}(w=100,h=100)}" th:title="${prd_product.brand.name}" th:alt="${prd_product.brand.name}" class="tooltip-test" />
-                                </div>
+
 
                                 <ul class="productinfo">
                                     <li> 
@@ -74,7 +82,11 @@
 
 
                                     <li th:each="det : ${prd_product.details}"> 
-                                        <span th:text="${det.name+': '}" class="productinfoleft">NAME</span><span th:text="${det.value}">VALUE</span> 
+                                        <span th:text="${det.name+': '}" class="productinfoleft">NAME</span>
+                                        <span>
+                                            <span th:text="${det.value}">VALUE</span> 
+                                            <span th:text="${det.description}">DESCRIPTION</span> 
+                                        </span>
                                     </li>
 
                                 </ul>

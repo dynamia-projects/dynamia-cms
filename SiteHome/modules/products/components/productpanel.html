@@ -5,7 +5,7 @@
 
     <body th:fragment="frag (prd)">
 
-        <div class="thumbnail" style="height:262px" >
+        <div class="thumbnail productpanel" style="height:280px" >
 
             <div class="relativediv">
                 <span class="brand" th:text="${prd.brand!=null?prd.brand.name.toUpperCase():''}">Brand</span>
@@ -26,12 +26,11 @@
                 </div>
             </div>
             <div class="caption">
-                <div class="mt10 mb10 productname">
+                <div class="mt10 mb10 productname">                    
                     <a  th:href="@{'/store/products/'+${prd.id}}" th:text="${prd.name}" href="#">Product Name</a>
                 </div>
 
-                <div class="productratecart centered">
-                    <span th:if="${prd.price lt prd.lastPrice}" th:text="${cmsUtil.formatNumber(prd.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}" class="oldprice" >$4459.00</span>
+                <div class="productratecart centered">                 
                     <h3><strong><span th:text="${cmsUtil.formatNumber(prd.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"  class=" orange">$4459.00</span></strong></h3>
                 </div>
 

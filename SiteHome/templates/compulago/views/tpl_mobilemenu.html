@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <!-- Main Menu -->
+
+    <body th:fragment="content">
+        <div class="headerstrip navbar-fixed-top hidden-lg hidden-md">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-sm-2 col-xs-2">
+                        <a  href="#" th:href='@{/}'>
+                            <img th:title="${name}" class="mt10" th:alt="${name}" src="img/logo2.gif" title="Simplepx" alt="Simplepx"/>
+                        </a> 
+                    </div>
+
+                    <div class="col-sm-8 col-xs-8">
+                        <form action="#" class="form-inline" th:action="@{/search}" th:object="${searchForm}" method="get">
+                            <input type="search" placeholder="Busqueda" style="margin-top: 3px" th:field="*{query}"/>                
+                        </form>        
+                    </div>
+
+                    <div class="col-sm-2 col-xs-2">
+                        <div class="btn-group btn-group-lg">                
+                            <button type="button" class="btn btn-orange btn-large icon-align-justify" style="border:0" data-toggle="collapse" data-target=".navbar-collapse"/>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav mobilemenu">
+                    <li><a th:href="@{/}" ><i class="icon-home icon-white"></i> Inicio</a> </li>
+                    <li th:each="mi : ${menuitems}"> 
+                        <a  th:class="${activeMenu == mi? 'active':''}" th:href="@{'/'+${mi.href}}" href="#">
+                            <i th:class="${'icon-'+mi.icon+' icon-white'}" class="icon-home icon-white font18"></i>                                
+                            <th:block th:text="${mi.name}"/>
+                        </a>
+                    </li> 
+                </ul>                
+            </div>
+
+        </div>
+    </body>
+
+</html>

@@ -2,23 +2,49 @@
     width: 100%;
 }
 
-.productpageprice{
-    width: auto;
+
+.mobilemenu a{
+    color: white;
+    font-size: 18px;
 }
+
+.mobilemenu a:hover{
+    color: #616161;
+}
+
 
 .contact ul.productinfo li{
     height: auto;
 }
 
+
+.brands{
+    height: 30px;
+    overflow: hidden;        
+}
+
+ul.brands > li > a{
+    margin: 0;
+    font-size: 13px;
+    padding: 6px;    
+}
+
+ul.brands > li > a:hover{
+    color: black;
+} 
+
+
 ul.subcategories > li > a{
     margin: 0;
     font-size: 12px;
-    padding: 6px;
+    padding: 6px;    
 }
 
 ul.subcategories > li + li > a{
     margin: 0;
 }
+
+
 
 #webchat{
     -webkit-border-top-left-radius: 5px;
@@ -52,9 +78,17 @@ ul.subcategories > li + li > a{
     right: 0px;
 }
 
+.productpanel:hover .productname a{
+    color: black;
+}
+
+.productpageprice{
+    width: auto;
+}
+
 .brand{
-    top: 0px;
-    left: 0px;
+    bottom: -20px;
+    left: 2px;
     position: absolute;
     z-index: 999;
     background-color: white;
@@ -63,12 +97,16 @@ ul.subcategories > li + li > a{
 }
 
 .productname{    
-    height: 20px;
+    height: 43px;
     overflow: hidden;    
     text-align: left;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .productname a{
     color: #424242;
+}
+
+.titles{
+    border: 0;
 }

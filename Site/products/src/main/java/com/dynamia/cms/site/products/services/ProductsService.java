@@ -65,4 +65,8 @@ public interface ProductsService {
 
     List<Product> getProductsById(List<Long> ids);
 
+    public List<Product> getSpecialProducts(ProductCategory category);
+
+    List<Product> getSpecialProducts(Site site);
+
 }

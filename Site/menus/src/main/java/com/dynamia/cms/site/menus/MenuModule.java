@@ -5,9 +5,9 @@
  */
 package com.dynamia.cms.site.menus;
 
-import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.core.api.CMSModule;
 import com.dynamia.cms.site.core.api.Module;
+import com.dynamia.cms.site.core.api.ModuleContext;
 
 /**
  *
@@ -15,11 +15,6 @@ import com.dynamia.cms.site.core.api.Module;
  */
 @CMSModule
 public class MenuModule implements Module {
-
-    @Override
-    public String getID() {
-        return getClass().getName();
-    }
 
     @Override
     public String getName() {
@@ -32,25 +27,8 @@ public class MenuModule implements Module {
     }
 
     @Override
-    public String getVersion() {
-        return "0.1";
-    }
-
-    @Override
-    public ModuleInstance newInstance() {
-
-        ModuleInstance instance = new ModuleInstance();
-        instance.setModuleId(getID());
-        instance.setEnabled(true);
-        instance.setPosition("menu");
-        instance.setAlias("mainmenu");
-
-        return instance;
-    }
-
-    @Override
-    public void init() {
-
+    public void init(ModuleContext context) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

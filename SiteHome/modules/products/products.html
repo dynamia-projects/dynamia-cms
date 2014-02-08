@@ -11,24 +11,26 @@
 
         <div class="row mt10">
 
-            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt40column">
+            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 mt40column">
                 <div class="titles animated fadeInUp time3">
                     <div class="pull-left">
                         <h1 th:text="${title}" class="headinglefttitle">Page title</h1>
-
-                        <!-- Subcategories -->
-                        <div th:include="products/components/subcategoriesmenu::content"/>                         
-
                     </div>
                     <i th:class="${'icon-'+icon+' animated flip time3'}" class="icon-warning-sign"></i> 
+                    <!-- Subcategories -->
+                    <div class="clearfix" th:include="products/components/subcategoriesmenu::content"/>                         
                     <div class="clearfix" th:include="products/components/brandsmenu::frag(${prd_category},${prd_categoryBrands})"/> 
 
                 </div>
 
+                <div th:if="${prd_specialProducts!=null and  not #lists.isEmpty(prd_specialProducts)}" class="featureprojectcontianer container mb40">
+                    <h2 class="heading1"><span class="maintext">Ofertas</span></h2>
+                    <th:block th:include="products/components/productcarousel::frag(${prd_specialProducts},4)"/>
+                </div>
+
+
                 <!--Top Pagination -->
                 <div class="clearfix" th:include="products/components/productpagination" />
-
-
 
                 <!-- PRODUCTS -->
 
@@ -45,13 +47,9 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt40column"> 
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 mt40column"> 
                 <!--categories-->        
                 <div th:include="products/components/categorylist"/>
-
-                <div class="mt40"></div>
-                <!--filters-->        
-                <div th:include="products/components/filtersform"/>
             </div>
         </div>
     </div>

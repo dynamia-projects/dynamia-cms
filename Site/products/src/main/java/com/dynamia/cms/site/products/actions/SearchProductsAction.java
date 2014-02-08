@@ -41,9 +41,24 @@ public class SearchProductsAction implements SiteAction {
     public void actionPerformed(ActionEvent evt) {
         ModelAndView mv = evt.getModelAndView();
         Site site = evt.getSite();
-        ProductSearchForm form = (ProductSearchForm) evt.getData();
 
-        List<Product> products = service.filterProducts(site, form);
+        List<Product> products = null;
+        if (evt.getData() instanceof String) {
+            String query = (String) evt.getData();
+            products = service.find(site, query);
+        } else if (evt.getData() instanceof ProductSearchForm) {
+            ProductSearchForm form = (ProductSearchForm) evt.getData();
+            products = service.filterProducts(site, form);
+            mv.addObject("prd_searchForm", form);
+            if (form.getCategoryId() != null) {
+                ProductCategory category = crudService.find(ProductCategory.class, form.getCategoryId());
+                List<ProductCategory> subcategories = service.getSubcategories(category);
+
+                mv.addObject("prd_category", category);
+                mv.addObject("prd_parentCategory", category.getParent());
+                mv.addObject("prd_subcategories", subcategories);
+            }
+        }
 
         if (products == null) {
             products = service.getFeaturedProducts(site);
@@ -54,18 +69,8 @@ public class SearchProductsAction implements SiteAction {
             mv.addObject("title", " No se encontraron productos para la busqueda avanzada");
         }
 
-        if (form.getCategoryId() != null) {
-            ProductCategory category = crudService.find(ProductCategory.class, form.getCategoryId());
-            List<ProductCategory> subcategories = service.getSubcategories(category);
-
-            mv.addObject("prd_category", category);
-            mv.addObject("prd_parentCategory", category.getParent());
-            mv.addObject("prd_subcategories", subcategories);
-        }
-
         products = ProductsUtil.setupPagination(products, evt.getRequest(), mv);
         ProductsUtil.setupProductsVar(products, mv);
-        mv.addObject("prd_searchForm", form);
 
     }
 

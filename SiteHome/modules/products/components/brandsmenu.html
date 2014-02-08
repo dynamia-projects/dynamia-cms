@@ -5,9 +5,9 @@
     <body th:fragment="frag(cat, brands)">
         <!--subcategories-->        
 
-        <ul class="nav nav-pills subcategories" th:if="${brands!=null and not #lists.isEmpty(brands)}">           
+        <ul class="nav nav-pills brands" th:if="${brands!=null and not #lists.isEmpty(brands)}">           
             <li th:each="brd : ${brands}">
-                <a th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}+'/'+${brd.alias}}" 
+                <a class="orange" th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}+'/'+${brd.alias}}" 
                    th:text="${brd.name}" href="#">Brand ABC</a> 
             </li>                      
         </ul>

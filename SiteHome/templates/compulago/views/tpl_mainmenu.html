@@ -3,14 +3,14 @@
       xmlns:th="http://www.thymeleaf.org">
 
     <!-- Main Menu -->
-    
+
     <body th:fragment="content">
         <div id="mainmenu"  class="mb10"> 
             <!-- Navigation -->
             <nav class="subnav">
                 <div class="container menurelative">
                     <ul class="nav-pills mainmenucontain container">
-
+                        <li><a class="" th:href="@{/}" ><i class="icon-home icon-white font18"></i></a> </li>
                         <li th:each="mi : ${menuitems}">
                             <a  th:class="${activeMenu == mi? 'active':''}" th:href="@{'/'+${mi.href}}" href="#">
                                 <i th:class="${'icon-'+mi.icon+' icon-white font18'}" class="icon-home icon-white font18"></i>                                

@@ -11,11 +11,11 @@
 
         <div class="row mt10">
 
-            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt40column">
+            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 mt40column">
                 <div class="titles animated fadeInUp time3">
                     <div class="pull-right" style="text-align: right">
                         <a th:href="@{'/store/brands/'+${prd_brand.alias}}" title="Ver otros productos de esta marca" class="tooltip-test">
-                            <img th:src="@{'/resources/products/brands/thumbnails/'+${prd_brand.image}(w=120,h=120)}" src="img/product1a.jpg" alt="" />
+                            <img class="animated flip time3" th:src="@{'/resources/products/brands/thumbnails/'+${prd_brand.image}(w=120,h=120)}" src="img/product1a.jpg" alt="" />
                         </a>
                     </div>
 
@@ -47,13 +47,11 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt40column"> 
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 mt40column"> 
                 <!--categories-->        
                 <div th:include="products/components/categorylist"/>
 
-                <div class="mt40"></div>
-                <!--filters-->        
-                <div th:include="products/components/filtersform"/>
+               
             </div>
         </div>
     </div>

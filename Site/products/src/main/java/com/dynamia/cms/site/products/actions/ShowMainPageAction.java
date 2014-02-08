@@ -47,13 +47,12 @@ public class ShowMainPageAction implements SiteAction {
 
         ModelAndView mv = evt.getModelAndView();
 
-        List<Product> featuredProducts = service.getFeaturedProducts(evt.getSite());
-        List<Product> saleProducts = service.getSaleProducts(evt.getSite());
+        List<Product> specialProducts = service.getSpecialProducts(evt.getSite());
+
         List<Product> mostViewed = service.getMostViewedProducts(evt.getSite());
 
-        mv.addObject("prd_featuredProducts", featuredProducts);
-        mv.addObject("prd_saleProducts", saleProducts);
         mv.addObject("prd_mostViewedProducts", mostViewed);
+        mv.addObject("prd_specialProducts", specialProducts);
         loadRecentProducts(evt, mv);
 
     }
@@ -67,11 +66,11 @@ public class ShowMainPageAction implements SiteAction {
                 for (String idText : values) {
                     ids.add(new Long(idText));
                 }
-                if (!ids.isEmpty()) {                   
+                if (!ids.isEmpty()) {
 
                     List<Product> recentViewed = service.getProductsById(ids);
                     recentViewed = sortByIdList(recentViewed, ids);
-                    
+
                     Product firstProduct = recentViewed.get(0);
                     List<Product> relatedProducts = service.getRelatedProducts(firstProduct);
                     mv.addObject("prd_recentViewedProducts", recentViewed);
@@ -88,7 +87,7 @@ public class ShowMainPageAction implements SiteAction {
         List<Product> resultList = new ArrayList<>();
         for (Long id : ids) {
             for (Product product : list) {
-                if(product.getId().equals(id)){
+                if (product.getId().equals(id)) {
                     resultList.add(product);
                     break;
                 }

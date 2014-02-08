@@ -35,9 +35,10 @@ public class MenuInterceptor extends SiteRequestInterceptorAdapter {
             Page page = (Page) mv.getModel().get("page");
             if (page != null) {
                 for (MenuItem menuItem : menu.getItems()) {
-                    if (page.equals(menuItem.getPage())) {
-                        mv.addObject("activeMenu", menuItem);
-                    }
+                    /* if (page.equals(menuItem.getPage())) {
+                     mv.addObject("activeMenu", menuItem);
+                     }
+                     */
                 }
 
             }

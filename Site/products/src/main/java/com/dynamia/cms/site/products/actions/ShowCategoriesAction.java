@@ -34,6 +34,7 @@ public class ShowCategoriesAction implements SiteAction{
         
         mv.addObject("title", "Categorias");
         mv.addObject("prd_categories", service.getCategories(evt.getSite()));
+        
     }
     
 }

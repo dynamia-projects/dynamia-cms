@@ -12,11 +12,6 @@ import com.dynamia.cms.site.pages.SearchForm;
 import com.dynamia.cms.site.pages.api.SearchProvider;
 import com.dynamia.cms.site.pages.api.SearchResult;
 import com.dynamia.cms.site.products.ProductSearchForm;
-import com.dynamia.cms.site.products.ProductsUtil;
-import com.dynamia.cms.site.products.domain.Product;
-import com.dynamia.cms.site.products.services.ProductsService;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -30,10 +25,8 @@ public class ProductSearchProvider implements SearchProvider {
     public SearchResult search(Site site, SearchForm form) {
 
         ModelAndView mv = new ModelAndView("products/productquery");
-        ProductSearchForm pform = new ProductSearchForm();
-        pform.setName(form.getQuery());
 
-        SiteActionManager.performAction("searchProducts", mv, form.getRequest(), pform);
+        SiteActionManager.performAction("searchProducts", mv, form.getRequest(), form.getQuery());
 
         SearchResult rs = new SearchResult(mv.getViewName(), false);
         rs.getEntries().putAll(mv.getModel());
