@@ -18,4 +18,6 @@ public interface ProductsListener {
     public void categoryChanged(DataChangedEvent evt);
 
     public void brandChanged(DataChangedEvent evt);
+    
+    public void storeChanged(DataChangedEvent evt);
 }

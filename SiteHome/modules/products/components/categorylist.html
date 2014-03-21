@@ -6,7 +6,7 @@
     <!--Categories-->    
     <body th:fragment="content">         
 
-        <h2 class="heading1"><span class="maintext">Categorias</span></h2>
+        <h2>Categorias</h2>
         <ul class="nav nav-list categories">
             <li th:each="cat : ${prd_categories}">
                 <a th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}}" 

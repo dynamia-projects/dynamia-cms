@@ -5,6 +5,7 @@
  */
 package com.dynamia.cms.site.products.domain;
 
+import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.dto.ProductDTO;
 import com.dynamia.tools.domain.SimpleEntity;
@@ -20,6 +21,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -29,7 +31,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "prd_products")
-public class Product extends SimpleEntity {
+public class Product extends SimpleEntity implements SiteAware {
 
     @OneToOne
     @NotNull
@@ -73,6 +75,9 @@ public class Product extends SimpleEntity {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductDetail> details = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductStock> stockDetails = new ArrayList<>();
 
     public Long getViews() {
         if (views == null) {
@@ -259,6 +264,14 @@ public class Product extends SimpleEntity {
 
     public void setDetails(List<ProductDetail> details) {
         this.details = details;
+    }
+
+    public List<ProductStock> getStockDetails() {
+        return stockDetails;
+    }
+
+    public void setStockDetails(List<ProductStock> stockDetails) {
+        this.stockDetails = stockDetails;
     }
 
     @Override

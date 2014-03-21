@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package com.dynamia.cms.site.menus.types;
+package com.dynamia.cms.site.users;
 
 /**
  *
  * @author mario
  */
-public class MenuPageType {
-    
+public interface IgnoringAntMatcher {
+
+    String[] matchers();
+
 }

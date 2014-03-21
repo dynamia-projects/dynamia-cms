@@ -14,16 +14,19 @@ import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.api.ProductsDatasource;
 import com.dynamia.cms.site.products.clients.ProductsDatasourceClient;
 import com.dynamia.cms.site.products.domain.ProductCategoryDetail;
+import com.dynamia.cms.site.products.domain.ProductStock;
+import com.dynamia.cms.site.products.domain.Store;
 import com.dynamia.cms.site.products.dto.ProductDTO;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDetailDTO;
 import com.dynamia.cms.site.products.dto.ProductDetailDTO;
+import com.dynamia.cms.site.products.dto.ProductStockDTO;
+import com.dynamia.cms.site.products.dto.StoreDTO;
 import com.dynamia.cms.site.products.services.ProductsSyncService;
-import com.dynamia.tools.commons.CollectionsUtils;
-import com.dynamia.tools.commons.collect.CollectionWrapper;
 import com.dynamia.tools.commons.logger.LoggingService;
 import com.dynamia.tools.commons.logger.SLF4JLoggingService;
+import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.integration.scheduling.SchedulerUtil;
 import com.dynamia.tools.integration.scheduling.Task;
@@ -35,7 +38,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -70,7 +72,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
         ProductsDatasource ds = getDatasource(siteCfg);
 
-        List<ProductCategoryDTO> categories = ds.getCategories();
+        List<ProductCategoryDTO> categories = ds.getCategories(siteCfg.getParametersAsMap());
 
         for (ProductCategoryDTO remoteCategory : categories) {
             synchronizeCategory(siteCfg, remoteCategory);
@@ -83,7 +85,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void synchronizeCategory(ProductsSiteConfig siteCfg, ProductCategoryDTO remoteCategory) {
-        ProductCategory localCategory = crudService.findSingle(ProductCategory.class, "externalRef", remoteCategory.getExternalRef());
+        ProductCategory localCategory = getLocalEntity(ProductCategory.class, remoteCategory.getExternalRef(), siteCfg);
         if (localCategory == null) {
             localCategory = new ProductCategory();
             localCategory.setSite(siteCfg.getSite());
@@ -92,12 +94,12 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         localCategory.sync(remoteCategory);
 
         if (remoteCategory.getParent() != null) {
-            localCategory.setParent(crudService.findSingle(ProductCategory.class, "externalRef", remoteCategory.getParent().getExternalRef()));
+            localCategory.setParent(getLocalEntity(ProductCategory.class, remoteCategory.getParent().getExternalRef(), siteCfg));
         }
 
         crudService.save(localCategory);
 
-        syncCategoryDetails(localCategory, remoteCategory);
+        syncCategoryDetails(siteCfg, localCategory, remoteCategory);
 
         if (remoteCategory.getSubcategories() != null && !remoteCategory.getSubcategories().isEmpty()) {
             for (ProductCategoryDTO subcategory : remoteCategory.getSubcategories()) {
@@ -111,7 +113,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
     public List<ProductDTO> synchronizeProducts(ProductsSiteConfig siteCfg) {
         logger.debug(">>>> STARTING PRODUCTS SYNCHRONIZATION FOR SITE " + siteCfg.getSite().getName() + " <<<<");
         ProductsDatasource ds = getDatasource(siteCfg);
-        List<ProductDTO> products = ds.getProducts();
+        List<ProductDTO> products = ds.getProducts(siteCfg.getParametersAsMap());
 
         for (ProductDTO remoteProduct : products) {
             logger.debug("Synchronizing product. Site:  " + siteCfg.getSite().getName() + " Name:" + remoteProduct.getName());
@@ -127,7 +129,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void synchronizeProduct(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
-        Product localProduct = crudService.findSingle(Product.class, "externalRef", remoteProduct.getExternalRef());
+        Product localProduct = getLocalEntity(Product.class, remoteProduct.getExternalRef(), siteCfg);
         if (localProduct == null) {
             localProduct = new Product();
             localProduct.setSite(siteCfg.getSite());
@@ -135,20 +137,24 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         localProduct.sync(remoteProduct);
 
         if (remoteProduct.getCategory() != null) {
-            localProduct.setCategory(crudService.findSingle(ProductCategory.class, "externalRef", remoteProduct.getCategory().getExternalRef()));
+            localProduct.setCategory(getLocalEntity(ProductCategory.class, remoteProduct.getCategory().getExternalRef(), siteCfg));
         }
 
         if (remoteProduct.getBrand() != null) {
-            localProduct.setBrand(crudService.findSingle(ProductBrand.class, "externalRef", remoteProduct.getBrand().getExternalRef()));
+            localProduct.setBrand(getLocalEntity(ProductBrand.class, remoteProduct.getBrand().getExternalRef(), siteCfg));
         }
 
         crudService.save(localProduct);
-        syncProductDetails(localProduct, remoteProduct);
-        downloadProductImages(siteCfg, localProduct);
 
     }
 
-    private void syncProductDetails(Product localProduct, ProductDTO remoteProduct) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void syncProductDetails(ProductDTO remoteProduct) {
+        Product localProduct = crudService.findSingle(Product.class, "externalRef", remoteProduct.getExternalRef());
+        if (localProduct == null) {
+            logger.warn(":: Local Product is NULL - Remote Product " + remoteProduct.getName() + " --> " + remoteProduct.getExternalRef());
+            return;
+        }
         deleteProductsDetails(localProduct);
         if (remoteProduct.getDetails() != null) {
 
@@ -164,11 +170,34 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         }
     }
 
-    private void syncCategoryDetails(ProductCategory localCategory, ProductCategoryDTO remoteCategory) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void syncProductStockDetails(ProductDTO remoteProduct) {
+        Product localProduct = crudService.findSingle(Product.class, "externalRef", remoteProduct.getExternalRef());
+        if (localProduct == null) {
+            logger.warn(":: Local Product is NULL - Remote Product " + remoteProduct.getName() + " --> " + remoteProduct.getExternalRef());
+            return;
+        }
+        deleteProductsStockDetails(localProduct);
+        if (remoteProduct.getStockDetails() != null) {
+
+            for (ProductStockDTO remoteDetail : remoteProduct.getStockDetails()) {
+
+                ProductStock localDetail = new ProductStock();
+
+                localDetail.setSite(localProduct.getSite());
+                localDetail.setProduct(localProduct);
+                localDetail.setStore(crudService.findSingle(Store.class, "externalRef", remoteDetail.getStoreExternalRef()));
+                localDetail.sync(remoteDetail);
+                crudService.save(localDetail);
+            }
+        }
+    }
+
+    private void syncCategoryDetails(ProductsSiteConfig siteCfg, ProductCategory localCategory, ProductCategoryDTO remoteCategory) {
 
         if (remoteCategory.getDetails() != null) {
             for (ProductCategoryDetailDTO remoteDetail : remoteCategory.getDetails()) {
-                ProductCategoryDetail localDetail = crudService.findSingle(ProductCategoryDetail.class, "externalRef", remoteDetail.getExternalRef());
+                ProductCategoryDetail localDetail = getLocalEntity(ProductCategoryDetail.class, remoteDetail.getExternalRef(), siteCfg);
                 if (localDetail == null) {
                     localDetail = new ProductCategoryDetail();
                 }
@@ -186,7 +215,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         logger.debug(">>>> STARTING PRODUCT'S BRANDS SYNCHRONIZATION FOR SITE " + siteCfg.getSite().getName() + " <<<<");
 
         ProductsDatasource ds = getDatasource(siteCfg);
-        List<ProductBrandDTO> brands = ds.getBrands();
+        List<ProductBrandDTO> brands = ds.getBrands(siteCfg.getParametersAsMap());
         for (ProductBrandDTO remoteBrand : brands) {
             synchronizeBrand(siteCfg, remoteBrand);
         }
@@ -195,7 +224,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void synchronizeBrand(ProductsSiteConfig siteCfg, ProductBrandDTO remoteBrand) {
-        ProductBrand localBrand = crudService.findSingle(ProductBrand.class, "externalRef", remoteBrand.getExternalRef());
+        ProductBrand localBrand = getLocalEntity(ProductBrand.class, remoteBrand.getExternalRef(), siteCfg);
         if (localBrand == null) {
             localBrand = new ProductBrand();
             localBrand.setSite(siteCfg.getSite());
@@ -212,7 +241,33 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         }
     }
 
-    private void downloadProductImages(ProductsSiteConfig siteCfg, Product product) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void synchronizeStores(ProductsSiteConfig siteCfg) {
+        logger.debug(">>>> STARTING STORE SYNCHRONIZATION FOR SITE " + siteCfg.getSite().getName() + " <<<<");
+
+        ProductsDatasource ds = getDatasource(siteCfg);
+        List<StoreDTO> stores = ds.getStores(siteCfg.getParametersAsMap());
+        for (StoreDTO remoteStroe : stores) {
+            synchronizeStore(siteCfg, remoteStroe);
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void synchronizeStore(ProductsSiteConfig siteCfg, StoreDTO remoteStore) {
+        Store localStore = getLocalEntity(Store.class, remoteStore.getExternalRef(), siteCfg);
+        if (localStore == null) {
+            localStore = new Store();
+            localStore.setSite(siteCfg.getSite());
+        }
+        localStore.sync(remoteStore);
+
+        crudService.save(localStore);
+
+    }
+
+    public void downloadProductImages(ProductsSiteConfig siteCfg, ProductDTO product) {
         try {
             String folder = DynamiaCMS.getSitesResourceLocation(siteCfg.getSite()).resolve(PRODUCTS_FOLDER + File.separator + "images").toString();
             downloadImage(siteCfg.getDatasourceImagesURL(), product.getImage(), folder);
@@ -277,21 +332,34 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
                 crudService.delete(productDetail);
             }
         }
+    }
+
+    private void deleteProductsStockDetails(Product product) {
+        if (product.getId() == null) {
+            return;
+        }
+        List<ProductStock> details = crudService.find(ProductStock.class, "product", product);
+        if (details != null) {
+            for (ProductStock stock : details) {
+                crudService.delete(stock);
+            }
+        }
 
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
-    public void disableCategoriesNoInList(List<ProductCategoryDTO> categories) {
+    public void disableCategoriesNoInList(ProductsSiteConfig siteCfg, List<ProductCategoryDTO> categories) {
         if (categories != null && !categories.isEmpty()) {
             List<Long> ids = new ArrayList<>();
             for (ProductCategoryDTO dto : categories) {
                 ids.add(dto.getExternalRef());
             }
 
-            String sql = "update " + ProductCategory.class.getSimpleName() + " pc set active=false where pc.parent is null and pc.externalRef not in (:ids)";
+            String sql = "update " + ProductCategory.class.getSimpleName() + " pc set active=false where pc.parent is null and pc.externalRef not in (:ids) and pc.site = :site";
             Query query = entityMgr.createQuery(sql);
             query.setParameter("ids", ids);
+            query.setParameter("site", siteCfg.getSite());
 
             query.executeUpdate();
 
@@ -300,16 +368,18 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
-    public void disableProductsNoInList(List<ProductDTO> products) {
+    public void disableProductsNoInList(ProductsSiteConfig siteCfg, List<ProductDTO> products) {
         if (products != null && !products.isEmpty()) {
             List<Long> ids = new ArrayList<>();
             for (ProductDTO dto : products) {
                 ids.add(dto.getExternalRef());
             }
 
-            String sql = "update " + Product.class.getSimpleName() + " pc set active=false where pc.externalRef not in (:ids)";
+            String sql = "update " + Product.class.getSimpleName() + " pc set active=false where pc.externalRef not in (:ids) and pc.site = :site";
             Query query = entityMgr.createQuery(sql);
             query.setParameter("ids", ids);
+            query.setParameter("site", siteCfg.getSite());
+
             query.executeUpdate();
 
         }
@@ -321,6 +391,12 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         siteCfg = crudService.reload(siteCfg);
         siteCfg.setLastSync(new Date());
         crudService.update(siteCfg);
+    }
+
+    public <T> T getLocalEntity(Class<T> clazz, Long externalRef, ProductsSiteConfig cfg) {
+        QueryParameters qp = QueryParameters.with("externalRef", externalRef).add("site", cfg.getSite());
+
+        return crudService.findSingle(clazz, qp);
     }
 
 }

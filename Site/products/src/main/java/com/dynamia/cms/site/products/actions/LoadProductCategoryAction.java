@@ -13,6 +13,7 @@ import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +52,29 @@ class LoadProductCategoryAction implements SiteAction {
             category = crudService.find(ProductCategory.class, id);
         }
 
-        List<Product> products = service.getProducts(category);
-        List<Product> specialProducts = service.getSpecialProducts(category);
+        List<Product> products = null;
+        QueryParameters qp = QueryParameters.with("active",true)
+                .add("site", evt.getSite());
+        
+        if(category.getParent()==null){
+            qp.add("category.parent", category);
+        }else{
+            qp.add("category", category);
+        }
+                
+        
+        qp.orderBy("price", true);
+        qp.paginate(service.getSiteConfig(evt.getSite()).getProductsPerPage());
+        if (evt.getRequest().getParameterMap().containsKey("featured")) {
+            qp.add("featured", true);
+            products = crudService.find(Product.class, qp);
+        } else if (evt.getRequest().getParameterMap().containsKey("sale")) {
+            qp.add("sale", true);
+            products = crudService.find(Product.class, qp);
+        } else {
+            products = service.getProducts(category);
+        }
+        //List<Product> specialProducts = service.getSpecialProducts(category);
         List<ProductCategory> subcategories = service.getSubcategories(category);
         List<ProductBrand> categoryBrands = service.getBrands(category);
 
@@ -61,7 +83,7 @@ class LoadProductCategoryAction implements SiteAction {
         mv.addObject("prd_subcategories", subcategories);
         mv.addObject("prd_categoryBrands", categoryBrands);
         mv.addObject("prd_parentCategory", category.getParent());
-        mv.addObject("prd_specialProducts", specialProducts);
+        //mv.addObject("prd_specialProducts", specialProducts);
 
         products = ProductsUtil.setupPagination(products, evt.getRequest(), mv);
         ProductsUtil.setupProductsVar(products, mv);

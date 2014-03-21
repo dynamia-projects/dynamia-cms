@@ -12,6 +12,7 @@ import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.products.controllers.StoreController;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.tools.commons.logger.LoggingService;
 import com.dynamia.tools.commons.logger.SLF4JLoggingService;
 import com.dynamia.tools.domain.services.CrudService;
@@ -53,11 +54,28 @@ public class ShowMainPageAction implements SiteAction {
 
         mv.addObject("prd_mostViewedProducts", mostViewed);
         mv.addObject("prd_specialProducts", specialProducts);
-        loadRecentProducts(evt, mv);
+        if (UserHolder.get().isAuthenticated()) {
+            loadRecentProductsFromUser(evt, mv);
+        } else {
+            loadRecentProductsFromCookies(evt, mv);
+        }
 
     }
 
-    public void loadRecentProducts(ActionEvent evt, ModelAndView mv) throws NumberFormatException {
+    private void loadRecentProductsFromUser(ActionEvent evt, ModelAndView mv) {
+        try {
+            List<Product> recentViewed = service.getRecentProducts(UserHolder.get().getCurrent());
+            Product firstProduct = recentViewed.get(0);
+            List<Product> relatedProducts = service.getRelatedProducts(firstProduct);
+            mv.addObject("prd_recentViewedProducts", recentViewed);
+            mv.addObject("prd_relatedProducts", relatedProducts);
+        } catch (Exception e) {
+            System.out.println("ERROR loadRecentProductsFromUser " + e.getMessage());
+        }
+
+    }
+
+    private void loadRecentProductsFromCookies(ActionEvent evt, ModelAndView mv) throws NumberFormatException {
         try {
             Cookie cookie = CMSUtil.getCookie(evt.getRequest(), StoreController.RECENT_PRODUCTS_COOKIE_NAME + evt.getSite().getKey());
             if (cookie != null) {

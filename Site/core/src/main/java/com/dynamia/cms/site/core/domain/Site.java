@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -33,6 +34,9 @@ public class Site extends SimpleEntity {
     @OneToMany(mappedBy = "site")
     private List<SiteParameter> parameters = new ArrayList<>();
 
+    @OneToOne
+    private Site parent;
+
     private String description;
     private boolean offline;
     private String offlineMessage;
@@ -44,6 +48,14 @@ public class Site extends SimpleEntity {
     private String googleAnalyticsID;
     private String googleAnalyticsDomain;
     private String googleSiteVerification;
+
+    public Site getParent() {
+        return parent;
+    }
+
+    public void setParent(Site parent) {
+        this.parent = parent;
+    }
 
     public String getName() {
         return name;

@@ -10,11 +10,13 @@ import com.dynamia.cms.site.products.ProductSearchForm;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
+import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.cms.site.users.UserHolder;
+import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.tools.commons.StringUtils;
 import com.dynamia.tools.commons.collect.PagedList;
-import com.dynamia.tools.domain.query.BooleanOp;
 import com.dynamia.tools.domain.query.QueryConditions;
 import static com.dynamia.tools.domain.query.QueryConditions.between;
 import static com.dynamia.tools.domain.query.QueryConditions.geqt;
@@ -24,15 +26,14 @@ import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.domain.util.QueryBuilder;
 import com.dynamia.tools.integration.Containers;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.servlet.http.Cookie;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -222,9 +223,10 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    
+
     public List<Product> getMostViewedProducts(Site site) {
-        QueryParameters qp = QueryParameters.with("active", true);
+        QueryParameters qp = QueryParameters.with("active", true)
+                .add("site", site);
         qp.paginate(getDefaultPageSize(site) + 2);
         qp.orderBy("views", false);
         PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp);
@@ -289,15 +291,14 @@ public class ProductsServiceImpl implements ProductsService {
                 .and("p.site = :site")
                 .and("(p.name like :param or p.category.parent.name like :param "
                         + "or p.category.parent.name like :param or p.brand.name like :param "
-                        + "or p.description like :param)")
+                        + "or p.description like :param or p.sku like :param )")
                 .orderBy("p.brand.name, p.price");
-        
-        
+
         QueryParameters qp = new QueryParameters();
-        qp.add("param",  param);
-        qp.add("site",site);
+        qp.add("param", param);
+        qp.add("site", site);
         qp.paginate(getDefaultPageSize(site));
-        
+
         return crudService.executeQuery(query, qp);
     }
 
@@ -307,12 +308,15 @@ public class ProductsServiceImpl implements ProductsService {
         QueryParameters qp = new QueryParameters();
         QueryBuilder qb = QueryBuilder.select(Product.class, "p");
 
+        qp.add("site", product.getSite());
         qp.add("category", product.getCategory());
-        qb.and("p.category = :category");
+        qb.and("p.site = :site");
 
         if (product.getBrand() != null) {
-            qb.or("p.brand = :brand");
+            qb.and("(p.category = :category or p.brand = :brand)");
             qp.add("brand", product.getBrand());
+        } else {
+            qb.and("p.category = :category");
         }
 
         qb.orderBy("p.price asc");
@@ -347,8 +351,8 @@ public class ProductsServiceImpl implements ProductsService {
         qp.add("category", category);
         qp.paginate(getDefaultPageSize(category.getSite()));
 
-        PagedList list = (PagedList) crudService.executeQuery(query, qp);
-        return list.getDataSource().getPageData();
+        return crudService.executeQuery(query, qp);
+
     }
 
     @Override
@@ -366,6 +370,69 @@ public class ProductsServiceImpl implements ProductsService {
 
         PagedList list = (PagedList) crudService.executeQuery(query, qp);
         return list.getDataSource().getPageData();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void updateProductStoryViews(Product product) {
+        try {
+            if (UserHolder.get().isAuthenticated()) {
+                ProductUserStory story = getProductStory(product, UserHolder.get().getCurrent());
+                if (story.getId() == null) {
+                    story.setFirstView(new Date());
+                }
+                story.setLastView(new Date());
+                story.setViews(story.getViews() + 1);
+                crudService.save(story);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void updateProductStoryShops(Product product) {
+        try {
+            if (UserHolder.get().isAuthenticated()) {
+                ProductUserStory story = getProductStory(product, UserHolder.get().getCurrent());
+                if (story.getId() == null) {
+                    story.setFirstShop(new Date());
+                }
+                story.setLastShop(new Date());
+                story.setShops(story.getShops() + 1);
+                crudService.save(story);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public ProductUserStory getProductStory(Product product, User user) {
+        if (user == null) {
+            return null;
+        }
+
+        QueryParameters qp = QueryParameters.with("product", product)
+                .add("user", user);
+
+        ProductUserStory userStory = crudService.findSingle(ProductUserStory.class, qp);
+        if (userStory == null) {
+            userStory = new ProductUserStory();
+            userStory.setProduct(product);
+            userStory.setUser(user);
+        }
+
+        return userStory;
+    }
+
+    @Override
+    public List<Product> getRecentProducts(User user) {
+        String sql = "select s.product from ProductUserStory s where s.user = :user order by s.lastView desc";
+        Query query = entityManager.createQuery(sql);
+        query.setMaxResults(getDefaultPageSize(user.getSite()));
+        query.setParameter("user", user);
+
+        return query.getResultList();
+
     }
 
 }

@@ -29,8 +29,7 @@
     </preference>
 
 
-    <system-config>
-        <disable-event-thread>false</disable-event-thread>
+    <system-config>     
         <ui-factory-class>org.zkoss.zk.ui.http.SerializableUiFactory</ui-factory-class>
     </system-config>
   

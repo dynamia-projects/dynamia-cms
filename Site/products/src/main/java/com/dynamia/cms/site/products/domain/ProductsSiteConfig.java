@@ -5,11 +5,17 @@
  */
 package com.dynamia.cms.site.products.domain;
 
+import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.tools.domain.SimpleEntity;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,7 +28,7 @@ import org.hibernate.annotations.Index;
  */
 @Entity
 @Table(name = "prd_sites_config")
-public class ProductsSiteConfig extends SimpleEntity {
+public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 
     @OneToOne
     @NotNull
@@ -45,12 +51,25 @@ public class ProductsSiteConfig extends SimpleEntity {
 
     private int productsPerPage;
 
+    private int productsStockToShow;
+
+    @OneToMany(mappedBy = "siteConfig")
+    private List<ProductsSiteConfigParameter> parameters = new ArrayList<>();
+
     public Site getSite() {
         return site;
     }
 
     public void setSite(Site site) {
         this.site = site;
+    }
+
+    public List<ProductsSiteConfigParameter> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(List<ProductsSiteConfigParameter> parameters) {
+        this.parameters = parameters;
     }
 
     public int getProductsPerPage() {
@@ -62,6 +81,17 @@ public class ProductsSiteConfig extends SimpleEntity {
 
     public void setProductsPerPage(int productsPerPage) {
         this.productsPerPage = productsPerPage;
+    }
+
+    public int getProductsStockToShow() {
+        if (productsStockToShow <= 0) {
+            productsStockToShow = 5;
+        }
+        return productsStockToShow;
+    }
+
+    public void setProductsStockToShow(int productsStockToShow) {
+        this.productsStockToShow = productsStockToShow;
     }
 
     public String getDefaultCurrency() {
@@ -134,6 +164,14 @@ public class ProductsSiteConfig extends SimpleEntity {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Map<String, String> getParametersAsMap() {
+        Map<String, String> params = new HashMap<>();
+        for (ProductsSiteConfigParameter param : getParameters()) {
+            params.put(param.getName(), param.getValue());
+        }
+        return params;
     }
 
 }

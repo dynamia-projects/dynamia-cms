@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+
+    <div class="container" layout:fragment="content">
+
+        <!-- Main Title-->
+        <div class="titles">
+            <div class="pull-left">
+                <h1 class="headinglefttitle">Mi Informacion Personal</h1>
+                <div class="headingsubtitle">Manten tus datos actualizados</div>
+            </div>
+            <i class="icon-user"></i>  
+        </div>
+
+        <div class="row mt40">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <form id="userForm" class="form-horizontal" action="#" th:action="@{/users/profile}" th:object="${userForm}" method="post">
+                    <div class="form-group">
+                        <label  class="col-lg-2 control-label">Correo Electronico:<span class="red">*</span></label>
+                        <div class="col-lg-10">
+                            <label  class="form-control" style="border:none" th:text="*{data.username}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-lg-2 control-label">Nombre:<span class="red">*</span></label>
+                        <div class="col-lg-10">
+                            <input  type="text"  class="form-control" th:field="*{data.fullName}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-lg-2 control-label">Identificacion:</label>
+                        <div class="col-lg-3">
+                            <input  type="text"  class="form-control" th:field="*{data.identification}"/>
+                        </div>
+                    </div>
+
+                    <h3>Datos de Contacto</h3>
+                    <div class="form-group">
+                        <label  class="col-lg-2 control-label">Correo Electronico Adicional:</label>
+                        <div class="col-lg-10">
+                            <input  type="email"  class="form-control" th:field="*{data.contactInfo.email}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-lg-2 control-label">Pais:</label>
+                        <div class="col-lg-3">
+                            <input  type="text"  class="form-control" th:field="*{data.contactInfo.country}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-lg-2 control-label">Departamento:</label>
+                        <div class="col-lg-3">
+                            <input  type="text"  class="form-control" th:field="*{data.contactInfo.region}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-lg-2 control-label">Ciudad:</label>
+                        <div class="col-lg-3">
+                            <input  type="text"  class="form-control" th:field="*{data.contactInfo.city}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-lg-2 control-label">Direccion:</label>
+                        <div class="col-lg-10">
+                            <input  type="text"  class="form-control" th:field="*{data.contactInfo.address}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-lg-2 control-label">Numero de Telefono:</label>
+                        <div class="col-lg-3">
+                            <input  type="tel"  class="form-control" th:field="*{data.contactInfo.phoneNumber}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-lg-2 control-label">Numero Celular:</label>
+                        <div class="col-lg-3">
+                            <input  type="tel"  class="form-control" th:field="*{data.contactInfo.mobileNumber}"/>
+                        </div>
+                    </div>
+
+
+                    <br/>
+
+                    <input type="hidden" th:field="*{data.id}"/>
+                    <a  class="btn btn-orange" onclick="$('#userForm').submit();">Guardar Cambios</a>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</html>

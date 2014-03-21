@@ -11,7 +11,7 @@
 
         <div class="row mt10">
 
-            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 mt40column">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt40column">
                 <div class="titles animated fadeInUp time3">
                     <div class="pull-left">
                         <h1 th:text="${title}" class="headinglefttitle">Page title</h1>
@@ -23,15 +23,16 @@
 
                 </div>
 
-                <div th:if="${prd_specialProducts!=null and  not #lists.isEmpty(prd_specialProducts)}" class="featureprojectcontianer container mb40">
-                    <h2 class="heading1"><span class="maintext">Ofertas</span></h2>
-                    <th:block th:include="products/components/productcarousel::frag(${prd_specialProducts},4)"/>
-                </div>
-
 
                 <!--Top Pagination -->
-                <div class="clearfix" th:include="products/components/productpagination" />
-
+                <div class="clearfix"/>
+                <div class="nav pull-left">
+                    <a class="btn btn btn-orange btn-sm" th:href="@{${currentURI}}"><span class="icon-asterisk"></span> Todos</a>
+                    <a class="btn btn btn-warning btn-sm" th:href="@{${currentURI}+'?sale'}"><span class="icon-gift"></span> Ofertas</a>
+                    <a class="btn btn btn-warning btn-sm" th:href="@{${currentURI}+'?featured'}"><span class="icon-star-empty"></span> Destacados</a>
+                </div>
+                <div th:include="products/components/productpagination::content" />
+                <div class="clearfix"/>
                 <!-- PRODUCTS -->
 
                 <div class="featureprojectcontianer mt10" id="productlist">
@@ -41,15 +42,18 @@
 
                         <!-- Paging-->
                         <div class="mt40 clearfix">
-                            <div th:include="products/components/productpagination" />
+                            <div th:include="products/components/productpagination::content" />
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 mt40column"> 
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt40column"> 
                 <!--categories-->        
-                <div th:include="products/components/categorylist"/>
+                <div th:include="products/components/categorylist::content"/>
+
+                <!-- Twitter -->
+                <div th:include="social/components/twitterstream::content"/>
             </div>
         </div>
     </div>

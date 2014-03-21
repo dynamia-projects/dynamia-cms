@@ -8,6 +8,7 @@ import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.domain.SiteDomain;
 import com.dynamia.cms.site.core.api.Module;
+import com.dynamia.cms.site.core.domain.SiteParameter;
 import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.tools.commons.logger.LoggingService;
 import com.dynamia.tools.commons.logger.SLF4JLoggingService;
@@ -60,9 +61,24 @@ public class SiteServiceImpl implements SiteService {
     }
 
     @Override
-    @Cacheable(value = "sites", key = "#request.serverName")
     public Site getSite(HttpServletRequest request) {
-        return getSiteByDomain(request.getServerName());
+        Site site = null;
+        if (request != null) {
+            site = (Site) request.getSession().getAttribute("site");
+            if (site == null) {
+                site = getSiteByDomain(request.getServerName());
+                request.getSession().setAttribute("site", site);
+            }
+        }
+
+        return site;
+    }
+    
+    @Cacheable(value="sites", key = "'params'+#site.key")
+    @Override
+    public List<SiteParameter> getSiteParameters(Site site){
+        site = crudService.reload(site);
+        return site.getParameters();        
     }
 
     @Override
@@ -77,8 +93,4 @@ public class SiteServiceImpl implements SiteService {
         return crudService.find(ModuleInstance.class, "enabled", true);
     }
 
-    @CacheEvict(value = "products", allEntries = true)
-    public void refresh() {
-        logger.info("Refresing Products DATA");
-    }
 }

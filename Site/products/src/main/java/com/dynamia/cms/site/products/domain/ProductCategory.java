@@ -5,6 +5,7 @@
  */
 package com.dynamia.cms.site.products.domain;
 
+import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import com.dynamia.tools.domain.SimpleEntity;
@@ -28,7 +29,7 @@ import org.hibernate.annotations.BatchSize;
 @Entity
 @Table(name = "prd_categories")
 @BatchSize(size = 50)
-public class ProductCategory extends SimpleEntity {
+public class ProductCategory extends SimpleEntity implements SiteAware{
 
     @OneToOne
     @NotNull

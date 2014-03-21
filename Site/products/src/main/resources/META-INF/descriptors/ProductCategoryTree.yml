@@ -1,0 +1,9 @@
+view: tree
+beanClass: com.dynamia.cms.site.products.domain.ProductCategory
+autofields: false
+sortFields: [name,description,active]
+
+fields:
+    name:
+    description:
+    active:

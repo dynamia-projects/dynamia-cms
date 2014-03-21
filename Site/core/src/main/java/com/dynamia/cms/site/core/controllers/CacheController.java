@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.TemplateRepository;
-import org.thymeleaf.templateresolver.TemplateResolver;
 
 /**
  *

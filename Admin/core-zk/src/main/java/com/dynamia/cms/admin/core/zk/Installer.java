@@ -31,8 +31,11 @@ public class Installer implements ModuleProvider {
 
         if (adminModules != null) {
             for (AdminModule am : adminModules) {
-                PageGroup pg = new PageGroup(am.getGroup(), am.getName());
-                module.addPageGroup(pg);
+                PageGroup pg = module.getPageGroupById(am.getGroup());
+                if (pg == null) {
+                    pg = new PageGroup(am.getGroup(), am.getName());
+                    module.addPageGroup(pg);                    
+                }
                 for (AdminModuleOption option : am.getOptions()) {
                     if (option instanceof ConfigAdminModuleOption) {
                         ConfigAdminModuleOption cfg = (ConfigAdminModuleOption) option;

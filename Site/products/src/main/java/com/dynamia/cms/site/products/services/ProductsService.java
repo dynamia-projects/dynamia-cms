@@ -10,7 +10,9 @@ import com.dynamia.cms.site.products.ProductSearchForm;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
+import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.tools.domain.query.QueryParameters;
 import java.util.List;
 import javax.servlet.http.Cookie;
@@ -68,5 +70,13 @@ public interface ProductsService {
     public List<Product> getSpecialProducts(ProductCategory category);
 
     List<Product> getSpecialProducts(Site site);
+
+    void updateProductStoryViews(Product product);
+
+    void updateProductStoryShops(Product product);
+
+    ProductUserStory getProductStory(Product product, User user);
+
+    List<Product> getRecentProducts(User user);
 
 }

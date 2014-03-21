@@ -4,6 +4,7 @@
  */
 package com.dynamia.cms.site.menus.domain;
 
+import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.tools.domain.SimpleEntity;
 import com.dynamia.tools.domain.contraints.NotEmpty;
@@ -26,7 +27,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "mn_menus")
-public class Menu extends SimpleEntity implements Serializable {
+public class Menu extends SimpleEntity implements Serializable, SiteAware {
 
     @NotEmpty
     private String name;

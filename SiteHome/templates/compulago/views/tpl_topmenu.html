@@ -7,35 +7,38 @@
     <body th:fragment="content">
         <div class="headerstrip navbar-fixed-top hidden-xs hidden-sm">
             <div class="container">
-                <div class="pull-left welcometxt">
+                <div class="pull-left">
                     <div class="navbar" id="topnav">
                         <div class="navbar-inner">
                             <ul class="nav" >
-                                <li><a class="" th:href="@{/}" ><i class="icon-home"></i> Compulago </a> </li>
-                                <li><a class="tooltip-test" data-placement="bottom"  data-original-title="Facebook"  ><i class="icon-facebook"></i></a></li>
-                                <li><a class="tooltip-test" data-placement="bottom" data-original-title="Twitter"  ><i class="icon-twitter"></i></a></li>
-                                <li><a class="tooltip-test" data-placement="bottom" data-original-title="Skype"  ><i class="icon-skype"></i></a></li>
+                                <li><a  th:href="@{/}" ><i class="icon-home"></i> Inicio </a> </li>
+                                <li><a class="tooltip-test" data-placement="bottom"  data-original-title="Facebook" th:if="${siteParams['facebook']}!=null" th:href="${siteParams['facebook']}"  ><i class="icon-facebook"></i></a></li>
+                                <li><a class="tooltip-test" data-placement="bottom" data-original-title="Twitter" th:if="${siteParams['twitter']}!=null"  th:href="@{${siteParams['twitter']}}"><i class="icon-twitter"></i></a></li>
                             </ul>
                         </div>
                     </div>
-
-                 
                 </div>
-                <!-- Top Nav Start -->
+
                 <div class="pull-right">
                     <div class="navbar" id="topnav">
                         <div class="navbar-inner">
-                            <ul class="nav" >                               
-                                <li><a class="" th:href="@{/store/brands}" ><i class=""></i>Marcas</a> </li>
-                                <li><a class="" href="#contacts" ><i class=""></i>Tiendas</a> </li>
-                                <li><a class="" href="mailito:servicioalcliente@compulago.net" ><i class=""></i>Quejas y Sugerencias</a> </li>
-                                <li><a class="" th:href="@{/empresa}" ><i class="group"></i>Nuestra Empresa</a> </li>
-                                <li><a class="myaccount" ><i class="icon-user"></i> Mi Cuenta </a> </li>
+                            <ul class="nav" >
+                                <li><a  th:href="@{/store/brands}" ><i class=""></i>Marcas</a> </li>
+                                <li><a  href="#contacts" ><i class=""></i>Tiendas</a> </li>
+                                <li><a  href="mailito:servicioalcliente@compulago.net" ><i class=""></i>Quejas y Sugerencias</a> </li>
+                                <li><a  th:href="@{/empresa}" ><i class="group"></i>Nuestra Empresa</a> </li>
+                                <li th:if="${@userHolder.authenticated eq false}">
+                                    <a th:href="@{/users/login}"><i class="icon-key"></i>Iniciar Sesion</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <!-- Top Nav End -->
+                <div class="pull-right">
+                    <ul class="nav language">                      
+                        <th:block th:include="users/components/usermenu::content"/>
+                    </ul>
+                </div>
 
 
             </div>

@@ -15,12 +15,14 @@
         <dynamia.icons.version>1.0</dynamia.icons.version>
         <hsql.version>1.8.0.10</hsql.version>
         <spring.version>3.2.6.RELEASE</spring.version>
+        <spring.security.version>3.2.0.RELEASE</spring.security.version>
         <hibernate.version>4.2.4.Final</hibernate.version>
         <thymeleaf.version>2.1.2.RELEASE</thymeleaf.version>
         <thymeleaf.layout.version>1.2.1</thymeleaf.layout.version>
                         
         <timestamp>${maven.build.timestamp}</timestamp>
-        <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>        
+        <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
     <build>
@@ -39,6 +41,15 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
         </plugins>
@@ -130,6 +141,7 @@
 
     <modules>        
         <module>core</module>
+        <module>users</module> 
         <module>templates</module>
         <module>pages</module>
         <module>menus</module>

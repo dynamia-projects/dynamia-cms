@@ -11,7 +11,7 @@ package com.dynamia.cms.site.products;
  */
 public enum ProductSearchOrder {
 
-    NAME("name", true), MINPRICE("price", true), MAXPRICE("price", false), RATE("rate", true);
+    NAME("name", true), MINPRICE("price", true), MAXPRICE("price", false), RATE("rate", true), VIEWS("views", true);
 
     private String field;
     private boolean asc;

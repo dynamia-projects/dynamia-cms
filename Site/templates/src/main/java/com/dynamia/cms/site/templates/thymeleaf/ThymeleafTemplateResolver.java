@@ -15,11 +15,14 @@ public class ThymeleafTemplateResolver extends org.thymeleaf.templateresolver.Te
     public ThymeleafTemplateResolver() {
         System.out.println("Initializing DynamiaCMS ThymeleafTemplateResolver");
         super.setResourceResolver(new ThymeleafTemplateResourceResolver());
+        
     }
 
     @Override
     public void setResourceResolver(IResourceResolver resourceResolver) {
         throw new IllegalArgumentException("Dont use this");
     }
+    
+    
 
 }

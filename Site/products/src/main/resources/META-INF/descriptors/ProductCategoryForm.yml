@@ -1,0 +1,20 @@
+view: form
+beanClass: com.dynamia.cms.site.products.domain.ProductCategory
+hidden: [id,externalRef]
+sortFields: [site,parent,name,alias,description,active]
+
+fields:
+  
+    
+    parent:
+        component: label
+        
+    description:
+        params:
+            multiline: true
+            height: 200px
+    
+   
+
+layout:
+    columns: 1

@@ -6,6 +6,7 @@
 package com.dynamia.cms.site.core;
 
 import com.dynamia.tools.commons.CollectionsUtils;
+import com.dynamia.tools.commons.StringUtils;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Collection;
@@ -64,6 +65,10 @@ public class CMSUtil {
         } else {
             return text.substring(0, size) + "...";
         }
+    }
+    
+    public String capitalize(String text){
+        return StringUtils.capitalizeAllWords(text);
     }
 
     public static Cookie getCookie(HttpServletRequest request, String cookieName) {

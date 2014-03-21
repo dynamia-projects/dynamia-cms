@@ -5,6 +5,7 @@
  */
 package com.dynamia.cms.site.products.domain;
 
+import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.dto.ProductCategoryDetailDTO;
 import com.dynamia.tools.domain.SimpleEntity;
@@ -22,7 +23,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "prd_category_details")
-public class ProductCategoryDetail extends SimpleEntity {
+public class ProductCategoryDetail extends SimpleEntity implements SiteAware{
 
     @OneToOne
     @NotNull

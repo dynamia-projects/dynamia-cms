@@ -12,6 +12,7 @@ import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.core.api.AdminModule;
 import com.dynamia.cms.site.core.api.AdminModuleOption;
 import com.dynamia.cms.site.core.api.CMSModule;
+import com.dynamia.cms.site.products.domain.Store;
 
 /**
  *
@@ -36,7 +37,9 @@ public class ProductsAdminModule implements AdminModule {
             new AdminModuleOption("config", "Configuration", ProductsSiteConfig.class),
             new AdminModuleOption("products", "Products", Product.class),
             new AdminModuleOption("categories", "Categories", ProductCategory.class),
-            new AdminModuleOption("brands", "Brands", ProductBrand.class),};
+            new AdminModuleOption("brands", "Brands", ProductBrand.class),
+            new AdminModuleOption("stores", "Stores", Store.class)};
+
     }
 
 }

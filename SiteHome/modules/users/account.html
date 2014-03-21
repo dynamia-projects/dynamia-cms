@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+
+    <div class="container" layout:fragment="content">
+
+        <!-- Main Title-->
+        <div class="titles">
+            <div class="pull-left">
+                <h1 class="headinglefttitle">Mi cuenta</h1>
+                <div class="headingsubtitle"> Gestione diferentes aspectos de su cuenta</div>
+            </div>
+            <i class="icon-ok-circle"></i>  </div>
+        <div class="row mt40">
+
+
+
+            <!-- Account Login-->
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <h3 class="heading3" th:text="${@userHolder.fullName}">My Accounts</h3>
+                <div class="myaccountbox">
+                    <ul>
+                        <li th:each="ua : ${userMenuActions}" >
+                            <a th:href="@{'/'+${ua.action()}}">
+                                <span th:text="${ua.description}"></span> 
+                            </a>
+                        </li>                    
+                    </ul>
+                </div>
+                <h3 class="heading3">Boletin de Noticias</h3>
+                <div class="myaccountbox">
+                    <ul>
+                        <li>
+                            <a >Subcribirse</a>
+                        </li>
+                        <li>
+                            <a >Cancelar Subscripcion</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>        
+
+        </div>
+
+    </div>
+
+
+</html>

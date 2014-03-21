@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <body th:fragment="content(store)">
+        <!--subcategories-->        
+
+        <div class="modal fade" th:id="${'store'+store.id}" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" th:text="${store.name}">Datos de Contacto</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div  class="containter" >
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="orange">Ciudad:</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <span th:text="${store.contactInfo.city}"></span>
+                                </div>
+                            </div>
+
+                        
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="orange">Direccion:</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <span th:text="${store.contactInfo.address}"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label  class="orange">Telefono:</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <span th:text="${store.contactInfo.phoneNumber}"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label  class="orange">Celular:</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <span th:text="${store.contactInfo.mobileNumber}"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="orange">Email:</label>
+                                </div>
+                                <div class="col-md-10">
+                                    <span><a th:hrerf="${'mailto:'+store.contactInfo.email}" th:text="${store.contactInfo.email}"></a></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-orange" data-dismiss="modal">Cerrar</button>                        
+                    </div>
+                </div>
+                <!-- /.modal-content --> 
+            </div>
+            <!-- /.modal-dialog --> 
+        </div>
+
+
+    </body>
+
+</html>

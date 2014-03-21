@@ -47,41 +47,18 @@ public class PageController {
     @RequestMapping(value = "/{page}", method = RequestMethod.GET)
     public ModelAndView page(@PathVariable String page, HttpServletRequest request) {
 
-        String domain = request.getServerName();
-        logger.debug("Loading page [" + page + "] for domain [" + domain + "]");
-
-        return page(domain, page, request);
+        return getPage(page, request);
     }
 
-    private ModelAndView page(String domainName, String pageAlias, HttpServletRequest request) {
+    private ModelAndView getPage(String pageAlias, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("site/page");
 
-        Site site = loadSite(domainName, mv);
+        Site site = coreService.getSite(request);
         Page page = loadPage(site, pageAlias, mv);
         configurePageType(page, site, mv, request);
 
         return mv;
-    }
-
-    private Site loadSite(String domainName, ModelAndView mv) {
-        Site site = coreService.getSite(domainName);
-        if (site == null) {
-            logger.info("Site for domain [" + domainName + "] not found. Using main site");
-            site = coreService.getMainSite();
-        }
-
-        mv.addObject("site", site);
-
-        if (site == null) {
-            logger.info("Main site is not configured");
-            mv.setViewName("error/404site");
-        } else {
-            mv.addObject("siteKey", site.getKey());
-            mv.addObject("domainName", domainName);
-        }
-        return site;
-
     }
 
     private Page loadPage(Site site, String pageAlias, ModelAndView mv) {

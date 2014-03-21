@@ -3,14 +3,14 @@
       xmlns:th="http://www.thymeleaf.org">
 
     <!-- Products Filter Form-->
-   
+
     <body th:fragment="content">
         <h2 class="heading1"><span class="maintext">Busqueda Avanzada</span></h2>
-        <form role="form" th:action="@{/store/search}" th:object="${prd_searchForm}" th:method="get">
+        <form role="form" class="form-vertical" th:action="@{/store/search}" th:object="${prd_searchForm}" th:method="get">
 
             <!-- Select Multiple -->
             <div class="form-group">
-                <label  for="category">Categoria</label>
+                <label  class="control-label"   for="category">Categoria</label>
                 <select th:field="*{categoryId}"  id="category" class="form-control">
                     <option th:value="${null}">Todas las Categorias</option>
                     <option th:each="cat : ${prd_categories}" th:text="${cat.name}" th:value="${cat.id}">Option one</option>
@@ -19,7 +19,7 @@
 
             <!-- Select Multiple -->
             <div class="form-group">
-                <label for="brand">Marca / Fabricante</label>
+                <label  class="control-label"  for="brand">Marca / Fabricante</label>
 
                 <select th:field="*{brandId}"  id="brand" class="form-control" >
                     <option  th:value="${null}">Todos los Fabricantes</option>
@@ -29,29 +29,30 @@
 
             <!-- Text input-->
             <div class="form-group">
-                <label  for="name">Nombre</label>
+                <label  class="control-label"   for="name">Nombre</label>
                 <input th:field="*{name}" id="name" name="" type="text" placeholder="nombre del producto" class="form-control" />
             </div>
 
             <!-- Text input-->
             <div class="form-group">
-                <label for="minPrice">Precio Minimo</label>
+                <label  class="control-label"  for="minPrice">Precio Minimo</label>
                 <input th:field="*{minPrice}" id="minPrice"  type="number" placeholder="ingrese el valor sin puntos ni comas"  class="form-control"/>
             </div>
 
             <div class="form-group">
-                <label for="maxPrice">Precio Maximo</label>
+                <label  class="control-label"  for="maxPrice">Precio Maximo</label>
                 <input th:field="*{maxPrice}" id="maxPrice"  type="number" placeholder="ingrese el valor sin puntos ni comas" class="form-control"/>
             </div>
 
 
             <div class="form-group">
-                <label  for="order">Ordernado Por</label>
+                <label class="control-label"  for="order">Ordernado Por</label>
                 <select th:field="*{order}"  id="order" class="form-control" >
                     <option value="NAME">Nombre</option>
                     <option value="MINPRICE">Menor Precio</option>
                     <option value="MAXPRICE">Mayor Precio</option>
                     <option value="RATE">Mas Relevante</option>
+                    <option value="VIEWS">Mas Vistos</option>
                 </select>                
             </div>
 

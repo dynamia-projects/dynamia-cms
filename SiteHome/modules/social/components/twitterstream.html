@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
+
+
+    <body th:fragment="content">
+        <div th:if="${siteParams['twitter']}!=null">
+            <h2 > <i class="icon-twitter-sign"></i> Twitter </h2>
+            <a class="twitter-timeline" th:href="${siteParams['twitter']}" data-widget-id="446758699650936832">Tweets por @compulagoC</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>
+
+    </body>
+
+</html>

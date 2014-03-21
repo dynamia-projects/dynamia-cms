@@ -27,7 +27,7 @@ public class ProductDTO implements Serializable {
 
     private BigDecimal price;
     private BigDecimal lastPrice;
-    private Long stock;
+    private long stock;
     private boolean active;
     private boolean featured;
     private boolean sale;
@@ -44,6 +44,8 @@ public class ProductDTO implements Serializable {
     private ProductBrandDTO brand;
 
     private List<ProductDetailDTO> details = new ArrayList<>();
+
+    private List<ProductStockDTO> stockDetails = new ArrayList<>();
 
     public String getStatus() {
         return status;
@@ -109,11 +111,11 @@ public class ProductDTO implements Serializable {
         this.lastPrice = lastPrice;
     }
 
-    public Long getStock() {
+    public long getStock() {
         return stock;
     }
 
-    public void setStock(Long stock) {
+    public void setStock(long stock) {
         this.stock = stock;
     }
 
@@ -203,6 +205,14 @@ public class ProductDTO implements Serializable {
 
     public void setDetails(List<ProductDetailDTO> details) {
         this.details = details;
+    }
+
+    public List<ProductStockDTO> getStockDetails() {
+        return stockDetails;
+    }
+
+    public void setStockDetails(List<ProductStockDTO> stockDetails) {
+        this.stockDetails = stockDetails;
     }
 
     @Override

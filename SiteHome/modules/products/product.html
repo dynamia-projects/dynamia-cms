@@ -11,7 +11,7 @@
             <!-- Main Title-->
             <div class="titles animated fadeInUp time3">
                 <div class="pull-left">
-                    <h1 th:text="${title}" class="headinglefttitle">Page title</h1>
+                    <h1 th:text="${prd_product.name}" class="headinglefttitle">Page title</h1>
                     <div th:text="${subtitle}" class="headingsubtitle"></div>
                 </div>
                 <div class="pull-right mt20">
@@ -39,6 +39,7 @@
 
                 <!-- Right Details-->
                 <div class="col-lg-7 col-md-7 col-xs-12 col-sm-12 mt40column">
+
                     <div class="productprice">
 
                         <div class="productpageprice"> <i class="icon-tags"></i><span th:text="${cmsUtil.formatNumber(prd_product.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> </div>
@@ -48,6 +49,13 @@
 
                     <div class="">
                         <span th:text="${prd_product.description}">description</span>
+                        <br/>
+                        <h4 class="orange" th:if="${prd_product.stock gt 0}"><i class="icon-check-sign"></i> En Inventario</h4>
+                        <h4 class="red" th:if="${prd_product.stock eq 0}"><i class="icon-ban-circle"></i> Agotado</h4>
+                    </div>
+
+                    <div th:if="${prd_story!=null}">
+                        <span>Has visto este producto <strong  class="orange" th:text="${prd_story.views}">TANTA</strong> veces! </span>
                     </div>
 
 
@@ -55,7 +63,7 @@
                     <div class="productdesc">
                         <ul class="nav nav-tabs" id="myTab">                        
                             <li class="active"><a href="#specification">Caracteristicas</a> </li>
-
+                            <li><a href="#stocks">Donde Comprar?</a> </li>
                             <li><a href="#producttag">Etiquetas</a> </li>
                         </ul>
                         <div class="tab-content">
@@ -82,13 +90,27 @@
 
 
                                     <li th:each="det : ${prd_product.details}"> 
-                                        <span th:text="${det.name+': '}" class="productinfoleft">NAME</span>
+                                        <span th:text="${det.name}" class="productinfoleft">NAME</span>
                                         <span>
                                             <span th:text="${det.value}">VALUE</span> 
                                             <span th:text="${det.description}">DESCRIPTION</span> 
                                         </span>
                                     </li>
 
+                                </ul>
+                            </div>
+
+
+                            <div class="tab-pane" id="stocks">
+                                <h3 class="orange">Nuestras Tiendas</h3>
+                                <div class="mb10">Clic en el nombre de la sucursal para ver datos de contacto</div>
+                                <ul class="productinfo">
+                                    <li th:each="det : ${prd_product.stockDetails}"> 
+                                        <span  class="productinfoleft"> <a data-toggle="modal"  class="tooltiptest" th:href="${'#store'+det.store.id}"  th:text="${cmsUtil.capitalize(det.store.name)}">NAME</a></span>
+                                        <span th:if="${det.stock le prd_config.productsStockToShow}" th:text="${det.stock+' en inventario'}">VALUE</span> 
+                                        <span th:if="${det.stock gt prd_config.productsStockToShow}">Suficientes</span> 
+                                        <th:block th:include="products/components/storedialog::content(${det.store})"/>
+                                    </li>
                                 </ul>
                             </div>
 
@@ -105,11 +127,13 @@
                     </div>
                     <!-- Buttons -->
                     <div class="productbtn">
-                        <button class="btn btn-orange tooltip-test" data-original-title="Proximamente"> <i class="icon-shopping-cart icon-white"></i>Comprar</button>
-                        <button class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-external-link icon-white"></i>Cotizar</button>
-                        <button class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-envelope icon-white"></i>Recomendar</button>
-                        <button class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-heart icon-white"></i> Favorito</button>
-                        <button class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-refresh icon-white"></i> Comparar </button>
+                        <a class="btn btn-orange tooltip-test" data-original-title="Proximamente"> <i class="icon-shopping-cart icon-white"></i> Comprar</a>
+                        <a class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-external-link icon-white"></i> Cotizar</a>                        
+                        <a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}"  class="btn btn-orange btn-small tooltip-test" data-original-title="Marca el producto como favorito"> <i class="icon-heart icon-white"></i> Favorito</a>
+                        <a class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-refresh icon-white"></i> Comparar </a>
+                    </div>
+                    <div>
+                        <th:block th:include="social/components/sharebuttons::content"/>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
+
+
+    <body th:fragment="content">
+        <div class="form-horizontal" style="display: inline">
+            <span style="margin-bottom: 3px">
+                <a href="https://twitter.com/share" class="twitter-share-button" th:data-via="${siteParams['twitterUser']}" >Tweet</a>
+                <script>!function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = p + '://platform.twitter.com/widgets.js';
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, 'script', 'twitter-wjs');</script>
+            </span>
+            <span class="fb-like " th:data-href="${currentURL}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></span>
+
+        </div>
+    </body>
+
+</html>

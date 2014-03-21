@@ -29,6 +29,7 @@ public class DynamiaCMS {
     private static final String VIEWS = "views";
     private static final String MODULES = "modules";
     private static final String SITES = "sites";
+    private static String path;
 
     public static Path getHomePath() {
         Path home = Paths.get(homePath());
@@ -68,7 +69,9 @@ public class DynamiaCMS {
     }
 
     private static String homePath() {
-        String path = ApplicationParameters.get().getValue(HOMEVAR);
+        if (path == null) {
+            path = ApplicationParameters.get().getValue(HOMEVAR);
+        }
         return path;
     }
 

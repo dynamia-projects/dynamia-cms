@@ -1,7 +1,7 @@
 view: form
 beanClass: com.dynamia.cms.site.products.domain.ProductsSiteConfig
-hidden: [id,lastSync,token]
-sortFields: [site,pricePattern,defaultCurrency, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceUsername,datasourcePassword]
+hidden: [id,lastSync,token,parametersAsMap]
+sortFields: [site,pricePattern,defaultCurrency,productsPerPage,productsStockToShow, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceUsername,datasourcePassword]
 
 fields:
     
@@ -24,12 +24,16 @@ fields:
     
     datasourcePassword:
         label: Password
+        
+                
+    parameters:
+        component: crudview
     
 groups:
     
     general:
         label: Basic Settings
-        fields: [site,pricePattern,defaultCurrency]
+        fields: [site,pricePattern,defaultCurrency,productsPerPage,productsStockToShow]
             
     
     datasource:

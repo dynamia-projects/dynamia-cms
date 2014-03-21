@@ -49,12 +49,23 @@
              <![endif]-->
     </head>
     <body>
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+
         <!-- Header Start -->
         <header >
             <th:block th:include="tpl_mobilemenu::content"/>
             <th:block th:include="tpl_topmenu::content"/>
 
-            <div class="headerdetails mt40  hidden-xs hidden-sm">
+            <div class="headerdetails mt20 hidden-xs hidden-sm">
                 <div class="container"> 
                     <a class="logo pull-left " href="#" th:href='@{/}'>
                         <img th:title="${name}" th:alt="${name}" th:src="@{${#objects.nullSafe(siteParams['logo'],'/img/logo.gif')}}" title="Simplepx" alt="Simplepx" src="img/logo.gif"/>
@@ -68,7 +79,7 @@
                     </div>
                     <!--Top Search -->
                     <div class="pull-right topsearch" th:include="site/searchform::content"/>
-                    
+
 
                 </div>
             </div>
@@ -76,6 +87,9 @@
         </header>
         <!-- Header End -->
         <div id="maincontainer" > 
+            <div class="container">
+                <th:block th:include="tpl_globalmessages::content"/>
+            </div>
 
             <div id="content" layout:fragment="content">
 

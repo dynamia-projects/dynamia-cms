@@ -32,14 +32,14 @@ public class ProductDatasourceTest {
     @Test
     public void testConnection() {
         ProductsDatasource ds = client.getProxy();
-        ds.getProduct(1L);
+        ds.getProduct(1L,null);
         assertNotNull(ds);
     }
 
     @Test
     public void testCategoryList() {
         ProductsDatasource ds = client.getProxy();
-        List<ProductCategoryDTO> categories = ds.getCategories();
+        List<ProductCategoryDTO> categories = ds.getCategories(null);
         assertFalse(categories.isEmpty());
 
         for (ProductCategoryDTO cat : categories) {
@@ -55,7 +55,7 @@ public class ProductDatasourceTest {
     @Test
     public void testProductList() {
         ProductsDatasource ds = client.getProxy();
-        List<ProductDTO> products = ds.getProducts();
+        List<ProductDTO> products = ds.getProducts(null);
         assertFalse(products.isEmpty());
 
         for (ProductDTO p : products) {

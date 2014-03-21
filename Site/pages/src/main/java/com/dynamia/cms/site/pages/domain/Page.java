@@ -4,6 +4,7 @@
  */
 package com.dynamia.cms.site.pages.domain;
 
+import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Content;
 import com.dynamia.cms.site.core.domain.ContentAuthor;
 import com.dynamia.tools.domain.contraints.NotEmpty;
@@ -28,7 +29,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "pg_pages")
-public class Page extends Content {
+public class Page extends Content implements SiteAware{
 
     @NotEmpty(message = "Enter page title")
     private String title;

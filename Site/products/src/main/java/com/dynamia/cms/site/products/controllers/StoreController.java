@@ -11,6 +11,7 @@ import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.cms.site.products.ProductSearchForm;
 import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.tools.commons.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +20,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,7 +81,7 @@ public class StoreController {
     @RequestMapping("/categories/{id}/{category}/{brand}")
     public ModelAndView categoryBrand(@PathVariable Long id, @PathVariable String category, @PathVariable String brand, HttpServletRequest request) {
         Site site = siteService.getSite(request);
-
+String serverName = request.getServerName();
         ProductSearchForm form = new ProductSearchForm();
         form.setBrandId(service.getBrandByAlias(site, brand).getId());
         form.setCategoryId(id);
@@ -111,7 +114,18 @@ public class StoreController {
         setupCookie(request, response, id);
 
         return mv;
+    }
 
+    @Secured("ROLE_USER")
+    @RequestMapping("/products/{id}/favorite")
+    public ModelAndView productFavorite(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mv = new ModelAndView("products/product");
+        if (UserHolder.get().isAuthenticated()) {
+            System.out.println("USER LOGGED: " + UserHolder.get().getUserName());
+        }
+        mv = product(id, request, response);
+
+        return mv;
     }
 
     @RequestMapping("/brands")
@@ -155,7 +169,7 @@ public class StoreController {
         if (ids.contains(idText)) {
             ids.remove(idText);
         }
-        
+
         ids.add(0, idText);
 
         if (ids.size() > service.getSiteConfig(site).getProductsPerPage()) {

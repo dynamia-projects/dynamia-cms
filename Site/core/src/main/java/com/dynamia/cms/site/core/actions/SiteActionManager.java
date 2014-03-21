@@ -59,8 +59,13 @@ public class SiteActionManager {
 
     public static void performAction(String actionName, ModelAndView mv, HttpServletRequest request, Object data) {
         SiteService service = Containers.get().findObject(SiteService.class);
+        Site site = service.getSite(request);
 
-        ActionEvent evt = newEvent(service.getSite(request), mv, request, null, data);
+        if (site == null) {
+            site = service.getMainSite();
+        }
+
+        ActionEvent evt = newEvent(site, mv, request, null, data);
         performAction(actionName, evt);
     }
 

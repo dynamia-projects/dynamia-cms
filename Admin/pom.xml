@@ -16,6 +16,15 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
         </plugins>
@@ -28,13 +37,10 @@
         <hibernate.version>4.2.4.Final</hibernate.version>
         
         <!-- Versiones de Modulos -->
-        <seguridad.version>3.5.3</seguridad.version>
-        
-        <entityfiles.version>3.1</entityfiles.version>
-        <comentarios.version>3.0</comentarios.version>
+        <seguridad.version>3.5.2</seguridad.version>
         
         <site.cms.version>0.4</site.cms.version>
-        
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -52,16 +58,6 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.dynamia.modules</groupId>
-            <artifactId>com.dynamia.modules.entityfiles.zk</artifactId>
-            <version>${entityfiles.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dynamia.modules</groupId>
-            <artifactId>com.dynamia.modules.comentarios.zk</artifactId>
-            <version>${comentarios.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.dynamia.modules</groupId>
             <artifactId>com.dynamia.modules.seguridad.zk</artifactId>
@@ -112,6 +108,7 @@
         <module>core</module>
         <module>core-zk</module>
         <module>web</module>
-        <module>products-admin</module>
+        <module>users-admin</module>
+        <module>products-admin</module>        
     </modules>
 </project>

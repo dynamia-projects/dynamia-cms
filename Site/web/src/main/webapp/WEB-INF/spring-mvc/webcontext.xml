@@ -36,7 +36,8 @@
     <bean id="templateResolver"  class="com.dynamia.cms.site.templates.thymeleaf.ThymeleafTemplateResolver">        
         <property name="suffix" value=".html" />
         <property name="templateMode" value="HTML5" />
-        <property name="cacheable" value="true"/>
+        <property name="cacheable" value="false"/>
+        
     </bean>
 
     <bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">

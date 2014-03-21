@@ -24,7 +24,7 @@ public class CoreAdminModule implements AdminModule {
 
     @Override
     public String getName() {
-        return "DynamiaCMS Core";
+        return "General";
     }
 
     @Override

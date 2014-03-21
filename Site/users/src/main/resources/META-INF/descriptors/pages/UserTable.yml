@@ -1,0 +1,10 @@
+view: table
+beanClass: com.dynamia.cms.site.users.domain.User
+autofields: false
+sortFields: [identification,fullName,username,contactInfo]
+
+fields:
+    identification:
+    fullName:
+    username:
+    contactInfo:

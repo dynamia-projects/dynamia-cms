@@ -1,0 +1,4 @@
+view: table
+beanClass: com.dynamia.cms.site.products.domain.ProductsSiteConfigParameter
+hidden: [id,siteConfig]
+sortFields: [name,value]

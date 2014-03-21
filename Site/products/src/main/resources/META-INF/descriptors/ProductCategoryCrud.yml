@@ -1,0 +1,3 @@
+view: crud
+beanClass: com.dynamia.cms.site.products.domain.ProductCategory
+dataSetView: tree

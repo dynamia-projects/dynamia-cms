@@ -5,13 +5,18 @@
  */
 package com.dynamia.cms.site.products.actions;
 
+import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.pages.PageNotFoundException;
 import com.dynamia.cms.site.products.domain.Product;
+import com.dynamia.cms.site.products.domain.ProductUserStory;
+import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.tools.commons.StringUtils;
+import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -45,16 +50,34 @@ public class ShowProductAction implements SiteAction {
         ModelAndView mv = evt.getModelAndView();
         Long id = (Long) evt.getData();
 
-        Product product = crudService.find(Product.class, id);
+        QueryParameters qp = QueryParameters.with("id", id)
+                .add("active", true)
+                .add("site",evt.getSite());
+        
+        Product product = crudService.findSingle(Product.class, qp);
         if (product == null) {
             throw new PageNotFoundException("Product not found");
         }
-        service.updateViewsCount(product);
         
+        String price = "";
+        try {
+            CMSUtil util = new CMSUtil();
+            ProductsSiteConfig config = service.getSiteConfig(evt.getSite());
+            price = " - " + util.formatNumber(product.getPrice(), config.getPricePattern());
+        } catch (Exception e) {
+        }
+
+        service.updateViewsCount(product);
+        service.updateProductStoryViews(product);
+        ProductUserStory story = service.getProductStory(product, UserHolder.get().getCurrent());
+        if (story != null) {
+            mv.addObject("prd_story", story);
+        }
+
         mv.addObject("prd_product", product);
         mv.addObject("prd_relatedProducts", service.getRelatedProducts(product));
         mv.addObject("prd_config", service.getSiteConfig(evt.getSite()));
-        mv.addObject("title", product.getName().toUpperCase());
+        mv.addObject("title", product.getName().toUpperCase() + price);
         mv.addObject("subtitle", product.getCategory().getName());
         mv.addObject("icon", "info-sign");
 
@@ -64,8 +87,8 @@ public class ShowProductAction implements SiteAction {
         }
         try {
             URL baseURL = new URL(evt.getRequest().getRequestURL().toString());
-            
-            String baseImageUrl = StringUtils.delete(baseURL.toString(),baseURL.getPath()) + "/resources/products/images/";
+
+            String baseImageUrl = StringUtils.delete(baseURL.toString(), baseURL.getPath()) + "/resources/products/images/";
             List<String> pageImages = new ArrayList<>();
             pageImages.add(baseImageUrl + product.getImage());
             if (product.getImage2() != null) {
