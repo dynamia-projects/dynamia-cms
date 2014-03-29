@@ -17,6 +17,15 @@ public class StoreDTO implements Serializable {
     private String name;
     private Long externalRef;
     private ContactInfo contactInfo = new ContactInfo();
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getName() {
         return name;

@@ -41,12 +41,14 @@ public interface ProductsSyncService {
 
     public void synchronizeStore(ProductsSiteConfig config, StoreDTO dto);
 
-    void synchronizeStores(ProductsSiteConfig siteCfg);
+    List<StoreDTO>  synchronizeStores(ProductsSiteConfig siteCfg);
 
     void syncProductDetails(ProductDTO remoteProduct);
 
     void syncProductStockDetails(ProductDTO remoteProduct);
 
     void downloadProductImages(ProductsSiteConfig siteCfg, ProductDTO product);
+
+    void downloadStoreImages(ProductsSiteConfig siteCfg, StoreDTO store);
 
 }

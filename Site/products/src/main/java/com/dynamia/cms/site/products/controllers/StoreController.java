@@ -81,7 +81,7 @@ public class StoreController {
     @RequestMapping("/categories/{id}/{category}/{brand}")
     public ModelAndView categoryBrand(@PathVariable Long id, @PathVariable String category, @PathVariable String brand, HttpServletRequest request) {
         Site site = siteService.getSite(request);
-String serverName = request.getServerName();
+
         ProductSearchForm form = new ProductSearchForm();
         form.setBrandId(service.getBrandByAlias(site, brand).getId());
         form.setCategoryId(id);

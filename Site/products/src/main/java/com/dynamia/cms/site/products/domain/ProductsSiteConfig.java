@@ -43,6 +43,8 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
     private String datasourcePassword;
     private String datasourceImagesURL;
     private String datasourceBrandImagesURL;
+    private String datasourceStoreImagesURL;
+
     @Index(name = "token")
     private String token;
 
@@ -148,6 +150,14 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 
     public void setDatasourceBrandImagesURL(String datasourceBrandImagesURL) {
         this.datasourceBrandImagesURL = datasourceBrandImagesURL;
+    }
+
+    public String getDatasourceStoreImagesURL() {
+        return datasourceStoreImagesURL;
+    }
+
+    public void setDatasourceStoreImagesURL(String datasourceStoreImagesURL) {
+        this.datasourceStoreImagesURL = datasourceStoreImagesURL;
     }
 
     public String getPricePattern() {

@@ -306,8 +306,9 @@ public class ProductsServiceImpl implements ProductsService {
     @Cacheable(value = "products", key = "'rld'+#product.id")
     public List<Product> getRelatedProducts(Product product) {
         QueryParameters qp = new QueryParameters();
-        QueryBuilder qb = QueryBuilder.select(Product.class, "p");
+        QueryBuilder qb = QueryBuilder.select(Product.class, "p").where("p.active = true");
 
+        
         qp.add("site", product.getSite());
         qp.add("category", product.getCategory());
         qb.and("p.site = :site");
@@ -343,7 +344,7 @@ public class ProductsServiceImpl implements ProductsService {
     public List<Product> getSpecialProducts(ProductCategory category) {
         QueryBuilder query = QueryBuilder.select(Product.class, "p")
                 .where("p.active=true")
-                .and("(p.sale=true or p.featured=true)")
+                .and("(p.sale=true or p.featured=true or p.newproduct=true)")
                 .and("(p.category = :category or p.category.parent=:category)")
                 .orderBy("p.price desc");
 
@@ -360,7 +361,7 @@ public class ProductsServiceImpl implements ProductsService {
     public List<Product> getSpecialProducts(Site site) {
         QueryBuilder query = QueryBuilder.select(Product.class, "p")
                 .where("p.active=true")
-                .and("(p.sale=true or p.featured=true)")
+                .and("(p.sale=true or p.featured=true or p.newproduct=true)")
                 .and("p.site = :site")
                 .orderBy("p.price desc");
 

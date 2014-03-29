@@ -56,6 +56,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductsSyncServiceImpl implements ProductsSyncService {
 
     private static final String PRODUCTS_FOLDER = "products";
+    private static final String STORES_FOLDER = "stores";
 
     private LoggingService logger = new SLF4JLoggingService(ProductsSyncService.class);
 
@@ -243,7 +244,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void synchronizeStores(ProductsSiteConfig siteCfg) {
+    public List<StoreDTO> synchronizeStores(ProductsSiteConfig siteCfg) {
         logger.debug(">>>> STARTING STORE SYNCHRONIZATION FOR SITE " + siteCfg.getSite().getName() + " <<<<");
 
         ProductsDatasource ds = getDatasource(siteCfg);
@@ -251,6 +252,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         for (StoreDTO remoteStroe : stores) {
             synchronizeStore(siteCfg, remoteStroe);
         }
+        return stores;
     }
 
     @Override
@@ -267,6 +269,18 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
     }
 
+    @Override
+    public void downloadStoreImages(ProductsSiteConfig siteCfg, StoreDTO store) {
+        try {
+            String folder = DynamiaCMS.getSitesResourceLocation(siteCfg.getSite()).resolve(STORES_FOLDER + File.separator + "images").toString();
+            downloadImage(siteCfg.getDatasourceStoreImagesURL(), store.getImage(), folder);
+
+        } catch (Exception ex) {
+            logger.error("Error downloading image from product " + store.getName() + " for Site: " + siteCfg.getSite().getName(), ex);
+        }
+    }
+
+    @Override
     public void downloadProductImages(ProductsSiteConfig siteCfg, ProductDTO product) {
         try {
             String folder = DynamiaCMS.getSitesResourceLocation(siteCfg.getSite()).resolve(PRODUCTS_FOLDER + File.separator + "images").toString();

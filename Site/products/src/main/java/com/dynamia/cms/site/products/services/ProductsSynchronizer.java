@@ -8,6 +8,7 @@ package com.dynamia.cms.site.products.services;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import com.dynamia.cms.site.products.dto.ProductDTO;
+import com.dynamia.cms.site.products.dto.StoreDTO;
 import com.dynamia.tools.commons.logger.LoggingService;
 import com.dynamia.tools.commons.logger.SLF4JLoggingService;
 import com.dynamia.tools.domain.services.CrudService;
@@ -39,7 +40,7 @@ public class ProductsSynchronizer {
         service.synchronizeBrands(siteCfg);
 
         logger.info("--Stores");
-        service.synchronizeStores(siteCfg);
+        List<StoreDTO> stores = service.synchronizeStores(siteCfg);
 
         logger.info("--Categories");
         List<ProductCategoryDTO> categories = service.synchronizeCategories(siteCfg);
@@ -60,6 +61,11 @@ public class ProductsSynchronizer {
         for (ProductDTO productDTO : products) {
             logger.info("-- Downloading Product Images for " + productDTO.getName());
             service.downloadProductImages(siteCfg, productDTO);
+        }
+
+        for (StoreDTO storeDTO : stores) {
+            logger.info("-- Downloading Store Images for " + storeDTO.getName());
+            service.downloadStoreImages(siteCfg, storeDTO);
         }
 
         service.update(siteCfg);

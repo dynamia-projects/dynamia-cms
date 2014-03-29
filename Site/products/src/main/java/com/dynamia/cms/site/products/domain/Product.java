@@ -55,6 +55,7 @@ public class Product extends SimpleEntity implements SiteAware {
     private boolean active;
     private boolean featured;
     private boolean sale;
+    private boolean newproduct;
     private String status;
     private String image;
     private String image2;
@@ -65,6 +66,24 @@ public class Product extends SimpleEntity implements SiteAware {
 
     @Column(length = 5000)
     private String tags;
+
+    private String externalLink;
+
+    public boolean isNewproduct() {
+        return newproduct;
+    }
+
+    public void setNewproduct(boolean newproduct) {
+        this.newproduct = newproduct;
+    }
+
+    public String getExternalLink() {
+        return externalLink;
+    }
+
+    public void setExternalLink(String externalLink) {
+        this.externalLink = externalLink;
+    }
 
     @OneToOne
     @NotNull(message = "Select product category")
@@ -297,6 +316,8 @@ public class Product extends SimpleEntity implements SiteAware {
         stock = dto.getStock();
         tags = dto.getTags();
         status = dto.getStatus();
+        externalLink = dto.getExternalLink();
+        newproduct = dto.isNewproduct();
     }
 
 }

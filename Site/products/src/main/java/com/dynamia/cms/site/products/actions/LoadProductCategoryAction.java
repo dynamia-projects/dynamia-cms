@@ -53,16 +53,15 @@ class LoadProductCategoryAction implements SiteAction {
         }
 
         List<Product> products = null;
-        QueryParameters qp = QueryParameters.with("active",true)
+        QueryParameters qp = QueryParameters.with("active", true)
                 .add("site", evt.getSite());
-        
-        if(category.getParent()==null){
+
+        if (category.getParent() == null) {
             qp.add("category.parent", category);
-        }else{
+        } else {
             qp.add("category", category);
         }
-                
-        
+
         qp.orderBy("price", true);
         qp.paginate(service.getSiteConfig(evt.getSite()).getProductsPerPage());
         if (evt.getRequest().getParameterMap().containsKey("featured")) {
@@ -70,6 +69,9 @@ class LoadProductCategoryAction implements SiteAction {
             products = crudService.find(Product.class, qp);
         } else if (evt.getRequest().getParameterMap().containsKey("sale")) {
             qp.add("sale", true);
+            products = crudService.find(Product.class, qp);
+        } else if (evt.getRequest().getParameterMap().containsKey("new")) {
+            qp.add("newproduct", true);
             products = crudService.find(Product.class, qp);
         } else {
             products = service.getProducts(category);

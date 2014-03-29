@@ -14,7 +14,13 @@
                     </div>
                     <div class="modal-body">
                         <div  class="containter" >
-                            <div class="row">
+                            <div class="row" th:if="${store.image!=null}">
+                                <div class="col-md-12" >
+                                    <img th:src="@{'/resources/stores/images/thumbnails/'+${store.image}(w=600,h=600)}" alt="foto"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt10">                                
                                 <div class="col-md-2">
                                     <label class="orange">Ciudad:</label>
                                 </div>
@@ -23,7 +29,7 @@
                                 </div>
                             </div>
 
-                        
+
 
                             <div class="row">
                                 <div class="col-md-2">
@@ -63,9 +69,7 @@
 
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-orange" data-dismiss="modal">Cerrar</button>                        
-                    </div>
+                  
                 </div>
                 <!-- /.modal-content --> 
             </div>

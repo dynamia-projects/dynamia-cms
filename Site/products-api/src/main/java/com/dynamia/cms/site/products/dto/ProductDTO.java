@@ -31,6 +31,7 @@ public class ProductDTO implements Serializable {
     private boolean active;
     private boolean featured;
     private boolean sale;
+    private boolean newproduct;
     private String status;
     private String image;
     private String image2;
@@ -46,6 +47,24 @@ public class ProductDTO implements Serializable {
     private List<ProductDetailDTO> details = new ArrayList<>();
 
     private List<ProductStockDTO> stockDetails = new ArrayList<>();
+
+    private String externalLink;
+
+    public boolean isNewproduct() {
+        return newproduct;
+    }
+
+    public void setNewproduct(boolean newproduct) {
+        this.newproduct = newproduct;
+    }
+
+    public String getExternalLink() {
+        return externalLink;
+    }
+
+    public void setExternalLink(String externalLink) {
+        this.externalLink = externalLink;
+    }
 
     public String getStatus() {
         return status;

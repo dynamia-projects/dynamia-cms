@@ -33,9 +33,18 @@ public class Store extends SimpleEntity implements SiteAware {
     private String name;
     private Long externalRef;
     private ContactInfo contactInfo = new ContactInfo();
+    private String image;
 
     @OneToOne
     private Page page;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Page getPage() {
         return page;
@@ -81,6 +90,7 @@ public class Store extends SimpleEntity implements SiteAware {
         setName(dto.getName());
         setContactInfo(dto.getContactInfo());
         setExternalRef(dto.getExternalRef());
+        setImage(dto.getImage());
 
     }
 
