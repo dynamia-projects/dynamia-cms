@@ -12,7 +12,7 @@
                     <ul class="nav-pills mainmenucontain container">
                         <li><a class="" th:href="@{/}" ><i class="icon-home icon-white font18"></i></a> </li>
                         <li th:each="mi : ${menuitems}">
-                            <a  th:class="${activeMenu == mi? 'active':''}" th:href="@{'/'+${mi.href}}" href="#">
+                            <a  th:class="${activeMenu == mi? 'active':''}" th:href="@{'/'+${mi.page.alias}}" href="#">
                                 <i th:class="${'icon-'+mi.icon+' icon-white font18'}" class="icon-home icon-white font18"></i>                                
                                 <th:block th:text="${mi.name}"/>
                             </a>

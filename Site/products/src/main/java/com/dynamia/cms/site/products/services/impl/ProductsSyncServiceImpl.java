@@ -14,12 +14,14 @@ import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.api.ProductsDatasource;
 import com.dynamia.cms.site.products.clients.ProductsDatasourceClient;
 import com.dynamia.cms.site.products.domain.ProductCategoryDetail;
+import com.dynamia.cms.site.products.domain.ProductCreditPrice;
 import com.dynamia.cms.site.products.domain.ProductStock;
 import com.dynamia.cms.site.products.domain.Store;
 import com.dynamia.cms.site.products.dto.ProductDTO;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDetailDTO;
+import com.dynamia.cms.site.products.dto.ProductCreditPriceDTO;
 import com.dynamia.cms.site.products.dto.ProductDetailDTO;
 import com.dynamia.cms.site.products.dto.ProductStockDTO;
 import com.dynamia.cms.site.products.dto.StoreDTO;
@@ -150,8 +152,8 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void syncProductDetails(ProductDTO remoteProduct) {
-        Product localProduct = crudService.findSingle(Product.class, "externalRef", remoteProduct.getExternalRef());
+    public void syncProductDetails(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
+        Product localProduct = getLocalEntity(Product.class, remoteProduct.getExternalRef(), siteCfg);
         if (localProduct == null) {
             logger.warn(":: Local Product is NULL - Remote Product " + remoteProduct.getName() + " --> " + remoteProduct.getExternalRef());
             return;
@@ -172,8 +174,8 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void syncProductStockDetails(ProductDTO remoteProduct) {
-        Product localProduct = crudService.findSingle(Product.class, "externalRef", remoteProduct.getExternalRef());
+    public void syncProductStockDetails(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
+        Product localProduct = getLocalEntity(Product.class, remoteProduct.getExternalRef(), siteCfg);
         if (localProduct == null) {
             logger.warn(":: Local Product is NULL - Remote Product " + remoteProduct.getName() + " --> " + remoteProduct.getExternalRef());
             return;
@@ -190,6 +192,31 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
                 localDetail.setStore(crudService.findSingle(Store.class, "externalRef", remoteDetail.getStoreExternalRef()));
                 localDetail.sync(remoteDetail);
                 crudService.save(localDetail);
+            }
+        }
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void syncProductCreditPrices(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
+
+        Product localProduct = getLocalEntity(Product.class, remoteProduct.getExternalRef(), siteCfg);
+        if (localProduct == null) {
+            logger.warn(":: Local Product is NULL - Remote Product " + remoteProduct.getName() + " --> " + remoteProduct.getExternalRef());
+            return;
+        }
+        deleteProductsCreditPrices(localProduct);
+        if (remoteProduct.getCreditPrices() != null) {
+
+            for (ProductCreditPriceDTO remotePrice : remoteProduct.getCreditPrices()) {
+                if (remotePrice != null) {
+                    ProductCreditPrice localPrice = new ProductCreditPrice();
+
+                    localPrice.setSite(localProduct.getSite());
+                    localPrice.setProduct(localProduct);
+                    localPrice.sync(remotePrice);
+                    crudService.save(localPrice);
+                }
             }
         }
     }
@@ -358,7 +385,18 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
                 crudService.delete(stock);
             }
         }
+    }
 
+    private void deleteProductsCreditPrices(Product product) {
+        if (product.getId() == null) {
+            return;
+        }
+        List<ProductCreditPrice> details = crudService.find(ProductCreditPrice.class, "product", product);
+        if (details != null) {
+            for (ProductCreditPrice price : details) {
+                crudService.delete(price);
+            }
+        }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -402,7 +440,6 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void update(ProductsSiteConfig siteCfg) {
-        siteCfg = crudService.reload(siteCfg);
         siteCfg.setLastSync(new Date());
         crudService.update(siteCfg);
     }

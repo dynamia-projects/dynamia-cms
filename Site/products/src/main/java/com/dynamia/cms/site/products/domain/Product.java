@@ -51,6 +51,7 @@ public class Product extends SimpleEntity implements SiteAware {
 
     private BigDecimal price;
     private BigDecimal lastPrice;
+    private String priceDescription;
     private Long stock;
     private boolean active;
     private boolean featured;
@@ -69,6 +70,49 @@ public class Product extends SimpleEntity implements SiteAware {
 
     private String externalLink;
 
+    @OneToOne
+    @NotNull(message = "Select product category")
+    private ProductCategory category;
+
+    @OneToOne
+    private ProductBrand brand;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductDetail> details = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductStock> stockDetails = new ArrayList<>();
+
+    @OrderBy("number")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductCreditPrice> creditPrices = new ArrayList<>();
+
+    private boolean showCreditPrices;
+
+    public String getPriceDescription() {
+        return priceDescription;
+    }
+
+    public void setPriceDescription(String priceDescription) {
+        this.priceDescription = priceDescription;
+    }
+
+    public List<ProductCreditPrice> getCreditPrices() {
+        return creditPrices;
+    }
+
+    public void setCreditPrices(List<ProductCreditPrice> creditPrices) {
+        this.creditPrices = creditPrices;
+    }
+
+    public boolean isShowCreditPrices() {
+        return showCreditPrices;
+    }
+
+    public void setShowCreditPrices(boolean showCreditPrices) {
+        this.showCreditPrices = showCreditPrices;
+    }
+
     public boolean isNewproduct() {
         return newproduct;
     }
@@ -84,19 +128,6 @@ public class Product extends SimpleEntity implements SiteAware {
     public void setExternalLink(String externalLink) {
         this.externalLink = externalLink;
     }
-
-    @OneToOne
-    @NotNull(message = "Select product category")
-    private ProductCategory category;
-
-    @OneToOne
-    private ProductBrand brand;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ProductDetail> details = new ArrayList<>();
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ProductStock> stockDetails = new ArrayList<>();
 
     public Long getViews() {
         if (views == null) {
@@ -318,6 +349,8 @@ public class Product extends SimpleEntity implements SiteAware {
         status = dto.getStatus();
         externalLink = dto.getExternalLink();
         newproduct = dto.isNewproduct();
+        showCreditPrices = dto.isShowCreditPrices();
+        priceDescription = dto.getPriceDescription();
     }
 
 }

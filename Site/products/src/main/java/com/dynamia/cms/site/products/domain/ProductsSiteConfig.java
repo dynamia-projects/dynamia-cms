@@ -13,7 +13,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -55,13 +57,19 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 
     private int productsStockToShow;
 
-    @OneToMany(mappedBy = "siteConfig")
+    private boolean shopEnabled;
+
+    private boolean quoteEnabled;
+
+    @OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductsSiteConfigParameter> parameters = new ArrayList<>();
 
+    @Override
     public Site getSite() {
         return site;
     }
 
+    @Override
     public void setSite(Site site) {
         this.site = site;
     }
@@ -72,6 +80,22 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 
     public void setParameters(List<ProductsSiteConfigParameter> parameters) {
         this.parameters = parameters;
+    }
+
+    public boolean isShopEnabled() {
+        return shopEnabled;
+    }
+
+    public void setShopEnabled(boolean shopEnabled) {
+        this.shopEnabled = shopEnabled;
+    }
+
+    public boolean isQuoteEnabled() {
+        return quoteEnabled;
+    }
+
+    public void setQuoteEnabled(boolean quoteEnabled) {
+        this.quoteEnabled = quoteEnabled;
     }
 
     public int getProductsPerPage() {

@@ -28,8 +28,17 @@ public class SiteDomain extends SimpleEntity {
     @NotNull
     @Column(unique = true)
     private String name;
+    private int port;
 
     private String description;
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
 
     public Site getSite() {
         return site;

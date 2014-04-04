@@ -11,6 +11,7 @@ import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.pages.PageNotFoundException;
 import com.dynamia.cms.site.products.domain.Product;
+import com.dynamia.cms.site.products.domain.ProductStock;
 import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.services.ProductsService;
@@ -73,8 +74,12 @@ public class ShowProductAction implements SiteAction {
         if (story != null) {
             mv.addObject("prd_story", story);
         }
+        
+        QueryParameters sdparams = QueryParameters.with("product", product).orderBy("store.contactInfo.city asc, store.name", true);
+        List<ProductStock> stockDetails = crudService.find(ProductStock.class, sdparams);
 
         mv.addObject("prd_product", product);
+        mv.addObject("prd_stock_details",stockDetails);
         mv.addObject("prd_relatedProducts", service.getRelatedProducts(product));
         mv.addObject("prd_config", service.getSiteConfig(evt.getSite()));
         mv.addObject("title", product.getName().toUpperCase() + price);

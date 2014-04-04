@@ -1,7 +1,7 @@
 view: form
 beanClass: com.dynamia.cms.site.core.domain.SiteDomain
 hidden: [id,site]
-sortFields: [name,description]
+sortFields: [name,port,description]
 
 fields:
     

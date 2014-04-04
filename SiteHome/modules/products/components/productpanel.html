@@ -33,6 +33,7 @@
 
                 <div class="productratecart centered">                 
                     <h3><strong><span th:text="${cmsUtil.formatNumber(prd.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"  class=" orange">$4459.00</span></strong></h3>
+                    <span th:text="${prd.priceDescription}"></span>
                 </div>
 
             </div>

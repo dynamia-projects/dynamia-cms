@@ -31,4 +31,6 @@ public interface SiteService {
 
     List<SiteParameter> getSiteParameters(Site site);
 
+    public void clearCache(Site site);
+
 }

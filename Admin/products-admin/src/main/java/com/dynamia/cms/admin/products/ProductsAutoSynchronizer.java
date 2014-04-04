@@ -25,7 +25,7 @@ public class ProductsAutoSynchronizer {
     @Autowired
     private CrudService crudService;
 
-    @Scheduled(fixedDelay = 2 * 60 * 60 * 1000) //each 2 hours
+    @Scheduled(fixedDelay = 1 * 60 * 60 * 1000) //each 2 hours
     public void sync() {
         List<ProductsSiteConfig> configs = crudService.findAll(ProductsSiteConfig.class);
         for (ProductsSiteConfig config : configs) {

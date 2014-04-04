@@ -27,6 +27,7 @@ public class ProductDTO implements Serializable {
 
     private BigDecimal price;
     private BigDecimal lastPrice;
+    private String priceDescription;
     private long stock;
     private boolean active;
     private boolean featured;
@@ -48,7 +49,35 @@ public class ProductDTO implements Serializable {
 
     private List<ProductStockDTO> stockDetails = new ArrayList<>();
 
+    private List<ProductCreditPriceDTO> creditPrices = new ArrayList<>();
+
     private String externalLink;
+
+    private boolean showCreditPrices;
+
+    public String getPriceDescription() {
+        return priceDescription;
+    }
+
+    public void setPriceDescription(String priceDescription) {
+        this.priceDescription = priceDescription;
+    }
+
+    public boolean isShowCreditPrices() {
+        return showCreditPrices;
+    }
+
+    public void setShowCreditPrices(boolean showCreditPrices) {
+        this.showCreditPrices = showCreditPrices;
+    }
+
+    public List<ProductCreditPriceDTO> getCreditPrices() {
+        return creditPrices;
+    }
+
+    public void setCreditPrices(List<ProductCreditPriceDTO> creditPrices) {
+        this.creditPrices = creditPrices;
+    }
 
     public boolean isNewproduct() {
         return newproduct;

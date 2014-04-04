@@ -14,11 +14,18 @@ import com.dynamia.tools.commons.logger.LoggingService;
 import com.dynamia.tools.commons.logger.SLF4JLoggingService;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.integration.Containers;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -73,12 +80,12 @@ public class SiteServiceImpl implements SiteService {
 
         return site;
     }
-    
-    @Cacheable(value="sites", key = "'params'+#site.key")
+
+    @Cacheable(value = "sites", key = "'params'+#site.key")
     @Override
-    public List<SiteParameter> getSiteParameters(Site site){
+    public List<SiteParameter> getSiteParameters(Site site) {
         site = crudService.reload(site);
-        return site.getParameters();        
+        return site.getParameters();
     }
 
     @Override
@@ -91,6 +98,46 @@ public class SiteServiceImpl implements SiteService {
     @Override
     public List<ModuleInstance> getEnabledModulesInstances() {
         return crudService.find(ModuleInstance.class, "enabled", true);
+    }
+
+    @Override
+    public void clearCache(Site site) {
+        SiteDomain firstDomain = crudService.findSingle(SiteDomain.class, "site", site);
+        if (firstDomain != null) {
+
+            String urltext = String.format("http://%s/cache/clear", firstDomain.getName());
+            if (firstDomain.getPort() > 0) {
+                urltext = String.format("http://%s:%s/cache/clear", firstDomain.getName(), firstDomain.getPort());
+            }
+            try {
+                logger.info("Clearing cache for site: " + site + " -> " + urltext);
+                executeHttpRequest(urltext);
+            } catch (MalformedURLException ex) {
+                logger.error("Invalid site domain URL: " + urltext + " site:" + site, ex);
+            } catch (IOException ex) {
+                logger.error("Error trying to clear site cache. Site: " + site, ex);
+            }
+        } else {
+            logger.warn("Cannot clear site cache " + site + ", not accepted domains configured");
+        }
+    }
+
+    private String executeHttpRequest(String url) throws MalformedURLException, IOException {
+
+        StringBuilder sb = new StringBuilder();
+        URL request = new URL(url);
+        URLConnection yc = request.openConnection();
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(
+                        yc.getInputStream()));
+        String inputLine;
+
+        while ((inputLine = in.readLine()) != null) {
+            sb.append(inputLine).append("\n");
+        }
+        in.close();
+
+        return sb.toString();
     }
 
 }

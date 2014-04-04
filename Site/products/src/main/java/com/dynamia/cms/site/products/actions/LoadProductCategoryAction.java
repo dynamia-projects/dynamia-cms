@@ -73,6 +73,9 @@ class LoadProductCategoryAction implements SiteAction {
         } else if (evt.getRequest().getParameterMap().containsKey("new")) {
             qp.add("newproduct", true);
             products = crudService.find(Product.class, qp);
+        } else if (evt.getRequest().getParameterMap().containsKey("views")) {
+            qp.orderBy("views", false);
+            products = crudService.find(Product.class, qp);
         } else {
             products = service.getProducts(category);
         }

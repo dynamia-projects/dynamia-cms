@@ -12,9 +12,10 @@
             <div class="titles animated fadeInUp time3">
                 <div class="pull-left">
                     <h1 th:text="${prd_product.name}" class="headinglefttitle">Page title</h1>
-                    <div th:text="${subtitle}" class="headingsubtitle"></div>
+                    <div th:text="${'Referencia: '+prd_product.sku}" class="headingsubtitle"></div>
+                    <div th:text="${subtitle}" class="headingsubtitle"></div>                    
                 </div>
-                <div class="pull-right mt20">
+                <div class="pull-right mt20"  th:if="${prd_product.brand}">
                     <a th:href="@{'/store/brands/'+${prd_product.brand.alias}}">
                         <img class="animated flip time3"  th:if="${prd_product.brand}" th:src="@{'/resources/products/brands/thumbnails/'+${prd_product.brand.image}(w=100,h=100)}" th:title="${prd_product.brand.name}" th:alt="${prd_product.brand.name}"  />
                     </a>
@@ -40,11 +41,22 @@
                 <!-- Right Details-->
                 <div class="col-lg-7 col-md-7 col-xs-12 col-sm-12 mt40column">
 
-                    <div class="productprice">
+                    <div class="productprice" th:if="${not prd_product.showCreditPrices}">
 
                         <div class="productpageprice"> <i class="icon-tags"></i><span th:text="${cmsUtil.formatNumber(prd_product.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> </div>
-                        <div th:if="${prd_product.price lt prd_product.lastPrice}" class="productpageoldprice">Antes <span th:text="${cmsUtil.formatNumber(prd_product.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> </div>
+                        <div th:if="${prd_product.price lt prd_product.lastPrice and prd_product.sale}" class="productpageoldprice">Antes <span th:text="${cmsUtil.formatNumber(prd_product.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> </div>
 
+                    </div>
+
+                    <div th:if="${prd_product.showCreditPrices}">
+
+                        <div th:each="cp : ${prd_product.creditPrices}">      
+                            <span style="display: inline">
+                                <span class="productpageprice" th:text="${cmsUtil.formatNumber(cp.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> 
+                                <span style="font-size: larger" th:text="${cp.number+' '+cp.description}"></span>                                
+                            </span>
+
+                        </div>
                     </div>
 
                     <div class="">
@@ -81,10 +93,9 @@
                                     </li>
                                     <li th:if="${prd_product.brand}"> 
                                         <span th:text="${'Marca o Fabricante: '}" class="productinfoleft">NAME</span>
-                                        <span>
-                                            <span th:text="${prd_product.brand.name}">VALUE</span> 
-                                            <a class="orange ml10 tooltip-test"  title="Ir a sitio web del fabricante" th:href="@{${cmsUtil.absoluteURL(prd_product.brand.website)}}" target="_blank">(Sitio Web Oficial)</a>
-                                        </span>
+
+                                        <span th:text="${prd_product.brand.name}">VALUE</span> 
+
                                     </li>
 
 
@@ -116,16 +127,21 @@
                         </div>
 
                         <div class="tab-pane" id="stocks">
-                            <h3 class="orange">Donde Comprar?</h3>                            
+                            <h3 class="orange">Disponibilidad y Direcciones</h3>                            
                             <div class="container">                                
-                                <div  class="row" th:each="det : ${prd_product.stockDetails}"> 
-                                    <div class="col-md-3"  th:text="${det.store.contactInfo.city}">VALUE</div> 
-                                    <div class="col-md-3 orange"> <a data-toggle="modal"  class="tooltip-test" title="Ver direccion" th:href="${'#store'+det.store.id}"  th:text="${cmsUtil.capitalize(det.store.name)}">NAME</a></div>
+                                <div  class="row" th:each="det : ${prd_stock_details}"> 
+                                    <div class="col-md-2"  th:text="${det.store.contactInfo.city}">VALUE</div> 
+                                    <div class="col-md-4 orange"> <a data-toggle="modal"  class="tooltip-test" title="Ver direccion" th:href="${'#store'+det.store.id}"  th:text="${det.store.name.toUpperCase()}">NAME</a></div>
                                     <div class="col-md-2" th:if="${det.stock le prd_config.productsStockToShow}" th:text="${det.stock+' en stock'}">VALUE</div> 
                                     <div class="col-md-2" th:if="${det.stock gt prd_config.productsStockToShow}">Suficientes</div> 
-                                    <div class="col-md-1"  th:text="${det.store.contactInfo.phoneNumber}">VALUE</div> 
-                                    <div class="col-md-2 orange"> <a data-toggle="modal"  class="tooltip-test" th:href="${'#store'+det.store.id}" title="Ver direccion"><i class="icon-plus-sign"></i></a></div>
+                                    <div class="col-md-4"><span th:text="${det.store.contactInfo.phoneNumber+' / '+det.store.contactInfo.mobileNumber}"></span> <a data-toggle="modal"  class="tooltip-test" th:href="${'#store'+det.store.id}" title="Ver direccion"><i class="icon-plus-sign"></i></a></div> 
+
                                     <th:block th:include="products/components/storedialog::content(${det.store})"/>
+                                </div>
+                                <div class="row mt10">
+                                    <div class="col-md-12 pull-right" >
+                                        <span>Ultima Actualizacion</span> <strong th:text="${#dates.format(prd_config.lastSync, 'dd MMMM yyyy   HH:mm aa')}"></strong>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -133,8 +149,8 @@
 
                     <!-- Buttons -->
                     <div class="productbtn">
-                        <a class="btn btn-orange tooltip-test" data-original-title="Proximamente"> <i class="icon-shopping-cart icon-white"></i> Comprar</a>
-                        <a class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-external-link icon-white"></i> Cotizar</a>                        
+                        <a th:if="${prd_config.shopEnabled}" class="btn btn-orange tooltip-test" data-original-title="Proximamente"> <i class="icon-shopping-cart icon-white"></i> Comprar</a>
+                        <a th:if="${prd_config.quoteEnabled}" class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-external-link icon-white"></i> Cotizar</a>                        
                         <a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}"  class="btn btn-orange btn-small tooltip-test" data-original-title="Marca el producto como favorito"> <i class="icon-heart icon-white"></i> Favorito</a>
                         <a class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-refresh icon-white"></i> Comparar </a>
                     </div>

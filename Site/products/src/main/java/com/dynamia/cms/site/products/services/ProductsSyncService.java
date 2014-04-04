@@ -5,6 +5,7 @@
  */
 package com.dynamia.cms.site.products.services;
 
+import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.api.ProductsDatasource;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
@@ -41,11 +42,13 @@ public interface ProductsSyncService {
 
     public void synchronizeStore(ProductsSiteConfig config, StoreDTO dto);
 
-    List<StoreDTO>  synchronizeStores(ProductsSiteConfig siteCfg);
+    List<StoreDTO> synchronizeStores(ProductsSiteConfig siteCfg);
 
-    void syncProductDetails(ProductDTO remoteProduct);
+    void syncProductDetails(ProductsSiteConfig siteCfg, ProductDTO remoteProduct);
 
-    void syncProductStockDetails(ProductDTO remoteProduct);
+    void syncProductStockDetails(ProductsSiteConfig siteCfg, ProductDTO remoteProduct);
+
+    void syncProductCreditPrices(ProductsSiteConfig siteCfg, ProductDTO remoteProduct);
 
     void downloadProductImages(ProductsSiteConfig siteCfg, ProductDTO product);
 

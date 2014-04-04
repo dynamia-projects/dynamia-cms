@@ -72,7 +72,9 @@
                     </a> 
                     <!--Social -->
                     <div class="socialtop pull-right">
-                        <div class="pull-right" th:include="tpl_payment::content"/>
+                        <a href="http://brilla.compulago.net" target="_blank" class="pull-right">
+                            <img th:src="@{/img/brilla.png}" alt="Brilla" title="Convenio Brilla" class="tooltip-test"/>
+                        </a>                        
                         <h4 class="call">
                             <i class="icon-phone"></i> Llamanos : <a class="orange" href="tel:0356930423">+57 (5) 693 04 23</a><br/> 
                         </h4>                        
@@ -102,7 +104,8 @@
             <!-- Footer -->
             <footer id="footer">
                 <section class="footersocial">
-                    <th:block th:include="tpl_contacts::content"/>                    
+                    <th:block th:include="tpl_contacts::content"/>        
+                    <div class="pull-right" th:include="tpl_payment::content"/>
                 </section>
 
                 <section id="quicklink">

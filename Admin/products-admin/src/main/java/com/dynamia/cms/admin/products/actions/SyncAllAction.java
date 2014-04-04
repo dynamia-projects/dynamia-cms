@@ -5,10 +5,8 @@
  */
 package com.dynamia.cms.admin.products.actions;
 
-import com.dynamia.cms.admin.products.ProductsAutoSynchronizer;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.services.ProductsSynchronizer;
-import com.dynamia.cms.site.products.services.ProductsSyncService;
 import com.dynamia.tools.commons.ApplicableClass;
 import com.dynamia.tools.web.actions.ActionGroup;
 import com.dynamia.tools.web.actions.InstallAction;
@@ -33,6 +31,7 @@ public class SyncAllAction extends AbstractCrudAction {
     public SyncAllAction() {
         setName("Sync All Products");
         setGroup(ActionGroup.get("products"));
+        setMenuSupported(true);
     }
 
     @Override
