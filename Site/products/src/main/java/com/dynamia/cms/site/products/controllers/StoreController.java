@@ -116,6 +116,15 @@ public class StoreController {
         return mv;
     }
 
+    @RequestMapping("/products/{id}/print")
+    public ModelAndView printProduct(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mv = new ModelAndView("products/printproduct");
+        SiteActionManager.performAction("showProduct", mv, request, id);
+        setupCookie(request, response, id);
+
+        return mv;
+    }
+
     @Secured("ROLE_USER")
     @RequestMapping("/products/{id}/favorite")
     public ModelAndView productFavorite(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
@@ -125,6 +134,20 @@ public class StoreController {
         }
         mv = product(id, request, response);
 
+        return mv;
+    }
+
+    @RequestMapping("/products/{id}/compare")
+    public ModelAndView productCompare(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mv = new ModelAndView();
+        SiteActionManager.performAction("addProductToCompareList", mv, request, response, id);
+        return mv;
+    }
+
+    @RequestMapping("/products/{id}/compare/remove")
+    public ModelAndView productNoCompare(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mv = new ModelAndView();
+        SiteActionManager.performAction("removeProductFromCompareList", mv, request, response, id);
         return mv;
     }
 
@@ -144,6 +167,29 @@ public class StoreController {
 
         ModelAndView mv = new ModelAndView("products/brand");
         SiteActionManager.performAction("showProductBrand", mv, request, form);
+        return mv;
+    }
+
+    @RequestMapping("/compare/{ids}")
+    public ModelAndView compare(@PathVariable String ids, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("products/compare");
+        SiteActionManager.performAction("compareProducts", mv, request, ids.split(","));
+        return mv;
+    }
+
+    @RequestMapping("/compare/clear")
+    public ModelAndView compareClear(HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("products/compare");
+        SiteActionManager.performAction("compareClear", mv, request);
+        return mv;
+    }
+
+    @RequestMapping("/compare/{ids}/print")
+    public ModelAndView comparePrint(@PathVariable String ids, HttpServletRequest request) {
+        Site site = siteService.getSite(request);
+
+        ModelAndView mv = new ModelAndView("products/printcompare");
+        SiteActionManager.performAction("compareProducts", mv, request, ids.split(","));
         return mv;
     }
 

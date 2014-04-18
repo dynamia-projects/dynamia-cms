@@ -10,6 +10,7 @@ import com.dynamia.cms.site.products.ProductSearchForm;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
+import com.dynamia.cms.site.products.domain.ProductDetail;
 import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.services.ProductsService;
@@ -308,7 +309,6 @@ public class ProductsServiceImpl implements ProductsService {
         QueryParameters qp = new QueryParameters();
         QueryBuilder qb = QueryBuilder.select(Product.class, "p").where("p.active = true");
 
-        
         qp.add("site", product.getSite());
         qp.add("category", product.getCategory());
         qb.and("p.site = :site");
@@ -434,6 +434,12 @@ public class ProductsServiceImpl implements ProductsService {
 
         return query.getResultList();
 
+    }
+
+    @Override
+    public List<ProductDetail> getProductsDetails(List<Product> products) {
+        QueryParameters qp = QueryParameters.with("product", QueryConditions.in(products));
+        return crudService.find(ProductDetail.class, qp);
     }
 
 }

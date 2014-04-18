@@ -47,6 +47,7 @@ public class Product extends SimpleEntity implements SiteAware {
     private String longDescription;
     @NotNull
     private String sku;
+    private String reference;
     private Long externalRef;
 
     private BigDecimal price;
@@ -127,6 +128,17 @@ public class Product extends SimpleEntity implements SiteAware {
 
     public void setExternalLink(String externalLink) {
         this.externalLink = externalLink;
+    }
+
+    public String getReference() {
+        if(reference==null){
+            reference="";
+        }
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public Long getViews() {
@@ -351,6 +363,7 @@ public class Product extends SimpleEntity implements SiteAware {
         newproduct = dto.isNewproduct();
         showCreditPrices = dto.isShowCreditPrices();
         priceDescription = dto.getPriceDescription();
+        reference = dto.getReference();
     }
 
 }

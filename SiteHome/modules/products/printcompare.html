@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="templateprint">
+
+    <div class="maincontainer" layout:fragment="content">
+
+
+
+
+        <!-- Compare-->
+        <div class="cart-info clearfix">
+            <th:block th:include="products/components/comparegrid::content"/>                       
+        </div>
+
+    </div>
+
+</html>

@@ -1,0 +1,57 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.dynamia.cms.site.products.actions;
+
+import com.dynamia.cms.site.core.actions.ActionEvent;
+import com.dynamia.cms.site.core.actions.SiteAction;
+import com.dynamia.cms.site.core.api.CMSAction;
+import com.dynamia.cms.site.products.ProductCompareList;
+import com.dynamia.cms.site.products.ProductsUtil;
+import com.dynamia.cms.site.products.domain.Product;
+import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.tools.commons.StringUtils;
+import com.dynamia.tools.domain.services.CrudService;
+import com.dynamia.tools.integration.Containers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+/**
+ *
+ * @author mario_2
+ */
+@CMSAction
+public class AddProductToCompareList implements SiteAction {
+
+    @Autowired
+    private CrudService crudService;
+    @Autowired
+    private ProductsService service;
+
+    @Override
+    public String getName() {
+        return "addProductToCompareList";
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        Long id = (Long) evt.getData();
+
+        Product product = crudService.find(Product.class, id);
+        ProductCompareList list = Containers.get().findObject(ProductCompareList.class);
+        list.add(product);
+
+        ModelAndView mv = evt.getModelAndView();
+        ProductsUtil.setupDefaultVars(evt.getSite(), mv);
+
+        if (list.getProducts().size() == 1) {
+            mv.addObject("successmessage", "Agregue otros productos de la misma categoria o similares para comparar");
+        }
+        String redirect = "/store/compare/" + list.toString();
+        mv.setView(new RedirectView(redirect, true, true, false));
+    }
+
+}

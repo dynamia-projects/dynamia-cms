@@ -10,6 +10,7 @@ import com.dynamia.cms.site.products.ProductSearchForm;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
+import com.dynamia.cms.site.products.domain.ProductDetail;
 import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.users.domain.User;
@@ -78,5 +79,7 @@ public interface ProductsService {
     ProductUserStory getProductStory(Product product, User user);
 
     List<Product> getRecentProducts(User user);
+
+    public List<ProductDetail> getProductsDetails(List<Product> products);
 
 }

@@ -27,7 +27,7 @@ public class ProductsUtil {
     public static void setupDefaultVars(Site site, ModelAndView mv) {
         ProductsService service = Containers.get().findObject(ProductsService.class);
 
-         mv.addObject("prd_categories", service.getCategories(site));
+        mv.addObject("prd_categories", service.getCategories(site));
         mv.addObject("prd_brands", service.getBrands(site));
         mv.addObject("prd_config", service.getSiteConfig(site));
         if (mv.getModel().get("prd_searchForm") == null) {
@@ -57,7 +57,7 @@ public class ProductsUtil {
 
         if (datasource != null) {
             mv.addObject(DATASOURCE, datasource);
-            
+
             if (request.getParameter("page") != null) {
                 try {
                     int page = Integer.parseInt(request.getParameter("page"));

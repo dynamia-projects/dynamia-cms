@@ -11,6 +11,7 @@ import com.dynamia.tools.integration.Containers;
 import com.dynamia.tools.integration.ObjectMatcher;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -58,6 +59,10 @@ public class SiteActionManager {
     }
 
     public static void performAction(String actionName, ModelAndView mv, HttpServletRequest request, Object data) {
+        performAction(actionName, mv, request, null, data);
+    }
+
+    public static void performAction(String actionName, ModelAndView mv, HttpServletRequest request, HttpServletResponse response, Object data) {
         SiteService service = Containers.get().findObject(SiteService.class);
         Site site = service.getSite(request);
 
@@ -65,7 +70,7 @@ public class SiteActionManager {
             site = service.getMainSite();
         }
 
-        ActionEvent evt = newEvent(site, mv, request, null, data);
+        ActionEvent evt = newEvent(site, mv, request, response, null, data);
         performAction(actionName, evt);
     }
 
@@ -73,8 +78,16 @@ public class SiteActionManager {
         performAction(actionName, mv, request, null);
     }
 
+    public static void performAction(String actionName, ModelAndView mv, HttpServletRequest request, HttpServletResponse response) {
+        performAction(actionName, mv, request, response, null);
+    }
+
     public static ActionEvent newEvent(Site site, ModelAndView mv, HttpServletRequest request, Object source, Object data) {
-        return new ActionEvent(site, mv, request, source, data);
+        return new ActionEvent(site, mv, request, null, source, data);
+    }
+
+    public static ActionEvent newEvent(Site site, ModelAndView mv, HttpServletRequest request, HttpServletResponse response, Object source, Object data) {
+        return new ActionEvent(site, mv, request, response, source, data);
     }
 
 }

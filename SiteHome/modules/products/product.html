@@ -11,14 +11,15 @@
             <!-- Main Title-->
             <div class="titles animated fadeInUp time3">
                 <div class="pull-left">
-                    <h1 th:text="${prd_product.name}" class="headinglefttitle">Page title</h1>
-                    <div th:text="${'Referencia: '+prd_product.sku}" class="headingsubtitle"></div>
+                    <h1 th:text="${prd_product.name}" class="headinglefttitle">Page title</h1> 
+                    <div th:text="${'Codigo: '+prd_product.sku}" class="headingsubtitle"></div>
                     <div th:text="${subtitle}" class="headingsubtitle"></div>                    
                 </div>
-                <div class="pull-right mt20"  th:if="${prd_product.brand}">
-                    <a th:href="@{'/store/brands/'+${prd_product.brand.alias}}">
+                <div class="pull-right mt20" >
+                    <a  th:if="${prd_product.brand}" th:href="@{'/store/brands/'+${prd_product.brand.alias}}">
                         <img class="animated flip time3"  th:if="${prd_product.brand}" th:src="@{'/resources/products/brands/thumbnails/'+${prd_product.brand.image}(w=100,h=100)}" th:title="${prd_product.brand.name}" th:alt="${prd_product.brand.name}"  />
                     </a>
+                    <div th:text="${'Referencia: '+prd_product.reference}" class="headingsubtitle"></div>                    
                 </div>                
             </div>
 
@@ -62,8 +63,7 @@
                     <div class="">
                         <span th:text="${prd_product.description}">description</span>
                         <br/>
-                        <h4 class="orange" th:if="${prd_product.stock gt 0}"><i class="icon-check-sign"></i> En Inventario</h4>
-                        <h4 class="red" th:if="${prd_product.stock eq 0}"><i class="icon-ban-circle"></i> Agotado</h4>
+                        <h4 class="orange" th:if="${prd_product.stock gt 0}"><i class="icon-check-sign"></i> En Inventario</h4>                        
                     </div>
 
                     <div th:if="${prd_story!=null}">
@@ -84,17 +84,16 @@
 
 
                                 <ul class="productinfo">
-                                    <li> 
-                                        <span th:text="${'Visto '}" class="productinfoleft">NAME</span><span th:text="${prd_product.views+' veces'}">VALUE</span> 
-                                    </li>
 
-                                    <li> 
-                                        <span th:text="${'Codigo: '}" class="productinfoleft">NAME</span><span th:text="${prd_product.sku}">VALUE</span> 
-                                    </li>
+
                                     <li th:if="${prd_product.brand}"> 
-                                        <span th:text="${'Marca o Fabricante: '}" class="productinfoleft">NAME</span>
+                                        <span th:text="${'Marca '}" class="productinfoleft">NAME</span>
 
-                                        <span th:text="${prd_product.brand.name}">VALUE</span> 
+                                        <span class="tooltip-test" title="Ver otros productos de esta marca">
+                                            <strong>
+                                                <a class="orange"  th:text="${prd_product.brand.name}" th:href="@{'/store/brands/'+${prd_product.brand.alias}}" href="#"/>                                           
+                                            </strong>
+                                        </span> 
 
                                     </li>
 
@@ -105,6 +104,9 @@
                                             <span th:text="${det.value}">VALUE</span> 
                                             <span th:text="${det.description}">DESCRIPTION</span> 
                                         </span>
+                                    </li>
+                                    <li> 
+                                        <span th:text="${'Visto '}" class="productinfoleft">NAME</span><span th:text="${prd_product.views+' veces'}">VALUE</span> 
                                     </li>
                                     <li th:if="${prd_product.externalLink!=null}"> 
                                         <span></span>
@@ -125,8 +127,11 @@
                                 </ul>
                             </div>
                         </div>
+                        <div>
+                            <th:block th:include="social/components/sharebuttons::content"/>
+                        </div>
 
-                        <div class="tab-pane" id="stocks">
+                        <div class="tab-pane" id="stocks"  th:if="${prd_product.stock gt 0}">
                             <h3 class="orange">Disponibilidad y Direcciones</h3>                            
                             <div class="container">                                
                                 <div  class="row" th:each="det : ${prd_stock_details}"> 
@@ -152,11 +157,10 @@
                         <a th:if="${prd_config.shopEnabled}" class="btn btn-orange tooltip-test" data-original-title="Proximamente"> <i class="icon-shopping-cart icon-white"></i> Comprar</a>
                         <a th:if="${prd_config.quoteEnabled}" class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-external-link icon-white"></i> Cotizar</a>                        
                         <a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}"  class="btn btn-orange btn-small tooltip-test" data-original-title="Marca el producto como favorito"> <i class="icon-heart icon-white"></i> Favorito</a>
-                        <a class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-refresh icon-white"></i> Comparar </a>
+                        <a th:href="@{'/store/products/'+${prd_product.id}+'/compare'}" class="btn btn-orange btn-small tooltip-test" data-original-title="Compara con otros productos"> <i class="icon-refresh icon-white"></i> Comparar </a>
+                        <a class="btn btn-orange btn-small tooltip-test" th:href="@{'/store/products/'+${prd_product.id}+'/print'}" target="_blank"> <i class="icon-print icon-white"></i> Imprimir </a>
                     </div>
-                    <div>
-                        <th:block th:include="social/components/sharebuttons::content"/>
-                    </div>
+
                 </div>
             </div>
         </div>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
+
+
+    <body th:fragment="content">
+
+
+        <table class="table table-striped table-bordered table-hover table-condensed compare">
+            <tbody>
+                <tr>
+                    <td class="orange">Producto</td>
+                    <td class="name" th:each="prd : ${comparegrid.products}" style="background: white">
+                        <a class="btn btn-lg red pull-right tooltip-test hidden-print" title="Quitar" th:href="@{'/store/products/'+${prd.id}+'/compare/remove'}"><i class="icon-remove-sign"/></a>
+
+                        <div style="height:100px">
+                            <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=100,h=100)}"/>
+                        </div>
+                        <h3 class="heading3 m0" th:text="${prd.name}">Product 1</h3>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="orange">Precio</td>
+                    <td class="name" th:each="prd : ${comparegrid.products}">
+
+                        <div class="productprice" th:if="${not prd.showCreditPrices}">
+                            <h3 class="orange" th:text="${cmsUtil.formatNumber(prd.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</h3>
+                        </div>
+
+                        <div th:if="${prd.showCreditPrices}">
+
+                            <div th:each="cp : ${prd.creditPrices}">      
+                                <span style="display: inline">
+                                    <strong class="orange" th:text="${cmsUtil.formatNumber(cp.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</strong> 
+                                    <span style="font-size: larger" th:text="${cp.number+' '+cp.description}"></span>                                
+                                </span>
+
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="orange">Codigo</td>
+                    <td class="name" th:each="prd : ${comparegrid.products}">
+                        <span th:text="${prd.sku}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="orange">Referencia</td>
+                    <td class="name" th:each="prd : ${comparegrid.products}">
+                        <span th:text="${prd.reference}"></span>
+                    </td>
+                </tr>                               
+
+                <tr >
+                    <td class="orange">Marca</td>
+                    <td class="name" th:each="prd : ${comparegrid.products}" >
+                        <strong th:if="${prd.brand}" th:text="${prd.brand.name}"></strong><br/>
+                        <img class="hidden-print" th:if="${prd.brand}" th:src="@{'/resources/products/brands/thumbnails/'+${prd.brand.image}(w=80,h=80)}"></img>
+
+                    </td>
+                </tr>
+
+                <tr  th:each="ftr : ${comparegrid.features}">
+                    <td class="orange" th:text="${ftr}"> Option1</td>                                    
+                    <td th:each="det : ${comparegrid.getData().get(ftr)}">
+                        <span th:if="${det}" th:text="${det.value}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="orange">Visto</td>
+                    <td class="name" th:each="prd : ${comparegrid.products}">
+                        <span th:text="${prd.views}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="orange">Resumen</td>
+                    <td class="name" th:each="prd : ${comparegrid.products}">
+                        <span th:text="${prd.description}"></span>
+                    </td>
+                </tr>
+            </tbody>                            
+        </table>
+
+    </body>
+
+</html>

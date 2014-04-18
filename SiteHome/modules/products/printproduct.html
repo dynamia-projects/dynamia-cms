@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="templateprint">
+    <body>
+
+        <div class="maincontainer" layout:fragment="content" >
+            <div class="productprice pull-right" th:if="${not prd_product.showCreditPrices}">
+
+                <div class="productpageprice"> <i class="icon-tags"></i><span th:text="${cmsUtil.formatNumber(prd_product.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> </div>
+                <div th:if="${prd_product.price lt prd_product.lastPrice and prd_product.sale}" class="productpageoldprice">Antes <span th:text="${cmsUtil.formatNumber(prd_product.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> </div>
+
+            </div>
+
+            <h2 th:text="${prd_product.name}" class="headinglefttitle">Page title</h2> 
+
+            <!-- Main Title-->
+
+
+            <div th:if="${prd_product.showCreditPrices}" class="pull-right">
+
+                <div th:each="cp : ${prd_product.creditPrices}">      
+                    <span style="display: inline">
+                        <span class="productpageprice" th:text="${cmsUtil.formatNumber(cp.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> 
+                        <span style="font-size: larger" th:text="${cp.number+' '+cp.description}"></span>                                
+                    </span>
+
+                </div>
+            </div>
+
+            <!-- Product-->
+            <div class="row"> 
+                <!-- Left Image-->
+
+                <div class="col-lg-3 col-md-3 col-xs-3 col-sm-3" >
+                    <ul class="productinfo">
+                        <li style="padding: 0">                             
+                            <span class="productinfoleft" th:text="${prd_product.sku}"/>
+                        </li>
+                        <li  style="padding: 0">                             
+                            <span class="productinfoleft" th:text="${prd_product.reference}"/>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                    <div style="text-align: center">
+                        <img th:if="${prd_product.image!=null}" th:src="@{'/resources/products/images/thumbnails/'+${prd_product.image}(w=200,h=200)}" /><br/>
+                        <img th:if="${prd_product.image2!=null}" th:src="@{'/resources/products/images/thumbnails/'+${prd_product.image2}(w=200,h=200)}" /><br/>
+                        <img th:if="${prd_product.image3!=null}" th:src="@{'/resources/products/images/thumbnails/'+${prd_product.image3}(w=200,h=200)}" /><br/>
+                        <img th:if="${prd_product.image4!=null}" th:src="@{'/resources/products/images/thumbnails/'+${prd_product.image4}(w=200,h=200)}" />
+                    </div>
+                </div>
+
+                <!-- Right Details-->
+                <div class="col-lg-8 col-md-8 col-xs-8 col-sm-8">
+
+
+
+
+                    <div class="clearfix">
+                        <span th:text="${prd_product.description}">description</span>
+                    </div>
+
+                    <!-- Product Details tab & comments-->
+                    <h3 class="orange">Caracteristicas</h3>          
+
+                    <ul class="productinfo">
+                        <li th:if="${prd_product.brand}"  style="padding: 0"> 
+                            <span th:text="${'Marca '}" class="productinfoleft">NAME</span>
+                            <span th:text="${prd_product.brand.name}"/>
+                        </li>
+
+                        <li th:each="det : ${prd_product.details}"  style="padding: 0"> 
+                            <span th:text="${det.name}" class="productinfoleft">NAME</span>
+                            <span>
+                                <span th:text="${det.value}">VALUE</span> 
+                                <span th:text="${det.description}">DESCRIPTION</span> 
+                            </span>
+                        </li>
+                    </ul>
+
+
+                    <div th:if="${prd_product.stock gt 0}">
+                        <h3 class="orange">Disponibilidad y Direcciones</h3>                            
+
+                        <div  class="row" th:each="det : ${prd_stock_details}"> 
+                            <div class="col-xs-2 col-md-2"  th:text="${det.store.contactInfo.city}">VALUE</div> 
+                            <div class="col-xs-4 col-md-4"  th:text="${det.store.name.toUpperCase()}">NAME</div>
+                            <div class="col-xs-2 col-md-2" th:if="${det.stock le prd_config.productsStockToShow}" th:text="${det.stock+' en stock'}">VALUE</div> 
+                            <div class="col-xs-2 col-md-2" th:if="${det.stock gt prd_config.productsStockToShow}">Suficientes</div> 
+                            <div class="col-xs-4 col-md-4"><span th:text="${det.store.contactInfo.phoneNumber+' / '+det.store.contactInfo.mobileNumber}"></span></div> 
+
+                        </div>
+                        <div class="row mt10">
+                            <div class="col-md-12" >
+                                <span>Ultima Actualizacion</span> <strong th:text="${#dates.format(prd_config.lastSync, 'dd MMMM yyyy   HH:mm aa')}"></strong>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            
+        
+        </div>
+
+
+    </body>
+
+</html>

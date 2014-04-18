@@ -10,7 +10,7 @@
         <meta name="author" th:content="${metaAuthor}" content=""/>
         <meta name="keywords" th:content="${metaKeywords}" content=""/>
         <meta name="copyright" th:content="${metaRights}" content=""/>
-        <meta name="robots" content="index, follow"/>
+
         <meta th:content="|${site.name} - ${title}|" property="og:title" content="" />
         <meta th:content="${metaDescription}" property="og:description" content="" />
         <th:block th:each="pi : ${pageImages}">
@@ -21,26 +21,20 @@
 
 
         <!-- CSS -->
-        <link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.min.css" rel="stylesheet" />
+        <link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.min.css" rel="stylesheet" media="print,screen"/>
         <!-- Google Webfont -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'/>
         <!-- Main Css -->
-        <link th:href="@{'/css/'+${#objects.nullSafe(siteParams['color'],'color2')}+'.css'}" href="css/color2.css" rel="stylesheet"  id="color"/>
+        <link th:href="@{'/css/'+${#objects.nullSafe(siteParams['color'],'color2')}+'.css'}" href="css/color2.css" rel="stylesheet" id="color"/>
 
         <!-- Font Icon -->
         <link th:href="@{/css/font-awesome.min.css}" href="css/font-awesome.min.css" rel="stylesheet" />
         <!-- Pop Up -->
         <link th:href="@{/css/prettyPhoto.css}" href="css/prettyPhoto.css" rel="stylesheet" />
-        <!-- Animation -->
-        <link th:href="@{/css/animate.css}" href="css/animate.css" rel="stylesheet"/>
 
         <!-- Template -->
         <link th:href="@{/css/template.css}" href="css/template.css" rel="stylesheet"/>
 
-
-        <!-- REVOLUTION BANNER CSS SETTINGS -->
-        <link th:href="@{/plugins/rs-plugin/css/responsive.css}" rel="stylesheet" type="text/css" href="plugins/rs-plugin/css/responsive.css"  />
-        <link th:href="@{/plugins/rs-plugin/css/settings.css}" rel="stylesheet" type="text/css" href="plugins/rs-plugin/css/settings.css"  />
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -49,90 +43,18 @@
              <![endif]-->
     </head>
     <body>
-        <div id="fb-root"></div>
-        <script>(function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id))
-                    return;
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
 
-        <!-- Header Start -->
-        <header >
-            <th:block th:include="tpl_mobilemenu::content"/>
-            <th:block th:include="tpl_topmenu::content"/>
-
-            <div class="headerdetails mt20 hidden-xs hidden-sm">
-                <div class="container"> 
-                    <a class="logo pull-left " href="#" th:href='@{/}'>
-                        <img th:title="${name}" th:alt="${name}" th:src="@{${#objects.nullSafe(siteParams['logo'],'/img/logo.gif')}}" title="Simplepx" alt="Simplepx" src="img/logo.gif"/>
-                    </a> 
-                    <!--Social -->
-                    <div class="socialtop pull-right">
-                        <a href="http://brilla.compulago.net" target="_blank" class="pull-right">
-                            <img th:src="@{/img/brilla.png}" alt="Brilla" title="Convenio Brilla" class="tooltip-test"/>
-                        </a>                        
-                        <h4 class="call">
-                            <i class="icon-phone"></i> Llamanos : <a class="orange" href="tel:0356930423">+57 (5) 693 04 23</a><br/> 
-                        </h4>                        
-                    </div>
-                    <!--Top Search -->
-                    <div class="pull-right topsearch" th:include="site/searchform::content"/>
+        <!-- Header Start -->       
+        <img th:title="${name}" th:alt="${name}" th:src="@{${#objects.nullSafe(siteParams['logo'],'/img/logo.gif')}}" title="Simplepx" alt="Simplepx" src="img/logo.gif"/>
 
 
-                </div>
-            </div>
-            <th:block th:include="tpl_mainmenu::content"/>
-        </header>
         <!-- Header End -->
         <div id="maincontainer" > 
-            <div class="container">
-                <th:block th:include="tpl_globalmessages::content"/>
-            </div>
+
 
             <div id="content" layout:fragment="content">
 
             </div>
-
-            <th:block th:include="tpl_webchat::content"/>
-
-            <!-- Newsletter-->
-            <th:block th:include="tpl_newsletter::content"/>
-            <!-- Footer -->
-            <footer id="footer">
-                <section class="footersocial">
-                    <th:block th:include="tpl_contacts::content"/>        
-                    <div class="pull-right" th:include="tpl_payment::content"/>
-                </section>
-
-                <section id="quicklink">
-                    <div class="container">
-                        <div class="row">
-                            <ul class="quicklinks">                               
-                                <li  th:each="mi : ${menuitems}">
-                                    <a th:text="${mi.name}" th:href="@{${mi.href}}" href="#">Menu Item</a>
-                                </li>                        
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-                <section class="copyrightbottom">
-                    <div class="container">
-                        <div class="row">
-                            <div class="pull-left">Powered by: <a href="http://www.dynamiasoluciones.com" target="blank" title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing" class="tooltip-test">Dynamia Soluciones IT</a></div>
-                        </div>
-                    </div>                    
-                </section>
-
-            </footer>
-
-
-
-            <!-- Got to top --> 
-            <a id="gotop"><i class="icon-circle-arrow-up"></i></a> 
         </div>
 
 
@@ -183,6 +105,8 @@
 
 
         <th:block th:include="tpl_googleAnalytics::content"/>
-
+        <script>
+            print();
+        </script>
     </body>
 </html>

@@ -23,6 +23,7 @@ public class ProductDTO implements Serializable {
     private String longDescription;
 
     private String sku;
+    private String reference;
     private Long externalRef;
 
     private BigDecimal price;
@@ -54,6 +55,14 @@ public class ProductDTO implements Serializable {
     private String externalLink;
 
     private boolean showCreditPrices;
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
 
     public String getPriceDescription() {
         return priceDescription;

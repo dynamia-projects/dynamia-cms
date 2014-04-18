@@ -21,7 +21,12 @@
                 <span th:if="${prd.newproduct}" class="sale tooltip-test" style="background-color: #cc0000"  data-original-title="" title=""> <i class="icon-bookmark-empty font24"></i> Nuevo</span>
 
                 <div class="viewicons">
-                    <button  data-original-title="Comprar" class="btn btn-inverse tooltip-test"> <i class="icon-shopping-cart icon-white"></i> </button>
+                    <form class="pull-left"  target="_blank" th:action="@{'/store/products/'+${prd.id}+'/print'}" method="get">
+                        <button type="submit"  data-original-title="Imprimir" class="btn btn-inverse tooltip-test"> <i class="icon-print icon-white"></i> </button>
+                    </form>
+                    <form class="pull-left"  th:action="@{'/store/products/'+${prd.id}+'/compare'}" method="get">
+                        <button type="submit"  data-original-title="Comparar" class="btn btn-inverse tooltip-test"> <i class="icon-refresh icon-white"></i> </button>
+                    </form>
                     <button  data-original-title="Cotizar" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-external-link icon-white"></i> </button>
                     <button  data-original-title="Recomendar" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-envelope icon-white"></i> </button>
                 </div>
