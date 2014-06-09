@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.CookieGenerator;
 
 /**
@@ -171,16 +172,16 @@ public class StoreController {
     }
 
     @RequestMapping("/compare/{ids}")
-    public ModelAndView compare(@PathVariable String ids, HttpServletRequest request) {
+    public ModelAndView compare(@PathVariable String ids, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView("products/compare");
-        SiteActionManager.performAction("compareProducts", mv, request, ids.split(","));
+        SiteActionManager.performAction("compareProducts", mv, request, redirectAttributes, ids.split(","));
         return mv;
     }
 
     @RequestMapping("/compare/clear")
-    public ModelAndView compareClear(HttpServletRequest request) {
+    public ModelAndView compareClear(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView("products/compare");
-        SiteActionManager.performAction("compareClear", mv, request);
+        SiteActionManager.performAction("compareClear", mv, request, redirectAttributes);
         return mv;
     }
 

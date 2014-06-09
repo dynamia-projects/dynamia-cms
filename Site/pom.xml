@@ -5,7 +5,7 @@
     <artifactId>com.dynamia.cms.site.parent</artifactId>
     <name>DynamiaCMS Site (${project.version})</name>
     <packaging>pom</packaging>
-    <version>0.6</version>
+    <version>0.7</version>
     <url>http://www.dynamiasoluciones.com</url>
   
     <properties>
@@ -147,7 +147,8 @@
         <module>menus</module>
         <module>products-api</module>
         <module>products</module>
-        <module>web</module>    
+        <module>web</module>
+        <module>shopping-cart</module>
     </modules>
   
 </project>

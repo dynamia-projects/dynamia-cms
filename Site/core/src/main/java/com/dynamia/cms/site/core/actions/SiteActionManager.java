@@ -13,6 +13,7 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -59,10 +60,18 @@ public class SiteActionManager {
     }
 
     public static void performAction(String actionName, ModelAndView mv, HttpServletRequest request, Object data) {
-        performAction(actionName, mv, request, null, data);
+        performAction(actionName, mv, request, (HttpServletResponse) null, null, data);
+    }
+
+    public static void performAction(String actionName, ModelAndView mv, HttpServletRequest request, RedirectAttributes redirectAttributes, Object data) {
+        performAction(actionName, mv, request, (HttpServletResponse) null, redirectAttributes, data);
     }
 
     public static void performAction(String actionName, ModelAndView mv, HttpServletRequest request, HttpServletResponse response, Object data) {
+        performAction(actionName, mv, request, response, null, data);
+    }
+
+    public static void performAction(String actionName, ModelAndView mv, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, Object data) {
         SiteService service = Containers.get().findObject(SiteService.class);
         Site site = service.getSite(request);
 
@@ -70,7 +79,7 @@ public class SiteActionManager {
             site = service.getMainSite();
         }
 
-        ActionEvent evt = newEvent(site, mv, request, response, null, data);
+        ActionEvent evt = newEvent(site, mv, request, response, redirectAttributes, null, data);
         performAction(actionName, evt);
     }
 
@@ -79,15 +88,23 @@ public class SiteActionManager {
     }
 
     public static void performAction(String actionName, ModelAndView mv, HttpServletRequest request, HttpServletResponse response) {
-        performAction(actionName, mv, request, response, null);
+        performAction(actionName, mv, request, response, null, null);
     }
 
     public static ActionEvent newEvent(Site site, ModelAndView mv, HttpServletRequest request, Object source, Object data) {
-        return new ActionEvent(site, mv, request, null, source, data);
+        return new ActionEvent(site, mv, request, null, null, source, data);
+    }
+
+    public static ActionEvent newEvent(Site site, ModelAndView mv, HttpServletRequest request, RedirectAttributes redirectAttributes, Object source, Object data) {
+        return new ActionEvent(site, mv, request, null, redirectAttributes, source, data);
     }
 
     public static ActionEvent newEvent(Site site, ModelAndView mv, HttpServletRequest request, HttpServletResponse response, Object source, Object data) {
-        return new ActionEvent(site, mv, request, response, source, data);
+        return new ActionEvent(site, mv, request, response, null, source, data);
+    }
+
+    public static ActionEvent newEvent(Site site, ModelAndView mv, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, Object source, Object data) {
+        return new ActionEvent(site, mv, request, response, redirectAttributes, source, data);
     }
 
 }

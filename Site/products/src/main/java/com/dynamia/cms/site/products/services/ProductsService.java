@@ -82,4 +82,6 @@ public interface ProductsService {
 
     public List<ProductDetail> getProductsDetails(List<Product> products);
 
+    Product getProductBySku(Site site, String sku);
+
 }

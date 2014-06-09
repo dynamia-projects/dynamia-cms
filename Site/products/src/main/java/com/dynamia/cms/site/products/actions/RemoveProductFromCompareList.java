@@ -5,6 +5,7 @@
  */
 package com.dynamia.cms.site.products.actions;
 
+import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
@@ -48,7 +49,7 @@ public class RemoveProductFromCompareList implements SiteAction {
         String action = "/store/compare/" + list.toString();
         ProductsUtil.setupDefaultVars(evt.getSite(), mv);
         if (list.getProducts().size() == 1) {
-            mv.addObject("successmessage", "Agregue otros productos de la misma categoria para comparar");
+            CMSUtil.addSuccessMessage("Agregue otros productos de la misma categoria o similares para comparar", evt.getRedirectAttributes());
         } else if (list.getProducts().isEmpty()) {
             action = "/";
         }

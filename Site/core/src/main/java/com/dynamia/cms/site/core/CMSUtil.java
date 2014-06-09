@@ -12,12 +12,31 @@ import java.text.NumberFormat;
 import java.util.Collection;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
  * @author mario
  */
 public class CMSUtil {
+
+    public static void addSuccessMessage(String string, RedirectAttributes ra) {
+        if (ra != null) {
+            ra.addFlashAttribute("successmessage", string);
+        }
+    }
+
+    public static void addErrorMessage(String string, RedirectAttributes ra) {
+        if (ra != null) {
+            ra.addFlashAttribute("errormessage", string);
+        }
+    }
+
+    public static void addWarningMessage(String string, RedirectAttributes ra) {
+        if (ra != null) {
+            ra.addFlashAttribute("warningmessage", string);
+        }
+    }
 
     public String formatNumber(Number number) {
         if (number == null) {
@@ -66,8 +85,8 @@ public class CMSUtil {
             return text.substring(0, size) + "...";
         }
     }
-    
-    public String capitalize(String text){
+
+    public String capitalize(String text) {
         return StringUtils.capitalizeAllWords(text);
     }
 

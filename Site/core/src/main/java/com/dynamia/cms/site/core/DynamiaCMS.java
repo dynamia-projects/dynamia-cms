@@ -24,7 +24,7 @@ public class DynamiaCMS {
 
     private static final String PREFIX = "CMSConfig_";
 
-    private static final String HOMEVAR = PREFIX + "HomePath";
+    static final String HOMEVAR = PREFIX + "HomePath";
     private static final String TEMPLATES = "templates";
     private static final String VIEWS = "views";
     private static final String MODULES = "modules";
@@ -87,6 +87,10 @@ public class DynamiaCMS {
 
     public static String[] getRelativeLocations() {
         return new String[]{VIEWS, MODULES};
+    }
+
+    public static void reloadHomePath() {
+        path = null;
     }
 
 }

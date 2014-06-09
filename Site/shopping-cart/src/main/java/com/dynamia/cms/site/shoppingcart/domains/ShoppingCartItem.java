@@ -1,0 +1,172 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.dynamia.cms.site.shoppingcart.domains;
+
+import com.dynamia.tools.domain.SimpleEntity;
+import com.dynamia.tools.domain.ValidationError;
+import java.math.BigDecimal;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+/**
+ *
+ * @author mario_2
+ */
+@Entity
+@Table(schema = "sc_shopping_carts_items")
+public class ShoppingCartItem extends SimpleEntity {
+
+    @ManyToOne
+    @NotNull
+    private ShoppingCart shoppingCart;
+    private String code;
+    private String name;
+    private String description;
+    @Min(value = 1)
+    private int quatity = 1;
+    private BigDecimal taxes = BigDecimal.ZERO;
+    @Min(value = 0)
+    @NotNull
+    private BigDecimal unitPrice = BigDecimal.ZERO;
+    @Min(value = 0)
+    @NotNull
+    private BigDecimal totalPrice = BigDecimal.ZERO;
+    private BigDecimal shipmentPrice = BigDecimal.ZERO;
+    private String imageURL;
+    private String imageName;
+    private String URL;
+
+    private Long refId;
+    private String refClass;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    public Long getRefId() {
+        return refId;
+    }
+
+    public void setRefId(Long refId) {
+        this.refId = refId;
+    }
+
+    public String getRefClass() {
+        return refClass;
+    }
+
+    public void setRefClass(String refClass) {
+        this.refClass = refClass;
+    }
+
+    public BigDecimal getShipmentPrice() {
+        return shipmentPrice;
+    }
+
+    public void setShipmentPrice(BigDecimal shipmentPrice) {
+        this.shipmentPrice = shipmentPrice;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getQuatity() {
+        return quatity;
+    }
+
+    public void setQuatity(int quatity) {
+        if (quatity <= 0) {
+            quatity = 1;
+        }
+        this.quatity = quatity;
+    }
+
+    public BigDecimal getTaxes() {
+        return taxes;
+    }
+
+    public void setTaxes(BigDecimal taxes) {
+        this.taxes = taxes;
+    }
+
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(BigDecimal unitPrice) {
+        if (unitPrice == null || unitPrice.longValue() <= 0) {
+            unitPrice = BigDecimal.ONE;
+        }
+        this.unitPrice = unitPrice;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    void compute() {
+        if (quatity > 0 && unitPrice != null && unitPrice.longValue() > 0) {
+            totalPrice = unitPrice.multiply(new BigDecimal(quatity));
+        }
+    }
+
+}

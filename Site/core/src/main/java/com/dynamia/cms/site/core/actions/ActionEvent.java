@@ -10,6 +10,7 @@ import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -21,16 +22,22 @@ public class ActionEvent implements Serializable {
     private ModelAndView modelAndView;
     private HttpServletRequest request;
     private HttpServletResponse response;
+    private RedirectAttributes redirectAttributes;
     private Object source;
     private Object data;
 
-    ActionEvent(Site site, ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response, Object source, Object data) {
+    ActionEvent(Site site, ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, Object source, Object data) {
         this.site = site;
         this.modelAndView = modelAndView;
         this.request = request;
         this.response = response;
+        this.redirectAttributes = redirectAttributes;
         this.source = source;
         this.data = data;
+    }
+
+    public RedirectAttributes getRedirectAttributes() {
+        return redirectAttributes;
     }
 
     public Site getSite() {

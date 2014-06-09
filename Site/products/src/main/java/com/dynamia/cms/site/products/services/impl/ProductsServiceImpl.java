@@ -94,6 +94,7 @@ public class ProductsServiceImpl implements ProductsService {
         return crudService.find(ProductCategory.class, qp);
     }
 
+    @Override
     public List<ProductCategory> getCategories(ProductBrand brand) {
         String sql = QueryBuilder.select(ProductCategory.class, "pc")
                 .where("pc.site=:site")
@@ -232,6 +233,16 @@ public class ProductsServiceImpl implements ProductsService {
         qp.orderBy("views", false);
         PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp);
         return list.getDataSource().getPageData();
+    }
+
+    @Override
+    public Product getProductBySku(Site site, String sku) {
+        QueryParameters qp = QueryParameters.with("active", true)
+                .add("site", site)
+                .add("sku", sku);
+
+        return crudService.findSingle(Product.class, qp);
+
     }
 
     @Override

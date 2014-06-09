@@ -29,7 +29,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.UniqueConstraint;
 
 /**
- * Archivo: Perfil.java Fecha de Creacion: 27/06/2009
+ * Archivo: Perfil.java Fecha de creación: 27/06/2009
  *
  * @author Ing. Mario Serrano Leones
  */
@@ -53,10 +53,15 @@ public class Profile extends BaseEntity implements GrantedAuthority, SiteAware {
     @OneToMany(mappedBy = "profile")
     private List<UserProfile> users = new ArrayList<>();
 
+    @Override
     public Site getSite() {
         return site;
     }
 
+    /**
+     *
+     * @param site
+     */
     public void setSite(Site site) {
         this.site = site;
     }

@@ -154,8 +154,8 @@
 
                     <!-- Buttons -->
                     <div class="productbtn">
-                        <a th:if="${prd_config.shopEnabled}" class="btn btn-orange tooltip-test" data-original-title="Proximamente"> <i class="icon-shopping-cart icon-white"></i> Comprar</a>
-                        <a th:if="${prd_config.quoteEnabled}" class="btn btn-orange btn-small tooltip-test" data-original-title="Proximamente"> <i class="icon-external-link icon-white"></i> Cotizar</a>                        
+                        <a th:href="@{'/shoppingcart/add/'+${prd_product.sku}(currentURI=${currentURI})}" th:if="${prd_config.shopEnabled}" class="btn btn-orange tooltip-test" data-original-title="Agregar al Carrito"> <i class="icon-shopping-cart icon-white"></i> Agregar</a>
+                        <a th:if="${prd_config.quoteEnabled}" class="btn btn-orange btn-small tooltip-test" data-original-title="Agregar al Carrito"> <i class="icon-external-link icon-white"></i> Cotizar</a>                        
                         <a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}"  class="btn btn-orange btn-small tooltip-test" data-original-title="Marca el producto como favorito"> <i class="icon-heart icon-white"></i> Favorito</a>
                         <a th:href="@{'/store/products/'+${prd_product.id}+'/compare'}" class="btn btn-orange btn-small tooltip-test" data-original-title="Compara con otros productos"> <i class="icon-refresh icon-white"></i> Comparar </a>
                         <a class="btn btn-orange btn-small tooltip-test" th:href="@{'/store/products/'+${prd_product.id}+'/print'}" target="_blank"> <i class="icon-print icon-white"></i> Imprimir </a>

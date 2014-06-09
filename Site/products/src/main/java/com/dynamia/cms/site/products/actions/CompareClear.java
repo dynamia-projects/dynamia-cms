@@ -5,6 +5,7 @@
  */
 package com.dynamia.cms.site.products.actions;
 
+import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
@@ -43,7 +44,7 @@ public class CompareClear implements SiteAction {
         list.clear();
 
         ModelAndView mv = evt.getModelAndView();
-        mv.addObject("successmessage", "Se ha limpiado la lista de comparacion exitosamente.");
+        CMSUtil.addSuccessMessage("Se ha limpiado la lista de comparacion.", evt.getRedirectAttributes());
         String redirect = "/";
         mv.setView(new RedirectView(redirect, true, true, false));
     }
