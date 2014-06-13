@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
+
+
+    <body th:fragment="content">
+        <section class="slider container mt10" >
+            <div class="flexslider" id="mainslider4">
+                <ul class="slides">
+                    <li th:each="banner : ${cmsUtil.listFilesNames('banners','jpg')}"> 
+                        <img th:src="${'/resources/banners/'+banner}" src="img/banner1.jpg" alt="" /> 
+                    </li>                  
+                </ul>
+            </div>
+        </section>  
+    </body>
+
+</html>

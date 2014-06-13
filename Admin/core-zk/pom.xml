@@ -29,6 +29,11 @@
             <artifactId>com.dynamia.cms.site.templates</artifactId>
             <version>${site.cms.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.dynamia.modules</groupId>
+            <artifactId>com.dynamia.modules.filemanager</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

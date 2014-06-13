@@ -5,13 +5,24 @@
  */
 package com.dynamia.cms.site.core;
 
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.tools.commons.CollectionsUtils;
 import com.dynamia.tools.commons.StringUtils;
+import com.dynamia.tools.integration.Containers;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Collection;
+import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -100,5 +111,34 @@ public class CMSUtil {
             }
         }
         return null;
+    }
+
+    public static HttpServletRequest getCurrentRequest() {
+        ServletRequestAttributes requestAttrb = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        return requestAttrb.getRequest();
+    }
+
+    public String[] listFilesNames(String directory, final String extension) {
+        SiteService service = Containers.get().findObject(SiteService.class);
+        HttpServletRequest request = getCurrentRequest();
+        Site site = service.getSite(request);
+        Path path = DynamiaCMS.getSitesResourceLocation(site).resolve(directory);
+        if (extension == null) {
+            return path.toFile().list();
+        } else {
+            return path.toFile().list(new FilenameFilter() {
+
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.toLowerCase().endsWith(extension.toLowerCase());
+
+                }
+            });
+        }
+
+    }
+
+    public String[] listFilesNames(String directory) {
+        return listFilesNames(directory, null);
     }
 }
