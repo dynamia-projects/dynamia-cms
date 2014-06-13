@@ -13,6 +13,7 @@ import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.domain.ProductDetail;
 import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import com.dynamia.cms.site.products.domain.Store;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.domain.User;
@@ -32,7 +33,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -246,6 +246,16 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
+    public Product getProductById(Site site, Long id) {
+        QueryParameters qp = QueryParameters.with("active", true)
+                .add("site", site)
+                .add("id", id);
+
+        return crudService.findSingle(Product.class, qp);
+
+    }
+
+    @Override
     public List<Product> getProductsById(List<Long> ids) {
         QueryParameters qp = QueryParameters.with("active", true);
         qp.add("id", QueryConditions.in(ids));
@@ -451,6 +461,13 @@ public class ProductsServiceImpl implements ProductsService {
     public List<ProductDetail> getProductsDetails(List<Product> products) {
         QueryParameters qp = QueryParameters.with("product", QueryConditions.in(products));
         return crudService.find(ProductDetail.class, qp);
+    }
+
+    @Override
+    public List<Store> getStores(Site site) {
+        QueryParameters qp = QueryParameters.with("site", site).orderBy("contactInfo.city", true);
+
+        return crudService.find(Store.class, qp);
     }
 
 }

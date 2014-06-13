@@ -16,6 +16,7 @@ import com.dynamia.tools.domain.ValidationError;
 import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.domain.services.ValidatorService;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.token.Sha512DigestUtils;
 import org.springframework.stereotype.Service;
@@ -72,7 +73,7 @@ public class UserServiceImpl implements UserService {
             actualUser.setContactInfo(user.getContactInfo());
             actualUser.setFullName(user.getFullName());
             actualUser.setIdentification(user.getIdentification());
-            
+
             validatorService.validate(actualUser);
             crudService.update(actualUser);
         }
@@ -112,6 +113,60 @@ public class UserServiceImpl implements UserService {
         }
 
         return roleUser;
+    }
+
+    private Profile getAdminProfile(Site site) {
+        QueryParameters qp = QueryParameters.with("site", site).add("internalName", "ROLE_ADMIN");
+        Profile roleAdmin = crudService.findSingle(Profile.class, qp);
+        if (roleAdmin == null) {
+            roleAdmin = new Profile();
+            roleAdmin.setName("Admin");
+            roleAdmin.setSite(site);
+            roleAdmin.setEditable(false);
+            roleAdmin = crudService.create(roleAdmin);
+        }
+
+        return roleAdmin;
+    }
+
+    private Profile getEditorProfile(Site site) {
+        QueryParameters qp = QueryParameters.with("site", site).add("internalName", "ROLE_EDITOR");
+        Profile roleAdmin = crudService.findSingle(Profile.class, qp);
+        if (roleAdmin == null) {
+            roleAdmin = new Profile();
+            roleAdmin.setName("Editor");
+            roleAdmin.setSite(site);
+            roleAdmin.setEditable(false);
+            roleAdmin = crudService.create(roleAdmin);
+        }
+
+        return roleAdmin;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void checkAdminUser(Site site) {
+        User adminUser = getUser(site, "admin");
+        if (adminUser == null) {
+            User user = new User();
+            user.setUsername("admin@" + site.getKey() + ".login");
+            user.setFullName("Administrator " + site.getName());
+            user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":admin" + site.getKey()));
+            user.setSite(site);
+            crudService.create(user);
+
+            UserProfile basicProfile = new UserProfile(getDefaultProfile(site), user);
+            basicProfile.setSite(site);
+            crudService.create(basicProfile);
+
+            UserProfile adminProfile = new UserProfile(getAdminProfile(site), user);
+            adminProfile.setSite(site);
+            crudService.create(adminProfile);
+
+            UserProfile editorProfile = new UserProfile(getEditorProfile(site), user);
+            editorProfile.setSite(site);
+            crudService.create(editorProfile);
+        }
     }
 
 }

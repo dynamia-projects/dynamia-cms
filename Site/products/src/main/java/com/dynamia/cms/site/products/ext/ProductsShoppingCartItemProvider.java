@@ -25,23 +25,30 @@ public class ProductsShoppingCartItemProvider implements ShoppingCartItemProvide
 
     @Override
     public ShoppingCartItem getItem(Site site, String code) {
-        Product product = service.getProductBySku(site, code);
-        if (product == null) {
+        try {
+
+            Product product = service.getProductById(site, new Long(code));
+            if (product == null) {
+                return null;
+            }
+
+            ShoppingCartItem item = new ShoppingCartItem();
+            item.setCode(code);
+            item.setImageURL("/resources/products/images/");
+            item.setImageName(product.getImage());
+            item.setURL("/store/products/" + product.getId());
+            item.setName(product.getName());
+            item.setUnitPrice(product.getPrice());
+            item.setRefId(product.getId());
+            item.setRefClass(Product.class.getName());
+            item.setDescription(product.getDescription());
+
+            return item;
+
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
-
-        ShoppingCartItem item = new ShoppingCartItem();
-        item.setCode(code);
-        item.setImageURL("/resources/products/images/");
-        item.setImageName(product.getImage());
-        item.setURL("/store/products/" + product.getId());
-        item.setName(product.getName());
-        item.setUnitPrice(product.getPrice());
-        item.setRefId(product.getId());
-        item.setRefClass(Product.class.getName());
-        item.setDescription(product.getDescription());
-
-        return item;
     }
 
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="templateprint">
+
+    <div class="maincontainer" layout:fragment="content">
+
+        <!-- Main Title-->
+        <div class="titles animated fadeInUp time3">
+            <div class="pull-left">
+                <h1 class="headinglefttitle">Listado de Productos</h1>      
+            </div>    
+            <div class="pull-right">
+                <span th:text="${#dates.format(new java.util.Date(), 'dd/MMM/yyyy HH:mm')}"></span>
+            </div>
+        </div>
+        <div class="clear-both">
+
+            <p>** Este documento no es valido como cotización. Si desea una cotización formal contacte uno de nuestros asesores</p>
+        </div>
+        <th th:include="shoppingcart/components/tableReadonly::content"/>
+
+
+
+    </div>
+</html>

@@ -21,7 +21,7 @@
                 <span th:if="${prd.newproduct}" class="sale tooltip-test" style="background-color: #cc0000"  data-original-title="" title=""> <i class="icon-bookmark-empty font24"></i> Nuevo</span>
 
                 <div class="viewicons">
-                    <form class="pull-left"   th:if="${prd_config.shopEnabled}" th:action="@{'/shoppingcart/add/'+${prd.sku}}" method="get">
+                    <form class="pull-left"   th:if="${prd_config.shopEnabled}" th:action="@{'/shoppingcart/add/'+${prd.id}}" method="get">
                         <button type="submit"  data-original-title="Agregar al Carrito" class="btn btn-inverse tooltip-test"> <i class="icon-shopping-cart icon-white"></i> </button>
                         <input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}"/>
                     </form>

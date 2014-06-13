@@ -29,7 +29,7 @@ public class ShoppingCartItem extends SimpleEntity {
     private String name;
     private String description;
     @Min(value = 1)
-    private int quatity = 1;
+    private int quantity = 1;
     private BigDecimal taxes = BigDecimal.ZERO;
     @Min(value = 0)
     @NotNull
@@ -125,15 +125,15 @@ public class ShoppingCartItem extends SimpleEntity {
         this.name = name;
     }
 
-    public int getQuatity() {
-        return quatity;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQuatity(int quatity) {
-        if (quatity <= 0) {
-            quatity = 1;
+    public void setQuantity(int quantity) {
+        if (quantity <= 0) {
+            quantity = 1;
         }
-        this.quatity = quatity;
+        this.quantity = quantity;
     }
 
     public BigDecimal getTaxes() {
@@ -164,8 +164,8 @@ public class ShoppingCartItem extends SimpleEntity {
     }
 
     void compute() {
-        if (quatity > 0 && unitPrice != null && unitPrice.longValue() > 0) {
-            totalPrice = unitPrice.multiply(new BigDecimal(quatity));
+        if (quantity > 0 && unitPrice != null && unitPrice.longValue() > 0) {
+            totalPrice = unitPrice.multiply(new BigDecimal(quantity));
         }
     }
 

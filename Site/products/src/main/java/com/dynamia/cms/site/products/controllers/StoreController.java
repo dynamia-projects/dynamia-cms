@@ -49,12 +49,7 @@ public class StoreController {
     @Autowired
     private SiteService siteService;
 
-    @RequestMapping("/")
-    public String home() {
-        return null;
-    }
-
-    @RequestMapping(value = "/categories")
+    @RequestMapping(value = {"", "/", "/categories"}, method = RequestMethod.GET)
     public ModelAndView category(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("products/categories");
 
@@ -192,6 +187,14 @@ public class StoreController {
         ModelAndView mv = new ModelAndView("products/printcompare");
         SiteActionManager.performAction("compareProducts", mv, request, ids.split(","));
         return mv;
+    }
+
+    @RequestMapping("/stores")
+    public ModelAndView stores(HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("products/stores");
+        SiteActionManager.performAction("showProductStores", mv, request);
+        return mv;
+
     }
 
     private void setupCookie(HttpServletRequest request, HttpServletResponse response, Long id) {

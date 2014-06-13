@@ -58,16 +58,24 @@ public class UsersConfig extends WebSecurityConfigurerAdapter {
                 .authenticationDetailsSource(new AuthenticationDetailsSource())
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .loginPage("/users/login").permitAll()
+                .loginPage(loginPage()).permitAll()
                 .and()
                 .logout()
-                .logoutUrl("/users/logout").deleteCookies("JSESSIONID")
+                .logoutUrl(logutURL()).deleteCookies("JSESSIONID")
                 .permitAll()
                 .and()
                 .rememberMe().key(StringUtils.randomString())
                 .and()
                 .httpBasic();
 
+    }
+
+    protected String logutURL() {
+        return "/users/logout";
+    }
+
+    protected String loginPage() {
+        return "/users/login";
     }
 
     @Override

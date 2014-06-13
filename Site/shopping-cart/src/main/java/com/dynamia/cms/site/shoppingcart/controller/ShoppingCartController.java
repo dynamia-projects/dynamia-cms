@@ -23,6 +23,22 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/shoppingcart")
 public class ShoppingCartController {
 
+    @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
+    public ModelAndView main(HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView();
+        SiteActionManager.performAction("viewShoppingCart", mv, request);
+
+        return mv;
+    }
+
+    @RequestMapping(value = "/print", method = RequestMethod.GET)
+    public ModelAndView print(HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView();
+        SiteActionManager.performAction("printShoppingCart", mv, request);
+
+        return mv;
+    }
+
     @RequestMapping(value = "/add/{itemCode}", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView add(@PathVariable String itemCode, HttpServletRequest request, final RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView();
@@ -50,6 +66,15 @@ public class ShoppingCartController {
         String redirect = request.getParameter("currentURI");
         mv.setView(new RedirectView(redirect, true, true, false));
         SiteActionManager.performAction("clearShoppingCart", mv, request, redirectAttributes, null);
+
+        return mv;
+    }
+
+    @RequestMapping(value = "/update/{itemCode}", method = {RequestMethod.POST, RequestMethod.GET})
+    public ModelAndView update(@PathVariable String itemCode, HttpServletRequest request, final RedirectAttributes redirectAttributes) {
+        ModelAndView mv = new ModelAndView("/shopping");
+
+        SiteActionManager.performAction("updateItemFromCart", mv, request, redirectAttributes, itemCode);
 
         return mv;
     }

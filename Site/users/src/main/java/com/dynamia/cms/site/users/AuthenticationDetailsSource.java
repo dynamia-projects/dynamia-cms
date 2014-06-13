@@ -13,19 +13,11 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
  *
  * @author mario_2
  */
-
-public class AuthenticationDetailsSource extends WebAuthenticationDetailsSource{
-
-    
+public class AuthenticationDetailsSource extends WebAuthenticationDetailsSource {
 
     @Override
     public WebAuthenticationDetails buildDetails(HttpServletRequest context) {
-    return new AuthenticationDetails(context);
+        return new AuthenticationDetails(context);
     }
-
-    
-
-
-   
 
 }

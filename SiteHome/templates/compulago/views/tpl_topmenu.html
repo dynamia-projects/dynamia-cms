@@ -24,7 +24,7 @@
                         <div class="navbar-inner">
                             <ul class="nav" >
                                 <li><a  th:href="@{/store/brands}" ><i class=""></i>Marcas</a> </li>
-                                <li><a  href="#contacts" ><i class=""></i>Tiendas</a> </li>
+                                <li><a  th:href="@{/store/stores}" ><i class=""></i>Tiendas</a> </li>
                                 <li><a  href="mailito:servicioalcliente@compulago.net" ><i class=""></i>Quejas y Sugerencias</a> </li>
                                 <li><a  th:href="@{/empresa}" ><i class="group"></i>Nuestra Empresa</a> </li>
                                 <li th:if="${@userHolder.authenticated eq false}">

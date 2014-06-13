@@ -31,7 +31,7 @@
 
     <!-- Spring MVC -->
 
- <!-- 
+ 
     <servlet>
         <servlet-name>SpringMVC</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -44,12 +44,12 @@
     
     <servlet-mapping>
         <servlet-name>SpringMVC</servlet-name>
-        <url-pattern>/<URL_PATTERN></url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
- -->
+
     
     
-    <!--Spring Security Configuration 
+    <!--Spring Security Configuration -->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -58,7 +58,7 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    -->
+    
     <servlet>
         <description>ZK loader for ZUML pages</description>
         <servlet-name>zkLoader</servlet-name>

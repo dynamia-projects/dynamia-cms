@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?page title="Prueba"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" >
+   
+    <style src="/css/default.css"/> 
+    <style src="/css/viewers.css"/> 
+    <style src="/css/zkstyles.css"/> 
+    
+    <borderlayout id="main" apply="${navComposer}" visible="true">
+
+        <north sclass="z-menubar header" height="50px">
+            <div>
+                <div sclass="topMenu" self="@{insert(topmenu)}"></div>
+                <hlayout>
+                    <div class="logo">                    
+                        <image id="imglogo" src="/images/LogoWhite.png" />
+                    </div>
+                    <div self="@{insert(header)}"></div>
+                </hlayout>
+            </div>
+        </north>
+
+        <center sclass="content" autoscroll="true" border="none"  self="@{insert(content)}">
+
+        </center>
+        
+        <south sclass="footer"  self="@{insert(footer)}">
+            
+        </south>
+    </borderlayout>
+
+</zk>

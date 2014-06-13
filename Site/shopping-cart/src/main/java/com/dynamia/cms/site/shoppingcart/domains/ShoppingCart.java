@@ -122,7 +122,7 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
     public void addItem(ShoppingCartItem item) {
         ShoppingCartItem addedItem = getItemByCode(item.getCode());
         if (addedItem != null) {
-            addedItem.setQuatity(addedItem.getQuatity() + 1);
+            addedItem.setQuantity(addedItem.getQuantity() + 1);
         } else {
             items.add(item);
             item.setShoppingCart(this);
@@ -161,7 +161,7 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
 
         for (ShoppingCartItem item : items) {
             item.compute();
-            quantity += item.getQuatity();
+            quantity += item.getQuantity();
             totalTaxes = totalTaxes.add(item.getTaxes());
             totalShipmentPrice = totalShipmentPrice.add(item.getShipmentPrice());
             subtotal = subtotal.add(item.getTotalPrice());

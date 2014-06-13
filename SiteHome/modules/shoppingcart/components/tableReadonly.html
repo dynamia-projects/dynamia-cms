@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+    <body th:fragment="content">
+
+        <!-- Cart-->
+        <div class="cart-info">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>Imagen</th>
+                    <th class="name">Nombre</th>                   
+                    <th>Cantidad</th>                    
+                    <th class="price">Precio Unit.</th>
+                    <th class="total">Total</th>
+                </tr>
+                <tr  th:each="item : ${@shoppingCartHolder.current.items}">
+
+                    <td style="width: 50px"><img th:src="@{${item.imageURL}+'thumbnails/'+${item.imageName}(w=90,h=90)}"  alt="product" title="product"></img></td>
+                    <td class="name">
+                        <span class="orange" style="font-weight: bold" th:text="${item.name}">MacBook</span>
+                        <br/>
+                        <span th:text="${item.description}"></span>
+                    </td>
+                    <td><span th:text="${item.quantity}"></span></td>
+
+                    <td class="price" th:text="${cmsUtil.formatNumber(item.unitPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$120.68</td>
+                    <td class="total" th:text="${cmsUtil.formatNumber(item.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+                </tr>
+
+            </table>
+
+            <div class="pull-right">
+                <table >
+                    <tbody>
+                        <tr th:if="false">
+                            <td class="textright"><b>Sub-Total:</b></td>
+                            <td class="textright" th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$500.00</td>
+                        </tr>
+                        <tr  th:if="false">
+                            <td class="textright"><b>Impuestos:</b></td>
+                            <td class="textright" th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.totalTaxes,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$2.00</td>
+                        </tr>
+                        <tr  th:if="false">
+                            <td class="textright"><b>Costos de Envio:</b></td>
+                            <td class="textright" th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.totalShipmentPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$87.50</td>
+                        </tr>
+                        <tr>
+                            <td class="textright"><b>Gran Total:</b></td>
+                            <td class="textright" th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </body>
+</html>

@@ -21,4 +21,6 @@ public interface UserService {
 
     public void changePassword(UserForm form);
 
+    void checkAdminUser(Site site);
+
 }

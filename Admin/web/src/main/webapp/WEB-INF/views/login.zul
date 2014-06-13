@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/template.zul"?>
+<?page title="DynamiaCMS - ${siteHolder.current.name}"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+  
+    
+    <window  self="@{define(content)}"   height="100%" border="0" contentStyle="padding:0">
+
+        <window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.dynamia.cms.admin.users.viewmodels.LoginVM')"
+                title="${siteHolder.current.name} - Login"  mode="overlapped"  position="center" border="normal" width="400px" height="280px">
+                    
+            <vlayout hflex="1">
+                <label value="Usuario" />
+                <textbox value="@bind(vm.username)" style="text-align:center"  hflex="1"/>
+
+                <label value="Password" />
+                <textbox type="password" value="@bind(vm.password)" style="text-align:center"  onOK="@command('login')"  hflex="1"/>
+
+                <hlayout hflex="1">
+                    <div hflex="true" align="right">
+                        <button  onClick="@command('login')" label="Iniciar Sesion"  />
+                    </div>
+                </hlayout>
+                                
+                <label value="@bind(vm.message)" sclass="loginMsg"/>               
+            </vlayout>
+        </window>
+
+    </window>
+  
+</zk>
