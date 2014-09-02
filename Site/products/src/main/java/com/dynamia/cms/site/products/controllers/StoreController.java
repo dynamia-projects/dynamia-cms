@@ -5,23 +5,16 @@
  */
 package com.dynamia.cms.site.products.controllers;
 
-import com.dynamia.cms.site.core.CMSUtil;
-import com.dynamia.cms.site.core.actions.SiteActionManager;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.cms.site.products.ProductSearchForm;
-import com.dynamia.cms.site.products.services.ProductsService;
-import com.dynamia.cms.site.users.UserHolder;
-import com.dynamia.tools.commons.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +24,15 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.CookieGenerator;
+
+import com.dynamia.cms.site.core.CMSUtil;
+import com.dynamia.cms.site.core.actions.SiteActionManager;
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.core.services.SiteService;
+import com.dynamia.cms.site.products.ProductSearchForm;
+import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.cms.site.users.UserHolder;
+import com.dynamia.tools.commons.StringUtils;
 
 /**
  *

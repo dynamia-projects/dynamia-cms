@@ -5,7 +5,7 @@
     <artifactId>com.dynamia.cms.site.parent</artifactId>
     <name>DynamiaCMS Site (${project.version})</name>
     <packaging>pom</packaging>
-    <version>0.7</version>
+    <version>0.8</version>
     <url>http://www.dynamiasoluciones.com</url>
   
     <properties>

@@ -10,3 +10,4 @@ gen/
 *.versionsBackup
 *.log
 /SiteHome/sites/
+.springBeans
