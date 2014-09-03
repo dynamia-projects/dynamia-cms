@@ -65,6 +65,8 @@ public class ProductsUtil {
                 } catch (NumberFormatException numberFormatException) {
                     //not a number, ignore it
                 }
+            }else{
+            	datasource.setActivePage(1);
             }
 
             products = datasource.getPageData();

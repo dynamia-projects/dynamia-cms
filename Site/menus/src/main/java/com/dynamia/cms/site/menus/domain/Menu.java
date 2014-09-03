@@ -29,54 +29,88 @@ import javax.validation.constraints.NotNull;
 @Table(name = "mn_menus")
 public class Menu extends SimpleEntity implements Serializable, SiteAware {
 
-    @NotEmpty
-    private String name;
-    @Column(name = "menuAlias")
-    private String alias;
-    @OneToOne
-    @NotNull
-    private Site site;
-    @OneToMany(mappedBy = "menu",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @OrderBy("order")
-    private List<MenuItem> items = new ArrayList<>();
+	@NotEmpty
+	private String name;
+	@Column(name = "menuAlias")
+	private String alias;
+	@OneToOne
+	@NotNull
+	private Site site;
+	@OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OrderBy("order")
+	private List<MenuItem> items = new ArrayList<>();
+	@Column(length = 1000)
+	private String description;
+	private String styleClass = "";
+	private String menuItemStyleClass = "";
 
-    public Menu() {
-    }
+	public Menu() {
+	}
 
-    public Menu(String name, String alias) {
-        this.name = name;
-        this.alias = alias;
-    }
+	public Menu(String name, String alias) {
+		this.name = name;
+		this.alias = alias;
+	}
 
-    public Site getSite() {
-        return site;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getStyleClass() {
+		if (styleClass == null) {
+			styleClass = "";
+		}
+		return styleClass;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setStyleClass(String styleClass) {
+		this.styleClass = styleClass;
+	}
 
-    public String getAlias() {
-        return alias;
-    }
+	public String getMenuItemStyleClass() {
+		if (menuItemStyleClass == null) {
+			menuItemStyleClass = "";
+		}
+		return menuItemStyleClass;
+	}
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
+	public void setMenuItemStyleClass(String menuItemStyleClass) {
+		this.menuItemStyleClass = menuItemStyleClass;
+	}
 
-    public List<MenuItem> getItems() {
-        return items;
-    }
+	public Site getSite() {
+		return site;
+	}
 
-    public void setItems(List<MenuItem> items) {
-        this.items = items;
-    }
+	public void setSite(Site site) {
+		this.site = site;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+
+	public List<MenuItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<MenuItem> items) {
+		this.items = items;
+	}
 }

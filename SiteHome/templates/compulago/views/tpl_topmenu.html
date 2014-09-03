@@ -1,48 +1,35 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-    <!-- Main Menu -->
+<!-- Main Menu -->
 
-    <body th:fragment="content">
-        <div class="headerstrip navbar-fixed-top hidden-xs hidden-sm">
-            <div class="container">
-                <div class="pull-left">
-                    <div class="navbar" id="topnav">
-                        <div class="navbar-inner">
-                            <ul class="nav" >
-                                <li><a  th:href="@{/}" ><i class="icon-home"></i> Inicio </a> </li>
-                                <li><a class="tooltip-test" data-placement="bottom"  data-original-title="Facebook" th:if="${siteParams['facebook']}!=null" th:href="${siteParams['facebook']}"  ><i class="icon-facebook"></i></a></li>
-                                <li><a class="tooltip-test" data-placement="bottom" data-original-title="Twitter" th:if="${siteParams['twitter']}!=null"  th:href="@{${siteParams['twitter']}}"><i class="icon-twitter"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+<body th:fragment="content">
+	<div class="headerstrip navbar-fixed-top hidden-xs hidden-sm">
+		<div class="container">
+			<div class="pull-left">
+				<div class="navbar" id="topnav">
+					<div class="navbar-inner">
+						<th:block th:include="module::position('topmenu_left')" />
+					</div>
+				</div>
+			</div>
 
-                <div class="pull-right">
-                    <div class="navbar" id="topnav">
-                        <div class="navbar-inner">
-                            <ul class="nav" >
-                                <li><a  th:href="@{/store/brands}" ><i class=""></i>Marcas</a> </li>
-                                <li><a  th:href="@{/store/stores}" ><i class=""></i>Tiendas</a> </li>
-                                <li><a  href="mailito:servicioalcliente@compulago.net" ><i class=""></i>Quejas y Sugerencias</a> </li>
-                                <li><a  th:href="@{/empresa}" ><i class="group"></i>Nuestra Empresa</a> </li>
-                                <li th:if="${@userHolder.authenticated eq false}">
-                                    <a th:href="@{/users/login}"><i class="icon-key"></i>Iniciar Sesion</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="pull-right">
-                    <ul class="nav language">                      
-                        <th:block th:include="users/components/usermenu::content"/>
-                    </ul>
-                </div>
+			<div class="pull-right">
+				<div class="navbar" id="topnav">
+					<div class="navbar-inner">
+						<th:block th:include="module::position('topmenu_right')" />
+					</div>
+				</div>
+			</div>
+			<div class="pull-right">
+				<ul class="nav language">
+					<th:block th:include="users/components/usermenu::content" />
+				</ul>
+			</div>
 
 
-            </div>
-        </div>
-    </body>
+		</div>
+	</div>
+</body>
 
 </html>

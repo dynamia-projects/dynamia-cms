@@ -17,12 +17,12 @@ import org.springframework.stereotype.Component;
  */
 @Component("siteHolder")
 @Scope("session")
-public class SiteHolder implements Serializable {
+public class SiteContext implements Serializable {
 
     private Site current;
 
-    public static SiteHolder get() {
-        return Containers.get().findObject(SiteHolder.class);
+    public static SiteContext get() {
+        return Containers.get().findObject(SiteContext.class);
     }
 
     public Site getCurrent() {

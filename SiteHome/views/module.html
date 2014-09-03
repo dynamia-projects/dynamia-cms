@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Main Menu -->
+
+<body th:fragment="position(name)">
+	<th:block th:each="m : ${cmsModules.getInstances(name)}">
+		<th:block th:include="${cmsModules.getTemplateViewName(m)}::module(${m})" />
+	</th:block>
+</body>
+
+</html>

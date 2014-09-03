@@ -21,15 +21,18 @@ fields:
         component: combobox
         
     type:
-        component: pageTypeSelector
+        component: typeSelector
+        params:
+            typeExtensionClass: com.dynamia.cms.site.pages.api.PageTypeExtension
         
     content:
         component: ckeditor
         params:
+            span: 2
             height: 300px
             
     parameters:
         component: crudview
         
 layout:
-    columns: 1
+    columns: 2

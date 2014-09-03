@@ -6,10 +6,30 @@
 
 package com.dynamia.cms.site.core.api;
 
+import com.dynamia.cms.site.core.domain.ModuleInstance;
+import com.dynamia.cms.site.core.domain.Site;
+
 /**
  *
  * @author mario
  */
-public interface ModuleContext {
-    
+public class ModuleContext {
+
+	private ModuleInstance moduleInstance;
+	private Site site;
+
+	public ModuleContext(ModuleInstance moduleInstance) {
+		super();
+		this.moduleInstance = moduleInstance;
+		this.site = moduleInstance.getSite();
+	}
+
+	public ModuleInstance getModuleInstance() {
+		return moduleInstance;
+	}
+
+	public Site getSite() {
+		return site;
+	}
+
 }

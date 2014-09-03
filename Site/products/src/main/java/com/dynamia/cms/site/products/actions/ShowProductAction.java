@@ -62,7 +62,7 @@ public class ShowProductAction implements SiteAction {
         
         String price = "";
         try {
-            CMSUtil util = new CMSUtil();
+            CMSUtil util = new CMSUtil(evt.getSite());
             ProductsSiteConfig config = service.getSiteConfig(evt.getSite());
             price = " - " + util.formatNumber(product.getPrice(), config.getPricePattern());
         } catch (Exception e) {

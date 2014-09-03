@@ -1,0 +1,16 @@
+view: table
+beanClass: com.dynamia.cms.site.core.domain.ModuleInstance
+autofields: false
+
+fields:
+    
+   title:   
+   alias:
+   moduleId:
+      label: Type   
+   enabled:     
+   position:
+   uuid:
+ 
+     
+   

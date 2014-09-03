@@ -5,10 +5,11 @@
  */
 package com.dynamia.cms.site.core;
 
-import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.api.AdminModule;
 import com.dynamia.cms.site.core.api.AdminModuleOption;
 import com.dynamia.cms.site.core.api.CMSModule;
+import com.dynamia.cms.site.core.domain.ModuleInstance;
+import com.dynamia.cms.site.core.domain.Site;
 
 /**
  *
@@ -17,21 +18,21 @@ import com.dynamia.cms.site.core.api.CMSModule;
 @CMSModule
 public class CoreAdminModule implements AdminModule {
 
-    @Override
-    public String getGroup() {
-        return "sites";
-    }
+	@Override
+	public String getGroup() {
+		return "sites";
+	}
 
-    @Override
-    public String getName() {
-        return "General";
-    }
+	@Override
+	public String getName() {
+		return "General";
+	}
 
-    @Override
+	@Override
     public AdminModuleOption[] getOptions() {
         return new AdminModuleOption[]{
-            new AdminModuleOption("sites", "Sites", Site.class)
+            new AdminModuleOption("sites", "Sites", Site.class),
+            new AdminModuleOption("modules", "Modules", ModuleInstance.class)
         };
     }
-
 }

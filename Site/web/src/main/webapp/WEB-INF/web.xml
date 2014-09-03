@@ -69,8 +69,4 @@
         <location>/error</location>
     </error-page>
   
-    <!-- With Servlet 3.0 and above general error page is possible -->
-    <error-page>
-        <location>/error</location>
-    </error-page>
 </web-app>

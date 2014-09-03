@@ -18,11 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 @CMSExtension
 public class SearchSiteInterceptor extends SiteRequestInterceptorAdapter {
 
-    @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
-        if (mv.getModel().get("searchForm") == null) {
-            mv.addObject("searchForm", new SearchForm());
-        }
-    }
+	@Override
+	protected void afterRequest(Site site, ModelAndView mv) {
+		if (mv != null && mv.getModel().get("searchForm") == null) {
+			mv.addObject("searchForm", new SearchForm());
+		}
+	}
 
 }

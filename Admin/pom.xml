@@ -30,14 +30,12 @@
         </plugins>
     </build>
     <properties>
-        <dynatools.version>2.1.0.Final</dynatools.version>        
+        <dynatools.version>2.1.5.Final</dynatools.version>        
         <dynamia.icons.version>2.0.0</dynamia.icons.version>
         <hsql.version>1.8.0.10</hsql.version>
-        <spring.version>3.2.6.RELEASE</spring.version>
-        <hibernate.version>4.2.4.Final</hibernate.version>
-        
-        <!-- Versiones de Modulos -->
-        <seguridad.version>3.5.2</seguridad.version>
+        <spring.version>4.0.6.RELEASE</spring.version>
+        <hibernate.version>4.3.6.Final</hibernate.version>
+      
         
         <site.cms.version>0.8</site.cms.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

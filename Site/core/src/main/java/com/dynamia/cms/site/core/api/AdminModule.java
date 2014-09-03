@@ -5,7 +5,6 @@
  */
 package com.dynamia.cms.site.core.api;
 
-import java.util.List;
 
 /**
  *

@@ -18,41 +18,51 @@ import javax.persistence.Table;
 @Table(name = "cr_modules_instances_params")
 public class ModuleInstanceParameter extends SimpleEntity {
 
-    private String paramName;
-    private String paramValue;
-    @ManyToOne
-    private ModuleInstance moduleInstance;
+	private String paramName;
+	private String paramValue;
+	private boolean enabled=true;
 
-    public ModuleInstanceParameter() {
-    }
+	@ManyToOne
+	private ModuleInstance moduleInstance;
 
-    public ModuleInstanceParameter(String paramName, String paramValue) {
-        this.paramName = paramName;
-        this.paramValue = paramValue;
-    }
+	public ModuleInstanceParameter() {
+	}
 
-    public ModuleInstance getModuleInstance() {
-        return moduleInstance;
-    }
+	public ModuleInstanceParameter(String paramName, String paramValue) {
+		this.paramName = paramName;
+		this.paramValue = paramValue;
+	}
 
-    public void setModuleInstance(ModuleInstance moduleInstance) {
-        this.moduleInstance = moduleInstance;
-    }
+	public ModuleInstance getModuleInstance() {
+		return moduleInstance;
+	}
 
-    public String getParamName() {
-        return paramName;
-    }
+	public void setModuleInstance(ModuleInstance moduleInstance) {
+		this.moduleInstance = moduleInstance;
+	}
 
-    public void setParamName(String paramName) {
-        this.paramName = paramName;
-    }
+	public String getParamName() {
+		return paramName;
+	}
 
-    public String getParamValue() {
-        return paramValue;
-    }
+	public void setParamName(String paramName) {
+		this.paramName = paramName;
+	}
 
-    public void setParamValue(String paramValue) {
-        this.paramValue = paramValue;
-    }
+	public String getParamValue() {
+		return paramValue;
+	}
+
+	public void setParamValue(String paramValue) {
+		this.paramValue = paramValue;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
 }

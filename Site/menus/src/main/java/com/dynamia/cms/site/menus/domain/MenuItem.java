@@ -4,16 +4,23 @@
  */
 package com.dynamia.cms.site.menus.domain;
 
-import com.dynamia.cms.site.pages.domain.Page;
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.contraints.NotEmpty;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.dynamia.cms.site.pages.domain.Page;
+import com.dynamia.tools.domain.SimpleEntity;
+import com.dynamia.tools.domain.contraints.NotEmpty;
 
 /**
  *
@@ -23,64 +30,166 @@ import javax.validation.constraints.NotNull;
 @Table(name = "mn_menuitems")
 public class MenuItem extends SimpleEntity implements Serializable {
 
-    @NotEmpty
-    private String name;
-    @OneToOne
-    @NotNull(message = "Select page for menu item")
-    private Page page;
-    @ManyToOne
-    private Menu menu;
-    private String icon;
-    @Column(name = "itemOrder")
-    private int order;
+	private String name = "";
+	@OneToOne
+	private Page page;
+	@ManyToOne
+	private Menu menu;
+	@ManyToOne
+	private MenuItem parentItem;
+	private String icon;
+	@Column(name = "itemOrder")
+	private int order;
+	@Column(name = "itemType")
+	private String type = "default";
+	@OneToMany(mappedBy = "menuItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<MenuItemParameter> parameters = new ArrayList<>();
+	@OneToMany(mappedBy = "parentItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<MenuItem> subitems = new ArrayList<>();
+	private String styleClass = "";
+	private String href;
+	private String title;
 
-    public String getIcon() {
-        return icon;
-    }
+	public MenuItem() {
+		// TODO Auto-generated constructor stub
+	}
 
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
+	public MenuItem(String name, Page page) {
+		super();
+		this.name = name;
+		this.page = page;
+	}
 
-    public int getOrder() {
-        return order;
-    }
+	public MenuItem(String name, String href) {
+		super();
+		this.name = name;
+		this.href = href;
+	}
 
-    public void setOrder(int order) {
-        this.order = order;
-    }
+	public MenuItem(String name, Page page, String icon) {
+		super();
+		this.name = name;
+		this.page = page;
+		this.icon = icon;
+	}
 
-    public Menu getMenu() {
-        return menu;
-    }
+	public MenuItem(String name, String href, String icon) {
+		super();
+		this.name = name;
+		this.icon = icon;
+		this.href = href;
+	}
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getStyleClass() {
+		if (styleClass == null) {
+			styleClass = "";
+		}
+		return styleClass;
+	}
 
-    public Page getPage() {
-        return page;
-    }
+	public void setStyleClass(String styleClass) {
+		this.styleClass = styleClass;
+	}
 
-    public void setPage(Page page) {
-        this.page = page;
-    }
+	public void setHref(String href) {
+		this.href = href;
+	}
 
-    public String getHref() {
-        StringBuilder sb = new StringBuilder();
-        if (!menu.getSite().getKey().equals("main")) {
-            sb.append("/site/").append(menu.getSite().getKey()).append("/");
-        }
-        sb.append(getPage().getAlias());
-        return sb.toString();
-    }
+	public MenuItem getParentItem() {
+		return parentItem;
+	}
+
+	public void setParentItem(MenuItem parentItem) {
+		this.parentItem = parentItem;
+	}
+
+	public List<MenuItem> getSubitems() {
+		return subitems;
+	}
+
+	public void setSubitems(List<MenuItem> subitems) {
+		this.subitems = subitems;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	public Menu getMenu() {
+		return menu;
+	}
+
+	public void setMenu(Menu menu) {
+		this.menu = menu;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Page getPage() {
+		return page;
+	}
+
+	public void setPage(Page page) {
+		this.page = page;
+		if (page != null) {
+			href = page.getAlias();
+		}
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public List<MenuItemParameter> getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(List<MenuItemParameter> parameters) {
+		this.parameters = parameters;
+	}
+
+	public String getHref() {
+		if (href == null && page != null) {
+			href = page.getAlias();
+		}
+		return href;
+	}
+
+	public void addMenuItem(MenuItem subitem) {
+		if (subitem != this) {
+			subitem.setParentItem(this);
+			subitems.add(subitem);
+		}
+	}
 
 }

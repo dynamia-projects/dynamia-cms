@@ -8,17 +8,7 @@
 		<!-- Navigation -->
 		<nav class="subnav">
 			<div class="container menurelative">
-				<ul class="nav-pills mainmenucontain container">
-					<li><a class="" th:href="@{/}"><i class="icon-home icon-white font18"></i></a></li>
-					<li th:each="mi : ${menuitems}"><a th:class="${activeMenu == mi? 'active':''}" th:href="@{'/'+${mi.page.alias}}" href="#"> <i
-							th:class="${'icon-'+mi.icon+' icon-white font18'}" class="icon-home icon-white font18"></i> <th:block th:text="${mi.name}" />
-					</a></li>
-
-
-				</ul>
-				<!--
-                    <a  class="quickcontact"><i class="icon-phone"></i> Buy Now</a> </div>
-                    -->
+				<th:block th:include="module::position('mainmenu')" />
 			</div>
 		</nav>
 	</div>

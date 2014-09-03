@@ -60,5 +60,10 @@
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+        	<groupId>com.dynamia.cms</groupId>
+        	<artifactId>com.dynamia.cms.site.menus</artifactId>
+        	<version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

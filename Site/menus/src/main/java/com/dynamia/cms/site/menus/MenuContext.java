@@ -5,31 +5,44 @@
  */
 package com.dynamia.cms.site.menus;
 
+import java.io.Serializable;
+
 import com.dynamia.cms.site.menus.domain.Menu;
 import com.dynamia.cms.site.menus.domain.MenuItem;
-import java.io.Serializable;
+import com.dynamia.cms.site.menus.domain.MenuItemParameter;
 
 /**
  *
  * @author mario
  */
-public class MenuContext implements Serializable{
+public class MenuContext implements Serializable {
 
-    private MenuItem menuItem;
+	private MenuItem menuItem;
 
-    private Menu parent;
+	private Menu parent;
 
-    public MenuContext(MenuItem menuItem, Menu parent) {
-        this.menuItem = menuItem;
-        this.parent = parent;
-    }
+	public MenuContext(MenuItem menuItem, Menu parent) {
+		this.menuItem = menuItem;
+		this.parent = parent;
+	}
 
-    public MenuItem getMenuItem() {
-        return menuItem;
-    }
+	public MenuItem getMenuItem() {
+		return menuItem;
+	}
 
-    public Menu getParent() {
-        return parent;
-    }
+	public Menu getParent() {
+		return parent;
+	}
+
+	public MenuItemParameter getParameter(String name) {
+		if (menuItem.getParameters() != null) {
+			for (MenuItemParameter param : menuItem.getParameters()) {
+				if (param.getName().equals(name)) {
+					return param;
+				}
+			}
+		}
+		return null;
+	}
 
 }

@@ -5,22 +5,17 @@
  */
 package com.dynamia.cms.site.pages.api;
 
+import com.dynamia.cms.site.core.api.TypeExtension;
 import com.dynamia.cms.site.pages.PageContext;
 
 /**
  *
  * @author mario
  */
-public interface PageTypeExtension {
+public interface PageTypeExtension extends TypeExtension {
 
-    public String getId();
+	public String getDescriptorId();
 
-    public String getName();
-
-    public String getDescription();
-
-    public String getDescriptorId();
-
-    public void setupPage(PageContext context);
+	public void setupPage(PageContext context);
 
 }

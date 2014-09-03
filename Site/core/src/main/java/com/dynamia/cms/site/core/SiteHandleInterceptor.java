@@ -23,67 +23,72 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 
-    @Autowired
-    private SiteService service;
+	@Autowired
+	private SiteService service;
 
-    private final LoggingService logger = new SLF4JLoggingService(SiteHandleInterceptor.class);
+	private final LoggingService logger = new SLF4JLoggingService(SiteHandleInterceptor.class);
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        Site site = service.getSite(request);
-        if (site == null) {
-            site = service.getMainSite();
-        }
-        try {
-            for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
-                interceptor.beforeRequest(site, request, response);
-            }
-        } catch (Exception e) {
-            logger.error("Error calling Site interceptor", e);
-            return false;
-        }
+		Site site = service.getSite(request);
+		if (site == null) {
+			site = service.getMainSite();
+		}
+		try {
+			for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
+				interceptor.beforeRequest(site, request, response);
+			}
+		} catch (Exception e) {
+			logger.error("Error calling Site interceptor", e);
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        Site site = service.getSite(request);
-        if (site == null) {
-            site = service.getMainSite();
-        }
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
+			throws Exception {
+		if (modelAndView == null) {
+			return;
+		}
 
-        loadSiteMetadata(site, modelAndView);
+		Site site = service.getSite(request);
+		if (site == null) {
+			site = service.getMainSite();
+		}
 
-        if (site != null && site.isOffline()) {
-            modelAndView.clear();
-            modelAndView.addObject("site", site);
-            modelAndView.setViewName("site/offline");
-        } else {
-            try {
-                for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
-                    interceptor.afterRequest(site, request, response, modelAndView);
-                }
-            } catch (Exception e) {
-                logger.error("Error calling Site interceptor", e);
-            }
-        }
+		loadSiteMetadata(site, modelAndView);
 
-    }
+		if (site != null && site.isOffline()) {
+			modelAndView.clear();
+			modelAndView.addObject("site", site);
+			modelAndView.setViewName("site/offline");
+		} else {
+			try {
+				for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
+					interceptor.afterRequest(site, request, response, modelAndView);
+				}
+			} catch (Exception e) {
+				logger.error("Error calling Site interceptor", e);
+			}
+		}
 
-    private void loadSiteMetadata(Site site, ModelAndView mv) {
-        if (site != null && mv != null) {
-            mv.addObject("metaAuthor", site.getMetadataAuthor());
-            mv.addObject("metaRights", site.getMetadataRights());
-            if (!mv.getModel().containsKey("metaDescription")) {
-                mv.addObject("metaDescription", site.getMetadataDescription());
-            }
-            if (!mv.getModel().containsKey("metaKeywords")) {
-                mv.addObject("metaKeywords", site.getMetadataKeywords());
-            }
+	}
 
-        }
-    }
+	private void loadSiteMetadata(Site site, ModelAndView mv) {
+		if (site != null && mv != null) {
+			mv.addObject("metaAuthor", site.getMetadataAuthor());
+			mv.addObject("metaRights", site.getMetadataRights());
+			if (!mv.getModel().containsKey("metaDescription")) {
+				mv.addObject("metaDescription", site.getMetadataDescription());
+			}
+			if (!mv.getModel().containsKey("metaKeywords")) {
+				mv.addObject("metaKeywords", site.getMetadataKeywords());
+			}
+
+		}
+	}
 
 }

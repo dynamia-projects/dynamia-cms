@@ -4,15 +4,18 @@
  */
 package com.dynamia.cms.site.core.api;
 
+import java.util.Map;
+
 /**
  *
  * @author mario
  */
-public interface Module {
+public interface Module extends TypeExtension {
 
-    String getName();
+	String getTemplateViewName();
 
-    String getDescription();
+	Map<String, Object> getMetadata();
 
-    void init(ModuleContext context);
+	void init(ModuleContext context);
+
 }

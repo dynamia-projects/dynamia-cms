@@ -4,16 +4,21 @@
  */
 package com.dynamia.cms.site.core.domain;
 
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.contraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import com.dynamia.tools.domain.contraints.NotEmpty;
 
 /**
  *
@@ -21,66 +26,113 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "cr_modules_instances")
-public class ModuleInstance extends SimpleEntity {
+public class ModuleInstance extends Content {
 
-    @NotEmpty(message = "Module ID is required")
-    @NotNull
-    private String moduleId;
-    @NotEmpty(message = "Select module position")
-    private String position;
-    @Column(name = "moduleAlias", unique = true)
-    private String alias;
-    private boolean enabled;
-    private String styleClass;
-    @OneToMany(mappedBy = "moduleInstance", cascade = CascadeType.ALL)
-    private List<ModuleInstanceParameter> params = new ArrayList<>();
+	@NotEmpty(message = "Module ID is required")
+	@NotNull
+	private String moduleId;
+	@NotEmpty(message = "Select module position")
+	private String position;
+	@Column(name = "moduleAlias")
+	private String alias;
+	@NotEmpty(message = "Enter module title")
+	private String title;
+	private boolean enabled = true;
+	private boolean titleVisible = true;
 
-    public String getModuleId() {
-        return moduleId;
-    }
+	private String styleClass;
+	@OneToMany(mappedBy = "moduleInstance", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<ModuleInstanceParameter> parameters = new ArrayList<>();
 
-    public void setModuleId(String moduleId) {
-        this.moduleId = moduleId;
-    }
+	@Transient
+	private Map<String, Object> model = new HashMap<String, Object>();
 
-    public String getPosition() {
-        return position;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getAlias() {
-        return alias;
-    }
+	public String getModuleId() {
+		return moduleId;
+	}
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
+	}
 
-    public boolean isEnabled() {
-        return enabled;
-    }
+	public String getPosition() {
+		return position;
+	}
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+	public void setPosition(String position) {
+		this.position = position;
+	}
 
-    public String getStyleClass() {
-        return styleClass;
-    }
+	public String getAlias() {
+		return alias;
+	}
 
-    public void setStyleClass(String styleClass) {
-        this.styleClass = styleClass;
-    }
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
 
-    public List<ModuleInstanceParameter> getParams() {
-        return params;
-    }
+	public boolean isEnabled() {
+		return enabled;
+	}
 
-    public void setParams(List<ModuleInstanceParameter> params) {
-        this.params = params;
-    }
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getStyleClass() {
+		return styleClass;
+	}
+
+	public void setStyleClass(String styleClass) {
+		this.styleClass = styleClass;
+	}
+
+	public List<ModuleInstanceParameter> getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(List<ModuleInstanceParameter> parameters) {
+		this.parameters = parameters;
+	}
+
+	public boolean isTitleVisible() {
+		return titleVisible;
+	}
+
+	public void setTitleVisible(boolean titleVisible) {
+		this.titleVisible = titleVisible;
+	}
+
+	@Override
+	public String toString() {
+		return getModuleId();
+	}
+
+	public String getParameter(String name) {
+		for (ModuleInstanceParameter parameter : parameters) {
+			if (parameter.getParamName().equals(name)) {
+				if (parameter.isEnabled()) {
+					return parameter.getParamValue();
+				}
+			}
+		}
+		return null;
+	}
+
+	public Map<String, Object> getModel() {
+		return model;
+	}
+
+	public void addObject(String name, Object object) {
+		model.put(name, object);
+	}
 
 }

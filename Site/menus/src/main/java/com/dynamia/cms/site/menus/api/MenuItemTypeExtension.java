@@ -6,20 +6,15 @@
 
 package com.dynamia.cms.site.menus.api;
 
+import com.dynamia.cms.site.core.api.TypeExtension;
 import com.dynamia.cms.site.menus.MenuContext;
 
 /**
  *
  * @author mario
  */
-public interface MenuItemTypeExtension {
-    
-    public String getId();
-    
-    public String getName();
-    
-    public String getDescription();
-    
-    public String getHref(MenuContext context);
-    
+public interface MenuItemTypeExtension extends TypeExtension {
+
+	public void setupMenuItem(MenuContext context);
+
 }

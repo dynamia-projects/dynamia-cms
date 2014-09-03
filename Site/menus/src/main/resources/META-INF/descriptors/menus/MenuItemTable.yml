@@ -1,14 +1,12 @@
 view: table
 beanClass: com.dynamia.cms.site.menus.domain.MenuItem
-hidden: [href,menu]
-sortFields: [id,name,icon,order,page,page.category,page.site]
+hidden: [id,menu,parentItem,styleClass,order]
+sortFields: [name,title,type,icon,href,page,page.category]
 
 fields:
     page.category:
         label: Category
-        
-    page.site:
-        label: Page Site
+
         
 params:
     orderBy: order

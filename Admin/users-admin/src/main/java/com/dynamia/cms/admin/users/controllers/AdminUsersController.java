@@ -5,7 +5,7 @@
  */
 package com.dynamia.cms.admin.users.controllers;
 
-import com.dynamia.cms.admin.core.SiteHolder;
+import com.dynamia.cms.admin.core.SiteContext;
 import com.dynamia.cms.admin.users.Initializer;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
@@ -32,7 +32,7 @@ public class AdminUsersController {
         initializer.init(request);
 
         Site site = service.getSite(request);
-        SiteHolder.get().setCurrent(site);
+        SiteContext.get().setCurrent(site);
 
         ModelAndView mv = new ModelAndView("login");
 

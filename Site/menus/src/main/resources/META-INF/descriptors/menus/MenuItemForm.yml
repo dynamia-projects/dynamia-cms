@@ -1,16 +1,30 @@
 view: form
 beanClass: com.dynamia.cms.site.menus.domain.MenuItem
-hidden: [id,menu,href]
-sortFields: [name,page,icon,order]
+autofields: false
 
 fields:
-    
+
+    name:
+    title:
+           
     page:
+        label: Page (optional)
         params:
             fields: site.name,title
-          
     
+    href:
     
+    type:
+        component: typeSelector
+        params:
+            typeExtensionClass: com.dynamia.cms.site.menus.api.MenuItemTypeExtension
+   
+    order:
+    icon:
+    styleClass:
+    
+    parameters:
+        component: crudview
         
 layout:
-    columns: 1
+    columns: 2

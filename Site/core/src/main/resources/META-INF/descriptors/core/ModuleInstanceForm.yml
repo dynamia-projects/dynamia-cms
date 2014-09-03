@@ -1,0 +1,29 @@
+view: form
+beanClass: com.dynamia.cms.site.core.domain.ModuleInstance
+autofields: false
+
+fields:
+   site: 
+      component: label
+   title:
+   alias:
+   moduleId:
+      label: Type
+      component: typeSelector
+      params:
+          typeExtensionClass: com.dynamia.cms.site.core.api.Module
+   
+   position:
+      component: positionSelector
+   
+   enabled:
+   titleVisible:
+   styleClass:
+   parameters:
+      component: crudview
+   
+        
+
+        
+layout:
+    columns: 2

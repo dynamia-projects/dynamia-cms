@@ -1,16 +1,31 @@
 view: form
 beanClass: com.dynamia.cms.site.menus.domain.Menu
-hidden: [id]
-sortFields: [site,name,alias]
+autofields: false
 
 fields:
     
-    site:
+    name:
+    alias:
+    description:
         params:
-            fields: key,name
+           span: 2
+           multiline: true
+           height: 100px
+           
+    styleClass:
+       label: Class
+    menuItemStyleClass:
+       label: Items Class
     
     items:
         component: crudview
         
+groups:
+    style:
+        label: CSS Classes
+        fields: [styleClass,menuItemStyleClass]
+        
+    
+        
 layout:
-    columns: 1
+    columns: 2
