@@ -12,7 +12,7 @@
 	<properties>
 		<name>DynamiaCMS Site</name>
 
-		<dynatools.version>2.1.5.Final</dynatools.version>
+		<dynatools.version>2.1.6.Final</dynatools.version>
 		<dynamia.icons.version>1.0</dynamia.icons.version>
 		<hsql.version>1.8.0.10</hsql.version>
 		<spring.version>4.0.6.RELEASE</spring.version>

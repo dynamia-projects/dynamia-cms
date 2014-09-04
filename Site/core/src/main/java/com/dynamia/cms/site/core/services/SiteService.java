@@ -17,20 +17,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface SiteService {
 
-    Site getMainSite();
+	Site getMainSite();
 
-    List<Module> getInstalledModules();
+	Site getSite(String key);
 
-    List<ModuleInstance> getEnabledModulesInstances();
+	Site getSiteByDomain(String domainName);
 
-    Site getSite(String key);
+	Site getSite(HttpServletRequest request);
 
-    Site getSiteByDomain(String domainName);
+	List<SiteParameter> getSiteParameters(Site site);
 
-    Site getSite(HttpServletRequest request);
-
-    List<SiteParameter> getSiteParameters(Site site);
-
-    public void clearCache(Site site);
+	public void clearCache(Site site);
 
 }

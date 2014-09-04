@@ -6,12 +6,12 @@
 <body th:fragment="module(instance)">
 
 	<ul th:class="${instance.styleClass}">		
-		<li th:each="mi : ${instance.model.menuitems}"><a th:class="${(activeMenu == mi? 'active':'')+' '+mi.styleClass}" th:href="@{${mi.href}}" th:title="${mi.title}"> <i
+		<li th:each="mi : ${instance.model.menuitems}"><a th:class="${(activeMenu == mi? 'active':'')+' '+mi.styleClass}" th:href="@{${mi.href}}" th:title="${mi.title}" th:target="${mi.target}"> <i
 				th:class="${(instance.getParameter('icons')!='false'?'icon-'+mi.icon:'')+' '+instance.getParameter('menuitem_class')}"></i> <th:block th:text="${mi.name}" />
 		</a>
 			<div th:if="${not #lists.isEmpty(mi.subitems) and instance.getParameter('subitems')!='false'}">
 				<ul>
-					<li th:each="smi : ${mi.subitems}"><a th:href="@{${smi.href}}" href="#"> <th:block th:text="${smi.name}" />
+					<li th:each="smi : ${mi.subitems}"><a th:href="@{${smi.href}}" th:target="${smi.target}" th:title="${smi.title}"> <th:block th:text="${smi.name}" />
 					</a></li>
 				</ul>
 			</div></li>

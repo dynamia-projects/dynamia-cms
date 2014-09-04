@@ -1,0 +1,37 @@
+view: table
+beanClass: com.dynamia.cms.site.products.domain.Product
+autofields: false
+
+fields:
+   sku:
+   
+   name:
+   brand:
+   category:
+   
+   price:
+      params:      
+          converter: converters.Integer
+          header:
+             align: right
+   lastPrice:
+      params:
+          converter: converters.Integer
+          header:
+             align: right
+  
+   stock:
+      params:
+         header:
+            align: center
+   views:
+      params:
+         header:
+            align: center
+   active:
+   featured:
+   sale:
+   newproduct:
+      label: New
+   status:
+   

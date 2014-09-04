@@ -20,7 +20,7 @@ public class MenuModule extends AbstractModule {
 	private MenuService service;
 
 	public MenuModule() {
-		super("menu_module", "Menus and MenuItems", "mod_menu");
+		super("menu_module", "Menus and MenuItems", "menus/menu");
 		setDescription("Basic module for creation menubars width its items");
 		putMetadata("author", "Mario Serrano Leones");
 		putMetadata("Created at", "03-09-2014");

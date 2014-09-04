@@ -1,0 +1,57 @@
+view: form
+beanClass: com.dynamia.cms.site.products.domain.Product
+autofields: false
+
+fields:
+   sku:
+   reference:
+   name:
+     params:
+         span: 2
+   brand:
+   category:
+   description:
+      params:
+          span: 4
+          multiline: true
+          height: 80px
+   longDescription:
+      component: ckeditor
+      params:       
+          span: 4
+          height: 200px
+   price:
+      params:
+          converter: converters.Integer
+   lastPrice:
+      params:
+          converter: converters.Integer
+   
+   stock:   
+   active:
+   featured:
+   sale:
+   newproduct:
+      label: New
+   status:
+   image:
+   image2:
+   image3:
+   image4:
+
+groups:
+   general:
+       fields: [sku,reference,name,brand,category,description,longDescription]
+       
+   sales:
+       fields: [stock,price,lastPrice]
+       
+   status:
+       fields: [active,featured,sale,newproduct,status]
+       
+   images:
+       fields: [image,image2,image3,image4]
+   
+   
+layout:
+   columns: 4

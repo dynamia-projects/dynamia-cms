@@ -36,108 +36,96 @@ import org.springframework.stereotype.Service;
 @Service
 public class SiteServiceImpl implements SiteService {
 
-    @Autowired
-    private CrudService crudService;
+	@Autowired
+	private CrudService crudService;
 
-    private LoggingService logger = new SLF4JLoggingService(SiteService.class);
+	private LoggingService logger = new SLF4JLoggingService(SiteService.class);
 
-    @Override
-    @Cacheable(value = "sites", key = "#root.methodName")
-    public Site getMainSite() {
-        return crudService.findSingle(Site.class, "key", "main");
-    }
+	@Override
+	@Cacheable(value = "sites", key = "#root.methodName")
+	public Site getMainSite() {
+		return crudService.findSingle(Site.class, "key", "main");
+	}
 
-    /**
-     *
-     * @param key
-     * @return
-     */
-    @Override
-    @Cacheable("sites")
-    public Site getSite(String key) {
-        return crudService.findSingle(Site.class, "key", key);
-    }
+	/**
+	 *
+	 * @param key
+	 * @return
+	 */
+	@Override
+	@Cacheable("sites")
+	public Site getSite(String key) {
+		return crudService.findSingle(Site.class, "key", key);
+	}
 
-    @Override
-    @Cacheable("sites")
-    public Site getSiteByDomain(String domainName) {
-        System.out.println("FINDING SITE FOR DOMAIN: " + domainName);
-        SiteDomain domain = crudService.findSingle(SiteDomain.class, "name", domainName);
+	@Override
+	@Cacheable("sites")
+	public Site getSiteByDomain(String domainName) {
+		System.out.println("FINDING SITE FOR DOMAIN: " + domainName);
+		SiteDomain domain = crudService.findSingle(SiteDomain.class, "name", domainName);
 
-        return domain != null ? domain.getSite() : null;
-    }
+		return domain != null ? domain.getSite() : null;
+	}
 
-    @Override
-    public Site getSite(HttpServletRequest request) {
-        Site site = null;
-        if (request != null) {
-            site = (Site) request.getSession().getAttribute("site");
-            if (site == null) {
-                site = getSiteByDomain(request.getServerName());
-                request.getSession().setAttribute("site", site);
-            }
-        }
+	@Override
+	public Site getSite(HttpServletRequest request) {
+		Site site = null;
+		if (request != null) {
+			site = (Site) request.getSession().getAttribute("site");
+			if (site == null) {
+				site = getSiteByDomain(request.getServerName());
+				request.getSession().setAttribute("site", site);
+			}
+		}
 
-        return site;
-    }
+		return site;
+	}
 
-    @Cacheable(value = "sites", key = "'params'+#site.key")
-    @Override
-    public List<SiteParameter> getSiteParameters(Site site) {
-        site = crudService.reload(site);
-        return site.getParameters();
-    }
+	@Cacheable(value = "sites", key = "'params'+#site.key")
+	@Override
+	public List<SiteParameter> getSiteParameters(Site site) {
+		site = crudService.reload(site);
+		return site.getParameters();
+	}
 
-    @Override
-    public List<Module> getInstalledModules() {
-        List<Module> modules = new ArrayList<>();
-        modules.addAll(Containers.get().findObjects(Module.class));
-        return modules;
-    }
+	@Override
+	public void clearCache(Site site) {
+		site = crudService.reload(site);
+		List<SiteDomain> domains = site.getAcceptedDomains();
+		for (SiteDomain domain : domains) {
+			if (domain != null) {
+				String urltext = String.format("http://%s/cache/clear", domain.getName());
+				if (domain.getPort() > 0) {
+					urltext = String.format("http://%s:%s/cache/clear", domain.getName(), domain.getPort());
+				}
+				try {
+					logger.info("Clearing cache for site: " + site + " -> " + urltext);
+					executeHttpRequest(urltext);
+				} catch (MalformedURLException ex) {
+					logger.error("Invalid site domain URL: " + urltext + " site:" + site, ex);
+				} catch (IOException ex) {
+					logger.error("Error trying to clear site cache. Site: " + site, ex);
+				}
+			} else {
+				logger.warn("Cannot clear site cache " + site + ", not accepted domains configured");
+			}
+		}
+	}
 
-    @Override
-    public List<ModuleInstance> getEnabledModulesInstances() {
-        return crudService.find(ModuleInstance.class, "enabled", true);
-    }
+	private String executeHttpRequest(String url) throws MalformedURLException, IOException {
 
-    @Override
-    public void clearCache(Site site) {
-        SiteDomain firstDomain = crudService.findSingle(SiteDomain.class, "site", site);
-        if (firstDomain != null) {
+		StringBuilder sb = new StringBuilder();
+		URL request = new URL(url);
+		URLConnection yc = request.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+		String inputLine;
 
-            String urltext = String.format("http://%s/cache/clear", firstDomain.getName());
-            if (firstDomain.getPort() > 0) {
-                urltext = String.format("http://%s:%s/cache/clear", firstDomain.getName(), firstDomain.getPort());
-            }
-            try {
-                logger.info("Clearing cache for site: " + site + " -> " + urltext);
-                executeHttpRequest(urltext);
-            } catch (MalformedURLException ex) {
-                logger.error("Invalid site domain URL: " + urltext + " site:" + site, ex);
-            } catch (IOException ex) {
-                logger.error("Error trying to clear site cache. Site: " + site, ex);
-            }
-        } else {
-            logger.warn("Cannot clear site cache " + site + ", not accepted domains configured");
-        }
-    }
+		while ((inputLine = in.readLine()) != null) {
+			sb.append(inputLine).append("\n");
+		}
+		in.close();
 
-    private String executeHttpRequest(String url) throws MalformedURLException, IOException {
-
-        StringBuilder sb = new StringBuilder();
-        URL request = new URL(url);
-        URLConnection yc = request.openConnection();
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(
-                        yc.getInputStream()));
-        String inputLine;
-
-        while ((inputLine = in.readLine()) != null) {
-            sb.append(inputLine).append("\n");
-        }
-        in.close();
-
-        return sb.toString();
-    }
+		return sb.toString();
+	}
 
 }

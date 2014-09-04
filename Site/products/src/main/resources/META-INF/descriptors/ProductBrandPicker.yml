@@ -1,0 +1,6 @@
+view: entitypicker
+beanClass: com.dynamia.cms.site.products.domain.ProductBrand
+autofields: false
+
+fields:
+   name:

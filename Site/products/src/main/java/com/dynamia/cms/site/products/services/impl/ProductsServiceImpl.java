@@ -389,8 +389,9 @@ public class ProductsServiceImpl implements ProductsService {
         QueryParameters qp = new QueryParameters();
         qp.add("site", site);
         qp.paginate(getDefaultPageSize(site));
+        
 
-        PagedList list = (PagedList) crudService.executeQuery(query, qp);
+        PagedList list = (PagedList) crudService.executeQuery(query, qp);        
         return list.getDataSource().getPageData();
     }
 

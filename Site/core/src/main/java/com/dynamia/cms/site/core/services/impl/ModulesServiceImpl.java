@@ -1,5 +1,6 @@
 package com.dynamia.cms.site.core.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,13 @@ public class ModulesServiceImpl implements ModulesService {
 
 	@Autowired
 	private CrudService crudService;
+
+	@Override
+	public List<Module> getInstalledModules() {
+		List<Module> modules = new ArrayList<>();
+		modules.addAll(Containers.get().findObjects(Module.class));
+		return modules;
+	}
 
 	@Override
 	public void initModuleInstance(ModuleInstance moduleInstance) {

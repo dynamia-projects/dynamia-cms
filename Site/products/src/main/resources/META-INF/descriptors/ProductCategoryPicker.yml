@@ -1,9 +1,8 @@
-view: tree
+view: entitypicker
 beanClass: com.dynamia.cms.site.products.domain.ProductCategory
 autofields: false
 
-
 fields:
-    name:
-    description:
-    active:
+   name:
+   parent:
+   active:

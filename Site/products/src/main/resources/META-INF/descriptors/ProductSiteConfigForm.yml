@@ -1,14 +1,10 @@
 view: form
 beanClass: com.dynamia.cms.site.products.domain.ProductsSiteConfig
 hidden: [id,lastSync,token,parametersAsMap]
-sortFields: [site,pricePattern,defaultCurrency,productsPerPage,productsStockToShow,showEnabled,quoteEnabled, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceUsername,datasourcePassword]
+sortFields: [pricePattern,defaultCurrency,productsPerPage,productsStockToShow,showEnabled,quoteEnabled, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceUsername,datasourcePassword]
 
 fields:
-    
-    site:
-        params:
-            span: 2
-            
+             
     
     datasourceURL:
         label: URL

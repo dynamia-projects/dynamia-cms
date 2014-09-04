@@ -3,10 +3,8 @@ package com.dynamia.cms.site.core.services.impl;
 import java.util.List;
 
 import com.dynamia.cms.site.core.api.Module;
-import com.dynamia.cms.site.core.api.ModuleContext;
 import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.integration.Containers;
 
 public interface ModulesService {
 
@@ -30,5 +28,7 @@ public interface ModulesService {
 	public abstract Module getModule(ModuleInstance instance);
 
 	public abstract void initModuleInstance(ModuleInstance moduleInstance);
+
+	List<Module> getInstalledModules();
 
 }

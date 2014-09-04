@@ -6,6 +6,9 @@
 package com.dynamia.cms.site.core.controllers;
 
 import java.util.Collection;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -24,40 +27,48 @@ import org.thymeleaf.TemplateEngine;
 @RequestMapping("/cache")
 public class CacheController {
 
-    @Autowired(required = false)
-    private CacheManager cacheManager;
+	@Autowired(required = false)
+	private CacheManager cacheManager;
 
-    @Autowired(required = false)
-    private TemplateEngine templateEngine;
+	@Autowired(required = false)
+	private TemplateEngine templateEngine;
 
-    @RequestMapping("/clear/{name}")
-    @ResponseStatus(HttpStatus.OK)
-    public void clearCache(@PathVariable String name) {
-        if (cacheManager != null) {
-            Cache cache = cacheManager.getCache(name);
-            if (cache != null) {
-                cache.clear();
-            }
-        }
-    }
+	private long lastCacheClear;
 
-    @RequestMapping("/clear")
-    @ResponseStatus(HttpStatus.OK)
-    public void clearAllCache() {
-        if (cacheManager != null) {
-            Collection<String> names = cacheManager.getCacheNames();
-            for (String name : names) {
-                cacheManager.getCache(name).clear();
-            }
+	@RequestMapping("/clear/{name}")
+	@ResponseStatus(HttpStatus.OK)
+	public void clearCache(@PathVariable String name, HttpServletRequest request) {
+		if (cacheManager != null) {
+			Cache cache = cacheManager.getCache(name);
+			if (cache != null) {
+				cache.clear();
+			}
+		}
+		lastCacheClear = System.currentTimeMillis();
+	}
 
-        }
-    }
+	@RequestMapping("/clear")
+	@ResponseStatus(HttpStatus.OK)
+	public void clearAllCache() {
+		if (cacheManager != null) {
+			Collection<String> names = cacheManager.getCacheNames();
+			for (String name : names) {
+				cacheManager.getCache(name).clear();
+			}
+		}
+		lastCacheClear = System.currentTimeMillis();
+	}
 
-    @RequestMapping("/clear/template")
-    @ResponseStatus(HttpStatus.OK)
-    public void clearTemplate() {
-        if (templateEngine != null) {
-            templateEngine.clearTemplateCache();
-        }
-    }
+	@RequestMapping("/clear/template")
+	@ResponseStatus(HttpStatus.OK)
+	public void clearTemplate() {
+		if (templateEngine != null) {
+			templateEngine.clearTemplateCache();
+		}
+	}
+
+	public long getLastCacheClear() {
+		return lastCacheClear;
+	}
+
 }

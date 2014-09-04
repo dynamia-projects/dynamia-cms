@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="templateOffline">
+
+
+    <div layout:fragment="content">        
+        <div class="container"> 
+
+            <!-- Main Title-->
+            <div class="titles">
+                <div class="pull-left">
+                    <h1 class="headinglefttitle" >Offline!!</h1>
+                    <div class="headingsubtitle"> 
+                        <h3></h3>
+
+                    </div>
+                </div>
+                <i th:class="${offlineIcon}"></i> 
+            </div>
+
+            <br/>
+
+
+            <div class="container mb40"> <br/>
+                <h2 class="error404"><span th:text="${site.name}"></span></h2>
+
+                <br/>
+                <div class="container centeralign">
+                    <h2 class="font18" th:text="${offlineMessage}">OFFLINE</h2>
+                </div>
+          
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+</html>

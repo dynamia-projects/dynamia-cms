@@ -14,6 +14,8 @@ fields:
     
     href:
     
+    target:
+    
     type:
         component: typeSelector
         params:

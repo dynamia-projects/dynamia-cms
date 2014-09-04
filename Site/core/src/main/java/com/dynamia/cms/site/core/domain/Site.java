@@ -4,16 +4,17 @@
  */
 package com.dynamia.cms.site.core.domain;
 
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.contraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.dynamia.tools.domain.SimpleEntity;
+import com.dynamia.tools.domain.contraints.NotEmpty;
 
 /**
  *
@@ -23,163 +24,172 @@ import javax.persistence.Table;
 @Table(name = "cr_sites")
 public class Site extends SimpleEntity {
 
-    @NotEmpty
-    private String name;
-    @Column(name = "site_key", unique = true)
-    @NotEmpty
-    private String key;
-    @OneToMany(mappedBy = "site")
-    private List<SiteDomain> acceptedDomains = new ArrayList<>();
+	@NotEmpty
+	private String name;
+	@Column(name = "site_key", unique = true)
+	@NotEmpty
+	private String key;
+	@OneToMany(mappedBy = "site")
+	private List<SiteDomain> acceptedDomains = new ArrayList<>();
 
-    @OneToMany(mappedBy = "site")
-    private List<SiteParameter> parameters = new ArrayList<>();
+	@OneToMany(mappedBy = "site")
+	private List<SiteParameter> parameters = new ArrayList<>();
 
-    @OneToOne
-    private Site parent;
+	@OneToOne
+	private Site parent;
 
-    private String description;
-    private boolean offline;
-    private String offlineMessage;
-    private String template = "dynamical";
-    private String metadataKeywords;
-    private String metadataAuthor;
-    private String metadataDescription;
-    private String metadataRights;
-    private String googleAnalyticsID;
-    private String googleAnalyticsDomain;
-    private String googleSiteVerification;
+	private String description;
+	private boolean offline;
+	private String offlineMessage;
+	private String offlineIcon;
+	private String template = "dynamical";
+	private String metadataKeywords;
+	private String metadataAuthor;
+	private String metadataDescription;
+	private String metadataRights;
+	private String googleAnalyticsID;
+	private String googleAnalyticsDomain;
+	private String googleSiteVerification;
 
-    public Site getParent() {
-        return parent;
-    }
+	public Site getParent() {
+		return parent;
+	}
 
-    public void setParent(Site parent) {
-        this.parent = parent;
-    }
+	public void setParent(Site parent) {
+		this.parent = parent;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public List<SiteDomain> getAcceptedDomains() {
-        return acceptedDomains;
-    }
+	public List<SiteDomain> getAcceptedDomains() {
+		return acceptedDomains;
+	}
 
-    public void setAcceptedDomains(List<SiteDomain> acceptedDomains) {
-        this.acceptedDomains = acceptedDomains;
-    }
+	public void setAcceptedDomains(List<SiteDomain> acceptedDomains) {
+		this.acceptedDomains = acceptedDomains;
+	}
 
-    public List<SiteParameter> getParameters() {
-        return parameters;
-    }
+	public List<SiteParameter> getParameters() {
+		return parameters;
+	}
 
-    public void setParameters(List<SiteParameter> parameters) {
-        this.parameters = parameters;
-    }
+	public void setParameters(List<SiteParameter> parameters) {
+		this.parameters = parameters;
+	}
 
-    public String getKey() {
-        return key;
-    }
+	public String getKey() {
+		return key;
+	}
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getGoogleAnalyticsID() {
-        return googleAnalyticsID;
-    }
+	public String getGoogleAnalyticsID() {
+		return googleAnalyticsID;
+	}
 
-    public void setGoogleAnalyticsID(String googleAnalyticsID) {
-        this.googleAnalyticsID = googleAnalyticsID;
-    }
+	public void setGoogleAnalyticsID(String googleAnalyticsID) {
+		this.googleAnalyticsID = googleAnalyticsID;
+	}
 
-    public String getGoogleAnalyticsDomain() {
-        return googleAnalyticsDomain;
-    }
+	public String getGoogleAnalyticsDomain() {
+		return googleAnalyticsDomain;
+	}
 
-    public void setGoogleAnalyticsDomain(String googleAnalyticsDomain) {
-        this.googleAnalyticsDomain = googleAnalyticsDomain;
-    }
+	public void setGoogleAnalyticsDomain(String googleAnalyticsDomain) {
+		this.googleAnalyticsDomain = googleAnalyticsDomain;
+	}
 
-    public String getGoogleSiteVerification() {
-        return googleSiteVerification;
-    }
+	public String getGoogleSiteVerification() {
+		return googleSiteVerification;
+	}
 
-    public void setGoogleSiteVerification(String googleSiteVerification) {
-        this.googleSiteVerification = googleSiteVerification;
-    }
+	public void setGoogleSiteVerification(String googleSiteVerification) {
+		this.googleSiteVerification = googleSiteVerification;
+	}
 
-    public boolean isOffline() {
-        return offline;
-    }
+	public boolean isOffline() {
+		return offline;
+	}
 
-    public void setOffline(boolean offline) {
-        this.offline = offline;
-    }
+	public void setOffline(boolean offline) {
+		this.offline = offline;
+	}
 
-    public String getOfflineMessage() {
-        return offlineMessage;
-    }
+	public String getOfflineMessage() {
+		return offlineMessage;
+	}
 
-    public void setOfflineMessage(String offlineMessage) {
-        this.offlineMessage = offlineMessage;
-    }
+	public void setOfflineMessage(String offlineMessage) {
+		this.offlineMessage = offlineMessage;
+	}
 
-    public String getTemplate() {
-        return template;
-    }
+	public String getOfflineIcon() {
+		return offlineIcon;
+	}
 
-    public void setTemplate(String template) {
-        this.template = template;
-    }
+	public void setOfflineIcon(String offlineIcon) {
+		this.offlineIcon = offlineIcon;
+	}
 
-    public String getMetadataKeywords() {
-        return metadataKeywords;
-    }
+	public String getTemplate() {
+		return template;
+	}
 
-    public void setMetadataKeywords(String metadataKeywords) {
-        this.metadataKeywords = metadataKeywords;
-    }
+	public void setTemplate(String template) {
+		this.template = template;
+	}
 
-    public String getMetadataAuthor() {
-        return metadataAuthor;
-    }
+	public String getMetadataKeywords() {
+		return metadataKeywords;
+	}
 
-    public void setMetadataAuthor(String metadataAuthor) {
-        this.metadataAuthor = metadataAuthor;
-    }
+	public void setMetadataKeywords(String metadataKeywords) {
+		this.metadataKeywords = metadataKeywords;
+	}
 
-    public String getMetadataDescription() {
-        return metadataDescription;
-    }
+	public String getMetadataAuthor() {
+		return metadataAuthor;
+	}
 
-    public void setMetadataDescription(String metadataDescription) {
-        this.metadataDescription = metadataDescription;
-    }
+	public void setMetadataAuthor(String metadataAuthor) {
+		this.metadataAuthor = metadataAuthor;
+	}
 
-    public String getMetadataRights() {
-        return metadataRights;
-    }
+	public String getMetadataDescription() {
+		return metadataDescription;
+	}
 
-    public void setMetadataRights(String metadataRights) {
-        this.metadataRights = metadataRights;
-    }
+	public void setMetadataDescription(String metadataDescription) {
+		this.metadataDescription = metadataDescription;
+	}
 
-    @Override
-    public String toString() {
-        return String.format("%s (%s)", name, key);
-    }
+	public String getMetadataRights() {
+		return metadataRights;
+	}
+
+	public void setMetadataRights(String metadataRights) {
+		this.metadataRights = metadataRights;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s (%s)", name, key);
+	}
 
 }

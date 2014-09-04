@@ -61,11 +61,13 @@ public class PageController {
 		ModelAndView mv = new ModelAndView("site/page");
 
 		Site site = coreService.getSite(request);
+
 		Page page = loadPage(site, pageAlias, mv);
 		configurePageType(page, site, mv, request);
 
 		return mv;
 	}
+
 
 	private Page loadPage(Site site, String pageAlias, ModelAndView mv) {
 		Page page = null;

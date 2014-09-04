@@ -34,9 +34,9 @@ import org.springframework.web.servlet.ModelAndView;
  * @author mario
  */
 @CMSAction
-public class ShowMainPageAction implements SiteAction {
+public class ShowProductsMainPageAction implements SiteAction {
 
-	private LoggingService logger = new SLF4JLoggingService(ShowMainPageAction.class);
+	private LoggingService logger = new SLF4JLoggingService(ShowProductsMainPageAction.class);
 
 	@Autowired
 	private ProductsService service;

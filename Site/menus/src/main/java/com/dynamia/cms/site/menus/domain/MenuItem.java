@@ -48,7 +48,8 @@ public class MenuItem extends SimpleEntity implements Serializable {
 	private List<MenuItem> subitems = new ArrayList<>();
 	private String styleClass = "";
 	private String href;
-	private String title;
+	private String title="";
+	private String target="";
 
 	public MenuItem() {
 		// TODO Auto-generated constructor stub
@@ -158,7 +159,7 @@ public class MenuItem extends SimpleEntity implements Serializable {
 	public void setPage(Page page) {
 		this.page = page;
 		if (page != null) {
-			href = page.getAlias();
+			href = "/" + page.getAlias();
 		}
 	}
 
@@ -180,7 +181,7 @@ public class MenuItem extends SimpleEntity implements Serializable {
 
 	public String getHref() {
 		if (href == null && page != null) {
-			href = page.getAlias();
+			setPage(page);
 		}
 		return href;
 	}
@@ -190,6 +191,14 @@ public class MenuItem extends SimpleEntity implements Serializable {
 			subitem.setParentItem(this);
 			subitems.add(subitem);
 		}
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
 	}
 
 }
