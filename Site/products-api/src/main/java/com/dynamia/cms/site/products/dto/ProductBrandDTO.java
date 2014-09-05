@@ -13,7 +13,11 @@ import java.io.Serializable;
  */
 public class ProductBrandDTO implements Serializable {
 
-    private String name;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7706501653302805197L;
+	private String name;
     private String website;
     private String description;
     private Long externalRef;

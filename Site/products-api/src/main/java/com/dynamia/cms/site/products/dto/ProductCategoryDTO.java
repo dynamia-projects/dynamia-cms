@@ -15,7 +15,12 @@ import java.util.List;
  */
 public class ProductCategoryDTO implements Serializable {
 
-    private ProductCategoryDTO parent;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6391246496268751494L;
+
+	private ProductCategoryDTO parent;
 
     private List<ProductCategoryDTO> subcategories = new ArrayList<>();
 

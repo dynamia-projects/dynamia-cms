@@ -14,7 +14,11 @@ import java.io.Serializable;
  */
 public class StoreDTO implements Serializable {
 
-    private String name;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 936740099546344064L;
+	private String name;
     private Long externalRef;
     private ContactInfo contactInfo = new ContactInfo();
     private String image;

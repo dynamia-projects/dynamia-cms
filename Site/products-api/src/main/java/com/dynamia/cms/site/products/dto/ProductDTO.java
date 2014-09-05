@@ -16,6 +16,13 @@ import java.util.List;
  */
 public class ProductDTO implements Serializable {
 
+	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1577777821132625315L;
+
 	private String name;
 
 	private String description;

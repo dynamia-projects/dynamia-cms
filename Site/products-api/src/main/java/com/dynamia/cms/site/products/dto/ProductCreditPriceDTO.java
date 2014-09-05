@@ -14,7 +14,11 @@ import java.math.BigDecimal;
  */
 public class ProductCreditPriceDTO implements Serializable{
 
-    private ProductDTO product;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5111921265189786308L;
+	private ProductDTO product;
     private int number;
     private String description;
     private BigDecimal price;
