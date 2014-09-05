@@ -24,68 +24,70 @@ import java.util.List;
  */
 public interface ProductsService {
 
-    public List<ProductCategory> getCategories(Site site);
+	public List<ProductCategory> getCategories(Site site);
 
-    public List<ProductCategory> getSubcategories(ProductCategory category);
+	public List<ProductCategory> getSubcategories(ProductCategory category);
 
-    public List<Product> getProducts(ProductCategory category);
+	public List<Product> getProducts(ProductCategory category);
 
-    public List<Product> getProducts(ProductBrand brand);
+	public List<Product> getProducts(ProductBrand brand);
 
-    public List<Product> filterProducts(Site site, QueryParameters params);
+	public List<Product> filterProducts(Site site, QueryParameters params);
 
-    public List<Product> getFeaturedProducts(Site site);
+	public List<Product> getFeaturedProducts(Site site);
 
-    public List<ProductBrand> getBrands(Site site);
+	public List<ProductBrand> getBrands(Site site);
 
-    public ProductsSiteConfig getSiteConfig(Site site);
+	public ProductsSiteConfig getSiteConfig(Site site);
 
-    List<Product> find(Site site, String query);
+	List<Product> find(Site site, String query);
 
-    public List<Product> filterProducts(Site site, ProductSearchForm form);
+	public List<Product> filterProducts(Site site, ProductSearchForm form);
 
-    public List<Product> getRelatedProducts(Product product);
+	public List<Product> getRelatedProducts(Product product);
 
-    public void generateToken(ProductsSiteConfig config);
+	public void generateToken(ProductsSiteConfig config);
 
-    ProductsSiteConfig getSiteConfig(String token);
+	ProductsSiteConfig getSiteConfig(String token);
 
-    ProductCategory getCategoryByAlias(Site site, String alias);
+	ProductCategory getCategoryByAlias(Site site, String alias);
 
-    ProductBrand getBrandByAlias(Site site, String alias);
+	ProductBrand getBrandByAlias(Site site, String alias);
 
-    public List<ProductBrand> getBrands(ProductCategory category);
+	public List<ProductBrand> getBrands(ProductCategory category);
 
-    List<ProductCategory> getSubcategories(ProductCategory category, ProductBrand brand);
+	List<ProductCategory> getSubcategories(ProductCategory category, ProductBrand brand);
 
-    List<ProductCategory> getCategories(ProductBrand brand);
+	List<ProductCategory> getCategories(ProductBrand brand);
 
-    public void updateViewsCount(Product product);
+	public void updateViewsCount(Product product);
 
-    public List<Product> getSaleProducts(Site site);
+	public List<Product> getSaleProducts(Site site);
 
-    public List<Product> getMostViewedProducts(Site site);
+	public List<Product> getMostViewedProducts(Site site);
 
-    List<Product> getProductsById(List<Long> ids);
+	List<Product> getProductsById(List<Long> ids);
 
-    public List<Product> getSpecialProducts(ProductCategory category);
+	public List<Product> getSpecialProducts(ProductCategory category);
 
-    List<Product> getSpecialProducts(Site site);
+	List<Product> getSpecialProducts(Site site);
 
-    void updateProductStoryViews(Product product);
+	void updateProductStoryViews(Product product);
 
-    void updateProductStoryShops(Product product);
+	void updateProductStoryShops(Product product);
 
-    ProductUserStory getProductStory(Product product, User user);
+	ProductUserStory getProductStory(Product product, User user);
 
-    List<Product> getRecentProducts(User user);
+	List<Product> getRecentProducts(User user);
 
-    public List<ProductDetail> getProductsDetails(List<Product> products);
+	public List<ProductDetail> getProductsDetails(List<Product> products);
 
-    Product getProductBySku(Site site, String sku);
+	Product getProductBySku(Site site, String sku);
 
-    Product getProductById(Site site, Long id);
+	Product getProductById(Site site, Long id);
 
-    public List<Store> getStores(Site site);
+	public List<Store> getStores(Site site);
+
+	public List<Product> getPriceVariationsProducts(Site site);
 
 }

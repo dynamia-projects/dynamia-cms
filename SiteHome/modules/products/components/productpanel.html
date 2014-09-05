@@ -1,53 +1,69 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 
-    <body th:fragment="frag (prd)">
+<body th:fragment="frag (prd)">
 
-        <div class="thumbnail productpanel" style="height:280px" >
+	<div class="thumbnail productpanel" style="height: 280px">
 
-            <div class="relativediv">
-                <span class="brand" th:text="${prd.brand!=null?prd.brand.name.toUpperCase():''}">Brand</span>
+		<div class="relativediv">
+			<span class="brand" th:text="${prd.brand!=null?prd.brand.name.toUpperCase():''}">Brand</span>
 
-                <!-- Product Image -->
-                <div style="height:170px;line-height: 170px" class="tooltip-test" data-placement="top" data-toogle="tooltip" th:title="${cmsUtil.cropText(prd.description,140)}" >
-                    <a  th:href="@{'/store/products/'+${prd.id}}" href="#" style="vertical-align: middle;line-height: 1.5">                
-                        <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=180,h=180)}" src="img/product1a.jpg" alt="" />
-                    </a>  
-                </div>
-                <span th:if="${prd.sale}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-gift font24"></i> Oferta</span>
-                <span th:if="${prd.featured}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-star-empty font24"></i> Destacado</span>
-                <span th:if="${prd.newproduct}" class="sale tooltip-test" style="background-color: #cc0000"  data-original-title="" title=""> <i class="icon-bookmark-empty font24"></i> Nuevo</span>
+			<!-- Product Image -->
+			<div style="height: 170px; line-height: 170px" class="tooltip-test" data-placement="top" data-toogle="tooltip"
+				th:title="${cmsUtil.cropText(prd.description,140)}">
+				<a th:href="@{'/store/products/'+${prd.id}}" href="#" style="vertical-align: middle; line-height: 1.5"> <img
+					th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=180,h=180)}" src="img/product1a.jpg" alt="" />
+				</a>
+			</div>
+			<span th:if="${prd.sale}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-gift font24"></i> Oferta
+			</span> <span th:if="${prd.featured}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-star-empty font24"></i> Destacado
+			</span> <span th:if="${prd.newproduct}" class="sale tooltip-test" style="background-color: #cc0000" data-original-title="" title=""> <i
+				class="icon-bookmark-empty font24"></i> Nuevo
+			</span>
 
-                <div class="viewicons">
-                    <form class="pull-left"   th:if="${prd_config.shopEnabled}" th:action="@{'/shoppingcart/add/'+${prd.id}}" method="get">
-                        <button type="submit"  data-original-title="Agregar al Carrito" class="btn btn-inverse tooltip-test"> <i class="icon-shopping-cart icon-white"></i> </button>
-                        <input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}"/>
-                    </form>
-                    <form class="pull-left"  target="_blank" th:action="@{'/store/products/'+${prd.id}+'/print'}" method="get">
-                        <button type="submit"  data-original-title="Imprimir" class="btn btn-inverse tooltip-test"> <i class="icon-print icon-white"></i> </button>
-                    </form>
-                    <form class="pull-left"  th:action="@{'/store/products/'+${prd.id}+'/compare'}" method="get">
-                        <button type="submit"  data-original-title="Comparar" class="btn btn-inverse tooltip-test"> <i class="icon-refresh icon-white"></i> </button>
-                    </form>
-                    <button  data-original-title="Recomendar" class="btn btn-inverse btn-small tooltip-test"> <i class="icon-envelope icon-white"></i> </button>
-                </div>
-            </div>
-            <div class="caption">
-                <div class="mt10 mb10 productname">                    
-                    <a  th:href="@{'/store/products/'+${prd.id}}" th:text="${prd.name}" href="#">Product Name</a>
-                </div>
+			<div class="viewicons">
+				<form class="pull-left" th:if="${prd_config.shopEnabled}" th:action="@{'/shoppingcart/add/'+${prd.id}}" method="get">
+					<button type="submit" data-original-title="Agregar al Carrito" class="btn btn-inverse tooltip-test">
+						<i class="icon-shopping-cart icon-white"></i>
+					</button>
+					<input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}" />
+				</form>
+				<form class="pull-left" target="_blank" th:action="@{'/store/products/'+${prd.id}+'/print'}" method="get">
+					<button type="submit" data-original-title="Imprimir" class="btn btn-inverse tooltip-test">
+						<i class="icon-print icon-white"></i>
+					</button>
+				</form>
+				<form class="pull-left" th:action="@{'/store/products/'+${prd.id}+'/compare'}" method="get">
+					<button type="submit" data-original-title="Comparar" class="btn btn-inverse tooltip-test">
+						<i class="icon-refresh icon-white"></i>
+					</button>
+				</form>
+				<button data-original-title="Recomendar" class="btn btn-inverse btn-small tooltip-test">
+					<i class="icon-envelope icon-white"></i>
+				</button>
+			</div>
+		</div>
+		<div class="caption">
+			<div class="mt10 mb10 productname">
+				<a th:href="@{'/store/products/'+${prd.id}}" th:text="${prd.name}" href="#">Product Name</a>
+			</div>
 
-                <div class="productratecart centered">                 
-                    <h3><strong><span th:text="${cmsUtil.formatNumber(prd.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"  class=" orange">$4459.00</span></strong></h3>
-                    <span th:text="${prd.priceDescription}"></span>
-                </div>
+			<div class="productratecart centered">
+				<h3>
+					<strong><span th:text="${cmsUtil.formatNumber(prd.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}" class=" orange">$4459.00</span></strong>
+				</h3>
+				<h3 th:if="${prd.showLastPrice}">
+					<strong><span th:text="${cmsUtil.formatNumber(prd.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}" class=" oldprice">$4459.00</span></strong>
+				</h3>
+				
+				<span th:text="${prd.priceDescription}"></span>
+			</div>
 
-            </div>
-        </div>
+		</div>
+	</div>
 
 
-    </body>
+</body>
 
 </html>

@@ -177,6 +177,18 @@ $(document).ready(function() {
                 $(this).children('div').css('display', 'none')
             }
     );
+    
+    $('ul.submenu li').hover(
+            function() {
+            	$(this).addClass('active')
+                $(this).children('div').css('display', 'table')
+            },
+            function() {
+            	$(this).removeClass('active')
+                $(this).children('div').css('display', 'none')
+            }
+    );
+    $('ul.submenu li').children('div').css('display', 'none')
 
 /*
 // Main Menu mobile

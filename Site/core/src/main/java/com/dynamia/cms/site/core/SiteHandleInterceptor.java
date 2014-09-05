@@ -5,6 +5,13 @@
  */
 package com.dynamia.cms.site.core;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
 import com.dynamia.cms.site.core.api.SiteRequestInterceptor;
 import com.dynamia.cms.site.core.controllers.CacheController;
 import com.dynamia.cms.site.core.domain.Site;
@@ -12,14 +19,6 @@ import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.tools.commons.logger.LoggingService;
 import com.dynamia.tools.commons.logger.SLF4JLoggingService;
 import com.dynamia.tools.integration.Containers;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  *
@@ -38,10 +37,7 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-		Site site = service.getSite(request);
-		if (site == null) {
-			site = service.getMainSite();
-		}
+		Site site = getCurrentSite(request);
 		try {
 			for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
 				interceptor.beforeRequest(site, request, response);
@@ -54,6 +50,20 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 		return true;
 	}
 
+	private Site getCurrentSite(HttpServletRequest request) {
+		Site site = SiteContext.get().getCurrent();
+		if (site == null) {
+			site = service.getSite(request);
+			SiteContext.get().setCurrent(site);
+		}
+		if (site == null) {
+			site = service.getMainSite();
+			SiteContext.get().setCurrent(site);
+		}
+		SiteContext.get().setCurrentURI(request.getRequestURI());
+		return site;
+	}
+
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
 			throws Exception {
@@ -61,12 +71,7 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 			return;
 		}
 
-		checkCache(request);
-
-		Site site = service.getSite(request);
-		if (site == null) {
-			site = service.getMainSite();
-		}
+		Site site = getCurrentSite(request);
 
 		loadSiteMetadata(site, modelAndView);
 
@@ -80,23 +85,6 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 
 		if (site != null && site.isOffline()) {
 			shutdown(site, modelAndView);
-		}
-	}
-
-	private void checkCache(HttpServletRequest request) {
-		if (request != null) {
-			HttpSession session = request.getSession(false);
-			if (session != null) {
-				Long lastCacheClear = (Long) session.getAttribute("lastCacheClear");
-				if (lastCacheClear == null) {
-					lastCacheClear = 0L;
-				}
-				if (cacheController.getLastCacheClear() > lastCacheClear) {
-					lastCacheClear = cacheController.getLastCacheClear();
-					session.setAttribute("lastCacheClear", lastCacheClear);
-					session.removeAttribute("site");
-				}
-			}
 		}
 	}
 

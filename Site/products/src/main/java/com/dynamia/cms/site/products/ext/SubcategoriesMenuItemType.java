@@ -56,12 +56,12 @@ public class SubcategoriesMenuItemType implements MenuItemTypeExtension {
 				List<ProductCategory> subcategories = service.getSubcategories(category);
 				MenuItem item = context.getMenuItem();
 				if (item.getHref() == null) {
-					item.setHref("store/categories/" + category.getId() + "/" + category.getAlias());
+					item.setHref("/store/categories/" + category.getId() + "/" + category.getAlias());
 				}
 
 				item.getSubitems().clear();
 				for (ProductCategory subcat : subcategories) {
-					item.addMenuItem(new MenuItem(clean(subcat.getName()), "store/categories/" + subcat.getId() + "/" + subcat.getAlias()));
+					item.addMenuItem(new MenuItem(clean(subcat.getName()), "/store/categories/" + subcat.getId() + "/" + subcat.getAlias()));
 				}
 			}
 		}

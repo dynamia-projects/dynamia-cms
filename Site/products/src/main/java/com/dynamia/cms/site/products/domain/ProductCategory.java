@@ -10,16 +10,20 @@ import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import com.dynamia.tools.domain.SimpleEntity;
 import com.dynamia.tools.domain.contraints.NotEmpty;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.BatchSize;
 
 /**
@@ -29,111 +33,111 @@ import org.hibernate.annotations.BatchSize;
 @Entity
 @Table(name = "prd_categories")
 @BatchSize(size = 50)
-public class ProductCategory extends SimpleEntity implements SiteAware{
+public class ProductCategory extends SimpleEntity implements SiteAware {
 
-    @OneToOne
-    @NotNull
-    private Site site;
+	@OneToOne
+	@NotNull
+	private Site site;
 
-    @ManyToOne
-    private ProductCategory parent;
-    @OneToMany(mappedBy = "parent")
-    private List<ProductCategory> subcategories = new ArrayList<>();
-    @NotNull
-    @NotEmpty(message = "Enter product category name")
-    private String name;
-    @Column(name = "catAlias")
-    private String alias;
-    private String description;
-    private boolean active;
-    private Long externalRef;
+	@ManyToOne
+	private ProductCategory parent;
+	@OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+	private List<ProductCategory> subcategories = new ArrayList<>();
+	@NotNull
+	@NotEmpty(message = "Enter product category name")
+	private String name;
+	@Column(name = "catAlias")
+	private String alias;
+	private String description;
+	private boolean active;
+	private Long externalRef;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<ProductCategoryDetail> details = new ArrayList<>();
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	private List<ProductCategoryDetail> details = new ArrayList<>();
 
-    public String getAlias() {
-        return alias;
-    }
+	public String getAlias() {
+		return alias;
+	}
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
 
-    public Site getSite() {
-        return site;
-    }
+	public Site getSite() {
+		return site;
+	}
 
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	public void setSite(Site site) {
+		this.site = site;
+	}
 
-    public List<ProductCategoryDetail> getDetails() {
-        return details;
-    }
+	public List<ProductCategoryDetail> getDetails() {
+		return details;
+	}
 
-    public void setDetails(List<ProductCategoryDetail> details) {
-        this.details = details;
-    }
+	public void setDetails(List<ProductCategoryDetail> details) {
+		this.details = details;
+	}
 
-    public Long getExternalRef() {
-        return externalRef;
-    }
+	public Long getExternalRef() {
+		return externalRef;
+	}
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
-    }
+	public void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
-    public ProductCategory getParent() {
-        return parent;
-    }
+	public ProductCategory getParent() {
+		return parent;
+	}
 
-    public void setParent(ProductCategory parent) {
-        this.parent = parent;
-    }
+	public void setParent(ProductCategory parent) {
+		this.parent = parent;
+	}
 
-    public List<ProductCategory> getSubcategories() {
-        return subcategories;
-    }
+	public List<ProductCategory> getSubcategories() {
+		return subcategories;
+	}
 
-    public void setSubcategories(List<ProductCategory> subcategories) {
-        this.subcategories = subcategories;
-    }
+	public void setSubcategories(List<ProductCategory> subcategories) {
+		this.subcategories = subcategories;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void sync(ProductCategoryDTO dto) {
-        name = dto.getName();
-        active = dto.isActive();
-        description = dto.getDescription();
-        externalRef = dto.getExternalRef();
+	public void sync(ProductCategoryDTO dto) {
+		name = dto.getName();
+		active = dto.isActive();
+		description = dto.getDescription();
+		externalRef = dto.getExternalRef();
 
-    }
+	}
 
-    @Override
-    public String toString() {
-        return getName();
-    }
+	@Override
+	public String toString() {
+		return getName();
+	}
 
 }

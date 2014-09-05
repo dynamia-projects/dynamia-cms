@@ -71,13 +71,8 @@ public class SiteServiceImpl implements SiteService {
 	public Site getSite(HttpServletRequest request) {
 		Site site = null;
 		if (request != null) {
-			site = (Site) request.getSession().getAttribute("site");
-			if (site == null) {
-				site = getSiteByDomain(request.getServerName());
-				request.getSession().setAttribute("site", site);
-			}
+			site = getSiteByDomain(request.getServerName());
 		}
-
 		return site;
 	}
 

@@ -47,13 +47,7 @@ ul.subcategories > li + li > a{
 
 
 #webchat{
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    background-color: #f3601d;
+ 
 
     position: fixed;
     height: 30px;
@@ -109,4 +103,8 @@ ul.subcategories > li + li > a{
 
 .titles{
     border: 0;
+}
+
+.oldprice{
+	font-size: inherit; !important
 }

@@ -42,7 +42,7 @@
               <script src="js/respond.min.js"></script> 
              <![endif]-->
     </head>
-    <body>
+    <body style="margin: 10px">
 
         <!-- Header Start -->       
         <img th:title="${name}" th:alt="${name}" th:src="@{${#objects.nullSafe(siteParams['logo'],'/img/logo.gif')}}" title="Simplepx" alt="Simplepx" src="img/logo.gif"/>
@@ -52,7 +52,7 @@
         <div id="maincontainer" > 
 
 
-            <div id="content" layout:fragment="content">
+            <div id="content"  layout:fragment="content">
 
             </div>
         </div>

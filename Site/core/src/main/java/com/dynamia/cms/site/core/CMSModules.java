@@ -27,6 +27,17 @@ public class CMSModules {
 		return service.getUsedPositions(site);
 	}
 
+	public boolean isUsed(String position) {
+		if (position != null) {
+			for (String usedPosition : getUsedPositions()) {
+				if (position.equals(usedPosition)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public String getTemplateViewName(ModuleInstance instance) {
 		Module module = service.getModule(instance);
 		if (module != null) {

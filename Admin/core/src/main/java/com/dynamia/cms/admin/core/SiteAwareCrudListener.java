@@ -1,5 +1,6 @@
 package com.dynamia.cms.admin.core;
 
+import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.tools.commons.BeanUtils;

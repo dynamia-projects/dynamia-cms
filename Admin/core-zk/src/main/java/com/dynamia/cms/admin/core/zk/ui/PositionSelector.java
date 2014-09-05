@@ -7,7 +7,7 @@ package com.dynamia.cms.admin.core.zk.ui;
 
 import org.zkoss.zul.Combobox;
 
-import com.dynamia.cms.admin.core.SiteContext;
+import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.templates.Template;
 import com.dynamia.cms.site.templates.services.TemplateService;
 import com.dynamia.tools.integration.Containers;

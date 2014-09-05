@@ -55,15 +55,16 @@ public class ShowProductsMainPageAction implements SiteAction {
 		ModelAndView mv = evt.getModelAndView();
 		
 		List<Product> specialProducts = service.getSpecialProducts(evt.getSite());
-
 		List<Product> mostViewed = service.getMostViewedProducts(evt.getSite());
+		List<Product> priceVariations = service.getPriceVariationsProducts(evt.getSite());
 
 		mv.addObject("prd_mostViewedProducts", mostViewed);
 		mv.addObject("prd_specialProducts", specialProducts);
+		mv.addObject("prd_priceVariations", priceVariations);
 		if (UserHolder.get().isAuthenticated()) {
 			loadRecentProductsFromUser(evt, mv);
 		} else {
-			loadRecentProductsFromCookies(evt, mv);
+			//loadRecentProductsFromCookies(evt, mv);
 		}
 		
 		applyParams(mv);		

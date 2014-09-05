@@ -1,35 +1,32 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="template">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
 
 
-    <div class="container" layout:fragment="content">
+<div class="container" layout:fragment="content">
 
 
 
-        <div class="row">
+	<div class="row">
 
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">
-                <!-- Main Title-->
-                <div th:include="site/pagetitle::content"/>
-
-
-                <!-- Brands -->
-                <ul class="clearfix " th:each="group : ${cmsUtil.groupCollection(prd_categories,6)}">
-
-                    <li class="col-lg-2 col-md-2 col-sm-6 col-xs-12" th:each="cat : ${group.collection}">
-                        <a th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}}" 
-                           th:class="${prd_category!=null and cat.id==prd_category.id?'active':''}"
-                           th:text="${cat.name}" href="#">Categoria ABC</a> 
-                    </li>
-                </ul>
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">
+			<!-- Main Title-->
+			<div th:include="site/pagetitle::content" />
 
 
-            </div>
+			<!-- Brands -->
+			<ul class="clearfix " th:each="group : ${cmsUtil.groupCollection(prd_categories,6)}">
 
-        </div>
-    </div>
+				<li class="col-lg-2 col-md-2 col-sm-6 col-xs-12" th:each="cat : ${group.collection}"><a
+					th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}}" th:class="${prd_category!=null and cat.id==prd_category.id?'active':''}"
+					th:text="${cat.name}" href="#">Categoria ABC</a>
+				
+			</ul>
+
+
+		</div>
+
+	</div>
+</div>
 
 </html>

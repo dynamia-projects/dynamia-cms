@@ -25,36 +25,36 @@ import org.springframework.web.servlet.ModelAndView;
 @CMSAction
 public class ShowBrandAction implements SiteAction {
 
-    @Autowired
-    private ProductsService service;
+	@Autowired
+	private ProductsService service;
 
-    @Autowired
-    private CrudService crudService;
+	@Autowired
+	private CrudService crudService;
 
-    @Override
-    public String getName() {
-        return "showProductBrand";
-    }
+	@Override
+	public String getName() {
+		return "showProductBrand";
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        ProductSearchForm form = (ProductSearchForm) evt.getData();
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		ProductSearchForm form = (ProductSearchForm) evt.getData();
 
-        ProductBrand brand = crudService.find(ProductBrand.class, form.getBrandId());
+		ProductBrand brand = crudService.find(ProductBrand.class, form.getBrandId());
 
-        ModelAndView mv = evt.getModelAndView();
-        mv.addObject("prd_brand", brand);
+		ModelAndView mv = evt.getModelAndView();
+		mv.addObject("prd_brand", brand);
+		
+		SiteActionManager.performAction("searchProducts", mv, evt.getRequest(), form);
 
-        SiteActionManager.performAction("searchProducts", mv, evt.getRequest(), form);
-
-        ProductCategory category = (ProductCategory) mv.getModel().get("prd_category");
-        if (category != null) {
-            mv.addObject("title", category.getName());
-            mv.addObject("prd_subcategories", service.getSubcategories(category, brand));
-        } else {
-            mv.addObject("title", brand.getName());
-            mv.addObject("prd_subcategories", service.getCategories(brand));
-        }
-    }
+		ProductCategory category = (ProductCategory) mv.getModel().get("prd_category");
+		if (category != null) {
+			mv.addObject("title", category.getName());
+			mv.addObject("prd_subcategories", service.getSubcategories(category, brand));
+		} else {
+			mv.addObject("title", brand.getName());
+			mv.addObject("prd_subcategories", service.getCategories(brand));
+		}
+	}
 
 }

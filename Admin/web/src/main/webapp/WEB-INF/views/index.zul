@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/template.zul"?>
-<?page title="DynamiaCMS - ${siteHolder.current.name}"?>
+<?page title="DynamiaCMS - ${siteContext.current.name}"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
 

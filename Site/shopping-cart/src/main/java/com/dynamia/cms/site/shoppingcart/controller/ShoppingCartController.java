@@ -34,6 +34,7 @@ public class ShoppingCartController {
     @RequestMapping(value = "/print", method = RequestMethod.GET)
     public ModelAndView print(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
+        mv.addObject("title", "Listado ");
         SiteActionManager.performAction("printShoppingCart", mv, request);
 
         return mv;
