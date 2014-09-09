@@ -203,6 +203,13 @@ public class StoreController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/products/{id}/share", method = RequestMethod.GET)
+	public ModelAndView share(@PathVariable Long id) {
+		ModelAndView mv = new ModelAndView("products/share");
+		SiteActionManager.performAction("showProduct", mv, id);
+		return mv;
+	}
+
 	@RequestMapping(value = "/share", method = RequestMethod.POST)
 	public ModelAndView share(@Valid ProductShareForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes,
 			HttpServletRequest request) {

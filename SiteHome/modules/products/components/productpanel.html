@@ -39,9 +39,11 @@
 						<i class="icon-refresh icon-white"></i>
 					</button>
 				</form>
-				<button data-original-title="Recomendar" class="btn btn-inverse btn-small tooltip-test">
-					<i class="icon-envelope icon-white"></i>
-				</button>
+				<form class="pull-left" th:action="@{'/store/products/'+${prd.id}+'/share'}" method="get">
+					<button type="submit" data-original-title="Recomendar" class="btn btn-inverse tooltip-test">
+						<i class="icon-envelope icon-white"></i>
+					</button>
+				</form>		
 			</div>
 		</div>
 		<div class="caption">
