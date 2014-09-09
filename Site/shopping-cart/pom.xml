@@ -6,7 +6,7 @@
         <artifactId>com.dynamia.cms.site.parent</artifactId>
         <version>0.8</version>
     </parent>
-    <groupId>com.dynamia.cms.site</groupId>
+    <groupId>com.dynamia.cms</groupId>
     <artifactId>com.dynamia.cms.site.shoppingcart</artifactId>
     <name>DynamiaCMS Site - ShoppingCart (${project.version})</name>
     <packaging>jar</packaging>

@@ -1,0 +1,12 @@
+view: table
+beanClass: com.dynamia.cms.site.mail.domain.MailTemplate
+autofields: false
+
+
+fields:
+   name:
+   description:
+      params:
+          multiline: true
+          height: 70px
+   

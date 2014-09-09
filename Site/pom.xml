@@ -159,10 +159,11 @@
 		<module>templates</module>
 		<module>pages</module>
 		<module>menus</module>
+		<module>mail</module>
 		<module>products-api</module>
 		<module>products</module>
-		<module>web</module>
 		<module>shopping-cart</module>
+		<module>web</module>
 	</modules>
 
 </project>

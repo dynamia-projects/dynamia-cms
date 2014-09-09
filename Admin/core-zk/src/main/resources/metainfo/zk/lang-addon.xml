@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Document : lang-addon.xml Created on : 17 de noviembre de 2010, 11:14 
+	AM Author : mario Description: Purpose of the document follows. -->
+
+<language-addon>
+	<addon-name>dynamiacms</addon-name>
+	<language-name>xul/html</language-name>
+
+	<component>
+		<component-name>cmseditor</component-name>
+		<component-class>com.dynamia.cms.admin.core.zk.ui.CMSeditor</component-class>
+		<widget-class>ckez.CKeditor</widget-class>
+		<annotation>
+			<annotation-name>default-bind</annotation-name>
+			<property-name>value</property-name>
+			<attribute>
+				<attribute-name>access</attribute-name>
+				<attribute-value>both</attribute-value>
+			</attribute>
+			<attribute>
+				<attribute-name>save-when</attribute-name>
+				<attribute-value>self.onChange</attribute-value>
+			</attribute>
+		</annotation>
+
+	</component>
+
+
+</language-addon>

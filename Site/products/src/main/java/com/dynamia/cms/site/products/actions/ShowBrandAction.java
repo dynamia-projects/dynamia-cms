@@ -9,12 +9,13 @@ import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.actions.SiteActionManager;
 import com.dynamia.cms.site.core.api.CMSAction;
-
 import com.dynamia.cms.site.products.ProductSearchForm;
+import com.dynamia.cms.site.products.ProductSearchOrder;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.tools.domain.services.CrudService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,7 +45,7 @@ public class ShowBrandAction implements SiteAction {
 
 		ModelAndView mv = evt.getModelAndView();
 		mv.addObject("prd_brand", brand);
-		
+		form.setOrder(ProductSearchOrder.MINPRICE);
 		SiteActionManager.performAction("searchProducts", mv, evt.getRequest(), form);
 
 		ProductCategory category = (ProductCategory) mv.getModel().get("prd_category");

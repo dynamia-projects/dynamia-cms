@@ -10,7 +10,7 @@
 		<div class="titles animated fadeInUp time3">
 			<div class="pull-left">
 				<h1 th:text="${prd_product.name}" class="headinglefttitle">Page title</h1>
-				<div th:text="${'Codigo: '+prd_product.sku}" class="headingsubtitle"></div>				
+				<div th:text="${'Codigo: '+prd_product.sku}" class="headingsubtitle"></div>
 				<div th:text="${'Referencia: '+prd_product.reference}" class="headingsubtitle"></div>
 			</div>
 			<div class="pull-right mt10">
@@ -61,6 +61,8 @@
 			<!-- Right Details-->
 			<div class="col-lg-7 col-md-7 col-xs-12 col-sm-12 mt40column">
 
+
+
 				<div class="productprice" th:if="${not prd_product.showCreditPrices}">
 
 					<div class="productpageprice">
@@ -82,6 +84,8 @@
 					</div>
 				</div>
 
+
+
 				<div th:if="${prd_story!=null}">
 					<span>Has visto este producto <strong class="orange" th:text="${prd_story.views}">TANTA</strong> veces!
 					</span>
@@ -92,6 +96,11 @@
 
 				</div>
 
+				<div class="pull-right mt10">
+					<a th:href="@{'/shoppingcart/add/'+${prd_product.id}(currentURI=${currentURI})}" th:if="${prd_config.shopEnabled}"
+						class="btn btn-danger btn-lg tooltip-test" data-original-title="Agregar al Carrito"> <i class="icon-shopping-cart icon-white"></i> Comprar Ahora
+					</a>
+				</div>
 				<!-- Product Details tab & comments-->
 				<div class="productdesc">
 					<ul class="nav nav-tabs" id="myTab">
@@ -160,19 +169,22 @@
 							</div>
 						</div>
 						<!-- Buttons -->
-						<div class="productbtn">
-							<a th:href="@{'/shoppingcart/add/'+${prd_product.id}(currentURI=${currentURI})}" th:if="${prd_config.shopEnabled}"
-								class="btn btn-orange tooltip-test" data-original-title="Agregar al Carrito"> <i class="icon-shopping-cart icon-white"></i> Agregar
-							</a> <a th:if="${prd_config.quoteEnabled}" class="btn btn-orange btn-small tooltip-test" data-original-title="Agregar al Carrito"> <i
+						<div class="productbtn orange">
+
+
+							<a th:if="${prd_config.quoteEnabled}" class="btn btn-small tooltip-test" data-original-title="Agregar al Carrito"> <i
 								class="icon-external-link icon-white"></i> Cotizar
-							</a> <a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}" class="btn btn-orange btn-small tooltip-test"
+							</a> <a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}" class="btn btn-small tooltip-test"
 								data-original-title="Marca el producto como favorito"> <i class="icon-heart icon-white"></i> Favorito
-							</a> <a th:href="@{'/store/products/'+${prd_product.id}+'/compare'}" class="btn btn-orange btn-small tooltip-test"
+							</a> <a th:href="@{'/store/products/'+${prd_product.id}+'/compare'}" class="btn btn-small tooltip-test"
 								data-original-title="Compara con otros productos"> <i class="icon-refresh icon-white"></i> Comparar
-							</a> <a class="btn btn-orange btn-small tooltip-test" th:href="@{'/store/products/'+${prd_product.id}+'/print'}" target="_blank"> <i
+							</a> <a class="btn btn-small tooltip-test" th:href="@{'/store/products/'+${prd_product.id}+'/print'}" target="_blank"> <i
 								class="icon-print icon-white"></i> Imprimir
+							</a> <a class="btn btn-small tooltip-test" th:href="${'#shareProduct'+prd_product.id}" data-toggle="modal"> <i class="icon-envelope icon-white"></i>
+								Enviar a un Amigo
 							</a>
 						</div>
+						<th:block th:include="products/components/sharedialog::content" />
 
 					</div>
 				</div>

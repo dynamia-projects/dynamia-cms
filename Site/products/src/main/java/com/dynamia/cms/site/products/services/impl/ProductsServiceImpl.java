@@ -5,8 +5,32 @@
  */
 package com.dynamia.cms.site.products.services.impl;
 
+import static com.dynamia.tools.domain.query.QueryConditions.between;
+import static com.dynamia.tools.domain.query.QueryConditions.geqt;
+import static com.dynamia.tools.domain.query.QueryConditions.gt;
+import static com.dynamia.tools.domain.query.QueryConditions.leqt;
+
+import java.io.File;
+import java.nio.file.Path;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.dynamia.cms.site.core.DynamiaCMS;
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.mail.MailMessage;
+import com.dynamia.cms.site.mail.services.MailService;
 import com.dynamia.cms.site.products.ProductSearchForm;
+import com.dynamia.cms.site.products.ProductShareForm;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
@@ -20,24 +44,10 @@ import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.tools.commons.StringUtils;
 import com.dynamia.tools.commons.collect.PagedList;
 import com.dynamia.tools.domain.query.QueryConditions;
-import static com.dynamia.tools.domain.query.QueryConditions.between;
-import static com.dynamia.tools.domain.query.QueryConditions.geqt;
-import static com.dynamia.tools.domain.query.QueryConditions.gt;
-import static com.dynamia.tools.domain.query.QueryConditions.leqt;
 import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.domain.util.QueryBuilder;
 import com.dynamia.tools.integration.Containers;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -51,6 +61,9 @@ public class ProductsServiceImpl implements ProductsService {
 
 	@PersistenceContext
 	private EntityManager entityManager;
+
+	@Autowired
+	private MailService mailService;
 
 	@Override
 	public void generateToken(ProductsSiteConfig config) {
@@ -186,22 +199,24 @@ public class ProductsServiceImpl implements ProductsService {
 			params.orderBy("price", true);
 		}
 
-		if (params.size() > 1) {
-			params.paginate(getDefaultPageSize(site));
+		
 
-			QueryBuilder builder = QueryBuilder.fromParameters(Product.class, "p", params);
-			if (form.getBrandId() != null) {
-				builder.and("p.brand.id = :brandId");
-				params.add("brandId", form.getBrandId());
-			}
-			if (form.getCategoryId() != null) {
-				builder.and("(p.category.id = :category or p.category.parent.id = :category)");
-				params.add("category", form.getCategoryId());
-			}
+		QueryBuilder builder = QueryBuilder.fromParameters(Product.class, "p", params);
+		if (form.getBrandId() != null) {
+			builder.and("p.brand.id = :brandId");
+			params.add("brandId", form.getBrandId());
+		}
+		if (form.getCategoryId() != null) {
+			builder.and("(p.category.id = :category or p.category.parent.id = :category)");
+			params.add("category", form.getCategoryId());
+		}
+		if (params.size() > 0) {
+			params.paginate(getDefaultPageSize(site));
 			return crudService.executeQuery(builder, params);
 		} else {
 			return null;
 		}
+
 	}
 
 	@Override
@@ -475,6 +490,27 @@ public class ProductsServiceImpl implements ProductsService {
 		QueryParameters qp = QueryParameters.with("site", site).orderBy("contactInfo.city", true);
 
 		return crudService.find(Store.class, qp);
+	}
+
+	@Override
+	public void shareProduct(ProductShareForm form) {
+		MailMessage message = new MailMessage();
+		Product product = getProductById(form.getSite(), form.getProductId());
+		ProductsSiteConfig config = getSiteConfig(form.getSite());
+		message.setTemplate(config.getShareProductMailTemplate());
+		message.getTemplateModel().put("product", product);
+		message.getTemplateModel().put("form", form);
+		message.setTo(form.getFriendEmail());
+		message.setMailAccount(config.getMailAccount());
+
+		if (product.getImage() != null && !product.getImage().isEmpty()) {
+			Path resources = DynamiaCMS.getSitesResourceLocation(product.getSite());
+			File image = resources.resolve("products/images/" + product.getImage()).toFile();
+			message.addAttachtment(image);
+		}
+
+		mailService.send(message);
+
 	}
 
 }

@@ -61,6 +61,14 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 			SiteContext.get().setCurrent(site);
 		}
 		SiteContext.get().setCurrentURI(request.getRequestURI());
+		SiteContext.get().setCurrentURL(request.getRequestURL().toString());
+		if (SiteContext.get().getSiteURL() == null) {
+			String siteURL = "http://" + request.getServerName();
+			if (request.getServerPort() != 80) {
+				siteURL = siteURL + ":" + request.getServerPort();
+			}
+			SiteContext.get().setSiteURL(siteURL);
+		}
 		return site;
 	}
 

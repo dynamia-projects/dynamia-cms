@@ -1,0 +1,7 @@
+view: entitypicker
+beanClass: com.dynamia.cms.site.mail.domain.MailAccount
+autofields: false
+
+
+fields:
+   name:

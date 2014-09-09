@@ -1,10 +1,9 @@
 view: form
 beanClass: com.dynamia.cms.site.products.domain.ProductsSiteConfig
 hidden: [id,lastSync,token,parametersAsMap]
-sortFields: [pricePattern,defaultCurrency,productsPerPage,productsStockToShow,showEnabled,quoteEnabled, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceUsername,datasourcePassword]
+sortFields: [pricePattern,defaultCurrency,productsPerPage,productsStockToShow,showEnabled,quoteEnabled, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceUsername,datasourcePassword,mailAccount,shareProductMailTemplate,orderCompletedMailTemplate]
 
-fields:
-             
+fields:            
     
     datasourceURL:
         label: URL
@@ -23,11 +22,20 @@ fields:
     
     datasourcePassword:
         label: Password
-        
-                
+                        
     parameters:
         component: crudview
-    
+  
+  
+    mailAccount:
+        label: Account   
+   
+   
+    shareProductMailTemplate:   
+        label: Share Product Template
+   
+    orderCompletedMailTemplate:   
+        label: Order Completed Template
 groups:
     
     general:
@@ -38,6 +46,10 @@ groups:
     datasource:
         label: Datasource Settings
         fields: [datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceUsername,datasourcePassword]
+    
+    email:
+        label: Mail Settings
+        fields: [mailAccount,shareProductMailTemplate,orderCompletedMailTemplate]
         
 layout:
     columns: 2

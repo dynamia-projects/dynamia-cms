@@ -6,7 +6,9 @@
 package com.dynamia.cms.site.products.services;
 
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.mail.MailMessage;
 import com.dynamia.cms.site.products.ProductSearchForm;
+import com.dynamia.cms.site.products.ProductShareForm;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
@@ -16,6 +18,7 @@ import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.domain.Store;
 import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.tools.domain.query.QueryParameters;
+
 import java.util.List;
 
 /**
@@ -89,5 +92,7 @@ public interface ProductsService {
 	public List<Store> getStores(Site site);
 
 	public List<Product> getPriceVariationsProducts(Site site);
+
+	public abstract void shareProduct(ProductShareForm form);
 
 }

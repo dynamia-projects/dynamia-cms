@@ -7,7 +7,7 @@
         <artifactId>com.dynamia.cms.site.parent</artifactId>
         <version>0.8</version>
     </parent>
-    <groupId>com.dynamia.cms.site</groupId>
+    <groupId>com.dynamia.cms</groupId>
     <artifactId>com.dynamia.cms.site.products.api</artifactId>
     <version>0.8</version>
     <name>DynamiaCMS Site - Products API (${project.version})</name>

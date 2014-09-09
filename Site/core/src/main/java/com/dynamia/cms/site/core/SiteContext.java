@@ -7,6 +7,7 @@ package com.dynamia.cms.site.core;
 
 import com.dynamia.cms.site.core.controllers.CacheController;
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.tools.integration.Containers;
 
 import java.io.Serializable;
@@ -25,8 +26,16 @@ public class SiteContext implements Serializable {
 
 	@Autowired(required = false)
 	private CacheController cacheController;
+
+	@Autowired
+	private SiteService service;
+
 	private Site current;
+	private String siteURL;
 	private String currentURI;
+	private String currentURL;
+	private String previousURI;
+	private String previousURL;
 	private long lastCacheClear;
 
 	public static SiteContext get() {
@@ -43,6 +52,7 @@ public class SiteContext implements Serializable {
 			if (cacheController.getLastCacheClear() > lastCacheClear) {
 				lastCacheClear = cacheController.getLastCacheClear();
 				current = null;
+				siteURL = null;
 			}
 		}
 	}
@@ -55,8 +65,34 @@ public class SiteContext implements Serializable {
 		return currentURI;
 	}
 
-	public void setCurrentURI(String currentURI) {
+	void setCurrentURI(String currentURI) {
+		this.previousURI = this.currentURI;
 		this.currentURI = currentURI;
+	}
+
+	public String getCurrentURL() {
+		return currentURL;
+	}
+
+	void setCurrentURL(String currentURL) {
+		this.previousURL = this.currentURL;
+		this.currentURL = currentURL;
+	}
+
+	public String getPreviousURI() {
+		return previousURI;
+	}
+
+	public String getPreviousURL() {
+		return previousURL;
+	}
+
+	public String getSiteURL() {
+		return siteURL;
+	}
+
+	void setSiteURL(String siteURL) {
+		this.siteURL = siteURL;
 	}
 
 }

@@ -1,152 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>com.dynamia.cms.site.parent</artifactId>
-        <groupId>com.dynamia.cms</groupId>
-        <version>0.8</version>
-    </parent>
-    <groupId>com.dynamia.cms</groupId>
-    <artifactId>com.dynamia.cms.site.web</artifactId>
-    <packaging>war</packaging>
-    <version>0.8</version>
-    <name>DynamiaCMS Site - Web (${project.version})</name>
-    <url>http://www.dynamiasoluciones.com</url>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>com.dynamia.cms.site.parent</artifactId>
+		<groupId>com.dynamia.cms</groupId>
+		<version>0.8</version>
+	</parent>
+	<groupId>com.dynamia.cms</groupId>
+	<artifactId>com.dynamia.cms.site.web</artifactId>
+	<packaging>war</packaging>
+	<version>0.8</version>
+	<name>DynamiaCMS Site - Web (${project.version})</name>
+	<url>http://www.dynamiasoluciones.com</url>
 
-    <dependencies>
-        
-        <!-- Modules -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.templates</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.pages</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.menus</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.products</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.users</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dynamia.cms.site</groupId>
-            <artifactId>com.dynamia.cms.site.shoppingcart</artifactId>
-            <version>0.8</version>
-        </dependency>
-    </dependencies>
+	<dependencies>
 
-  
-    <build>
-        <finalName>cms-site</finalName>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-
-            <!-- Jetty Configuration -->
-            <plugin>
-               
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>7.4.5.v20110725</version>
-                
-            
-                <configuration>
-
-                    <jettyConfig>conf/jetty.xml</jettyConfig>
-                    <!--Disable auto scen -->
-                    <scanIntervalSeconds>0</scanIntervalSeconds>
-                    <webAppConfig>
-                        <contextPath>/</contextPath>
-                    </webAppConfig>
-
-                    <stopPort>9808</stopPort>
-                    <stopKey>jetty-stop</stopKey>
-
-                    <connectors>
-                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <port>8080</port>
-                            <maxIdleTime>60000</maxIdleTime>
-                        </connector>
-                    </connectors>
+		<!-- Modules -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.site.core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.site.templates</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.site.pages</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.site.menus</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.site.products</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.site.users</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.site.shoppingcart</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.site.mail</artifactId>
+			<version>0.8</version>
+		</dependency>
+	</dependencies>
 
 
-                </configuration>
+	<build>
+		<finalName>cms-site</finalName>
 
-                <dependencies>
-                    <dependency>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                        <version>1.1.1</version>
-                    </dependency>
-                    
-                    <!-- JDBC Drivers -->
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.26</version>
-                    </dependency>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
 
-                    <dependency>
-                        <groupId>hsqldb</groupId>
-                        <artifactId>hsqldb</artifactId>
-                        <version>1.8.0.10</version>
-                    </dependency>
+			<!-- Jetty Configuration -->
+			<plugin>
 
-                    <!-- JavaMail -->
-                    <dependency>
-                        <groupId>javax.mail</groupId>
-                        <artifactId>mail</artifactId>
-                        <version>1.4.2</version>
-                    </dependency>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>7.4.5.v20110725</version>
 
 
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.4.3</version>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-        </plugins>
+				<configuration>
 
-    </build>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+					<jettyConfig>conf/jetty.xml</jettyConfig>
+					<!--Disable auto scen -->
+					<scanIntervalSeconds>0</scanIntervalSeconds>
+					<webAppConfig>
+						<contextPath>/</contextPath>
+					</webAppConfig>
+
+					<stopPort>9808</stopPort>
+					<stopKey>jetty-stop</stopKey>
+
+					<connectors>
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+							<port>8080</port>
+							<maxIdleTime>60000</maxIdleTime>
+						</connector>
+					</connectors>
+
+
+				</configuration>
+
+				<dependencies>
+					<dependency>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+						<version>1.1.1</version>
+					</dependency>
+
+					<!-- JDBC Drivers -->
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.26</version>
+					</dependency>
+
+					<dependency>
+						<groupId>hsqldb</groupId>
+						<artifactId>hsqldb</artifactId>
+						<version>1.8.0.10</version>
+					</dependency>
+
+					<!-- JavaMail -->
+					<dependency>
+						<groupId>javax.mail</groupId>
+						<artifactId>mail</artifactId>
+						<version>1.4.2</version>
+					</dependency>
+
+
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4.3</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 </project>

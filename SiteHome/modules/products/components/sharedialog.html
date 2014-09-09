@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<body th:fragment="content">
+	<!--subcategories-->
+
+	<div class="modal fade" th:id="${'shareProduct'+prd_shareForm.productId}" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Enviar a un Amigo</h4>
+				</div>
+				<div class="modal-body">
+					<div class="containter">
+
+						<form role="form" class="form-vertical" th:action="@{/store/share}" th:object="${prd_shareForm}" th:method="post">
+
+							<!-- Text input-->
+							<div class="form-group">
+								<input th:field="*{friendName}" id="name" name="" type="text" placeholder="Nombre de tu amigo" class="form-control" />
+							</div>
+							<div class="form-group">
+								<input th:field="*{friendEmail}" id="email" name="" type="email" placeholder="Email de tu amigo" class="form-control" />
+							</div>
+							<div class="form-group">
+								<input th:field="*{yourName}" id="yourName" name="" type="text" placeholder="Tu nombre" class="form-control" />
+							</div>
+							<div class="form-group">
+								<textarea th:field="*{message}" rows="6" cols="40" id="message" name="" placeholder="Mensaje" class="form-control"></textarea>
+							</div>
+							
+							<input th:field="*{productId}" id="productId" th:value="${prd_product.id}" name="" type="hidden" />
+							
+							<!-- Button -->
+							<div class="form-group">
+								<button type="submit" class="btn btn-orange">
+									Enviar <i class="icon-envelope icon-white"></i>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+
+
+</body>
+
+</html>

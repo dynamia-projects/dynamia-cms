@@ -1,7 +1,9 @@
 view: form
 beanClass: com.dynamia.cms.site.pages.domain.Page
+#customizer: com.dynamia.cms.admin.core.zk.PageFormCustomizer
 hidden: [id,uuid,creationDate,parameter]
 sortFields: [site,alias,title,subtitle,type,category,author,layout,icon,published,startDate,endDate,tags,content]
+
 
 fields:
     
@@ -26,7 +28,7 @@ fields:
             typeExtensionClass: com.dynamia.cms.site.pages.api.PageTypeExtension
         
     content:
-        component: ckeditor
+        component: cmseditor
         params:
             span: 2
             height: 300px

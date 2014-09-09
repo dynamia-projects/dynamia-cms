@@ -5,14 +5,12 @@
  */
 package com.dynamia.cms.site.products.domain;
 
-import com.dynamia.cms.site.core.api.SiteAware;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.domain.SimpleEntity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,7 +20,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
-import org.hibernate.annotations.Index;
+
+import com.dynamia.cms.site.core.api.SiteAware;
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.mail.domain.MailAccount;
+import com.dynamia.cms.site.mail.domain.MailTemplate;
+import com.dynamia.tools.domain.SimpleEntity;
 
 /**
  *
@@ -32,180 +35,210 @@ import org.hibernate.annotations.Index;
 @Table(name = "prd_sites_config")
 public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 
-    @OneToOne
-    @NotNull
-    @JoinColumn(unique = true)
-    private Site site;
+	@OneToOne
+	@NotNull
+	@JoinColumn(unique = true)
+	private Site site;
 
-    private String pricePattern;
-    private String defaultCurrency;
+	private String pricePattern;
+	private String defaultCurrency;
 
-    private String datasourceURL;
-    private String datasourceUsername;
-    private String datasourcePassword;
-    private String datasourceImagesURL;
-    private String datasourceBrandImagesURL;
-    private String datasourceStoreImagesURL;
+	private String datasourceURL;
+	private String datasourceUsername;
+	private String datasourcePassword;
+	private String datasourceImagesURL;
+	private String datasourceBrandImagesURL;
+	private String datasourceStoreImagesURL;
 
-    @Index(name = "token")
-    private String token;
+	private String token;
 
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date lastSync;
+	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	private Date lastSync;
 
-    private int productsPerPage;
+	private int productsPerPage;
 
-    private int productsStockToShow;
+	private int productsStockToShow;
 
-    private boolean shopEnabled;
+	private boolean shopEnabled;
 
-    private boolean quoteEnabled;
+	private boolean quoteEnabled;
 
-    @OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<ProductsSiteConfigParameter> parameters = new ArrayList<>();
+	@OneToOne
+	private MailAccount mailAccount;
+	@OneToOne
+	private MailTemplate shareProductMailTemplate;
+	@OneToOne
+	private MailTemplate orderCompletedMailTemplate;
 
-    @Override
-    public Site getSite() {
-        return site;
-    }
+	@OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<ProductsSiteConfigParameter> parameters = new ArrayList<>();
 
-    @Override
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	public MailAccount getMailAccount() {
+		return mailAccount;
+	}
 
-    public List<ProductsSiteConfigParameter> getParameters() {
-        return parameters;
-    }
+	public void setMailAccount(MailAccount mailAccount) {
+		this.mailAccount = mailAccount;
+	}
 
-    public void setParameters(List<ProductsSiteConfigParameter> parameters) {
-        this.parameters = parameters;
-    }
+	public MailTemplate getShareProductMailTemplate() {
+		return shareProductMailTemplate;
+	}
 
-    public boolean isShopEnabled() {
-        return shopEnabled;
-    }
+	public void setShareProductMailTemplate(MailTemplate shareProductMailTemplate) {
+		this.shareProductMailTemplate = shareProductMailTemplate;
+	}
 
-    public void setShopEnabled(boolean shopEnabled) {
-        this.shopEnabled = shopEnabled;
-    }
+	public MailTemplate getOrderCompletedMailTemplate() {
+		return orderCompletedMailTemplate;
+	}
 
-    public boolean isQuoteEnabled() {
-        return quoteEnabled;
-    }
+	public void setOrderCompletedMailTemplate(MailTemplate orderCompletedMailTemplate) {
+		this.orderCompletedMailTemplate = orderCompletedMailTemplate;
+	}
 
-    public void setQuoteEnabled(boolean quoteEnabled) {
-        this.quoteEnabled = quoteEnabled;
-    }
+	@Override
+	public Site getSite() {
+		return site;
+	}
 
-    public int getProductsPerPage() {
-        if (productsPerPage <= 0) {
-            productsPerPage = 16;
-        }
-        return productsPerPage;
-    }
+	@Override
+	public void setSite(Site site) {
+		this.site = site;
+	}
 
-    public void setProductsPerPage(int productsPerPage) {
-        this.productsPerPage = productsPerPage;
-    }
+	public List<ProductsSiteConfigParameter> getParameters() {
+		return parameters;
+	}
 
-    public int getProductsStockToShow() {
-        if (productsStockToShow <= 0) {
-            productsStockToShow = 5;
-        }
-        return productsStockToShow;
-    }
+	public void setParameters(List<ProductsSiteConfigParameter> parameters) {
+		this.parameters = parameters;
+	}
 
-    public void setProductsStockToShow(int productsStockToShow) {
-        this.productsStockToShow = productsStockToShow;
-    }
+	public boolean isShopEnabled() {
+		return shopEnabled;
+	}
 
-    public String getDefaultCurrency() {
-        return defaultCurrency;
-    }
+	public void setShopEnabled(boolean shopEnabled) {
+		this.shopEnabled = shopEnabled;
+	}
 
-    public void setDefaultCurrency(String defaultCurrency) {
-        this.defaultCurrency = defaultCurrency;
-    }
+	public boolean isQuoteEnabled() {
+		return quoteEnabled;
+	}
 
-    public Date getLastSync() {
-        return lastSync;
-    }
+	public void setQuoteEnabled(boolean quoteEnabled) {
+		this.quoteEnabled = quoteEnabled;
+	}
 
-    public void setLastSync(Date lastSync) {
-        this.lastSync = lastSync;
-    }
+	public int getProductsPerPage() {
+		if (productsPerPage <= 0) {
+			productsPerPage = 16;
+		}
+		return productsPerPage;
+	}
 
-    public String getDatasourceURL() {
-        return datasourceURL;
-    }
+	public void setProductsPerPage(int productsPerPage) {
+		this.productsPerPage = productsPerPage;
+	}
 
-    public void setDatasourceURL(String datasourceURL) {
-        this.datasourceURL = datasourceURL;
-    }
+	public int getProductsStockToShow() {
+		if (productsStockToShow <= 0) {
+			productsStockToShow = 5;
+		}
+		return productsStockToShow;
+	}
 
-    public String getDatasourceUsername() {
-        return datasourceUsername;
-    }
+	public void setProductsStockToShow(int productsStockToShow) {
+		this.productsStockToShow = productsStockToShow;
+	}
 
-    public void setDatasourceUsername(String datasourceUsername) {
-        this.datasourceUsername = datasourceUsername;
-    }
+	public String getDefaultCurrency() {
+		return defaultCurrency;
+	}
 
-    public String getDatasourcePassword() {
-        return datasourcePassword;
-    }
+	public void setDefaultCurrency(String defaultCurrency) {
+		this.defaultCurrency = defaultCurrency;
+	}
 
-    public void setDatasourcePassword(String datasourcePassword) {
-        this.datasourcePassword = datasourcePassword;
-    }
+	public Date getLastSync() {
+		return lastSync;
+	}
 
-    public String getDatasourceImagesURL() {
-        return datasourceImagesURL;
-    }
+	public void setLastSync(Date lastSync) {
+		this.lastSync = lastSync;
+	}
 
-    public void setDatasourceImagesURL(String datasourceImagesURL) {
-        this.datasourceImagesURL = datasourceImagesURL;
-    }
+	public String getDatasourceURL() {
+		return datasourceURL;
+	}
 
-    public String getDatasourceBrandImagesURL() {
-        return datasourceBrandImagesURL;
-    }
+	public void setDatasourceURL(String datasourceURL) {
+		this.datasourceURL = datasourceURL;
+	}
 
-    public void setDatasourceBrandImagesURL(String datasourceBrandImagesURL) {
-        this.datasourceBrandImagesURL = datasourceBrandImagesURL;
-    }
+	public String getDatasourceUsername() {
+		return datasourceUsername;
+	}
 
-    public String getDatasourceStoreImagesURL() {
-        return datasourceStoreImagesURL;
-    }
+	public void setDatasourceUsername(String datasourceUsername) {
+		this.datasourceUsername = datasourceUsername;
+	}
 
-    public void setDatasourceStoreImagesURL(String datasourceStoreImagesURL) {
-        this.datasourceStoreImagesURL = datasourceStoreImagesURL;
-    }
+	public String getDatasourcePassword() {
+		return datasourcePassword;
+	}
 
-    public String getPricePattern() {
-        return pricePattern;
-    }
+	public void setDatasourcePassword(String datasourcePassword) {
+		this.datasourcePassword = datasourcePassword;
+	}
 
-    public void setPricePattern(String pricePattern) {
-        this.pricePattern = pricePattern;
-    }
+	public String getDatasourceImagesURL() {
+		return datasourceImagesURL;
+	}
 
-    public String getToken() {
-        return token;
-    }
+	public void setDatasourceImagesURL(String datasourceImagesURL) {
+		this.datasourceImagesURL = datasourceImagesURL;
+	}
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+	public String getDatasourceBrandImagesURL() {
+		return datasourceBrandImagesURL;
+	}
 
-    public Map<String, String> getParametersAsMap() {
-        Map<String, String> params = new HashMap<>();
-        for (ProductsSiteConfigParameter param : getParameters()) {
-            params.put(param.getName(), param.getValue());
-        }
-        return params;
-    }
+	public void setDatasourceBrandImagesURL(String datasourceBrandImagesURL) {
+		this.datasourceBrandImagesURL = datasourceBrandImagesURL;
+	}
+
+	public String getDatasourceStoreImagesURL() {
+		return datasourceStoreImagesURL;
+	}
+
+	public void setDatasourceStoreImagesURL(String datasourceStoreImagesURL) {
+		this.datasourceStoreImagesURL = datasourceStoreImagesURL;
+	}
+
+	public String getPricePattern() {
+		return pricePattern;
+	}
+
+	public void setPricePattern(String pricePattern) {
+		this.pricePattern = pricePattern;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public Map<String, String> getParametersAsMap() {
+		Map<String, String> params = new HashMap<>();
+		for (ProductsSiteConfigParameter param : getParameters()) {
+			params.put(param.getName(), param.getValue());
+		}
+		return params;
+	}
 
 }

@@ -1,164 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>com.dynamia.cms.admin.parent</artifactId>
-        <groupId>com.dynamia.cms</groupId>
-        <version>0.8</version>
-    </parent>
-    <groupId>com.dynamia.cms</groupId>
-    <artifactId>com.dynamia.cms.admin.web</artifactId>
-    <packaging>war</packaging>
-    <version>0.8</version>
-    <name>DynamiaCMS Admin - Web (${project.version})</name>
-    <url>http://www.dynamiasoluciones.com</url>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>com.dynamia.cms.admin.parent</artifactId>
+		<groupId>com.dynamia.cms</groupId>
+		<version>0.8</version>
+	</parent>
+	<groupId>com.dynamia.cms</groupId>
+	<artifactId>com.dynamia.cms.admin.web</artifactId>
+	<packaging>war</packaging>
+	<version>0.8</version>
+	<name>DynamiaCMS Admin - Web (${project.version})</name>
+	<url>http://www.dynamiasoluciones.com</url>
 
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>${project.groupId}.admin.core.zk</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.zkoss.theme</groupId>
-            <artifactId>atlantic</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        
-        <!-- Modules -->
-        
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.core</artifactId>
-            <version>${site.cms.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.pages</artifactId>
-            <version>${site.cms.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.menus</artifactId>
-            <version>${site.cms.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.products</artifactId>
-            <version>${site.cms.version}</version>          
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.admin.products</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.admin.users</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.2</version>
-        </dependency>
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>${project.groupId}.admin.core.zk</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.zkoss.theme</groupId>
+			<artifactId>atlantic</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 
-    <build>
-        <finalName>cms-admin</finalName>
+		<!-- Modules -->
 
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.site.core</artifactId>
+			<version>${site.cms.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.site.pages</artifactId>
+			<version>${site.cms.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.site.menus</artifactId>
+			<version>${site.cms.version}</version>
+		</dependency>
 
-            <!-- Jetty Configuration -->
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>7.4.5.v20110725</version>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.site.products</artifactId>
+			<version>${site.cms.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.admin.products</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.dynamia.cms.admin.users</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.admin.mail</artifactId>
+			<version>0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.2</version>
+		</dependency>
+	</dependencies>
 
-                <configuration>
+	<build>
+		<finalName>cms-admin</finalName>
 
-                    <jettyConfig>conf/jetty.xml</jettyConfig>
-                    <!--Disable auto scen -->
-                    <scanIntervalSeconds>0</scanIntervalSeconds>
-                    <webAppConfig>
-                        <contextPath>/admin</contextPath>
-                    </webAppConfig>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
 
-                    <stopPort>9484</stopPort>
-                    <stopKey>jetty-stop</stopKey>
+			<!-- Jetty Configuration -->
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>7.4.5.v20110725</version>
 
-                    <connectors>                        
-                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <port>4848</port>
-                            <maxIdleTime>60000</maxIdleTime>
-                        </connector>
-                    </connectors>
+				<configuration>
 
+					<jettyConfig>conf/jetty.xml</jettyConfig>
+					<!--Disable auto scen -->
+					<scanIntervalSeconds>0</scanIntervalSeconds>
+					<webAppConfig>
+						<contextPath>/admin</contextPath>
+					</webAppConfig>
 
-                </configuration>
+					<stopPort>9484</stopPort>
+					<stopKey>jetty-stop</stopKey>
 
-                <dependencies>
-                    <!-- JDBC Drivers -->
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.26</version>
-                    </dependency>
-
-                    <dependency>
-                        <groupId>hsqldb</groupId>
-                        <artifactId>hsqldb</artifactId>
-                        <version>1.8.0.10</version>
-                    </dependency>
-
-                    <!-- JavaMail -->
-                    <dependency>
-                        <groupId>javax.mail</groupId>
-                        <artifactId>mail</artifactId>
-                        <version>1.4.2</version>
-                    </dependency>
+					<connectors>
+						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+							<port>4848</port>
+							<maxIdleTime>60000</maxIdleTime>
+						</connector>
+					</connectors>
 
 
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.4.3</version>
-                <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
-        </plugins>
+				</configuration>
 
-    </build>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    <dependencyManagement>
-    	<dependencies>
-    		<dependency>
-    			<groupId>org.zkoss.zkforge</groupId>
-    			<artifactId>ckez</artifactId>
-    			<version>4.3.3.0</version>
-    		</dependency>
-    	</dependencies>
-    </dependencyManagement>
+				<dependencies>
+					<!-- JDBC Drivers -->
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.26</version>
+					</dependency>
+
+					<dependency>
+						<groupId>hsqldb</groupId>
+						<artifactId>hsqldb</artifactId>
+						<version>1.8.0.10</version>
+					</dependency>
+
+					<!-- JavaMail -->
+					<dependency>
+						<groupId>javax.mail</groupId>
+						<artifactId>mail</artifactId>
+						<version>1.4.2</version>
+					</dependency>
+
+
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4.3</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.zkoss.zkforge</groupId>
+				<artifactId>ckez</artifactId>
+				<version>4.3.3.0</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
