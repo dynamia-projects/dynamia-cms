@@ -11,7 +11,7 @@
 				<th width="100px"></th>
 				<th class="name">Nombre</th>
 			</tr>
-			<tr th:each="item : ${@shoppingCartHolder.current.items}">
+			<tr th:each="item : ${cart.items}">
 
 				<td style="width: 50px"><img th:src="@{${item.imageURL}+'thumbnails/'+${item.imageName}(w=90,h=90)}" alt="product" title="product"></img></td>
 				<td class="name"><span class="orange" style="font-weight: bold" th:text="${item.name}">MacBook</span> <br /> <span

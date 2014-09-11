@@ -50,7 +50,7 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.dynamia.cms.site</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>com.dynamia.cms.site.shoppingcart</artifactId>
 			<version>${project.version}</version>
 		</dependency>

@@ -76,16 +76,17 @@
 					<a href="http://brilla.compulago.net" target="_blank" class="pull-right"> <img th:src="@{/img/brilla.png}" alt="Brilla"
 						title="Convenio Brilla" class="tooltip-test" />
 					</a>
-					<h4 class="call">
-						<i class="icon-phone"></i> Llamanos : <a class="orange" href="tel:0356930423">+57 (5) 693 04 23</a><br />
-					</h4>
+					<h5 class="call">
+						<i class="icon-phone"></i> Llamanos: <a class="orange" href="tel:0356930423">+57 (5) 693 04 23</a><br />
+					</h5>
 				</div>
 
 				<!--Top Shopping Cart -->
-				<th:block th:include="shoppingcart/components/topcart::content" />
+				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop')},'icon-shopping-cart')" />
+				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('quote')},'icon-external-link')" />
 
 				<!--Top Search -->
-				<div class="pull-right topsearch" th:include="site/searchform::content" />
+				<div class="pull-right topsearch" style="margin: 23px" th:include="site/searchform::content" />
 
 
 			</div>

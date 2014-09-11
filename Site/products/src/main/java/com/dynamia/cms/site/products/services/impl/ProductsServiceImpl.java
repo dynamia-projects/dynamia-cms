@@ -199,8 +199,6 @@ public class ProductsServiceImpl implements ProductsService {
 			params.orderBy("price", true);
 		}
 
-		
-
 		QueryBuilder builder = QueryBuilder.fromParameters(Product.class, "p", params);
 		if (form.getBrandId() != null) {
 			builder.and("p.brand.id = :brandId");
@@ -344,9 +342,9 @@ public class ProductsServiceImpl implements ProductsService {
 		qp.add("category", product.getCategory());
 		qb.and("p.site = :site");
 
-		if (product.getBrand() != null) {
-			qb.and("(p.category = :category or p.brand = :brand)");
-			qp.add("brand", product.getBrand());
+		if (product.getCategory().getParent() != null) {
+			qb.and("(p.category.parent = :parentCategory or p.category = :category)");
+			qp.add("parentCategory", product.getCategory().getParent());
 		} else {
 			qb.and("p.category = :category");
 		}
@@ -503,9 +501,24 @@ public class ProductsServiceImpl implements ProductsService {
 		message.setTo(form.getFriendEmail());
 		message.setMailAccount(config.getMailAccount());
 
+		Path resources = DynamiaCMS.getSitesResourceLocation(product.getSite());
 		if (product.getImage() != null && !product.getImage().isEmpty()) {
-			Path resources = DynamiaCMS.getSitesResourceLocation(product.getSite());
 			File image = resources.resolve("products/images/" + product.getImage()).toFile();
+			message.addAttachtment(image);
+		}
+
+		if (product.getImage2() != null && !product.getImage2().isEmpty()) {
+			File image = resources.resolve("products/images/" + product.getImage2()).toFile();
+			message.addAttachtment(image);
+		}
+
+		if (product.getImage3() != null && !product.getImage3().isEmpty()) {
+			File image = resources.resolve("products/images/" + product.getImage3()).toFile();
+			message.addAttachtment(image);
+		}
+
+		if (product.getImage4() != null && !product.getImage4().isEmpty()) {
+			File image = resources.resolve("products/images/" + product.getImage4()).toFile();
 			message.addAttachtment(image);
 		}
 

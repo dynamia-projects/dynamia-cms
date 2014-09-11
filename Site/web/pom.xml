@@ -53,9 +53,9 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.dynamia.cms</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>com.dynamia.cms.site.mail</artifactId>
-			<version>0.8</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 

@@ -11,17 +11,17 @@
             <!-- Main Title-->
             <div class="titles animated fadeInUp time3">
                 <div class="pull-left">
-                    <h1 class="headinglefttitle">Carrito</h1>                    
+                    <h1 class="headinglefttitle" th:text="${title}"></h1>                    
                     <div th:text="${subtitle}" class="headingsubtitle"></div>                    
                 </div>
-                <i class="icon-shopping-cart"></i>           
+                <i th:class="${icon}"></i>           
             </div>
 
             <div class="row mt40">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">   
                     <th th:include="shoppingcart/components/table::content"/>
                     <div class="pull-right">
-                        <a target="_blank" class="btn btn-orange tooltip-test" th:href="@{'/shoppingcart/print'}" > <i class="icon-print"></i> Imprimir</a> 
+                        <a target="_blank" class="btn btn-orange tooltip-test" th:href="@{'/shoppingcart/'+${cartName}+'print'}" > <i class="icon-print"></i> Imprimir</a> 
                     </div>
                 </div>
             </div>

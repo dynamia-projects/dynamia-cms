@@ -8,7 +8,9 @@ package com.dynamia.cms.site.products;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
 import com.dynamia.cms.site.users.UserHolder;
+import com.dynamia.tools.commons.StringUtils;
 import com.dynamia.tools.commons.collect.PagedList;
 import com.dynamia.tools.commons.collect.PagedListDataSource;
 import com.dynamia.tools.integration.Containers;
@@ -39,6 +41,20 @@ public class ProductsUtil {
 		}
 		if (mv.getModel().get("prd_product") != null) {
 			addShareForm(site, mv);
+		}
+
+		if (mv.getModel().get("cart") != null) {
+			ShoppingCart shoppingCart = (ShoppingCart) mv.getModel().get("cart");
+			switch (shoppingCart.getName()) {
+			case "quote":
+				mv.addObject("title", "Cotizacion");
+				mv.addObject("icon", "icon-external-link");
+				break;
+			case "shop":
+				mv.addObject("title", "Carrito de Compra");
+				mv.addObject("icon", "icon-shopping-cart");
+				break;
+			}
 		}
 	}
 

@@ -8,6 +8,7 @@ package com.dynamia.cms.site.shoppingcart.actions;
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
+import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
 
 /**
  *
@@ -16,15 +17,16 @@ import com.dynamia.cms.site.core.api.CMSAction;
 @CMSAction
 public class PrintShoppingCartAction implements SiteAction {
 
-    @Override
-    public String getName() {
-        return "printShoppingCart";
-    }
+	@Override
+	public String getName() {
+		return "printShoppingCart";
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        evt.getModelAndView().setViewName("shoppingcart/print");
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		ShoppingCartUtils.getShoppingCart(evt.getModelAndView());
+		evt.getModelAndView().setViewName("shoppingcart/print");
 
-    }
+	}
 
 }

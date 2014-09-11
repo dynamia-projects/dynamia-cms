@@ -8,6 +8,7 @@ package com.dynamia.cms.site.shoppingcart.actions;
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
+import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
 
 /**
  *
@@ -23,7 +24,7 @@ public class ViewShoppingCartAction implements SiteAction {
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        evt.getModelAndView().addObject("title", "Carrito");
+    	ShoppingCartUtils.getShoppingCart(evt.getModelAndView());        
         evt.getModelAndView().setViewName("shoppingcart/details");
 
     }

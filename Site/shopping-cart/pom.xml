@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.dynamia.cms</groupId>
-        <artifactId>com.dynamia.cms.site.parent</artifactId>
-        <version>0.8</version>
-    </parent>
-    <groupId>com.dynamia.cms</groupId>
-    <artifactId>com.dynamia.cms.site.shoppingcart</artifactId>
-    <name>DynamiaCMS Site - ShoppingCart (${project.version})</name>
-    <packaging>jar</packaging>
-    <dependencies>
-        <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.site.core</artifactId>
-            <version>0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.site.users</artifactId>
-            <version>0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>6.0</version>
-            <type>jar</type>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.dynamia.cms</groupId>
+		<artifactId>com.dynamia.cms.site.parent</artifactId>
+		<version>0.8</version>
+	</parent>
+	<groupId>com.dynamia.cms</groupId>
+	<artifactId>com.dynamia.cms.site.shoppingcart</artifactId>
+	<name>DynamiaCMS Site - ShoppingCart (${project.version})</name>
+	<version>0.8</version>
+
+	<packaging>jar</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.site.core</artifactId>
+			<version>0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.site.users</artifactId>
+			<version>0.8</version>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<version>6.0</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 </project>

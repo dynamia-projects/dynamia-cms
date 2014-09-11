@@ -23,7 +23,7 @@
 			</span>
 
 			<div class="viewicons">
-				<form class="pull-left" th:if="${prd_config.shopEnabled}" th:action="@{'/shoppingcart/add/'+${prd.id}}" method="get">
+				<form class="pull-left" th:if="${prd_config.shopEnabled}" th:action="@{'/shoppingcart/shop/add/'+${prd.id}}" method="get">
 					<button type="submit" data-original-title="Agregar al Carrito" class="btn btn-inverse tooltip-test">
 						<i class="icon-shopping-cart icon-white"></i>
 					</button>

@@ -10,7 +10,10 @@ import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
+import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
+import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,23 +24,26 @@ import org.springframework.web.servlet.ModelAndView;
 @CMSAction
 public class ClearShoppingCartAction implements SiteAction {
 
-    @Autowired
-    private ShoppingCartService service;
+	@Autowired
+	private ShoppingCartService service;
 
-    @Override
-    public String getName() {
-        return "clearShoppingCart";
-    }
+	@Override
+	public String getName() {
+		return "clearShoppingCart";
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView();
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView();
 
-        ShoppingCartHolder.get().getCurrent().getItems().clear();
-        ShoppingCartHolder.get().getCurrent().compute();
+		ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
+		if (shoppingCart != null) {
+			shoppingCart.getItems().clear();
+			shoppingCart.compute();
 
-        CMSUtil.addSuccessMessage("Carrito limpiado exitosamente", evt.getRedirectAttributes());
+			CMSUtil.addSuccessMessage("Carrito limpiado exitosamente", evt.getRedirectAttributes());
+		}
 
-    }
+	}
 
 }

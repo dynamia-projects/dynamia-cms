@@ -9,7 +9,11 @@ import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.tools.integration.Containers;
 import com.dynamia.tools.integration.sterotypes.Component;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.context.annotation.Scope;
 
 /**
@@ -20,21 +24,32 @@ import org.springframework.context.annotation.Scope;
 @Scope("session")
 public class ShoppingCartHolder implements Serializable {
 
-    private ShoppingCart current;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7780236453596280623L;
+	private Map<String, ShoppingCart> carts = new HashMap<String, ShoppingCart>();
 
-    public static ShoppingCartHolder get() {
-        return Containers.get().findObject(ShoppingCartHolder.class);
-    }
+	public static ShoppingCartHolder get() {
+		return Containers.get().findObject(ShoppingCartHolder.class);
+	}
 
-    public ShoppingCart getCurrent() {
-        if (current == null) {
-            current = new ShoppingCart();
-
-            if (UserHolder.get().isAuthenticated()) {
-                current.setUser(UserHolder.get().getCurrent());
-            }
-        }
-        return current;
-    }
+	/**
+	 * Get a shopping cart with given name. If not exist it create a new one
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public ShoppingCart getCart(String name) {
+		ShoppingCart cart = carts.get(name);
+		if (cart == null) {
+			cart = new ShoppingCart(name);
+			if (UserHolder.get().isAuthenticated()) {
+				cart.setUser(UserHolder.get().getCurrent());
+			}
+			carts.put(name, cart);
+		}
+		return cart;
+	}
 
 }

@@ -1,59 +1,60 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="template">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
 
-    <body th:fragment="content">
+<body th:fragment="content(cart,icon)">
 
-        <div th:if="${not @shoppingCartHolder.current.isEmpty()}">
-            <ul class="nav topcart pull-right">
-                <li class="dropdown hover carticon "> <a  class="dropdown-toggle" > <i class="icon-shopping-cart font18"></i> Carrito <span class="label label-orange font14"><span th:text="${ @shoppingCartHolder.current.quantity}"></span> item(s)</span> - <span th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$200.000</span> <b class="caret"></b></a>
-                    <ul class="dropdown-menu topcartopen " style="width:400px">
-                        <li>
-                            <table>
-                                <tbody>
-                                    <tr th:each="item : ${@shoppingCartHolder.current.items}">
-                                        <td style="width: 50px"><a th:href="@{${item.URL}}"><img th:src="@{${item.imageURL}+'thumbnails/'+${item.imageName}(w=50,h=50)}"  alt="product" title="product"></img></a></td>
-                                        <td class="name"><a  th:href="@{${item.URL}}" th:text="${cmsUtil.cropText(item.name,60)}">MacBook</a></td>
-                                        <td class="quantity">x&nbsp;<span th:text="${item.quantity}">1</span></td>
-                                        <td class="total" th:text="${cmsUtil.formatNumber(item.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
-                                        <td class="remove"><a class="tooltip-test" title="Borrar" th:href="@{'/shoppingcart/remove/'+${item.code}(currentURI=${currentURI})}"><i class="icon-remove"></i></a></td>
-                                    </tr>                                  
-                                </tbody>
-                            </table>
-                            <table>
-                                <tbody>
-                                    <tr th:if="false">
-                                        <td class="textright"><b>Sub-Total:</b></td>
-                                        <td class="textright" th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$500.00</td>
-                                    </tr>
-                                    <tr  th:if="false">
-                                        <td class="textright"><b>Impuestos:</b></td>
-                                        <td class="textright" th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.totalTaxes,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$2.00</td>
-                                    </tr>
-                                    <tr  th:if="false">
-                                        <td class="textright"><b>Costos de Envio:</b></td>
-                                        <td class="textright" th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.totalShipmentPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$87.50</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="textright"><b>Total:</b></td>
-                                        <td class="textright" th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="well pull-right buttonwrap"> 
-                                <a class="btn btn-orange" th:href="@{/shoppingcart}"> <i class="icon-plus-sign-alt"></i> Ver Detalles</a>
-                                <a th:if="false" class="btn btn-orange" >Checkout</a> 
-                                <a title="Borrar todos los items" class="btn btn-orange tooltip-test" th:href="@{'/shoppingcart/clear'(currentURI=${currentURI})}" > <i class="icon-remove-circle"></i></a> 
-                                <a target="_blank" title="Imprimir carrito" class="btn btn-orange tooltip-test" th:href="@{'/shoppingcart/print'}" > <i class="icon-print"></i></a> 
+	<div th:if="${not cart.isEmpty()}">
+		<ul class="nav topcart pull-right">
+			<li class="dropdown hover carticon "><a class="dropdown-toggle"> <i th:class="${icon}+' font18'"></i> <span
+					class="label label-orange font14"><span th:text="${ cart.quantity}"></span> item(s)</span> - <span
+					th:text="${cmsUtil.formatNumber(cart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$200.000</span> <b class="caret"></b></a>
+				<ul class="dropdown-menu topcartopen " style="width: 400px">
+					<li>
+						<table>
+							<tbody>
+								<tr th:each="item : ${cart.items}">
+									<td style="width: 50px"><a th:href="@{${item.URL}}"><img th:src="@{${item.imageURL}+'thumbnails/'+${item.imageName}(w=50,h=50)}"
+											alt="product" title="product"></img></a></td>
+									<td class="name"><a th:href="@{${item.URL}}" th:text="${cmsUtil.cropText(item.name,60)}">MacBook</a></td>
+									<td class="quantity">x&nbsp;<span th:text="${item.quantity}">1</span></td>
+									<td class="total" th:text="${cmsUtil.formatNumber(item.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+									<td class="remove"><a class="tooltip-test" title="Borrar" th:href="@{'/shoppingcart/remove/'+${item.code}(currentURI=${currentURI})}"><i
+											class="icon-remove"></i></a></td>
+								</tr>
+							</tbody>
+						</table>
+						<table>
+							<tbody>
+								<tr th:if="false">
+									<td class="textright"><b>Sub-Total:</b></td>
+									<td class="textright" th:text="${cmsUtil.formatNumber(cart.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$500.00</td>
+								</tr>
+								<tr th:if="false">
+									<td class="textright"><b>Impuestos:</b></td>
+									<td class="textright" th:text="${cmsUtil.formatNumber(cart.totalTaxes,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$2.00</td>
+								</tr>
+								<tr th:if="false">
+									<td class="textright"><b>Costos de Envio:</b></td>
+									<td class="textright" th:text="${cmsUtil.formatNumber(cart.totalShipmentPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$87.50</td>
+								</tr>
+								<tr>
+									<td class="textright"><b>Total:</b></td>
+									<td class="textright" th:text="${cmsUtil.formatNumber(cart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="well pull-right buttonwrap">
+							<a class="btn btn-orange" th:href="@{'/shoppingcart/'+${cart.name}}"> <i class="icon-plus-sign-alt"></i> Ver Detalles
+							</a> <a th:if="false" class="btn btn-orange">Checkout</a> <a title="Borrar todos los items" class="btn btn-orange tooltip-test"
+								th:href="@{'/shoppingcart/'+${cart.name}+'/clear'(currentURI=${currentURI})}"> <i class="icon-remove-circle"></i></a> <a target="_blank"
+								title="Imprimir carrito" class="btn btn-orange tooltip-test" th:href="@{'/shoppingcart/'+${cart.name}+'/print'}"> <i class="icon-print"></i></a>
 
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+						</div>
+					</li>
+				</ul></li>
+		</ul>
+	</div>
 
-    </body>
+</body>
 </html>

@@ -17,7 +17,7 @@
                     <th class="price">Precio Unit.</th>
                     <th class="total">Total</th>
                 </tr>
-                <tr  th:each="item : ${@shoppingCartHolder.current.items}">
+                <tr  th:each="item : ${cart.items}">
 
                     <td style="width: 50px"><a th:href="@{${item.URL}}"><img th:src="@{${item.imageURL}+'thumbnails/'+${item.imageName}(w=90,h=90)}"  alt="product"></img></a></td>
                     <td class="name">
@@ -25,13 +25,13 @@
                         <span th:text="${item.description}"></span>
                     </td>
                     <td class="quantity" style="width:80px">
-                        <form class="form-inline" th:id="${'form'+item.code}" th:action="@{'/shoppingcart/update/'+${item.code}}" method="get">
+                        <form class="form-inline" th:id="${'form'+item.code}" th:action="@{'/shoppingcart/'+${cart.name}+'/update/'+${item.code}}" method="get">
                             <input  title="presione ENTER para actualizar"  name="quantity" type="text" size="1" value="1" th:value="${item.quantity}"> </input>
                         </form>
                     </td>
 
                     <td class="total" style="width: 40px">
-                        <a class="tooltip-test " title="Borrar" th:href="@{'/shoppingcart/remove/'+${item.code}(currentURI=${currentURI})}"><i class="font24 icon-remove-circle"></i></a>
+                        <a class="tooltip-test " title="Borrar" th:href="@{'/shoppingcart/'+${cart.name}+'/remove/'+${item.code}(currentURI=${currentURI})}"><i class="font24 icon-remove-circle"></i></a>
                     </td>
                     <td class="price" th:text="${cmsUtil.formatNumber(item.unitPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$120.68</td>
                     <td class="total" th:text="${cmsUtil.formatNumber(item.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
@@ -45,19 +45,19 @@
                         <tbody>
                             <tr th:if="false">
                                 <td class="textright"><b>Sub-Total:</b></td>
-                                <td class="textright" th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$500.00</td>
+                                <td class="textright" th:text="${cmsUtil.formatNumber(cart.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$500.00</td>
                             </tr>
                             <tr  th:if="false">
                                 <td class="textright"><b>Impuestos:</b></td>
-                                <td class="textright" th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.totalTaxes,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$2.00</td>
+                                <td class="textright" th:text="${cmsUtil.formatNumber(cart.totalTaxes,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$2.00</td>
                             </tr>
                             <tr  th:if="false">
                                 <td class="textright"><b>Costos de Envio:</b></td>
-                                <td class="textright" th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.totalShipmentPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$87.50</td>
+                                <td class="textright" th:text="${cmsUtil.formatNumber(cart.totalShipmentPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$87.50</td>
                             </tr>
                             <tr>
                                 <td class="textright"><b>Gran Total:</b></td>
-                                <td class="textright" th:text="${cmsUtil.formatNumber(@shoppingCartHolder.current.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+                                <td class="textright" th:text="${cmsUtil.formatNumber(cart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
                             </tr>
                         </tbody>
                     </table>

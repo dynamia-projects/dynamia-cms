@@ -23,61 +23,68 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/shoppingcart")
 public class ShoppingCartController {
 
-    @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
-    public ModelAndView main(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView();
-        SiteActionManager.performAction("viewShoppingCart", mv, request);
+	@RequestMapping(value = { "/{name}" }, method = RequestMethod.GET)
+	public ModelAndView main(@PathVariable String name, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("cartName", name);
+		SiteActionManager.performAction("viewShoppingCart", mv, request);
 
-        return mv;
-    }
+		return mv;
+	}
 
-    @RequestMapping(value = "/print", method = RequestMethod.GET)
-    public ModelAndView print(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("title", "Listado ");
-        SiteActionManager.performAction("printShoppingCart", mv, request);
+	@RequestMapping(value = "/{name}/print", method = RequestMethod.GET)
+	public ModelAndView print(@PathVariable String name, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("cartName", name);
+		mv.addObject("title", "Listado ");
+		SiteActionManager.performAction("printShoppingCart", mv, request);
 
-        return mv;
-    }
+		return mv;
+	}
 
-    @RequestMapping(value = "/add/{itemCode}", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView add(@PathVariable String itemCode, HttpServletRequest request, final RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView();
-        String redirect = request.getParameter("currentURI");
+	@RequestMapping(value = "/{name}/add/{itemCode}", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView add(@PathVariable String name, @PathVariable String itemCode, HttpServletRequest request,
+			final RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("cartName", name);
+		String redirect = request.getParameter("currentURI");
+		mv.setView(new RedirectView(redirect, true, true, false));
+		SiteActionManager.performAction("addItemToCart", mv, request, redirectAttributes, itemCode);
 
-        mv.setView(new RedirectView(redirect, true, true, false));
-        SiteActionManager.performAction("addItemToCart", mv, request, redirectAttributes, itemCode);
+		return mv;
+	}
 
-        return mv;
-    }
+	@RequestMapping(value = "/{name}/remove/{itemCode}", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView remove(@PathVariable String name, @PathVariable String itemCode, HttpServletRequest request,
+			final RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("cartName", name);
+		String redirect = request.getParameter("currentURI");
+		mv.setView(new RedirectView(redirect, true, true, false));
+		SiteActionManager.performAction("removeItemFromCart", mv, request, redirectAttributes, itemCode);
 
-    @RequestMapping(value = "/remove/{itemCode}", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView remove(@PathVariable String itemCode, HttpServletRequest request, final RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView();
-        String redirect = request.getParameter("currentURI");
-        mv.setView(new RedirectView(redirect, true, true, false));
-        SiteActionManager.performAction("removeItemFromCart", mv, request, redirectAttributes, itemCode);
+		return mv;
+	}
 
-        return mv;
-    }
+	@RequestMapping(value = "/{name}/clear", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView clear(@PathVariable String name, HttpServletRequest request, final RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("cartName", name);
+		String redirect = request.getParameter("currentURI");
+		mv.setView(new RedirectView(redirect, true, true, false));
+		SiteActionManager.performAction("clearShoppingCart", mv, request, redirectAttributes, null);
 
-    @RequestMapping(value = "/clear", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView clear(HttpServletRequest request, final RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView();
-        String redirect = request.getParameter("currentURI");
-        mv.setView(new RedirectView(redirect, true, true, false));
-        SiteActionManager.performAction("clearShoppingCart", mv, request, redirectAttributes, null);
+		return mv;
+	}
 
-        return mv;
-    }
+	@RequestMapping(value = "/{name}/update/{itemCode}", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView update(@PathVariable String name, @PathVariable String itemCode, HttpServletRequest request,
+			final RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView("/shopping");
+		mv.addObject("cartName", name);
+		SiteActionManager.performAction("updateItemFromCart", mv, request, redirectAttributes, itemCode);
 
-    @RequestMapping(value = "/update/{itemCode}", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView update(@PathVariable String itemCode, HttpServletRequest request, final RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView("/shopping");
-
-        SiteActionManager.performAction("updateItemFromCart", mv, request, redirectAttributes, itemCode);
-
-        return mv;
-    }
+		return mv;
+	}
 
 }

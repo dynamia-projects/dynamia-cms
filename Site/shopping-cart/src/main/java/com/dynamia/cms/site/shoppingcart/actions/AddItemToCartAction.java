@@ -10,8 +10,11 @@ import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
+import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
+import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
 import com.dynamia.cms.site.shoppingcart.domains.ShoppingCartItem;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,25 +25,28 @@ import org.springframework.web.servlet.ModelAndView;
 @CMSAction
 public class AddItemToCartAction implements SiteAction {
 
-    @Autowired
-    private ShoppingCartService service;
+	@Autowired
+	private ShoppingCartService service;
 
-    @Override
-    public String getName() {
-        return "addItemToCart";
-    }
+	@Override
+	public String getName() {
+		return "addItemToCart";
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView();
-        String code = (String) evt.getData();
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView();
+		String code = (String) evt.getData();
 
-        ShoppingCartItem item = service.getItem(evt.getSite(), code);
-        if (item != null) {
-            ShoppingCartHolder.get().getCurrent().addItem(item);
-            CMSUtil.addSuccessMessage(item.getName().toUpperCase() + " agregado exitosamente al carrito", evt.getRedirectAttributes());
-        }
+		ShoppingCartItem item = service.getItem(evt.getSite(), code);
+		if (item != null) {
+			ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
+			if (shoppingCart != null) {
+				shoppingCart.addItem(item);
+				CMSUtil.addSuccessMessage(item.getName().toUpperCase() + " agregado exitosamente al carrito", evt.getRedirectAttributes());
+			}
+		}
 
-    }
+	}
 
 }
