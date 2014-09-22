@@ -5,12 +5,12 @@
 	<parent>
 		<artifactId>com.dynamia.cms.admin.parent</artifactId>
 		<groupId>com.dynamia.cms</groupId>
-		<version>0.8</version>
+		<version>0.9</version>
 	</parent>
 	<groupId>com.dynamia.cms</groupId>
 	<artifactId>com.dynamia.cms.admin.web</artifactId>
 	<packaging>war</packaging>
-	<version>0.8</version>
+	<version>0.9</version>
 	<name>DynamiaCMS Admin - Web (${project.version})</name>
 	<url>http://www.dynamiasoluciones.com</url>
 
@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.admin.mail</artifactId>
-			<version>0.8</version>
+			<version>0.9</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>

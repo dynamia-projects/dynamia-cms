@@ -6,7 +6,7 @@
 	<artifactId>com.dynamia.cms.admin.parent</artifactId>
 	<name>DynamiaCMS Admin  (${project.version})</name>
 	<packaging>pom</packaging>
-	<version>0.8</version>
+	<version>0.9</version>
 	<url>http://www.dynamiasoluciones.com</url>
 	<build>
 		<plugins>

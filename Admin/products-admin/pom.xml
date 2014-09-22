@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.dynamia.cms</groupId>
         <artifactId>com.dynamia.cms.admin.parent</artifactId>
-        <version>0.8</version>
+        <version>0.9</version>
     </parent>
     <name>DynamiaCMS Admin - Products (${project.version})</name>
     <groupId>com.dynamia.cms</groupId>
     <artifactId>com.dynamia.cms.admin.products</artifactId>
-    <version>0.8</version>
+    <version>0.9</version>
     
     <url>http://maven.apache.org</url>
     <properties>
