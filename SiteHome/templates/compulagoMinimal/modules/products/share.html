@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+<div class="maincontainer" layout:fragment="content">
+
+
+	<div class="container">
+		<!-- Main Title-->
+		<div class="titles animated fadeInUp time3">
+			<div class="pull-left">
+				<h1 th:text="${prd_product.name}" class="headinglefttitle">Page title</h1>
+				<div th:text="${'Codigo: '+prd_product.sku}" class="headingsubtitle"></div>
+				<div th:text="${'Referencia: '+prd_product.reference}" class="headingsubtitle"></div>
+			</div>
+			<div class="pull-right mt10">
+				<a th:if="${prd_product.brand}" th:href="@{'/store/brands/'+${prd_product.brand.alias}}"> <img class="animated flip time3"
+					th:if="${prd_product.brand}" th:src="@{'/resources/products/brands/thumbnails/'+${prd_product.brand.image}(w=100,h=100)}"
+					th:title="${prd_product.brand.name}" th:alt="${prd_product.brand.name}" />
+				</a>
+
+			</div>
+		</div>
+
+		<!-- Product-->
+		<div class="row mt10">
+			<!-- Left Image-->
+			<div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
+
+				<h4 class="orange" th:if="${prd_product.stock gt 0}">
+					<i class="icon-check-sign"></i> En Inventario
+				</h4>
+
+
+				<ul class="thumbnails mainimage clearfix mt40">
+					<li><img th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="my-foto-container"
+						src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}"
+						title="Your Product Name" /></li>
+				</ul>
+
+				<ul class="thumbnails mainimage clearfix">
+					<li th:if="${prd_product.image!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img
+						th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}" title="Your Product Name" /></li>
+					<li th:if="${prd_product.image2!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img
+						th:src="@{'/resources/products/images/'+${prd_product.image2}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image2}}" th:data-title="${prd_product.name}" title="Your Product Name" /></li>
+					<li th:if="${prd_product.image3!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img
+						th:src="@{'/resources/products/images/'+${prd_product.image3}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image3}}" th:data-title="${prd_product.name}" title="Your Product Name" /></li>
+					<li th:if="${prd_product.image4!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img
+						th:src="@{'/resources/products/images/'+${prd_product.image4}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image4}}" th:data-title="${prd_product.name}" title="Your Product Name" /></li>
+				</ul>
+			</div>
+
+			<!-- Right Details-->
+			<div class="col-lg-7 col-md-7 col-xs-12 col-sm-12 mt40column">
+
+				<div class="productprice" th:if="${not prd_product.showCreditPrices}">
+
+					<div class="productpageprice">
+						<i class="icon-tags"></i><span th:text="${cmsUtil.formatNumber(prd_product.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
+					</div>
+					<div th:if="${prd_product.price lt prd_product.lastPrice and prd_product.sale}" class="productpageoldprice">
+						Antes <span th:text="${cmsUtil.formatNumber(prd_product.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
+					</div>
+
+				</div>
+				<div th:if="${prd_product.showCreditPrices}">
+
+					<div th:each="cp : ${prd_product.creditPrices}">
+						<span style="display: inline"> <span class="productpageprice"
+							th:text="${cmsUtil.formatNumber(cp.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> <span
+							style="font-size: larger" th:text="${cp.number+' '+cp.description}"></span>
+						</span>
+
+					</div>
+				</div>
+
+				<div class="">
+					<span th:text="${prd_product.description}">description</span> <br />
+
+				</div>
+
+				<!-- Product Details tab & comments-->
+				<div class="productdesc clear fix">
+					<h1>Recomendar a un Amigo</h1>
+					<form role="form" class="form-vertical" th:action="@{/store/share}" th:object="${prd_shareForm}" th:method="post">
+
+						<!-- Text input-->
+						<div class="form-group">
+							<input th:field="*{friendName}" id="name" name="" type="text" placeholder="Nombre de tu amigo" class="form-control" />
+						</div>
+						<div class="form-group">
+							<input th:field="*{friendEmail}" id="email" name="" type="email" placeholder="Email de tu amigo" class="form-control" />
+						</div>
+						<div class="form-group">
+							<input th:field="*{yourName}" id="yourName" name="" type="text" placeholder="Tu nombre" class="form-control" />
+						</div>
+						<div class="form-group">
+							<textarea th:field="*{message}" rows="6" cols="40" id="message" name="" placeholder="Mensaje" class="form-control"></textarea>
+						</div>
+
+						<input th:field="*{productId}" id="productId" th:value="${prd_product.id}" name="" type="hidden" />
+
+						<!-- Button -->
+						<div class="form-group">
+							<button type="submit" class="btn btn-orange">
+								Enviar <i class="icon-envelope icon-white"></i>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Related Project-->
+	<div th:if="${prd_relatedProducts!=null and  not #lists.isEmpty(prd_relatedProducts)}" class="featureprojectcontianer container mt40">
+		<h2 class="heading1">
+			<span class="maintext">Productos Relacionados</span>
+		</h2>
+		<th:block th:include="products/components/productcarousel::frag(${prd_relatedProducts},5)" />
+
+	</div>
+</div>
+</html>

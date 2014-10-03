@@ -67,6 +67,13 @@ public class UsersConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe().key(StringUtils.randomString())
                 .and()
                 .httpBasic();
+        
+        http.headers()
+        .cacheControl()
+        .xssProtection()
+        .httpStrictTransportSecurity()
+        .contentTypeOptions();
+        
 
     }
 

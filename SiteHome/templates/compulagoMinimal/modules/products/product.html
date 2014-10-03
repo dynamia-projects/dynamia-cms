@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+<div class="maincontainer" layout:fragment="content">
+
+
+	<div class="container">
+		<!-- Main Title-->
+		<div class="titles animated fadeInUp time3">
+			<div class="pull-left">
+				<h1 th:text="${prd_product.name}" class="headinglefttitle">Page title</h1>
+				<div th:text="${'Codigo: '+prd_product.sku}" class="headingsubtitle"></div>
+				<div th:text="${'Referencia: '+prd_product.reference}" class="headingsubtitle"></div>
+			</div>
+			<div class="pull-right mt10">
+				<a th:if="${prd_product.brand}" th:href="@{'/store/brands/'+${prd_product.brand.alias}}"> <img class="animated flip time3"
+					th:if="${prd_product.brand}" th:src="@{'/resources/products/brands/thumbnails/'+${prd_product.brand.image}(w=100,h=100)}"
+					th:title="${prd_product.brand.name}" th:alt="${prd_product.brand.name}" />
+				</a>
+
+			</div>
+		</div>
+
+		<!-- Product-->
+		<div class="row mt10">
+			<!-- Left Image-->
+			<div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
+
+
+
+
+
+				<h4 class="orange" th:if="${prd_product.stock gt 0}">
+					<i class="icon-check-sign"></i> En Inventario
+				</h4>
+
+
+				<ul class="thumbnails mainimage clearfix mt40">
+					<li><img th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="my-foto-container"
+						src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}"
+						title="Your Product Name" /></li>
+				</ul>
+
+				<ul class="thumbnails mainimage clearfix">
+					<li th:if="${prd_product.image!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img
+						th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}" title="Your Product Name" /></li>
+					<li th:if="${prd_product.image2!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img
+						th:src="@{'/resources/products/images/'+${prd_product.image2}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image2}}" th:data-title="${prd_product.name}" title="Your Product Name" /></li>
+					<li th:if="${prd_product.image3!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img
+						th:src="@{'/resources/products/images/'+${prd_product.image3}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image3}}" th:data-title="${prd_product.name}" title="Your Product Name" /></li>
+					<li th:if="${prd_product.image4!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img
+						th:src="@{'/resources/products/images/'+${prd_product.image4}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image4}}" th:data-title="${prd_product.name}" title="Your Product Name" /></li>
+				</ul>
+			</div>
+
+			<!-- Right Details-->
+			<div class="col-lg-7 col-md-7 col-xs-12 col-sm-12 mt40column">
+
+				<div class="productprice" th:if="${not prd_product.showCreditPrices}">
+
+					<div class="productpageprice">
+						<i class="icon-tags"></i><span th:text="${cmsUtil.formatNumber(prd_product.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
+					</div>
+					<div th:if="${prd_product.price lt prd_product.lastPrice and prd_product.sale}" class="productpageoldprice">
+						Antes <span th:text="${cmsUtil.formatNumber(prd_product.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
+					</div>
+
+				</div>
+				<div th:if="${prd_product.showCreditPrices}">
+
+					<div th:each="cp : ${prd_product.creditPrices}">
+						<span style="display: inline"> <span class="productpageprice"
+							th:text="${cmsUtil.formatNumber(cp.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span> <span
+							style="font-size: larger" th:text="${cp.number+' '+cp.description}"></span>
+						</span>
+
+					</div>
+				</div>
+
+
+
+				<div th:if="${prd_story!=null}">
+					<span>Has visto este producto <strong class="orange" th:text="${prd_story.views}">TANTA</strong> veces!
+					</span>
+				</div>
+
+				<div class="">
+					<span th:text="${prd_product.description}">description</span> <br />
+
+				</div>
+
+			
+				<!-- Product Details tab & comments-->
+				<div class="productdesc">
+					<ul class="nav nav-tabs" id="myTab">
+						<li class="active"><a href="#specification">Caracteristicas</a></li>
+						<li><a href="#producttag">Etiquetas</a></li>
+					</ul>
+					<div class="tab-content">
+						<!-- DESCRIPTION -->
+
+						<div class="tab-pane active" id="specification">
+
+
+							<ul class="productinfo">
+
+
+								<li th:if="${prd_product.brand}"><span th:text="${'Marca '}" class="productinfoleft">NAME</span> <span class="tooltip-test"
+									title="Ver otros productos de esta marca"> <strong> <a class="orange" th:text="${prd_product.brand.name}"
+											th:href="@{'/store/brands/'+${prd_product.brand.alias}}" href="#" />
+									</strong>
+								</span></li>
+
+
+								<li th:each="det : ${prd_product.details}"><span th:text="${det.name}" class="productinfoleft">NAME</span> <span> <span
+										th:text="${det.value}">VALUE</span> <span th:text="${det.description}">DESCRIPTION</span>
+								</span></li>
+								<li><span th:text="${'Visto '}" class="productinfoleft">NAME</span><span th:text="${prd_product.views+' veces'}">VALUE</span></li>
+								<li th:if="${prd_product.externalLink!=null}"><span></span> <span class="productinfoleft"><a class="orange" target="_blank"
+										th:href="@{${prd_product.externalLink}}">Mas Informacion</a></span></li>
+
+							</ul>
+						</div>
+
+
+						<div class="tab-pane" id="producttag">
+
+							<ul class="tags" th:if="${prd_product.tags!=null}">
+								<li th:each="tag : ${#strings.setSplit(prd_product.tags,',')}"><a><i class="icon-tag"></i><span th:text="${tag}">Tag HERE</span></a></li>
+
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="tab-pane" id="stocks" th:if="${prd_product.stock gt 0}">
+					<h3 class="orange">Disponibilidad y Direcciones</h3>
+					<div class="container">
+						<div class="row" th:each="det : ${prd_stock_details}">
+							<div class="col-md-2" th:text="${det.store.contactInfo.city}">VALUE</div>
+							<div class="col-md-4 orange">
+								<a data-toggle="modal" class="tooltip-test" title="Ver direccion" th:href="${'#store'+det.store.id}" th:text="${det.store.name.toUpperCase()}">NAME</a>
+							</div>
+							<div class="col-md-2" th:text="${det.stock+' en stock'}">VALUE</div>							
+							<div class="col-md-4">
+								<span th:text="${det.store.contactInfo.phoneNumber+' / '+det.store.contactInfo.mobileNumber}"></span> <a data-toggle="modal"
+									class="tooltip-test" th:href="${'#store'+det.store.id}" title="Ver direccion"><i class="icon-plus-sign"></i></a>
+							</div>
+
+							<th:block th:include="products/components/storedialog::content(${det.store})" />
+						</div>
+						<div class="row mt10 mb20">
+							<div class="col-md-12 pull-right">
+								<span>Ultima Actualizacion</span> <strong th:text="${#dates.format(prd_config.lastSync, 'dd MMMM yyyy   HH:mm aa')}"></strong>
+							</div>
+						</div>
+						<!-- Buttons -->
+						<div class="productbtn orange ">
+							 <a th:href="@{'/store/products/'+${prd_product.id}+'/compare'}" class="btn btn-small tooltip-test"
+								data-original-title="Compara con otros productos"> <i class="icon-refresh icon-white"></i> Comparar
+							</a> <a class="btn btn-small tooltip-test" th:href="@{'/store/products/'+${prd_product.id}+'/print'}" target="_blank"> <i
+								class="icon-print icon-white"></i> Imprimir
+							</a> <a class="btn btn-small tooltip-test" th:href="${'#shareProduct'+prd_product.id}" data-toggle="modal"> <i class="icon-envelope icon-white"></i>
+								Recomendar a un Amigo
+							</a>
+						</div>
+						<th:block th:include="products/components/sharedialog::content" />
+
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	</div>
+
+	<!-- Related Project-->
+	<div th:if="${prd_relatedProducts!=null and  not #lists.isEmpty(prd_relatedProducts)}" class="featureprojectcontianer container mt40">
+		<h2 class="heading1">
+			<span class="maintext">Productos Relacionados</span>
+		</h2>
+		<th:block th:include="products/components/productcarousel::frag(${prd_relatedProducts},5)" />
+
+	</div>
+</div>
+</html>
