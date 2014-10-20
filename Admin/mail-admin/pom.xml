@@ -26,7 +26,7 @@
         <dependency>
             <groupId>com.dynamia.cms</groupId>
             <artifactId>com.dynamia.cms.site.mail</artifactId>
-            <version>0.8</version>
+            <version>${site.cms.version}</version>
         </dependency>
     </dependencies>
 </project>
