@@ -32,6 +32,7 @@ import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.integration.scheduling.SchedulerUtil;
 import com.dynamia.tools.integration.scheduling.Task;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -45,13 +46,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
  * @author mario
  */
 @Service
@@ -184,14 +185,19 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         if (remoteProduct.getStockDetails() != null) {
 
             for (ProductStockDTO remoteDetail : remoteProduct.getStockDetails()) {
+                try {
 
-                ProductStock localDetail = new ProductStock();
-
-                localDetail.setSite(localProduct.getSite());
-                localDetail.setProduct(localProduct);
-                localDetail.setStore(crudService.findSingle(Store.class, "externalRef", remoteDetail.getStoreExternalRef()));
-                localDetail.sync(remoteDetail);
-                crudService.save(localDetail);
+                    ProductStock localDetail = new ProductStock();
+                    localDetail.setSite(localProduct.getSite());
+                    localDetail.setProduct(localProduct);
+                    localDetail.setStore(getLocalEntity(Store.class, remoteDetail.getStoreExternalRef(), siteCfg));
+                    localDetail.sync(remoteDetail);
+                    if (localDetail.getProduct() != null && localDetail.getStore() != null) {
+                        crudService.save(localDetail);
+                    }
+                } catch (Exception e) {
+                    logger.error("Error creando stock de producto " + localProduct.getName() + ", Store External ID: " + remoteDetail.getStoreExternalRef());
+                }
             }
         }
     }

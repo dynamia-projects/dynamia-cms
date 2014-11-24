@@ -10,7 +10,11 @@ fields:
       label: Type   
    enabled:     
    position:
+   order:
    uuid:
+
+params:
+   orderBy: order
  
      
    

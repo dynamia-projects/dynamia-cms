@@ -18,6 +18,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.dynamia.cms.site.core.Orderable;
 import com.dynamia.cms.site.pages.domain.Page;
 import com.dynamia.tools.domain.SimpleEntity;
 import com.dynamia.tools.domain.contraints.NotEmpty;
@@ -28,7 +29,7 @@ import com.dynamia.tools.domain.contraints.NotEmpty;
  */
 @Entity
 @Table(name = "mn_menuitems")
-public class MenuItem extends SimpleEntity implements Serializable {
+public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 
 	private String name = "";
 	@OneToOne

@@ -1,6 +1,6 @@
 view: table
 beanClass: com.dynamia.cms.site.menus.domain.MenuItem
-hidden: [id,menu,parentItem,styleClass,order]
+hidden: [id,menu,parentItem,styleClass]
 sortFields: [name,title,type,icon,href,target,page,page.category]
 
 fields:

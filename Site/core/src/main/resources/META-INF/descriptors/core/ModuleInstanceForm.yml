@@ -19,6 +19,7 @@ fields:
    enabled:
    titleVisible:
    styleClass:
+   order:
    parameters:
       component: crudview
    
