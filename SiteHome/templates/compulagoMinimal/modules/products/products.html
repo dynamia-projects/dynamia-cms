@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+
+    <div class="container" layout:fragment="content">
+
+
+
+        <div class="row mt10">
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">
+                <div class="titles animated fadeInUp time3">
+                    <div class="pull-left">
+                        <h1 th:text="${title}" class="headinglefttitle">Page title</h1>
+                    </div>
+                    <i th:class="${'icon-'+icon+' animated flip time3'}" class="icon-warning-sign"></i> 
+                    <!-- Subcategories -->
+                    <div class="clearfix" th:include="products/components/subcategoriesmenu::content"/>                         
+                    <div class="clearfix" th:include="products/components/brandsmenu::frag(${prd_category},${prd_categoryBrands})"/> 
+
+                </div>
+
+
+                <!--Top Pagination -->
+                <div class="clearfix"/>
+                <div class="nav pull-left">
+                    <a class="btn btn btn-orange btn-sm" th:href="@{${currentURI}}"><span class="icon-asterisk"></span> Todos</a>
+                    <a class="btn btn btn-danger btn-sm" th:href="@{${currentURI}+'?new'}"><span class="icon-bookmark-empty"></span>  Nuevos</a>
+                    <a class="btn btn btn-warning btn-sm" th:href="@{${currentURI}+'?sale'}"><span class="icon-gift"></span> Ofertas</a>
+                    <a class="btn btn btn-primary btn-sm" th:href="@{${currentURI}+'?views'}"><span class="icon-eye-open"></span> Mas Vistos</a>
+                    <a class="btn btn btn-warning btn-sm" th:href="@{${currentURI}+'?featured'}"><span class="icon-star-empty"></span> Destacados</a>
+                </div>
+                <div th:include="products/components/productpagination::content" />
+                <div class="clearfix"/>
+                <!-- PRODUCTS -->
+
+                <div class="featureprojectcontianer mt10" id="productlist">
+                    <div class="featureprojectwrap latestprojectcontianer grid">
+                        <!-- Grid -->
+                        <div th:include="products/components/productgrid::frag(${prd_products})"/>
+
+                        <!-- Paging-->
+                        <div class="mt40 clearfix">
+                            <div th:include="products/components/productpagination::content" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</html>

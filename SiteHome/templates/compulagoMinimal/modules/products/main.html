@@ -1,58 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="template">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
 
 <div class="maincontainer" layout:fragment="content">
 
-	<div class="container">
+    <div class="container">
 
-		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt40column">
-			
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">
 
-			<div th:if="${prd_specialProducts!=null and  not #lists.isEmpty(prd_specialProducts)}" class="featureprojectcontianer container mt40">
-				<h2 class="heading1">
-					<span class="maintext">Novedades</span>
-				</h2>
-				<th:block th:include="products/components/productcarousel::frag(${prd_specialProducts},4)" />
-			</div>
+            <th:block th:include="module::position('maincontent')"/>
+        </div>
 
-
-			<div th:if="${prd_mostViewedProducts!=null and  not #lists.isEmpty(prd_mostViewedProducts)}" class="featureprojectcontianer container mt40">
-				<h2 class="heading1">
-					<span class="maintext">Los mas vistos</span>
-				</h2>
-				<th:block th:include="products/components/productcarousel::frag(${prd_mostViewedProducts},4)" />
-			</div>
-
-			<div th:if="${prd_priceVariations!=null and  not #lists.isEmpty(prd_priceVariations)}" class="featureprojectcontianer container mt40">
-				<h2 class="heading1">
-					<span class="maintext">Mejoraron su precio</span>
-				</h2>
-				<th:block th:include="products/components/productcarousel::frag(${prd_priceVariations},4)" />
-			</div>
-
-			<div th:if="${prd_recentViewedProducts!=null and  not #lists.isEmpty(prd_recentViewedProducts)}" class="featureprojectcontianer container mt40">
-				<h2 class="heading1">
-					<span class="maintext">Tu historial</span>
-				</h2>
-				<th:block th:include="products/components/productcarousel::frag(${prd_recentViewedProducts},4)" />
-			</div>
-
-			<div th:if="${prd_relatedProducts!=null and  not #lists.isEmpty(prd_relatedProducts)}" class="featureprojectcontianer container mt40">
-				<h2 class="heading1">
-					<span class="maintext">Recomendados</span>
-				</h2>
-				<th:block th:include="products/components/productcarousel::frag(${prd_relatedProducts},4)" />
-			</div>
-
-		</div>
-
-		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt40column">
-			<!--categories-->
-			<div th:include="products/components/categorylist::content" />
-
-		</div>
-
-	</div>
+    </div>
 </div>
 </html>

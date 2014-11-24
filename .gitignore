@@ -11,3 +11,5 @@ gen/
 *.log
 /SiteHome/sites/
 .springBeans
+*.iml
+.idea/

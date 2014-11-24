@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Main Menu -->
+
+<body th:fragment="module(instance)">
+
+<div th:class="'clearfix mt20 '+${instance.styleClass}">
+    <h2 class="heading1" th:if="${instance.titleVisible}">
+        <span class="maintext" th:text="${instance.title}">Title</span>
+    </h2>
+    <th:block
+            th:include="products/components/productcarousel::frag(${instance.model.products},${instance.model.columns})"/>
+</div>
+
+</body>
+
+</html>

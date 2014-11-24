@@ -3,7 +3,7 @@
 <log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
    
     <appender name="applicationFileLog" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="logs/cms.log"/>
+        <param name="File" value="logs/cms-admin.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{dd-MMM-yyyy HH:mm} [%-5p] %m %n"/>
@@ -28,6 +28,7 @@
  
     <root>
         <priority value ="info" />
+        <appender-ref ref="applicationFileLog" />
         <appender-ref ref="consoleAppender" />
     </root>
 
