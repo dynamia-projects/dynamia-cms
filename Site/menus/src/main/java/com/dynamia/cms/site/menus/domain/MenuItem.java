@@ -38,6 +38,8 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 	private Menu menu;
 	@ManyToOne
 	private MenuItem parentItem;
+	@ManyToOne
+	private MenuItemGroup parentGroup;
 	private String icon;
 	@Column(name = "itemOrder")
 	private int order;
@@ -47,6 +49,8 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 	private List<MenuItemParameter> parameters = new ArrayList<>();
 	@OneToMany(mappedBy = "parentItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<MenuItem> subitems = new ArrayList<>();
+	@OneToMany(mappedBy = "parentItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<MenuItemGroup> itemsGroups = new ArrayList<>();
 	private String styleClass = "";
 	private String href;
 	private String title = "";
@@ -80,6 +84,14 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 		this.name = name;
 		this.icon = icon;
 		this.href = href;
+	}
+
+	public MenuItemGroup getParentGroup() {
+		return parentGroup;
+	}
+
+	public void setParentGroup(MenuItemGroup parentGroup) {
+		this.parentGroup = parentGroup;
 	}
 
 	public String getTitle() {
@@ -119,6 +131,14 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 
 	public void setSubitems(List<MenuItem> subitems) {
 		this.subitems = subitems;
+	}
+
+	public List<MenuItemGroup> getItemsGroups() {
+		return itemsGroups;
+	}
+
+	public void setItemsGroups(List<MenuItemGroup> itemsGroups) {
+		this.itemsGroups = itemsGroups;
 	}
 
 	public String getIcon() {
@@ -194,6 +214,11 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 			subitem.setParentItem(this);
 			subitems.add(subitem);
 		}
+	}
+
+	public void addMenuItemGroup(MenuItemGroup group) {
+		group.setParentItem(this);
+		itemsGroups.add(group);
 	}
 
 	public String getTarget() {

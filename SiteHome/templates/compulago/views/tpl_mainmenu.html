@@ -4,14 +4,15 @@
 <!-- Main Menu -->
 
 <body th:fragment="content">
-	<div id="mainmenu" class="mb10">
-		<!-- Navigation -->
-		<nav class="subnav">
-			<div class="container menurelative">
+
+	<div id="mainmenu">
+		<div class="subnav" style="padding: 0px; margin: 0px; height: 50px">
+			<div class="container ">
 				<th:block th:include="module::position('mainmenu')" />
 			</div>
-		</nav>
+		</div>
 	</div>
+
 </body>
 
 </html>

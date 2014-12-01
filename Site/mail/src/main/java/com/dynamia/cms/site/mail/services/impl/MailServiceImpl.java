@@ -27,6 +27,7 @@ import com.dynamia.cms.site.mail.MailServiceException;
 import com.dynamia.cms.site.mail.MailServiceListener;
 import com.dynamia.cms.site.mail.domain.MailAccount;
 import com.dynamia.cms.site.mail.domain.MailTemplate;
+import com.dynamia.cms.site.mail.domain.MailingContact;
 import com.dynamia.cms.site.mail.services.MailService;
 import com.dynamia.tools.commons.logger.LoggingService;
 import com.dynamia.tools.commons.logger.SLF4JLoggingService;
@@ -193,6 +194,11 @@ public class MailServiceImpl implements MailService {
 		velocityEngine.evaluate(context, contentWriter, "log", template.getContent());
 		message.setSubject(subjectWriter.toString());
 		message.setContent(contentWriter.toString());
+	}
+	
+	@Override
+	public boolean existsMailingContact(MailingContact contact) {
+		return crudService.findSingle(MailingContact.class, "emailAddress", contact.getEmailAddress())!=null;		
 	}
 
 	private void fireOnMailSending(MailMessage message) {

@@ -100,6 +100,10 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         if (remoteCategory.getParent() != null) {
             localCategory.setParent(getLocalEntity(ProductCategory.class, remoteCategory.getParent().getExternalRef(), siteCfg));
         }
+        
+        if (remoteCategory.getRelatedCategoryExternalRef() != null) {
+            localCategory.setRelatedCategory(getLocalEntity(ProductCategory.class, remoteCategory.getRelatedCategoryExternalRef(), siteCfg));
+        }
 
         crudService.save(localCategory);
 

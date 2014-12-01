@@ -5,5 +5,7 @@ autofields: false
 
 fields:
     name:
+    relatedCategory:
+       label: Related
     description:
     active:

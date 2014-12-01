@@ -95,4 +95,6 @@ public interface ProductsService {
 
 	public abstract void shareProduct(ProductShareForm form);
 
+	public List<ProductCategory> getRelatedCategories(ProductCategory category);
+
 }

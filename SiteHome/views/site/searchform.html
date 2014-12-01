@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 
-    <div th:fragment="content">
+<div th:fragment="content">
 
-        <form action="#" class="form-inline" th:action="@{/search}" th:object="${searchForm}" method="get">
-            <input type="search" placeholder="Busqueda" class="form-control" th:field="*{query}"/>
-            <button type="submit" data-original-title="Buscar" class="btn btn-orange btn-small tooltip-test"> <i class="icon-search icon-white"></i> </button>
-        </form>
-    </div>
+	<form action="#" class="form-inline" th:action="@{/search}" th:object="${searchForm}" method="get">
+		<div class="input-group">
+			<input type="search" placeholder="Buscar por palabras claves, marcas, productos" class="form-control" th:field="*{query}" style="width: 380px" />
+			<button type="submit" class="btn btn-orange btn-small tooltip-test">
+				<i class="icon-search icon-white"></i> Buscar
+			</button>
+		</div>
+	</form>
+</div>
 
 
 </html>

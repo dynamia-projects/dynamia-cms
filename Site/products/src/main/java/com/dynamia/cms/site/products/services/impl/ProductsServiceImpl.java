@@ -525,5 +525,14 @@ public class ProductsServiceImpl implements ProductsService {
 		mailService.send(message);
 
 	}
+	
+	@Override
+	public List<ProductCategory> getRelatedCategories(ProductCategory category) {
+		QueryParameters qp = QueryParameters.with("relatedCategory", category);
+		qp.add("active", true);
+		qp.add("site", category.getSite());
+		qp.orderBy("name", true);
+		return crudService.find(ProductCategory.class, qp);
+	}
 
 }

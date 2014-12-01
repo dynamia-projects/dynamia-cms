@@ -6,9 +6,9 @@
     <body th:fragment="frag (productlist)">
 
 
-        <ul class="mt20 clearfix " th:each="group : ${cmsUtil.groupCollection(productlist,4)}">
+        <ul class="mt20 clearfix " th:each="group : ${cmsUtil.groupCollection(productlist,6)}">
          
-            <li class="col-lg-3 col-md-3 col-sm-6 col-xs-12" th:each="prd : ${group.collection}">
+            <li class="col-lg-2 col-md-2 col-sm-12 col-xs-12" th:each="prd : ${group.collection}">
                 <div th:include="products/components/productpanel::frag(${prd})"/>
             </li>
         </ul>

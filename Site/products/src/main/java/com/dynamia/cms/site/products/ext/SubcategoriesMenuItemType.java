@@ -13,6 +13,7 @@ import com.dynamia.cms.site.core.api.CMSExtension;
 import com.dynamia.cms.site.menus.MenuContext;
 import com.dynamia.cms.site.menus.api.MenuItemTypeExtension;
 import com.dynamia.cms.site.menus.domain.MenuItem;
+import com.dynamia.cms.site.menus.domain.MenuItemGroup;
 import com.dynamia.cms.site.menus.domain.MenuItemParameter;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.services.ProductsService;
@@ -60,8 +61,27 @@ public class SubcategoriesMenuItemType implements MenuItemTypeExtension {
 				}
 
 				item.getSubitems().clear();
-				for (ProductCategory subcat : subcategories) {
-					item.addMenuItem(new MenuItem(clean(subcat.getName()), "/store/categories/" + subcat.getId() + "/" + subcat.getAlias()));
+				if (subcategories != null) {
+					for (ProductCategory subcat : subcategories) {
+						item.addMenuItem(new MenuItem(clean(subcat.getName()), "/store/categories/" + subcat.getId() + "/"
+								+ subcat.getAlias()));
+					}
+				}
+
+				item.getItemsGroups().clear();
+				List<ProductCategory> relatedCategories = service.getRelatedCategories(category);
+				if (relatedCategories != null && !relatedCategories.isEmpty()) {
+					for (ProductCategory relatedCategory : relatedCategories) {
+						MenuItemGroup group = new MenuItemGroup(relatedCategory.getName().split(" ")[0]);
+						item.addMenuItemGroup(group);
+						List<ProductCategory> relatedSubcategories = service.getSubcategories(relatedCategory);
+						if (relatedSubcategories != null) {
+							for (ProductCategory relSubcat : relatedSubcategories) {
+								group.addMenuItem(new MenuItem(clean(relSubcat.getName()), "/store/categories/" + relSubcat.getId() + "/"
+										+ relSubcat.getAlias()));
+							}
+						}
+					}
 				}
 			}
 		}

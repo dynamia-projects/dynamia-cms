@@ -5,7 +5,7 @@
 <body th:fragment="content(cart,icon)">
 
 	<div th:if="${not cart.isEmpty()}">
-		<ul class="nav topcart pull-right">
+		<ul class="nav topcart pull-left">
 			<li class="dropdown hover carticon "><a class="dropdown-toggle"> <i th:class="${icon}+' font18'"></i> <span
 					class="label label-orange font14"><span th:text="${ cart.quantity}"></span> item(s)</span> - <span
 					th:text="${cmsUtil.formatNumber(cart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$200.000</span> <b class="caret"></b></a>

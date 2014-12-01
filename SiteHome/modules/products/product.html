@@ -28,9 +28,6 @@
 			<div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
 
 
-
-
-
 				<h4 class="orange" th:if="${prd_product.stock gt 0}">
 					<i class="icon-check-sign"></i> En Inventario
 				</h4>
@@ -96,7 +93,7 @@
 
 				</div>
 
-				<div class="pull-right mt10">
+				<div class="pull-right mt10" th:if="${prd_product.stock gt 0}">
 					<a th:href="@{'/shoppingcart/shop/add/'+${prd_product.id}(currentURI=${currentURI})}" th:if="${prd_config.shopEnabled}"
 						class="btn btn-danger btn-lg tooltip-test" data-original-title="Agregar al Carrito"> <i class="icon-shopping-cart icon-white"></i> Comprar Ahora
 					</a>

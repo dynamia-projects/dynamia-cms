@@ -34,6 +34,8 @@
 <link th:href="@{/css/animate.css}" href="css/animate.css" rel="stylesheet" />
 
 <!-- Template -->
+<link th:href="@{/css/yamm.css}" href="css/yamm.css" rel="stylesheet" />
+<link th:href="@{/css/menu.css}" href="css/menu.css" rel="stylesheet" />
 <link th:href="@{/css/template.css}" href="css/template.css" rel="stylesheet" />
 
 
@@ -69,7 +71,7 @@
 		<div class="headerdetails mt20 hidden-xs hidden-sm">
 			<div class="container">
 				<a class="logo pull-left " href="#" th:href='@{/}'> <img th:title="${name}" th:alt="${name}"
-					th:src="@{${#objects.nullSafe(siteParams['logo'],'/img/logo.gif')}}" title="Simplepx" alt="Simplepx" src="img/logo.gif" />
+					th:src="@{${#objects.nullSafe(siteParams['logo'],'/img/logo.png')}}" title="Simplepx" alt="Simplepx" src="img/logo.gif" />
 				</a>
 				<!--Social -->
 				<div class="socialtop pull-right">
@@ -81,14 +83,19 @@
 					</h5>
 				</div>
 
+
+
+				<div class="pull-right topsearch">
+					<!-- Newsletter-->
+					<div class="pull-right" th:include="tpl_newsletter::content" />
+					<!--Top Search -->
+					<div style="margin-top: 40px" th:include="site/searchform::content" />
+				</div>
+			</div>
+			<div class="container">
 				<!--Top Shopping Cart -->
 				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop')},'icon-shopping-cart')" />
 				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('quote')},'icon-external-link')" />
-
-				<!--Top Search -->
-				<div class="pull-right topsearch" style="margin: 23px" th:include="site/searchform::content" />
-
-
 			</div>
 		</div>
 		<th:block th:include="tpl_mainmenu::content" />
@@ -102,9 +109,11 @@
 		<div id="content" layout:fragment="content"></div>
 
 		<th:block th:include="tpl_webchat::content" />
-
-		<!-- Newsletter-->
-		<th:block th:include="tpl_newsletter::content" />
+		
+		<section id="quicklink" class="mt20">
+			
+			
+		</section>
 		<!-- Footer -->
 		<footer id="footer">
 			<section class="footersocial">
@@ -112,13 +121,7 @@
 				<div class="pull-right" th:include="tpl_payment::content" />
 			</section>
 
-			<section id="quicklink">
-				<div class="container">
-					<div class="row">
-						<th:block th:include="module::position('quicklinks')" />
-					</div>
-				</div>
-			</section>
+
 			<section class="copyrightbottom">
 				<div class="container">
 					<div class="row">

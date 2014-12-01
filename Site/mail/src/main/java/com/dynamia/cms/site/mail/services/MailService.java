@@ -6,6 +6,7 @@ package com.dynamia.cms.site.mail.services;
 
 import com.dynamia.cms.site.mail.MailMessage;
 import com.dynamia.cms.site.mail.domain.MailAccount;
+import com.dynamia.cms.site.mail.domain.MailingContact;
 
 /**
  *
@@ -20,5 +21,7 @@ public interface MailService {
 	public void setPreferredEmailAccount(MailAccount account);
 
 	public MailAccount getPreferredEmailAccount();
+
+	public boolean existsMailingContact(MailingContact contact);
 
 }

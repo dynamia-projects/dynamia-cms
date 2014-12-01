@@ -15,76 +15,85 @@ import java.util.List;
  */
 public class ProductCategoryDTO implements Serializable {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6391246496268751494L;
 
 	private ProductCategoryDTO parent;
 
-    private List<ProductCategoryDTO> subcategories = new ArrayList<>();
+	private List<ProductCategoryDTO> subcategories = new ArrayList<>();
 
-    private String name;
-    private String description;
-    private boolean active;
-    private Long externalRef;
+	private String name;
+	private String description;
+	private boolean active;
+	private Long externalRef;
+	private Long relatedCategoryExternalRef;
 
-    private List<ProductCategoryDetailDTO> details = new ArrayList<>();
+	private List<ProductCategoryDetailDTO> details = new ArrayList<>();
 
-    public List<ProductCategoryDetailDTO> getDetails() {
-        return details;
-    }
+	public Long getRelatedCategoryExternalRef() {
+		return relatedCategoryExternalRef;
+	}
 
-    public void setDetails(List<ProductCategoryDetailDTO> details) {
-        this.details = details;
-    }
+	public void setRelatedCategoryExternalRef(Long relatedCategoryExternalRef) {
+		this.relatedCategoryExternalRef = relatedCategoryExternalRef;
+	}
 
-    public Long getExternalRef() {
-        return externalRef;
-    }
+	public List<ProductCategoryDetailDTO> getDetails() {
+		return details;
+	}
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
-    }
+	public void setDetails(List<ProductCategoryDetailDTO> details) {
+		this.details = details;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public Long getExternalRef() {
+		return externalRef;
+	}
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+	public void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef;
+	}
 
-    public ProductCategoryDTO getParent() {
-        return parent;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public void setParent(ProductCategoryDTO parent) {
-        this.parent = parent;
-    }
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
-    public List<ProductCategoryDTO> getSubcategories() {
-        return subcategories;
-    }
+	public ProductCategoryDTO getParent() {
+		return parent;
+	}
 
-    public void setSubcategories(List<ProductCategoryDTO> subcategories) {
-        this.subcategories = subcategories;
-    }
+	public void setParent(ProductCategoryDTO parent) {
+		this.parent = parent;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public List<ProductCategoryDTO> getSubcategories() {
+		return subcategories;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setSubcategories(List<ProductCategoryDTO> subcategories) {
+		this.subcategories = subcategories;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }

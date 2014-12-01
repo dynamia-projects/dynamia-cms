@@ -51,9 +51,19 @@ public class ProductCategory extends SimpleEntity implements SiteAware {
 	private String description;
 	private boolean active;
 	private Long externalRef;
+	@OneToOne
+	private ProductCategory relatedCategory;
 
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private List<ProductCategoryDetail> details = new ArrayList<>();
+
+	public ProductCategory getRelatedCategory() {
+		return relatedCategory;
+	}
+
+	public void setRelatedCategory(ProductCategory relatedCategory) {
+		this.relatedCategory = relatedCategory;
+	}
 
 	public String getAlias() {
 		return alias;
