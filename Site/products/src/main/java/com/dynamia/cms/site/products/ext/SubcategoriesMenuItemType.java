@@ -63,7 +63,7 @@ public class SubcategoriesMenuItemType implements MenuItemTypeExtension {
 				item.getSubitems().clear();
 				if (subcategories != null) {
 					for (ProductCategory subcat : subcategories) {
-						item.addMenuItem(new MenuItem(clean(subcat.getName()), "/store/categories/" + subcat.getId() + "/"
+						item.addMenuItem(new MenuItem(clean(getCategoryName(subcat)), "/store/categories/" + subcat.getId() + "/"
 								+ subcat.getAlias()));
 					}
 				}
@@ -72,7 +72,9 @@ public class SubcategoriesMenuItemType implements MenuItemTypeExtension {
 				List<ProductCategory> relatedCategories = service.getRelatedCategories(category);
 				if (relatedCategories != null && !relatedCategories.isEmpty()) {
 					for (ProductCategory relatedCategory : relatedCategories) {
-						MenuItemGroup group = new MenuItemGroup(relatedCategory.getName().split(" ")[0]);
+						String groupName = getCategoryName(relatedCategory);
+						
+						MenuItemGroup group = new MenuItemGroup(groupName);
 						item.addMenuItemGroup(group);
 						List<ProductCategory> relatedSubcategories = service.getSubcategories(relatedCategory);
 						if (relatedSubcategories != null) {
@@ -86,6 +88,14 @@ public class SubcategoriesMenuItemType implements MenuItemTypeExtension {
 			}
 		}
 
+	}
+
+	private String getCategoryName(ProductCategory category) {
+		String name = category.getName();
+		if(category.getAlternateName()!=null && !category.getAlternateName().trim().isEmpty()){
+			name = category.getAlternateName();
+		}
+		return name;
 	}
 
 	private String clean(String name) {

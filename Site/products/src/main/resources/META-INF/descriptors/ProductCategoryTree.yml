@@ -4,6 +4,7 @@ autofields: false
 
 
 fields:
+    id:
     name:
     relatedCategory:
        label: Related

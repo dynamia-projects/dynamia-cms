@@ -46,6 +46,7 @@ public class ProductCategory extends SimpleEntity implements SiteAware {
 	@NotNull
 	@NotEmpty(message = "Enter product category name")
 	private String name;
+	private String alternateName;
 	@Column(name = "catAlias")
 	private String alias;
 	private String description;
@@ -56,6 +57,14 @@ public class ProductCategory extends SimpleEntity implements SiteAware {
 
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private List<ProductCategoryDetail> details = new ArrayList<>();
+
+	public String getAlternateName() {
+		return alternateName;
+	}
+
+	public void setAlternateName(String alternateName) {
+		this.alternateName = alternateName;
+	}
 
 	public ProductCategory getRelatedCategory() {
 		return relatedCategory;
@@ -139,6 +148,7 @@ public class ProductCategory extends SimpleEntity implements SiteAware {
 
 	public void sync(ProductCategoryDTO dto) {
 		name = dto.getName();
+		alternateName = dto.getAlternateName();
 		active = dto.isActive();
 		description = dto.getDescription();
 		externalRef = dto.getExternalRef();

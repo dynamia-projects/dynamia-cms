@@ -25,10 +25,21 @@ public class ProductCategoryDTO implements Serializable {
 	private List<ProductCategoryDTO> subcategories = new ArrayList<>();
 
 	private String name;
+	private String alternateName;
 	private String description;
 	private boolean active;
 	private Long externalRef;
 	private Long relatedCategoryExternalRef;
+	
+	
+
+	public String getAlternateName() {
+		return alternateName;
+	}
+
+	public void setAlternateName(String alternateName) {
+		this.alternateName = alternateName;
+	}
 
 	private List<ProductCategoryDetailDTO> details = new ArrayList<>();
 
