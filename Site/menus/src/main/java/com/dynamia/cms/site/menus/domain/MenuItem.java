@@ -54,6 +54,7 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 	private String styleClass = "";
 	private String href;
 	private String title = "";
+	private String subtitle = "";
 	private String target = "";
 
 	public MenuItem() {
@@ -84,6 +85,14 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 		this.name = name;
 		this.icon = icon;
 		this.href = href;
+	}
+
+	public String getSubtitle() {
+		return subtitle;
+	}
+
+	public void setSubtitle(String subtitle) {
+		this.subtitle = subtitle;
 	}
 
 	public MenuItemGroup getParentGroup() {

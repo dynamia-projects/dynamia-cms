@@ -187,6 +187,17 @@ public class Page extends Content implements SiteAware {
 		this.parameters = parameters;
 	}
 
+	public PageParameter getParam(String name) {
+		if (parameters != null) {
+			for (PageParameter pageParameter : parameters) {
+				if (pageParameter.getName().equals(name)) {
+					return pageParameter;
+				}
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public String toString() {
 		return getTitle();

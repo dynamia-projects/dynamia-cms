@@ -18,8 +18,8 @@
 					<div class="yamm-content">
 						<div class="row">
 							<ul class="column col-sm-4 ">
-								<li><p>
-										<strong class="orange">Subcategorias</strong>
+								<li th:if="${not #lists.isEmpty(mi.itemsGroups)}"><p>
+										<strong class="orange" th:text="${mi.subtitle}">Subcategorias</strong>
 									</p></li>
 								<li th:each="smi : ${mi.subitems}"><a th:href="@{${smi.href}}" th:target="${smi.target}" th:title="${smi.title}"> <th:block
 											th:text="${smi.name}" />

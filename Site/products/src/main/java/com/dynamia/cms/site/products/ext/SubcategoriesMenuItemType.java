@@ -15,6 +15,8 @@ import com.dynamia.cms.site.menus.api.MenuItemTypeExtension;
 import com.dynamia.cms.site.menus.domain.MenuItem;
 import com.dynamia.cms.site.menus.domain.MenuItemGroup;
 import com.dynamia.cms.site.menus.domain.MenuItemParameter;
+import com.dynamia.cms.site.pages.domain.Page;
+import com.dynamia.cms.site.pages.domain.PageParameter;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.tools.domain.services.CrudService;
@@ -49,13 +51,22 @@ public class SubcategoriesMenuItemType implements MenuItemTypeExtension {
 
 	@Override
 	public void setupMenuItem(MenuContext context) {
-		MenuItemParameter categoryParam = context.getParameter("category");
-		if (categoryParam != null) {
-			Long categoryId = new Long(categoryParam.getValue());
+
+		String categoryParamValue = tryGetPageCategory(context.getMenuItem().getPage());
+		if (categoryParamValue == null) {
+			MenuItemParameter parameter = context.getParameter("category");
+			if (parameter != null) {
+				categoryParamValue = parameter.getValue();
+			}
+		}
+
+		if (categoryParamValue != null) {
+			Long categoryId = new Long(categoryParamValue);
 			ProductCategory category = crudService.find(ProductCategory.class, categoryId);
 			if (category != null) {
 				List<ProductCategory> subcategories = service.getSubcategories(category);
 				MenuItem item = context.getMenuItem();
+				item.setSubtitle(getCategoryName(category));
 				if (item.getHref() == null) {
 					item.setHref("/store/categories/" + category.getId() + "/" + category.getAlias());
 				}
@@ -73,15 +84,18 @@ public class SubcategoriesMenuItemType implements MenuItemTypeExtension {
 				if (relatedCategories != null && !relatedCategories.isEmpty()) {
 					for (ProductCategory relatedCategory : relatedCategories) {
 						String groupName = getCategoryName(relatedCategory);
-						
+
 						MenuItemGroup group = new MenuItemGroup(groupName);
-						item.addMenuItemGroup(group);
+
 						List<ProductCategory> relatedSubcategories = service.getSubcategories(relatedCategory);
 						if (relatedSubcategories != null) {
 							for (ProductCategory relSubcat : relatedSubcategories) {
 								group.addMenuItem(new MenuItem(clean(relSubcat.getName()), "/store/categories/" + relSubcat.getId() + "/"
 										+ relSubcat.getAlias()));
 							}
+						}
+						if (!group.getSubitems().isEmpty()) {
+							item.addMenuItemGroup(group);
 						}
 					}
 				}
@@ -90,9 +104,22 @@ public class SubcategoriesMenuItemType implements MenuItemTypeExtension {
 
 	}
 
+	private String tryGetPageCategory(Page page) {
+		String value = null;
+		ProductsPageType productsPageType = new ProductsPageType();
+		if (page != null && page.getType().equals(productsPageType.getId())) {
+			PageParameter param = page.getParam("category");
+			if (param != null) {
+				value = param.getValue();
+			}
+		}
+
+		return value;
+	}
+
 	private String getCategoryName(ProductCategory category) {
 		String name = category.getName();
-		if(category.getAlternateName()!=null && !category.getAlternateName().trim().isEmpty()){
+		if (category.getAlternateName() != null && !category.getAlternateName().trim().isEmpty()) {
 			name = category.getAlternateName();
 		}
 		return name;

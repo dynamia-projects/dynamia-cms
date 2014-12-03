@@ -5,13 +5,12 @@
 
 <body th:fragment="module(instance)">
 
-<div th:class="'clearfix mt20 '+${instance.styleClass}">
-    <h2 class="heading1" th:if="${instance.titleVisible}">
-        <span class="maintext" th:text="${instance.title}">Title</span>
-    </h2>
-    <th:block
-            th:include="products/components/productcarousel::frag(${instance.model.products},${instance.model.columns})"/>
-</div>
+	<div th:class="'clearfix mt20 '+${instance.styleClass}">
+		<h2 class="heading1" th:if="${instance.titleVisible and not #lists.isEmpty(instance.model.products)}">
+			<span class="maintext" th:text="${instance.title}">Title</span>
+		</h2>
+		<th:block th:include="products/components/productcarousel::frag(${instance.model.products},${instance.model.columns})" />
+	</div>
 
 </body>
 

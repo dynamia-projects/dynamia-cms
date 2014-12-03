@@ -88,7 +88,8 @@ public class ProductsCarouselModule extends AbstractModule {
             PagedList<Product> pagedList = (PagedList<Product>) products;
             products = pagedList.getDataSource().getPageData();
         }
-
+        
+        
         ModuleInstance mod = context.getModuleInstance();
         mod.addObject("products", products);
         mod.addObject("columns",columns);
