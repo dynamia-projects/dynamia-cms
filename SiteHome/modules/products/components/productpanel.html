@@ -16,9 +16,9 @@
 					th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=180,h=180)}" src="img/product1a.jpg" alt="" />
 				</a>
 			</div>
-			<span th:if="${prd.sale}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-gift font24"></i> Oferta
-			</span> <span th:if="${prd.featured}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-star-empty font24"></i> Destacado
-			</span> <span th:if="${prd.newproduct}" class="sale tooltip-test" style="background-color: #cc0000" data-original-title="" title=""> <i
+			<span th:if="${prd.sale and prd_config.showBadges}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-gift font24"></i> Oferta
+			</span> <span th:if="${prd.featured and prd_config.showBadges}" class="sale tooltip-test" data-original-title="" title=""> <i class="icon-star-empty font24"></i> Destacado
+			</span> <span th:if="${prd.newproduct and prd_config.showBadges}" class="sale tooltip-test" style="background-color: #cc0000" data-original-title="" title=""> <i
 				class="icon-bookmark-empty font24"></i> Nuevo
 			</span>
 

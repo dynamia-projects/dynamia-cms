@@ -166,7 +166,9 @@ public class StoreController {
 		Site site = siteService.getSite(request);
 
 		ProductSearchForm form = new ProductSearchForm();
-		form.setBrandId(service.getBrandByAlias(site, name).getId());
+		if (name != null && !name.equals("#null#")) {
+			form.setBrandId(service.getBrandByAlias(site, name).getId());
+		}
 
 		ModelAndView mv = new ModelAndView("products/brand");
 		SiteActionManager.performAction("showProductBrand", mv, request, form);

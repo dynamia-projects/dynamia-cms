@@ -11,7 +11,7 @@
 
         <div class="row mt10">
 
-            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt40column">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">
                 <div class="titles animated fadeInUp time3">
                     <div class="pull-right" style="text-align: right">
                         <a th:href="@{'/store/brands/'+${prd_brand.alias}}" title="Ver otros productos de esta marca" class="tooltip-test">
@@ -47,13 +47,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt40column"> 
-                <!--categories-->        
-                <div th:include="products/components/categorylist"/>
-
-                <!-- Twitter -->
-                <div th:include="social/components/twitterstream::content"/>
-            </div>
+          
         </div>
     </div>
 

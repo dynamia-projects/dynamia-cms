@@ -5,12 +5,6 @@
  */
 package com.dynamia.cms.site.products.domain;
 
-import com.dynamia.cms.site.core.api.SiteAware;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.contraints.NotEmpty;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +20,13 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.BatchSize;
 
+import com.dynamia.cms.site.core.Orderable;
+import com.dynamia.cms.site.core.api.SiteAware;
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
+import com.dynamia.tools.domain.SimpleEntity;
+import com.dynamia.tools.domain.contraints.NotEmpty;
+
 /**
  *
  * @author mario
@@ -33,7 +34,7 @@ import org.hibernate.annotations.BatchSize;
 @Entity
 @Table(name = "prd_categories")
 @BatchSize(size = 50)
-public class ProductCategory extends SimpleEntity implements SiteAware {
+public class ProductCategory extends SimpleEntity implements SiteAware, Orderable {
 
 	@OneToOne
 	@NotNull
@@ -57,6 +58,17 @@ public class ProductCategory extends SimpleEntity implements SiteAware {
 
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private List<ProductCategoryDetail> details = new ArrayList<>();
+
+	@Column(name = "catOrder")
+	private int order;
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
 	public String getAlternateName() {
 		return alternateName;
@@ -148,6 +160,7 @@ public class ProductCategory extends SimpleEntity implements SiteAware {
 
 	public void sync(ProductCategoryDTO dto) {
 		name = dto.getName();
+		order = dto.getOrder();
 		alternateName = dto.getAlternateName();
 		active = dto.isActive();
 		description = dto.getDescription();

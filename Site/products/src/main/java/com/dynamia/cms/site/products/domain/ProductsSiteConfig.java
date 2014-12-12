@@ -63,6 +63,8 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 
 	private boolean quoteEnabled;
 
+	private boolean showBadges;
+
 	@OneToOne
 	private MailAccount mailAccount;
 	@OneToOne
@@ -72,6 +74,14 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 
 	@OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ProductsSiteConfigParameter> parameters = new ArrayList<>();
+
+	public boolean isShowBadges() {
+		return showBadges;
+	}
+
+	public void setShowBadges(boolean showBadges) {
+		this.showBadges = showBadges;
+	}
 
 	public MailAccount getMailAccount() {
 		return mailAccount;

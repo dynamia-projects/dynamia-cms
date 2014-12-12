@@ -39,11 +39,11 @@ public class ShowBrandAction implements SiteAction {
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView();
 		ProductSearchForm form = (ProductSearchForm) evt.getData();
 
 		ProductBrand brand = crudService.find(ProductBrand.class, form.getBrandId());
-
-		ModelAndView mv = evt.getModelAndView();
+		
 		mv.addObject("prd_brand", brand);
 		form.setOrder(ProductSearchOrder.MINPRICE);
 		SiteActionManager.performAction("searchProducts", mv, evt.getRequest(), form);

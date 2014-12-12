@@ -11,10 +11,11 @@ import com.dynamia.cms.site.mail.domain.MailingContact;
 public class MailingContactSiteInterceptor extends SiteRequestInterceptorAdapter {
 
 	
+	
 	@Override
 	protected void afterRequest(Site site, ModelAndView mv) {
-		if (mv != null && mv.getModel().get("mailingContact") == null) {
-			mv.addObject("mailingContact", new MailingContact());
-		}
+
+		mv.addObject("mailingContact", new MailingContact());
+
 	}
 }

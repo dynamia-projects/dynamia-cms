@@ -59,6 +59,7 @@ public class Product extends SimpleEntity implements SiteAware {
 	private boolean featured;
 	private boolean sale;
 	private boolean newproduct;
+	
 	private String status;
 	private String image;
 	private String image2;
@@ -394,6 +395,7 @@ public class Product extends SimpleEntity implements SiteAware {
 		reference = dto.getReference();
 		sellInStore = dto.isSellInStore();
 		sellInWeb = dto.isSellInWeb();
+		showLastPrice = dto.isShowLastPrice();
 	}
 
 }

@@ -30,8 +30,15 @@ public class ProductCategoryDTO implements Serializable {
 	private boolean active;
 	private Long externalRef;
 	private Long relatedCategoryExternalRef;
-	
-	
+	private int order;
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
 	public String getAlternateName() {
 		return alternateName;

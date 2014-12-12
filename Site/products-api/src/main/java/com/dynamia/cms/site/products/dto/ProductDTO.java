@@ -16,8 +16,6 @@ import java.util.List;
  */
 public class ProductDTO implements Serializable {
 
-	
-
 	/**
 	 * 
 	 */
@@ -62,8 +60,17 @@ public class ProductDTO implements Serializable {
 	private String externalLink;
 
 	private boolean showCreditPrices;
+	private boolean showLastPrice;
 	private boolean sellInStore = true;
 	private boolean sellInWeb = true;
+
+	public boolean isShowLastPrice() {
+		return showLastPrice;
+	}
+
+	public void setShowLastPrice(boolean showLastPrice) {
+		this.showLastPrice = showLastPrice;
+	}
 
 	public String getReference() {
 		return reference;

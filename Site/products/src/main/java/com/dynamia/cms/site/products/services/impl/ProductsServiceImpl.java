@@ -91,7 +91,7 @@ public class ProductsServiceImpl implements ProductsService {
 		QueryParameters qp = QueryParameters.with("site", site);
 		qp.add("parent", QueryConditions.isNull());
 		qp.add("active", true);
-		qp.orderBy("name", true);
+		qp.orderBy("order", true);
 
 		return crudService.find(ProductCategory.class, qp);
 	}
@@ -102,7 +102,7 @@ public class ProductsServiceImpl implements ProductsService {
 		QueryParameters qp = QueryParameters.with("site", category.getSite());
 		qp.add("parent", category);
 		qp.add("active", true);
-		qp.orderBy("name", true);
+		qp.orderBy("order", true);
 
 		return crudService.find(ProductCategory.class, qp);
 	}
@@ -146,7 +146,7 @@ public class ProductsServiceImpl implements ProductsService {
 		qp.add(cat, category);
 
 		qp.paginate(getDefaultPageSize(category.getSite()));
-		qp.orderBy(cat + ".name, brand.name, price", true);
+		qp.orderBy(cat + ".name, price", true);
 
 		return crudService.find(Product.class, qp);
 	}
@@ -387,7 +387,8 @@ public class ProductsServiceImpl implements ProductsService {
 	@Cacheable(value = "products", key = "'priceVariations'+#site.key")
 	public List<Product> getPriceVariationsProducts(Site site) {
 		QueryBuilder query = QueryBuilder.select(Product.class, "p").where("p.active=true").and("p.site = :site")
-				.and("p.sale=false and p.featured=false and p.newproduct=false").and("p.price < p.lastPrice").orderBy("p.price desc");
+				.and("p.sale=false and p.featured=false and p.newproduct=false").and("p.price < p.lastPrice").and("p.showLastPrice = true")
+				.orderBy("p.price desc");
 
 		QueryParameters qp = new QueryParameters();
 		qp.add("site", site);
@@ -395,9 +396,7 @@ public class ProductsServiceImpl implements ProductsService {
 
 		PagedList list = (PagedList) crudService.executeQuery(query, qp);
 		List<Product> products = list.getDataSource().getPageData();
-		for (Product product : products) {
-			product.setShowLastPrice(true);
-		}
+
 		return products;
 	}
 
@@ -525,13 +524,13 @@ public class ProductsServiceImpl implements ProductsService {
 		mailService.send(message);
 
 	}
-	
+
 	@Override
 	public List<ProductCategory> getRelatedCategories(ProductCategory category) {
 		QueryParameters qp = QueryParameters.with("relatedCategory", category);
 		qp.add("active", true);
 		qp.add("site", category.getSite());
-		qp.orderBy("name", true);
+		qp.orderBy("order", true);
 		return crudService.find(ProductCategory.class, qp);
 	}
 
