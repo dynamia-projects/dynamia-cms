@@ -13,7 +13,7 @@
 					th:class="${(instance.getParameter('icons')!='false'?'icon-'+mi.icon:'')}"></i> <th:block th:text="${mi.name}" />
 			</a>
 
-				<ul class="dropdown-menu" th:if="${not #lists.isEmpty(mi.subitems) and instance.getParameter('subitems')!='false'}">
+				<ul class="dropdown-menu" th:style="'background-image: url('+${mi.backgroundImage}+');background-repeat:no-repeat;background-size: 100% 100%;'" th:if="${not #lists.isEmpty(mi.subitems) and instance.getParameter('subitems')!='false'}">
 
 					<div class="yamm-content">
 						<div class="row">

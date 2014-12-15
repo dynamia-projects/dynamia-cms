@@ -6,7 +6,8 @@ fields:
 
     name:
     title:
-           
+    subtitle:
+    
     page:
         label: Page (optional)
         params:
@@ -24,7 +25,7 @@ fields:
     order:
     icon:
     styleClass:
-    
+    backgroundImage:
     parameters:
         component: crudview
         

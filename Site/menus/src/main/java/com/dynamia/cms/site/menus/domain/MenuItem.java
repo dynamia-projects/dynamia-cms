@@ -56,6 +56,7 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 	private String title = "";
 	private String subtitle = "";
 	private String target = "";
+	private String backgroundImage = "";
 
 	public MenuItem() {
 		// TODO Auto-generated constructor stub
@@ -85,6 +86,14 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 		this.name = name;
 		this.icon = icon;
 		this.href = href;
+	}
+
+	public String getBackgroundImage() {
+		return backgroundImage;
+	}
+
+	public void setBackgroundImage(String backgroundImage) {
+		this.backgroundImage = backgroundImage;
 	}
 
 	public String getSubtitle() {
