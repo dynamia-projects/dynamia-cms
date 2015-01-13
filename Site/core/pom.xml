@@ -12,15 +12,7 @@
     <name>DynamiaCMS Site - Core (${project.version})</name>
     <version>0.9</version>
     <url>http://www.dynamiasoluciones.com</url>
-    <dependencies>
-        <dependency>
-            <groupId>com.mortennobel</groupId>
-            <artifactId>java-image-scaling</artifactId>
-            <version>0.8.6</version>
-            <type>jar</type>
-        </dependency>
   
-    </dependencies>
     <build>
         <plugins>
             <plugin>

@@ -4,16 +4,20 @@
  */
 package com.dynamia.cms.site.core;
 
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.tools.integration.Containers;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
+
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.core.services.SiteService;
+import com.dynamia.tools.integration.Containers;
+import com.dynamia.tools.io.ImageUtil;
 
 /**
  *
