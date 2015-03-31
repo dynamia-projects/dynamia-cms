@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data-sources>
-	<data-source id="mysql5-1409653178114-975946909" provider="mysql" driver="mysql5" name="MySQL - dynamiacms" create-date="1409653187068" save-password="true" show-system-objects="true" read-only="false">
-		<connection host="localhost" port="3306" server="" database="dynamiacms" url="jdbc:mysql://localhost:3306/dynamiacms" user="root" password="QlZVQKA=" home="C:\Program Files (x86)\MySQL\MySQL Server 5.5" type="dev">
+	<data-source id="mysql5-1409653178114-975946909" provider="mysql" driver="mysql5" name="MySQL - dynamiacms" create-date="1409653187068" update-date="1427762452374" save-password="true" show-system-objects="true" read-only="false">
+		<connection host="localhost" port="3307" server="" database="dynamiacms" url="jdbc:mysql://localhost:3307/dynamiacms" user="root" password="QlZVQKA=" home="C:\Program Files (x86)\MySQL\MySQL Server 5.5" type="dev">
 			<property name="@dbeaver-ssl@" value="false"/>
 			<network-handler type="TUNNEL" id="ssh_tunnel" enabled="false" user="" save-password="false">
 				<property name="port" value="22"/>
