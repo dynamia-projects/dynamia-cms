@@ -7,6 +7,7 @@ package com.dynamia.cms.site.shoppingcart.domains;
 
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.shoppingcart.domains.enums.ShoppingCartStatus;
 import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.tools.domain.SimpleEntity;
 
@@ -47,6 +48,7 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
 	private BigDecimal totalPrice;
 	@OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
 	private List<ShoppingCartItem> items = new ArrayList<>();
+	private ShoppingCartStatus status = ShoppingCartStatus.NEW;
 
 	public ShoppingCart() {
 		// TODO Auto-generated constructor stub
@@ -55,6 +57,14 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
 	public ShoppingCart(String name) {
 		super();
 		this.name = name;
+	}
+
+	public ShoppingCartStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ShoppingCartStatus status) {
+		this.status = status;
 	}
 
 	public String getName() {

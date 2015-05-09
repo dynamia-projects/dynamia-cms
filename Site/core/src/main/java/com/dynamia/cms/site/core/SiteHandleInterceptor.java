@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.dynamia.cms.site.core.api.SiteRequestInterceptor;
-import com.dynamia.cms.site.core.controllers.CacheController;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.tools.commons.logger.LoggingService;
@@ -28,9 +27,6 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 
 	@Autowired
 	private SiteService service;
-
-	@Autowired
-	private CacheController cacheController;
 
 	private final LoggingService logger = new SLF4JLoggingService(SiteHandleInterceptor.class);
 

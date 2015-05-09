@@ -5,16 +5,15 @@
  */
 package com.dynamia.cms.site.core;
 
-import com.dynamia.cms.site.core.controllers.CacheController;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.tools.integration.Containers;
-
 import java.io.Serializable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.core.services.SiteService;
+import com.dynamia.tools.integration.Containers;
 
 /**
  *
@@ -24,9 +23,7 @@ import org.springframework.stereotype.Component;
 @Scope("session")
 public class SiteContext implements Serializable {
 
-	@Autowired(required = false)
-	private CacheController cacheController;
-
+	
 	@Autowired
 	private SiteService service;
 
@@ -36,26 +33,18 @@ public class SiteContext implements Serializable {
 	private String currentURL;
 	private String previousURI;
 	private String previousURL;
-	private long lastCacheClear;
+	
 
 	public static SiteContext get() {
 		return Containers.get().findObject(SiteContext.class);
 	}
 
 	public Site getCurrent() {
-		checkCache();
+		
 		return current;
 	}
 
-	private void checkCache() {
-		if (cacheController != null) {
-			if (cacheController.getLastCacheClear() > lastCacheClear) {
-				lastCacheClear = cacheController.getLastCacheClear();
-				current = null;
-				siteURL = null;
-			}
-		}
-	}
+	
 
 	public void setCurrent(Site current) {
 		this.current = current;

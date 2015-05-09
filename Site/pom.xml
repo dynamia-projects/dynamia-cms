@@ -92,35 +92,6 @@
 		</dependency>
 
 
-		<!-- Thymeleaf -->
-		<dependency>
-			<groupId>org.thymeleaf</groupId>
-			<artifactId>thymeleaf</artifactId>
-			<version>${thymeleaf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.thymeleaf</groupId>
-			<artifactId>thymeleaf-spring4</artifactId>
-			<version>${thymeleaf.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>nz.net.ultraq.thymeleaf</groupId>
-			<artifactId>thymeleaf-layout-dialect</artifactId>
-			<version>${thymeleaf.layout.version}</version>
-		</dependency>
-
-
-
-
-
-		<!-- JPA and Hibernate -->
-		<dependency>
-			<groupId>libraries</groupId>
-			<artifactId>libraries.hibernate</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-
 
 		<!-- TEST DEPENDIENCIES -->
 		<dependency>
@@ -164,6 +135,8 @@
 		<module>products</module>
 		<module>shopping-cart</module>
 		<module>web</module>
+		<module>payment</module>
+		<module>payment-payulatam</module>
 	</modules>
 
 </project>

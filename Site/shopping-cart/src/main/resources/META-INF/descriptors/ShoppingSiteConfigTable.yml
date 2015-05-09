@@ -1,0 +1,18 @@
+view: table
+beanClass: com.dynamia.cms.site.shoppingcart.domains.ShoppingSiteConfig
+autofields: false
+
+fields:
+  paymentGatewayId:
+    label: Gateway ID
+  paymentGatewayName:
+    label: Gateway Name
+  paymentEnabled:
+  minPaymentAmount:
+  defaultCurrency:
+  descriptionTemplate:
+  notificationEmails:
+  
+ 
+layout:
+  columns: 2

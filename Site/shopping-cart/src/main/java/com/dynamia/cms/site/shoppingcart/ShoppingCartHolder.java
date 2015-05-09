@@ -5,6 +5,7 @@
  */
 package com.dynamia.cms.site.shoppingcart;
 
+import com.dynamia.cms.site.shoppingcart.domains.ShoppingOrder;
 import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.tools.integration.Containers;
@@ -29,6 +30,7 @@ public class ShoppingCartHolder implements Serializable {
 	 */
 	private static final long serialVersionUID = 7780236453596280623L;
 	private Map<String, ShoppingCart> carts = new HashMap<String, ShoppingCart>();
+	private ShoppingOrder currentOrder;
 
 	public static ShoppingCartHolder get() {
 		return Containers.get().findObject(ShoppingCartHolder.class);
@@ -50,6 +52,14 @@ public class ShoppingCartHolder implements Serializable {
 			carts.put(name, cart);
 		}
 		return cart;
+	}
+
+	public ShoppingOrder getCurrentOrder() {
+		return currentOrder;
+	}
+
+	public void setCurrentOrder(ShoppingOrder currentOrder) {
+		this.currentOrder = currentOrder;
 	}
 
 }

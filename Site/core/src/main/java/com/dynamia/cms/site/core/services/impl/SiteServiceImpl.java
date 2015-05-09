@@ -12,8 +12,10 @@ import com.dynamia.cms.site.core.domain.SiteParameter;
 import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.tools.commons.logger.LoggingService;
 import com.dynamia.tools.commons.logger.SLF4JLoggingService;
+import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.integration.Containers;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,7 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -81,6 +85,18 @@ public class SiteServiceImpl implements SiteService {
 	public List<SiteParameter> getSiteParameters(Site site) {
 		site = crudService.reload(site);
 		return site.getParameters();
+	}
+
+	@Override
+	public SiteParameter getSiteParameter(Site site, String name, String defaultValue) {
+		SiteParameter siteParameter = crudService.findSingle(SiteParameter.class, QueryParameters.with("site", site).add("name", name));
+		if (siteParameter == null) {
+			siteParameter = new SiteParameter();
+			siteParameter.setSite(site);
+			siteParameter.setName(name);
+			siteParameter.setValue(defaultValue);
+		}
+		return siteParameter;
 	}
 
 	@Override

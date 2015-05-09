@@ -89,4 +89,13 @@ public class ShoppingCartController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/{name}/checkout", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView checkout(@PathVariable String name, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("cartName", name);		
+		SiteActionManager.performAction("checkoutShoppingCart", mv, request);
+
+		return mv;
+	}
+
 }

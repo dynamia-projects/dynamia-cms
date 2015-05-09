@@ -57,6 +57,20 @@
 			<artifactId>com.dynamia.cms.site.mail</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<!-- JPA and Hibernate -->
+		<dependency>
+			<groupId>libraries</groupId>
+			<artifactId>libraries.hibernate</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>
+				com.dynamia.cms.site.payment.payulatam
+			</artifactId>
+			<version>0.9</version>
+		</dependency>
 	</dependencies>
 
 

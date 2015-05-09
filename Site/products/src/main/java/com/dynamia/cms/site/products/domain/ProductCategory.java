@@ -18,8 +18,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.BatchSize;
-
 import com.dynamia.cms.site.core.Orderable;
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
@@ -33,7 +31,6 @@ import com.dynamia.tools.domain.contraints.NotEmpty;
  */
 @Entity
 @Table(name = "prd_categories")
-@BatchSize(size = 50)
 public class ProductCategory extends SimpleEntity implements SiteAware, Orderable {
 
 	@OneToOne
