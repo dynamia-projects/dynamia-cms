@@ -24,26 +24,26 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @Order(1)
 public class AdminUsersConfig extends UsersConfig {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().anyRequest().authenticated();
-        http.csrf().disable();
-        http
-                .formLogin()
-                .authenticationDetailsSource(new AuthenticationDetailsSource())
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/", true)
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .permitAll()
-                .and()
-                .httpBasic();
+		http.authorizeRequests().anyRequest().hasAnyRole("ADMIN", "EDITOR");
+		http.csrf().disable();
+		http
+				.formLogin()
+				.authenticationDetailsSource(new AuthenticationDetailsSource())
+				.usernameParameter("username")
+				.passwordParameter("password")
+				.defaultSuccessUrl("/", true)
+				.loginPage("/login")
+				.permitAll()
+				.and()
+				.logout()
+				.logoutUrl("/logout")
+				.permitAll()
+				.and()
+				.httpBasic();
 
-    }
+	}
 
 }

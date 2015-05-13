@@ -11,20 +11,20 @@ package com.dynamia.cms.site.core.api;
  */
 public class ConfigAdminModuleOption extends AdminModuleOption {
 
-    private String descriptorID;
+	private String descriptorID;
 
-    public ConfigAdminModuleOption(String id, String name, String descriptorID) {
-        super(id, name);
-        this.descriptorID = descriptorID;
+	public ConfigAdminModuleOption(String id, String name, String descriptorID) {
+		super(id, name, null, false, true);
+		this.descriptorID = descriptorID;
 
-    }
+	}
 
-    public String getDescriptorID() {
-        return descriptorID;
-    }
+	public String getDescriptorID() {
+		return descriptorID;
+	}
 
-    public void setDescriptorID(String descriptorID) {
-        this.descriptorID = descriptorID;
-    }
+	public void setDescriptorID(String descriptorID) {
+		this.descriptorID = descriptorID;
+	}
 
 }

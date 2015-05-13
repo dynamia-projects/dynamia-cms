@@ -37,7 +37,7 @@
 <link th:href="@{/css/yamm.css}" href="css/yamm.css" rel="stylesheet" />
 <link th:href="@{/css/menu.css}" href="css/menu.css" rel="stylesheet" />
 <link th:href="@{/css/template.css}" href="css/template.css" rel="stylesheet" />
-
+<link th:href="@{/css/template2.css}" href="css/template2.css" rel="stylesheet" />
 
 <!-- REVOLUTION BANNER CSS SETTINGS -->
 <link th:href="@{/plugins/rs-plugin/css/responsive.css}" rel="stylesheet" type="text/css" href="plugins/rs-plugin/css/responsive.css" />
@@ -68,15 +68,16 @@
 		<th:block th:include="tpl_mobilemenu::content" />
 		<th:block th:include="tpl_topmenu::content" />
 
-		<div class="headerdetails mt20 hidden-xs hidden-sm">
+		<div class="headerdetails hidden-xs hidden-sm">
 			<div class="container">
-				<a class="logo pull-left " href="#" th:href='@{/}'> <img th:title="${name}" th:alt="${name}"
-					th:src="@{${#objects.nullSafe(siteParams['logo'],'/img/logo.png')}}" title="Simplepx" alt="Simplepx" src="img/logo.gif" />
-				</a>
+				<div class="headerimage" th:style="${'background-image: url('+siteParams['headerimage']+')'}">
+				
+
+				</div>
 				<!--Social -->
 				<div class="socialtop pull-right">
-					<a href="http://brilla.compulago.net" target="_blank" class="pull-right"> <img th:src="@{/img/brilla.png}" alt="Brilla"
-						title="Convenio Brilla" class="tooltip-test" />
+					<a href="http://corporativo.compulago.net" target="_blank" class="pull-right"> <img th:src="@{/img/corporativo.png}" alt="Corporativo"
+						title="Ventas Corporativas" class="tooltip-test" />
 					</a>
 					<h5 class="call">
 						<i class="icon-phone"></i> Llamanos: <a class="orange" href="tel:0356930423">+57 (5) 693 04 23</a><br />
@@ -86,10 +87,9 @@
 
 
 				<div class="pull-right topsearch">
-					<!-- Newsletter-->
-					<div class="pull-right" th:include="tpl_newsletter::content" />
+
 					<!--Top Search -->
-					<div style="margin-top: 40px" th:include="site/searchform::content" />
+					<div th:include="site/searchform::content" />
 				</div>
 			</div>
 			<div class="container">
@@ -102,6 +102,9 @@
 	</header>
 	<!-- Header End -->
 	<div id="maincontainer">
+		<div class="hidden-lg hidden-md" style="margin-top: 40px"></div>
+
+
 		<div class="container">
 			<th:block th:include="tpl_globalmessages::content" />
 		</div>
@@ -114,7 +117,9 @@
 		<!-- Footer -->
 		<footer id="footer">
 			<section class="footersocial">
-				<th:block th:include="tpl_contacts::content" />
+				<div class="container hidden-xs hidden-sm">
+					<div class="footerimage" th:style="${'background-image: url('+siteParams['footerimage']+')'}"></div>
+				</div>
 				<div class="pull-right" th:include="tpl_payment::content" />
 			</section>
 

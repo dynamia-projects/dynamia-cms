@@ -13,47 +13,78 @@ import java.io.Serializable;
  */
 public class AdminModuleOption implements Serializable {
 
-    private String id;
-    private String name;
-    private Class coreClass;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8763631027547751496L;
+	private String id;
+	private String name;
+	private Class coreClass;
+	private boolean editorAllowed = true;
+	private boolean adminAllowed = true;
 
-    public AdminModuleOption() {
+	public AdminModuleOption() {
 
-    }
+	}
 
-    public AdminModuleOption(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+	public AdminModuleOption(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
-    public AdminModuleOption(String id, String name, Class coreClass) {
-        this.id = id;
-        this.name = name;
-        this.coreClass = coreClass;
-    }
+	public AdminModuleOption(String id, String name, Class coreClass) {
+		this.id = id;
+		this.name = name;
+		this.coreClass = coreClass;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public AdminModuleOption(String id, String name, Class coreClass, boolean editorAllowed, boolean adminAllowed) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.coreClass = coreClass;
+		this.editorAllowed = editorAllowed;
+		this.adminAllowed = adminAllowed;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Class getCoreClass() {
-        return coreClass;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setCoreClass(Class coreClass) {
-        this.coreClass = coreClass;
-    }
+	public Class getCoreClass() {
+		return coreClass;
+	}
+
+	public void setCoreClass(Class coreClass) {
+		this.coreClass = coreClass;
+	}
+
+	public boolean isEditorAllowed() {
+		return editorAllowed;
+	}
+
+	public void setEditorAllowed(boolean editorAllowed) {
+		this.editorAllowed = editorAllowed;
+	}
+
+	public boolean isAdminAllowed() {
+		return adminAllowed;
+	}
+
+	public void setAdminAllowed(boolean adminAllowed) {
+		this.adminAllowed = adminAllowed;
+	}
 
 }

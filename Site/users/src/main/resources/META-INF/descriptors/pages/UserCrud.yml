@@ -1,9 +1,3 @@
 view: crud
 beanClass: com.dynamia.cms.site.users.domain.User
 
-actions:
-    
-    EditAction:
-        enabled: false
-        
-    

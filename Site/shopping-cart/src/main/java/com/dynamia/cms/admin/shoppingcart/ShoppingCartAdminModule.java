@@ -22,7 +22,7 @@ public class ShoppingCartAdminModule implements AdminModule {
 	@Override
 	public AdminModuleOption[] getOptions() {
 		return new AdminModuleOption[] {
-				new AdminModuleOption("config", "Configuration", ShoppingSiteConfig.class),
+				new AdminModuleOption("shopConfig", "Configuration", ShoppingSiteConfig.class),
 				new AdminModuleOption("paymentConfig", "Payment Gateway Config", PaymentGatewayConfig.class)
 
 		};

@@ -53,7 +53,7 @@ public class TestGatewayAction extends AbstractCrudAction {
 		StringBuilder sb = new StringBuilder();
 		sb.append("TX: " + tx.getUuid() + "\n");
 		sb.append("FORM: " + form.getUrl() + "  " + form.getHttpMethod() + "\n");
-		sb.append(PaymentUtils.mapToString(form.getParamaters()));
+		sb.append(PaymentUtils.mapToString(form.getParameters()));
 		
 		Messagebox.show(sb.toString());
 

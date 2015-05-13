@@ -28,7 +28,7 @@ public class PaymentTransaction extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 6395335361885553112L;
 
-	private String uuid = StringUtils.randomString();
+	private String uuid = StringUtils.randomString().toUpperCase();
 
 	@NotNull
 	private String gatewayId;
@@ -52,7 +52,7 @@ public class PaymentTransaction extends BaseEntity {
 	private String currency;
 	private String responseCode;
 	private String signature;
-	@Column(length = 4000)
+	@Column(length = 1000)
 	private String description;
 	private String email;
 	private String source;
@@ -66,6 +66,7 @@ public class PaymentTransaction extends BaseEntity {
 	@Column(length = 1000)
 	private String confirmationURL;
 	private boolean test = false;
+	private boolean confirmed;
 
 	public PaymentTransaction() {
 		// TODO Auto-generated constructor stub
@@ -74,6 +75,14 @@ public class PaymentTransaction extends BaseEntity {
 	public PaymentTransaction(String source) {
 		super();
 		this.source = source;
+	}
+
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
 	}
 
 	public Date getStartDate() {
@@ -173,6 +182,9 @@ public class PaymentTransaction extends BaseEntity {
 	}
 
 	public BigDecimal getAmount() {
+		if (amount == null) {
+			amount = BigDecimal.ZERO;
+		}
 		return amount;
 	}
 
@@ -181,6 +193,9 @@ public class PaymentTransaction extends BaseEntity {
 	}
 
 	public BigDecimal getTaxes() {
+		if (taxes == null) {
+			taxes = BigDecimal.ZERO;
+		}
 		return taxes;
 	}
 
@@ -189,6 +204,9 @@ public class PaymentTransaction extends BaseEntity {
 	}
 
 	public BigDecimal getTaxesBase() {
+		if (taxesBase == null) {
+			taxesBase = BigDecimal.ZERO;
+		}
 		return taxesBase;
 	}
 
@@ -283,14 +301,6 @@ public class PaymentTransaction extends BaseEntity {
 				+ ", taxes=" + taxes + ", taxesBase=" + taxesBase + ", paymentMethod=" + paymentMethod + ", currency=" + currency
 				+ ", responseCode=" + responseCode + ", signature=" + signature + ", description=" + description + ", test=" + test
 				+ ", email=" + email + "]";
-	}
-
-	public boolean isValidSignature(String responseSignature) {
-		try {
-			return this.signature.equals(responseSignature);
-		} catch (Exception e) {
-			return false;
-		}
 	}
 
 }

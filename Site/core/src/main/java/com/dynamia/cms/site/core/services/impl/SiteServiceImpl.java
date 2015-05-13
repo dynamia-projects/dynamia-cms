@@ -23,6 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -97,6 +98,26 @@ public class SiteServiceImpl implements SiteService {
 			siteParameter.setValue(defaultValue);
 		}
 		return siteParameter;
+	}
+
+	@Override
+	public String[] getSiteParameterAsArray(Site site, String name) {
+		SiteParameter siteParameter = getSiteParameter(site, name, "");
+		String[] values = siteParameter.getValue().split(",");
+		if (values != null && values.length > 0) {
+			for (int i = 0; i < values.length; i++) {
+				String value = values[i];
+				if (value != null) {
+					values[i] = value.trim();
+				}
+			}
+		} else {
+			values = new String[0];
+		}
+		
+		Arrays.sort(values);
+
+		return values;
 	}
 
 	@Override

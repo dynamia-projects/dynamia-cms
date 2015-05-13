@@ -14,6 +14,7 @@ import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.tools.commons.StringUtils;
 import com.dynamia.tools.domain.BaseEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import com.dynamia.tools.domain.ValidationError;
 import com.dynamia.tools.domain.contraints.Email;
 import com.dynamia.tools.domain.contraints.NotEmpty;
 import com.dynamia.tools.domain.util.ContactInfo;
+
 import javax.persistence.OneToOne;
 import javax.persistence.UniqueConstraint;
 
@@ -42,218 +44,253 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "usr_users", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"site_id", "username"})
+		@UniqueConstraint(columnNames = { "site_id", "username" })
 })
 public class User extends BaseEntity implements UserDetails, SiteAware {
 
-    @OneToOne
-    @NotNull
-    private Site site;
+	@OneToOne
+	@NotNull
+	private Site site;
 
-    @Column(updatable = false)
-    @Size(min = 5, message = "El nombre de usuario debe ser minimo de 5 caracteres")
-    @Email(message = "Ingrese direccion valida de email")
-    private String username;
-    @Size(min = 5, message = "El password del usuario debe ser minimo de 5 caracteres")
-    private String password;
+	@Column(updatable = false)
+	@Size(min = 5, message = "El nombre de usuario debe ser minimo de 5 caracteres")
+	@Email(message = "Ingrese direccion valida de email")
+	private String username;
+	@Size(min = 5, message = "El password del usuario debe ser minimo de 5 caracteres")
+	private String password;
 
-    private ContactInfo contactInfo = new ContactInfo();
-    private String userphoto;
-    private String identification;
+	private ContactInfo contactInfo = new ContactInfo();
+	private String userphoto;
+	private String identification;
 
-    private boolean accountNonExpired = true;
-    private boolean accountNonLocked = true;
-    private boolean credentialsNonExpired = true;
-    private boolean enabled = true;
-    private boolean passwordExpired;
+	private boolean accountNonExpired = true;
+	private boolean accountNonLocked = true;
+	private boolean credentialsNonExpired = true;
+	private boolean enabled = true;
+	private boolean passwordExpired;
+	private boolean superadmin;
 
-    @NotNull(message = "Enter user full name")
-    @NotEmpty
-    private String fullName;
+	@NotNull(message = "Enter user full name")
+	@NotEmpty
+	private String fullName;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<UserProfile> profiles = new ArrayList<>();
+	private String firstName;
+	private String lastName;
 
-    public String getUserphoto() {
-        return userphoto;
-    }
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	private List<UserProfile> profiles = new ArrayList<>();
 
-    public void setUserphoto(String userphoto) {
-        this.userphoto = userphoto;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public String getIdentification() {
-        return identification;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public void setIdentification(String identification) {
-        this.identification = identification;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    @Override
-    public Site getSite() {
-        return site;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    @Override
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	public boolean isSuperadmin() {
+		return superadmin;
+	}
 
-    public ContactInfo getContactInfo() {
-        return contactInfo;
-    }
+	public void setSuperadmin(boolean superadmin) {
+		this.superadmin = superadmin;
+	}
 
-    public void setContactInfo(ContactInfo contactInfo) {
-        this.contactInfo = contactInfo;
-    }
+	public String getUserphoto() {
+		return userphoto;
+	}
 
-    public String getFullName() {
-        return fullName;
-    }
+	public void setUserphoto(String userphoto) {
+		this.userphoto = userphoto;
+	}
 
-    public void setFullName(String fullName) {
-        if (fullName != null) {
-            fullName = StringUtils.capitalizeAllWords(fullName);
-        }
-        this.fullName = fullName;
-    }
+	public String getIdentification() {
+		return identification;
+	}
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+	public void setIdentification(String identification) {
+		this.identification = identification;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	@Override
+	public Site getSite() {
+		return site;
+	}
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
+	@Override
+	public void setSite(Site site) {
+		this.site = site;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public ContactInfo getContactInfo() {
+		return contactInfo;
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return accountNonExpired;
-    }
+	public void setContactInfo(ContactInfo contactInfo) {
+		this.contactInfo = contactInfo;
+	}
 
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
+	public String getFullName() {
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return accountNonLocked;
-    }
+		fullName = getFirstName() + " " + getLastName();
+		if (fullName != null) {
+			fullName = StringUtils.toUpperCase(fullName);
+		}
+		return fullName;
+	}
 
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
+	public void setFullName(String fullName) {
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
-    }
+		this.fullName = fullName;
+	}
 
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
+	@Override
+	public String getPassword() {
+		return password;
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+	@Override
+	public String getUsername() {
+		return username;
+	}
 
-    public List<UserProfile> getProfiles() {
-        return profiles;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public void setProfiles(List<UserProfile> profiles) {
-        this.profiles = profiles;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return accountNonExpired;
+	}
 
-    public boolean isPasswordExpired() {
-        return passwordExpired;
-    }
+	public void setAccountNonExpired(boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
+	}
 
-    public void setPasswordExpired(boolean passwordExpired) {
-        this.passwordExpired = passwordExpired;
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return accountNonLocked;
+	}
 
-    public void addProfile(Profile profile) {
-        if (profile != null) {
-            for (UserProfile p : profiles) {
-                if (p.getProfile().equals(profile)) {
-                    throw new ValidationError("Profile " + profile.getName() + " already assigned");
-                }
-            }
-            profiles.add(new UserProfile(profile, this));
-        }
-    }
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
 
-    public void removeProfile(UserProfile profile) {
-        if (profile != null) {
-            profiles.remove(profile);
-            profile.setProfile(null);
-            profile.setUser(this);
-        }
-    }
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return credentialsNonExpired;
+	}
 
-    @Override
-    public String toString() {
-        if (username == null) {
-            return super.toString();
-        } else {
-            return username;
-        }
-    }
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
+	}
 
-    /*--------------------------------------------------*/
-    @Override
-    public List<GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-        for (int i = 0; i < profiles.size(); i++) {
-            UserProfile perfilUsuario = profiles.get(i);
-            auths.add(perfilUsuario.getProfile());
-        }
-        return auths;
-    }
+	@Override
+	public boolean isEnabled() {
+		return enabled;
+	}
 
-    public Profile getProfile(String profileName) {
-        if (getAuthorities() != null) {
-            for (GrantedAuthority grantedAuthority : getAuthorities()) {
-                if (grantedAuthority.getAuthority().equals(profileName)) {
-                    return (Profile) grantedAuthority;
-                }
-            }
-        }
-        return null;
-    }
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
-    public String getAssignedProfiles() {
-        StringBuilder sb = new StringBuilder();
-        for (UserProfile profile : profiles) {
-            sb.append(profile.getProfile().getName()).append(", ");
-        }
-        if (sb.length() > 1) {
-            sb.deleteCharAt(sb.lastIndexOf(", "));
-        }
-        return sb.toString();
-    }
+	public List<UserProfile> getProfiles() {
+		return profiles;
+	}
 
-    public static User createMock() {
-        User user = new User();
-        user.setUsername("Anonymous");
-        user.setFullName("Anonymous");
-        return user;
-    }
+	public void setProfiles(List<UserProfile> profiles) {
+		this.profiles = profiles;
+	}
+
+	public boolean isPasswordExpired() {
+		return passwordExpired;
+	}
+
+	public void setPasswordExpired(boolean passwordExpired) {
+		this.passwordExpired = passwordExpired;
+	}
+
+	public void addProfile(Profile profile) {
+		if (profile != null) {
+			for (UserProfile p : profiles) {
+				if (p.getProfile().equals(profile)) {
+					throw new ValidationError("Profile " + profile.getName() + " already assigned");
+				}
+			}
+			profiles.add(new UserProfile(profile, this));
+		}
+	}
+
+	public void removeProfile(UserProfile profile) {
+		if (profile != null) {
+			profiles.remove(profile);
+			profile.setProfile(null);
+			profile.setUser(this);
+		}
+	}
+
+	@Override
+	public String toString() {
+		if (username == null) {
+			return super.toString();
+		} else {
+			return username;
+		}
+	}
+
+	/*--------------------------------------------------*/
+	@Override
+	public List<GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
+		for (int i = 0; i < profiles.size(); i++) {
+			UserProfile perfilUsuario = profiles.get(i);
+			auths.add(perfilUsuario.getProfile());
+		}
+		return auths;
+	}
+
+	public Profile getProfile(String profileName) {
+		if (getAuthorities() != null) {
+			for (GrantedAuthority grantedAuthority : getAuthorities()) {
+				if (grantedAuthority.getAuthority().equals(profileName)) {
+					return (Profile) grantedAuthority;
+				}
+			}
+		}
+		return null;
+	}
+
+	public String getAssignedProfiles() {
+		StringBuilder sb = new StringBuilder();
+		for (UserProfile profile : profiles) {
+			sb.append(profile.getProfile().getName()).append(", ");
+		}
+		if (sb.length() > 1) {
+			sb.deleteCharAt(sb.lastIndexOf(", "));
+		}
+		return sb.toString();
+	}
+
+	public static User createMock() {
+		User user = new User();
+		user.setUsername("Anonymous");
+		user.setFullName("Anonymous");
+		return user;
+	}
+
+	public boolean hasProfile(String string) {
+		return getProfile(string) != null;
+	}
 }

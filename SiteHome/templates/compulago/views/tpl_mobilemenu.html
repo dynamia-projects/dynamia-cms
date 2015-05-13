@@ -5,31 +5,27 @@
 
 <body th:fragment="content">
 	<div class="headerstrip navbar-fixed-top hidden-lg hidden-md">
-		<div class="container">
-			<div class="row">
 
-				<div class="col-sm-2 col-xs-2">
-					<a href="#" th:href='@{/}'> <img th:title="${name}" class="mt10" th:alt="${name}" th:src="@{/img/logo2.gif}" title="Simplepx" alt="Simplepx" />
-					</a>
-				</div>
-
-				<div class="col-sm-8 col-xs-8">
-					<form action="#" class="form-inline" th:action="@{/search}" th:object="${searchForm}" method="get" >					
-						<input type="search" class="form-control" placeholder="Busqueda" style="margin-top: 3px" th:field="*{query}" />
+		<table style="width: 100%; border: 0; padding: 0">
+			<tr>
+				<td width="50px" align="center"><a href="#" th:href='@{/}'> <img th:title="${name}" class="mt10" th:alt="${name}"
+						th:src="@{/img/logo2.gif}" title="Simplepx" alt="Simplepx" />
+				</a></td>
+				<td>
+					<form action="#" class="form-inline" th:action="@{/search}" th:object="${searchForm}" method="get">
+						<input type="search" class="form-control" placeholder="Busqueda" style="margin-top: 3px; background-color: transparent; border: 0; border-bottom: solid 1px silver; color: white" th:field="*{query}" />
 					</form>
-				</div>
-
-				<div class="col-sm-2 col-xs-2">
-					<div class="btn-group btn-group-lg">
-						<button type="button" class="btn btn-orange btn-large icon-align-justify" style="border: 0" data-toggle="collapse"
-							data-target=".navbar-collapse" />
-					</div>
-				</div>
-			</div>
-		</div>
+				</td>
+				<td width="35px" style="text-align: center">
+					<button type="button" class="navbar-toggle" style="border: 0" data-toggle="collapse" data-target=".navbar-collapse">
+						<i class="icon-align-justify"></i>
+					</button>
+				</td>
+			</tr>
+		</table>
 
 		<div class="collapse navbar-collapse">
-			<ul class="nav navbar-nav mobilemenu">				
+			<ul class="nav navbar-nav mobilemenu">
 				<li th:each="mi : ${menuitems}"><a th:class="${activeMenu == mi? 'active':''}" th:href="@{${mi.href}}" href="#"> <i
 						th:class="${'icon-'+mi.icon+' icon-white'}" class="icon-home icon-white font18"></i> <th:block th:text="${mi.name}" />
 				</a></li>

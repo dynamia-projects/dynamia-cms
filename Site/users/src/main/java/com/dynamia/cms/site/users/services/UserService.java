@@ -5,9 +5,12 @@
  */
 package com.dynamia.cms.site.users.services;
 
+import java.util.List;
+
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.users.UserForm;
 import com.dynamia.cms.site.users.domain.User;
+import com.dynamia.cms.site.users.domain.UserContactInfo;
 
 /**
  *
@@ -22,5 +25,7 @@ public interface UserService {
     public void changePassword(UserForm form);
 
     void checkAdminUser(Site site);
+
+	public List<UserContactInfo> getContactInfos(User current);
 
 }

@@ -33,4 +33,6 @@ public interface SiteService {
 
 	public void clearCache(Site site);
 
+	public abstract String[] getSiteParameterAsArray(Site site, String name);
+
 }

@@ -25,8 +25,17 @@ public class UserContactInfo extends SimpleEntity implements SiteAware {
 	@NotNull
 	private User user;
 	private ContactInfo info = new ContactInfo();
+	private String name;
 	@Column(length = 3000)
 	private String description;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public Site getSite() {
 		return site;
@@ -58,6 +67,11 @@ public class UserContactInfo extends SimpleEntity implements SiteAware {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s (%s, %s)", name, info.getCity(), info.getAddress());
 	}
 
 }

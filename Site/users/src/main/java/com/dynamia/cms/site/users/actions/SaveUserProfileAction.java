@@ -5,15 +5,18 @@
  */
 package com.dynamia.cms.site.users.actions;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.users.UserForm;
+import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.UsersUtil;
+import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.cms.site.users.services.UserService;
 import com.dynamia.tools.domain.ValidationError;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -22,30 +25,31 @@ import org.springframework.web.servlet.ModelAndView;
 @CMSAction
 public class SaveUserProfileAction implements SiteAction {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @Override
-    public String getName() {
-        return "saveUserProfile";
-    }
+	@Override
+	public String getName() {
+		return "saveUserProfile";
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView();
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView();
 
-        
-        UserForm userForm = (UserForm) evt.getData();
-        userForm.setSite(evt.getSite());
-        try {
-            userService.saveUser(userForm);
-            mv.addObject("successmessage", "Informacion Personal actualizada correctamente");
-        } catch (ValidationError e) {            
-            mv.addObject("errormessage", e.getMessage());
-            mv.setViewName("users/profile");
-            UsersUtil.setupUserFormVar(mv, userForm);
-        } 
+		UserForm userForm = (UserForm) evt.getData();
+		userForm.setSite(evt.getSite());
+		try {
+			userService.saveUser(userForm);
+			User user = userService.getUser(evt.getSite(), userForm.getData().getUsername());
+			UserHolder.get().update(user);
+			mv.addObject("successmessage", "Informacion Personal actualizada correctamente");
+		} catch (ValidationError e) {
+			mv.addObject("errormessage", e.getMessage());
+			mv.setViewName("users/profile");
+			UsersUtil.setupUserFormVar(mv, userForm);
+		}
 
-    }
+	}
 
 }

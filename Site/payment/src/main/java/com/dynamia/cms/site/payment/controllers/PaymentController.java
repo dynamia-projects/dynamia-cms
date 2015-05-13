@@ -6,8 +6,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,7 @@ import com.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import com.dynamia.cms.site.payment.services.PaymentService;
 import com.dynamia.tools.commons.logger.LoggingService;
 import com.dynamia.tools.commons.logger.SLF4JLoggingService;
+import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.integration.Containers;
 import com.dynamia.tools.integration.sterotypes.Controller;
 
@@ -32,36 +34,56 @@ public class PaymentController {
 	@Autowired
 	private PaymentService service;
 
+	@Autowired
+	private CrudService crudService;
+
 	private LoggingService logger = new SLF4JLoggingService(PaymentController.class);
 
 	@RequestMapping(value = "/{gatewayId}/response", method = RequestMethod.GET)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ModelAndView gatewayResponse(@PathVariable String gatewayId, HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("paymentResponse");
+		ModelAndView mv = new ModelAndView("payment/response");
 
-		PaymentTransaction tx = commitTransaction(gatewayId, request);
-
-		mv.addObject("transaction", tx);
-		mv.addObject("gateway", service.findGateway(gatewayId));
+		try {
+			PaymentTransaction tx = commitTransaction(gatewayId, request, false);
+			crudService.save(tx);
+			mv.addObject("title", tx.getStatusText());
+			mv.addObject("subtitle", tx.getReference());
+			mv.addObject("transaction", tx);
+			mv.addObject("gateway", service.findGateway(gatewayId));
+		} catch (Exception e) {
+			mv.setViewName("redirect:/");
+		}
 		return mv;
 	}
 
 	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(value = "/{gatewayId}/response", method = RequestMethod.POST)
+	@RequestMapping(value = "/{gatewayId}/confirmation", method = RequestMethod.POST)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void gatewayConfirmation(@PathVariable String gatewayId, HttpServletRequest request) {
-		commitTransaction(gatewayId, request);
+
+		PaymentTransaction tx = commitTransaction(gatewayId, request, true);
+		if (!tx.isConfirmed()) {
+			tx.setConfirmed(true);
+			logger.info("Payment Transaction Confirmation " + tx.getUuid() + " - " + tx.getStatusText());
+			crudService.save(tx);
+		}
+
 	}
 
-	private PaymentTransaction commitTransaction(String gatewayId, HttpServletRequest request) {
-		Map<String, String> response = parseRequest(request);
-
+	private PaymentTransaction commitTransaction(String gatewayId, HttpServletRequest request, boolean notify) {
 		PaymentGateway gateway = service.findGateway(gatewayId);
+		Map<String, String> response = parseRequest(gateway.getResponseParams(), request);
+
 		PaymentTransaction tx = service.findTransaction(gateway, response);
-		PaymentTransactionStatus oldStatus = tx.getStatus();
+		if (!tx.isConfirmed()) {
+			PaymentTransactionStatus oldStatus = tx.getStatus();
 
-		gateway.commit(tx, response);
+			gateway.processResponse(tx, response);
 
-		if (oldStatus != tx.getStatus()) {
-			fireNewStatusListeners(tx, oldStatus);
+			if (oldStatus != tx.getStatus() && notify) {
+				fireNewStatusListeners(tx, oldStatus);
+			}
 		}
 
 		return tx;
@@ -78,10 +100,9 @@ public class PaymentController {
 
 	}
 
-	private Map<String, String> parseRequest(HttpServletRequest request) {
+	private Map<String, String> parseRequest(String[] params, HttpServletRequest request) {
 		Map<String, String> response = new HashMap<String, String>();
-		while (request.getParameterNames().hasMoreElements()) {
-			String name = request.getParameterNames().nextElement();
+		for (String name : params) {
 			String value = request.getParameter(name);
 			response.put(name, value);
 		}

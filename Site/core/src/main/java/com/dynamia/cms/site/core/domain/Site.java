@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -32,7 +33,7 @@ public class Site extends SimpleEntity {
 	@OneToMany(mappedBy = "site")
 	private List<SiteDomain> acceptedDomains = new ArrayList<>();
 
-	@OneToMany(mappedBy = "site")
+	@OneToMany(mappedBy = "site", fetch = FetchType.EAGER)
 	private List<SiteParameter> parameters = new ArrayList<>();
 
 	@OneToOne

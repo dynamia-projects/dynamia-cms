@@ -12,11 +12,13 @@ public interface PaymentGateway {
 
 	String[] getRequiredParams();
 
+	String[] getResponseParams();
+
 	PaymentTransaction newTransaction(String source);
 
 	public PaymentForm createForm(PaymentTransaction tx);
 
-	public boolean commit(PaymentTransaction tx, Map<String, String> response);
+	public boolean processResponse(PaymentTransaction tx, Map<String, String> response);
 
 	public abstract String getTransactionLocator();
 

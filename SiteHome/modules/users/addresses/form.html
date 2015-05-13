@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+
+<div class="container" layout:fragment="content">
+
+	<!-- Main Title-->
+	<div class="titles">
+		<div class="pull-left">
+			<h1 class="headinglefttitle" th:text="${title}"></h1>
+			<div class="headingsubtitle" th:text="${subtitle}"></div>
+		</div>
+		<i class="icon-map-marker"></i>
+	</div>
+
+	<div class="row mt40">
+		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+			<form id="userForm" class="form-horizontal" action="#" th:action="@{/users/addresses}" th:object="${userContactInfo}" method="post">
+
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Nombre <span class="red">*</span></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" th:field="*{name}" placeholder="ejemplos: oficina, casa, principal" />
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Pais <span class="red">*</span></label>
+					<div class="col-lg-3">
+						<select th:field="*{info.country}" class="form-control">
+							<option th:each="op : ${uciCountries}" th:value="${op.value}" th:text="${op.name}">COUNTRY</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Departamento <span class="red">*</span></label>
+					<div class="col-lg-3">
+						<select th:field="*{info.region}" class="form-control">
+							<option th:each="op : ${uciRegions}" th:value="${op.value}" th:text="${op.name}">COUNTRY</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Ciudad <span class="red">*</span></label>
+					<div class="col-lg-3">
+						<select th:field="*{info.city}" class="form-control">
+							<option th:each="op : ${uciCities}" th:value="${op.value}" th:text="${op.name}">COUNTRY</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Direccion <span class="red">*</span></label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" th:field="*{info.address}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Telefono:</label>
+					<div class="col-lg-3">
+						<input type="tel" class="form-control" th:field="*{info.phoneNumber}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Celular:</label>
+					<div class="col-lg-3">
+						<input type="tel" class="form-control" th:field="*{info.mobileNumber}" />
+					</div>
+				</div>
+
+				<input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}" /> <input type="hidden" name="redirect" id="redirect"
+					th:value="${redirect}" /> <br /> <input type="hidden" th:field="*{id}" /> <a class="btn btn-orange" onclick="$('#userForm').submit();">Guardar
+					Cambios</a>
+
+			</form>
+		</div>
+
+	</div>
+
+</div>
+
+
+</html>

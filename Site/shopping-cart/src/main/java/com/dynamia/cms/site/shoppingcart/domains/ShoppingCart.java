@@ -18,6 +18,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -48,6 +50,7 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
 	private BigDecimal totalPrice;
 	@OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
 	private List<ShoppingCartItem> items = new ArrayList<>();
+	@Enumerated(EnumType.ORDINAL)
 	private ShoppingCartStatus status = ShoppingCartStatus.NEW;
 
 	public ShoppingCart() {

@@ -7,8 +7,8 @@ package com.dynamia.cms.site.shoppingcart.actions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
+import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
@@ -18,9 +18,10 @@ import com.dynamia.cms.site.payment.services.PaymentService;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
 import com.dynamia.cms.site.shoppingcart.domains.ShoppingOrder;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingSiteConfig;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
+import com.dynamia.cms.site.users.domain.UserContactInfo;
+import com.dynamia.tools.domain.ValidationError;
+import com.dynamia.tools.domain.services.CrudService;
 
 /**
  *
@@ -35,6 +36,9 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 	@Autowired
 	private PaymentService paymentService;
 
+	@Autowired
+	private CrudService crudService;
+
 	@Override
 	public String getName() {
 		return "confirmShoppingOrder";
@@ -45,13 +49,61 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 		ModelAndView mv = evt.getModelAndView();
 		mv.setViewName("shoppingcart/confirm");
 
+		mv.addObject("title", "Resumen de Pedido");
 		ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder();
-		PaymentGateway gateway = paymentService.findGateway(order.getTransaction().getGatewayId());
-		PaymentForm form = gateway.createForm(order.getTransaction());
+		if (order.getId() != null) {
+			order = crudService.find(ShoppingOrder.class, order.getId());
+			ShoppingCartHolder.get().setCurrentOrder(order);
+		}
+		order.sync();
+		order.setUserComments(evt.getRequest().getParameter("userComments"));
+		order.setBillingAddress(loadContactInfo("billingAddress", evt));
+		order.setShippingAddress(loadContactInfo("shippingAddress", evt));
 
-		mv.addObject("shoppingOrder", order);
-		mv.addObject("paymentForm", form);
+		try {
 
+			validate(order);
+			String name = order.getShoppingCart().getName();
+			service.saveOrder(order);
+			ShoppingCartHolder.get().setCurrentOrder(order);
+			ShoppingCartHolder.get().removeCart(name);
+			
+			PaymentGateway gateway = paymentService.findGateway(order.getTransaction().getGatewayId());
+			PaymentForm form = gateway.createForm(order.getTransaction());
+
+			mv.addObject("shoppingOrder", order);
+			mv.addObject("paymentForm", form);
+
+		} catch (ValidationError e) {
+			mv.setViewName("redirect:/");
+			CMSUtil.addErrorMessage(e.getMessage(), evt.getRedirectAttributes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void validate(ShoppingOrder order) {
+		if (order.getBillingAddress() == null) {
+			throw new ValidationError("Seleccione direccion de facturacion");
+		}
+
+		if (order.getShippingAddress() == null) {
+			throw new ValidationError("Seleccione direccion de envio");
+		}
+
+	}
+
+	private UserContactInfo loadContactInfo(String string, ActionEvent evt) {
+		UserContactInfo userContactInfo = null;
+
+		try {
+			Long id = Long.parseLong(evt.getRequest().getParameter(string));
+			userContactInfo = crudService.find(UserContactInfo.class, id);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return userContactInfo;
 	}
 
 }

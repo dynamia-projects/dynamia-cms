@@ -5,6 +5,8 @@
  */
 package com.dynamia.cms.site.users.actions;
 
+import java.util.List;
+
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
@@ -12,8 +14,10 @@ import com.dynamia.cms.site.users.UserForm;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.UsersUtil;
 import com.dynamia.cms.site.users.domain.User;
+import com.dynamia.cms.site.users.domain.UserContactInfo;
 import com.dynamia.cms.site.users.services.UserService;
 import com.dynamia.tools.domain.services.CrudService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,6 +49,10 @@ public class UpdateUserAction implements SiteAction {
         form.setData(user);
         form.setSite(evt.getSite());
         UsersUtil.setupUserFormVar(mv, form);
+        
+    	List<UserContactInfo> userContactInfos = service.getContactInfos(UserHolder.get().getCurrent());
+		mv.addObject("userContactInfos", userContactInfos);
+		
     }
 
 }

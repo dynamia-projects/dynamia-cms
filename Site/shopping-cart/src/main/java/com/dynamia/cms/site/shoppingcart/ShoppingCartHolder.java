@@ -5,6 +5,7 @@
  */
 package com.dynamia.cms.site.shoppingcart;
 
+import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.shoppingcart.domains.ShoppingOrder;
 import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
 import com.dynamia.cms.site.users.UserHolder;
@@ -46,12 +47,17 @@ public class ShoppingCartHolder implements Serializable {
 		ShoppingCart cart = carts.get(name);
 		if (cart == null) {
 			cart = new ShoppingCart(name);
+			cart.setSite(SiteContext.get().getCurrent());
 			if (UserHolder.get().isAuthenticated()) {
 				cart.setUser(UserHolder.get().getCurrent());
 			}
 			carts.put(name, cart);
 		}
 		return cart;
+	}
+
+	public void removeCart(String name) {
+		carts.remove(name);
 	}
 
 	public ShoppingOrder getCurrentOrder() {

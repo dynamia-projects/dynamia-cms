@@ -93,19 +93,19 @@
 
 				</div>
 
-				<div class="pull-right mt10" th:if="${prd_product.stock gt 0}">
-					<a th:href="@{'/shoppingcart/shop/add/'+${prd_product.id}(currentURI=${currentURI})}" th:if="${prd_config.shopEnabled}"
-						class="btn btn-danger btn-lg tooltip-test" data-original-title="Agregar al Carrito"> <i class="icon-shopping-cart icon-white"></i> Comprar Ahora
+				<div class="pull-right mt10 hidden-xs hidden-sm" th:if="${prd_product.stock gt 0}">
+					<a th:href="@{'/shoppingcart/shop/add/'+${prd_product.id}(currentURI=${currentURI})}" th:if="${prd_config.shopEnabled or @userHolder.superadmin}"
+						class="btn btn-danger btn-lg tooltip-test" data-original-title="Agregar al Carrito"> <i class="icon-shopping-cart icon-white"></i> Comprar
+						Ahora
+					</a> <a th:if="${prd_config.quoteEnabled}" th:href="@{'/shoppingcart/quote/add/'+${prd_product.id}(currentURI=${currentURI})}"
+						class="btn btn-primary  btn-lg tooltip-test" data-original-title="Cotizar"> <i class="icon-external-link icon-white"></i> Cotizar
 					</a>
-					<a th:if="${prd_config.quoteEnabled}" th:href="@{'/shoppingcart/quote/add/'+${prd_product.id}(currentURI=${currentURI})}" class="btn btn-primary  btn-lg tooltip-test" data-original-title="Cotizar"> <i
-								class="icon-external-link icon-white" ></i> Cotizar
-							</a>
 				</div>
 				<!-- Product Details tab & comments-->
 				<div class="productdesc">
 					<ul class="nav nav-tabs" id="myTab">
 						<li class="active"><a href="#specification">Caracteristicas</a></li>
-						<li><a href="#producttag">Etiquetas</a></li>
+						<li th:if="${false}"><a href="#producttag">Etiquetas</a></li>
 					</ul>
 					<div class="tab-content">
 						<!-- DESCRIPTION -->
@@ -134,7 +134,7 @@
 						</div>
 
 
-						<div class="tab-pane" id="producttag">
+						<div class="tab-pane" id="producttag" th:if="${false}">
 
 							<ul class="tags" th:if="${prd_product.tags!=null}">
 								<li th:each="tag : ${#strings.setSplit(prd_product.tags,',')}"><a><i class="icon-tag"></i><span th:text="${tag}">Tag HERE</span></a></li>
@@ -147,9 +147,9 @@
 
 
 				<div class="tab-pane" id="stocks" th:if="${prd_product.stock gt 0}">
-					<h3 class="orange">Disponibilidad y Direcciones</h3>
+					<h3 class="orange hidden-xs hidden-sm">Disponibilidad y Direcciones</h3>
 					<div class="container">
-						<div class="row" th:each="det : ${prd_stock_details}">
+						<div class="row hidden-xs hidden-sm" th:each="det : ${prd_stock_details}">
 							<div class="col-md-2" th:text="${det.store.contactInfo.city}">VALUE</div>
 							<div class="col-md-4 orange">
 								<a data-toggle="modal" class="tooltip-test" title="Ver direccion" th:href="${'#store'+det.store.id}" th:text="${det.store.name.toUpperCase()}">NAME</a>
@@ -172,7 +172,7 @@
 						<div class="productbtn orange ">
 
 
-							 <a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}" class="btn btn-small tooltip-test"
+							<a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}" class="btn btn-small tooltip-test"
 								data-original-title="Marca el producto como favorito"> <i class="icon-heart icon-white"></i> Favorito
 							</a> <a th:href="@{'/store/products/'+${prd_product.id}+'/compare'}" class="btn btn-small tooltip-test"
 								data-original-title="Compara con otros productos"> <i class="icon-refresh icon-white"></i> Comparar
@@ -189,15 +189,16 @@
 			</div>
 		</div>
 
-		<div>
+		<div class="hidden-xs hidden-sm">
 			<th:block th:include="social/components/sharebuttons::content" />
-		</div>
-		<div class="mt40">
-			<h2 class="heading1">
-				<span class="maintext">Dejanos tus comentarios</span>
-			</h2>
-			<div class="fb-comments" th:attr="data-href=${currentURL}" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
 
+			<div class="mt40">
+				<h2 class="heading1">
+					<span class="maintext">Dejanos tus comentarios</span>
+				</h2>
+				<div class="fb-comments" th:attr="data-href=${currentURL}" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+
+			</div>
 		</div>
 	</div>
 

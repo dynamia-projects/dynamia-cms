@@ -46,7 +46,6 @@ public class SaveUserAction implements SiteAction {
         UserForm userForm = (UserForm) evt.getData();
         userForm.setSite(evt.getSite());
         try {
-
             userService.saveUser(userForm);
             User user = userService.getUser(evt.getSite(), userForm.getData().getUsername());
             mv.addObject("user", user);

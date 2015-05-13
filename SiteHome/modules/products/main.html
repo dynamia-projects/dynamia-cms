@@ -7,7 +7,7 @@
 	<div class="container">
 
 
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
 			<th:block th:include="banners/banner::content" />
 		</div>
 
@@ -16,7 +16,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">
 
 
-			<th:block th:include="module::position('maincontent')"/>
+			<th:block th:include="module::position('maincontent')" />
 
 			<div th:if="${prd_mostViewedProducts!=null and  not #lists.isEmpty(prd_mostViewedProducts)}" class="featureprojectcontianer container mt40">
 				<h2 class="heading1">
@@ -32,21 +32,21 @@
 				<th:block th:include="products/components/productcarousel::frag(${prd_priceVariations},5)" />
 			</div>
 
-			
+
 			<div th:if="${prd_relatedProducts!=null and  not #lists.isEmpty(prd_relatedProducts)}" class="featureprojectcontianer container mt40">
 				<h2 class="heading1">
 					<span class="maintext">Recomendados</span>
 				</h2>
 				<th:block th:include="products/components/productcarousel::frag(${prd_relatedProducts},5)" />
 			</div>
-			
+
 			<div th:if="${prd_recentViewedProducts!=null and  not #lists.isEmpty(prd_recentViewedProducts)}" class="featureprojectcontianer container mt40">
 				<h2 class="heading1">
 					<span class="maintext">Tu historial</span>
 				</h2>
 				<th:block th:include="products/components/productcarousel::frag(${prd_recentViewedProducts},5)" />
 			</div>
-			
+
 
 		</div>
 

@@ -6,9 +6,11 @@
 package com.dynamia.cms.site.core;
 
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.core.html.Option;
 import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.tools.commons.CollectionsUtils;
 import com.dynamia.tools.commons.StringUtils;
+import com.dynamia.tools.domain.util.ContactInfo;
 import com.dynamia.tools.integration.Containers;
 
 import java.io.File;
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -58,6 +61,13 @@ public class CMSUtil {
 		if (ra != null) {
 			ra.addFlashAttribute("warningmessage", string);
 		}
+	}
+
+	public static void buildContactInfoOptions(Site site, ModelAndView mv, String prefix, ContactInfo selected) {
+		SiteService service = Containers.get().findObject(SiteService.class);
+		mv.addObject(prefix + "Countries", Option.buildFromArray(service.getSiteParameterAsArray(site, "countries"), selected.getCountry()));
+		mv.addObject(prefix + "Regions", Option.buildFromArray(service.getSiteParameterAsArray(site, "regions"), selected.getRegion()));
+		mv.addObject(prefix + "Cities", Option.buildFromArray(service.getSiteParameterAsArray(site, "cities"), selected.getCity()));
 	}
 
 	public String formatNumber(Number number) {

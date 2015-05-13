@@ -7,14 +7,14 @@ public class PaymentForm {
 
 	private String url;
 	private String httpMethod;
-	private Map<String, String> paramaters = new HashMap<>();
+	private Map<String, String> parameters = new HashMap<>();
 
 	public void addParam(String name, String value) {
-		paramaters.put(name, value);
+		parameters.put(name, value);
 	}
 
 	public void addParams(Map<String, String> params) {
-		paramaters.putAll(params);
+		parameters.putAll(params);
 	}
 
 	public String getUrl() {
@@ -33,12 +33,12 @@ public class PaymentForm {
 		this.httpMethod = httpMethod;
 	}
 
-	public Map<String, String> getParamaters() {
-		return paramaters;
+	public Map<String, String> getParameters() {
+		return parameters;
 	}
 
-	public void setParamaters(Map<String, String> paramaters) {
-		this.paramaters = paramaters;
+	public void setParameters(Map<String, String> parameters) {
+		this.parameters = parameters;
 	}
 
 }

@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,9 @@ class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
 	private CrudService crudService;
+
+	@PersistenceContext
+	private EntityManager em;
 
 	/*
 	 * (non-Javadoc)
@@ -94,8 +100,11 @@ class PaymentServiceImpl implements PaymentService {
 	@Override
 	public PaymentTransaction findTransaction(PaymentGateway gateway, Map<String, String> response) {
 		String uuid = response.get(gateway.getTransactionLocator());
-		PaymentTransaction tx = crudService.findSingle(PaymentTransaction.class,
-				QueryParameters.with("uuid", uuid).add("gatewayId", gateway.getId()));
+		PaymentTransaction tx = (PaymentTransaction) em
+				.createQuery("select tx from " + PaymentTransaction.class.getName() + " tx where tx.uuid=:uuid and tx.gatewayId=:gid")
+				.setParameter("uuid", uuid)
+				.setParameter("gid", gateway.getId())
+				.getSingleResult();
 
 		if (tx == null) {
 			throw new PaymentException("No transaction found for gateway " + gateway.getId() + " uuid: " + uuid);

@@ -22,49 +22,59 @@ import org.springframework.stereotype.Component;
 @Scope("session")
 public class UserHolder implements Serializable {
 
-    protected User user;
+	protected User user;
 
-    private Date timestamp;
+	private Date timestamp;
 
-    public static UserHolder get() {
-        try {
-            return Containers.get().findObject(UserHolder.class);
-        } catch (Exception e) {
-            UserHolder userHolder = new UserHolder();
-            userHolder.init(User.createMock());
-            return userHolder;
-        }
-    }
+	public static UserHolder get() {
+		try {
+			return Containers.get().findObject(UserHolder.class);
+		} catch (Exception e) {
+			UserHolder userHolder = new UserHolder();
+			userHolder.init(User.createMock());
+			return userHolder;
+		}
+	}
 
-    public boolean isAuthenticated() {
-        return user != null && user.getId() != null;
-    }
+	public boolean isAuthenticated() {
+		return user != null && user.getId() != null;
+	}
 
-    public String getUserName() {
-        return user.getUsername().toLowerCase();
-    }
+	public boolean isSuperadmin() {
+		return isAuthenticated() && user.isSuperadmin();
+	}
 
-    public String getFullName() {
+	public String getUserName() {
+		return user.getUsername().toLowerCase();
+	}
 
-        return user.getFullName();
-    }
+	public String getFullName() {
 
-    public boolean hasProfile(String profileName) {
-        return user.getProfile(profileName) != null;
-    }
+		return user.getFullName();
+	}
 
-    public User getCurrent() {
-        return user;
-    }
+	public boolean hasProfile(String profileName) {
+		return user.getProfile(profileName) != null;
+	}
 
-    public Date getTimestamp() {
-        return timestamp;
-    }
+	public User getCurrent() {
+		return user;
+	}
 
-    void init(User user) {
-        if (user != null) {
-            this.user = user;
-            this.timestamp = new Date();
-        }
-    }
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	void init(User user) {
+		if (user != null) {
+			this.user = user;
+			this.timestamp = new Date();
+		}
+	}
+
+	public void update(User user) {
+		if (user != null && this.user != null && this.user.equals(user)) {
+			this.user = user;
+		}
+	}
 }

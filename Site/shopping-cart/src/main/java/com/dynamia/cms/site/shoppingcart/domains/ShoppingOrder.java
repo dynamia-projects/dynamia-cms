@@ -42,9 +42,9 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 	private PaymentTransaction transaction;
 
 	@OneToOne
-	private UserContactInfo shipAddress;
+	private UserContactInfo shippingAddress;
 	@OneToOne
-	private UserContactInfo invoiceAddress;
+	private UserContactInfo billingAddress;
 
 	@Column(length = 5000)
 	private String userComments;
@@ -97,20 +97,20 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 		this.transaction = transaction;
 	}
 
-	public UserContactInfo getShipAddress() {
-		return shipAddress;
+	public UserContactInfo getShippingAddress() {
+		return shippingAddress;
 	}
 
-	public void setShipAddress(UserContactInfo shipAddress) {
-		this.shipAddress = shipAddress;
+	public void setShippingAddress(UserContactInfo shippingAddress) {
+		this.shippingAddress = shippingAddress;
 	}
 
-	public UserContactInfo getInvoiceAddress() {
-		return invoiceAddress;
+	public UserContactInfo getBillingAddress() {
+		return billingAddress;
 	}
 
-	public void setInvoiceAddress(UserContactInfo invoiceAddress) {
-		this.invoiceAddress = invoiceAddress;
+	public void setBillingAddress(UserContactInfo billingAddress) {
+		this.billingAddress = billingAddress;
 	}
 
 	public String getUserComments() {
@@ -123,6 +123,18 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 
 	public boolean isCompleted() {
 		return transaction != null && transaction.getStatus() == PaymentTransactionStatus.COMPLETED;
+	}
+
+	public void sync() {
+		if (shoppingCart != null && transaction != null) {
+			shoppingCart.compute();
+			transaction.setAmount(shoppingCart.getTotalPrice());
+			transaction.setTaxes(shoppingCart.getTotalTaxes());
+			if (transaction.getTaxes() != null && transaction.getTaxes().longValue() > 0) {
+				transaction.setTaxesBase(shoppingCart.getSubtotal());
+			}
+		}
+
 	}
 
 }

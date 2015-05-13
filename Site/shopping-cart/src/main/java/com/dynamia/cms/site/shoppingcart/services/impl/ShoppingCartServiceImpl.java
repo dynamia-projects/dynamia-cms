@@ -33,6 +33,7 @@ import com.dynamia.cms.site.shoppingcart.domains.enums.ShoppingCartStatus;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.tools.commons.SimpleTemplateEngine;
+import com.dynamia.tools.domain.ValidationError;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.domain.util.DomainUtils;
 import com.dynamia.tools.integration.Containers;
@@ -90,8 +91,14 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 	@Override
 	public ShoppingOrder createOrder(ShoppingCart shoppingCart, ShoppingSiteConfig config) {
+		shoppingCart.compute();
+		if (shoppingCart.getTotalPrice().longValue() < config.getMinPaymentAmount().longValue()) {
+			throw new ValidationError("Minimo valor de venta es $" + config.getMinPaymentAmount());
+		}
+
 		PaymentGateway gateway = paymentService.findGateway(config.getPaymentGatewayId());
 		PaymentTransaction tx = gateway.newTransaction(config.getSite().getKey());
+		tx.setGatewayId(gateway.getId());
 		tx.setAmount(shoppingCart.getTotalPrice());
 		tx.setTaxes(shoppingCart.getTotalTaxes());
 		if (tx.getTaxes() == null || tx.getTaxes().longValue() == 0) {
@@ -100,10 +107,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 			tx.setTaxesBase(shoppingCart.getSubtotal());
 		}
 		tx.setCurrency(config.getDefaultCurrency());
-		if (config.getDescriptionTemplate() != null && !config.getDescriptionTemplate().isEmpty()) {
-			tx.setDescription(SimpleTemplateEngine.parse(config.getDescriptionTemplate(), getDescriptionsVars(shoppingCart)));
-		}
-		tx.setEmail(UserHolder.get().getCurrent().getContactInfo().getEmail());
+
+		tx.setEmail(UserHolder.get().getCurrent().getUsername());
 
 		ShoppingOrder order = new ShoppingOrder();
 		order.setShoppingCart(shoppingCart);
@@ -116,7 +121,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void saveOrder(ShoppingOrder order) {
-		if (order.getId() == null && order.getNumber() == null) {
+		if (order.getId() == null) {
 			SiteParameter param = siteService.getSiteParameter(order.getSite(), LAST_SHOPPING_ORDER_NUMBER, "0");
 			long lastNumber = Long.parseLong(param.getValue());
 			lastNumber++;
@@ -126,8 +131,15 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 			String number = DomainUtils.formatNumberWithZeroes(lastNumber, 10000);
 			order.setNumber(number);
+			order.getShoppingCart().setName(number);
 			order.getShoppingCart().setStatus(ShoppingCartStatus.COMPLETED);
-			crudService.save(order);
+
+			order.getTransaction().setDescription(
+					"Orden No. " + order.getNumber() + ". Compra de " + order.getShoppingCart().getQuantity() + " producto(s)");
+
+			crudService.create(order);
+		} else {
+			crudService.update(order);
 		}
 
 	}

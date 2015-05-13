@@ -22,9 +22,7 @@ public class ProductsInterceptor extends SiteRequestInterceptorAdapter {
 	@Override
 	protected void afterRequest(Site site, ModelAndView mv) {
 
-		if (mv.getViewName().contains("products") || mv.getModel().get("prd_products") != null || mv.getModel().get("cart") != null) {
-			ProductsUtil.setupDefaultVars(site, mv);
-		}
+		ProductsUtil.setupDefaultVars(site, mv);
 
 	}
 

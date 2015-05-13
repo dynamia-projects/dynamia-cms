@@ -5,6 +5,8 @@
  */
 package com.dynamia.cms.site.shoppingcart.actions;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
@@ -17,16 +19,20 @@ import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
 @CMSAction
 public class ViewShoppingCartAction implements SiteAction {
 
-    @Override
-    public String getName() {
-        return "viewShoppingCart";
-    }
+	
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-    	ShoppingCartUtils.getShoppingCart(evt.getModelAndView());        
-        evt.getModelAndView().setViewName("shoppingcart/details");
+	@Override
+	public String getName() {
+		return "viewShoppingCart";
+	}
 
-    }
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView();
+		mv.setViewName("shoppingcart/details");
+
+		ShoppingCartUtils.loadConfig(evt.getSite(), mv);
+
+	}
 
 }

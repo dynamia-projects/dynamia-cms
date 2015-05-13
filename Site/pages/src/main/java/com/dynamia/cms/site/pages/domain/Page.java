@@ -60,7 +60,7 @@ public class Page extends Content implements SiteAware {
 	private boolean published;
 	private String tags;
 	private String icon;
-	@OneToMany(mappedBy = "page", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "page", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PageParameter> parameters = new ArrayList<>();
 
 	public String getType() {

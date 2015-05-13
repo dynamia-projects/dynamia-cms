@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+<div class="maincontainer" layout:fragment="content">
+
+
+	<div class="container">
+		<!-- Main Title-->
+		<div class="titles animated fadeInUp time3">
+			<div class="pull-left">
+				<h1 class="headinglefttitle" th:text="${title}"></h1>
+				<div th:text="${subtitle}" class="headingsubtitle"></div>
+			</div>
+			<i th:class="${icon}"></i>
+		</div>
+
+		<div class="row mt40">
+			<form role="form" class="form-horizontal" th:action="@{/shoppingcart/shop/confirm}" th:method="post">
+
+
+				<h2>Datos Personales</h2>
+				
+				<div class="form-group">
+					<label class="col-lg-2 orange">CC/NIT</label> <span class="col-lg-6 " th:text="${@userHolder.current.identification}"></span>
+
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 orange">Nombres</label> <span class="col-lg-6 " th:text="${@userHolder.current.firstName}"></span>
+
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 orange">Apellidos</label> <span class="col-lg-6 " th:text="${@userHolder.current.lastName}"></span>
+
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 orange">Email</label> <span class="col-lg-6 " th:text="${@userHolder.current.username}"></span>
+
+				</div>
+				
+				<a class="btn btn-primary" th:href="@{/users/profile}">Editar</a>
+				
+
+				<div class="form-group">
+					<h2>Direccion de Facturacion</h2>
+					<select class="form-control" name="billingAddress">
+						<option th:each="uci : ${userContactInfos}" th:value="${uci.id}" th:text="${uci.toString()}"></option>
+					</select> <a class="orange" th:href="@{/users/addresses/add(redirect='/shoppingcart/shop/checkout')}">Nueva Direccion</a>
+				</div>
+
+				<div class="form-group">
+					<h2>Direccion de Envio</h2>
+					<select class="form-control" name="shippingAddress">
+						<option th:each="uci : ${userContactInfos}" th:value="${uci.id}" th:text="${uci.toString()}"></option>
+					</select> <a class="orange" th:href="@{/users/addresses/add(redirect='/shoppingcart/shop/checkout')}">Nueva Direccion</a>
+				</div>
+
+				<div class="form-group">
+					<h2>Comentarios y Obsevaciones</h2>
+					<textarea rows="4" cols="40" id="message" name="userComments"
+						placeholder="Ingrese cualquier informacion adicional que debamos tener en cuenta en el envio de su pedido" class="form-control"></textarea>
+				</div>
+
+
+				<div class="form-group">
+					<h2>Detalles del Pedido</h2>
+					<th th:include="shoppingcart/components/orderDetails::content" />
+				</div>
+
+				<!-- Button -->
+				<div class="form-group">
+					<button type="submit" class="btn btn-orange btn-lg">
+						Confirmar <i class="icon-check icon-white"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</html>
