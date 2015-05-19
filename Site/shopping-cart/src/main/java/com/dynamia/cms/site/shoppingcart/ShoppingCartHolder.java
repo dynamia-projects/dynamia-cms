@@ -44,9 +44,14 @@ public class ShoppingCartHolder implements Serializable {
 	 * @return
 	 */
 	public ShoppingCart getCart(String name) {
+		return getCart(name, "");
+	}
+
+	public ShoppingCart getCart(String name, String title) {
 		ShoppingCart cart = carts.get(name);
 		if (cart == null) {
 			cart = new ShoppingCart(name);
+			cart.setTitle(title);
 			cart.setSite(SiteContext.get().getCurrent());
 			if (UserHolder.get().isAuthenticated()) {
 				cart.setUser(UserHolder.get().getCurrent());

@@ -68,9 +68,10 @@ public class UsersController {
 
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/changepassword", method = RequestMethod.POST)
-	public ModelAndView changePassword(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request) {
+	public ModelAndView changePassword(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView("users/accounts");
-		SiteActionManager.performAction("changePassword", mv, request, user);
+		SiteActionManager.performAction("changePassword", mv, request, redirectAttributes, user);
 		return mv;
 	}
 
@@ -79,15 +80,24 @@ public class UsersController {
 	public ModelAndView profile(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("users/profile");
 		mv.addObject("title", "Mis Datos");
+
 		SiteActionManager.performAction("updateUser", mv, request);
+
+		mv.addObject("redirect", request.getParameter("redirect"));
 		return mv;
 	}
 
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/profile", method = RequestMethod.POST)
-	public ModelAndView profile(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request) {
+	public ModelAndView profile(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView("users/account");
-		SiteActionManager.performAction("saveUserProfile", mv, request, user);
+		SiteActionManager.performAction("saveUserProfile", mv, request, redirectAttributes, user);
+
+		if (request.getParameter("redirect") != null) {
+			mv.setView(new RedirectView(request.getParameter("redirect"), true, true, false));
+		}
+
 		return mv;
 	}
 

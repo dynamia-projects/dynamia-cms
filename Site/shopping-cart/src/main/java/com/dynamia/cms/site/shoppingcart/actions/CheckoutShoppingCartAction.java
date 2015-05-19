@@ -47,14 +47,12 @@ public class CheckoutShoppingCartAction implements SiteAction {
 
 		ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
 		ShoppingSiteConfig config = service.getConfiguration(evt.getSite());
-		
+
 		if (shoppingCart == null || shoppingCart.getQuantity() == 0) {
 			CMSUtil.addWarningMessage("El carrito de compra esta vacio", evt.getRedirectAttributes());
 			mv.setView(new RedirectView("/", false, true, false));
 		} else if (config.isPaymentEnabled() || UserHolder.get().isSuperadmin()) {
 			mv.setViewName("shoppingcart/checkout");
-
-			ShoppingCartUtils.loadConfig(evt.getSite(), mv);
 
 			mv.addObject("title", "Confirmar Pedido");
 			mv.addObject("userContactInfos", userService.getContactInfos(UserHolder.get().getCurrent()));

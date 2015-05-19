@@ -23,6 +23,7 @@ import com.dynamia.cms.site.payment.PaymentTransactionListener;
 import com.dynamia.cms.site.payment.domain.PaymentTransaction;
 import com.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import com.dynamia.cms.site.payment.services.PaymentService;
+import com.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartItemProvider;
 import com.dynamia.cms.site.shoppingcart.ShoppingException;
 import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
@@ -32,6 +33,7 @@ import com.dynamia.cms.site.shoppingcart.domains.ShoppingSiteConfig;
 import com.dynamia.cms.site.shoppingcart.domains.enums.ShoppingCartStatus;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import com.dynamia.cms.site.users.UserHolder;
+import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.tools.commons.SimpleTemplateEngine;
 import com.dynamia.tools.domain.ValidationError;
 import com.dynamia.tools.domain.services.CrudService;
@@ -108,9 +110,13 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		}
 		tx.setCurrency(config.getDefaultCurrency());
 
-		tx.setEmail(UserHolder.get().getCurrent().getUsername());
+		User user = UserHolder.get().getCurrent();
+		tx.setEmail(user.getUsername());
+		tx.setPayerFullname(user.getFullName());
+		tx.setPayerDocument(user.getIdentification());
 
 		ShoppingOrder order = new ShoppingOrder();
+
 		order.setShoppingCart(shoppingCart);
 		order.setTransaction(tx);
 		order.setSite(config.getSite());
@@ -137,6 +143,9 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 			order.getTransaction().setDescription(
 					"Orden No. " + order.getNumber() + ". Compra de " + order.getShoppingCart().getQuantity() + " producto(s)");
 
+			order.getTransaction().setPayerPhoneNumber(order.getBillingAddress().getInfo().getPhoneNumber());
+			order.getTransaction().setPayerMobileNumber(order.getBillingAddress().getInfo().getMobileNumber());
+
 			crudService.create(order);
 		} else {
 			crudService.update(order);
@@ -160,7 +169,20 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 			order.getTransaction().setStatus(PaymentTransactionStatus.CANCELLED);
 			order.getShoppingCart().setStatus(ShoppingCartStatus.CANCELLED);
 			crudService.update(order);
+
+			recreateShoppingCart(order.getShoppingCart());
 		}
+	}
+
+	private void recreateShoppingCart(ShoppingCart shoppingCart) {
+		ShoppingCart newsc = ShoppingCartHolder.get().getCart("shop");
+		for (ShoppingCartItem oldItem : shoppingCart.getItems()) {
+			ShoppingCartItem newItem = oldItem.clone();
+			newsc.addItem(newItem);
+		}
+
+		newsc.compute();
+
 	}
 
 	private Map<String, Object> getDescriptionsVars(ShoppingCart shoppingCart) {

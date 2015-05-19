@@ -54,6 +54,10 @@ public class PaymentTransaction extends BaseEntity {
 	private String signature;
 	@Column(length = 1000)
 	private String description;
+	private String payerFullname;
+	private String payerDocument;
+	private String payerPhoneNumber;
+	private String payerMobileNumber;
 	private String email;
 	private String source;
 	private String bank;
@@ -123,6 +127,38 @@ public class PaymentTransaction extends BaseEntity {
 
 	public void setClientIP(String clientIP) {
 		this.clientIP = clientIP;
+	}
+
+	public String getPayerFullname() {
+		return payerFullname;
+	}
+
+	public void setPayerFullname(String payerFullname) {
+		this.payerFullname = payerFullname;
+	}
+
+	public String getPayerDocument() {
+		return payerDocument;
+	}
+
+	public void setPayerDocument(String payerDocument) {
+		this.payerDocument = payerDocument;
+	}
+
+	public String getPayerPhoneNumber() {
+		return payerPhoneNumber;
+	}
+
+	public void setPayerPhoneNumber(String payerPhoneNumber) {
+		this.payerPhoneNumber = payerPhoneNumber;
+	}
+
+	public String getPayerMobileNumber() {
+		return payerMobileNumber;
+	}
+
+	public void setPayerMobileNumber(String payerMobileNumber) {
+		this.payerMobileNumber = payerMobileNumber;
 	}
 
 	public String getBank() {

@@ -25,7 +25,7 @@ public class ShoppingCartUtils {
 		ShoppingCart shoppingCart = getShoppingCart(mv);
 		mv.addObject("shoppingConfig", config);
 		boolean paymentEnabled = false;
-		if (config != null && shoppingCart != null && "shop".equals(shoppingCart.getName())) {
+		if (config != null) {
 			paymentEnabled = config.isPaymentEnabled() || UserHolder.get().isSuperadmin();
 		}
 		mv.addObject("paymentEnabled", paymentEnabled);

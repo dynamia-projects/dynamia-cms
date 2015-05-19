@@ -31,6 +31,12 @@ import com.dynamia.tools.domain.services.CrudService;
 @Service
 public class PayULatamGateway implements PaymentGateway {
 
+	private static final String PAYER_FULL_NAME = "payerFullName";
+	private static final String PAYER_DOCUMENT = "payerDocument";
+	private static final String PAYER_MOBILE_PHONE = "payerMobilePhone";
+	private static final String PAYER_PHONE = "payerPhone";
+	private static final String PAYER_EMAIL = "payerEmail";
+	private static final String BUYER_FULL_NAME = "buyerFullName";
 	private static final String TX_STATE = "transactionState";
 	private static final String TX_VALUE = "TX_VALUE";
 	private static final String RES_PSE_REFERENCE3 = "pseReference3";
@@ -138,6 +144,13 @@ public class PayULatamGateway implements PaymentGateway {
 			form.addParam(TEST, "1");
 		}
 		form.addParam(BUYER_EMAIL, tx.getEmail());
+		form.addParam(BUYER_FULL_NAME, tx.getPayerFullname());
+		form.addParam(PAYER_EMAIL, tx.getEmail());
+		form.addParam(PAYER_PHONE, tx.getPayerPhoneNumber());
+		form.addParam(PAYER_MOBILE_PHONE, tx.getPayerMobileNumber());
+		form.addParam(PAYER_DOCUMENT, tx.getPayerDocument());
+		form.addParam(PAYER_FULL_NAME, tx.getPayerFullname());
+
 		form.addParam(RESPONSE_URL, tx.getResponseURL());
 		form.addParam(CONFIRMATION_URL, tx.getConfirmationURL());
 		form.addParam(DESCRIPTION, tx.getDescription());

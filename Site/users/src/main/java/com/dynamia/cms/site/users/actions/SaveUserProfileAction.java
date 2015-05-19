@@ -17,6 +17,7 @@ import com.dynamia.cms.site.users.UsersUtil;
 import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.cms.site.users.services.UserService;
 import com.dynamia.tools.domain.ValidationError;
+import com.dynamia.tools.domain.services.CrudService;
 
 /**
  *
@@ -27,6 +28,9 @@ public class SaveUserProfileAction implements SiteAction {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private CrudService crudService;
 
 	@Override
 	public String getName() {
@@ -41,7 +45,7 @@ public class SaveUserProfileAction implements SiteAction {
 		userForm.setSite(evt.getSite());
 		try {
 			userService.saveUser(userForm);
-			User user = userService.getUser(evt.getSite(), userForm.getData().getUsername());
+			User user = crudService.find(User.class, userForm.getData().getId());
 			UserHolder.get().update(user);
 			mv.addObject("successmessage", "Informacion Personal actualizada correctamente");
 		} catch (ValidationError e) {

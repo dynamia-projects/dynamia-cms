@@ -11,6 +11,7 @@ import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
+import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
 
 /**
  *
@@ -18,8 +19,6 @@ import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
  */
 @CMSAction
 public class ViewShoppingCartAction implements SiteAction {
-
-	
 
 	@Override
 	public String getName() {
@@ -31,8 +30,10 @@ public class ViewShoppingCartAction implements SiteAction {
 		ModelAndView mv = evt.getModelAndView();
 		mv.setViewName("shoppingcart/details");
 
-		ShoppingCartUtils.loadConfig(evt.getSite(), mv);
-
+		ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
+		if (shoppingCart != null) {
+			mv.addObject("title", shoppingCart.getTitle());
+		}
 	}
 
 }

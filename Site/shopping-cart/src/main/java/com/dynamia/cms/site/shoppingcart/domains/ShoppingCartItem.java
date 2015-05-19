@@ -169,4 +169,23 @@ public class ShoppingCartItem extends SimpleEntity {
 		}
 	}
 
+	public ShoppingCartItem clone() {
+		ShoppingCartItem clone = new ShoppingCartItem();
+		clone.code = code;
+		clone.description = description;
+		clone.imageName = imageName;
+		clone.imageURL = imageURL;
+		clone.name = name;
+		clone.quantity = quantity;
+		clone.refClass = refClass;
+		clone.refId = refId;
+		clone.shipmentPrice = shipmentPrice;
+		clone.taxes = taxes;
+		clone.totalPrice = totalPrice;
+		clone.unitPrice = unitPrice;
+		clone.URL = URL;
+
+		return clone;
+	}
+
 }

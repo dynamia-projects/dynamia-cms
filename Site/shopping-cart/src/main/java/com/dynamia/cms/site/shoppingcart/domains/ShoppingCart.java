@@ -36,6 +36,7 @@ import javax.validation.constraints.NotNull;
 public class ShoppingCart extends SimpleEntity implements SiteAware {
 
 	private String name;
+	private String title;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date timeStamp = new Date();
 	@OneToOne
@@ -60,6 +61,14 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
 	public ShoppingCart(String name) {
 		super();
 		this.name = name;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public ShoppingCartStatus getStatus() {

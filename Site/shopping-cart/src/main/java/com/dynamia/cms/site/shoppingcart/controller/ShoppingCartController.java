@@ -110,6 +110,15 @@ public class ShoppingCartController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/{name}/cancel", method = { RequestMethod.GET })
+	public ModelAndView cancel(@PathVariable String name, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("cartName", name);
+		SiteActionManager.performAction("cancelShoppingOrder", mv, request, redirectAttributes);
+		return mv;
+	}
+
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/{name}/confirm", method = { RequestMethod.POST })
 	public ModelAndView confirm(@PathVariable String name, HttpServletRequest request, RedirectAttributes redirectAttributes) {
