@@ -6,10 +6,10 @@
 package com.dynamia.cms.site.shoppingcart.services;
 
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingCartItem;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingOrder;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingSiteConfig;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
 
 /**
  *
@@ -26,5 +26,11 @@ public interface ShoppingCartService {
 	public abstract void cancelOrder(ShoppingOrder order);
 
 	public abstract void saveOrder(ShoppingOrder order);
+
+	public abstract void notifyOrderCompleted(ShoppingOrder order);
+
+	public abstract void shipOrder(ShoppingOrder shoppingOrder);
+
+	public abstract void notifyOrderShipped(ShoppingOrder order);
 
 }

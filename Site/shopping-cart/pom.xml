@@ -37,5 +37,10 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.site.mail</artifactId>
+			<version>0.9</version>
+		</dependency>
 	</dependencies>
 </project>

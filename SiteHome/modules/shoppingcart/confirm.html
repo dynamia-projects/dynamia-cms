@@ -83,9 +83,29 @@
 				<div class="form-group">
 					<input type="hidden" th:each="param : ${paymentForm.parameters}" th:name="${param.key}" th:value="${param.value}" />
 					<button type="submit" class="btn btn-danger btn-lg">Pagar en Linea</button>
+					<a data-toggle="modal" href="#cancelconfirm" class="btn btn-warning btn-lg"><i class="icon-ban-circle"></i> Cancelar</a>
 				</div>
 			</form>
 		</div>
 	</div>
+
+	<div id="cancelconfirm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Cancelar Pedido</h4>
+				</div>
+				<div class="modal-body">
+					<span>Esta seguro que desea cancelar este pedido?</span>
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-danger" th:href="@{/shoppingcart/shop/cancel}">Si</a>
+					<button type="button" class="btn btn-orange" data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </div>
 </html>

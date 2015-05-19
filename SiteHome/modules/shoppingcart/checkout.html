@@ -41,7 +41,7 @@
 
 				</div>
 				
-				<a class="btn btn-primary" th:href="@{/users/profile}">Editar</a>
+				<a class="btn btn-primary" th:href="@{/users/profile(redirect='/shoppingcart/shop/checkout')}">Editar</a>
 				
 
 				<div class="form-group">
@@ -73,7 +73,7 @@
 				<!-- Button -->
 				<div class="form-group">
 					<button type="submit" class="btn btn-orange btn-lg">
-						Confirmar <i class="icon-check icon-white"></i>
+						<i class="icon-check icon-white"></i> Confirmar 
 					</button>
 				</div>
 			</form>

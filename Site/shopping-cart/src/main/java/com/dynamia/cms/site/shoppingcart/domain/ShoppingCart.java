@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dynamia.cms.site.shoppingcart.domains;
+package com.dynamia.cms.site.shoppingcart.domain;
 
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.shoppingcart.domains.enums.ShoppingCartStatus;
+import com.dynamia.cms.site.shoppingcart.domain.enums.ShoppingCartStatus;
 import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.tools.domain.SimpleEntity;
 

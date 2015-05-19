@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.dynamia.cms.site.shoppingcart.domains;
+package com.dynamia.cms.site.shoppingcart.domain;
 
 import com.dynamia.tools.domain.SimpleEntity;
 import com.dynamia.tools.domain.ValidationError;
@@ -42,8 +42,26 @@ public class ShoppingCartItem extends SimpleEntity {
 	private String imageName;
 	private String URL;
 
+	private String reference;
+	private String sku;
 	private Long refId;
 	private String refClass;
+
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
 
 	public String getDescription() {
 		return description;

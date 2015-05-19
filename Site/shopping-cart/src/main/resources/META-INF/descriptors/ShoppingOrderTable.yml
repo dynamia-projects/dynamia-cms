@@ -1,0 +1,66 @@
+view: table
+beanClass: com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+autofields: false
+
+
+fields:
+  shipped:
+    params:
+      header:
+        align: center
+  number:
+  creationDate:
+    params:
+      converter: converters.Date
+  creationTime:
+    params:
+      converter: converters.Time
+  
+  shoppingCart.user.fullName:
+    label: User
+  
+  shoppingCart.user.identification:
+    label: Identificacion
+  
+  shoppingCart.user.username:
+    label: Email
+  
+  
+  shoppingCart.totalPrice:
+    label: Total
+    params:
+      converter: converters.Currency
+      header:
+        align: right
+      
+  shoppingCart.quantity:
+    label: Quantity
+    params:
+      header:
+        align: center
+      
+    
+  transaction.status:
+    label: Status
+    
+  transaction.statusText:
+    label: Status Text
+    
+  transaction.uuid:
+    label: Reference
+    
+  transaction.confirmed:
+    label: Confirmed
+    
+  transaction.paymentMethod:
+    label: Payment Method
+    
+  shippingCompany:
+  trackingNumber:
+  invoiceNumber:
+  
+  userComments:
+    params:
+      header:
+        width: 300px
+  

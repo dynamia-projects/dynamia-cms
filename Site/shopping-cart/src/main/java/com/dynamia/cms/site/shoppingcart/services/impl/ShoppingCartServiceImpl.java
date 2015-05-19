@@ -7,6 +7,7 @@ package com.dynamia.cms.site.shoppingcart.services.impl;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.domain.SiteParameter;
 import com.dynamia.cms.site.core.services.SiteService;
+import com.dynamia.cms.site.mail.MailMessage;
+import com.dynamia.cms.site.mail.domain.MailAccount;
+import com.dynamia.cms.site.mail.domain.MailTemplate;
+import com.dynamia.cms.site.mail.services.MailService;
 import com.dynamia.cms.site.payment.PaymentGateway;
 import com.dynamia.cms.site.payment.PaymentTransactionEvent;
 import com.dynamia.cms.site.payment.PaymentTransactionListener;
@@ -26,20 +31,26 @@ import com.dynamia.cms.site.payment.services.PaymentService;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartItemProvider;
 import com.dynamia.cms.site.shoppingcart.ShoppingException;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingCartItem;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingOrder;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingSiteConfig;
-import com.dynamia.cms.site.shoppingcart.domains.enums.ShoppingCartStatus;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
+import com.dynamia.cms.site.shoppingcart.domain.enums.ShoppingCartStatus;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.domain.User;
+import com.dynamia.tools.commons.BeanMessages;
+import com.dynamia.tools.commons.ClassMessages;
+import com.dynamia.tools.commons.Messages;
 import com.dynamia.tools.commons.SimpleTemplateEngine;
+import com.dynamia.tools.commons.logger.LoggingService;
+import com.dynamia.tools.commons.logger.SLF4JLoggingService;
 import com.dynamia.tools.domain.ValidationError;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.domain.util.DomainUtils;
 import com.dynamia.tools.integration.Containers;
 import com.dynamia.tools.integration.sterotypes.Service;
+import com.jhlabs.image.MedianFilter;
 
 /**
  *
@@ -58,6 +69,13 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 	@Autowired
 	private SiteService siteService;
+
+	@Autowired
+	private MailService mailService;
+
+	private LoggingService logger = new SLF4JLoggingService(ShoppingCartService.class);
+
+	private ClassMessages classMessages;
 
 	@Override
 	public ShoppingCartItem getItem(Site site, String code) {
@@ -114,6 +132,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		tx.setEmail(user.getUsername());
 		tx.setPayerFullname(user.getFullName());
 		tx.setPayerDocument(user.getIdentification());
+		shoppingCart.setUser(user);
 
 		ShoppingOrder order = new ShoppingOrder();
 
@@ -203,11 +222,142 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 	}
 
-	private void notifyOrderCompleted(ShoppingOrder order) {
-		// TODO: Async mode
-		// TODO: Generate PDF
-		// TODO: Notify user
-		// TODO: Notify store
+	@Override
+	public void notifyOrderCompleted(ShoppingOrder order) {
+		ShoppingSiteConfig config = getConfiguration(order.getSite());
+		logger.info("Order Completed " + order.getNumber());
+		try {
+			if (config.getOrderCompletedMailTemplate() != null) {
+				logger.info("Sending customer email " + order.getShoppingCart().getUser().getUsername());
+				MailMessage customerMessage = createMailMessage(config.getOrderCompletedMailTemplate(), config.getMailAccount(), order);
+				User user = order.getShoppingCart().getUser();
+				customerMessage.setTo(user.getUsername());
+				if (user.getContactInfo() != null
+						&& user.getContactInfo().getEmail() != null
+						&& !user.getContactInfo().getEmail().isEmpty()
+						&& !user.getContactInfo().getEmail().equals(user.getUsername())) {
+					customerMessage.addTo(user.getUsername());
+					customerMessage.addTo(user.getContactInfo().getEmail());
+				}
 
+				mailService.send(customerMessage);
+				logger.info("Customer email Sended");
+			}
+		} catch (Exception e) {
+			logger.error("Error sending customer email for order " + order.getNumber(), e);
+			e.printStackTrace();
+
+		}
+
+		try {
+			if (config.getNotificationMailTemplate() != null) {
+				logger.info("Sending notification email " + config.getNotificationEmails());
+				MailMessage notificationMessage = createMailMessage(config.getNotificationMailTemplate(), config.getMailAccount(), order);
+
+				if (config.getNotificationEmails().contains(",")) {
+					String[] emails = config.getNotificationEmails().split(",");
+					for (int i = 0; i < emails.length; i++) {
+						String otherEmail = emails[i];
+						notificationMessage.addTo(otherEmail.trim());
+					}
+				} else {
+					notificationMessage.setTo(config.getNotificationEmails());
+				}
+
+				mailService.send(notificationMessage);
+				logger.info("Notification email Sended");
+			}
+		} catch (Exception e) {
+			logger.error("Error sending notification email for order " + order.getNumber(), e);
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void shipOrder(ShoppingOrder shoppingOrder) {
+
+		if (!shoppingOrder.isCompleted() || !shoppingOrder.getTransaction().isConfirmed()) {
+			throw new ValidationError(msg("OrderNotConfirmed", shoppingOrder.getNumber()));
+		}
+
+		if (shoppingOrder.isShipped()) {
+			throw new ValidationError(msg("OrderAlreadyShipped", shoppingOrder.getNumber()));
+		}
+
+		if (shoppingOrder.getShippingCompany() == null) {
+			throw new ValidationError(msg("SelectShippingCompany"));
+		}
+
+		if (shoppingOrder.getTrackingNumber() == null || shoppingOrder.getTrackingNumber().isEmpty()) {
+			throw new ValidationError(msg("EnterTrackingNumber"));
+		}
+
+		if (shoppingOrder.getEstimatedArrivalDate() == null) {
+			throw new ValidationError(msg("SelectEstimatedArrivalDate"));
+		}
+
+		if (shoppingOrder.getInvoiceNumber() == null || shoppingOrder.getInvoiceNumber().isEmpty()) {
+			throw new ValidationError(msg("EnterInvoiceNumber"));
+		}
+
+		shoppingOrder.setShipped(true);
+		shoppingOrder.setShippingDate(new Date());
+		crudService.save(shoppingOrder);
+		notifyOrderShipped(shoppingOrder);
+
+	}
+
+	@Override
+	public void notifyOrderShipped(ShoppingOrder order) {
+		if (!order.isShipped()) {
+			throw new ValidationError("Order " + order.getNumber() + " is not shipped cannot be notify it");
+		}
+
+		ShoppingSiteConfig config = getConfiguration(order.getSite());
+		logger.info("Order Shipped " + order.getNumber());
+		try {
+			if (config.getOrderShippedMailTemplate() != null) {
+				logger.info("Sending customer email " + order.getShoppingCart().getUser().getUsername());
+				MailMessage customerMessage = createMailMessage(config.getOrderShippedMailTemplate(), config.getMailAccount(), order);
+				User user = order.getShoppingCart().getUser();
+				customerMessage.setTo(user.getUsername());
+				if (user.getContactInfo().getEmail() != null
+						&& !user.getContactInfo().getEmail().isEmpty()
+						&& !user.getContactInfo().getEmail().equals(user.getUsername())) {
+					customerMessage.addTo(user.getContactInfo().getEmail());
+				}
+
+				mailService.send(customerMessage);
+				logger.info("Customer email Sended");
+			}
+		} catch (Exception e) {
+			logger.error("Error sending customer email for order " + order.getNumber(), e);
+			e.printStackTrace();
+		}
+	}
+
+	private MailMessage createMailMessage(MailTemplate template, MailAccount mailAccount, ShoppingOrder order) {
+		MailMessage message = new MailMessage();
+		message.setMailAccount(mailAccount);
+		message.setTemplate(template);
+		message.getTemplateModel().put("order", order);
+
+		ShoppingCart cart = crudService.reload(order.getShoppingCart());
+		cart.getItems().size();
+		message.getTemplateModel().put("cart", cart);
+		message.getTemplateModel().put("items", cart.getItems());
+		message.getTemplateModel().put("shippingAddress", order.getShippingAddress());
+		message.getTemplateModel().put("billingAddress", order.getBillingAddress());
+		message.getTemplateModel().put("tx", order.getTransaction());
+		return message;
+	}
+
+	private String msg(String key, Object... params) {
+		if (classMessages == null) {
+			this.classMessages = ClassMessages.get(ShoppingCartService.class);
+		}
+
+		return classMessages.get(key, params);
 	}
 }

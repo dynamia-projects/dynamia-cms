@@ -1,0 +1,44 @@
+view: form
+beanClass: com.dynamia.cms.site.payment.domain.PaymentTransaction
+autofields: false
+
+fields:
+
+  uuid:
+    label: TX Reference  
+  gatewayId:
+    label: Gateway  
+  status:
+  statusText:  
+  startDate:      
+  endDate:
+  amount:
+  taxes:
+  taxesBase:
+  paymentMethod:
+  currency:
+  responseCode:
+  signature:  
+  description:
+  payerFullname:
+  payerDocument:
+  payerPhoneNumber:
+  payerMobileNumber:
+  email:
+  source:
+  bank:
+  reference:
+  reference2:
+  reference3:
+  clientIP:
+  confirmed:
+  
+ 
+params:
+  readonly: true
+
+layout:
+  columns: 3
+ 
+ 
+  

@@ -4,7 +4,9 @@ import com.dynamia.cms.site.core.api.AdminModule;
 import com.dynamia.cms.site.core.api.AdminModuleOption;
 import com.dynamia.cms.site.core.api.CMSModule;
 import com.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingSiteConfig;
+import com.dynamia.cms.site.shoppingcart.domain.ShippingCompany;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
 
 @CMSModule
 public class ShoppingCartAdminModule implements AdminModule {
@@ -23,7 +25,9 @@ public class ShoppingCartAdminModule implements AdminModule {
 	public AdminModuleOption[] getOptions() {
 		return new AdminModuleOption[] {
 				new AdminModuleOption("shopConfig", "Configuration", ShoppingSiteConfig.class),
-				new AdminModuleOption("paymentConfig", "Payment Gateway Config", PaymentGatewayConfig.class)
+				new AdminModuleOption("paymentConfig", "Payment Gateway Config", PaymentGatewayConfig.class),
+				new AdminModuleOption("shoppingOrders", "Orders", ShoppingOrder.class),
+				new AdminModuleOption("shippingCompany", "Shipping Company", ShippingCompany.class)
 
 		};
 	}

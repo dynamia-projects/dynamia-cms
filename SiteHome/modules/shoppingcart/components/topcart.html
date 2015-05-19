@@ -12,6 +12,11 @@
 				<ul class="dropdown-menu topcartopen " style="width: 400px">
 					<li>
 						<table>
+							<thead>
+								<tr>
+									<td colspan="5"><strong class="orange" th:text="${cart.title}"></strong></td>
+								</tr>
+							</thead>
 							<tbody>
 								<tr th:each="item : ${cart.items}">
 									<td style="width: 50px"><a th:href="@{${item.URL}}"><img th:src="@{${item.imageURL}+'thumbnails/'+${item.imageName}(w=50,h=50)}"
@@ -19,8 +24,8 @@
 									<td class="name"><a th:href="@{${item.URL}}" th:text="${cmsUtil.cropText(item.name,60)}">MacBook</a></td>
 									<td class="quantity">x&nbsp;<span th:text="${item.quantity}">1</span></td>
 									<td class="total" th:text="${cmsUtil.formatNumber(item.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
-									<td class="remove"><a class="tooltip-test" title="Borrar" th:href="@{'/shoppingcart/remove/'+${item.code}(currentURI=${currentURI})}"><i
-											class="icon-remove"></i></a></td>
+									<td class="remove"><a class="tooltip-test" title="Borrar"
+										th:href="@{'/shoppingcart/'+${cart.name}+'/remove/'+${item.code}(currentURI=${currentURI})}"><i class="icon-remove"></i></a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -45,9 +50,10 @@
 							</tbody>
 						</table>
 						<div class="well pull-right buttonwrap">
-							<a class="btn btn-orange" th:href="@{'/shoppingcart/'+${cart.name}}"> <i class="icon-plus-sign-alt"></i> Ver Detalles
+							<a th:href="@{/shoppingcart/shop/checkout}" th:if="${paymentEnabled and cart.name == 'shop'}" class="btn btn-danger tooltip-test">Pagar</a> <a
+								class="btn btn-orange" th:href="@{'/shoppingcart/'+${cart.name}}"> <i class="icon-plus-sign-alt"></i> Ver Detalles
 							</a> <a th:if="false" class="btn btn-orange">Checkout</a> <a title="Borrar todos los items" class="btn btn-orange tooltip-test"
-								th:href="@{'/shoppingcart/'+${cart.name}+'/clear'(currentURI=${currentURI})}"> <i class="icon-remove-circle"></i></a> <a target="_blank"
+								th:href="@{'/shoppingcart/'+${cart.name}+'/clear'(currentURI='/')}"> <i class="icon-remove-circle"></i></a> <a target="_blank"
 								title="Imprimir carrito" class="btn btn-orange tooltip-test" th:href="@{'/shoppingcart/'+${cart.name}+'/print'}"> <i class="icon-print"></i></a>
 
 						</div>

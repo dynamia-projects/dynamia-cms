@@ -1,0 +1,19 @@
+view: crud
+beanClass: com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+controller: com.dynamia.cms.admin.shopping.controllers.ShoppingOrderController
+
+autofields: false
+
+
+actions:
+  NewAction:
+    enabled: false
+    
+  EditAction:
+    enabled: false
+  
+  DeleteAction:
+    enabled: false
+    
+  ViewDateAction:
+    enabled: false

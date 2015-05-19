@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.services.ProductsService;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.tools.commons.collect.PagedList;
 import com.dynamia.tools.commons.collect.PagedListDataSource;

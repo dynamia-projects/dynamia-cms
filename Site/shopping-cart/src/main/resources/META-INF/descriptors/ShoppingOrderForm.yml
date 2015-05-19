@@ -1,0 +1,101 @@
+view: form
+beanClass: com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+autofields: false
+
+
+fields: 
+  number:
+  creationDate:
+    component: label
+    params:
+      converter: converters.Date
+  creationTime:
+    component: label
+    params:
+      converter: converters.Time
+  
+  shoppingCart.user.fullName:
+    label: User
+  
+  shoppingCart.user.identification:
+    label: Identification
+  
+  shoppingCart.user.username:
+    label: Email
+    
+  shippingCompany:
+  trackingNumber:
+  invoiceNumber:
+  
+  userComments:    
+    params:
+      span: 3
+      multiline: true
+      height: 60px
+  
+  shippingAddress.name:
+    label: Name
+  
+  shippingAddress.info.country:
+    label: Country
+  shippingAddress.info.region:
+    label: Region
+  shippingAddress.info.city:
+    label: City
+  
+  shippingAddress.info.address:
+    label: Address
+  
+  shippingAddress.info.phoneNumber:
+    label: Phone Number
+  
+  shippingAddress.info.mobileNumber:
+    label: Mobile Number
+    
+  
+  billingAddress.name:
+    label: Name
+  
+  billingAddress.info.country:
+    label: Country
+  billingAddress.info.region:
+    label: Region
+  billingAddress.info.city:
+    label: City
+  
+  billingAddress.info.address:
+    label: Address
+  
+  billingAddress.info.phoneNumber:
+    label: Phone Number
+  
+  billingAddress.info.mobileNumber:
+    label: Mobile Number
+    
+groups:
+  shippingAddress:
+    fields:
+     - shippingAddress.name
+     - shippingAddress.info.country    
+     - shippingAddress.info.region    
+     - shippingAddress.info.city
+     - shippingAddress.info.address
+     - shippingAddress.info.phoneNumber
+     - shippingAddress.info.mobileNumber
+     
+  billingAddress:
+    fields:
+     - billingAddress.name
+     - billingAddress.info.country    
+     - billingAddress.info.region    
+     - billingAddress.info.city
+     - billingAddress.info.address
+     - billingAddress.info.phoneNumber
+     - billingAddress.info.mobileNumber
+        
+params:
+  readonly: true
+  
+layout: 
+  columns: 3
+  

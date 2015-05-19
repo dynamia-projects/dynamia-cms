@@ -8,13 +8,14 @@ fields:
    description:
       params:
           multiline: true
-          height: 70px
+          height: 40px
    subject:
    content:      
       component: cmseditor
       params:
           multiline: true
           height: 400px;
+   enabled:
           
 layout:
    columns: 1

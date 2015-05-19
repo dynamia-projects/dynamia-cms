@@ -1,0 +1,9 @@
+view: table
+beanClass: com.dynamia.cms.site.shoppingcart.domain.ShippingCompany
+autofields: false
+
+fields:
+  name:
+  website:
+  trackingSiteURL:
+    label: Tracking Site URL

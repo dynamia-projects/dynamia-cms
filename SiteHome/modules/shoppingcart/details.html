@@ -20,7 +20,7 @@
 				<th th:include="shoppingcart/components/table::content" />
 
 				<form role="form" class="pull-left">
-					<a th:href="@{/shoppingcart/shop/checkout}" th:if="${paymentEnabled}" class="btn btn-danger tooltip-test">Realizar Pago</a> 
+					<a th:href="@{/shoppingcart/shop/checkout}" th:if="${paymentEnabled and cartName == 'shop'}" class="btn btn-danger tooltip-test">Realizar Pago</a> 
 					<a target="_blank"
 						class="btn btn-orange tooltip-test" th:href="@{'/shoppingcart/'+${cartName}+'/print'}"> <i class="icon-print"></i> Imprimir
 					</a>

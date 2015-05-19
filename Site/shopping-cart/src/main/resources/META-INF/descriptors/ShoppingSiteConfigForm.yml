@@ -1,5 +1,5 @@
 view: form
-beanClass: com.dynamia.cms.site.shoppingcart.domains.ShoppingSiteConfig
+beanClass: com.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig
 autofields: false
 
 fields:
@@ -12,6 +12,11 @@ fields:
   defaultCurrency:
   descriptionTemplate:
   notificationEmails:
+    description: You can use multiple emails address separated by comma
+  orderCompletedMailTemplate:
+  orderShippedMailTemplate:
+  notificationMailTemplate:
+  mailAccount:
   
  
 layout:

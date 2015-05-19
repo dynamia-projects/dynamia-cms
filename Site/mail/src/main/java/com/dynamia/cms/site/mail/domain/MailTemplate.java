@@ -30,6 +30,15 @@ public class MailTemplate extends SimpleEntity implements SiteAware {
 	@Basic(fetch = FetchType.LAZY)
 	@NotEmpty(message = "Enter template content")
 	private String content;
+	private boolean enabled = true;
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	public Site getSite() {
 		return site;

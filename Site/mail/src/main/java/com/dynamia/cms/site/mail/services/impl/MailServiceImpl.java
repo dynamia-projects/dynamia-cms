@@ -45,8 +45,7 @@ public class MailServiceImpl implements MailService {
 	@Autowired
 	private CrudService crudService;
 
-	@Autowired(required = false)
-	private VelocityEngine velocityEngine;
+	private VelocityEngine velocityEngine = new VelocityEngine();
 
 	private final LoggingService logger = new SLF4JLoggingService(MailService.class);
 
@@ -64,6 +63,10 @@ public class MailServiceImpl implements MailService {
 		}
 
 		if (account == null) {
+			return;
+		}
+
+		if (mailMessage.getTemplate() != null && !mailMessage.getTemplate().isEnabled()) {
 			return;
 		}
 
@@ -195,10 +198,10 @@ public class MailServiceImpl implements MailService {
 		message.setSubject(subjectWriter.toString());
 		message.setContent(contentWriter.toString());
 	}
-	
+
 	@Override
 	public boolean existsMailingContact(MailingContact contact) {
-		return crudService.findSingle(MailingContact.class, "emailAddress", contact.getEmailAddress())!=null;		
+		return crudService.findSingle(MailingContact.class, "emailAddress", contact.getEmailAddress()) != null;
 	}
 
 	private void fireOnMailSending(MailMessage message) {

@@ -1,5 +1,5 @@
 view: table
-beanClass: com.dynamia.cms.site.shoppingcart.domains.ShoppingSiteConfig
+beanClass: com.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig
 autofields: false
 
 fields:
@@ -12,7 +12,10 @@ fields:
   defaultCurrency:
   descriptionTemplate:
   notificationEmails:
-  
+  orderCompletedMailTemplate:
+  orderShippedMailTemplate:
+  notificationMailTemplate:
+  mailAccount:
  
 layout:
   columns: 2

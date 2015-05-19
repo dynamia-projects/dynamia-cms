@@ -1,7 +1,7 @@
 package com.dynamia.cms.admin.shopping.controllers;
 
 import com.dynamia.cms.site.core.SiteContext;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingSiteConfig;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import com.dynamia.tools.integration.Containers;
 import com.dynamia.tools.web.crud.CrudController;

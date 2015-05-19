@@ -1,0 +1,87 @@
+id: ShoppingOrderShipment
+view: form
+
+
+
+fields: 
+  number:
+    params:
+      readonly: true
+  creationDate:
+    component: label
+    params:
+      converter: converters.Date
+  creationTime:
+    component: label
+    params:
+      converter: converters.Time
+  
+  shoppingCart.user.fullName:
+    label: User
+    params:
+      readonly: true
+  
+  shoppingCart.user.identification:
+    label: Identification
+    params:
+      readonly: true
+  
+  shoppingCart.user.username:
+    label: Email
+    params:
+      readonly: true
+   
+  
+  userComments:    
+    params:
+      readonly: true
+      span: 3
+      multiline: true
+      height: 60px
+      
+  shippingCompany:
+  trackingNumber:
+  estimatedArrivalDate:
+  invoiceNumber:  
+  shippingComments:    
+    params:      
+      span: 3
+      multiline: true
+      height: 60px
+  
+  shippingAddress.name:
+    label: Name
+  
+  shippingAddress.info.country:
+    label: Country
+  shippingAddress.info.region:
+    label: Region
+  shippingAddress.info.city:
+    label: City
+  
+  shippingAddress.info.address:
+    label: Address
+  
+  shippingAddress.info.phoneNumber:
+    label: Phone Number
+  
+  shippingAddress.info.mobileNumber:
+    label: Mobile Number
+
+    
+groups:
+  shippingAddress:
+    fields:
+     - shippingAddress.name
+     - shippingAddress.info.country    
+     - shippingAddress.info.region    
+     - shippingAddress.info.city
+     - shippingAddress.info.address
+     - shippingAddress.info.phoneNumber
+     - shippingAddress.info.mobileNumber
+
+
+  
+layout: 
+  columns: 3
+  

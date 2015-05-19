@@ -14,7 +14,7 @@ import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingCart;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 
 /**

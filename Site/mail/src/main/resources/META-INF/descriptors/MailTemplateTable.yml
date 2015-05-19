@@ -5,8 +5,7 @@ autofields: false
 
 fields:
    name:
+   enabled:
    description:
-      params:
-          multiline: true
-          height: 70px
+
    

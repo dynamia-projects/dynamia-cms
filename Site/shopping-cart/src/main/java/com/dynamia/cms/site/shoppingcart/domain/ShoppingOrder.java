@@ -1,10 +1,14 @@
-package com.dynamia.cms.site.shoppingcart.domains;
+package com.dynamia.cms.site.shoppingcart.domain;
+
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -32,6 +36,14 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 
 	private String invoiceNumber;
 	private String invoiceId;
+	private String trackingNumber;
+	private ShippingCompany shippingCompany;
+	@Temporal(TemporalType.DATE)
+	private Date estimatedArrivalDate;
+	private String shippingComments;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date shippingDate;
+	private boolean shipped;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@NotNull
@@ -48,6 +60,54 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 
 	@Column(length = 5000)
 	private String userComments;
+
+	public Date getShippingDate() {
+		return shippingDate;
+	}
+
+	public void setShippingDate(Date shippingDate) {
+		this.shippingDate = shippingDate;
+	}
+
+	public String getShippingComments() {
+		return shippingComments;
+	}
+
+	public void setShippingComments(String shippingComments) {
+		this.shippingComments = shippingComments;
+	}
+
+	public String getTrackingNumber() {
+		return trackingNumber;
+	}
+
+	public void setTrackingNumber(String trackingNumber) {
+		this.trackingNumber = trackingNumber;
+	}
+
+	public ShippingCompany getShippingCompany() {
+		return shippingCompany;
+	}
+
+	public void setShippingCompany(ShippingCompany shippingCompany) {
+		this.shippingCompany = shippingCompany;
+	}
+
+	public Date getEstimatedArrivalDate() {
+		return estimatedArrivalDate;
+	}
+
+	public void setEstimatedArrivalDate(Date estimatedArrivalDate) {
+		this.estimatedArrivalDate = estimatedArrivalDate;
+	}
+
+	public boolean isShipped() {
+		return shipped;
+	}
+
+	public void setShipped(boolean shipped) {
+		this.shipped = shipped;
+	}
 
 	public Site getSite() {
 		return site;

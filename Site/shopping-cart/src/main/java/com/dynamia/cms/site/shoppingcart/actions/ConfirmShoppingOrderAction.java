@@ -17,7 +17,7 @@ import com.dynamia.cms.site.payment.PaymentGateway;
 import com.dynamia.cms.site.payment.services.PaymentService;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingOrder;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import com.dynamia.cms.site.users.domain.UserContactInfo;
 import com.dynamia.tools.domain.ValidationError;
@@ -67,7 +67,7 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 			service.saveOrder(order);
 			ShoppingCartHolder.get().setCurrentOrder(order);
 			ShoppingCartHolder.get().removeCart(name);
-			
+
 			PaymentGateway gateway = paymentService.findGateway(order.getTransaction().getGatewayId());
 			PaymentForm form = gateway.createForm(order.getTransaction());
 
@@ -89,6 +89,14 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 
 		if (order.getShippingAddress() == null) {
 			throw new ValidationError("Seleccione direccion de envio");
+		}
+
+		if (order.getShoppingCart() == null) {
+			throw new ValidationError("La orden de pedido no tiene carrito de compra asociado");
+		}
+
+		if (order.getShoppingCart().getUser() == null) {
+			throw new ValidationError("La orden de pedido no tiene usuario asociado");
 		}
 
 	}

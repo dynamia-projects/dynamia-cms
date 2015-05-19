@@ -6,7 +6,7 @@
 package com.dynamia.cms.site.shoppingcart;
 
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.shoppingcart.domains.ShoppingCartItem;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
 
 /**
  *

@@ -94,8 +94,8 @@
 			</div>
 			<div class="container">
 				<!--Top Shopping Cart -->
-				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop')},'icon-shopping-cart')" />
-				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('quote')},'icon-external-link')" />
+				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Carrito de Compras')},'icon-shopping-cart')" />
+				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('quote','Cotizacion')},'icon-external-link')" />
 			</div>
 		</div>
 		<th:block th:include="tpl_mainmenu::content" />
