@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dynamia.cms.site.core.HtmlTableBuilder;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.domain.SiteParameter;
 import com.dynamia.cms.site.core.services.SiteService;
@@ -344,13 +345,29 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		message.getTemplateModel().put("order", order);
 
 		ShoppingCart cart = crudService.reload(order.getShoppingCart());
-		cart.getItems().size();
+
 		message.getTemplateModel().put("cart", cart);
+		message.getTemplateModel().put("itemsTable", buildShoppingCartTable(cart));
 		message.getTemplateModel().put("items", cart.getItems());
 		message.getTemplateModel().put("shippingAddress", order.getShippingAddress());
 		message.getTemplateModel().put("billingAddress", order.getBillingAddress());
 		message.getTemplateModel().put("tx", order.getTransaction());
 		return message;
+	}
+
+	private String buildShoppingCartTable(ShoppingCart shoppingCart) {
+		HtmlTableBuilder htb = new HtmlTableBuilder();
+
+		htb.addColumnHeader("");
+
+		htb.addColumnHeader(msg("ItemSKU"), msg("ItemName"), msg("ItemUnitPrice"), msg("ItemQuantity"), msg("ItemPrice"));
+		for (ShoppingCartItem item : shoppingCart.getItems()) {
+			htb.addRow();
+			htb.addData(htb.getRowCount(), item.getSku(), item.getName(), item.getUnitPrice(), item.getQuantity(), item.getTotalPrice());
+		}
+		htb.addRow();
+		htb.addData("", "", "<b>TOTAL</b>", "", shoppingCart.getQuantity(), shoppingCart.getTotalPrice());
+		return htb.render();
 	}
 
 	private String msg(String key, Object... params) {

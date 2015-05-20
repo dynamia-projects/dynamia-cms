@@ -24,7 +24,7 @@
 <!-- Google Webfont -->
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css' />
 <!-- Main Css -->
-<link th:href="@{'/css/'+${#objects.nullSafe(siteParams['color'],'color2')}+'.css'}" href="css/color2.css" rel="stylesheet" id="color" />
+<link th:href="@{'/css/'+${#objects.nullSafe(siteParams['color'],'colorlago')}+'.css'}" href="css/color2.css" rel="stylesheet" id="color" />
 
 <!-- Font Icon -->
 <link th:href="@{/css/font-awesome.min.css}" href="css/font-awesome.min.css" rel="stylesheet" />
@@ -37,7 +37,7 @@
 <link th:href="@{/css/yamm.css}" href="css/yamm.css" rel="stylesheet" />
 <link th:href="@{/css/menu.css}" href="css/menu.css" rel="stylesheet" />
 <link th:href="@{/css/template.css}" href="css/template.css" rel="stylesheet" />
-<link th:href="@{/css/template2.css}" href="css/template2.css" rel="stylesheet" />
+<link th:href="@{/css/templatext.css}" href="css/templatext.css" rel="stylesheet" />
 
 <!-- REVOLUTION BANNER CSS SETTINGS -->
 <link th:href="@{/plugins/rs-plugin/css/responsive.css}" rel="stylesheet" type="text/css" href="plugins/rs-plugin/css/responsive.css" />
@@ -68,20 +68,17 @@
 		<th:block th:include="tpl_mobilemenu::content" />
 		<th:block th:include="tpl_topmenu::content" />
 
-		<div class="headerdetails hidden-xs hidden-sm">
-			<div class="container">
-				<div class="headerimage" th:style="${'background-image: url('+siteParams['headerimage']+')'}">
-				
+		<div class="headerimage hidden-xs hidden-sm" th:style="${'background-image: url('+siteParams['headerimage']+')'}"></div>
+		<div class="headerdetails hidden-xs hidden-sm" style="height: 180px">
 
-				</div>
+			<div class="container">
+
 				<!--Social -->
 				<div class="socialtop pull-right">
 					<a href="http://corporativo.compulago.net" target="_blank" class="pull-right"> <img th:src="@{/img/corporativo.png}" alt="Corporativo"
 						title="Ventas Corporativas" class="tooltip-test" />
 					</a>
-					<h5 class="call">
-						<i class="icon-phone"></i> Llamanos: <a class="orange" href="tel:0356930423">+57 (5) 693 04 23</a><br />
-					</h5>
+					
 				</div>
 
 
@@ -91,12 +88,7 @@
 					<!--Top Search -->
 					<div th:include="site/searchform::content" />
 				</div>
-			</div>
-			<div class="container">
-				<!--Top Shopping Cart -->
-				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Carrito de Compras')},'icon-shopping-cart')" />
-				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('quote','Cotizacion')},'icon-external-link')" />
-			</div>
+			</div>			
 		</div>
 		<th:block th:include="tpl_mainmenu::content" />
 	</header>
@@ -116,12 +108,7 @@
 		<section id="quicklink" class="mt20"></section>
 		<!-- Footer -->
 		<footer id="footer">
-			<section class="footersocial">
-				<div class="container hidden-xs hidden-sm">
-					<div class="footerimage" th:style="${'background-image: url('+siteParams['footerimage']+')'}"></div>
-				</div>
-				<div class="pull-right" th:include="tpl_payment::content" />
-			</section>
+			<div class="footerimage hidden-xs hidden-sm" th:style="${'background-image: url('+siteParams['footerimage']+')'}"></div>
 
 
 			<section class="copyrightbottom">

@@ -4,7 +4,7 @@
 <!-- Main Menu -->
 
 <body th:fragment="content">
-	<div class="headerstrip navbar-fixed-top hidden-xs hidden-sm" style="height: 30px">
+	<div class="headerstrip navbar-fixed-top hidden-xs hidden-sm" style="height: 35px; background-color: #303030">
 		<div class="container">
 			<div class="pull-left">
 				<div class="navbar" id="topnav">
@@ -13,6 +13,10 @@
 					</div>
 				</div>
 			</div>
+
+
+			<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Carrito de Compras')},'icon-shopping-cart')" />
+			<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('quote','Cotizacion')},'icon-external-link')" />
 
 
 			<div class="pull-right">
