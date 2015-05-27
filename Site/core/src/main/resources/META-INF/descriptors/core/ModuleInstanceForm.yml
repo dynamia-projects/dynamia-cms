@@ -1,5 +1,6 @@
 view: form
 beanClass: com.dynamia.cms.site.core.domain.ModuleInstance
+
 autofields: false
 
 fields:
@@ -20,11 +21,6 @@ fields:
    titleVisible:
    styleClass:
    order:
-   parameters:
-      component: crudview
-   
-        
-
         
 layout:
     columns: 2

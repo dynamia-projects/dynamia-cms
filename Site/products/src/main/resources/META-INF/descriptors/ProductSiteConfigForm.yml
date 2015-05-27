@@ -1,7 +1,7 @@
 view: form
 beanClass: com.dynamia.cms.site.products.domain.ProductsSiteConfig
 hidden: [id,lastSync,token,parametersAsMap]
-sortFields: [pricePattern,defaultCurrency,productsPerPage,productsStockToShow,showEnabled,quoteEnabled,showBadges, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceUsername,datasourcePassword,mailAccount,shareProductMailTemplate,orderCompletedMailTemplate]
+sortFields: [pricePattern,defaultCurrency,productsPerPage,productsStockToShow,synchronizationEnabled,showEnabled,quoteEnabled,showBadges, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceUsername,datasourcePassword,mailAccount,shareProductMailTemplate,orderCompletedMailTemplate]
 
 fields:            
     
@@ -40,7 +40,7 @@ groups:
     
     general:
         label: Basic Settings
-        fields: [site,pricePattern,defaultCurrency,productsPerPage,productsStockToShow,shopEnabled,quoteEnabled,showBadges]
+        fields: [site,pricePattern,defaultCurrency,productsPerPage,productsStockToShow,synchronizationEnabled,shopEnabled,quoteEnabled,showBadges]
             
     
     datasource:

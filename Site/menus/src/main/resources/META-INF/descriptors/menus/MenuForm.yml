@@ -13,13 +13,10 @@ fields:
            height: 100px
            
     styleClass:
-       label: Class
+       label: Menu Class
     menuItemStyleClass:
        label: Items Class
-    
-    items:
-        component: crudview
-        
+ 
 groups:
     style:
         label: CSS Classes

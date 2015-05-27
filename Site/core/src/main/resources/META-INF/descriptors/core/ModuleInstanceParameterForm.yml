@@ -1,9 +1,11 @@
 view: form
 beanClass: com.dynamia.cms.site.core.domain.ModuleInstanceParameter
-hidden: [id,moduleInstance]
-sortFields: [name,value,enabled]
+autofields: false
 
 fields:
+  name:
+  value:
+  enabled:
     
    
       

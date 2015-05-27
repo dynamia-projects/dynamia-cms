@@ -5,10 +5,16 @@
  */
 package com.dynamia.cms.site.core.domain;
 
-import com.dynamia.tools.domain.SimpleEntity;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.dynamia.cms.site.core.api.Parameter;
+import com.dynamia.tools.domain.SimpleEntity;
 
 /**
  *
@@ -16,11 +22,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "cr_modules_instances_params")
-public class ModuleInstanceParameter extends SimpleEntity {
+public class ModuleInstanceParameter extends SimpleEntity implements Parameter {
 
-	private String paramName;
-	private String paramValue;
-	private boolean enabled=true;
+	@Column(name = "paramName")
+	private String name;
+	@Column(name = "paramValue")
+	private String value;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	private String extra;
+	private boolean enabled = true;
 
 	@ManyToOne
 	private ModuleInstance moduleInstance;
@@ -28,9 +39,10 @@ public class ModuleInstanceParameter extends SimpleEntity {
 	public ModuleInstanceParameter() {
 	}
 
-	public ModuleInstanceParameter(String paramName, String paramValue) {
-		this.paramName = paramName;
-		this.paramValue = paramValue;
+	public ModuleInstanceParameter(String name, String value) {
+		this.name = name;
+		setValue(value);
+
 	}
 
 	public ModuleInstance getModuleInstance() {
@@ -41,20 +53,25 @@ public class ModuleInstanceParameter extends SimpleEntity {
 		this.moduleInstance = moduleInstance;
 	}
 
-	public String getParamName() {
-		return paramName;
+	public String getName() {
+		return name;
 	}
 
-	public void setParamName(String paramName) {
-		this.paramName = paramName;
+	public void setName(String paramName) {
+		this.name = paramName;
 	}
 
-	public String getParamValue() {
-		return paramValue;
+	public String getValue() {
+		return value;
 	}
 
-	public void setParamValue(String paramValue) {
-		this.paramValue = paramValue;
+	public void setValue(String value) {
+		if (value != null && value.length() <= 255) {
+			this.value = value;
+		} else {
+			this.extra = value;
+		}
+
 	}
 
 	public boolean isEnabled() {
@@ -63,6 +80,26 @@ public class ModuleInstanceParameter extends SimpleEntity {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public String getExtra() {
+		return extra;
+	}
+
+	public void setExtra(String extra) {
+		this.extra = extra;
+	}
+
+	@Override
+	public String toString() {
+		return getName();
+	}
+
+	public ModuleInstanceParameter clone() {
+		ModuleInstanceParameter clone = new ModuleInstanceParameter(name, value);
+		clone.extra = extra;
+		clone.enabled = enabled;
+		return clone;
 	}
 
 }

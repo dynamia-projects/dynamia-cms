@@ -1,0 +1,54 @@
+package com.dynamia.cms.admin.core.zk;
+
+import org.zkoss.bind.BindContext;
+import org.zkoss.bind.Converter;
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zkplus.databind.TypeConverter;
+
+import com.dynamia.tools.domain.services.CrudService;
+import com.dynamia.tools.domain.util.DomainUtils;
+import com.dynamia.tools.integration.Containers;
+import com.dynamia.tools.web.ui.EntityPickerBox;
+
+@SuppressWarnings("deprecation")
+public class EntityConverter implements TypeConverter, Converter<Object, Object, Component> {
+
+	@Override
+	public Object coerceToUi(Object beanProp, Component component, BindContext ctx) {
+		return coerceToUi(beanProp, component);
+	}
+
+	@Override
+	public Object coerceToBean(Object compAttr, Component component, BindContext ctx) {
+		return coerceToBean(compAttr, component);
+	}
+
+	@Override
+	public Object coerceToUi(Object val, Component comp) {
+		CrudService crudService = Containers.get().findObject(CrudService.class);
+
+		try {
+			if (val != null) {
+				EntityPickerBox entityPicker = (EntityPickerBox) comp;
+				Long id = new Long(val.toString());
+				Object entity = crudService.find(entityPicker.getEntityClass(), id);
+				return entity;
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	@Override
+	public Object coerceToBean(Object val, Component comp) {
+		if (DomainUtils.isJPAEntity(val)) {
+			return DomainUtils.getJPAIdValue(val).toString();
+		} else {
+			return null;
+		}
+	}
+
+}

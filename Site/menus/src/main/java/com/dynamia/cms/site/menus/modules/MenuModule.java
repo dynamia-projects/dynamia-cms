@@ -16,11 +16,12 @@ import com.dynamia.cms.site.menus.services.MenuService;
 @CMSModule
 public class MenuModule extends AbstractModule {
 
+	private static final String PARAM_MENU = "menu";
 	@Autowired
 	private MenuService service;
 
 	public MenuModule() {
-		super("menu_module", "Menus and MenuItems", "menus/menu");
+		super("menu_module", "Menus and MenuItems", "menus/modules/menu");
 		setDescription("Basic module for creation menubars width its items");
 		putMetadata("author", "Mario Serrano Leones");
 		putMetadata("Created at", "03-09-2014");
@@ -30,12 +31,18 @@ public class MenuModule extends AbstractModule {
 	public void init(ModuleContext context) {
 		ModuleInstance mod = context.getModuleInstance();
 
-		String menuName = mod.getParameter("menu");
-		if (menuName == null) {
-			menuName = "mainmenu";
+		String menuId = mod.getParameterValue(PARAM_MENU);
+		if (menuId == null) {
+			menuId = "mainmenu";
 		}
 
-		Menu menu = service.getMenu(context.getSite(), menuName);
+		Menu menu = null;
+		try {
+			menu = service.getMenu(context.getSite(), new Long(menuId));
+		} catch (NumberFormatException e) {
+			menu = service.getMenu(context.getSite(), menuId);
+		}
+
 		if (menu != null) {
 			List<MenuItem> items = new ArrayList<>(menu.getItems());
 			for (MenuItem menuItem : items) {
@@ -43,7 +50,7 @@ public class MenuModule extends AbstractModule {
 				service.setupMenuItem(menuItem);
 			}
 
-			mod.addObject("menu", menu);
+			mod.addObject(PARAM_MENU, menu);
 			mod.addObject("menuitems", items);
 		}
 

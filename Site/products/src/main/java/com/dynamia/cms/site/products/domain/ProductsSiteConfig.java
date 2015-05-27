@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.transaction.Synchronization;
 import javax.validation.constraints.NotNull;
 
 import com.dynamia.cms.site.core.api.SiteAware;
@@ -65,6 +66,8 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 
 	private boolean showBadges;
 
+	private boolean synchronizationEnabled;
+
 	@OneToOne
 	private MailAccount mailAccount;
 	@OneToOne
@@ -74,6 +77,16 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 
 	@OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ProductsSiteConfigParameter> parameters = new ArrayList<>();
+	
+	
+
+	public boolean isSynchronizationEnabled() {
+		return synchronizationEnabled;
+	}
+
+	public void setSynchronizationEnabled(boolean synchronizationEnabled) {
+		this.synchronizationEnabled = synchronizationEnabled;
+	}
 
 	public boolean isShowBadges() {
 		return showBadges;

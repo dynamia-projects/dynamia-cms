@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.dynamia.cms.site.core.api.Parameterizable;
 import com.dynamia.tools.domain.SimpleEntity;
 import com.dynamia.tools.domain.contraints.NotEmpty;
 
@@ -23,7 +24,7 @@ import com.dynamia.tools.domain.contraints.NotEmpty;
  */
 @Entity
 @Table(name = "cr_sites")
-public class Site extends SimpleEntity {
+public class Site extends SimpleEntity implements Parameterizable {
 
 	@NotEmpty
 	private String name;
@@ -76,6 +77,7 @@ public class Site extends SimpleEntity {
 		this.acceptedDomains = acceptedDomains;
 	}
 
+	@Override
 	public List<SiteParameter> getParameters() {
 		return parameters;
 	}

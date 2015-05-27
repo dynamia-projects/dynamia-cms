@@ -1,3 +1,11 @@
 view: crud
 beanClass: com.dynamia.cms.site.core.domain.ModuleInstance
 
+
+actions:
+  EditAction:
+    enabled: false
+  
+  NewAction:
+    enabled: false
+

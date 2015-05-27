@@ -9,6 +9,7 @@ public abstract class AbstractModule implements Module {
 	private String name;
 	private String description;
 	private String templateViewName;
+
 	private Map<String, Object> metadata = new HashMap<>();
 
 	public AbstractModule(String id, String name, String templateViewName) {

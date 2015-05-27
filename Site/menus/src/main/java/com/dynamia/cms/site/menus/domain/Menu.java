@@ -8,9 +8,11 @@ import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.tools.domain.SimpleEntity;
 import com.dynamia.tools.domain.contraints.NotEmpty;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -112,5 +114,10 @@ public class Menu extends SimpleEntity implements Serializable, SiteAware {
 
 	public void setItems(List<MenuItem> items) {
 		this.items = items;
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 }

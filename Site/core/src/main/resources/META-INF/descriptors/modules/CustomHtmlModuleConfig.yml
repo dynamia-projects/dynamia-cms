@@ -1,0 +1,10 @@
+view: config
+id: custom_html
+
+fields:
+
+  content:
+    component: cmseditor
+    params:
+      span: 2
+      height: 300px

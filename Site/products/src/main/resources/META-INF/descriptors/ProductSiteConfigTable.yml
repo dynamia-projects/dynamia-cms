@@ -1,7 +1,7 @@
 view: table
 beanClass: com.dynamia.cms.site.products.domain.ProductsSiteConfig
 hidden: [id,datasourcePassword,parametersAsMap,datasourceStoreImagesURL,datasourceImagesURL,datasourceBrandImagesURL,datasourcePassword,shareProductMailTemplate,orderCompletedMailTemplate]
-sortFields: [lastSync,datasourceURL,datasourceUsername,defaultCurrency,pricePattern,productsPerPage,productsStockToShow,mailAccount,token]
+sortFields: [lastSync,datasourceURL,datasourceUsername,defaultCurrency,pricePattern,productsPerPage,productsStockToShow,mailAccount,token,synchronizationEnabled]
 
 fields:
     datasourceURL:

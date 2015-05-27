@@ -1,5 +1,10 @@
 package com.dynamia.cms.site.products.modules;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.dynamia.cms.site.core.api.AbstractModule;
 import com.dynamia.cms.site.core.api.CMSModule;
 import com.dynamia.cms.site.core.api.ModuleContext;
@@ -11,16 +16,24 @@ import com.dynamia.tools.domain.query.BooleanOp;
 import com.dynamia.tools.domain.query.QueryConditions;
 import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Mario on 18/11/2014.
  */
 @CMSModule
 public class ProductsCarouselModule extends AbstractModule {
+
+	private static final String PARAM_PAGE_SIZE = "pageSize";
+
+	private static final String PARAM_ORDER_BY = "orderBy";
+
+	private static final String PARAM_STATUS = "status";
+
+	private static final String PARAM_CATEGORY = "category";
+
+	private static final String PARAM_COLUMNS = "columns";
+
+	private static final String PARAM_TYPE = "type";
 
 	@Autowired
 	private ProductsService service;
@@ -34,26 +47,40 @@ public class ProductsCarouselModule extends AbstractModule {
 		putMetadata("author", "Mario Serrano Leones");
 		putMetadata("version", "1.0");
 		putMetadata("created at", "18-11-2014");
-		putMetadata("columns", "4");
-		putMetadata("type", "featured");
+		putMetadata(PARAM_COLUMNS, "4");
+		putMetadata(PARAM_TYPE, "featured");
+		putMetadata(PARAM_PAGE_SIZE, "16");
 
 	}
 
 	@Override
 	public void init(ModuleContext context) {
-		ProductCarouselType type = ProductCarouselType.valueOf(getParameter(context, "type").toUpperCase());
-		int columns = Integer.parseInt(getParameter(context, "columns"));
-		String category = getParameter(context, "category");
-		String status = getParameter(context, "status");
-		String orderBy = getParameter(context, "orderBy");
-		String pageSizeParam = getParameter(context, "pageSize");
+		ProductCarouselType type = ProductCarouselType.valueOf(getParameter(context, PARAM_TYPE).toUpperCase());
+		int columns;
+		try {
+			columns = Integer.parseInt(getParameter(context, PARAM_COLUMNS));
+		} catch (NumberFormatException e1) {
+			columns = Integer.parseInt((String) getMetadata().get(PARAM_COLUMNS));
+		}
+
+		String category = getParameter(context, PARAM_CATEGORY);
+		String status = getParameter(context, PARAM_STATUS);
+		String orderBy = null;
+		try {
+			ProductOrderField orderField = ProductOrderField.valueOf(getParameter(context, PARAM_ORDER_BY).toUpperCase());
+			orderBy = orderField.getField();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		String pageSizeParam = getParameter(context, PARAM_PAGE_SIZE);
 
 		List<Product> products = new ArrayList<>();
 		QueryParameters params = QueryParameters.with("site", context.getSite())
 				.add("active", true)
 				.paginate(columns * 4);
-		
-		if(pageSizeParam!=null){
+
+		if (pageSizeParam != null) {
 			try {
 				int pageSize = Integer.parseInt(pageSizeParam);
 				params.paginate(pageSize);
@@ -79,7 +106,7 @@ public class ProductsCarouselModule extends AbstractModule {
 			params.orderBy("views", false);
 			break;
 		case CUSTOM:
-			params.add("status", status);
+			params.add(PARAM_STATUS, status);
 			break;
 		}
 
@@ -109,11 +136,11 @@ public class ProductsCarouselModule extends AbstractModule {
 
 		ModuleInstance mod = context.getModuleInstance();
 		mod.addObject("products", products);
-		mod.addObject("columns", columns);
+		mod.addObject(PARAM_COLUMNS, columns);
 	}
 
 	private String getParameter(ModuleContext context, String name) {
-		String param = context.getModuleInstance().getParameter(name);
+		String param = context.getModuleInstance().getParameterValue(name);
 		if (param == null || param.trim().isEmpty()) {
 			Object metadata = getMetadata().get(name);
 			if (metadata != null) {
@@ -127,4 +154,5 @@ public class ProductsCarouselModule extends AbstractModule {
 
 		return param;
 	}
+
 }

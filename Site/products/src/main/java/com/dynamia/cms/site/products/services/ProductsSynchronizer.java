@@ -25,74 +25,80 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductsSynchronizer {
 
-    @Autowired
-    private ProductsSyncService service;
+	@Autowired
+	private ProductsSyncService service;
 
-    @Autowired
-    private SiteService siteService;
+	@Autowired
+	private SiteService siteService;
 
-    @Autowired
-    private CrudService crudService;
+	@Autowired
+	private CrudService crudService;
 
-    private LoggingService logger = new SLF4JLoggingService(ProductsSynchronizer.class);
+	private LoggingService logger = new SLF4JLoggingService(ProductsSynchronizer.class);
 
-    public void synchronize(ProductsSiteConfig siteCfg) {
-        siteCfg = crudService.reload(siteCfg);
+	public void synchronize(ProductsSiteConfig siteCfg) {
 
-        logger.info("Starting Products Sync for " + siteCfg.getSite());
+		if (!siteCfg.isSynchronizationEnabled()) {
+			logger.warn("Product Synchronization is NOT enabled for  " + siteCfg.getSite());
+			return;
+		}
 
-        logger.info("--Brands");
-        service.synchronizeBrands(siteCfg);
+		siteCfg = crudService.reload(siteCfg);
 
-        logger.info("--Stores");
-        List<StoreDTO> stores = service.synchronizeStores(siteCfg);
+		logger.info("Starting Products Sync for " + siteCfg.getSite());
 
-        logger.info("--Categories");
-        List<ProductCategoryDTO> categories = service.synchronizeCategories(siteCfg);
-        service.disableCategoriesNoInList(siteCfg, categories);
+		logger.info("--Brands");
+		service.synchronizeBrands(siteCfg);
 
-        logger.info("--Products");
-        List<ProductDTO> products = service.synchronizeProducts(siteCfg);
-        for (ProductDTO productDTO : products) {
-            logger.info("-- Product Details for " + productDTO.getName());
-            service.syncProductDetails(siteCfg, productDTO);
+		logger.info("--Stores");
+		List<StoreDTO> stores = service.synchronizeStores(siteCfg);
 
-            logger.info("-- Product Stock for " + productDTO.getName());
-            service.syncProductStockDetails(siteCfg, productDTO);
+		logger.info("--Categories");
+		List<ProductCategoryDTO> categories = service.synchronizeCategories(siteCfg);
+		service.disableCategoriesNoInList(siteCfg, categories);
 
-            logger.info("-- Product Prices for " + productDTO.getName());
-            service.syncProductCreditPrices(siteCfg, productDTO);
-        }
+		logger.info("--Products");
+		List<ProductDTO> products = service.synchronizeProducts(siteCfg);
+		for (ProductDTO productDTO : products) {
+			logger.info("-- Product Details for " + productDTO.getName());
+			service.syncProductDetails(siteCfg, productDTO);
 
-        service.disableProductsNoInList(siteCfg, products);
+			logger.info("-- Product Stock for " + productDTO.getName());
+			service.syncProductStockDetails(siteCfg, productDTO);
 
-        for (ProductDTO productDTO : products) {
-            logger.info("-- Downloading Product Images for " + productDTO.getName());
-            service.downloadProductImages(siteCfg, productDTO);
-        }
+			logger.info("-- Product Prices for " + productDTO.getName());
+			service.syncProductCreditPrices(siteCfg, productDTO);
+		}
 
-        for (StoreDTO storeDTO : stores) {
-            logger.info("-- Downloading Store Images for " + storeDTO.getName());
-            service.downloadStoreImages(siteCfg, storeDTO);
-        }
+		service.disableProductsNoInList(siteCfg, products);
 
-        service.update(siteCfg);
-        logger.info("Sync Completed for " + siteCfg.getSite());
+		for (ProductDTO productDTO : products) {
+			logger.info("-- Downloading Product Images for " + productDTO.getName());
+			service.downloadProductImages(siteCfg, productDTO);
+		}
 
-        siteService.clearCache(siteCfg.getSite());
-    }
+		for (StoreDTO storeDTO : stores) {
+			logger.info("-- Downloading Store Images for " + storeDTO.getName());
+			service.downloadStoreImages(siteCfg, storeDTO);
+		}
 
-    public void synchronize(ProductsSiteConfig siteCfg, ProductDTO dto) {
-        try {
+		service.update(siteCfg);
+		logger.info("Sync Completed for " + siteCfg.getSite());
 
-            service.synchronizeProduct(siteCfg, dto);
-            service.syncProductDetails(siteCfg, dto);
-            service.syncProductStockDetails(siteCfg, dto);
-            service.syncProductCreditPrices(siteCfg, dto);
-            service.downloadProductImages(siteCfg, dto);
-            siteService.clearCache(siteCfg.getSite());
-        } catch (Exception e) {
-            logger.error("Error Syncronizing product " + dto.getName() + " for SITE: " + siteCfg.getSite(), e);
-        }
-    }
+		siteService.clearCache(siteCfg.getSite());
+	}
+
+	public void synchronize(ProductsSiteConfig siteCfg, ProductDTO dto) {
+		try {
+
+			service.synchronizeProduct(siteCfg, dto);
+			service.syncProductDetails(siteCfg, dto);
+			service.syncProductStockDetails(siteCfg, dto);
+			service.syncProductCreditPrices(siteCfg, dto);
+			service.downloadProductImages(siteCfg, dto);
+			siteService.clearCache(siteCfg.getSite());
+		} catch (Exception e) {
+			logger.error("Error Syncronizing product " + dto.getName() + " for SITE: " + siteCfg.getSite(), e);
+		}
+	}
 }

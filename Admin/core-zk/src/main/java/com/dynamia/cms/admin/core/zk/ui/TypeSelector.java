@@ -51,11 +51,11 @@ public class TypeSelector extends Combobox {
 		Collection<? extends TypeExtension> types = Containers.get().findObjects(getTypeExtensionClass());
 		if (types != null && !types.isEmpty()) {
 			int i = 0;
-			for (TypeExtension template : types) {
+			for (TypeExtension typeExtension : types) {
 				Comboitem item = new Comboitem();
 				item.setParent(this);
 				try {
-					getItemRenderer().render(item, template, i);
+					getItemRenderer().render(item, typeExtension, i);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

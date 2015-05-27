@@ -78,7 +78,7 @@
 					<a href="http://corporativo.compulago.net" target="_blank" class="pull-right"> <img th:src="@{/img/corporativo.png}" alt="Corporativo"
 						title="Ventas Corporativas" class="tooltip-test" />
 					</a>
-					
+
 				</div>
 
 
@@ -88,7 +88,7 @@
 					<!--Top Search -->
 					<div th:include="site/searchform::content" />
 				</div>
-			</div>			
+			</div>
 		</div>
 		<th:block th:include="tpl_mainmenu::content" />
 	</header>
@@ -108,7 +108,13 @@
 		<section id="quicklink" class="mt20"></section>
 		<!-- Footer -->
 		<footer id="footer">
-			<div class="footerimage hidden-xs hidden-sm" th:style="${'background-image: url('+siteParams['footerimage']+')'}"></div>
+			<div class="footerimage hidden-xs hidden-sm" th:style="${'background-color: #3A3A3A; color: #999; background-image: url('+siteParams['footerimage']+')'}">
+				<div class="container">
+					<div class="row row-centered">
+						<th:block th:include="module::position('footer')" />
+					</div>
+				</div>
+			</div>
 
 
 			<section class="copyrightbottom">

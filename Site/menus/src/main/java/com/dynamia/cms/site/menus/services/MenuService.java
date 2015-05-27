@@ -6,12 +6,9 @@
 
 package com.dynamia.cms.site.menus.services;
 
-import org.springframework.cache.annotation.Cacheable;
-
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.menus.domain.Menu;
 import com.dynamia.cms.site.menus.domain.MenuItem;
-import com.dynamia.tools.domain.query.QueryParameters;
 
 /**
  *
@@ -19,10 +16,12 @@ import com.dynamia.tools.domain.query.QueryParameters;
  */
 public interface MenuService {
 
-    Menu getMainMenu(Site site);
+	Menu getMainMenu(Site site);
 
 	void setupMenuItem(MenuItem menuItem);
 
-	public abstract Menu getMenu(Site site, String alias);
-    
+	public Menu getMenu(Site site, String alias);
+
+	public Menu getMenu(Site site, Long id);
+
 }

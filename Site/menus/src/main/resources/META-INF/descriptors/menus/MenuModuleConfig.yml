@@ -1,0 +1,12 @@
+view: config
+id: menu_module
+
+fields:            
+    
+  menu:
+    component: entitypicker
+    params:
+      entityClass: com.dynamia.cms.site.menus.domain.Menu
+  
+
+    

@@ -28,124 +28,151 @@ import com.dynamia.tools.domain.contraints.NotEmpty;
 @Table(name = "cr_modules_instances")
 public class ModuleInstance extends Content implements Orderable {
 
-    @NotEmpty(message = "Module ID is required")
-    @NotNull
-    private String moduleId;
-    @NotEmpty(message = "Select module position")
-    private String position;
-    @Column(name = "moduleAlias")
-    private String alias;
-    @NotEmpty(message = "Enter module title")
-    private String title;
-    private boolean enabled = true;
-    private boolean titleVisible = true;
+	@NotEmpty(message = "Module ID is required")
+	@NotNull
+	private String moduleId;
+	@NotEmpty(message = "Select module position")
+	private String position;
+	@Column(name = "moduleAlias")
+	private String alias;
+	@NotEmpty(message = "Enter module title")
+	private String title;
+	private boolean enabled = true;
+	private boolean titleVisible = true;
 
-    private String styleClass;
-    @OneToMany(mappedBy = "moduleInstance", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<ModuleInstanceParameter> parameters = new ArrayList<>();
+	private String styleClass;
+	@OneToMany(mappedBy = "moduleInstance", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	private List<ModuleInstanceParameter> parameters = new ArrayList<>();
 
-    @Column(name = "instanceOrder")
-    private int order;
+	@Column(name = "instanceOrder")
+	private int order;
 
-    @Transient
-    private Map<String, Object> model = new HashMap<String, Object>();
+	@Transient
+	private Map<String, Object> model = new HashMap<String, Object>();
 
-    @Override
-    public int getOrder() {
-        return order;
-    }
+	@Override
+	public int getOrder() {
+		return order;
+	}
 
-    @Override
-    public void setOrder(int order) {
-        this.order = order;
-    }
+	@Override
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getModuleId() {
-        return moduleId;
-    }
+	public String getModuleId() {
+		return moduleId;
+	}
 
-    public void setModuleId(String moduleId) {
-        this.moduleId = moduleId;
-    }
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
+	}
 
-    public String getPosition() {
-        return position;
-    }
+	public String getPosition() {
+		return position;
+	}
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
+	public void setPosition(String position) {
+		this.position = position;
+	}
 
-    public String getAlias() {
-        return alias;
-    }
+	public String getAlias() {
+		return alias;
+	}
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
 
-    public boolean isEnabled() {
-        return enabled;
-    }
+	public boolean isEnabled() {
+		return enabled;
+	}
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
-    public String getStyleClass() {
-        return styleClass;
-    }
+	public String getStyleClass() {
+		return styleClass;
+	}
 
-    public void setStyleClass(String styleClass) {
-        this.styleClass = styleClass;
-    }
+	public void setStyleClass(String styleClass) {
+		this.styleClass = styleClass;
+	}
 
-    public List<ModuleInstanceParameter> getParameters() {
-        return parameters;
-    }
+	public List<ModuleInstanceParameter> getParameters() {
+		return parameters;
+	}
 
-    public void setParameters(List<ModuleInstanceParameter> parameters) {
-        this.parameters = parameters;
-    }
+	public void setParameters(List<ModuleInstanceParameter> parameters) {
+		this.parameters = parameters;
+	}
 
-    public boolean isTitleVisible() {
-        return titleVisible;
-    }
+	public boolean isTitleVisible() {
+		return titleVisible;
+	}
 
-    public void setTitleVisible(boolean titleVisible) {
-        this.titleVisible = titleVisible;
-    }
+	public void setTitleVisible(boolean titleVisible) {
+		this.titleVisible = titleVisible;
+	}
 
-    @Override
-    public String toString() {
-        return getModuleId();
-    }
+	@Override
+	public String toString() {
+		return getModuleId();
+	}
 
-    public String getParameter(String name) {
-        for (ModuleInstanceParameter parameter : parameters) {
-            if (parameter.getParamName().equals(name)) {
-                if (parameter.isEnabled()) {
-                    return parameter.getParamValue();
-                }
-            }
-        }
-        return null;
-    }
+	public String getParameterValue(String name) {
+		ModuleInstanceParameter parameter = getParameter(name);
+		if (parameter != null && parameter.isEnabled()) {
+			return parameter.getValue();
+		}
 
-    public Map<String, Object> getModel() {
-        return model;
-    }
+		return null;
+	}
 
-    public void addObject(String name, Object object) {
-        model.put(name, object);
-    }
+	public ModuleInstanceParameter getParameter(String name) {
+		for (ModuleInstanceParameter parameter : parameters) {
+			if (parameter.getName().equalsIgnoreCase(name)) {
+				return parameter;
+			}
+		}
+		return null;
+	}
+
+	public Map<String, Object> getModel() {
+		return model;
+	}
+
+	public void addObject(String name, Object object) {
+		model.put(name, object);
+	}
+
+	public ModuleInstance clone() {
+		ModuleInstance clone = new ModuleInstance();
+		clone.alias = alias;
+		clone.enabled = false;
+		clone.moduleId = moduleId;
+		clone.order = order + 1;
+		clone.position = position;
+		clone.styleClass = styleClass;
+		clone.title = title + "- copy";
+		clone.titleVisible = titleVisible;
+
+		for (ModuleInstanceParameter parameter : getParameters()) {
+			ModuleInstanceParameter cloneParam = parameter.clone();
+			clone.getParameters().add(cloneParam);
+			cloneParam.setModuleInstance(clone);
+		}
+
+		return clone;
+	}
 
 }

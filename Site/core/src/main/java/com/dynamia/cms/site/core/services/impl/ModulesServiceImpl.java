@@ -61,7 +61,7 @@ public class ModulesServiceImpl implements ModulesService {
 
 	@Override
 	public Module getModule(ModuleInstance instance) {
-		if (instance != null) {
+		if (instance != null && instance.getModuleId()!=null) {
 			for (Module module : Containers.get().findObjects(Module.class)) {
 				if (instance.getModuleId().equals(module.getId())) {
 					return module;

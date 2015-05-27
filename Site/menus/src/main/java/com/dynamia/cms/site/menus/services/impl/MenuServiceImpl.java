@@ -5,6 +5,10 @@
  */
 package com.dynamia.cms.site.menus.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.menus.MenuContext;
 import com.dynamia.cms.site.menus.api.MenuItemTypeExtension;
@@ -14,10 +18,6 @@ import com.dynamia.cms.site.menus.services.MenuService;
 import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.integration.Containers;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
 
 /**
  *
@@ -42,6 +42,14 @@ public class MenuServiceImpl implements MenuService {
 		QueryParameters qp = QueryParameters.with("site", site).add("alias", alias);
 		return crudService.findSingle(Menu.class, qp);
 	}
+	
+	@Override
+	@Cacheable(value = "menus", key = "#site.key+#id")
+	public Menu getMenu(Site site, Long id) {
+		QueryParameters qp = QueryParameters.with("site", site).add("id", id);
+		return crudService.findSingle(Menu.class, qp);
+	}
+
 
 	@Override
 	public void setupMenuItem(MenuItem menuItem) {

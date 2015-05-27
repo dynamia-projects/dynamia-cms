@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Main Menu -->
+
+<body th:fragment="module(instance)">
+
+	<div th:class="${instance.styleClass}">
+		<h3 th:if="${instance.titleVisible}">
+			<span class="maintext" th:text="${instance.title}">Title</span>
+		</h3>
+		<div th:utext="${instance.model.content}">Content</div>
+	</div>
+
+</body>
+
+</html>
