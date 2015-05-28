@@ -4,7 +4,7 @@ import com.dynamia.cms.site.core.api.CMSExtension;
 import com.dynamia.cms.site.menus.MenuContext;
 
 @CMSExtension
-public class DefaultMenuItemType implements MenuItemTypeExtension {
+public class DefaultMenuItemType implements MenuItemType {
 
 	@Override
 	public String getId() {

@@ -56,6 +56,8 @@ import com.dynamia.tools.integration.Containers;
 @Service
 public class ProductsServiceImpl implements ProductsService {
 
+	private static final String CACHE_NAME = "products";
+
 	@Autowired
 	private CrudService crudService;
 
@@ -76,7 +78,7 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	@Cacheable(value = "products", key = "'cat'+#site.key+#alias")
+	@Cacheable(value = CACHE_NAME, key = "'cat'+#site.key+#alias")
 	public ProductCategory getCategoryByAlias(Site site, String alias) {
 		QueryParameters qp = QueryParameters.with("site", site);
 		qp.add("active", true);
@@ -86,7 +88,13 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	@Cacheable(value = "products", key = "'cat'+#site.key")
+	@Cacheable(value = CACHE_NAME, key = "'cat'+#categoryId")
+	public ProductCategory getCategoryById(Long categoryId) {
+		return crudService.find(ProductCategory.class, categoryId);
+	}
+
+	@Override
+	@Cacheable(value = CACHE_NAME, key = "'cat'+#site.key")
 	public List<ProductCategory> getCategories(Site site) {
 		QueryParameters qp = QueryParameters.with("site", site);
 		qp.add("parent", QueryConditions.isNull());
@@ -97,7 +105,7 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	@Cacheable(value = "products", key = "#category.id")
+	@Cacheable(value = CACHE_NAME, key = "'subcatsOf'+#category.id")
 	public List<ProductCategory> getSubcategories(ProductCategory category) {
 		QueryParameters qp = QueryParameters.with("site", category.getSite());
 		qp.add("parent", category);
@@ -108,8 +116,11 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
+	@Cacheable(value = CACHE_NAME, key = "'brandCat'+#brand.id")
 	public List<ProductCategory> getCategories(ProductBrand brand) {
-		String sql = QueryBuilder.select(ProductCategory.class, "pc").where("pc.site=:site")
+		String sql = QueryBuilder
+				.select(ProductCategory.class, "pc")
+				.where("pc.site=:site")
 				.and("pc.id in (select p.category.parent.id from Product p where p.site = :site and p.brand = :brand  and p.active=true)")
 				.orderBy("pc.name").toString();
 
@@ -121,6 +132,7 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
+	@Cacheable(value = CACHE_NAME, key = "'brandCat'+#brand.id+#category.id")
 	public List<ProductCategory> getSubcategories(ProductCategory category, ProductBrand brand) {
 		String sql = QueryBuilder
 				.select(ProductCategory.class, "pc")
@@ -218,7 +230,7 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	@Cacheable(value = "products", key = "'fea'+#site.key")
+	@Cacheable(value = CACHE_NAME, key = "'fea'+#site.key")
 	public List<Product> getFeaturedProducts(Site site) {
 		QueryParameters qp = QueryParameters.with("active", true);
 		qp.add("featured", true);
@@ -229,7 +241,7 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	@Cacheable(value = "products", key = "'sale'+#site.key")
+	@Cacheable(value = CACHE_NAME, key = "'sale'+#site.key")
 	public List<Product> getSaleProducts(Site site) {
 		QueryParameters qp = QueryParameters.with("active", true);
 		qp.add("sale", true);
@@ -272,10 +284,13 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	@Cacheable(value = "products", key = "#site.key")
+	@Cacheable(value = CACHE_NAME, key = "#site.key")
 	public List<ProductBrand> getBrands(Site site) {
-		String sql = QueryBuilder.select(ProductBrand.class, "pb").where("pb.site=:site")
-				.and("pb.id in (select p.brand.id from Product p where p.site = :site  and p.active=true)").orderBy("pb.name").toString();
+		String sql = QueryBuilder
+				.select(ProductBrand.class, "pb")
+				.where("pb.site=:site")
+				.and("pb.id in (select p.brand.id from Product p where p.site = :site  and p.active=true)")
+				.orderBy("pb.name").toString();
 
 		Query query = entityManager.createQuery(sql);
 		query.setParameter("site", site);
@@ -284,6 +299,7 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
+	@Cacheable(value = CACHE_NAME, key = "'brandByCat'+#category.id")
 	public List<ProductBrand> getBrands(ProductCategory category) {
 		String sql = QueryBuilder
 				.select(ProductBrand.class, "pb")
@@ -299,7 +315,7 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	@Cacheable(value = "products", key = "'brd'+#site.key+#alias")
+	@Cacheable(value = CACHE_NAME, key = "'brand'+#site.key+#alias")
 	public ProductBrand getBrandByAlias(Site site, String alias) {
 		QueryParameters qp = QueryParameters.with("site", site);
 		qp.add("alias", QueryConditions.eq(alias));
@@ -308,7 +324,7 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	@Cacheable(value = "products", key = "'cfg'+#site.key")
+	@Cacheable(value = CACHE_NAME, key = "'cfg'+#site.key")
 	public ProductsSiteConfig getSiteConfig(Site site) {
 		return crudService.findSingle(ProductsSiteConfig.class, "site", site);
 	}
@@ -322,7 +338,8 @@ public class ProductsServiceImpl implements ProductsService {
 				.and("p.site = :site")
 				.and("(p.name like :param or p.category.parent.name like :param "
 						+ "or p.category.parent.name like :param or p.brand.name like :param "
-						+ "or p.description like :param or p.sku like :param )").orderBy("p.brand.name, p.price");
+						+ "or p.description like :param or p.sku like :param )")
+				.orderBy("p.brand.name, p.price");
 
 		QueryParameters qp = new QueryParameters();
 		qp.add("param", param);
@@ -333,7 +350,7 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	@Cacheable(value = "products", key = "'rld'+#product.id")
+	@Cacheable(value = CACHE_NAME, key = "'rld'+#product.id")
 	public List<Product> getRelatedProducts(Product product) {
 		QueryParameters qp = new QueryParameters();
 		QueryBuilder qb = QueryBuilder.select(Product.class, "p").where("p.active = true");
@@ -369,11 +386,12 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	@Cacheable(value = "products", key = "'specialCat'+#category.id")
+	@Cacheable(value = CACHE_NAME, key = "'specialCat'+#category.id")
 	public List<Product> getSpecialProducts(ProductCategory category) {
 		QueryBuilder query = QueryBuilder.select(Product.class, "p").where("p.active=true")
 				.and("(p.sale=true or p.featured=true or p.newproduct=true)")
-				.and("(p.category = :category or p.category.parent=:category)").orderBy("p.price desc");
+				.and("(p.category = :category or p.category.parent=:category)")
+				.orderBy("p.price desc");
 
 		QueryParameters qp = new QueryParameters();
 		qp.add("category", category);
@@ -384,11 +402,12 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	@Cacheable(value = "products", key = "'priceVariations'+#site.key")
+	@Cacheable(value = CACHE_NAME, key = "'priceVariations'+#site.key")
 	public List<Product> getPriceVariationsProducts(Site site) {
-		QueryBuilder query = QueryBuilder.select(Product.class, "p").where("p.active=true").and("p.site = :site")
-				.and("p.sale=false and p.featured=false and p.newproduct=false").and("p.price < p.lastPrice").and("p.showLastPrice = true")
-				.orderBy("p.price desc");
+		QueryBuilder query = QueryBuilder.select(Product.class, "p").where("p.active=true")
+				.and("p.site = :site")
+				.and("p.sale=false and p.featured=false and p.newproduct=false")
+				.and("p.price < p.lastPrice").and("p.showLastPrice = true").orderBy("p.price desc");
 
 		QueryParameters qp = new QueryParameters();
 		qp.add("site", site);
@@ -401,10 +420,11 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
-	@Cacheable(value = "products", key = "'special'+#site.key")
+	@Cacheable(value = CACHE_NAME, key = "'special'+#site.key")
 	public List<Product> getSpecialProducts(Site site) {
 		QueryBuilder query = QueryBuilder.select(Product.class, "p").where("p.active=true")
-				.and("(p.sale=true or p.featured=true or p.newproduct=true)").and("p.site = :site").orderBy("p.price desc");
+				.and("(p.sale=true or p.featured=true or p.newproduct=true)").and("p.site = :site")
+				.orderBy("p.price desc");
 
 		QueryParameters qp = new QueryParameters();
 		qp.add("site", site);
@@ -526,6 +546,7 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
+	@Cacheable(value = CACHE_NAME, key = "'catRelated'+#category.id")
 	public List<ProductCategory> getRelatedCategories(ProductCategory category) {
 		QueryParameters qp = QueryParameters.with("relatedCategory", category);
 		qp.add("active", true);

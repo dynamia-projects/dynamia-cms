@@ -28,18 +28,17 @@ public class SaveModuleInstanceAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		List<Parameter> parameters = (List<Parameter>) evt.getData();
-		
+
 		ModuleInstance moduleInstance = (ModuleInstance) evt.getParam("moduleInstance");
-		Module module = (Module) evt.getParam("module");
 
 		crudService.save(moduleInstance);
 		for (Parameter parameter : parameters) {
-			String name = parameter.getName().substring(module.getId().length() + 1);
-			ModuleInstanceParameter instanceParameter = moduleInstance.getParameter(name);
+
+			ModuleInstanceParameter instanceParameter = moduleInstance.getParameter(parameter.getName());
 			if (instanceParameter == null) {
 				String value = parameter.getValue();
 				if (value != null && !value.isEmpty()) {
-					instanceParameter = new ModuleInstanceParameter(name, parameter.getValue());
+					instanceParameter = new ModuleInstanceParameter(parameter.getName(), parameter.getValue());
 					instanceParameter.setEnabled(true);
 					instanceParameter.setModuleInstance(moduleInstance);
 					crudService.save(instanceParameter);
@@ -51,8 +50,8 @@ public class SaveModuleInstanceAction extends AbstractAction {
 		}
 
 		UIMessages.showMessage("Module instance saved");
-		
-		ModuleInstanceUI ui =  (ModuleInstanceUI) evt.getSource();
+
+		ModuleInstanceUI ui = (ModuleInstanceUI) evt.getSource();
 		ui.getParent().detach();
 	}
 

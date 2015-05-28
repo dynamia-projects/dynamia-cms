@@ -7,6 +7,7 @@
 package com.dynamia.cms.site.menus.services;
 
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.menus.api.MenuItemType;
 import com.dynamia.cms.site.menus.domain.Menu;
 import com.dynamia.cms.site.menus.domain.MenuItem;
 
@@ -23,5 +24,7 @@ public interface MenuService {
 	public Menu getMenu(Site site, String alias);
 
 	public Menu getMenu(Site site, Long id);
+
+	MenuItemType getMenuItemType(MenuItem menuItem);
 
 }

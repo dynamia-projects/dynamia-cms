@@ -35,6 +35,7 @@ import com.dynamia.tools.web.ui.EntityPickerBox;
 
 public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 
+	private static final String CONFIG_ID_PREFIX = "module_";
 	/**
 	 * 
 	 */
@@ -84,7 +85,7 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 		Module module = modulesService.getModule(moduleInstance);
 		if (module != null) {
 			try {
-				ViewDescriptor configDescriptor = Viewers.findViewDescriptor(module.getId());
+				ViewDescriptor configDescriptor = Viewers.findViewDescriptor(CONFIG_ID_PREFIX + module.getId());
 				configureEntityConverter(configDescriptor);
 				configurationUI = createCustomConfig(configDescriptor, moduleInstance, module);
 			} catch (ViewDescriptorNotFoundException e) {
@@ -99,6 +100,8 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 
 	private void configureEntityConverter(ViewDescriptor configDescriptor) {
 		for (Field field : configDescriptor.getFields()) {
+			field.addParam("parameterName", field.getName());
+
 			if (field.getComponentClass() == EntityPickerBox.class) {
 				field.addParam("converter", EntityConverter.class.getName());
 			}
@@ -142,7 +145,7 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 			if (parameter.getExtra() != null && !parameter.getExtra().isEmpty()) {
 				value = parameter.getExtra();
 			}
-			cfgParameters.add(new Parameter(module.getId() + "_" + parameter.getName().toUpperCase(), value));
+			cfgParameters.add(new Parameter(parameter.getName(), value));
 		}
 		return cfgParameters;
 	}

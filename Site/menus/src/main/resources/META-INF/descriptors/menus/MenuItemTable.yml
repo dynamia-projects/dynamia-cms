@@ -1,11 +1,17 @@
 view: table
 beanClass: com.dynamia.cms.site.menus.domain.MenuItem
-hidden: [id,menu,parentItem,styleClass,backgroundImage]
-sortFields: [name,title,type,icon,href,target,page,page.category]
+autofields: false
 
 fields:
+    name:
+    title:
+    type:
+    icon:
+    href:
+    target:
+    page:
     page.category:
-        label: Category
+        label: Page Category
 
         
 params:

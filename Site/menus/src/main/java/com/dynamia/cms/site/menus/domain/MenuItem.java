@@ -31,6 +31,10 @@ import com.dynamia.tools.domain.contraints.NotEmpty;
 @Table(name = "mn_menuitems")
 public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6009984090089120221L;
 	private String name = "";
 	@OneToOne
 	private Page page;
@@ -245,6 +249,42 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 
 	public void setTarget(String target) {
 		this.target = target;
+	}
+
+	public MenuItemParameter getParameter(String name) {
+		if (getParameters() != null) {
+			for (MenuItemParameter param : getParameters()) {
+				if (param.getName().equalsIgnoreCase(name)) {
+					return param;
+				}
+			}
+		}
+		return null;
+	}
+
+	public MenuItem clone() {
+		MenuItem clone = new MenuItem();
+		clone.backgroundImage = backgroundImage;
+		clone.href = href;
+		clone.icon = icon;
+		clone.name = name+" (copy)";
+		clone.order = order + 1;
+		clone.page = page;
+		clone.styleClass = styleClass;
+		clone.subtitle = subtitle;
+		clone.target = target;
+		clone.title = title+" (copy)";
+		clone.type = type;
+		clone.menu = menu;
+
+		for (MenuItemParameter parameter : parameters) {
+			MenuItemParameter cloneParam = parameter.clone();
+			clone.parameters.add(cloneParam);
+			cloneParam.setMenuItem(clone);
+		}
+
+		return clone;
+
 	}
 
 }

@@ -1,0 +1,8 @@
+view: config
+id: menuitem_subcategories
+
+fields:
+    category:
+        component: entitypicker
+        params:
+            entityClass: com.dynamia.cms.site.products.domain.ProductCategory

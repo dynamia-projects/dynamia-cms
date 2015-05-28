@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.menus.MenuContext;
-import com.dynamia.cms.site.menus.api.MenuItemTypeExtension;
+import com.dynamia.cms.site.menus.api.MenuItemType;
 import com.dynamia.cms.site.menus.domain.Menu;
 import com.dynamia.cms.site.menus.domain.MenuItem;
 import com.dynamia.cms.site.menus.services.MenuService;
@@ -42,7 +42,7 @@ public class MenuServiceImpl implements MenuService {
 		QueryParameters qp = QueryParameters.with("site", site).add("alias", alias);
 		return crudService.findSingle(Menu.class, qp);
 	}
-	
+
 	@Override
 	@Cacheable(value = "menus", key = "#site.key+#id")
 	public Menu getMenu(Site site, Long id) {
@@ -50,11 +50,10 @@ public class MenuServiceImpl implements MenuService {
 		return crudService.findSingle(Menu.class, qp);
 	}
 
-
 	@Override
 	public void setupMenuItem(MenuItem menuItem) {
 
-		MenuItemTypeExtension typeExtension = getTypeExtension(menuItem.getType());
+		MenuItemType typeExtension = getMenuItemType(menuItem);
 		if (typeExtension != null) {
 			MenuContext context = new MenuContext(menuItem, menuItem.getMenu());
 			typeExtension.setupMenuItem(context);
@@ -62,9 +61,11 @@ public class MenuServiceImpl implements MenuService {
 
 	}
 
-	private MenuItemTypeExtension getTypeExtension(String type) {
+	@Override
+	public MenuItemType getMenuItemType(MenuItem menuItem) {
+		String type = menuItem.getType();
 		if (type != null && !type.isEmpty()) {
-			for (MenuItemTypeExtension typeExtension : Containers.get().findObjects(MenuItemTypeExtension.class)) {
+			for (MenuItemType typeExtension : Containers.get().findObjects(MenuItemType.class)) {
 				if (type.equals(typeExtension.getId())) {
 					return typeExtension;
 				}
@@ -72,4 +73,5 @@ public class MenuServiceImpl implements MenuService {
 		}
 		return null;
 	}
+
 }

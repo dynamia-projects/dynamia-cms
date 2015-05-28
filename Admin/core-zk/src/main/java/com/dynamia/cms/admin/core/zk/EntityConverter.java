@@ -34,9 +34,7 @@ public class EntityConverter implements TypeConverter, Converter<Object, Object,
 				Object entity = crudService.find(entityPicker.getEntityClass(), id);
 				return entity;
 			}
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (NumberFormatException e) {			
 		}
 
 		return null;

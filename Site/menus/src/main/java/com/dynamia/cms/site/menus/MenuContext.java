@@ -17,6 +17,11 @@ import com.dynamia.cms.site.menus.domain.MenuItemParameter;
  */
 public class MenuContext implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3721516938528381332L;
+
 	private MenuItem menuItem;
 
 	private Menu parent;
@@ -35,14 +40,7 @@ public class MenuContext implements Serializable {
 	}
 
 	public MenuItemParameter getParameter(String name) {
-		if (menuItem.getParameters() != null) {
-			for (MenuItemParameter param : menuItem.getParameters()) {
-				if (param.getName().equals(name)) {
-					return param;
-				}
-			}
-		}
-		return null;
+		return menuItem.getParameter(name);
 	}
 
 }

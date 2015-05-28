@@ -41,13 +41,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class SiteServiceImpl implements SiteService {
 
+	private static final String CACHE_NAME = "sites";
+
 	@Autowired
 	private CrudService crudService;
 
 	private LoggingService logger = new SLF4JLoggingService(SiteService.class);
 
 	@Override
-	@Cacheable(value = "sites", key = "#root.methodName")
+	@Cacheable(value = CACHE_NAME, key = "#root.methodName")
 	public Site getMainSite() {
 		return crudService.findSingle(Site.class, "key", "main");
 	}
@@ -58,13 +60,13 @@ public class SiteServiceImpl implements SiteService {
 	 * @return
 	 */
 	@Override
-	@Cacheable("sites")
+	@Cacheable(CACHE_NAME)
 	public Site getSite(String key) {
 		return crudService.findSingle(Site.class, "key", key);
 	}
 
 	@Override
-	@Cacheable("sites")
+	@Cacheable(CACHE_NAME)
 	public Site getSiteByDomain(String domainName) {
 		System.out.println("FINDING SITE FOR DOMAIN: " + domainName);
 		SiteDomain domain = crudService.findSingle(SiteDomain.class, "name", domainName);
@@ -76,12 +78,13 @@ public class SiteServiceImpl implements SiteService {
 	public Site getSite(HttpServletRequest request) {
 		Site site = null;
 		if (request != null) {
-			site = getSiteByDomain(request.getServerName());
+			SiteService thisServ = Containers.get().findObject(SiteService.class);
+			site = thisServ.getSiteByDomain(request.getServerName());
 		}
 		return site;
 	}
 
-	@Cacheable(value = "sites", key = "'params'+#site.key")
+	@Cacheable(value = CACHE_NAME, key = "'params'+#site.key")
 	@Override
 	public List<SiteParameter> getSiteParameters(Site site) {
 		site = crudService.reload(site);
@@ -114,7 +117,7 @@ public class SiteServiceImpl implements SiteService {
 		} else {
 			values = new String[0];
 		}
-		
+
 		Arrays.sort(values);
 
 		return values;

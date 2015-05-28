@@ -97,4 +97,6 @@ public interface ProductsService {
 
 	public List<ProductCategory> getRelatedCategories(ProductCategory category);
 
+	public ProductCategory getCategoryById(Long categoryId);
+
 }

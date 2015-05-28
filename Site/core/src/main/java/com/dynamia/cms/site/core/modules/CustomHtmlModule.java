@@ -13,6 +13,7 @@ public class CustomHtmlModule extends AbstractModule {
 
 	public CustomHtmlModule() {
 		super("custom_html", "Custom Html", "core/modules/customhtml");
+		setDescription("Allow you add custom html code");
 	}
 
 	@Override

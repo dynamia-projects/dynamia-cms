@@ -28,7 +28,7 @@ public class CopyModuleInstanceAction extends AbstractCrudAction {
 	public CopyModuleInstanceAction() {
 		setGroup(ActionGroup.get("CRUD"));
 		setName("Copy");
-		setImage("clone");
+		setImage("copy");
 	}
 
 	@Override

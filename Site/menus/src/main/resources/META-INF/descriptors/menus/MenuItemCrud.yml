@@ -1,0 +1,12 @@
+view: crud
+beanClass: com.dynamia.cms.site.menus.domain.MenuItem
+autofields: false
+
+actions:
+    NewAction:    
+        enabled: false
+        
+    EditAction:
+        enabled: false
+        
+    

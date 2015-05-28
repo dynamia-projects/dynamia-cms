@@ -7,6 +7,7 @@
 package com.dynamia.cms.site.core.api;
 
 import com.dynamia.cms.site.core.domain.ModuleInstance;
+import com.dynamia.cms.site.core.domain.ModuleInstanceParameter;
 import com.dynamia.cms.site.core.domain.Site;
 
 /**
@@ -26,6 +27,10 @@ public class ModuleContext {
 
 	public ModuleInstance getModuleInstance() {
 		return moduleInstance;
+	}
+	
+	public ModuleInstanceParameter getParameters(String name){
+		return moduleInstance.getParameter(name);
 	}
 
 	public Site getSite() {

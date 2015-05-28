@@ -20,7 +20,7 @@ fields:
     type:
         component: typeSelector
         params:
-            typeExtensionClass: com.dynamia.cms.site.menus.api.MenuItemTypeExtension
+            typeExtensionClass: com.dynamia.cms.site.menus.api.MenuItemType
    
     order:
     icon:
