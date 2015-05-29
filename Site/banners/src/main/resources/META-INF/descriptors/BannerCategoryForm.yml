@@ -1,0 +1,13 @@
+view: form
+beanClass: com.dynamia.cms.site.banners.domain.BannerCategory
+autofields: false
+
+fields:
+    name:
+    description:
+        params:
+            multiline: true
+            height: 80px    
+    
+layout:
+    columns: 1

@@ -1,0 +1,20 @@
+view: form
+beanClass: com.dynamia.cms.site.banners.domain.Banner
+autofields: false
+
+fields:
+    title:
+    category:
+    enabled:
+    imageURL:
+        label: Image URL
+        params:
+            span: 3
+            placeholder: Enter image URL
+    url:
+        params:
+            span: 3
+            placeholder: When user click the banner go to this url 
+    
+layout:
+    columns: 3

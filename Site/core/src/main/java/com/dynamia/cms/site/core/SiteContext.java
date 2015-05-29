@@ -23,7 +23,6 @@ import com.dynamia.tools.integration.Containers;
 @Scope("session")
 public class SiteContext implements Serializable {
 
-	
 	@Autowired
 	private SiteService service;
 
@@ -33,18 +32,14 @@ public class SiteContext implements Serializable {
 	private String currentURL;
 	private String previousURI;
 	private String previousURL;
-	
 
 	public static SiteContext get() {
 		return Containers.get().findObject(SiteContext.class);
 	}
 
 	public Site getCurrent() {
-		
 		return current;
 	}
-
-	
 
 	public void setCurrent(Site current) {
 		this.current = current;

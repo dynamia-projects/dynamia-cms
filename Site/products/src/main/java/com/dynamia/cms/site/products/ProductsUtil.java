@@ -43,16 +43,21 @@ public class ProductsUtil {
 		}
 
 		if (mv.getModel().get("cart") != null) {
-			ShoppingCart shoppingCart = (ShoppingCart) mv.getModel().get("cart");
-			switch (shoppingCart.getName()) {
-			case "quote":
-				mv.addObject("title", "Cotizacion");
-				mv.addObject("icon", "icon-external-link");
-				break;
-			case "shop":
-				mv.addObject("title", "Carrito de Compra");
-				mv.addObject("icon", "icon-shopping-cart");
-				break;
+			try {
+				ShoppingCart shoppingCart = (ShoppingCart) mv.getModel().get("cart");
+				switch (shoppingCart.getName()) {
+				case "quote":
+					mv.addObject("title", "Cotizacion");
+					mv.addObject("icon", "icon-external-link");
+					break;
+				case "shop":
+					mv.addObject("title", "Carrito de Compra");
+					mv.addObject("icon", "icon-shopping-cart");
+					break;
+				}
+			} catch (Exception e) {
+				System.err.println("Error Loading shopping CART");
+				e.printStackTrace();
 			}
 		}
 	}

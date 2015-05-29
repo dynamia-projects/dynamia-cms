@@ -26,7 +26,7 @@ public class ContentAdminModule implements AdminModule {
 
     @Override
     public String getName() {
-        return "Pages and Content";
+        return "Site Content";
     }
 
     @Override

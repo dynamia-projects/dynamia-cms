@@ -36,7 +36,7 @@
     <session-config>
         <device-type>ajax</device-type>
         <automatic-timeout/> <!-- the same as <automatic-timeout>true</automatic-timeout> -->
-        <timeout-uri>/login.zul</timeout-uri>
+        <timeout-uri>/login</timeout-uri>
     </session-config>
 
     <library-property>

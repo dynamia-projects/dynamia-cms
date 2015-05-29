@@ -102,9 +102,10 @@
 		<module>core-zk</module>
 		<module>mail-admin</module>
 		<module>users-admin</module>
-		<module>products-admin</module>
-		<module>web</module>
+		<module>products-admin</module>		
 		<module>shopping-admin</module>
-    <module>menus-admin</module>
-  </modules>
+		<module>menus-admin</module>
+		
+		<module>web</module>
+	</modules>
 </project>

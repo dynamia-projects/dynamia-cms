@@ -1,0 +1,11 @@
+view: table
+beanClass: com.dynamia.cms.site.banners.domain.Banner
+autofields: false
+
+fields:
+    title:
+    category:
+    enabled:
+    imageURL:
+        label: Image
+    order:

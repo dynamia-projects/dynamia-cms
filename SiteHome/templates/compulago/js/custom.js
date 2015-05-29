@@ -384,18 +384,7 @@ $(document).ready(function() {
     $('#comingsoon').countdown({until: austDay, layout: '<div class="box"><div>{dn}</div> <span> {dl} </span></div> <div class="box"><div>{hn}</div> <span> {hl} </span></div> <div class="box"><div>{mn}</div> <span> {ml} </span></div> <div class="box"><div>{sn}</div> <span> {sl} </span></div>'});
     $('#year').text(austDay.getFullYear());
 
-// google map	
-    $("#contactmap").gMap({
-        address: "pxcreate, Elizabeth Street, Melbourne, Victoria, Australia", //replace this with your address
-        zoom: 10,
-        markers: [
-            {
-                latitude: -37.817361, //replace this with your latitude
-                longitude: 144.965047, //replace this with your longitude
-                html: "pxcreate Pty Ltd" //replace this with your text
-            }
-        ]
-    });
+
 
 // Social Steams 
     $('.flickr-feed').socialstream({
@@ -426,30 +415,6 @@ $(document).ready(function() {
 
 
 
-
-// Contact Form 
-    $(".contactform").validate({
-        submitHandler: function(form) {
-            var name = $("input#name").val();
-            var email = $("input#email").val();
-            var url = $("input#url").val();
-            var message = $("textarea#message").val();
-
-            var dataString = 'name=' + name + '&email=' + email + '&url=' + url + '&message=' + message;
-            $.ajax({
-                type: "POST",
-                url: "email.php",
-                data: dataString,
-                success: function() {
-                    $('#contactmsg').remove();
-                    $('.contactform').prepend("<div id='contactmsg' class='successmsg'>Form submitted successfully!</div>");
-                    $('#contactmsg').delay(1500).fadeOut(500);
-                    $('#submit_id').attr('disabled', 'disabled');
-                }
-            });
-            return false;
-        }
-    });
 });
 
 

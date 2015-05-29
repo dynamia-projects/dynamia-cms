@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="template">
 
 <div class="maincontainer" layout:fragment="content">
@@ -12,42 +14,60 @@
 				<h1 class="headinglefttitle">
 					Pedido No. <span th:text="${shoppingOrder.number}"></span>
 				</h1>
-				<div class="headingsubtitle">Este es su pedido, al final de la pagina podra realizar el pago</div>
+				<div class="headingsubtitle">Este es su pedido, al final de la
+					pagina podra realizar el pago</div>
 			</div>
 			<i th:class="icon-shoppingcart"></i>
 		</div>
 
 		<div class="container">
 
-			<form role="form" class="form-horizontal" th:action="${paymentForm.url}" th:method="${paymentForm.httpMethod}">
+			<form role="form" class="form-horizontal"
+				th:action="${paymentForm.url}" th:method="${paymentForm.httpMethod}">
 				<div class="row">
 					<div class="col-md-4">
-						<div class="form-group">
-							<h3>Datos Personales</h3>
-							<label class="col-lg-2 orange">CC/NIT</label> <span class="col-lg-10 " th:text="${@userHolder.current.identification}"></span>
+
+						<h3>Datos Personales</h3>
+							<div class="form-group" style="margin-bottom: 0px">
+							<label class="col-md-2 orange">CC/NIT</label> <span
+								class="col-md-10 "
+								th:text="${@userHolder.current.identification}"></span>
+
 						</div>
 
-						<div class="form-group">
-							<label class="col-lg-2 orange">Nombres</label> <span class="col-lg-10 " th:text="${@userHolder.current.firstName}"></span>
+						<div class="form-group" style="margin-bottom: 0px">
+							<label class="col-md-2 orange">Nombres</label> <span
+								class="col-md-10 " th:text="${@userHolder.current.firstName}"></span>
+
 						</div>
 
-						<div class="form-group">
-							<label class="col-lg-2 orange">Apellidos</label> <span class="col-lg-10 " th:text="${@userHolder.current.lastName}"></span>
+						<div class="form-group" style="margin-bottom: 0px">
+							<label class="col-md-2 orange">Apellidos</label> <span
+								class="col-md-10" th:text="${@userHolder.current.lastName}"></span>
+
 						</div>
 
-						<div class="form-group">
-							<label class="col-lg-2 orange">Email</label> <span class="col-lg-10 " th:text="${@userHolder.current.username}"></span>
+						<div class="form-group" style="margin-bottom: 0px">
+							<label class="col-md-2 orange">Email</label> <span
+								class="col-md-10 " th:text="${@userHolder.current.username}"></span>
+
 						</div>
+
 					</div>
 					<!-- Text input-->
 					<div class="col-md-4">
 						<div class="form-group">
 							<h3>Direccion de Facturacion</h3>
 							<address>
-								<strong th:text="${shoppingOrder.billingAddress.name}"></strong> <br /> <span th:text="${shoppingOrder.billingAddress.info.address}"></span><br />
-								<span th:text="${shoppingOrder.billingAddress.info.country}"></span>, <span th:text="${shoppingOrder.billingAddress.info.region}"></span> - <span
-									th:text="${shoppingOrder.billingAddress.info.city}"></span><br /> <abbr title="Telefono">Tel:</abbr> <span
-									th:text="${shoppingOrder.billingAddress.info.phoneNumber}"></span><br /> <abbr title="Celular">Cel:</abbr> <span
+								<strong th:text="${shoppingOrder.billingAddress.name}"></strong>
+								<br /> <span
+									th:text="${shoppingOrder.billingAddress.info.address}"></span><br />
+								<span th:text="${shoppingOrder.billingAddress.info.country}"></span>,
+								<span th:text="${shoppingOrder.billingAddress.info.region}"></span>
+								- <span th:text="${shoppingOrder.billingAddress.info.city}"></span><br />
+								<abbr title="Telefono">Tel:</abbr> <span
+									th:text="${shoppingOrder.billingAddress.info.phoneNumber}"></span><br />
+								<abbr title="Celular">Cel:</abbr> <span
 									th:text="${shoppingOrder.billingAddress.info.mobileNumber}"></span><br />
 							</address>
 						</div>
@@ -57,10 +77,15 @@
 						<div class="form-group">
 							<h3>Direccion de Envio</h3>
 							<address>
-								<strong th:text="${shoppingOrder.shippingAddress.name}"></strong> <br /> <span th:text="${shoppingOrder.shippingAddress.info.address}"></span><br />
-								<span th:text="${shoppingOrder.billingAddress.info.country}"></span>, <span th:text="${shoppingOrder.shippingAddress.info.region}"></span> - <span
-									th:text="${shoppingOrder.shippingAddress.info.city}"></span><br /> <abbr title="Telefono">Tel:</abbr> <span
-									th:text="${shoppingOrder.shippingAddress.info.phoneNumber}"></span><br /> <abbr title="Celular">Cel:</abbr> <span
+								<strong th:text="${shoppingOrder.shippingAddress.name}"></strong>
+								<br /> <span
+									th:text="${shoppingOrder.shippingAddress.info.address}"></span><br />
+								<span th:text="${shoppingOrder.billingAddress.info.country}"></span>,
+								<span th:text="${shoppingOrder.shippingAddress.info.region}"></span>
+								- <span th:text="${shoppingOrder.shippingAddress.info.city}"></span><br />
+								<abbr title="Telefono">Tel:</abbr> <span
+									th:text="${shoppingOrder.shippingAddress.info.phoneNumber}"></span><br />
+								<abbr title="Celular">Cel:</abbr> <span
 									th:text="${shoppingOrder.shippingAddress.info.mobileNumber}"></span><br />
 							</address>
 						</div>
@@ -81,23 +106,30 @@
 
 				<!-- Button -->
 				<div class="form-group">
-					<input type="hidden" th:each="param : ${paymentForm.parameters}" th:name="${param.key}" th:value="${param.value}" />
-					<button type="submit" class="btn btn-danger btn-lg">Pagar en Linea</button>
-					<a data-toggle="modal" href="#cancelconfirm" class="btn btn-warning btn-lg"><i class="icon-ban-circle"></i> Cancelar</a>
+					<input type="hidden" th:each="param : ${paymentForm.parameters}"
+						th:name="${param.key}" th:value="${param.value}" />
+					<button type="submit" class="btn btn-danger btn-lg">Pagar
+						en Linea</button>
+					<a data-toggle="modal" href="#cancelconfirm"
+						class="btn btn-warning btn-lg"><i class="icon-ban-circle"></i>
+						Cancelar</a>
 				</div>
 			</form>
 		</div>
 	</div>
 
-	<div id="cancelconfirm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	<div id="cancelconfirm" class="modal fade" tabindex="-1" role="dialog"
+		aria-hidden="true">
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
 					<h4 class="modal-title">Cancelar Pedido</h4>
 				</div>
 				<div class="modal-body">
-					<span>Esta seguro que desea cancelar este pedido?</span>
+					<span>Esta seguro que desea cancelar este pedido?</span><br/>
+					<span>Esta accion recreara su carrito de compra y podra empezar de nuevo.</span>
 				</div>
 				<div class="modal-footer">
 					<a class="btn btn-danger" th:href="@{/shoppingcart/shop/cancel}">Si</a>

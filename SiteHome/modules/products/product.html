@@ -95,8 +95,7 @@
 
 				<div class="pull-right mt10 hidden-xs hidden-sm" th:if="${prd_product.stock gt 0}">
 					<a th:href="@{'/shoppingcart/shop/add/'+${prd_product.id}(currentURI='/')}" th:if="${prd_config.shopEnabled or @userHolder.superadmin}"
-						class="btn btn-danger btn-lg tooltip-test" data-original-title="Agregar al Carrito"> <i class="icon-shopping-cart icon-white"></i> Comprar
-						Ahora
+						class="btn btn-danger btn-lg tooltip-test" data-original-title="Agregar al Carrito"> <i class="icon-shopping-cart icon-white"></i> Agregar al Carrito
 					</a> <a th:if="${prd_config.quoteEnabled}" th:href="@{'/shoppingcart/quote/add/'+${prd_product.id}(currentURI='/')}"
 						class="btn btn-primary  btn-lg tooltip-test" data-original-title="Cotizar"> <i class="icon-external-link icon-white"></i> Cotizar
 					</a>

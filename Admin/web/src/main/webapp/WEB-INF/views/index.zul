@@ -4,24 +4,24 @@
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
 
-    <div self="@{define(topmenu)}">
-        <menubar>
-            <menuitem label="${userHolder.userName}"  />                
-            <menuitem label="cerrar sesion" href="/logout"/>
-        </menubar>  
-    </div>
-    
-    <div self="@{define(header)}" >
-        <div apply="${navBuilder}" style="clear:both">
-            <custom-attributes builderClass="navigation.builders.Menu" />
-        </div> 
-    </div>
+	<div self="@{define(topmenu)}">
+		<menubar>
+			<menuitem label="Apply Changes" onClick="siteCache.clear()" image="${icons['apply:normal']}" />
+			
+			<menuitem label="Exit" href="/logout" image="${icons['cancel:normal'] }"/>
+		</menubar>
+	</div>
+
+	<div self="@{define(header)}">
+		<div apply="${navBuilder}" style="clear:both">
+			<custom-attributes builderClass="navigation.builders.Menu" />
+		</div>
+	</div>
 
 
 
-    <window  self="@{define(content)}" apply="${navComposer}" vflex="1">
-        <div   id="workspace" height="100%">
-        </div>
-    </window>
-    
+	<window self="@{define(content)}" apply="${navComposer}" vflex="1">
+		<div id="workspace" height="100%"></div>
+	</window>
+
 </zk>

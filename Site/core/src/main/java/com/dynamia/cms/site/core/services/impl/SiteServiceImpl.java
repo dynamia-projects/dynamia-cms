@@ -38,7 +38,7 @@ import org.springframework.stereotype.Service;
  *
  * @author mario
  */
-@Service
+@Service("siteService")
 public class SiteServiceImpl implements SiteService {
 
 	private static final String CACHE_NAME = "sites";

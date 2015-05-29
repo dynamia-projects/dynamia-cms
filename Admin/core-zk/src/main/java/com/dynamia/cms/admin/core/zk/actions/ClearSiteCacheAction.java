@@ -7,19 +7,13 @@ package com.dynamia.cms.admin.core.zk.actions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.dynamia.cms.site.core.DynamiaCMS;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.modules.filemanager.FileManager;
 import com.dynamia.tools.commons.ApplicableClass;
-import com.dynamia.tools.web.actions.ActionRenderer;
 import com.dynamia.tools.web.actions.InstallAction;
 import com.dynamia.tools.web.crud.AbstractCrudAction;
 import com.dynamia.tools.web.crud.CrudActionEvent;
 import com.dynamia.tools.web.crud.CrudState;
-import com.dynamia.tools.web.crud.actions.renderers.ToolbarbuttonActionRenderer;
-import com.dynamia.tools.web.navigation.ComponentPage;
-import com.dynamia.tools.web.navigation.ZKNavigationManager;
 import com.dynamia.tools.web.ui.MessageType;
 import com.dynamia.tools.web.ui.UIMessages;
 
@@ -59,5 +53,7 @@ public class ClearSiteCacheAction extends AbstractCrudAction {
 	public ApplicableClass[] getApplicableClasses() {
 		return ApplicableClass.get(Site.class);
 	}
+
+	
 
 }

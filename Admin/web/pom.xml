@@ -14,18 +14,53 @@
 	<url>http://www.dynamiasoluciones.com</url>
 
 	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>${project.groupId}.admin.core.zk</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.zkoss.theme</groupId>
-			<artifactId>atlantic</artifactId>
-			<version>1.0.0</version>
-		</dependency>
+
 
 		<!-- Modules -->
+
+		<!-- ADMIN MODULES -->
+
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.admin.core</artifactId>
+			<version>0.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.admin.core.zk</artifactId>
+			<version>0.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.admin.products</artifactId>
+			<version>0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.admin.users</artifactId>
+			<version>0.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.admin.mail</artifactId>
+			<version>0.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.admin.shopping</artifactId>
+			<version>0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.admin.menus</artifactId>
+			<version>0.9</version>
+		</dependency>
+
+		<!-- SITE MODULES -->
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -48,41 +83,36 @@
 			<artifactId>com.dynamia.cms.site.products</artifactId>
 			<version>${site.cms.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.dynamia.cms.admin.products</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>com.dynamia.cms.admin.users</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.dynamia.cms</groupId>
-			<artifactId>com.dynamia.cms.admin.mail</artifactId>
-			<version>0.9</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.dynamia.cms</groupId>
-			<artifactId>com.dynamia.cms.admin.shopping</artifactId>
-			<version>0.9</version>
-		</dependency>
+
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.payment.payulatam</artifactId>
 			<version>${site.cms.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
-			<artifactId>com.dynamia.cms.admin.menus</artifactId>
-			<version>0.9</version>
+			<artifactId>com.dynamia.cms.site.banners</artifactId>
+			<version>${site.cms.version}</version>
 		</dependency>
+
+
+		<!-- OTHERS -->
+
+
+		<dependency>
+			<groupId>org.zkoss.theme</groupId>
+			<artifactId>atlantic</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

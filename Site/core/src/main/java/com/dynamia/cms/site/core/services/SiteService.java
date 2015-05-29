@@ -4,14 +4,12 @@
  */
 package com.dynamia.cms.site.core.services;
 
-import com.dynamia.cms.site.core.domain.ModuleInstance;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.core.api.Module;
-import com.dynamia.cms.site.core.domain.SiteParameter;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.core.domain.SiteParameter;
 
 /**
  *

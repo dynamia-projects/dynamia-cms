@@ -19,12 +19,12 @@ public class MenuAdminModule implements AdminModule {
 
     @Override
     public String getGroup() {
-        return "Menu";
+        return "Content";
     }
 
     @Override
     public String getName() {
-        return "Menu";
+        return "Site Content";
     }
 
     @Override

@@ -43,7 +43,7 @@ public class CMSModules {
 		if (module != null) {
 			return module.getTemplateViewName();
 		} else {
-			return null;
+			return "error/modulenotfound";
 		}
 	}
 

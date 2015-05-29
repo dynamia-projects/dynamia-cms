@@ -28,7 +28,7 @@
         </center>
         
         <south sclass="footer"  self="@{insert(footer)}">
-            
+            <label value="Powered by: Dynamia Soluciones IT" style="color: silver"/>
         </south>
     </borderlayout>
 

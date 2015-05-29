@@ -10,6 +10,7 @@ import com.dynamia.cms.site.core.api.Module;
 import com.dynamia.cms.site.core.api.ModuleContext;
 import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.tools.domain.query.QueryConditions;
 import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.domain.util.QueryBuilder;
@@ -19,6 +20,7 @@ import com.dynamia.tools.integration.sterotypes.Service;
 @Service
 public class ModulesServiceImpl implements ModulesService {
 
+	private static final String CACHE_NAME = "modules";
 	@Autowired
 	private CrudService crudService;
 
@@ -39,9 +41,9 @@ public class ModulesServiceImpl implements ModulesService {
 	}
 
 	@Override
-	@Cacheable(value = "modules", key = "#site.key+#position")
+	@Cacheable(value = CACHE_NAME, key = "#site.key+#position")
 	public List<ModuleInstance> getModules(Site site, String position) {
-		QueryParameters params = QueryParameters.with("site", site).add("enabled", true).add("position", position);
+		QueryParameters params = QueryParameters.with("site", site).add("enabled", true).add("position", QueryConditions.eq(position));
 		List<ModuleInstance> instances = crudService.find(ModuleInstance.class, params);
 		for (ModuleInstance moduleInstance : instances) {
 			moduleInstance.getParameters().size();
@@ -52,7 +54,7 @@ public class ModulesServiceImpl implements ModulesService {
 	}
 
 	@Override
-	@Cacheable(value = "modules", key = "positions+#site.key")
+	@Cacheable(value = CACHE_NAME, key = "'positions'+#site.key")
 	public List<String> getUsedPositions(Site site) {
 		QueryParameters params = QueryParameters.with("site", site).add("enabled", true);
 		QueryBuilder queryBuilder = QueryBuilder.select(ModuleInstance.class, "m", "position").where(params).groupBy("position");
@@ -61,7 +63,7 @@ public class ModulesServiceImpl implements ModulesService {
 
 	@Override
 	public Module getModule(ModuleInstance instance) {
-		if (instance != null && instance.getModuleId()!=null) {
+		if (instance != null && instance.getModuleId() != null) {
 			for (Module module : Containers.get().findObjects(Module.class)) {
 				if (instance.getModuleId().equals(module.getId())) {
 					return module;

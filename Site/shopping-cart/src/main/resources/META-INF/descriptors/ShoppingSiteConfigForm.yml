@@ -18,6 +18,16 @@ fields:
   notificationMailTemplate:
   mailAccount:
   
+
+groups:
+    notifications:
+       fields:
+       - notificationEmails  
+       - orderCompletedMailTemplate
+       - orderShippedMailTemplate
+       - notificationMailTemplate
+       - mailAccount  
+  
  
 layout:
   columns: 2

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>com.dynamia.cms.site.parent</artifactId>
@@ -11,51 +10,61 @@
 	<artifactId>com.dynamia.cms.site.web</artifactId>
 	<packaging>war</packaging>
 	<version>0.9</version>
-	<name>DynamiaCMS Site - Web (${project.version})</name>
+	<name>DynamiaCMS Site - Web (0.9)</name>
 	<url>http://www.dynamiasoluciones.com</url>
 
 	<dependencies>
 
 		<!-- Modules -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.core</artifactId>
-			<version>${project.version}</version>
+			<version>0.9</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.templates</artifactId>
-			<version>${project.version}</version>
+			<version>0.9</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.pages</artifactId>
-			<version>${project.version}</version>
+			<version>0.9</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.menus</artifactId>
-			<version>${project.version}</version>
+			<version>0.9</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.products</artifactId>
-			<version>${project.version}</version>
+			<version>0.9</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.users</artifactId>
-			<version>${project.version}</version>
+			<version>0.9</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.shoppingcart</artifactId>
-			<version>${project.version}</version>
+			<version>0.9</version>
 		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.mail</artifactId>
-			<version>${project.version}</version>
+			<version>0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.site.payment.payulatam</artifactId>
+			<version>0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.site.banners</artifactId>
+			<version>0.9</version>
 		</dependency>
 
 		<!-- JPA and Hibernate -->
@@ -64,13 +73,7 @@
 			<artifactId>libraries.hibernate</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.dynamia.cms</groupId>
-			<artifactId>
-				com.dynamia.cms.site.payment.payulatam
-			</artifactId>
-			<version>0.9</version>
-		</dependency>
+
 	</dependencies>
 
 
