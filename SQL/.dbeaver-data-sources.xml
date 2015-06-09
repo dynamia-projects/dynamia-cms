@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data-sources>
-	<data-source id="mariaDB-1432735887593-376486008" provider="mysql" driver="mariaDB" name="MariaDB - dynamiacms" create-date="1432735887593" save-password="true" show-system-objects="true" read-only="false">
-		<connection host="localhost" port="3306" server="" database="dynamiacms" url="jdbc:mysql://localhost:3306/dynamiacms" user="root" password="QlZVQKA=" home="/usr" type="dev">
+	<data-source id="mariaDB-1432735887593-376486008" provider="mysql" driver="mariaDB" name="MariaDB - dynamiacms" create-date="1432735887593" update-date="1432934131473" save-password="true" show-system-objects="true" read-only="false">
+		<connection host="localhost" port="3307" server="" database="dynamiacms" url="jdbc:mysql://localhost:3307/dynamiacms" user="root" password="QlZVQKA=" home="/usr" type="dev">
 			<property name="@dbeaver-ssl@" value="false"/>
 			<network-handler type="PROXY" id="socks_proxy" enabled="false" user="" save-password="false">
-				<property name="socks-port" value="1080"/>
 				<property name="socks-host" value=""/>
+				<property name="socks-port" value="1080"/>
 			</network-handler>
 			<network-handler type="TUNNEL" id="ssh_tunnel" enabled="false" user="" save-password="false">
-				<property name="host" value=""/>
-				<property name="authType" value="PASSWORD"/>
 				<property name="port" value="22"/>
 				<property name="keyPath" value=""/>
+				<property name="host" value=""/>
+				<property name="authType" value="PASSWORD"/>
 			</network-handler>
 		</connection>
+		<custom-property name="default.activeObject" value=""/>
 	</data-source>
 </data-sources>

@@ -51,3 +51,11 @@
 .footerimage a:hover{
 	text-decoration: underline !important;
 }
+
+.footerimage .light a{
+	color: white !important;
+}
+
+.footerimage .light h1,.footerimage .light h2,.footerimage .light h3{
+	color: white !important;
+}

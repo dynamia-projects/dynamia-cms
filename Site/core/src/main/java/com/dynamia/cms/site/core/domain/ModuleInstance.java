@@ -157,7 +157,7 @@ public class ModuleInstance extends Content implements Orderable {
 
 	public ModuleInstance clone() {
 		ModuleInstance clone = new ModuleInstance();
-		clone.alias = alias;
+		clone.alias = "";
 		clone.enabled = false;
 		clone.moduleId = moduleId;
 		clone.order = order + 1;
