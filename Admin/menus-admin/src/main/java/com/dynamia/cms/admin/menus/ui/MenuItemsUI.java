@@ -114,7 +114,7 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 		MenuService service = Containers.get().findObject(MenuService.class);
 		MenuItemType menuItemType = service.getMenuItemType(menuItem);
 
-		Object data = menuItem;
+		Object data = null;
 		params = MapBuilder.put("type", menuItemType, "menuItem", menuItem);
 		if (configurationUI instanceof ConfigView) {
 			data = ((ConfigView) configurationUI).getValue();

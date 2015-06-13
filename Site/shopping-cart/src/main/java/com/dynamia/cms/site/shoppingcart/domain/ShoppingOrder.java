@@ -55,11 +55,23 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 
 	@OneToOne
 	private UserContactInfo shippingAddress;
+
 	@OneToOne
 	private UserContactInfo billingAddress;
 
+	private boolean pickupAtStore;
+
 	@Column(length = 5000)
 	private String userComments;
+
+	public boolean isPickupAtStore() {
+
+		return pickupAtStore;
+	}
+
+	public void setPickupAtStore(boolean pickupAtStore) {
+		this.pickupAtStore = pickupAtStore;
+	}
 
 	public Date getShippingDate() {
 		return shippingDate;

@@ -3,7 +3,6 @@ package com.dynamia.cms.admin.menus.actions;
 import java.util.List;
 
 import com.dynamia.cms.admin.menus.ui.MenuItemsUI;
-import com.dynamia.cms.site.menus.api.MenuItemType;
 import com.dynamia.cms.site.menus.domain.MenuItem;
 import com.dynamia.cms.site.menus.domain.MenuItemParameter;
 import com.dynamia.tools.domain.query.Parameter;
@@ -17,6 +16,7 @@ import com.dynamia.tools.web.ui.UIMessages;
 public class SaveMenuItemAction extends AbstractAction {
 
 	private CrudService crudService;
+
 
 	public SaveMenuItemAction(CrudService crudService) {
 		setName("Save");
@@ -33,22 +33,25 @@ public class SaveMenuItemAction extends AbstractAction {
 		if (needSave(menuItem)) {
 			crudService.save(menuItem);
 		}
-		for (Parameter parameter : parameters) {
-			MenuItemParameter itemParameter = menuItem.getParameter(parameter.getName());
-			if (itemParameter == null) {
-				String value = parameter.getValue();
-				if (value != null && !value.isEmpty()) {
-					itemParameter = new MenuItemParameter(parameter.getName(), parameter.getValue());
-					itemParameter.setEnabled(true);
-					itemParameter.setMenuItem(menuItem);
+		
+		if (parameters != null) {
+			for (Parameter parameter : parameters) {
+				MenuItemParameter itemParameter = menuItem.getParameter(parameter.getName());
+				if (itemParameter == null) {
+					String value = parameter.getValue();
+					if (value != null && !value.isEmpty()) {
+						itemParameter = new MenuItemParameter(parameter.getName(), parameter.getValue());
+						itemParameter.setEnabled(true);
+						itemParameter.setMenuItem(menuItem);
+						if (needSave(menuItem)) {
+							crudService.save(itemParameter);
+						}
+					}
+				} else {
+					itemParameter.setValue(parameter.getValue());
 					if (needSave(menuItem)) {
 						crudService.save(itemParameter);
 					}
-				}
-			} else {
-				itemParameter.setValue(parameter.getValue());
-				if (needSave(menuItem)) {
-					crudService.save(itemParameter);
 				}
 			}
 		}

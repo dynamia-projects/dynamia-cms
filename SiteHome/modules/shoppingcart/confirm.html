@@ -12,7 +12,7 @@
 		<div class="titles animated fadeInUp time3">
 			<div class="pull-left">
 				<h1 class="headinglefttitle">
-					Pedido No. <span th:text="${shoppingOrder.number}"></span>
+					Pedido de Compra No. <span th:text="${shoppingOrder.number}"></span>
 				</h1>
 				<div class="headingsubtitle">Este es su pedido, al final de la
 					pagina podra realizar el pago</div>
@@ -22,13 +22,17 @@
 
 		<div class="container">
 
+			<th:block th:include="module::position('confirmOrderTop')"
+				th:if="${cmsModules.isUsed('confirmOrderTop')}" />
+
 			<form role="form" class="form-horizontal"
-				th:action="${paymentForm.url}" th:method="${paymentForm.httpMethod}">
+				th:action="${paymentForm.url}" th:method="${paymentForm.httpMethod}"
+				target="payment">
 				<div class="row">
 					<div class="col-md-4">
 
 						<h3>Datos Personales</h3>
-							<div class="form-group" style="margin-bottom: 0px">
+						<div class="form-group" style="margin-bottom: 0px">
 							<label class="col-md-2 orange">CC/NIT</label> <span
 								class="col-md-10 "
 								th:text="${@userHolder.current.identification}"></span>
@@ -76,7 +80,13 @@
 					<div class="col-md-4">
 						<div class="form-group">
 							<h3>Direccion de Envio</h3>
-							<address>
+
+							<address th:if="${shoppingOrder.pickupAtStore}">
+								<strong>Recoger en tienda</strong><br/>
+								<span>Se le notificara via email la tienda donde retirar su mercancia</span>
+							</address>
+
+							<address th:if="${shoppingOrder.shippingAddress!=null}">
 								<strong th:text="${shoppingOrder.shippingAddress.name}"></strong>
 								<br /> <span
 									th:text="${shoppingOrder.shippingAddress.info.address}"></span><br />
@@ -104,6 +114,9 @@
 					<th th:include="shoppingcart/components/orderDetails::content" />
 				</div>
 
+				<th:block th:include="module::position('confirmOrderBottom1')"
+					th:if="${cmsModules.isUsed('confirmOrderBottom1')}" />
+
 				<!-- Button -->
 				<div class="form-group">
 					<input type="hidden" th:each="param : ${paymentForm.parameters}"
@@ -115,6 +128,8 @@
 						Cancelar</a>
 				</div>
 			</form>
+			<th:block th:include="module::position('confirmOrderBottom2')"
+				th:if="${cmsModules.isUsed('confirmOrderBottom2')}" />
 		</div>
 	</div>
 
@@ -128,8 +143,8 @@
 					<h4 class="modal-title">Cancelar Pedido</h4>
 				</div>
 				<div class="modal-body">
-					<span>Esta seguro que desea cancelar este pedido?</span><br/>
-					<span>Esta accion recreara su carrito de compra y podra empezar de nuevo.</span>
+					<span>Esta seguro que desea cancelar este pedido?</span><br /> <span>Esta
+						accion recreara su carrito de compra y podra empezar de nuevo.</span>
 				</div>
 				<div class="modal-footer">
 					<a class="btn btn-danger" th:href="@{/shoppingcart/shop/cancel}">Si</a>

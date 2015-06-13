@@ -169,4 +169,17 @@ public class CMSUtil {
 	public String[] listFilesNames(String directory) {
 		return listFilesNames(directory, null);
 	}
+
+	public static boolean isChecked(String parameter) {
+		if (parameter != null) {
+			String values[] = { "checked", "on", "true", "1" };
+			for (String string : values) {
+				if (string.equalsIgnoreCase(parameter)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }

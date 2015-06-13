@@ -60,6 +60,10 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 		order.setBillingAddress(loadContactInfo("billingAddress", evt));
 		order.setShippingAddress(loadContactInfo("shippingAddress", evt));
 
+		System.out.println("PICKUP " + evt.getRequest().getParameter("pickupAtStore"));
+
+		order.setPickupAtStore(CMSUtil.isChecked(evt.getRequest().getParameter("pickupAtStore")));
+
 		try {
 
 			validate(order);
@@ -87,8 +91,10 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 			throw new ValidationError("Seleccione direccion de facturacion");
 		}
 
-		if (order.getShippingAddress() == null) {
-			throw new ValidationError("Seleccione direccion de envio");
+		if (!order.isPickupAtStore() && order.getShippingAddress() == null) {
+			throw new ValidationError("Seleccione direccion de envio o marque la opcion recoger en tienda");
+		}else if(order.isPickupAtStore()){
+			order.setShippingAddress(null);
 		}
 
 		if (order.getShoppingCart() == null) {

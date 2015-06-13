@@ -59,3 +59,11 @@
 .footerimage .light h1,.footerimage .light h2,.footerimage .light h3{
 	color: white !important;
 }
+
+.common a:link{
+	color: #337ab7;	
+}
+
+.common a:hover{
+	text-decoration: underline;
+}

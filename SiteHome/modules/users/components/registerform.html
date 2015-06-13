@@ -48,6 +48,9 @@
 		</div>
 
 		<br /> <a class="btn btn-orange" onclick="$('#userForm').submit();">Registrarse</a>
+		
+		<th:block th:include="module::position('userRegisterBottom')"
+				th:if="${cmsModules.isUsed('userRegisterBottom')}" />
 
 	</form>
 
