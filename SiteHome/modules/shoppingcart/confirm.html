@@ -25,7 +25,7 @@
 			<th:block th:include="module::position('confirmOrderTop')"
 				th:if="${cmsModules.isUsed('confirmOrderTop')}" />
 
-			<form role="form" class="form-horizontal"
+			<form id="paymentForm" role="form" class="form-horizontal"
 				th:action="${paymentForm.url}" th:method="${paymentForm.httpMethod}"
 				target="payment">
 				<div class="row">
@@ -82,8 +82,8 @@
 							<h3>Direccion de Envio</h3>
 
 							<address th:if="${shoppingOrder.pickupAtStore}">
-								<strong>Recoger en tienda</strong><br/>
-								<span>Se le notificara via email la tienda donde retirar su mercancia</span>
+								<strong>Recoger en tienda</strong><br /> <span>Se le
+									notificara via email la tienda donde retirar su mercancia</span>
 							</address>
 
 							<address th:if="${shoppingOrder.shippingAddress!=null}">
@@ -121,9 +121,9 @@
 				<div class="form-group">
 					<input type="hidden" th:each="param : ${paymentForm.parameters}"
 						th:name="${param.key}" th:value="${param.value}" />
-					<button type="submit" class="btn btn-danger btn-lg">Pagar
+					<button id="submitBtn" type="button" class="btn btn-danger btn-lg">Pagar
 						en Linea</button>
-					<a data-toggle="modal" href="#cancelconfirm"
+					<a id="cancelBtn" data-toggle="modal" href="#cancelconfirm"
 						class="btn btn-warning btn-lg"><i class="icon-ban-circle"></i>
 						Cancelar</a>
 				</div>
@@ -153,6 +153,21 @@
 			</div>
 		</div>
 	</div>
-
 </div>
+
+<th:block layout:fragment="scripts">
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#submitBtn").click(function() {
+				$("#submitBtn").attr("disabled", true);
+				$("#submitBtn").text("Pagando...");
+				
+				$('#paymentForm').submit();
+			});
+		});
+	</script>
+
+</th:block>
+
 </html>
