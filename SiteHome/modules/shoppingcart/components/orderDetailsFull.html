@@ -41,7 +41,20 @@
 				<td style="text-align: right"
 					th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
 			</tr>
-		
+				<tr>
+				<td style="text-align: right" colspan="4"></td>
+				
+				<td style="text-align: right" colspan="1"><b>Envio</b></td>
+				<td style="text-align: right"
+					th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalShipmentPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+			</tr>
+			<tr>
+				<td style="text-align: right" colspan="4"></td>
+				
+				<td style="text-align: right" colspan="1"><b>TOTAL</b></td>
+				<td style="text-align: right;font-weight: bold"
+					th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+			</tr>
 
 		</table>
 

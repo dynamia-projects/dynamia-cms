@@ -68,7 +68,7 @@ public class CheckoutShoppingCartAction implements SiteAction {
 				mv.setView(new RedirectView("/", true));
 			}
 		} else {
-			mv.setViewName("redirect:/");
+			mv.setView(new RedirectView("/", false, true, false));
 			CMSUtil.addErrorMessage("Sistema de pagos dehabilitado temporalmente", evt.getRedirectAttributes());
 		}
 

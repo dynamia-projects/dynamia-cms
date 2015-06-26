@@ -112,9 +112,15 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 	@Override
 	public ShoppingOrder createOrder(ShoppingCart shoppingCart, ShoppingSiteConfig config) {
+		shoppingCart.setShipmentPercent(config.getShipmentPercent());
 		shoppingCart.compute();
+
 		if (shoppingCart.getTotalPrice().longValue() < config.getMinPaymentAmount().longValue()) {
 			throw new ValidationError("Minimo valor de venta es $" + config.getMinPaymentAmount());
+		}
+
+		if (shoppingCart.getTotalPrice().longValue() > config.getMaxPaymentAmount().longValue()) {
+			throw new ValidationError("El valor maximo de ventas en linea es $" + config.getMaxPaymentAmount());
 		}
 
 		PaymentGateway gateway = paymentService.findGateway(config.getPaymentGatewayId());
@@ -149,6 +155,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 	public void saveOrder(ShoppingOrder order) {
 		if (order.getId() == null) {
 			SiteParameter param = siteService.getSiteParameter(order.getSite(), LAST_SHOPPING_ORDER_NUMBER, "0");
+			ShoppingSiteConfig config = getConfiguration(order.getSite());
+
 			long lastNumber = Long.parseLong(param.getValue());
 			lastNumber++;
 
@@ -158,6 +166,14 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 			String number = DomainUtils.formatNumberWithZeroes(lastNumber, 10000);
 			order.setNumber(number);
 			order.getShoppingCart().setName(number);
+			if (order.isPickupAtStore()) {
+				order.getShoppingCart().setShipmentPercent(0);
+				order.getShoppingCart().compute();
+			}else if(order.getShoppingCart().getTotalShipmentPrice().longValue()<config.getMinShipmentAmount().longValue()){
+				order.getShoppingCart().setTotalShipmentPrice(config.getMinShipmentAmount());
+				order.getShoppingCart().computeTotalOnly();
+			}
+
 			order.getShoppingCart().setStatus(ShoppingCartStatus.COMPLETED);
 
 			order.getTransaction().setDescription(

@@ -111,7 +111,7 @@
 
 				<div class="form-group">
 					<h3>Detalles del Pedido</h3>
-					<th th:include="shoppingcart/components/orderDetails::content" />
+					<th th:include="shoppingcart/components/orderDetailsFull::content" />
 				</div>
 
 				<th:block th:include="module::position('confirmOrderBottom1')"
@@ -162,7 +162,7 @@
 			$("#submitBtn").click(function() {
 				$("#submitBtn").attr("disabled", true);
 				$("#submitBtn").text("Pagando...");
-				
+
 				$('#paymentForm').submit();
 			});
 		});

@@ -9,6 +9,10 @@ fields:
     label: Gateway Name
   paymentEnabled:
   minPaymentAmount:
+  maxPaymentAmount:
+  shipmentPercent:
+    component: decimalbox
+  minShipmentAmount:
   defaultCurrency:
   descriptionTemplate:
   notificationEmails:
@@ -20,6 +24,12 @@ fields:
   
 
 groups:
+    values:
+       fields:
+       - minPaymentAmount
+       - maxPaymentAmount
+       - shipmentPercent
+       - minShipmentAmount
     notifications:
        fields:
        - notificationEmails  

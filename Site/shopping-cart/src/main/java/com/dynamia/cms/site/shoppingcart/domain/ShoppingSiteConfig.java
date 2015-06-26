@@ -24,6 +24,9 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 	private String paymentGatewayName;
 	private boolean paymentEnabled;
 	private BigDecimal minPaymentAmount;
+	private BigDecimal maxPaymentAmount;
+	private float shipmentPercent;
+	private BigDecimal minShipmentAmount;
 	private String defaultCurrency;
 	private String descriptionTemplate;
 	private String notificationEmails;
@@ -35,6 +38,36 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 	private MailTemplate notificationMailTemplate;
 	@OneToOne
 	private MailAccount mailAccount;
+
+	public BigDecimal getMinShipmentAmount() {
+		if (minShipmentAmount == null) {
+			minShipmentAmount = BigDecimal.ZERO;
+		}
+		return minShipmentAmount;
+	}
+
+	public void setMinShipmentAmount(BigDecimal minShipmentAmount) {
+		this.minShipmentAmount = minShipmentAmount;
+	}
+
+	public BigDecimal getMaxPaymentAmount() {
+		if (maxPaymentAmount == null) {
+			maxPaymentAmount = BigDecimal.ZERO;
+		}
+		return maxPaymentAmount;
+	}
+
+	public void setMaxPaymentAmount(BigDecimal maxPaymentAmount) {
+		this.maxPaymentAmount = maxPaymentAmount;
+	}
+
+	public float getShipmentPercent() {
+		return shipmentPercent;
+	}
+
+	public void setShipmentPercent(float shipmentPercent) {
+		this.shipmentPercent = shipmentPercent;
+	}
 
 	public MailAccount getMailAccount() {
 		return mailAccount;
@@ -117,6 +150,9 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 	}
 
 	public BigDecimal getMinPaymentAmount() {
+		if (minPaymentAmount == null) {
+			minPaymentAmount = BigDecimal.ZERO;
+		}
 		return minPaymentAmount;
 	}
 

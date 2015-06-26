@@ -9,6 +9,8 @@ fields:
     label: Gateway Name
   paymentEnabled:
   minPaymentAmount:
+  maxPaymentAmount:
+  shipmentPercent:
   defaultCurrency:
   descriptionTemplate:
   notificationEmails:
