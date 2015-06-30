@@ -153,8 +153,7 @@
 							<div class="col-md-4 orange">
 								<a data-toggle="modal" class="tooltip-test" title="Ver direccion" th:href="${'#store'+det.store.id}" th:text="${det.store.name.toUpperCase()}">NAME</a>
 							</div>
-							<div class="col-md-2" th:if="${det.stock le prd_config.productsStockToShow}" th:text="${det.stock+' en stock'}">VALUE</div>
-							<div class="col-md-2" th:if="${det.stock gt prd_config.productsStockToShow}">Suficientes</div>
+							
 							<div class="col-md-4">
 								<span th:text="${det.store.contactInfo.phoneNumber+' / '+det.store.contactInfo.mobileNumber}"></span> <a data-toggle="modal"
 									class="tooltip-test" th:href="${'#store'+det.store.id}" title="Ver direccion"><i class="icon-plus-sign"></i></a>

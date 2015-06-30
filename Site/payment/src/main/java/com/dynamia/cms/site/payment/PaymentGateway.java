@@ -18,7 +18,7 @@ public interface PaymentGateway {
 
 	public PaymentForm createForm(PaymentTransaction tx);
 
-	public boolean processResponse(PaymentTransaction tx, Map<String, String> response);
+	public boolean processResponse(PaymentTransaction tx, Map<String, String> response, ResponseType type);
 
 	public abstract String getTransactionLocator();
 

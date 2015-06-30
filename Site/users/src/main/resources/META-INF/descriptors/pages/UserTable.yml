@@ -3,6 +3,9 @@ beanClass: com.dynamia.cms.site.users.domain.User
 autofields: false
 
 fields:
+    creationDate:
+        params:
+           converter: converters.Date
     identification:
     fullName:
     username:

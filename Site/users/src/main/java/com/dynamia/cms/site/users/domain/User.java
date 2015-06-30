@@ -81,6 +81,9 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 	private List<UserProfile> profiles = new ArrayList<>();
 
 	public String getFirstName() {
+		if (firstName == null) {
+			firstName = "";
+		}
 		return firstName;
 	}
 
@@ -89,6 +92,9 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 	}
 
 	public String getLastName() {
+		if (lastName == null) {
+			lastName = "";
+		}
 		return lastName;
 	}
 
@@ -144,6 +150,11 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 		if (fullName != null) {
 			fullName = StringUtils.toUpperCase(fullName);
 		}
+
+		if (fullName.equals("NULL NULL")) {
+			fullName = "";
+		}
+
 		return fullName;
 	}
 

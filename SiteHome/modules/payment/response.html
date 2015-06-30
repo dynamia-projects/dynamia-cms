@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="template">
 
 <div class="maincontainer" layout:fragment="content">
@@ -77,6 +79,11 @@
 				</table>
 
 
+			</div>
+		</div>
+		<div class="row mt40" th:if="${cmsModules.isUsed('txResponseBottom')}">
+			<div class="col-md-12">
+				<th:block th:include="module::position('txResponseBottom')" />
 			</div>
 		</div>
 

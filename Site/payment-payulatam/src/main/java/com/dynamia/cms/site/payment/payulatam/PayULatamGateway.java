@@ -21,6 +21,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.dynamia.cms.site.payment.PaymentException;
 import com.dynamia.cms.site.payment.PaymentForm;
 import com.dynamia.cms.site.payment.PaymentGateway;
+import com.dynamia.cms.site.payment.ResponseType;
 import com.dynamia.cms.site.payment.domain.PaymentTransaction;
 import com.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import com.dynamia.cms.site.payment.services.PaymentService;
@@ -47,7 +48,7 @@ public class PayULatamGateway implements PaymentGateway {
 	private static final String RES_LAP_PAYMENT_METHOD = "lapPaymentMethod";
 	private static final String RES_PSE_BANK = "pseBank";
 	private static final String RES_POL_RESPONSE_CODE = "polResponseCode";
-	private static final String RES_POL_TRANSACTION_STATE = "polTransactionState";
+	private static final String RES_TRANSACTION_STATE = "transactionState";
 
 	private static final String CONFIRMATION_URL = "confirmationUrl";
 	private static final String RESPONSE_URL = "responseUrl";
@@ -65,6 +66,7 @@ public class PayULatamGateway implements PaymentGateway {
 	private static final String REFERENCE_CODE = "referenceCode";
 	private static final String TEST_URL = "testUrl";
 	private static final String PRODUCTION_URL = "productionUrl";
+	private static final String RES_STATE_POL = "state_pol";
 
 	@Autowired
 	private PaymentService service;
@@ -95,9 +97,9 @@ public class PayULatamGateway implements PaymentGateway {
 
 	@Override
 	public String[] getResponseParams() {
-		return new String[] { RES_CUS, RES_LAP_PAYMENT_METHOD, RES_POL_RESPONSE_CODE, RES_POL_TRANSACTION_STATE, RES_PSE_BANK,
+		return new String[] { RES_CUS, RES_LAP_PAYMENT_METHOD, RES_POL_RESPONSE_CODE, RES_TRANSACTION_STATE, RES_PSE_BANK,
 				RES_PSE_REFERENCE1, RES_PSE_REFERENCE2, RES_PSE_REFERENCE3, RES_REFERENCE_POL, SIGNATURE, REFERENCE_CODE, MERCHANT_ID,
-				ACCOUNT_ID, TAX_RETURN_BASE, TX_STATE, TX_VALUE, CURRENCY };
+				ACCOUNT_ID, TAX_RETURN_BASE, TX_STATE, TX_VALUE, CURRENCY, RES_STATE_POL };
 	}
 
 	@Override
@@ -162,7 +164,7 @@ public class PayULatamGateway implements PaymentGateway {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public boolean processResponse(PaymentTransaction tx, Map<String, String> response) {
+	public boolean processResponse(PaymentTransaction tx, Map<String, String> response, ResponseType type) {
 		Map<String, String> params = service.getGatewayConfigMap(this, tx.getSource());
 
 		if (tx.getEndDate() == null) {
@@ -176,40 +178,64 @@ public class PayULatamGateway implements PaymentGateway {
 			return false;
 		}
 
-		String statusText = "";
-		PaymentTransactionStatus status = tx.getStatus();
-		if (eq(response, RES_POL_TRANSACTION_STATE, "6") && eq(response, RES_POL_RESPONSE_CODE, "5")) {
-			statusText = "Transacción fallida";
-			status = PaymentTransactionStatus.FAILED;
-		} else if (eq(response, RES_POL_TRANSACTION_STATE, "6") && eq(response, RES_POL_RESPONSE_CODE, "4")) {
-			statusText = "Transacción rechazada";
-			status = PaymentTransactionStatus.REJECTED;
-		} else if (eq(response, RES_POL_TRANSACTION_STATE, "12") && eq(response, RES_POL_RESPONSE_CODE, "9994")) {
-			statusText = "Pendiente, Por favor revisar si el débito fue realizado en el Banco";
-			status = PaymentTransactionStatus.PROCESSING;
-			tx.setEndDate(null);
-		} else if (eq(response, RES_POL_TRANSACTION_STATE, "4") && eq(response, RES_POL_RESPONSE_CODE, "1")) {
-			statusText = "Transacción aprobada";
-			status = PaymentTransactionStatus.COMPLETED;
-		} else {
-			status = PaymentTransactionStatus.CANCELLED;
-			statusText = response.get("mensaje");
-			if (statusText == null || statusText.isEmpty()) {
-				statusText = response.get("message");
-			}
+		String txState = null;
+
+		if (type == ResponseType.RESPONSE) {
+			txState = response.get(RES_TRANSACTION_STATE);
+		} else if (type == ResponseType.CONFIRMATION) {
+			txState = response.get(RES_STATE_POL);
 		}
 
-		tx.setStatus(status);
-		tx.setStatusText(statusText);
-		tx.setBank(response.get(RES_PSE_BANK));
-		tx.setResponseCode(response.get(RES_POL_TRANSACTION_STATE) + "  -  " + response.get(RES_POL_RESPONSE_CODE));
-		tx.setPaymentMethod(response.get(RES_LAP_PAYMENT_METHOD));
-		tx.setReference(response.get(RES_REFERENCE_POL));
-		tx.setReference2(response.get(RES_CUS));
-		tx.setReference3(response.get(RES_PSE_REFERENCE1) + " " + response.get(RES_PSE_REFERENCE2) + " " + response.get(RES_PSE_REFERENCE3));
-		tx.setGatewayResponse(mapToString(response));
+		if (txState == null || txState.isEmpty()) {
+			logger.info("NO Transaction State found in response aborting TX: " + tx.getUuid());
+			return false;
+		}
 
-		return true;
+		String statusText = "";
+		PaymentTransactionStatus status = tx.getStatus();
+		if (status == null || status == PaymentTransactionStatus.NEW || status == PaymentTransactionStatus.PROCESSING) {
+
+			if (txState.equals("4")) {
+				statusText = "Transaccion Aprovada";
+				status = PaymentTransactionStatus.COMPLETED;
+			} else if (txState.equals("6")) {
+				statusText = "Transaccion Rechazada";
+				status = PaymentTransactionStatus.REJECTED;
+			} else if (txState.equals("104")) {
+				statusText = "Error";
+				status = PaymentTransactionStatus.ERROR;
+			} else if (txState.equals("7")) {
+				statusText = "Transaccion Pendiente";
+				status = PaymentTransactionStatus.PROCESSING;
+				tx.setEndDate(null);
+			} else {
+				status = PaymentTransactionStatus.UNKNOWN;
+				statusText = response.get("mensaje");
+
+				if (statusText == null || statusText.isEmpty()) {
+					statusText = response.get("message");
+				}
+
+				if (statusText == null || statusText.isEmpty()) {
+					statusText = "Desconocido";
+				}
+			}
+
+			tx.setStatus(status);
+			tx.setStatusText(statusText);
+			tx.setBank(response.get(RES_PSE_BANK));
+			tx.setResponseCode(txState + "  -  " + response.get(RES_POL_RESPONSE_CODE));
+			tx.setPaymentMethod(response.get(RES_LAP_PAYMENT_METHOD));
+			tx.setReference(response.get(RES_REFERENCE_POL));
+			tx.setReference2(response.get(RES_CUS));
+			tx.setReference3(
+					response.get(RES_PSE_REFERENCE1) + " " + response.get(RES_PSE_REFERENCE2) + " " + response.get(RES_PSE_REFERENCE3));
+			tx.setGatewayResponse(mapToString(response));
+
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public boolean isValidSignature(String apiKey, Map<String, String> response) {

@@ -40,6 +40,7 @@ import com.dynamia.cms.site.shoppingcart.domain.enums.ShoppingCartStatus;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.domain.User;
+import com.dynamia.cms.site.users.domain.UserContactInfo;
 import com.dynamia.tools.commons.BeanMessages;
 import com.dynamia.tools.commons.ClassMessages;
 import com.dynamia.tools.commons.Messages;
@@ -169,7 +170,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 			if (order.isPickupAtStore()) {
 				order.getShoppingCart().setShipmentPercent(0);
 				order.getShoppingCart().compute();
-			}else if(order.getShoppingCart().getTotalShipmentPrice().longValue()<config.getMinShipmentAmount().longValue()){
+			} else if (order.getShoppingCart().getTotalShipmentPrice().longValue() < config.getMinShipmentAmount().longValue()) {
 				order.getShoppingCart().setTotalShipmentPrice(config.getMinShipmentAmount());
 				order.getShoppingCart().computeTotalOnly();
 			}
@@ -200,6 +201,10 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 			if (order.getTransaction().getStatus() == PaymentTransactionStatus.PROCESSING) {
 				throw new ShoppingException("No se puede cancelar order No. " + order.getNumber() + " porque ya esta siendo PROCESADA");
+			}
+
+			if (order.getTransaction().getStatus() == PaymentTransactionStatus.REJECTED) {
+				throw new ShoppingException("No se puede cancelar order No. " + order.getNumber() + " porque ya fue RECHAZADA");
 			}
 
 			order.getTransaction().setStatus(PaymentTransactionStatus.CANCELLED);
@@ -365,10 +370,27 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		message.getTemplateModel().put("cart", cart);
 		message.getTemplateModel().put("itemsTable", buildShoppingCartTable(cart));
 		message.getTemplateModel().put("items", cart.getItems());
-		message.getTemplateModel().put("shippingAddress", order.getShippingAddress());
+		message.getTemplateModel().put("shippingAddress", getShippingAddress(order));
 		message.getTemplateModel().put("billingAddress", order.getBillingAddress());
 		message.getTemplateModel().put("tx", order.getTransaction());
+		message.getTemplateModel().put("user", order.getShoppingCart().getUser());
 		return message;
+	}
+
+	private Object getShippingAddress(ShoppingOrder order) {
+		UserContactInfo address = order.getShippingAddress();
+		if (order.isPickupAtStore()) {
+			address = new UserContactInfo();
+			address.setName("Recoger en tienda");
+			address.getInfo().setAddress("Se le informara via email la tienda donde recoger su mercancia");
+			address.getInfo().setCountry("");
+			address.getInfo().setCity("");
+			address.getInfo().setRegion("");
+			address.getInfo().setPhoneNumber("");
+			address.getInfo().setMobileNumber("");
+		}
+
+		return address;
 	}
 
 	private String buildShoppingCartTable(ShoppingCart shoppingCart) {
@@ -382,7 +404,11 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 			htb.addData(htb.getRowCount(), item.getSku(), item.getName(), item.getUnitPrice(), item.getQuantity(), item.getTotalPrice());
 		}
 		htb.addRow();
-		htb.addData("", "", "<b>TOTAL</b>", "", shoppingCart.getQuantity(), shoppingCart.getTotalPrice());
+		htb.addData("", "", "<b>SUBTOTAL</b>", "", shoppingCart.getQuantity(), shoppingCart.getSubtotal());
+		htb.addRow();
+		htb.addData("", "", "<b>ENVIO</b>", "", "", shoppingCart.getTotalShipmentPrice());
+		htb.addRow();
+		htb.addData("", "", "<b>TOTAL</b>", "", "", shoppingCart.getTotalPrice());
 		return htb.render();
 	}
 
