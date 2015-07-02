@@ -59,9 +59,9 @@ public class CancelShoppingOrderAction implements SiteAction {
 
 		try {
 			service.cancelOrder(order);
-			CMSUtil.addSuccessMessage("Pedido No." + order.getNumber() + " cancelado exitosamente", evt.getRedirectAttributes());
-		} catch (ValidationError e) {			
-			CMSUtil.addErrorMessage(e.getMessage(), evt.getRedirectAttributes());
+			CMSUtil.addSuccessMessage("Pedido No." + order.getNumber() + " cancelado exitosamente", mv);
+		} catch (ValidationError e) {
+			CMSUtil.addErrorMessage(e.getMessage(), mv);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

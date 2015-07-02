@@ -1,8 +1,8 @@
 view: form
 beanClass: com.dynamia.cms.site.pages.domain.Page
 #customizer: com.dynamia.cms.admin.core.zk.PageFormCustomizer
-hidden: [id,uuid,creationDate,parameter]
-sortFields: [site,alias,title,subtitle,type,category,author,layout,icon,published,startDate,endDate,tags,content]
+hidden: [id,uuid,creationDate,parameter,site]
+sortFields: [alias,title,subtitle,showTitle,type,category,author,layout,icon,published,startDate,endDate,tags,content]
 
 
 fields:

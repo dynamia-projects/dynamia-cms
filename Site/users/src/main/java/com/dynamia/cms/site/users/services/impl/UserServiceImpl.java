@@ -7,7 +7,16 @@ package com.dynamia.cms.site.users.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.token.Sha512DigestUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.mail.MailMessage;
+import com.dynamia.cms.site.mail.domain.MailTemplate;
+import com.dynamia.cms.site.mail.services.MailService;
 import com.dynamia.cms.site.users.PasswordsNotMatchException;
 import com.dynamia.cms.site.users.UserForm;
 import com.dynamia.cms.site.users.domain.Profile;
@@ -15,18 +24,11 @@ import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.cms.site.users.domain.UserContactInfo;
 import com.dynamia.cms.site.users.domain.UserProfile;
 import com.dynamia.cms.site.users.services.UserService;
+import com.dynamia.tools.commons.StringUtils;
 import com.dynamia.tools.domain.ValidationError;
 import com.dynamia.tools.domain.query.QueryParameters;
 import com.dynamia.tools.domain.services.CrudService;
 import com.dynamia.tools.domain.services.ValidatorService;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.token.Sha512DigestUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -37,6 +39,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private CrudService crudService;
+
+	@Autowired
+	private MailService mailService;
 
 	@Autowired
 	private ValidatorService validatorService;
@@ -103,9 +108,46 @@ public class UserServiceImpl implements UserService {
 			throw new PasswordsNotMatchException(user);
 		}
 
-		user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + form.getData().getPassword()));
+		String newPassword = form.getData().getPassword();
+		setupPassword(user, newPassword);
 		crudService.save(user);
+	}
 
+	private void setupPassword(User user, String newPassword) {
+		user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + newPassword));
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void resetPassword(Site site, String username) {
+	
+		
+
+		String templateName = "ResetPasswordTemplate";
+		QueryParameters params = QueryParameters.with("name", templateName)
+				.add("site", site);
+
+		MailTemplate mailTemplate = crudService.findSingle(MailTemplate.class, params);
+		if (mailTemplate == null) {
+			throw new ValidationError("En estos momentos no podemos reiniciar su password, por favor intente mas tarde");
+		}
+		
+		User user = getUser(site, username);
+		if (user == null) {
+			throw new ValidationError("El usuario [" + username + "] no existe en este sitio web");
+		}
+		
+		String newPassword = StringUtils.randomString().substring(0, 7);
+		setupPassword(user, newPassword);
+		crudService.save(user);
+		
+
+		MailMessage message = new MailMessage(mailTemplate);
+		message.setTo(username);	
+		message.getTemplateModel().put("user", user);
+		message.getTemplateModel().put("newpassword", newPassword);
+
+		mailService.send(message);
 	}
 
 	private Profile getDefaultProfile(Site site) {

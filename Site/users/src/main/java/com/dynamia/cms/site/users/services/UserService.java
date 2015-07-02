@@ -18,14 +18,16 @@ import com.dynamia.cms.site.users.domain.UserContactInfo;
  */
 public interface UserService {
 
-    public void saveUser(UserForm user);
+	public void saveUser(UserForm user);
 
-    public User getUser(Site site, String name);
+	public User getUser(Site site, String name);
 
-    public void changePassword(UserForm form);
+	public void changePassword(UserForm form);
 
-    void checkAdminUser(Site site);
+	void checkAdminUser(Site site);
 
 	public List<UserContactInfo> getContactInfos(User current);
+
+	public void resetPassword(Site site, String username);
 
 }

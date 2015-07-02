@@ -63,9 +63,28 @@ public class CMSUtil {
 		}
 	}
 
+	public static void addSuccessMessage(String string, ModelAndView mv) {
+		if (mv != null) {
+			mv.addObject("successmessage", string);
+		}
+	}
+
+	public static void addErrorMessage(String string, ModelAndView mv) {
+		if (mv != null) {
+			mv.addObject("errormessage", string);
+		}
+	}
+
+	public static void addWarningMessage(String string, ModelAndView mv) {
+		if (mv != null) {
+			mv.addObject("warningmessage", string);
+		}
+	}
+
 	public static void buildContactInfoOptions(Site site, ModelAndView mv, String prefix, ContactInfo selected) {
 		SiteService service = Containers.get().findObject(SiteService.class);
-		mv.addObject(prefix + "Countries", Option.buildFromArray(service.getSiteParameterAsArray(site, "countries"), selected.getCountry()));
+		mv.addObject(prefix + "Countries",
+				Option.buildFromArray(service.getSiteParameterAsArray(site, "countries"), selected.getCountry()));
 		mv.addObject(prefix + "Regions", Option.buildFromArray(service.getSiteParameterAsArray(site, "regions"), selected.getRegion()));
 		mv.addObject(prefix + "Cities", Option.buildFromArray(service.getSiteParameterAsArray(site, "cities"), selected.getCity()));
 	}

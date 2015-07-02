@@ -9,7 +9,7 @@
 
         <div class="container">
 
-            <div th:include="site/pagetitle::content"/>
+            <div th:include="site/pagetitle::content"  th:if="${page.showTitle}"/>
 
            
             <div th:utext="${page.content}">

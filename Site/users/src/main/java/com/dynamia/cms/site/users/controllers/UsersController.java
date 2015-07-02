@@ -7,6 +7,7 @@ package com.dynamia.cms.site.users.controllers;
 
 import com.dynamia.cms.site.core.actions.SiteActionManager;
 import com.dynamia.cms.site.users.UserForm;
+import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.cms.site.users.domain.UserContactInfo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +47,25 @@ public class UsersController {
 		mv.addObject("title", "Registro de Usuarios");
 		SiteActionManager.performAction("saveUser", mv, request, user);
 
+		return mv;
+	}
+
+	@RequestMapping(value = "/resetpassword", method = RequestMethod.GET)
+	public ModelAndView resetPassword(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("users/resetpassword");
+		mv.addObject("title", "Olvide mi Password");
+		UserForm form = new UserForm();
+		form.setData(new User());		
+		mv.addObject("userForm",form);
+		return mv;
+	}
+
+	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
+	public ModelAndView resetPassword(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView("users/resetpassword");
+		mv.addObject("title", "Olvide mi Password");
+		SiteActionManager.performAction("resetPassword", mv, request, redirectAttributes, user);
 		return mv;
 	}
 
@@ -119,7 +139,8 @@ public class UsersController {
 		if (request.getParameter("redirect") != null) {
 			redirect = request.getParameter("redirect");
 		}
-		mv.setView(new RedirectView(redirect, true, true, false));
+		mv.addObject("redirect", redirect);
+		
 		SiteActionManager.performAction("saveUserContactInfo", mv, request, redirectAttributes, userContactInfo);
 
 		return mv;

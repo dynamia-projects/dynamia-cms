@@ -28,7 +28,7 @@
 			<div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
 
 
-				<h4 class="orange" th:if="${prd_product.stock gt 0}">
+				<h4 class="orange" th:if="${prd_product.stock gt prd_config.minStock}">
 					<i class="icon-check-sign"></i> En Inventario
 				</h4>
 
@@ -93,7 +93,7 @@
 
 				</div>
 
-				<div class="pull-right mt10 hidden-xs hidden-sm" th:if="${prd_product.stock gt 0}">
+				<div class="pull-right mt10 hidden-xs hidden-sm" th:if="${prd_product.stock gt prd_config.minStock}">
 					<a th:href="@{'/shoppingcart/shop/add/'+${prd_product.id}(currentURI='/')}" th:if="${prd_config.shopEnabled or @userHolder.superadmin}"
 						class="btn btn-danger btn-lg tooltip-test" data-original-title="Agregar al Carrito"> <i class="icon-shopping-cart icon-white"></i> Agregar al Carrito
 					</a> <a th:if="${prd_config.quoteEnabled}" th:href="@{'/shoppingcart/quote/add/'+${prd_product.id}(currentURI='/')}"
@@ -190,7 +190,7 @@
 		<div class="hidden-xs hidden-sm">
 			<th:block th:include="social/components/sharebuttons::content" />
 
-			<div class="mt40">
+			<div class="mt40" th:if="false">
 				<h2 class="heading1">
 					<span class="maintext">Dejanos tus comentarios</span>
 				</h2>

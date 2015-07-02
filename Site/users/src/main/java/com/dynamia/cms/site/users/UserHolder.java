@@ -49,8 +49,11 @@ public class UserHolder implements Serializable {
 	}
 
 	public String getFullName() {
-
-		return user.getFullName();
+		if (isAuthenticated()) {
+			return user.getFullName();
+		} else {
+			return "";
+		}
 	}
 
 	public boolean hasProfile(String profileName) {

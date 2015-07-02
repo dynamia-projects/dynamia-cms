@@ -38,6 +38,11 @@ public class MailMessage implements Serializable {
 	public MailMessage() {
 	}
 
+	public MailMessage(MailTemplate template) {
+		super();
+		this.template = template;
+	}
+
 	public MailMessage(String to, String subject, String content) {
 		this.to = to;
 		this.subject = subject;

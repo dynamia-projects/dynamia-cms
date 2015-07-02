@@ -77,8 +77,16 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 
 	@OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ProductsSiteConfigParameter> parameters = new ArrayList<>();
-	
-	
+
+	private int minStock;
+
+	public int getMinStock() {
+		return minStock;
+	}
+
+	public void setMinStock(int minStock) {
+		this.minStock = minStock;
+	}
 
 	public boolean isSynchronizationEnabled() {
 		return synchronizationEnabled;

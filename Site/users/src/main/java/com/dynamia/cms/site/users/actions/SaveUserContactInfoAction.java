@@ -5,12 +5,15 @@
  */
 package com.dynamia.cms.site.users.actions;
 
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
+import com.dynamia.cms.site.core.actions.SiteActionManager;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.domain.UserContactInfo;
@@ -36,7 +39,7 @@ public class SaveUserContactInfoAction implements SiteAction {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		ModelAndView mv = evt.getModelAndView();
-
+		mv.setViewName("/users/addresses/form");
 		UserContactInfo userContactInfo = (UserContactInfo) evt.getData();
 
 		if (userContactInfo.getId() != null) {
@@ -53,11 +56,19 @@ public class SaveUserContactInfoAction implements SiteAction {
 			userContactInfo.setUser(UserHolder.get().getCurrent());
 			crudService.save(userContactInfo);
 
-			CMSUtil.addSuccessMessage("Direccion de usuario guardada exitosamente", evt.getRedirectAttributes());
+			CMSUtil.addSuccessMessage("Direccion de usuario guardada exitosamente", mv);
+
+			String redirect = (String) mv.getModel().get("redirect");
+			if (redirect == null || redirect.isEmpty()) {
+				redirect = "/users/addresses";
+			}
+
+			mv.setView(new RedirectView(redirect, true, true, false));
 		} catch (ValidationError e) {
-			CMSUtil.addErrorMessage(e.getMessage(), evt.getRedirectAttributes());
-			mv.setView(null);
-			mv.setViewName("users/addresses/form");
+			SiteActionManager.performAction("addUserContactInfo", mv, evt.getRequest());
+			mv.addObject("userContactInfo", userContactInfo);
+			CMSUtil.addErrorMessage(e.getMessage(), mv);
+
 		}
 	}
 

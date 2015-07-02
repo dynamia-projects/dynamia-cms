@@ -1,0 +1,10 @@
+view: table
+beanClass: com.dynamia.cms.site.users.domain.User
+autofields: false
+
+fields:
+    identification:
+    fullName:
+    username:
+    superadmin:
+    contactInfo:

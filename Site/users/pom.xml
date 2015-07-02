@@ -56,6 +56,11 @@
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+        	<groupId>com.dynamia.cms</groupId>
+        	<artifactId>com.dynamia.cms.site.mail</artifactId>
+        	<version>0.9</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

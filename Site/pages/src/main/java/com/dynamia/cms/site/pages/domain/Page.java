@@ -62,6 +62,15 @@ public class Page extends Content implements SiteAware {
 	private String icon;
 	@OneToMany(mappedBy = "page", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PageParameter> parameters = new ArrayList<>();
+	private boolean showTitle = true;
+
+	public boolean isShowTitle() {
+		return showTitle;
+	}
+
+	public void setShowTitle(boolean showTitle) {
+		this.showTitle = showTitle;
+	}
 
 	public String getType() {
 		if (type == null) {
