@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
+import com.dynamia.cms.site.core.actions.SiteActionManager;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.payment.PaymentForm;
 import com.dynamia.cms.site.payment.PaymentGateway;
@@ -79,7 +80,7 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 			mv.addObject("paymentForm", form);
 
 		} catch (ValidationError e) {
-			e.printStackTrace();			
+			SiteActionManager.performAction("checkoutShoppingCart", mv, evt.getRequest(),evt.getRedirectAttributes());	
 			CMSUtil.addErrorMessage(e.getMessage(), mv);
 		} catch (Exception e) {
 			e.printStackTrace();

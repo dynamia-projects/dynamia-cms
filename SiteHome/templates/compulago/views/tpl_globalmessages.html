@@ -19,6 +19,12 @@
             <i class="icon-remove"></i>
             <strong>Ok!</strong> <span th:text="${successmessage}">message</span>
         </div>
+        
+          <div class="alertmsg alert" th:if="${warningmessage!=null}">
+            <i class="icon-warning-sign font36"></i>
+            <i class="icon-remove"></i>
+            <strong>Advertencia!</strong> <span th:text="${warningmessage}">message</span>
+        </div>
 
 
 

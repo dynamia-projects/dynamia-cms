@@ -12,6 +12,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
+import com.dynamia.cms.site.core.actions.SiteActionManager;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
@@ -49,7 +50,7 @@ public class CheckoutShoppingCartAction implements SiteAction {
 		ShoppingSiteConfig config = service.getConfiguration(evt.getSite());
 
 		if (shoppingCart == null || shoppingCart.getQuantity() == 0) {
-			CMSUtil.addWarningMessage("El carrito de compra esta vacio", evt.getRedirectAttributes());
+			CMSUtil.addWarningMessage("El carrito de compra esta vacio", mv);
 			mv.setView(new RedirectView("/", false, true, false));
 		} else if (config.isPaymentEnabled() || UserHolder.get().isSuperadmin()) {
 			mv.setViewName("shoppingcart/checkout");
@@ -64,12 +65,12 @@ public class CheckoutShoppingCartAction implements SiteAction {
 
 				mv.addObject("shoppingOrder", order);
 			} catch (ValidationError e) {
-				CMSUtil.addWarningMessage(e.getMessage(), evt.getRedirectAttributes());
-				mv.setView(new RedirectView("/", true));
+				CMSUtil.addWarningMessage(e.getMessage(), mv);
+				SiteActionManager.performAction("viewShoppingCart", mv, evt.getRequest());
 			}
 		} else {
 			mv.setView(new RedirectView("/", false, true, false));
-			CMSUtil.addErrorMessage("Sistema de pagos dehabilitado temporalmente", evt.getRedirectAttributes());
+			CMSUtil.addErrorMessage("Sistema de pagos dehabilitado temporalmente", mv);
 		}
 
 	}
