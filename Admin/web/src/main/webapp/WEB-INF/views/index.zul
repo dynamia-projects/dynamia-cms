@@ -6,6 +6,7 @@
 
 	<div self="@{define(topmenu)}">
 		<menubar>
+			<menuitem label="Resources" onClick="siteResourcesManagerAction.show()" image="${icons['package:normal']}" />
 			<menuitem label="Apply Changes" onClick="siteCache.clear()" image="${icons['apply:normal']}" />
 			
 			<menuitem label="Exit" href="/logout" image="${icons['cancel:normal'] }"/>

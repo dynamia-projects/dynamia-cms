@@ -32,7 +32,7 @@ public class SiteParameter extends SimpleEntity implements Parameter {
 	@NotEmpty(message = "Enter domain Name")
 	@NotNull
 	private String name;
-	@Column(name = "paramValue")
+	@Column(name = "paramValue", length=10000)
 	private String value;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)

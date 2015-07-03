@@ -8,6 +8,8 @@ package com.dynamia.cms.site.shoppingcart.domain;
 import com.dynamia.tools.domain.SimpleEntity;
 import com.dynamia.tools.domain.ValidationError;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -27,6 +29,7 @@ public class ShoppingCartItem extends SimpleEntity {
 	private ShoppingCart shoppingCart;
 	private String code;
 	private String name;
+	@Column(length=1000)
 	private String description;
 	@Min(value = 1)
 	private int quantity = 1;

@@ -79,8 +79,8 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 			mv.addObject("paymentForm", form);
 
 		} catch (ValidationError e) {
-			mv.setViewName("redirect:/");
-			CMSUtil.addErrorMessage(e.getMessage(), evt.getRedirectAttributes());
+			e.printStackTrace();			
+			CMSUtil.addErrorMessage(e.getMessage(), mv);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

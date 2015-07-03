@@ -6,6 +6,7 @@
 package com.dynamia.cms.admin.core.zk.actions;
 
 import com.dynamia.cms.site.core.DynamiaCMS;
+import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.modules.filemanager.FileManager;
 import com.dynamia.tools.commons.ApplicableClass;
@@ -40,6 +41,11 @@ public class SiteResourcesManagerAction extends AbstractCrudAction {
 
             ZKNavigationManager.getInstance().setCurrentPage(page);
         }
+    }
+    
+    public void show(){
+    	CrudActionEvent evt = new CrudActionEvent(SiteContext.get().getCurrent(), null, null, null);
+    	actionPerformed(evt);
     }
 
     @Override
