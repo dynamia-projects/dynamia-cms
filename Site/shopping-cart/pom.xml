@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>com.dynamia.cms</groupId>
 		<artifactId>com.dynamia.cms.site.parent</artifactId>
-		<version>0.9</version>
+		<version>1.0.0.Beta</version>
 	</parent>
 	<groupId>com.dynamia.cms</groupId>
 	<artifactId>com.dynamia.cms.site.shoppingcart</artifactId>
 	<name>DynamiaCMS Site - ShoppingCart (${project.version})</name>
-	<version>0.9</version>
+	<version>1.0.0.Beta</version>
 
 	<packaging>jar</packaging>
 	<build>
@@ -38,17 +38,17 @@
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.core</artifactId>
-			<version>0.9</version>
+			<version>1.0.0.Beta</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.users</artifactId>
-			<version>0.9</version>
+			<version>1.0.0.Beta</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.payment</artifactId>
-			<version>0.9</version>
+			<version>1.0.0.Beta</version>
 		</dependency>
 		<dependency>
 			<groupId>javax</groupId>
@@ -61,7 +61,7 @@
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.mail</artifactId>
-			<version>0.9</version>
+			<version>1.0.0.Beta</version>
 		</dependency>
 	</dependencies>
 </project>

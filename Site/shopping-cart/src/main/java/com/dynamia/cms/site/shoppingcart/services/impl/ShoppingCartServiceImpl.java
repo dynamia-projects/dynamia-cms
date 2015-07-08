@@ -127,15 +127,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		PaymentGateway gateway = paymentService.findGateway(config.getPaymentGatewayId());
 		PaymentTransaction tx = gateway.newTransaction(config.getSite().getKey());
 		tx.setGatewayId(gateway.getId());
-		tx.setAmount(shoppingCart.getTotalPrice());
-		tx.setTaxes(shoppingCart.getTotalTaxes());
-		if (tx.getTaxes() == null || tx.getTaxes().longValue() == 0) {
-			tx.setTaxesBase(BigDecimal.ZERO);
-		} else {
-			tx.setTaxesBase(shoppingCart.getSubtotal());
-		}
 		tx.setCurrency(config.getDefaultCurrency());
-
+	
 		User user = UserHolder.get().getCurrent();
 		tx.setEmail(user.getUsername());
 		tx.setPayerFullname(user.getFullName());
@@ -143,10 +136,11 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		shoppingCart.setUser(user);
 
 		ShoppingOrder order = new ShoppingOrder();
-
 		order.setShoppingCart(shoppingCart);
 		order.setTransaction(tx);
+		order.sync();
 		order.setSite(config.getSite());
+		
 
 		return order;
 	}
@@ -175,6 +169,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 				order.getShoppingCart().computeTotalOnly();
 			}
 
+			order.syncTransaction();
 			order.getShoppingCart().setStatus(ShoppingCartStatus.COMPLETED);
 
 			order.getTransaction().setDescription(

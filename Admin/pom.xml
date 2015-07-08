@@ -5,7 +5,7 @@
 	<artifactId>com.dynamia.cms.admin.parent</artifactId>
 	<name>DynamiaCMS Admin  (${project.version})</name>
 	<packaging>pom</packaging>
-	<version>0.9</version>
+	<version>1.0.0.Beta</version>
 	<url>http://www.dynamiasoluciones.com</url>
 	<build>
 		<plugins>
@@ -37,7 +37,7 @@
 		<hibernate.version>4.3.6.Final</hibernate.version>
 
 
-		<site.cms.version>0.9</site.cms.version>
+		<site.cms.version>1.0.0.Beta</site.cms.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -104,8 +104,7 @@
 		<module>users-admin</module>
 		<module>products-admin</module>		
 		<module>shopping-admin</module>
-		<module>menus-admin</module>
-		
+		<module>menus-admin</module>		
 		<module>web</module>
 	</modules>
 </project>

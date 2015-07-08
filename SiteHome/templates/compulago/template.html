@@ -69,18 +69,10 @@
              <![endif]-->
 </head>
 <body>
+
+
 	<div id="fb-root"></div>
-	<script>
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id))
-				return;
-			js = d.createElement(s);
-			js.id = id;
-			js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>
+
 
 	<!-- Header Start -->
 	<header>
@@ -110,7 +102,7 @@
 	</header>
 	<!-- Header End -->
 	<div id="maincontainer">
-		<div class="hidden-lg hidden-md" style="margin-top: 40px"></div>
+		
 
 
 		<div class="container">
@@ -127,7 +119,7 @@
 		<!-- CONTENT -->
 		<div id="content" layout:fragment="content"></div>
 
-		<th:block th:include="tpl_webchat::content" />
+
 
 		<section id="quicklink" class="mt20"></section>
 		<!-- Footer -->
@@ -138,6 +130,12 @@
 					<div class="row row-centered">
 						<th:block th:include="module::position('footer')" />
 					</div>
+				</div>
+			</div>
+
+			<div class="visible-xs visible-sm" style="background-color: #3A3A3A; padding-bottom: 10px">
+				<div class="row row-centered">
+					<th:block th:include="module::position('footer')" />
 				</div>
 			</div>
 
@@ -226,9 +224,23 @@
 	<script th:src="@{/js/custom.js}" src="js/custom.js"></script>
 
 
-<th:block layout:fragment="scripts"></th:block>
+	<th:block layout:fragment="scripts"></th:block>
 
 	<th:block th:include="tpl_googleAnalytics::content" />
+
+	<th:block th:include="tpl_webchat::content" />
+
+	<script>
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id))
+				return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
 
 </body>
 </html>

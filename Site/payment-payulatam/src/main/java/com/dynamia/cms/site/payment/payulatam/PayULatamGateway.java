@@ -6,6 +6,8 @@ import static com.dynamia.cms.site.payment.PaymentUtils.md5;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -133,18 +135,26 @@ public class PayULatamGateway implements PaymentGateway {
 			form.setUrl(params.get(PRODUCTION_URL));
 		}
 
-		form.addParam(MERCHANT_ID, params.get(MERCHANT_ID));
-		form.addParam(ACCOUNT_ID, params.get(ACCOUNT_ID));
-		form.addParam(REFERENCE_CODE, tx.getUuid());
-		form.addParam(AMOUNT, String.valueOf(tx.getAmount().intValue()));
-		form.addParam(TAX, String.valueOf(tx.getTaxes().intValue()));
-		form.addParam(TAX_RETURN_BASE, String.valueOf(tx.getTaxesBase().intValue()));
-		form.addParam(CURRENCY, tx.getCurrency());
+		DecimalFormat formatter = new DecimalFormat("######");
+
 		if (!"1".equals(params.get(TEST))) {
 			form.addParam(TEST, tx.isTest() ? "1" : "0");
 		} else {
 			form.addParam(TEST, "1");
 		}
+
+		form.addParam(MERCHANT_ID, params.get(MERCHANT_ID));
+		form.addParam(ACCOUNT_ID, params.get(ACCOUNT_ID));
+		form.addParam(REFERENCE_CODE, tx.getUuid());
+		form.addParam(AMOUNT, formatter.format(tx.getAmount()));
+		form.addParam(TAX, formatter.format(tx.getTaxes()));
+		form.addParam(TAX_RETURN_BASE, formatter.format(tx.getTaxesBase()));
+
+		if (tx.getCurrency() == null || tx.getCurrency().isEmpty()) {
+			throw new PaymentException("No Currency supplied for PayU");
+		}
+		form.addParam(CURRENCY, tx.getCurrency());
+
 		form.addParam(BUYER_EMAIL, tx.getEmail());
 		form.addParam(BUYER_FULL_NAME, tx.getPayerFullname());
 		form.addParam(PAYER_EMAIL, tx.getEmail());
