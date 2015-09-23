@@ -25,8 +25,7 @@ public class ViewResourceLinkAction extends FileManagerAction {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		FileInfo file = (FileInfo) evt.getData();
-		
-		
+
 		if (file != null) {
 			try {
 				CrudService crudService = Containers.get().findObject(CrudService.class);
@@ -38,10 +37,11 @@ public class ViewResourceLinkAction extends FileManagerAction {
 					port = ":" + domain.getPort();
 				}
 				String path = file.getFile().getPath();
-				path = path.substring(path.indexOf(site.getKey())+site.getKey().length()+1);
+				path = path.substring(path.indexOf(site.getKey()) + site.getKey().length() + 1);
 
 				String url = String.format("http://%s%s/resources/%s", domain.getName(), port, path);
-				Messagebox.show(url,"Link",Messagebox.OK,null);
+				url = url.trim().replace(" ", "%20");
+				Messagebox.show(url, "Link", Messagebox.OK, null);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
