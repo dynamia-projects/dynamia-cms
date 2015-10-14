@@ -12,14 +12,20 @@ import com.dynamia.cms.site.products.ProductShareForm;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
+import com.dynamia.cms.site.products.domain.ProductCategoryDetail;
 import com.dynamia.cms.site.products.domain.ProductDetail;
 import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.domain.Store;
 import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.tools.domain.query.QueryParameters;
+import com.dynamia.tools.domain.util.QueryBuilder;
 
 import java.util.List;
+
+import javax.persistence.Query;
+
+import org.springframework.cache.annotation.Cacheable;
 
 /**
  *
@@ -98,5 +104,7 @@ public interface ProductsService {
 	public List<ProductCategory> getRelatedCategories(ProductCategory category);
 
 	public ProductCategory getCategoryById(Long categoryId);
+
+	List<ProductCategoryDetail> getCategoryDetails(ProductCategory category);
 
 }

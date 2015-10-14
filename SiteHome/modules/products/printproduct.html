@@ -86,8 +86,7 @@
                         <div  class="row" th:each="det : ${prd_stock_details}"> 
                             <div class="col-xs-2 col-md-2"  th:text="${det.store.contactInfo.city}">VALUE</div> 
                             <div class="col-xs-4 col-md-4"  th:text="${det.store.name.toUpperCase()}">NAME</div>
-                            <div class="col-xs-2 col-md-2" th:if="${det.stock le prd_config.productsStockToShow}" th:text="${det.stock+' en stock'}">VALUE</div> 
-                            <div class="col-xs-2 col-md-2" th:if="${det.stock gt prd_config.productsStockToShow}">Suficientes</div> 
+                           
                             <div class="col-xs-4 col-md-4"><span th:text="${det.store.contactInfo.phoneNumber+' / '+det.store.contactInfo.mobileNumber}"></span></div> 
 
                         </div>

@@ -61,6 +61,7 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 	private UserContactInfo billingAddress;
 
 	private boolean pickupAtStore;
+	private boolean payAtDelivery;
 
 	@Column(length = 5000)
 	private String userComments;
@@ -72,6 +73,14 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 
 	public void setPickupAtStore(boolean pickupAtStore) {
 		this.pickupAtStore = pickupAtStore;
+	}
+
+	public boolean isPayAtDelivery() {
+		return payAtDelivery;
+	}
+
+	public void setPayAtDelivery(boolean payAtDelivery) {
+		this.payAtDelivery = payAtDelivery;
 	}
 
 	public Date getShippingDate() {

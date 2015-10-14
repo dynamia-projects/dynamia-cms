@@ -34,6 +34,7 @@ import com.dynamia.cms.site.products.ProductShareForm;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
+import com.dynamia.cms.site.products.domain.ProductCategoryDetail;
 import com.dynamia.cms.site.products.domain.ProductDetail;
 import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
@@ -304,7 +305,7 @@ public class ProductsServiceImpl implements ProductsService {
 		String sql = QueryBuilder
 				.select(ProductBrand.class, "pb")
 				.where("pb.site=:site")
-				.and("pb.id in (select p.brand.id from Product p where p.site = :site and (p.category = :category or p.category.parent = :category  and p.active=true))")
+				.and("pb.id in (select p.brand.id from Product p where p.site = :site and ((p.category = :category or p.category.parent = :category)  and p.active=true and p.stock > 0))")
 				.orderBy("pb.name").toString();
 
 		Query query = entityManager.createQuery(sql);
@@ -553,6 +554,23 @@ public class ProductsServiceImpl implements ProductsService {
 		qp.add("site", category.getSite());
 		qp.orderBy("order", true);
 		return crudService.find(ProductCategory.class, qp);
+	}
+	
+	
+	@Override
+	@Cacheable(value = CACHE_NAME, key = "'catDetails'+#category.id")
+	public List<ProductCategoryDetail> getCategoryDetails(ProductCategory category) {
+		String sql = QueryBuilder
+				.select(ProductCategoryDetail.class, "pcd")
+				.where("pcd.site=:site")
+				.and("pcd.category = :category and pcd.name in (select pd.name from ProductDetail pd where pd.site = :site and ((pd.product.category = :category or pd.product.category.parent = :category)  and pd.product.active=true) group by pd.name)")
+				.orderBy("pcd.order").toString();
+
+		Query query = entityManager.createQuery(sql);
+		query.setParameter("site", category.getSite());
+		query.setParameter("category", category);
+		
+		return query.getResultList();
 	}
 
 }

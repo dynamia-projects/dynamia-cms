@@ -85,6 +85,7 @@ class LoadProductCategoryAction implements SiteAction {
 
         mv.addObject("title", category.getName());
         mv.addObject("prd_category", category);
+        mv.addObject("prd_category_details",service.getCategoryDetails(category));
         mv.addObject("prd_subcategories", subcategories);
         mv.addObject("prd_categoryBrands", categoryBrands);
         mv.addObject("prd_parentCategory", category.getParent());

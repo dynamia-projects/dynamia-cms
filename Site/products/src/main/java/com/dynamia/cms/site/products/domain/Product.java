@@ -81,6 +81,7 @@ public class Product extends SimpleEntity implements SiteAware {
 	private ProductBrand brand;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@OrderBy("order")
 	private List<ProductDetail> details = new ArrayList<>();
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

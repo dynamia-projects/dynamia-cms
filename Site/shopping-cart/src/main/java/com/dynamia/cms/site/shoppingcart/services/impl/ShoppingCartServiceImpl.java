@@ -128,7 +128,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		PaymentTransaction tx = gateway.newTransaction(config.getSite().getKey());
 		tx.setGatewayId(gateway.getId());
 		tx.setCurrency(config.getDefaultCurrency());
-	
+
 		User user = UserHolder.get().getCurrent();
 		tx.setEmail(user.getUsername());
 		tx.setPayerFullname(user.getFullName());
@@ -140,7 +140,6 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		order.setTransaction(tx);
 		order.sync();
 		order.setSite(config.getSite());
-		
 
 		return order;
 	}
@@ -161,7 +160,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 			String number = DomainUtils.formatNumberWithZeroes(lastNumber, 10000);
 			order.setNumber(number);
 			order.getShoppingCart().setName(number);
-			if (order.isPickupAtStore()) {
+			if (order.isPickupAtStore() || order.isPayAtDelivery()) {
 				order.getShoppingCart().setShipmentPercent(0);
 				order.getShoppingCart().compute();
 			} else if (order.getShoppingCart().getTotalShipmentPrice().longValue() < config.getMinShipmentAmount().longValue()) {
@@ -369,6 +368,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		message.getTemplateModel().put("billingAddress", order.getBillingAddress());
 		message.getTemplateModel().put("tx", order.getTransaction());
 		message.getTemplateModel().put("user", order.getShoppingCart().getUser());
+		message.getTemplateModel().put("identification", order.getShoppingCart().getUser().getIdentification());
+		message.getTemplateModel().put("deliveryType", order.isPayAtDelivery() ? "Pago Envio Contraentrega" : "");
 		return message;
 	}
 

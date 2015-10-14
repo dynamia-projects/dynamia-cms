@@ -5,6 +5,7 @@
  */
 package com.dynamia.cms.site.products.domain;
 
+import com.dynamia.cms.site.core.Orderable;
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.dto.ProductDetailDTO;
@@ -22,72 +23,83 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "prd_details")
-public class ProductDetail extends SimpleEntity implements SiteAware {
+public class ProductDetail extends SimpleEntity implements SiteAware, Orderable {
 
-    @OneToOne
-    @NotNull
-    private Site site;
+	@OneToOne
+	@NotNull
+	private Site site;
 
-    @ManyToOne
-    private Product product;
-    private String name;
-    @Column(name = "detvalue")
-    private String value;
-    private String description;
-    private Long externalRef;
+	@ManyToOne
+	private Product product;
+	private String name;
+	@Column(name = "detvalue")
+	private String value;
+	private String description;
+	private Long externalRef;
+	@Column(name="detorder")
+	private int order;
 
-    public Site getSite() {
-        return site;
-    }
+	public int getOrder() {
+		return order;
+	}
 
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
-    public Product getProduct() {
-        return product;
-    }
+	public Site getSite() {
+		return site;
+	}
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+	public void setSite(Site site) {
+		this.site = site;
+	}
 
-    public Long getExternalRef() {
-        return externalRef;
-    }
+	public Product getProduct() {
+		return product;
+	}
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
-    }
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public Long getExternalRef() {
+		return externalRef;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    public void sync(ProductDetailDTO dto) {
-        description = dto.getDescription();
-        externalRef = dto.getExternalRef();
-        name = dto.getName();
-        value = dto.getValue();
-    }
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void sync(ProductDetailDTO dto) {
+		description = dto.getDescription();
+		externalRef = dto.getExternalRef();
+		name = dto.getName();
+		value = dto.getValue();
+	}
+
 }

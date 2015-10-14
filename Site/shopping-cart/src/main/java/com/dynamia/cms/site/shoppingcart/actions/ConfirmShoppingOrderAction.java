@@ -61,9 +61,18 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 		order.setBillingAddress(loadContactInfo("billingAddress", evt));
 		order.setShippingAddress(loadContactInfo("shippingAddress", evt));
 
-		System.out.println("PICKUP " + evt.getRequest().getParameter("pickupAtStore"));
-
-		order.setPickupAtStore(CMSUtil.isChecked(evt.getRequest().getParameter("pickupAtStore")));
+		String deliveryType = evt.getRequest().getParameter("deliveryType");
+		if(deliveryType==null){
+			deliveryType="";
+		}
+		if(deliveryType.equals("pickupAtStore")){
+			order.setPickupAtStore(true);
+			order.setPayAtDelivery(false);
+		}else if(deliveryType.equals("payAtDelivery")){
+			order.setPickupAtStore(false);
+			order.setPayAtDelivery(true);
+		}
+	
 
 		try {
 
@@ -80,7 +89,7 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 			mv.addObject("paymentForm", form);
 
 		} catch (ValidationError e) {
-			SiteActionManager.performAction("checkoutShoppingCart", mv, evt.getRequest(),evt.getRedirectAttributes());	
+			SiteActionManager.performAction("checkoutShoppingCart", mv, evt.getRequest(), evt.getRedirectAttributes());
 			CMSUtil.addErrorMessage(e.getMessage(), mv);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,7 +103,7 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 
 		if (!order.isPickupAtStore() && order.getShippingAddress() == null) {
 			throw new ValidationError("Seleccione direccion de envio o marque la opcion recoger en tienda");
-		}else if(order.isPickupAtStore()){
+		} else if (order.isPickupAtStore()) {
 			order.setShippingAddress(null);
 		}
 

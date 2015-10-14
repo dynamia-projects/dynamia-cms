@@ -15,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -54,6 +55,7 @@ public class ProductCategory extends SimpleEntity implements SiteAware, Orderabl
 	private ProductCategory relatedCategory;
 
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	@OrderBy("order")
 	private List<ProductCategoryDetail> details = new ArrayList<>();
 
 	@Column(name = "catOrder")

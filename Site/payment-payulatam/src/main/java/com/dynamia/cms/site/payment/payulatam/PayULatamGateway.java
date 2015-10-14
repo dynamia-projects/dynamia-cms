@@ -206,7 +206,7 @@ public class PayULatamGateway implements PaymentGateway {
 		if (status == null || status == PaymentTransactionStatus.NEW || status == PaymentTransactionStatus.PROCESSING) {
 
 			if (txState.equals("4")) {
-				statusText = "Transaccion Aprovada";
+				statusText = "Transaccion Aprobada";
 				status = PaymentTransactionStatus.COMPLETED;
 			} else if (txState.equals("6")) {
 				statusText = "Transaccion Rechazada";
