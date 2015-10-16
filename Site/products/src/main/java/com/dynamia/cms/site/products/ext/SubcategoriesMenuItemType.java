@@ -90,6 +90,7 @@ public class SubcategoriesMenuItemType implements MenuItemType {
 						String groupName = getCategoryName(relatedCategory);
 
 						MenuItemGroup group = new MenuItemGroup(groupName);
+						group.setHref(CATEGORIES_PATH + relatedCategory.getId() + "/" + relatedCategory.getAlias());
 
 						List<ProductCategory> relatedSubcategories = service.getSubcategories(relatedCategory);
 						if (relatedSubcategories != null) {

@@ -10,6 +10,7 @@ import com.dynamia.cms.site.core.domain.ModuleInstanceParameter;
 public class CustomHtmlModule extends AbstractModule {
 
 	private static final String PARAM_CONTENT = "content";
+	private static final String PARAM_CONTENT_PLAIN = "contentPlain";
 
 	public CustomHtmlModule() {
 		super("custom_html", "Custom Html", "core/modules/customhtml");
@@ -26,6 +27,15 @@ public class CustomHtmlModule extends AbstractModule {
 				instance.addObject(PARAM_CONTENT, content.getExtra());
 			} else {
 				instance.addObject(PARAM_CONTENT, content.getValue());
+			}
+		}
+
+		ModuleInstanceParameter contentPlain = instance.getParameter(PARAM_CONTENT_PLAIN);
+		if (contentPlain != null && contentPlain.isEnabled()) {
+			if (content.getExtra() != null && !content.getExtra().isEmpty()) {
+				instance.addObject(PARAM_CONTENT, contentPlain.getExtra());
+			} else {
+				instance.addObject(PARAM_CONTENT, contentPlain.getValue());
 			}
 		}
 

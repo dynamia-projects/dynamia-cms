@@ -21,6 +21,7 @@ public class MenuItemGroup extends SimpleEntity {
 	private MenuItem parentItem;
 	@OneToMany(mappedBy = "parentGroup", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<MenuItem> subitems = new ArrayList<>();
+	private String href;
 
 	public MenuItemGroup() {
 		// TODO Auto-generated constructor stub
@@ -28,7 +29,15 @@ public class MenuItemGroup extends SimpleEntity {
 
 	public MenuItemGroup(String name) {
 		super();
-		this.name = name;	
+		this.name = name;
+	}
+
+	public String getHref() {
+		return href;
+	}
+
+	public void setHref(String href) {
+		this.href = href;
 	}
 
 	public String getName() {
@@ -54,8 +63,8 @@ public class MenuItemGroup extends SimpleEntity {
 	public void setSubitems(List<MenuItem> subitems) {
 		this.subitems = subitems;
 	}
-	
-	public void addMenuItem(MenuItem menuItem){
+
+	public void addMenuItem(MenuItem menuItem) {
 		menuItem.setParentGroup(this);
 		subitems.add(menuItem);
 	}

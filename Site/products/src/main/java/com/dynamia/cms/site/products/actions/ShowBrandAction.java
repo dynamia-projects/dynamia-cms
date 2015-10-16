@@ -43,19 +43,26 @@ public class ShowBrandAction implements SiteAction {
 		ProductSearchForm form = (ProductSearchForm) evt.getData();
 
 		ProductBrand brand = crudService.find(ProductBrand.class, form.getBrandId());
-		
+
 		mv.addObject("prd_brand", brand);
 		form.setOrder(ProductSearchOrder.MINPRICE);
-		SiteActionManager.performAction("searchProducts", mv, evt.getRequest(), form);
 
+		if (!evt.getRequest().getParameterMap().isEmpty()) {
+			form.setDetail(evt.getRequest().getParameter("q"));
+		}
+
+		SiteActionManager.performAction("searchProducts", mv, evt.getRequest(), form);
 		ProductCategory category = (ProductCategory) mv.getModel().get("prd_category");
+
 		if (category != null) {
 			mv.addObject("title", category.getName());
 			mv.addObject("prd_subcategories", service.getSubcategories(category, brand));
+			mv.addObject("prd_category_details", service.getCategoryDetails(category));
 		} else {
 			mv.addObject("title", brand.getName());
 			mv.addObject("prd_subcategories", service.getCategories(brand));
 		}
+
 	}
 
 }

@@ -11,11 +11,16 @@ import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.dto.ProductCategoryDetailDTO;
 import com.dynamia.tools.domain.SimpleEntity;
 import com.dynamia.tools.domain.contraints.NotEmpty;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -37,8 +42,18 @@ public class ProductCategoryDetail extends SimpleEntity implements SiteAware, Or
 	@Column(name = "detorder")
 	private int order;
 
+	@Transient
+	private List<String> currentValues;
+
 	@ManyToOne
 	private ProductCategory category;
+
+	public List<String> getCurrentValues() {
+		if (currentValues == null) {
+			currentValues = new ArrayList<String>();
+		}
+		return currentValues;
+	}
 
 	public int getOrder() {
 		return order;

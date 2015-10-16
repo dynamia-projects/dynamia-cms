@@ -8,36 +8,53 @@
 	<nav class="navbar yamm mainmenu" role="navigation">
 
 		<ul class="nav navbar-nav">
-			<li class="dropdown" th:each="mi : ${instance.model.menuitems}"><a th:class="${(activeMenu == mi? 'active':'')+' topmenu'}"
-				th:href="@{${mi.href}}" th:title="${mi.title}" th:target="${mi.target}"> <i
-					th:class="${(instance.getParameter('icons')!='false'?'icon-'+mi.icon:'')}"></i> <th:block th:text="${mi.name}" />
-			</a>
+			<li class="dropdown" th:each="mi : ${instance.model.menuitems}">
+				<a th:class="${(activeMenu == mi? 'active':'')+' topmenu'}" th:href="@{${mi.href}}"
+					th:title="${mi.title}" th:target="${mi.target}">
+					<i th:class="${(instance.getParameter('icons')!='false'?'icon-'+mi.icon:'')}"></i>
+					<th:block th:text="${mi.name}" />
+				</a>
 
-				<ul class="dropdown-menu" th:style="'background-image: url('+${mi.backgroundImage}+');background-repeat:no-repeat;background-size: 100% 100%;'" th:if="${not #lists.isEmpty(mi.subitems) and instance.getParameter('subitems')!='false'}">
+				<ul class="dropdown-menu"
+					th:style="'background-image: url('+${mi.backgroundImage}+');background-repeat:no-repeat;background-size: 100% 100%;'"
+					th:if="${not #lists.isEmpty(mi.subitems) and instance.getParameter('subitems')!='false'}">
 
 					<div class="yamm-content">
 						<div class="row">
 							<ul class="column col-sm-4 ">
-								<li th:if="${not #lists.isEmpty(mi.itemsGroups)}"><p>
-										<strong class="orange" th:text="${mi.subtitle}">Subcategorias</strong>
-									</p></li>
-								<li th:each="smi : ${mi.subitems}"><a th:href="@{${smi.href}}" th:target="${smi.target}" th:title="${smi.title}"> <th:block
-											th:text="${smi.name}" />
-								</a></li>
+								<li th:if="${not #lists.isEmpty(mi.itemsGroups)}">
+									<p>
+										<a href="#">
+											<strong class="orange" th:text="${mi.subtitle}">Subcategorias</strong>
+										</a>
+									</p>
+								</li>
+								<li th:each="smi : ${mi.subitems}">
+									<a th:href="@{${smi.href}}" th:target="${smi.target}" th:title="${smi.title}">
+										<th:block th:text="${smi.name}" />
+									</a>
+								</li>
 							</ul>
 							<ul class="column col-sm-4 " th:each="miGroup : ${mi.itemsGroups}">
-								<li><p>
-										<strong  class="orange" th:text="${miGroup.name}">Group</strong>
-									</p></li>
-								<li th:each="gsmi : ${miGroup.subitems}"><a th:href="@{${gsmi.href}}" th:target="${gsmi.target}" th:title="${gsmi.title}"> <th:block
-											th:text="${gsmi.name}" />
-								</a></li>
+								<li>
+									<p>
+										<a th:href="@{${miGroup.href}}">
+											<strong class="orange" th:text="${miGroup.name}">Subcategorias</strong>
+										</a>
+									</p>
+								</li>
+								<li th:each="gsmi : ${miGroup.subitems}">
+									<a th:href="@{${gsmi.href}}" th:target="${gsmi.target}" th:title="${gsmi.title}">
+										<th:block th:text="${gsmi.name}" />
+									</a>
+								</li>
 							</ul>
-						
-							
+
+
 						</div>
 					</div>
-				</ul></li>
+				</ul>
+			</li>
 		</ul>
 	</nav>
 </body>

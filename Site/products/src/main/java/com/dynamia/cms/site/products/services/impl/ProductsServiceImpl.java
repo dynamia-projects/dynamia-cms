@@ -221,6 +221,18 @@ public class ProductsServiceImpl implements ProductsService {
 			builder.and("(p.category.id = :category or p.category.parent.id = :category)");
 			params.add("category", form.getCategoryId());
 		}
+
+		if (form.getDetail() != null) {
+			try {
+				String detail[] = form.getDetail().split("=");
+				builder.and(
+						"p.id in (select det.product.id from ProductDetail det where det.name = :detname and det.value = :detvalue)");
+				params.add("detname", QueryConditions.eq(detail[0].trim()));
+				params.add("detvalue", QueryConditions.eq(detail[1].trim()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		if (params.size() > 0) {
 			params.paginate(getDefaultPageSize(site));
 			return crudService.executeQuery(builder, params);
@@ -555,22 +567,40 @@ public class ProductsServiceImpl implements ProductsService {
 		qp.orderBy("order", true);
 		return crudService.find(ProductCategory.class, qp);
 	}
-	
-	
+
 	@Override
 	@Cacheable(value = CACHE_NAME, key = "'catDetails'+#category.id")
 	public List<ProductCategoryDetail> getCategoryDetails(ProductCategory category) {
 		String sql = QueryBuilder
 				.select(ProductCategoryDetail.class, "pcd")
 				.where("pcd.site=:site")
-				.and("pcd.category = :category and pcd.name in (select pd.name from ProductDetail pd where pd.site = :site and ((pd.product.category = :category or pd.product.category.parent = :category)  and pd.product.active=true) group by pd.name)")
+				.and("(pcd.category = :category or pcd.category.parent = :category) and pcd.name in (select pd.name from ProductDetail pd where pd.site = :site and (pd.product.category = :category or pd.product.category.parent = :category)  and pd.product.active=true)")
+				.groupBy("name")
 				.orderBy("pcd.order").toString();
 
 		Query query = entityManager.createQuery(sql);
 		query.setParameter("site", category.getSite());
 		query.setParameter("category", category);
-		
-		return query.getResultList();
+
+		List<ProductCategoryDetail> details = query.getResultList();
+
+		String sqlValues = "select det.name, det.value from ProductDetail det inner join det.product p inner join p.category c"
+				+ " where (c = :category or c.parent = :category)  and p.active=true group by det.value order by det.value";
+		List values = entityManager.createQuery(sqlValues).setParameter("category", category).getResultList();
+
+		for (ProductCategoryDetail det : details) {
+			for (Object objet : values) {
+				Object[] catValue = (Object[]) objet;
+
+				if (det.getName().trim().equals(catValue[0].toString().trim())) {
+					if (catValue[1] != null && !catValue[1].toString().isEmpty()) {
+						det.getCurrentValues().add(catValue[1].toString());
+					}
+				}
+			}
+		}
+
+		return details;
 	}
 
 }

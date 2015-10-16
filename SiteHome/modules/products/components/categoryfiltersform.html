@@ -5,74 +5,36 @@
 
 <body th:fragment="content">
 
-	<form role="form" class="form-vertical" th:action="@{/store/search}" th:object="${prd_searchForm}"
-		th:method="get">
-
-		<!-- Text input-->
-		<div class="form-group">
-			<label class="control-label orange" for="name">Nombre</label>
-			<input th:field="*{name}" id="name" name="" type="text" placeholder="nombre del producto"
-				class="form-control" />
-		</div>
 
 
-		<!-- Select Multiple -->
-		<div class="form-group myaccountbox" style="padding: 0"
-			th:if="${prd_categoryBrands!=null and not #lists.isEmpty(prd_categoryBrands)}">
-			<label class="control-label orange" for="brand">Marca / Fabricante</label>
+	<!-- Select Multiple -->
+	<div class="form-group myaccountbox" style="padding: 0"
+		th:if="${prd_categoryBrands!=null and not #lists.isEmpty(prd_categoryBrands)}">
+		<label class="control-label orange" for="brand">Marca / Fabricante</label>
 
-			<ul>
-				<li th:each="brd : ${prd_categoryBrands}">
-					<a class="orange" th:text="${brd.name}" style="padding: 2px" href="#">Brand ABC</a>
-				</li>
-			</ul>
-		</div>
-
-
-		<!-- Text input-->
-		<div class="form-group">
-			<label class="control-label orange" for="minPrice">Precio</label>
-
-			<input th:field="*{minPrice}" id="minPrice" type="number" placeholder="Minimo"
-				title="ingrese valor sin puntos ni comas" class="form-control " />
-			<input th:field="*{maxPrice}" id="maxPrice" type="number" placeholder="Maximo"
-				title="ingrese valor sin puntos ni comas" class="form-control " />
-
-		</div>
+		<ul>
+			<li th:each="brd : ${prd_categoryBrands}">
+			
+				<a class="orange" th:text="${brd.name}" style="padding: 2px" th:href="@{'/store/categories/'+${prd_category.id}+'/'+${prd_category.alias}+'/'+${brd.alias}}"  href="#">Brand ABC</a>
+			</li>
+		</ul>
+	</div>
 
 
 
-		
 
-		<div class="form-group myaccountbox" style="padding: 0" th:each="det : ${prd_category_details}">
-			<label class="control-label orange" th:text="${det.name}">NAME</label>
+	<div class="form-group myaccountbox" style="padding: 0" th:each="det : ${prd_category_details}"
+		th:if="${not #lists.isEmpty(det.currentValues)}">
+		<label class="control-label orange" th:text="${det.name}">NAME</label>
 
-			<ul>
-				<li th:each="val : ${#strings.arraySplit(det.values, ',')}">
-					<a class="orange" th:text="${val.trim()}" style="padding: 2px" href="#">Brand ABC</a>
-				</li>
-			</ul>
-		</div>
-		
-		<div class="form-group">
-			<label class="control-label orange" for="order">Ordernado Por</label>
-			<select th:field="*{order}" id="order" class="form-control">
-				<option value="NAME">Nombre</option>
-				<option value="MINPRICE">Menor Precio</option>
-				<option value="MAXPRICE">Mayor Precio</option>
-				<option value="RATE">Mas Relevante</option>
-				<option value="VIEWS">Mas Vistos</option>
-			</select>
-		</div>
+		<ul style="max-height: 80px; overflow: auto">
+			<li th:each="val : ${det.currentValues}">
+				<a class="orange" th:text="${val}" style="padding: 2px" th:href="@{${CURRENT_URL}('q'=${det.name}+'='+${val})}" href="#">Brand ABC</a>
+			</li>
+		</ul>
+	</div>
 
-		<!-- Button -->
-		<div class="form-group">
-			<button type="submit" class="btn btn-orange btn-lg">
-				Buscar <i class="icon-search icon-white"></i>
-			</button>
-		</div>
 
-	</form>
 
 </body>
 

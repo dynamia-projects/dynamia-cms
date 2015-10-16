@@ -8,3 +8,10 @@ fields:
     params:
       span: 2
       height: 300px
+      
+  contentPlain:
+    component: textbox
+    params:
+      multiline: true
+      span: 2
+      height: 300px

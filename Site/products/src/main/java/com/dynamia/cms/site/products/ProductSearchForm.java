@@ -25,6 +25,19 @@ public class ProductSearchForm implements Serializable {
 	private Long brandId;
 	private boolean stock;
 	private ProductSearchOrder order = ProductSearchOrder.NAME;
+	private String detail;
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public String getName() {
 		return name;
