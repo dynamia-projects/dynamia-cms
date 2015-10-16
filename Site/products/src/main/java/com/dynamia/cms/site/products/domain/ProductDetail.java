@@ -100,6 +100,7 @@ public class ProductDetail extends SimpleEntity implements SiteAware, Orderable 
 		externalRef = dto.getExternalRef();
 		name = dto.getName();
 		value = dto.getValue();
+		order = dto.getOrder();
 	}
 
 }
