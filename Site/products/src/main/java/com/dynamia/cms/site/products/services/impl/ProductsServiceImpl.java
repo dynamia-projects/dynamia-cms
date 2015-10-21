@@ -574,7 +574,9 @@ public class ProductsServiceImpl implements ProductsService {
 		String sql = QueryBuilder
 				.select(ProductCategoryDetail.class, "pcd")
 				.where("pcd.site=:site")
+				.and("pcd.filterable=true")
 				.and("(pcd.category = :category or pcd.category.parent = :category) and pcd.name in (select pd.name from ProductDetail pd where pd.site = :site and (pd.product.category = :category or pd.product.category.parent = :category)  and pd.product.active=true)")
+
 				.groupBy("name")
 				.orderBy("pcd.order").toString();
 

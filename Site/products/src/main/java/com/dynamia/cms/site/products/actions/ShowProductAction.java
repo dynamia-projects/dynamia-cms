@@ -57,11 +57,19 @@ public class ShowProductAction implements SiteAction {
 	public void actionPerformed(ActionEvent evt) {
 		ModelAndView mv = evt.getModelAndView();
 
+		Product product = null;
 		Long id = (Long) evt.getData();
+		QueryParameters qp = QueryParameters.with("active", true).add("site", evt.getSite());
 
-		QueryParameters qp = QueryParameters.with("id", id).add("active", true).add("site", evt.getSite());
+		if (id != null) {
+			qp.add("id", id);
+		} else if (evt.getRequest().getParameter("sku") != null) {
+			String sku = evt.getRequest().getParameter("sku");
+			qp.add("sku", sku);
 
-		Product product = crudService.findSingle(Product.class, qp);
+		}
+		product = crudService.findSingle(Product.class, qp);
+		
 		if (product == null) {
 			throw new PageNotFoundException("Product not found");
 		}

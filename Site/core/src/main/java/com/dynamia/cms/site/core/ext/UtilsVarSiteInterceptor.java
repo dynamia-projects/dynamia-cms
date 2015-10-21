@@ -55,6 +55,9 @@ public class UtilsVarSiteInterceptor extends SiteRequestInterceptorAdapter {
 		modelAndView.addObject("siteParams", createParams(site));
 		modelAndView.addObject("cmsUtil", new CMSUtil(site));
 		modelAndView.addObject("cmsModules", new CMSModules(site, modulesService));
+		
+		
+		
 	}
 
 	private Object createParams(Site site) {

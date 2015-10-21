@@ -48,11 +48,21 @@ public class ProductCategoryDetail extends SimpleEntity implements SiteAware, Or
 	@ManyToOne
 	private ProductCategory category;
 
+	private boolean filterable = true;
+
 	public List<String> getCurrentValues() {
 		if (currentValues == null) {
 			currentValues = new ArrayList<String>();
 		}
 		return currentValues;
+	}
+
+	public boolean isFilterable() {
+		return filterable;
+	}
+
+	public void setFilterable(boolean filterable) {
+		this.filterable = filterable;
 	}
 
 	public int getOrder() {
@@ -108,6 +118,7 @@ public class ProductCategoryDetail extends SimpleEntity implements SiteAware, Or
 		this.values = dto.getValues();
 		this.externalRef = dto.getExternalRef();
 		this.order = dto.getOrder();
+		this.filterable = dto.isFilterable();
 
 	}
 

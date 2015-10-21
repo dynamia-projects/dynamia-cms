@@ -13,57 +13,66 @@ import java.io.Serializable;
  */
 public class ProductCategoryDetailDTO implements Serializable {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7113328659044071865L;
 
 	private String name;
 
-    private String values;
-    private Long externalRef;
-    private int order;
+	private String values;
+	private Long externalRef;
+	private int order;
+	private boolean filterable;
 
-    private ProductCategoryDTO category;
+	private ProductCategoryDTO category;
 
-    public int getOrder() {
-        return order;
-    }
+	public boolean isFilterable() {
+		return filterable;
+	}
 
-    public void setOrder(int order) {
-        this.order = order;
-    }
+	public void setFilterable(boolean filterable) {
+		this.filterable = filterable;
+	}
 
-    public ProductCategoryDTO getCategory() {
-        return category;
-    }
+	public int getOrder() {
+		return order;
+	}
 
-    public void setCategory(ProductCategoryDTO category) {
-        this.category = category;
-    }
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
-    public Long getExternalRef() {
-        return externalRef;
-    }
+	public ProductCategoryDTO getCategory() {
+		return category;
+	}
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
-    }
+	public void setCategory(ProductCategoryDTO category) {
+		this.category = category;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public Long getExternalRef() {
+		return externalRef;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef;
+	}
 
-    public String getValues() {
-        return values;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setValues(String values) {
-        this.values = values;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getValues() {
+		return values;
+	}
+
+	public void setValues(String values) {
+		this.values = values;
+	}
 
 }

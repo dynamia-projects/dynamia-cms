@@ -119,6 +119,14 @@ public class StoreController {
 		return mv;
 	}
 
+	@RequestMapping("/products")
+	public ModelAndView product(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("products/product");
+		SiteActionManager.performAction("showProduct", mv, request);
+
+		return mv;
+	}
+
 	@RequestMapping("/products/{id}/print")
 	public ModelAndView printProduct(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("products/printproduct");
