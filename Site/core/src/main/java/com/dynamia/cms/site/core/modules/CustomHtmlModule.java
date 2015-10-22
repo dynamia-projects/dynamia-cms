@@ -32,7 +32,7 @@ public class CustomHtmlModule extends AbstractModule {
 
 		ModuleInstanceParameter contentPlain = instance.getParameter(PARAM_CONTENT_PLAIN);
 		if (contentPlain != null && contentPlain.isEnabled()) {
-			if (content.getExtra() != null && !content.getExtra().isEmpty()) {
+			if (contentPlain.getExtra() != null && !contentPlain.getExtra().isEmpty()) {
 				instance.addObject(PARAM_CONTENT, contentPlain.getExtra());
 			} else {
 				instance.addObject(PARAM_CONTENT, contentPlain.getValue());
