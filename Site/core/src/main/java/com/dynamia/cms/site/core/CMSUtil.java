@@ -5,24 +5,19 @@
  */
 package com.dynamia.cms.site.core;
 
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.core.html.Option;
-import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.tools.commons.CollectionsUtils;
-import com.dynamia.tools.commons.StringUtils;
-import com.dynamia.tools.domain.util.ContactInfo;
-import com.dynamia.tools.integration.Containers;
-
 import java.io.File;
 import java.io.FilenameFilter;
-import java.nio.file.Files;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +26,14 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.core.html.Option;
+import com.dynamia.cms.site.core.services.SiteService;
+import com.dynamia.tools.commons.CollectionsUtils;
+import com.dynamia.tools.commons.StringUtils;
+import com.dynamia.tools.domain.util.ContactInfo;
+import com.dynamia.tools.integration.Containers;
 
 /**
  *
@@ -200,5 +203,34 @@ public class CMSUtil {
 		}
 
 		return false;
+	}
+	
+	public static Map<String, List<String>> getQueryParams(String url) {
+	    try {
+	        Map<String, List<String>> params = new HashMap<String, List<String>>();
+	        String[] urlParts = url.split("\\?");
+	        if (urlParts.length > 1) {
+	            String query = urlParts[1];
+	            for (String param : query.split("&")) {
+	                String[] pair = param.split("=");
+	                String key = URLDecoder.decode(pair[0], "UTF-8");
+	                String value = "";
+	                if (pair.length > 1) {
+	                    value = URLDecoder.decode(pair[1], "UTF-8");
+	                }
+
+	                List<String> values = params.get(key);
+	                if (values == null) {
+	                    values = new ArrayList<String>();
+	                    params.put(key, values);
+	                }
+	                values.add(value);
+	            }
+	        }
+
+	        return params;
+	    } catch (UnsupportedEncodingException ex) {
+	        throw new AssertionError(ex);
+	    }
 	}
 }

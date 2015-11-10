@@ -44,6 +44,7 @@ public class ProductDTO implements Serializable {
 	private String image2;
 	private String image3;
 	private String image4;
+	private String videoURL;
 
 	private String tags;
 
@@ -63,6 +64,14 @@ public class ProductDTO implements Serializable {
 	private boolean showLastPrice;
 	private boolean sellInStore = true;
 	private boolean sellInWeb = true;
+
+	public String getVideoURL() {
+		return videoURL;
+	}
+
+	public void setVideoURL(String videoURL) {
+		this.videoURL = videoURL;
+	}
 
 	public boolean isShowLastPrice() {
 		return showLastPrice;

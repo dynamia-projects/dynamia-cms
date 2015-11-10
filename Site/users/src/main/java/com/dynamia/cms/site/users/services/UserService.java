@@ -30,4 +30,6 @@ public interface UserService {
 
 	public void resetPassword(Site site, String username);
 
+	public void resetPassword(User user, String newpassword, String newpassword2);
+
 }

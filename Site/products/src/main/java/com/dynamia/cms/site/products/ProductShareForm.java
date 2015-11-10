@@ -16,10 +16,8 @@ public class ProductShareForm implements Serializable {
 	private static final long serialVersionUID = -7043302060479353034L;
 	@Email(message = "Ingrese email valido")
 	private String friendEmail;
-	private String friendName;
-	@NotEmpty
-	private String yourName;
-	@NotEmpty
+	private String friendName;	
+	private String yourName;	
 	private String message;
 	private String productURL;
 	@NotNull

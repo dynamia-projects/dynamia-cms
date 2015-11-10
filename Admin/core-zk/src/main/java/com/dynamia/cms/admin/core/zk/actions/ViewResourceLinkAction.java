@@ -1,5 +1,10 @@
 package com.dynamia.cms.admin.core.zk.actions;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import org.zkoss.zul.Messagebox;
 
 import com.dynamia.cms.site.core.SiteContext;
@@ -20,13 +25,20 @@ public class ViewResourceLinkAction extends FileManagerAction {
 	public ViewResourceLinkAction() {
 		setImage("link");
 		setName("View Link");
+		setPosition(Double.MAX_VALUE);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		FileInfo file = (FileInfo) evt.getData();
+		List<FileInfo> files = new ArrayList<>();
 
-		if (file != null) {
+		if (evt.getData() instanceof FileInfo) {
+			files.add((FileInfo) evt.getData());
+		} else if (evt.getData() instanceof List) {
+			files.addAll((Collection<? extends FileInfo>) evt.getData());
+		}
+
+		if (!files.isEmpty()) {
 			try {
 				CrudService crudService = Containers.get().findObject(CrudService.class);
 				Site site = SiteContext.get().getCurrent();
@@ -36,11 +48,11 @@ public class ViewResourceLinkAction extends FileManagerAction {
 				if (domain.getPort() > 0) {
 					port = ":" + domain.getPort();
 				}
-				String path = file.getFile().getPath();
-				path = path.substring(path.indexOf(site.getKey()) + site.getKey().length() + 1);
+				String url = "";
+				for (FileInfo file : files) {
+					url = url + getFileURL(file, site, domain, port) + "\n";
+				}
 
-				String url = String.format("http://%s%s/resources/%s", domain.getName(), port, path);
-				url = url.trim().replace(" ", "%20");
 				Messagebox.show(url, "Link", Messagebox.OK, null);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -49,6 +61,15 @@ public class ViewResourceLinkAction extends FileManagerAction {
 			UIMessages.showMessage("Selecte a file first", MessageType.ERROR);
 		}
 
+	}
+
+	private String getFileURL(FileInfo file, Site site, SiteDomain domain, String port) {
+		String path = file.getFile().getPath();
+		path = path.substring(path.indexOf(site.getKey()) + site.getKey().length() + 1);
+
+		String url = String.format("http://%s%s/resources/%s", domain.getName(), port, path);
+		url = url.trim().replace(" ", "%20");
+		return url;
 	}
 
 }

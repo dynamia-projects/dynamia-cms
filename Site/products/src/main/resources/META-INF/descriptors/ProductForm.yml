@@ -38,6 +38,7 @@ fields:
    image2:
    image3:
    image4:
+   videoURL:
 
 groups:
    general:
@@ -51,6 +52,9 @@ groups:
        
    images:
        fields: [image,image2,image3,image4]
+       
+   videos:
+       fields: [videoURL]
    
    
 layout:

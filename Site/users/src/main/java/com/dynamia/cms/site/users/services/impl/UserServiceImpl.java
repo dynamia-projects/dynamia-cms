@@ -120,8 +120,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void resetPassword(Site site, String username) {
-	
-		
 
 		String templateName = "ResetPasswordTemplate";
 		QueryParameters params = QueryParameters.with("name", templateName)
@@ -131,23 +129,43 @@ public class UserServiceImpl implements UserService {
 		if (mailTemplate == null) {
 			throw new ValidationError("En estos momentos no podemos reiniciar su password, por favor intente mas tarde");
 		}
-		
+
 		User user = getUser(site, username);
 		if (user == null) {
 			throw new ValidationError("El usuario [" + username + "] no existe en este sitio web");
 		}
-		
+
 		String newPassword = StringUtils.randomString().substring(0, 7);
 		setupPassword(user, newPassword);
 		crudService.save(user);
-		
 
 		MailMessage message = new MailMessage(mailTemplate);
-		message.setTo(username);	
+		message.setTo(username);
 		message.getTemplateModel().put("user", user);
 		message.getTemplateModel().put("newpassword", newPassword);
 
 		mailService.send(message);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void resetPassword(User user, String newpassword, String newpassword2) {
+
+		if (user == null) {
+			throw new ValidationError("El usuario no existe en este sitio web");
+		}
+
+		if (newpassword == null || newpassword.isEmpty() || newpassword2 == null || newpassword2.isEmpty()) {
+			throw new ValidationError("Ingrese nuevo password");
+		}
+
+		if (!newpassword.equals(newpassword2)) {
+			throw new ValidationError("El nuevo password ingresado no coincide");
+		}
+
+		setupPassword(user, newpassword);
+		crudService.save(user);
+
 	}
 
 	private Profile getDefaultProfile(Site site) {

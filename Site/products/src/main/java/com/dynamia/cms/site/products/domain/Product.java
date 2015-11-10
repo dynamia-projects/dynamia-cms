@@ -59,12 +59,14 @@ public class Product extends SimpleEntity implements SiteAware {
 	private boolean featured;
 	private boolean sale;
 	private boolean newproduct;
-	
+
 	private String status;
 	private String image;
 	private String image2;
 	private String image3;
 	private String image4;
+	private String videoURL;
+
 	private int rate;
 	private Long views;
 
@@ -95,6 +97,14 @@ public class Product extends SimpleEntity implements SiteAware {
 	private boolean showCreditPrices;
 	private boolean sellInStore = true;
 	private boolean sellInWeb = true;
+
+	public String getVideoURL() {
+		return videoURL;
+	}
+
+	public void setVideoURL(String videoURL) {
+		this.videoURL = videoURL;
+	}
 
 	public boolean isSellInStore() {
 		return sellInStore;
@@ -397,6 +407,7 @@ public class Product extends SimpleEntity implements SiteAware {
 		sellInStore = dto.isSellInStore();
 		sellInWeb = dto.isSellInWeb();
 		showLastPrice = dto.isShowLastPrice();
+		videoURL = dto.getVideoURL();
 	}
 
 }
