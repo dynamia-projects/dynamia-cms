@@ -9,7 +9,6 @@ import com.dynamia.cms.site.core.api.AdminModule;
 import com.dynamia.cms.site.core.api.AdminModuleOption;
 import com.dynamia.cms.site.core.api.CMSModule;
 import com.dynamia.cms.site.core.domain.ModuleInstance;
-import com.dynamia.cms.site.core.domain.Site;
 
 /**
  *
@@ -30,8 +29,7 @@ public class CoreAdminModule implements AdminModule {
 
 	@Override
     public AdminModuleOption[] getOptions() {
-        return new AdminModuleOption[]{
-            new AdminModuleOption("sites", "Sites", Site.class),
+        return new AdminModuleOption[]{            
             new AdminModuleOption("modules", "Modules", ModuleInstance.class)
         };
     }

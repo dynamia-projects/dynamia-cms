@@ -2,6 +2,10 @@ id: CMSConfig
 view: config
 
 fields:
+    SuperAdminSite:
+        component: superAdminSite
+        description: Admin Site with full system access
+
     HomePath:
         label: Home Path
         component: directorybox

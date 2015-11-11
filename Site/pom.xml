@@ -5,7 +5,7 @@
 	<artifactId>com.dynamia.cms.site.parent</artifactId>
 	<name>DynamiaCMS Site (${project.version})</name>
 	<packaging>pom</packaging>
-	<version>1.0.0.Beta</version>
+	<version>1.0.0.Final</version>
 	<url>http://www.dynamiasoluciones.com</url>
 
 	<properties>
@@ -18,7 +18,7 @@
 		<spring.security.version>3.2.5.RELEASE</spring.security.version>
 		<hibernate.version>4.3.6.Final</hibernate.version>
 		<thymeleaf.version>2.1.3.RELEASE</thymeleaf.version>
-		<thymeleaf.layout.version>1.2.5</thymeleaf.layout.version>
+		<thymeleaf.layout.version>1.3.1</thymeleaf.layout.version>
 
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>

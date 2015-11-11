@@ -25,15 +25,42 @@ public class Banner extends SimpleEntity implements SiteAware, Orderable {
 	private Site site;
 
 	private String title;
+	private String subtitle;
+	private String description;
 	private boolean enabled = true;
 	private String url = "#";
 	private String imageURL;
-	@Column(name="bannerOrder")
+	private String alternateImageURL;
+	@Column(name = "bannerOrder")
 	private int order;
 
 	@OneToOne
 	@NotNull
 	private BannerCategory category;
+
+	public String getSubtitle() {
+		return subtitle;
+	}
+
+	public void setSubtitle(String subtitle) {
+		this.subtitle = subtitle;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getAlternateImageURL() {
+		return alternateImageURL;
+	}
+
+	public void setAlternateImageURL(String alternateImageURL) {
+		this.alternateImageURL = alternateImageURL;
+	}
 
 	public Site getSite() {
 		return site;

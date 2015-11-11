@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?page title="DynamiaCMS File Browser - ${siteContext.current.name}"?>
+<?link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"?>
+<?link rel="icon" href="/images/favicon.ico" type="image/x-icon"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">
+
+	<borderlayout height="100%" width="100%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.dynamia.cms.admin.core.zk.controllers.FileBrowserVM')">
+
+		<center>
+			<filemanager id="fileMgr" rootDirectory="${rootDirectory}" />
+		</center>
+
+		<south height="60px" style="padding: 5px">
+			<button label="Select File" onClick="@command('select')" />
+		</south>
+
+	</borderlayout>
+
+
+
+
+</zk>

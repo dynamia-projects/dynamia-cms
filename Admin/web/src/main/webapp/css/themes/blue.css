@@ -1,0 +1,44 @@
+.header {
+	background-color: #1171a3 !important;
+}
+
+.content {
+	background-color: #efefef;
+	background-image: url("../../images/LogoCMS.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	padding: 0 !important;
+}
+
+.content .z-north, .content .z-south, .content .z-center,
+	.content .z-east, .content .z-borderlayout {
+	background: none !important;
+	border: 0;	
+}
+
+.content .z-west{
+	background-color: #707070;
+}
+
+.footer {
+	color: white;
+	background-color: #1171a3 !important;
+	
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.loginContainer .z-window-content {
+	background-color: #efefef !important;
+	background-image: url("../../images/LogoCMS.png") !important;
+	background-position: center top !important;
+	background-repeat: no-repeat;
+}
+
+.footer .z-label {
+	font-size: 10px;
+}
+
+.z-menubar, .z-toolbar {
+	background-color: transparent !important;
+}

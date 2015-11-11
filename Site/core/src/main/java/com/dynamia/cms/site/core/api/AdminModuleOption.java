@@ -22,6 +22,8 @@ public class AdminModuleOption implements Serializable {
 	private Class coreClass;
 	private boolean editorAllowed = true;
 	private boolean adminAllowed = true;
+	private String image;
+	private boolean shortcut;
 
 	public AdminModuleOption() {
 
@@ -85,6 +87,22 @@ public class AdminModuleOption implements Serializable {
 
 	public void setAdminAllowed(boolean adminAllowed) {
 		this.adminAllowed = adminAllowed;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public boolean isShortcut() {
+		return shortcut;
+	}
+
+	public void setShortcut(boolean shortcut) {
+		this.shortcut = shortcut;
 	}
 
 }

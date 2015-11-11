@@ -4,12 +4,12 @@
 	<parent>
 		<artifactId>com.dynamia.cms.site.parent</artifactId>
 		<groupId>com.dynamia.cms</groupId>
-		<version>1.0.0.Beta</version>
+		<version>1.0.0.Final</version>
 	</parent>
 	<groupId>com.dynamia.cms</groupId>
 	<artifactId>com.dynamia.cms.site.web</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.0.Beta</version>
+	<version>1.0.0.Final</version>
 	<name>DynamiaCMS Site - Web (${project.version})</name>
 	<url>http://www.dynamiasoluciones.com</url>
 
@@ -19,52 +19,52 @@
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.core</artifactId>
-			<version>1.0.0.Beta</version>
+			<version>1.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.templates</artifactId>
-			<version>1.0.0.Beta</version>
+			<version>1.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.pages</artifactId>
-			<version>1.0.0.Beta</version>
+			<version>1.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.menus</artifactId>
-			<version>1.0.0.Beta</version>
+			<version>1.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.products</artifactId>
-			<version>1.0.0.Beta</version>
+			<version>1.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.users</artifactId>
-			<version>1.0.0.Beta</version>
+			<version>1.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.shoppingcart</artifactId>
-			<version>1.0.0.Beta</version>
+			<version>1.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.mail</artifactId>
-			<version>1.0.0.Beta</version>
+			<version>1.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.payment.payulatam</artifactId>
-			<version>1.0.0.Beta</version>
+			<version>1.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.banners</artifactId>
-			<version>1.0.0.Beta</version>
+			<version>1.0.0.Final</version>
 		</dependency>
 
 		<!-- JPA and Hibernate -->

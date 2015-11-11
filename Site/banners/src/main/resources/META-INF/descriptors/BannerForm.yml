@@ -4,13 +4,31 @@ autofields: false
 
 fields:
     title:
+        params:
+            span: 3
+            
+    
+    subtitle:    
     category:
     enabled:
+    description:
+        params:
+            span: 3
+            multiline: true
+            height: 80px
+    
     imageURL:
         label: Image URL
         params:
             span: 3
             placeholder: Enter image URL
+    
+    alternateImageURL:
+        label: Alternate Image URL
+        params:
+            span: 3
+            placeholder: Enter image URL
+    
     url:
         params:
             span: 3

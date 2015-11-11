@@ -5,13 +5,13 @@
  */
 package com.dynamia.cms.admin.core.zk;
 
-import com.dynamia.tools.domain.query.Parameter;
+import org.springframework.stereotype.Component;
+
+import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.tools.web.cfg.ConfigPage;
 import com.dynamia.tools.web.crud.CrudPage;
 import com.dynamia.tools.web.navigation.Module;
 import com.dynamia.tools.web.navigation.ModuleProvider;
-import com.dynamia.tools.web.navigation.PageGroup;
-import org.springframework.stereotype.Component;
 
 /**
  *
@@ -20,17 +20,13 @@ import org.springframework.stereotype.Component;
 @Component("CMSInstallerConfigModule")
 public class InstallerConfig implements ModuleProvider {
 
-    @Override
-    public Module getModule() {
-        Module m = new Module("system", "System");
-        PageGroup pg = new PageGroup("config", "Configuration");
-        m.addPageGroup(pg);
-        {
-            pg.addPage(new ConfigPage("cmsconfig", "Default Configuration", "CMSConfig"));
-            pg.addPage(new CrudPage("params", "Global Parameters", Parameter.class));
-        }
+	@Override
+	public Module getModule() {
+		Module m = new Module("system", "System");
+		m.addPage(new CrudPage("sites", "Sites", Site.class));
+		m.addPage(new ConfigPage("cmsconfig", "Configuration", "CMSConfig"));
 
-        return m;
-    }
+		return m;
+	}
 
 }

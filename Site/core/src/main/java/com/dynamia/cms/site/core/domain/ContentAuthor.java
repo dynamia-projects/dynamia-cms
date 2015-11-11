@@ -4,11 +4,11 @@
  */
 package com.dynamia.cms.site.core.domain;
 
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.contraints.Email;
-import com.dynamia.tools.domain.contraints.NotEmpty;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.dynamia.tools.domain.contraints.Email;
+import com.dynamia.tools.domain.contraints.NotEmpty;
 
 /**
  *
@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "cr_authors")
-public class ContentAuthor extends SimpleEntity {
+public class ContentAuthor extends SiteSimpleEntity {
 
     @NotEmpty(message = "Enter first name")
     private String firstName;

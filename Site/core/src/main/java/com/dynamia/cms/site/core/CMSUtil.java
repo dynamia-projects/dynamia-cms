@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.core.domain.SiteDomain;
 import com.dynamia.cms.site.core.html.Option;
 import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.tools.commons.CollectionsUtils;
@@ -46,6 +47,19 @@ public class CMSUtil {
 	public CMSUtil(Site site) {
 		super();
 		this.site = site;
+	}
+
+	public static String getSiteURL(SiteDomain domain, String uri) {
+		if (uri == null) {
+			uri = "";
+		}
+
+		String urltext = String.format("http://%s/" + uri, domain.getName());
+		if (domain.getPort() > 0) {
+			urltext = String.format("http://%s:%s/" + uri, domain.getName(), domain.getPort());
+		}
+
+		return urltext;
 	}
 
 	public static void addSuccessMessage(String string, RedirectAttributes ra) {
@@ -204,33 +218,33 @@ public class CMSUtil {
 
 		return false;
 	}
-	
+
 	public static Map<String, List<String>> getQueryParams(String url) {
-	    try {
-	        Map<String, List<String>> params = new HashMap<String, List<String>>();
-	        String[] urlParts = url.split("\\?");
-	        if (urlParts.length > 1) {
-	            String query = urlParts[1];
-	            for (String param : query.split("&")) {
-	                String[] pair = param.split("=");
-	                String key = URLDecoder.decode(pair[0], "UTF-8");
-	                String value = "";
-	                if (pair.length > 1) {
-	                    value = URLDecoder.decode(pair[1], "UTF-8");
-	                }
+		try {
+			Map<String, List<String>> params = new HashMap<String, List<String>>();
+			String[] urlParts = url.split("\\?");
+			if (urlParts.length > 1) {
+				String query = urlParts[1];
+				for (String param : query.split("&")) {
+					String[] pair = param.split("=");
+					String key = URLDecoder.decode(pair[0], "UTF-8");
+					String value = "";
+					if (pair.length > 1) {
+						value = URLDecoder.decode(pair[1], "UTF-8");
+					}
 
-	                List<String> values = params.get(key);
-	                if (values == null) {
-	                    values = new ArrayList<String>();
-	                    params.put(key, values);
-	                }
-	                values.add(value);
-	            }
-	        }
+					List<String> values = params.get(key);
+					if (values == null) {
+						values = new ArrayList<String>();
+						params.put(key, values);
+					}
+					values.add(value);
+				}
+			}
 
-	        return params;
-	    } catch (UnsupportedEncodingException ex) {
-	        throw new AssertionError(ex);
-	    }
+			return params;
+		} catch (UnsupportedEncodingException ex) {
+			throw new AssertionError(ex);
+		}
 	}
 }

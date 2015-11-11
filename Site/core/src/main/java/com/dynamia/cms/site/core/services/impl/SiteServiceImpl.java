@@ -7,6 +7,7 @@ package com.dynamia.cms.site.core.services.impl;
 import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.domain.SiteDomain;
+import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.api.Module;
 import com.dynamia.cms.site.core.domain.SiteParameter;
 import com.dynamia.cms.site.core.services.SiteService;
@@ -129,10 +130,7 @@ public class SiteServiceImpl implements SiteService {
 		List<SiteDomain> domains = site.getAcceptedDomains();
 		for (SiteDomain domain : domains) {
 			if (domain != null) {
-				String urltext = String.format("http://%s/cache/clear", domain.getName());
-				if (domain.getPort() > 0) {
-					urltext = String.format("http://%s:%s/cache/clear", domain.getName(), domain.getPort());
-				}
+				String urltext = CMSUtil.getSiteURL(domain, "cache/clear");
 				try {
 					logger.info("Clearing cache for site: " + site + " -> " + urltext);
 					executeHttpRequest(urltext);

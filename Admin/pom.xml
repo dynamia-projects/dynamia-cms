@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.dynamia.cms</groupId>
 	<artifactId>com.dynamia.cms.admin.parent</artifactId>
 	<name>DynamiaCMS Admin  (${project.version})</name>
 	<packaging>pom</packaging>
-	<version>1.0.0.Beta</version>
+	<version>1.0.0.Final</version>
 	<url>http://www.dynamiasoluciones.com</url>
 	<build>
 		<plugins>
@@ -37,7 +38,7 @@
 		<hibernate.version>4.3.6.Final</hibernate.version>
 
 
-		<site.cms.version>1.0.0.Beta</site.cms.version>
+		<site.cms.version>1.0.0.Final</site.cms.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -74,7 +75,13 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<version>6.0</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
 		<!-- TEST DEPENDIENCIES -->
 		<dependency>
 			<groupId>hsqldb</groupId>
@@ -102,9 +109,9 @@
 		<module>core-zk</module>
 		<module>mail-admin</module>
 		<module>users-admin</module>
-		<module>products-admin</module>		
+		<module>products-admin</module>
 		<module>shopping-admin</module>
-		<module>menus-admin</module>		
+		<module>menus-admin</module>
 		<module>web</module>
 	</modules>
 </project>

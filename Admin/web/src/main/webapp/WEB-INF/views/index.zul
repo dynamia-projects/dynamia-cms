@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/template.zul"?>
 <?page title="DynamiaCMS - ${siteContext.current.name}"?>
-
+<?link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"?>
+<?link rel="icon" href="/images/favicon.ico" type="image/x-icon"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
 
 	<div self="@{define(topmenu)}">
 		<menubar>
-			<menuitem label="Resources" onClick="siteResourcesManagerAction.show()" image="${icons['package:normal']}" />
-			<menuitem label="Apply Changes" onClick="siteCache.clear()" image="${icons['apply:normal']}" />
-			
-			<menuitem label="Exit" href="/logout" image="${icons['cancel:normal'] }"/>
+			<menuitem label="Resources"
+				onClick="siteResourcesManagerAction.show()"
+				image="${icons['package:normal']}" />
+			<menuitem label="Apply Changes" onClick="siteCache.clear()"
+				image="${icons['apply:normal']}" />
+
+			<menuitem label="Exit" href="/logout"
+				image="${icons['cancel:normal'] }" />
 		</menubar>
 	</div>
 
@@ -21,8 +26,18 @@
 
 
 
-	<window self="@{define(content)}" apply="${navComposer}" vflex="1">
-		<div id="workspace" height="100%"></div>
-	</window>
+	<borderlayout self="@{define(content)}" apply="${navComposer}"
+		vflex="1">
+
+		<west width="80px">
+
+		</west>
+
+		<center>
+			<div id="workspace" sclass="workspace" height="100%"></div>
+		</center>
+	</borderlayout>
+
+
 
 </zk>

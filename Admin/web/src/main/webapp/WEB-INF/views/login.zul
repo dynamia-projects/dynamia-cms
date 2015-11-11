@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/template.zul"?>
 <?page title="DynamiaCMS - ${siteContext.current.name}"?>
-
+<?link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"?>
+<?link rel="icon" href="/images/favicon.ico" type="image/x-icon"?>
 <zk xmlns="http://www.zkoss.org/2005/zul">
   
     
-    <window  self="@{define(content)}"   height="100%" border="0" contentStyle="padding:0">
+    
+    <window sclass="loginContainer"  self="@{define(content)}"   height="100%" border="0" contentStyle="padding:0">
 
-        <window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.dynamia.cms.admin.users.viewmodels.LoginVM')"
+        <window sclass="loginWindow" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.dynamia.cms.admin.users.viewmodels.LoginVM')"
                 title="${siteContext.current.name} - Login"  mode="overlapped"  position="center" border="normal" width="400px" height="280px">
                     
             <vlayout hflex="1">
