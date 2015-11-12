@@ -96,6 +96,7 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 		mv.setViewName("error/offline");
 		mv.addObject("title", "OFFLINE!");
 		mv.addObject("site", site);
+		mv.addObject("siteKey", site.getKey());
 		mv.addObject("offlineIcon", site.getOfflineIcon());
 		mv.addObject("offlineMessage", site.getOfflineMessage());
 
@@ -103,6 +104,8 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 
 	private void loadSiteMetadata(Site site, ModelAndView mv) {
 		if (site != null && mv != null) {
+			mv.addObject("siteKey", site.getKey());
+			mv.addObject("site", site);
 			mv.addObject("metaAuthor", site.getMetadataAuthor());
 			mv.addObject("metaRights", site.getMetadataRights());
 			if (!mv.getModel().containsKey("metaDescription")) {

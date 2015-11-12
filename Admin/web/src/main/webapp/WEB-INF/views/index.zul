@@ -32,7 +32,7 @@
 		<west width="70px" apply="org.zkoss.bind.BindComposer" sclass="shortcutsContainer"
 			viewModel="@id('vm') @init('com.dynamia.cms.admin.core.zk.controllers.AdminModuleShortcutVM')">
 
-			<grid model="@load(vm.shortcuts)" width="100%"
+			<grid model="@load(vm.shortcuts)" width="100%" vflex="1" 
 				oddRowSclass="none" sclass="shortcuts">
 				<template name="model" var="shrt">
 					<row>

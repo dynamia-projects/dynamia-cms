@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Main Menu -->
+
+<body th:fragment="content">
+	<div class="headerstrip navbar-fixed-top hidden-lg hidden-md">
+
+		<table style="width: 100%; border: 0; padding: 0">
+			<tr>
+				<td width="50px" align="center"><a href="#" th:href='@{/}'> <img th:title="${name}"  th:alt="${name}"
+						th:src="@{/img/logomobile.png}" title="Simplepx" alt="Simplepx" />
+				</a></td>
+				<td>
+					<form action="#" class="form-inline" th:action="@{/search}" th:object="${searchForm}" method="get">
+						<input type="search" class="form-control" placeholder="Busqueda" style="margin-top: 3px; background-color: transparent; border: 0; border-bottom: solid 1px silver; color: white" th:field="*{query}" />
+					</form>
+				</td>
+				<td width="35px" style="text-align: center">
+					<button type="button" class="navbar-toggle" style="border: 0" data-toggle="collapse" data-target=".navbar-collapse">
+						<i class="icon-align-justify"></i>
+					</button>
+				</td>
+			</tr>
+		</table>
+
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav mobilemenu">
+				<li th:each="mi : ${menuitems}"><a th:class="${activeMenu == mi? 'active':''}" th:href="@{${mi.href}}" href="#"> <i
+						th:class="${'icon-'+mi.icon+' icon-white'}" class="icon-home icon-white font18"></i> <th:block th:text="${mi.name}" />
+				</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="hidden-lg hidden-md" style="height: 80px"></div>
+	
+
+</body>
+
+</html>
