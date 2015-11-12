@@ -30,7 +30,7 @@ public class CoreAdminModule implements AdminModule {
 	@Override
     public AdminModuleOption[] getOptions() {
         return new AdminModuleOption[]{            
-            new AdminModuleOption("modules", "Modules", ModuleInstance.class)
+            new AdminModuleOption("modules", "Modules", ModuleInstance.class,true,true,"cubes",true)
         };
     }
 }

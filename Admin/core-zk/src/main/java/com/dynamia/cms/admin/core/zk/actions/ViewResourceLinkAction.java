@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zul.Messagebox;
 
 import com.dynamia.cms.site.core.SiteContext;
@@ -67,7 +68,8 @@ public class ViewResourceLinkAction extends FileManagerAction {
 		path = path.substring(path.indexOf(site.getKey()) + site.getKey().length() + 1);
 
 		String url = String.format("http://%s%s/resources/%s", domain.getName(), port, path);
-		url = url.trim().replace(" ", "%20");
+		url = url.trim().replace(" ", "%20").replace("\\", "/");
+		url = Executions.getCurrent().encodeURL(url);
 		return url;
 	}
 

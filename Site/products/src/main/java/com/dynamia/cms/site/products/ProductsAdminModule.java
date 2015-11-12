@@ -21,25 +21,25 @@ import com.dynamia.cms.site.products.domain.Store;
 @CMSModule
 public class ProductsAdminModule implements AdminModule {
 
-    @Override
-    public String getGroup() {
-        return "Products";
-    }
+	@Override
+	public String getGroup() {
+		return "Products";
+	}
 
-    @Override
-    public String getName() {
-        return "Products";
-    }
+	@Override
+	public String getName() {
+		return "Products";
+	}
 
-    @Override
-    public AdminModuleOption[] getOptions() {
-        return new AdminModuleOption[]{
-            new AdminModuleOption("config", "Configuration", ProductsSiteConfig.class),
-            new AdminModuleOption("products", "Products", Product.class),
-            new AdminModuleOption("categories", "Categories", ProductCategory.class),
-            new AdminModuleOption("brands", "Brands", ProductBrand.class),
-            new AdminModuleOption("stores", "Stores", Store.class)};
+	@Override
+	public AdminModuleOption[] getOptions() {
+		return new AdminModuleOption[] {
+				new AdminModuleOption("config", "Configuration", ProductsSiteConfig.class),
+				new AdminModuleOption("products", "Products", Product.class, true, true, "th", true),
+				new AdminModuleOption("categories", "Categories", ProductCategory.class),
+				new AdminModuleOption("brands", "Brands", ProductBrand.class),
+				new AdminModuleOption("stores", "Stores", Store.class) };
 
-    }
+	}
 
 }

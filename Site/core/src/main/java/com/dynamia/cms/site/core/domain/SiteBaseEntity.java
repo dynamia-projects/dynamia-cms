@@ -1,11 +1,13 @@
 package com.dynamia.cms.site.core.domain;
 
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.tools.domain.BaseEntity;
 
+@MappedSuperclass
 public abstract class SiteBaseEntity extends BaseEntity implements SiteAware {
 
 	/**

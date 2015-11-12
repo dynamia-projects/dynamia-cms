@@ -26,7 +26,7 @@ public class ShoppingCartAdminModule implements AdminModule {
 		return new AdminModuleOption[] {
 				new AdminModuleOption("shopConfig", "Configuration", ShoppingSiteConfig.class),
 				new AdminModuleOption("paymentConfig", "Payment Gateway Config", PaymentGatewayConfig.class),
-				new AdminModuleOption("shoppingOrders", "Orders", ShoppingOrder.class),
+				new AdminModuleOption("shoppingOrders", "Orders", ShoppingOrder.class,true,true,"shopping-cart",true),
 				new AdminModuleOption("shippingCompany", "Shipping Company", ShippingCompany.class)
 
 		};

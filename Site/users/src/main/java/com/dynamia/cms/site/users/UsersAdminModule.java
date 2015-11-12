@@ -30,7 +30,7 @@ public class UsersAdminModule implements AdminModule {
     @Override
     public AdminModuleOption[] getOptions() {
         return new AdminModuleOption[]{
-            new AdminModuleOption("users", "Users", User.class)
+            new AdminModuleOption("users", "Users", User.class,true,true,"users",true)
         };
     }
 

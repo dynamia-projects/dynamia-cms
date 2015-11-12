@@ -24,6 +24,7 @@ public class AdminModuleOption implements Serializable {
 	private boolean adminAllowed = true;
 	private String image;
 	private boolean shortcut;
+	private String path;
 
 	public AdminModuleOption() {
 
@@ -47,6 +48,18 @@ public class AdminModuleOption implements Serializable {
 		this.coreClass = coreClass;
 		this.editorAllowed = editorAllowed;
 		this.adminAllowed = adminAllowed;
+	}
+
+	public AdminModuleOption(String id, String name, Class coreClass, boolean editorAllowed, boolean adminAllowed, String image,
+			boolean shortcut) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.coreClass = coreClass;
+		this.editorAllowed = editorAllowed;
+		this.adminAllowed = adminAllowed;
+		this.image = image;
+		this.shortcut = shortcut;
 	}
 
 	public String getId() {
@@ -103,6 +116,14 @@ public class AdminModuleOption implements Serializable {
 
 	public void setShortcut(boolean shortcut) {
 		this.shortcut = shortcut;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 }

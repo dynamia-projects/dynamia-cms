@@ -2,6 +2,8 @@
 	background-color: #1171a3 !important;
 }
 
+
+
 .content {
 	background-color: #efefef;
 	background-image: url("../../images/LogoCMS.png");
@@ -10,20 +12,20 @@
 	padding: 0 !important;
 }
 
-.content .z-north, .content .z-south, .content .z-center,
-	.content .z-east, .content .z-borderlayout {
+.content .z-north, .content .z-south, .content .z-center, .content .z-east,
+	.content .z-borderlayout {
 	background: none !important;
-	border: 0;	
+	border: 0;
 }
 
-.content .z-west{
+
+.content .shortcutsContainer {
 	background-color: #707070;
 }
 
 .footer {
 	color: white;
 	background-color: #1171a3 !important;
-	
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -41,4 +43,38 @@
 
 .z-menubar, .z-toolbar {
 	background-color: transparent !important;
+}
+
+.z-north, .z-south, .z-west, .z-center, .z-east{
+	border: 0;
+}
+
+.shortcuts, .shortcuts .z-row .z-row-inner {
+	background: none;
+	border: 0;
+	text-align: center;
+}
+
+.shortcut {
+	text-align: center;
+	color: #e2e2e2;
+	text-decoration: none;
+	line-height: 1;
+	margin-top: 4px;
+}
+
+.shortcut div {
+	height: 53px;
+	padding-top: 5px;
+}
+
+.shortcut div:hover {
+	background-color: #819194;
+	border-radius: 6px;
+	color: white;
+	
+}
+
+.shortcut span {
+	font-size: 10px;
 }

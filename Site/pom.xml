@@ -137,6 +137,7 @@
 		<module>payment</module>
 		<module>payment-payulatam</module>
 		<module>banners</module>
-	</modules>
+    <module>contacts</module>
+  </modules>
 
 </project>

@@ -126,8 +126,8 @@ public class SiteServiceImpl implements SiteService {
 
 	@Override
 	public void clearCache(Site site) {
-		site = crudService.reload(site);
-		List<SiteDomain> domains = site.getAcceptedDomains();
+
+		List<SiteDomain> domains = crudService.find(SiteDomain.class, "site", site);
 		for (SiteDomain domain : domains) {
 			if (domain != null) {
 				String urltext = CMSUtil.getSiteURL(domain, "cache/clear");

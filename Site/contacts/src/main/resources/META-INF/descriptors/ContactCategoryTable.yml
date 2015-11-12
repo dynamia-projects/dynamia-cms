@@ -1,0 +1,14 @@
+view: table
+beanClass: com.dynamia.cms.site.contacts.domain.ContactCategory
+autofields: false
+
+fields:
+  name:
+  defaultEmail:
+  description: 
+  order:
+  active:
+  
+
+params:
+  orderBy: order, active

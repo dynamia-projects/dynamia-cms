@@ -30,7 +30,7 @@ public class MenuAdminModule implements AdminModule {
     @Override
     public AdminModuleOption[] getOptions() {
         return new AdminModuleOption[]{
-            new AdminModuleOption("menus", "Menus", Menu.class)
+            new AdminModuleOption("menus", "Menus", Menu.class,true,true,"indent",true)
         };
     }
 

@@ -1,0 +1,18 @@
+view: table
+beanClass: com.dynamia.cms.site.contacts.domain.Contact
+autofields: false
+
+fields:
+  category:
+  name:
+  email:
+  phoneNumber:
+  mobileNumber:
+  city:
+  zipCode:
+  address:
+  active:
+  
+params:
+  orderBy: name, active
+  

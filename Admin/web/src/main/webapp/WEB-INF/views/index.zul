@@ -3,7 +3,7 @@
 <?page title="DynamiaCMS - ${siteContext.current.name}"?>
 <?link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"?>
 <?link rel="icon" href="/images/favicon.ico" type="image/x-icon"?>
-<zk xmlns="http://www.zkoss.org/2005/zul">
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
 
 	<div self="@{define(topmenu)}">
 		<menubar>
@@ -29,7 +29,27 @@
 	<borderlayout self="@{define(content)}" apply="${navComposer}"
 		vflex="1">
 
-		<west width="80px">
+		<west width="70px" apply="org.zkoss.bind.BindComposer" sclass="shortcutsContainer"
+			viewModel="@id('vm') @init('com.dynamia.cms.admin.core.zk.controllers.AdminModuleShortcutVM')">
+
+			<grid model="@load(vm.shortcuts)" width="100%"
+				oddRowSclass="none" sclass="shortcuts">
+				<template name="model" var="shrt">
+					<row>
+						
+						<a sclass="shortcut" onClick="@command('navigateTo', path=shrt.path)">
+						
+							<div>
+								<n:i class="fa fa-${shrt.image} fa-2x fa-fw" />
+								<n:br />
+								<n:span>${shrt.name}</n:span>
+							</div>
+						</a>
+
+					</row>
+				</template>
+
+			</grid>
 
 		</west>
 
