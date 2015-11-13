@@ -4,11 +4,12 @@
  */
 package com.dynamia.cms.site.users.domain;
 
-import com.dynamia.tools.domain.SimpleEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import tools.dynamia.domain.SimpleEntity;
 
 /**
  *

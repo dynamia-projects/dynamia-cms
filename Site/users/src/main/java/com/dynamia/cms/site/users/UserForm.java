@@ -5,10 +5,12 @@
  */
 package com.dynamia.cms.site.users;
 
+import java.io.Serializable;
+
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.users.domain.User;
-import com.dynamia.tools.domain.contraints.NotEmpty;
-import java.io.Serializable;
+
+import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  *

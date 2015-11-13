@@ -5,11 +5,6 @@
  */
 package com.dynamia.cms.site.products.services.impl;
 
-import static com.dynamia.tools.domain.query.QueryConditions.between;
-import static com.dynamia.tools.domain.query.QueryConditions.geqt;
-import static com.dynamia.tools.domain.query.QueryConditions.gt;
-import static com.dynamia.tools.domain.query.QueryConditions.leqt;
-
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Date;
@@ -42,13 +37,15 @@ import com.dynamia.cms.site.products.domain.Store;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.domain.User;
-import com.dynamia.tools.commons.StringUtils;
-import com.dynamia.tools.commons.collect.PagedList;
-import com.dynamia.tools.domain.query.QueryConditions;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.domain.util.QueryBuilder;
-import com.dynamia.tools.integration.Containers;
+
+import tools.dynamia.commons.StringUtils;
+import tools.dynamia.commons.collect.PagedList;
+import static tools.dynamia.domain.query.QueryConditions.*;
+import tools.dynamia.domain.query.QueryConditions;
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.domain.util.QueryBuilder;
+import tools.dynamia.integration.Containers;
 
 /**
  *

@@ -3,10 +3,11 @@ package com.dynamia.cms.admin.core;
 import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.commons.BeanUtils;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.util.CrudServiceListenerAdapter;
-import com.dynamia.tools.integration.sterotypes.Component;
+
+import tools.dynamia.commons.BeanUtils;
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.util.CrudServiceListenerAdapter;
+import tools.dynamia.integration.sterotypes.Component;
 
 @Component
 public class SiteAwareCrudListener extends CrudServiceListenerAdapter<SiteAware> {

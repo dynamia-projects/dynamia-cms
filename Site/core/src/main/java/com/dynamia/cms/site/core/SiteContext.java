@@ -13,7 +13,8 @@ import org.springframework.stereotype.Component;
 
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.tools.integration.Containers;
+
+import tools.dynamia.integration.Containers;
 
 /**
  *

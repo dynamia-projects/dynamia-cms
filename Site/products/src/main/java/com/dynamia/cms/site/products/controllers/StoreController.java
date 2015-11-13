@@ -36,7 +36,8 @@ import com.dynamia.cms.site.products.ProductSearchForm;
 import com.dynamia.cms.site.products.ProductShareForm;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.cms.site.users.UserHolder;
-import com.dynamia.tools.commons.StringUtils;
+
+import tools.dynamia.commons.StringUtils;
 
 /**
  *

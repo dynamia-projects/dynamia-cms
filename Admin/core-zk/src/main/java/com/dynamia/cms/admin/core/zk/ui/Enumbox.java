@@ -11,8 +11,8 @@ import java.util.List;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zul.Combobox;
 
-import com.dynamia.tools.viewers.zk.ComponentAliasIndex;
-import com.dynamia.tools.web.util.ZKUtil;
+import tools.dynamia.zk.ComponentAliasIndex;
+import tools.dynamia.zk.util.ZKUtil;
 
 /**
  *

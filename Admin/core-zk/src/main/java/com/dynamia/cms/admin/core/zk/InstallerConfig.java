@@ -8,10 +8,11 @@ package com.dynamia.cms.admin.core.zk;
 import org.springframework.stereotype.Component;
 
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.web.cfg.ConfigPage;
-import com.dynamia.tools.web.crud.CrudPage;
-import com.dynamia.tools.web.navigation.Module;
-import com.dynamia.tools.web.navigation.ModuleProvider;
+
+import tools.dynamia.crud.CrudPage;
+import tools.dynamia.navigation.Module;
+import tools.dynamia.navigation.ModuleProvider;
+import tools.dynamia.zk.crud.cfg.ConfigPage;
 
 /**
  *

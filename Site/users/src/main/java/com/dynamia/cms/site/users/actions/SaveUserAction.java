@@ -5,6 +5,9 @@
  */
 package com.dynamia.cms.site.users.actions;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
@@ -13,9 +16,8 @@ import com.dynamia.cms.site.users.UserForm;
 import com.dynamia.cms.site.users.UsersUtil;
 import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.cms.site.users.services.UserService;
-import com.dynamia.tools.domain.ValidationError;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
+
+import tools.dynamia.domain.ValidationError;
 
 /**
  *

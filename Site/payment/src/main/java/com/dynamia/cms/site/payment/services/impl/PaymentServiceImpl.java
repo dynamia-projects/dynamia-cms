@@ -16,10 +16,11 @@ import com.dynamia.cms.site.payment.PaymentGateway;
 import com.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
 import com.dynamia.cms.site.payment.domain.PaymentTransaction;
 import com.dynamia.cms.site.payment.services.PaymentService;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.integration.sterotypes.Service;
+
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.integration.Containers;
+import tools.dynamia.integration.sterotypes.Service;
 
 @Service
 class PaymentServiceImpl implements PaymentService {

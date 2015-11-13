@@ -11,7 +11,8 @@ import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.mail.domain.MailAccount;
 import com.dynamia.cms.site.mail.domain.MailTemplate;
-import com.dynamia.tools.domain.SimpleEntity;
+
+import tools.dynamia.domain.SimpleEntity;
 
 @Entity
 @Table(name = "sc_configuration")

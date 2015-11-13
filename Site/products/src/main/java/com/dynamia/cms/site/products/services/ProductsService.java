@@ -5,8 +5,9 @@
  */
 package com.dynamia.cms.site.products.services;
 
+import java.util.List;
+
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.mail.MailMessage;
 import com.dynamia.cms.site.products.ProductSearchForm;
 import com.dynamia.cms.site.products.ProductShareForm;
 import com.dynamia.cms.site.products.domain.Product;
@@ -18,14 +19,8 @@ import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.domain.Store;
 import com.dynamia.cms.site.users.domain.User;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.util.QueryBuilder;
 
-import java.util.List;
-
-import javax.persistence.Query;
-
-import org.springframework.cache.annotation.Cacheable;
+import tools.dynamia.domain.query.QueryParameters;
 
 /**
  *

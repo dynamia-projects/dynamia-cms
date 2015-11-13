@@ -17,9 +17,10 @@ import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
 import com.dynamia.cms.site.users.UserHolder;
-import com.dynamia.tools.commons.collect.PagedList;
-import com.dynamia.tools.commons.collect.PagedListDataSource;
-import com.dynamia.tools.integration.Containers;
+
+import tools.dynamia.commons.collect.PagedList;
+import tools.dynamia.commons.collect.PagedListDataSource;
+import tools.dynamia.integration.Containers;
 
 /**
  *

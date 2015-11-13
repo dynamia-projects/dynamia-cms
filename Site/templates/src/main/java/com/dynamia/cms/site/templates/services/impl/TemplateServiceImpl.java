@@ -5,13 +5,6 @@
  */
 package com.dynamia.cms.site.templates.services.impl;
 
-import com.dynamia.cms.site.core.DynamiaCMS;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.templates.Template;
-import com.dynamia.cms.site.templates.TemplateNotFoundException;
-import com.dynamia.cms.site.templates.services.TemplateService;
-import com.dynamia.tools.domain.query.Parameter;
-import com.dynamia.tools.domain.query.Parameters;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.DirectoryStream;
@@ -22,8 +15,18 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.dynamia.cms.site.core.DynamiaCMS;
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.templates.Template;
+import com.dynamia.cms.site.templates.TemplateNotFoundException;
+import com.dynamia.cms.site.templates.services.TemplateService;
+
+import tools.dynamia.domain.query.Parameter;
+import tools.dynamia.domain.query.Parameters;
 
 /**
  *

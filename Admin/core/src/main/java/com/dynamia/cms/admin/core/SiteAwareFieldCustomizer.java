@@ -1,8 +1,8 @@
 package com.dynamia.cms.admin.core;
 
-import com.dynamia.tools.integration.sterotypes.Component;
-import com.dynamia.tools.viewers.Field;
-import com.dynamia.tools.viewers.FieldCustomizer;
+import tools.dynamia.integration.sterotypes.Component;
+import tools.dynamia.viewers.Field;
+import tools.dynamia.viewers.FieldCustomizer;
 
 @Component
 public class SiteAwareFieldCustomizer implements FieldCustomizer {

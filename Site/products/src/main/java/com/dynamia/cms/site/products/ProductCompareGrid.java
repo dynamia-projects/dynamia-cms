@@ -5,17 +5,19 @@
  */
 package com.dynamia.cms.site.products;
 
-import com.dynamia.cms.site.products.domain.Product;
-import com.dynamia.cms.site.products.domain.ProductDetail;
-import com.dynamia.cms.site.products.services.ProductsService;
-import com.dynamia.tools.commons.StringUtils;
-import com.dynamia.tools.commons.collect.ArrayListMultiMap;
-import com.dynamia.tools.commons.collect.MultiMap;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import com.dynamia.cms.site.products.domain.Product;
+import com.dynamia.cms.site.products.domain.ProductDetail;
+import com.dynamia.cms.site.products.services.ProductsService;
+
+import tools.dynamia.commons.StringUtils;
+import tools.dynamia.commons.collect.ArrayListMultiMap;
+import tools.dynamia.commons.collect.MultiMap;
 
 /**
  *

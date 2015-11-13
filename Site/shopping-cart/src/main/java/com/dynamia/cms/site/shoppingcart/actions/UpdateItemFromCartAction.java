@@ -17,7 +17,8 @@ import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
-import com.dynamia.tools.commons.StringUtils;
+
+import tools.dynamia.commons.StringUtils;
 
 /**
  *

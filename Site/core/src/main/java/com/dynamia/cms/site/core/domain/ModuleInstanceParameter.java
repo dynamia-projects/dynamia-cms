@@ -14,7 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.dynamia.cms.site.core.api.Parameter;
-import com.dynamia.tools.domain.SimpleEntity;
+
+import tools.dynamia.domain.SimpleEntity;
 
 /**
  *

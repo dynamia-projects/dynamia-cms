@@ -5,12 +5,15 @@
  */
 package com.dynamia.cms.admin.users;
 
-import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.cms.site.users.services.UserService;
-import com.dynamia.tools.integration.sterotypes.Component;
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+
+import com.dynamia.cms.site.core.services.SiteService;
+import com.dynamia.cms.site.users.services.UserService;
+
+import tools.dynamia.integration.sterotypes.Component;
 
 /**
  *

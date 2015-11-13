@@ -5,17 +5,18 @@
  */
 package com.dynamia.cms.site.templates;
 
+import java.io.File;
+import java.nio.file.Path;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.DynamiaCMS;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.cms.site.templates.services.TemplateService;
-import com.dynamia.tools.integration.Containers;
 
-import java.io.File;
-import java.nio.file.Path;
-
-import javax.servlet.http.HttpServletRequest;
+import tools.dynamia.integration.Containers;
 
 /**
  *

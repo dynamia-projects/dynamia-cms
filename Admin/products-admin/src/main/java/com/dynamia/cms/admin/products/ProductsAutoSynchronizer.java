@@ -5,13 +5,16 @@
  */
 package com.dynamia.cms.admin.products;
 
-import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import com.dynamia.cms.site.products.services.ProductsSynchronizer;
-import com.dynamia.tools.domain.services.CrudService;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import com.dynamia.cms.site.products.services.ProductsSynchronizer;
+
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *

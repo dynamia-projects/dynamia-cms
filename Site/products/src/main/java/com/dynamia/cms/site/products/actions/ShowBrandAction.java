@@ -5,6 +5,9 @@
  */
 package com.dynamia.cms.site.products.actions;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.actions.SiteActionManager;
@@ -14,10 +17,8 @@ import com.dynamia.cms.site.products.ProductSearchOrder;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.services.ProductsService;
-import com.dynamia.tools.domain.services.CrudService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *

@@ -4,10 +4,10 @@ beanClass: com.dynamia.cms.site.core.domain.ModuleInstance
 autofields: false
 
 fields:
-   site: 
-      component: label
+   
    title:
    alias:
+   titleVisible:
    moduleId:
       label: Type
       component: typeSelector
@@ -17,10 +17,11 @@ fields:
    position:
       component: positionSelector
    
-   enabled:
-   titleVisible:
+   
+   
    styleClass:
    order:
+   enabled:
         
 layout:
-    columns: 2
+    columns: 3

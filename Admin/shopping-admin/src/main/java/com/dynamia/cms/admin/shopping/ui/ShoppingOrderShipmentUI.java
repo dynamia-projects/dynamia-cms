@@ -11,13 +11,14 @@ import org.zkoss.zul.South;
 
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-import com.dynamia.tools.viewers.util.Viewers;
-import com.dynamia.tools.viewers.zk.form.FormView;
-import com.dynamia.tools.viewers.zk.table.TableView;
-import com.dynamia.tools.web.actions.Action;
-import com.dynamia.tools.web.actions.ActionEvent;
-import com.dynamia.tools.web.actions.ActionEventBuilder;
-import com.dynamia.tools.web.ui.ActionToolbar;
+
+import tools.dynamia.actions.Action;
+import tools.dynamia.actions.ActionEvent;
+import tools.dynamia.actions.ActionEventBuilder;
+import tools.dynamia.viewers.util.Viewers;
+import tools.dynamia.zk.actions.ActionToolbar;
+import tools.dynamia.zk.viewers.form.FormView;
+import tools.dynamia.zk.viewers.table.TableView;
 
 @SuppressWarnings("unchecked")
 public class ShoppingOrderShipmentUI extends Borderlayout implements ActionEventBuilder {

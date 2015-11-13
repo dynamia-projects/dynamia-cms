@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,11 +23,11 @@ import com.dynamia.cms.site.payment.ResponseType;
 import com.dynamia.cms.site.payment.domain.PaymentTransaction;
 import com.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import com.dynamia.cms.site.payment.services.PaymentService;
-import com.dynamia.tools.commons.logger.LoggingService;
-import com.dynamia.tools.commons.logger.SLF4JLoggingService;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.integration.sterotypes.Controller;
+
+import tools.dynamia.commons.logger.LoggingService;
+import tools.dynamia.commons.logger.SLF4JLoggingService;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.integration.Containers;
 
 @Controller
 @RequestMapping("/payment")

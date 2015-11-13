@@ -6,19 +6,20 @@ import org.zkoss.zul.Window;
 import com.dynamia.cms.admin.shopping.ui.ShoppingOrderShipmentUI;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
-import com.dynamia.tools.commons.ApplicableClass;
-import com.dynamia.tools.commons.Messages;
-import com.dynamia.tools.domain.ValidationError;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.web.actions.AbstractAction;
-import com.dynamia.tools.web.actions.ActionEvent;
-import com.dynamia.tools.web.actions.InstallAction;
-import com.dynamia.tools.web.crud.AbstractCrudAction;
-import com.dynamia.tools.web.crud.CrudActionEvent;
-import com.dynamia.tools.web.crud.CrudState;
-import com.dynamia.tools.web.ui.MessageType;
-import com.dynamia.tools.web.ui.UIMessages;
-import com.dynamia.tools.web.util.ZKUtil;
+
+import tools.dynamia.actions.AbstractAction;
+import tools.dynamia.actions.ActionEvent;
+import tools.dynamia.actions.InstallAction;
+import tools.dynamia.commons.ApplicableClass;
+import tools.dynamia.commons.Messages;
+import tools.dynamia.crud.AbstractCrudAction;
+import tools.dynamia.crud.CrudActionEvent;
+import tools.dynamia.crud.CrudState;
+import tools.dynamia.domain.ValidationError;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.ui.MessageType;
+import tools.dynamia.ui.UIMessages;
+import tools.dynamia.zk.util.ZKUtil;
 
 @InstallAction
 public class ShipOrderAction extends AbstractCrudAction {

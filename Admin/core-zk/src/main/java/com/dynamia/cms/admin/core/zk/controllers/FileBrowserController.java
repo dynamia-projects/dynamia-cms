@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,8 +14,8 @@ import com.dynamia.cms.site.core.DynamiaCMS;
 import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.domain.SiteDomain;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.integration.sterotypes.Controller;
+
+import tools.dynamia.domain.services.CrudService;
 
 @Controller
 public class FileBrowserController {

@@ -5,14 +5,14 @@
  */
 package com.dynamia.cms.site.products.ext;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.dynamia.cms.site.core.api.CMSExtension;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartItemProvider;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *

@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
-import com.dynamia.tools.commons.ApplicableClass;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.web.actions.InstallAction;
-import com.dynamia.tools.web.crud.AbstractCrudAction;
-import com.dynamia.tools.web.crud.CrudActionEvent;
-import com.dynamia.tools.web.crud.CrudState;
-import com.dynamia.tools.web.ui.UIMessages;
-import com.dynamia.tools.web.util.Callback;
+
+import tools.dynamia.actions.InstallAction;
+import tools.dynamia.commons.ApplicableClass;
+import tools.dynamia.crud.AbstractCrudAction;
+import tools.dynamia.crud.CrudActionEvent;
+import tools.dynamia.crud.CrudState;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.ui.UIMessages;
 
 @InstallAction
 public class NotifyOrderCompletedAction extends AbstractCrudAction {
@@ -43,14 +43,10 @@ public class NotifyOrderCompletedAction extends AbstractCrudAction {
 		final ShoppingOrder shoppingOrder = (ShoppingOrder) evt.getData();
 		if (shoppingOrder != null) {
 
-			UIMessages.showQuestion("Are you sure?", new Callback() {
+			UIMessages.showQuestion("Are you sure?", () -> {
+				service.notifyOrderCompleted(crudService.reload(shoppingOrder));
+				UIMessages.showMessage("Notification sended ");
 
-				@Override
-				public void doSomething() {
-					service.notifyOrderCompleted(crudService.reload(shoppingOrder));
-					UIMessages.showMessage("Notification sended ");
-
-				}
 			});
 		}
 	}

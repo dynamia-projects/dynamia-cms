@@ -7,8 +7,8 @@ package com.dynamia.cms.site.core.domain;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.dynamia.tools.domain.contraints.Email;
-import com.dynamia.tools.domain.contraints.NotEmpty;
+import tools.dynamia.domain.contraints.Email;
+import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  *

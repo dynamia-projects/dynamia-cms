@@ -4,11 +4,6 @@
  */
 package com.dynamia.cms.site.menus.domain;
 
-import com.dynamia.cms.site.core.api.SiteAware;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.contraints.NotEmpty;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +17,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.dynamia.cms.site.core.api.SiteAware;
+import com.dynamia.cms.site.core.domain.Site;
+
+import tools.dynamia.domain.SimpleEntity;
+import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  *

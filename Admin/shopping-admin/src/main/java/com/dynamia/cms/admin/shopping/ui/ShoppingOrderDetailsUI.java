@@ -7,9 +7,10 @@ import org.zkoss.zul.Groupbox;
 import com.dynamia.cms.site.payment.domain.PaymentTransaction;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-import com.dynamia.tools.viewers.util.Viewers;
-import com.dynamia.tools.viewers.zk.form.FormView;
-import com.dynamia.tools.viewers.zk.table.TableView;
+
+import tools.dynamia.viewers.util.Viewers;
+import tools.dynamia.zk.viewers.form.FormView;
+import tools.dynamia.zk.viewers.table.TableView;
 
 public class ShoppingOrderDetailsUI extends Div {
 

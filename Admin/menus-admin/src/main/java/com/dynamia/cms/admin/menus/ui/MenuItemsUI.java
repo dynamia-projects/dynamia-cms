@@ -12,27 +12,36 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.North;
 import org.zkoss.zul.South;
+import org.zkoss.zul.Tab;
+import org.zkoss.zul.Tabbox;
+import org.zkoss.zul.Tabpanel;
+import org.zkoss.zul.Tabpanels;
+import org.zkoss.zul.Tabs;
 
 import com.dynamia.cms.admin.core.zk.EntityConverter;
 import com.dynamia.cms.admin.core.zk.ui.TypeSelector;
+import com.dynamia.cms.admin.menus.actions.EditSubmenuAction;
+import com.dynamia.cms.admin.menus.actions.NewSubmenuAction;
 import com.dynamia.cms.site.menus.api.MenuItemType;
 import com.dynamia.cms.site.menus.domain.MenuItem;
 import com.dynamia.cms.site.menus.domain.MenuItemParameter;
 import com.dynamia.cms.site.menus.services.MenuService;
-import com.dynamia.tools.commons.MapBuilder;
-import com.dynamia.tools.domain.query.Parameter;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.viewers.Field;
-import com.dynamia.tools.viewers.ViewDescriptor;
-import com.dynamia.tools.viewers.ViewDescriptorNotFoundException;
-import com.dynamia.tools.viewers.util.Viewers;
-import com.dynamia.tools.viewers.zk.form.FormView;
-import com.dynamia.tools.web.actions.Action;
-import com.dynamia.tools.web.actions.ActionEvent;
-import com.dynamia.tools.web.actions.ActionEventBuilder;
-import com.dynamia.tools.web.cfg.ConfigView;
-import com.dynamia.tools.web.ui.ActionToolbar;
-import com.dynamia.tools.web.ui.EntityPickerBox;
+
+import tools.dynamia.actions.Action;
+import tools.dynamia.actions.ActionEvent;
+import tools.dynamia.actions.ActionEventBuilder;
+import tools.dynamia.commons.MapBuilder;
+import tools.dynamia.domain.query.Parameter;
+import tools.dynamia.integration.Containers;
+import tools.dynamia.viewers.Field;
+import tools.dynamia.viewers.ViewDescriptor;
+import tools.dynamia.viewers.ViewDescriptorNotFoundException;
+import tools.dynamia.viewers.util.Viewers;
+import tools.dynamia.zk.actions.ActionToolbar;
+import tools.dynamia.zk.crud.cfg.ConfigView;
+import tools.dynamia.zk.crud.ui.EntityPickerBox;
+import tools.dynamia.zk.viewers.form.FormView;
+import tools.dynamia.zk.viewers.table.TableView;
 
 public class MenuItemsUI extends Div implements ActionEventBuilder {
 
@@ -42,16 +51,21 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 	 */
 	private static final long serialVersionUID = -3032514789042367569L;
 	private ActionToolbar toolbar;
+	private ActionToolbar toolbarSubmenus;
 	private MenuItem menuItem;
 	private Component configurationUI;
-	private Borderlayout layout;
+	private Borderlayout layoutMenu;
+	private Borderlayout layoutSubmenus;
+	private Tabbox tabbox;
 	private FormView<MenuItem> formView;
+	private TableView<MenuItem> subitemsTable;
 
 	public MenuItemsUI(MenuItem menuItem) {
 		super();
 		this.menuItem = menuItem;
 		initUI();
 		initConfigurationUI();
+		initDefaultActions();
 	}
 
 	private void initUI() {
@@ -60,27 +74,60 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 
 		toolbar = new ActionToolbar(this);
 
-		layout = new Borderlayout();
-		layout.setParent(this);
-		layout.appendChild(new North());
-		layout.appendChild(new South());
-		layout.appendChild(new Center());
+		tabbox = new Tabbox();
+		tabbox.setHflex("1");
+		tabbox.setVflex("1");
+		tabbox.appendChild(new Tabs());
+		tabbox.appendChild(new Tabpanels());
 
-		layout.getSouth().appendChild(toolbar);
-		layout.getCenter().setTitle("Configuration");
-		layout.getCenter().setAutoscroll(true);
+		tabbox.getTabs().appendChild(new Tab("Menu Item"));
+		tabbox.getTabs().appendChild(new Tab("Submenus"));
 
-		formView = (FormView<MenuItem>) Viewers.getView(MenuItem.class, "form", menuItem);
+		Tabpanel panelMenu = new Tabpanel();
+		tabbox.getTabpanels().appendChild(panelMenu);
+
+		Tabpanel panelSubmenus = new Tabpanel();
+		tabbox.getTabpanels().appendChild(panelSubmenus);
+		appendChild(tabbox);
+
+		// Menu Item
+
+		layoutMenu = new Borderlayout();
+		layoutMenu.appendChild(new North());
+		layoutMenu.appendChild(new South());
+		layoutMenu.appendChild(new Center());
+
+		layoutMenu.getSouth().appendChild(toolbar);
+		layoutMenu.getCenter().setTitle("Configuration");
+		layoutMenu.getCenter().setAutoscroll(true);
+		panelMenu.appendChild(layoutMenu);
+
+		formView = (FormView<MenuItem>) Viewers.getView(Viewers.findViewDescriptor("topMenuItem"));
+		formView.setValue(menuItem);
 		TypeSelector typeSelector = (TypeSelector) formView.getFieldComponent("type").getInputComponent();
 		typeSelector.addEventListener(Events.ON_SELECT, evt -> initConfigurationUI());
 
-		layout.getNorth().appendChild(formView);
+		layoutMenu.getNorth().appendChild(formView);
 
+		// Submenus
+
+		subitemsTable = (TableView<MenuItem>) Viewers.getView(MenuItem.class, "table", menuItem.getSubitems());
+
+		toolbarSubmenus = new ActionToolbar((source, params) -> new ActionEvent(subitemsTable.getSelected(), this, params));
+
+		layoutSubmenus = new Borderlayout();
+		layoutSubmenus.appendChild(new North());
+		layoutSubmenus.appendChild(new Center());
+
+		layoutSubmenus.getNorth().appendChild(toolbarSubmenus);
+		layoutSubmenus.getCenter().appendChild(subitemsTable);
+
+		panelSubmenus.appendChild(layoutSubmenus);
 	}
 
 	private void initConfigurationUI() {
 		configurationUI = null;
-		layout.getCenter().getChildren().clear();
+		layoutMenu.getCenter().getChildren().clear();
 
 		MenuService service = Containers.get().findObject(MenuService.class);
 		MenuItemType menuItemType = service.getMenuItemType(menuItem);
@@ -95,8 +142,14 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 		}
 
 		if (configurationUI != null) {
-			layout.getCenter().appendChild(configurationUI);
+			layoutMenu.getCenter().appendChild(configurationUI);
 		}
+	}
+
+	private void initDefaultActions() {
+		addSubmenusAction(new NewSubmenuAction(menuItem));
+		addSubmenusAction(new EditSubmenuAction(menuItem));
+
 	}
 
 	private void configureEntityConverter(ViewDescriptor configDescriptor) {
@@ -153,5 +206,18 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 
 	public void addAction(Action action) {
 		toolbar.addAction(action);
+	}
+
+	public void addSubmenusAction(Action action) {
+		toolbarSubmenus.addAction(action);
+
+	}
+
+	public TableView<MenuItem> getSubitemsTable() {
+		return subitemsTable;
+	}
+
+	public void reloadSubitems() {
+		subitemsTable.setValue(menuItem.getSubitems());
 	}
 }

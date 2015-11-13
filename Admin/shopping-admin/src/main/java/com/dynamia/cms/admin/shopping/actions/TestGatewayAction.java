@@ -11,11 +11,12 @@ import com.dynamia.cms.site.payment.PaymentUtils;
 import com.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
 import com.dynamia.cms.site.payment.domain.PaymentTransaction;
 import com.dynamia.cms.site.payment.services.PaymentService;
-import com.dynamia.tools.commons.ApplicableClass;
-import com.dynamia.tools.web.actions.InstallAction;
-import com.dynamia.tools.web.crud.AbstractCrudAction;
-import com.dynamia.tools.web.crud.CrudActionEvent;
-import com.dynamia.tools.web.crud.CrudState;
+
+import tools.dynamia.actions.InstallAction;
+import tools.dynamia.commons.ApplicableClass;
+import tools.dynamia.crud.AbstractCrudAction;
+import tools.dynamia.crud.CrudActionEvent;
+import tools.dynamia.crud.CrudState;
 
 @InstallAction
 public class TestGatewayAction extends AbstractCrudAction {

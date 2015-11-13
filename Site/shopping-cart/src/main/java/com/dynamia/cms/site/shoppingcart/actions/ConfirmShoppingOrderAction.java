@@ -17,12 +17,12 @@ import com.dynamia.cms.site.payment.PaymentForm;
 import com.dynamia.cms.site.payment.PaymentGateway;
 import com.dynamia.cms.site.payment.services.PaymentService;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
-import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import com.dynamia.cms.site.users.domain.UserContactInfo;
-import com.dynamia.tools.domain.ValidationError;
-import com.dynamia.tools.domain.services.CrudService;
+
+import tools.dynamia.domain.ValidationError;
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *

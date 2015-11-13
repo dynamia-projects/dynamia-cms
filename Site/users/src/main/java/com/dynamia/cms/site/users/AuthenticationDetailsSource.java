@@ -6,6 +6,7 @@
 package com.dynamia.cms.site.users;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 

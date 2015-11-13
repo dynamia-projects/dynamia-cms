@@ -31,10 +31,10 @@
 		</plugins>
 	</build>
 	<properties>
-		<dynatools.version>2.1.7.Final</dynatools.version>
-		<dynamia.icons.version>2.0.0</dynamia.icons.version>
+		<dynatools.version>3.0.0.Final</dynatools.version>
+		<dynamia.icons.version>3.0.0</dynamia.icons.version>
 		<hsql.version>1.8.0.10</hsql.version>
-		<spring.version>4.0.6.RELEASE</spring.version>
+		<spring.version>4.2.2.RELEASE</spring.version>
 		<hibernate.version>4.3.6.Final</hibernate.version>
 
 
@@ -45,13 +45,13 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>com.dynamia.tools</groupId>
-			<artifactId>com.dynamia.tools.domain</artifactId>
+			<groupId>tools.dynamia</groupId>
+			<artifactId>tools.dynamia.domain</artifactId>
 			<version>${dynatools.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.dynamia.tools</groupId>
-			<artifactId>com.dynamia.tools.reports.zk</artifactId>
+			<groupId>tools.dynamia</groupId>
+			<artifactId>tools.dynamia.zk.reports</artifactId>
 			<version>${dynatools.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>

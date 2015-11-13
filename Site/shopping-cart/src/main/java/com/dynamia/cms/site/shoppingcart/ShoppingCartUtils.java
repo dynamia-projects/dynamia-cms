@@ -7,7 +7,8 @@ import com.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import com.dynamia.cms.site.users.UserHolder;
-import com.dynamia.tools.integration.Containers;
+
+import tools.dynamia.integration.Containers;
 
 public class ShoppingCartUtils {
 

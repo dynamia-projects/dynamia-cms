@@ -21,6 +21,8 @@ public class CustomHtmlModule extends AbstractModule {
 	public void init(ModuleContext context) {
 
 		ModuleInstance instance = context.getModuleInstance();
+		instance.addObject(PARAM_CONTENT, "<b>CUSTOM MODULE NO CONTENT</b>");
+		
 		ModuleInstanceParameter content = instance.getParameter(PARAM_CONTENT);
 		if (content != null && content.isEnabled()) {
 			if (content.getExtra() != null && !content.getExtra().isEmpty()) {

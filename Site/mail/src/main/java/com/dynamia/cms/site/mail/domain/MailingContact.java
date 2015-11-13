@@ -7,9 +7,10 @@ import javax.validation.constraints.NotNull;
 
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.contraints.Email;
-import com.dynamia.tools.domain.contraints.NotEmpty;
+
+import tools.dynamia.domain.SimpleEntity;
+import tools.dynamia.domain.contraints.Email;
+import tools.dynamia.domain.contraints.NotEmpty;
 
 @Entity
 @Table(name = "ntf_mailing_contacts")

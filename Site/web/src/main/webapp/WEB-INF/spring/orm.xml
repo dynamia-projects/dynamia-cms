@@ -23,7 +23,7 @@
     <!-- EntityManager Factory -->
 
     <bean name="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
-        <property name="packagesToScan" value="com.dynamia.**.*" />
+        <property name="packagesToScan" value="com.dynamia.**.*,tools.dynamia.**.*" />
         <property name="dataSource" ref="dataSource" />
 
         <property name="jpaVendorAdapter">

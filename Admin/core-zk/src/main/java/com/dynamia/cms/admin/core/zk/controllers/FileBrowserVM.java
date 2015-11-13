@@ -1,5 +1,6 @@
 package com.dynamia.cms.admin.core.zk.controllers;
 
+import org.springframework.stereotype.Controller;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -13,9 +14,9 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 
 import com.dynamia.modules.filemanager.FileManager;
-import com.dynamia.tools.integration.sterotypes.Controller;
-import com.dynamia.tools.web.ui.MessageType;
-import com.dynamia.tools.web.ui.UIMessages;
+
+import tools.dynamia.ui.MessageType;
+import tools.dynamia.ui.UIMessages;
 
 @Controller
 public class FileBrowserVM {

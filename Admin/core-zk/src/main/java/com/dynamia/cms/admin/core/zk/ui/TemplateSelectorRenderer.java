@@ -5,9 +5,10 @@
  */
 package com.dynamia.cms.admin.core.zk.ui;
 
-import com.dynamia.cms.site.templates.Template;
 import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.ComboitemRenderer;
+
+import com.dynamia.cms.site.templates.Template;
 
 /**
  *

@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.dynamia.tools.domain.SimpleEntity;
+import tools.dynamia.domain.SimpleEntity;
 
 @Entity
 @Table(name = "mn_menuitems_groups")

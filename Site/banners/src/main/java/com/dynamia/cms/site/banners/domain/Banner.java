@@ -9,7 +9,8 @@ import javax.validation.constraints.NotNull;
 import com.dynamia.cms.site.core.Orderable;
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.domain.SimpleEntity;
+
+import tools.dynamia.domain.SimpleEntity;
 
 @Entity
 @Table(name = "ban_banners")

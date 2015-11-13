@@ -5,23 +5,26 @@ import java.util.List;
 import com.dynamia.cms.admin.menus.ui.MenuItemsUI;
 import com.dynamia.cms.site.menus.domain.MenuItem;
 import com.dynamia.cms.site.menus.domain.MenuItemParameter;
-import com.dynamia.tools.domain.query.Parameter;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.web.actions.AbstractAction;
-import com.dynamia.tools.web.actions.ActionEvent;
-import com.dynamia.tools.web.actions.ActionRenderer;
-import com.dynamia.tools.web.crud.actions.renderers.ToolbarbuttonActionRenderer;
-import com.dynamia.tools.web.ui.UIMessages;
+
+import tools.dynamia.actions.AbstractAction;
+import tools.dynamia.actions.ActionEvent;
+import tools.dynamia.actions.ActionRenderer;
+import tools.dynamia.crud.CrudActionEvent;
+import tools.dynamia.domain.query.Parameter;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.ui.UIMessages;
+import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer;
 
 public class SaveMenuItemAction extends AbstractAction {
 
 	private CrudService crudService;
+	private CrudActionEvent sourceEvent;
 
-
-	public SaveMenuItemAction(CrudService crudService) {
+	public SaveMenuItemAction(CrudService crudService, CrudActionEvent evt) {
 		setName("Save");
 		setImage("save");
 		this.crudService = crudService;
+		this.sourceEvent = evt;
 	}
 
 	@Override
@@ -33,7 +36,7 @@ public class SaveMenuItemAction extends AbstractAction {
 		if (needSave(menuItem)) {
 			crudService.save(menuItem);
 		}
-		
+
 		if (parameters != null) {
 			for (Parameter parameter : parameters) {
 				MenuItemParameter itemParameter = menuItem.getParameter(parameter.getName());
@@ -60,6 +63,10 @@ public class SaveMenuItemAction extends AbstractAction {
 
 		MenuItemsUI ui = (MenuItemsUI) evt.getSource();
 		ui.getParent().detach();
+
+		if (sourceEvent != null) {
+			sourceEvent.getController().doQuery();
+		}
 	}
 
 	private boolean needSave(MenuItem menuItem) {

@@ -3,6 +3,7 @@ package com.dynamia.cms.site.mail.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,7 +13,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.dynamia.cms.site.core.actions.SiteActionManager;
 import com.dynamia.cms.site.mail.domain.MailingContact;
-import com.dynamia.tools.integration.sterotypes.Controller;
 
 @Controller
 @RequestMapping(value = "/mailing", method = { RequestMethod.GET, RequestMethod.POST })

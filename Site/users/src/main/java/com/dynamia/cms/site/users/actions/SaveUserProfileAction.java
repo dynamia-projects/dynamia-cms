@@ -16,8 +16,9 @@ import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.UsersUtil;
 import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.cms.site.users.services.UserService;
-import com.dynamia.tools.domain.ValidationError;
-import com.dynamia.tools.domain.services.CrudService;
+
+import tools.dynamia.domain.ValidationError;
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *

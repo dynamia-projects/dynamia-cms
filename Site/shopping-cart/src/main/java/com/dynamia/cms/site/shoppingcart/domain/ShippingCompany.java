@@ -6,7 +6,8 @@ import javax.persistence.Table;
 
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.domain.SimpleEntity;
+
+import tools.dynamia.domain.SimpleEntity;
 
 @Entity
 @Table(name = "sc_shipping_companies")

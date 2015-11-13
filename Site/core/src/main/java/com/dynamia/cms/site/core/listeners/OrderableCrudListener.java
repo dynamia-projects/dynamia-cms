@@ -1,10 +1,11 @@
 package com.dynamia.cms.site.core.listeners;
 
 import com.dynamia.cms.site.core.Orderable;
-import com.dynamia.tools.commons.BeanUtils;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.util.CrudServiceListenerAdapter;
-import com.dynamia.tools.integration.sterotypes.Component;
+
+import tools.dynamia.commons.BeanUtils;
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.util.CrudServiceListenerAdapter;
+import tools.dynamia.integration.sterotypes.Component;
 
 /**
  * Created by Mario on 18/11/2014.

@@ -5,20 +5,24 @@
  */
 package com.dynamia.cms.site.pages.controllers;
 
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.cms.site.pages.SearchForm;
-import com.dynamia.cms.site.pages.api.SearchProvider;
-import com.dynamia.cms.site.pages.api.SearchResult;
-import com.dynamia.tools.integration.Containers;
 import java.util.Collection;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.core.services.SiteService;
+import com.dynamia.cms.site.pages.SearchForm;
+import com.dynamia.cms.site.pages.api.SearchProvider;
+import com.dynamia.cms.site.pages.api.SearchResult;
+
+import tools.dynamia.integration.Containers;
 
 /**
  *

@@ -7,8 +7,9 @@ import com.dynamia.cms.site.core.api.CMSListener;
 import com.dynamia.cms.site.payment.PaymentGateway;
 import com.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
 import com.dynamia.cms.site.payment.services.PaymentService;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.util.CrudServiceListenerAdapter;
+
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.util.CrudServiceListenerAdapter;
 
 @CMSListener
 public class PaymentGatewayConfigListener extends CrudServiceListenerAdapter<PaymentGatewayConfig> {

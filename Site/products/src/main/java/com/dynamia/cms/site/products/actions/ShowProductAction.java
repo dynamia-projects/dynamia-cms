@@ -5,35 +5,27 @@
  */
 package com.dynamia.cms.site.products.actions;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
-import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.pages.PageNotFoundException;
-import com.dynamia.cms.site.products.ProductShareForm;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductStock;
 import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.cms.site.users.UserHolder;
-import com.dynamia.tools.commons.StringUtils;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.services.CrudService;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.enterprise.inject.New;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *

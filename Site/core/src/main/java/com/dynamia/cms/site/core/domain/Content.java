@@ -4,11 +4,13 @@
  */
 package com.dynamia.cms.site.core.domain;
 
-import com.dynamia.cms.site.core.api.SiteAware;
-import com.dynamia.tools.domain.SimpleEntity;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+
+import com.dynamia.cms.site.core.api.SiteAware;
+
+import tools.dynamia.domain.SimpleEntity;
 
 /**
  *

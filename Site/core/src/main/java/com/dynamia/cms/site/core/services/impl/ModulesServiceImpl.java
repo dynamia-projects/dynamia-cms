@@ -10,12 +10,13 @@ import com.dynamia.cms.site.core.api.Module;
 import com.dynamia.cms.site.core.api.ModuleContext;
 import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.domain.query.QueryConditions;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.domain.util.QueryBuilder;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.integration.sterotypes.Service;
+
+import tools.dynamia.domain.query.QueryConditions;
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.domain.util.QueryBuilder;
+import tools.dynamia.integration.Containers;
+import tools.dynamia.integration.sterotypes.Service;
 
 @Service
 public class ModulesServiceImpl implements ModulesService {

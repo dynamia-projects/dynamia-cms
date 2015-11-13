@@ -5,6 +5,8 @@
  */
 package com.dynamia.cms.site.products.listeners;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.dynamia.cms.site.products.api.DataChangedEvent;
 import com.dynamia.cms.site.products.api.InvalidTokenException;
 import com.dynamia.cms.site.products.api.ProductsDatasource;
@@ -17,7 +19,6 @@ import com.dynamia.cms.site.products.dto.StoreDTO;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.cms.site.products.services.ProductsSyncService;
 import com.dynamia.cms.site.products.services.ProductsSynchronizer;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *

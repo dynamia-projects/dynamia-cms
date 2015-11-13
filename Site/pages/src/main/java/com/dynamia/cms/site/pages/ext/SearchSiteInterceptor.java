@@ -5,11 +5,12 @@
  */
 package com.dynamia.cms.site.pages.ext;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import com.dynamia.cms.site.core.api.CMSExtension;
 import com.dynamia.cms.site.core.api.SiteRequestInterceptorAdapter;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.pages.SearchForm;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *

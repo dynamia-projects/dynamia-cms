@@ -31,10 +31,11 @@ import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.domain.SiteDomain;
 import com.dynamia.cms.site.core.html.Option;
 import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.tools.commons.CollectionsUtils;
-import com.dynamia.tools.commons.StringUtils;
-import com.dynamia.tools.domain.util.ContactInfo;
-import com.dynamia.tools.integration.Containers;
+
+import tools.dynamia.commons.CollectionsUtils;
+import tools.dynamia.commons.StringUtils;
+import tools.dynamia.domain.util.ContactInfo;
+import tools.dynamia.integration.Containers;
 
 /**
  *

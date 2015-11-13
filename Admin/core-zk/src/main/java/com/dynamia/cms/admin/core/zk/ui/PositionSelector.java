@@ -10,9 +10,10 @@ import org.zkoss.zul.Combobox;
 import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.templates.Template;
 import com.dynamia.cms.site.templates.services.TemplateService;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.viewers.zk.ComponentAliasIndex;
-import com.dynamia.tools.web.util.ZKUtil;
+
+import tools.dynamia.integration.Containers;
+import tools.dynamia.zk.ComponentAliasIndex;
+import tools.dynamia.zk.util.ZKUtil;
 
 /**
  *

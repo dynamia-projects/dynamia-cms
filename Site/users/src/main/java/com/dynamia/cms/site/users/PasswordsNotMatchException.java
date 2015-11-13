@@ -6,7 +6,8 @@
 package com.dynamia.cms.site.users;
 
 import com.dynamia.cms.site.users.domain.User;
-import com.dynamia.tools.domain.ValidationError;
+
+import tools.dynamia.domain.ValidationError;
 
 /**
  *

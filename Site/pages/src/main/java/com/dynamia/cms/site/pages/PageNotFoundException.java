@@ -5,9 +5,10 @@
  */
 package com.dynamia.cms.site.pages;
 
-import com.dynamia.cms.site.core.DynamiaCMSException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.dynamia.cms.site.core.DynamiaCMSException;
 
 /**
  *

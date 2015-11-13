@@ -10,23 +10,24 @@
  */
 package com.dynamia.cms.site.users.domain;
 
-import com.dynamia.cms.site.core.api.SiteAware;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.domain.BaseEntity;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import com.dynamia.tools.domain.ValidationError;
-import javax.persistence.OneToOne;
-import javax.persistence.UniqueConstraint;
+import com.dynamia.cms.site.core.api.SiteAware;
+import com.dynamia.cms.site.core.domain.Site;
+
+import tools.dynamia.domain.BaseEntity;
+import tools.dynamia.domain.ValidationError;
 
 /**
  * Archivo: Perfil.java Fecha de creación: 27/06/2009

@@ -18,20 +18,23 @@ import com.dynamia.cms.site.core.api.Module;
 import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.core.domain.ModuleInstanceParameter;
 import com.dynamia.cms.site.core.services.impl.ModulesService;
-import com.dynamia.tools.commons.MapBuilder;
-import com.dynamia.tools.domain.query.Parameter;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.viewers.Field;
-import com.dynamia.tools.viewers.ViewDescriptor;
-import com.dynamia.tools.viewers.ViewDescriptorNotFoundException;
-import com.dynamia.tools.viewers.util.Viewers;
-import com.dynamia.tools.viewers.zk.form.FormView;
-import com.dynamia.tools.web.actions.Action;
-import com.dynamia.tools.web.actions.ActionEvent;
-import com.dynamia.tools.web.actions.ActionEventBuilder;
-import com.dynamia.tools.web.cfg.ConfigView;
-import com.dynamia.tools.web.ui.ActionToolbar;
-import com.dynamia.tools.web.ui.EntityPickerBox;
+
+import tools.dynamia.actions.Action;
+import tools.dynamia.actions.ActionEvent;
+import tools.dynamia.actions.ActionEventBuilder;
+import tools.dynamia.commons.MapBuilder;
+import tools.dynamia.domain.query.Parameter;
+import tools.dynamia.integration.Containers;
+import tools.dynamia.viewers.Field;
+import tools.dynamia.viewers.ViewDescriptor;
+import tools.dynamia.viewers.ViewDescriptorNotFoundException;
+import tools.dynamia.viewers.util.Viewers;
+import tools.dynamia.zk.actions.ActionToolbar;
+import tools.dynamia.zk.crud.cfg.ConfigView;
+import tools.dynamia.zk.crud.cfg.ConfigViewRender;
+import tools.dynamia.zk.crud.ui.EntityPickerBox;
+import tools.dynamia.zk.viewers.form.FormView;
+import tools.dynamia.zk.viewers.ui.Viewer;
 
 public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 
@@ -100,10 +103,10 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 
 	private void configureEntityConverter(ViewDescriptor configDescriptor) {
 		for (Field field : configDescriptor.getFields()) {
-			field.addParam("parameterName", field.getName());
+			field.addParam(ConfigViewRender.PARAM_PARAMETER_NAME, field.getName());
 
 			if (field.getComponentClass() == EntityPickerBox.class) {
-				field.addParam("converter", EntityConverter.class.getName());
+				field.addParam(Viewers.PARAM_CONVERTER, EntityConverter.class.getName());
 			}
 		}
 	}
@@ -113,21 +116,23 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 		ModulesService modulesService = Containers.get().findObject(ModulesService.class);
 		Module module = modulesService.getModule(moduleInstance);
 
-		Object data = moduleInstance;
+		Object data = formView.getValue();
 		params = MapBuilder.put("module", module, "moduleInstance", moduleInstance);
-		if (configurationUI instanceof ConfigView) {
-			data = ((ConfigView) configurationUI).getValue();
+		if (configurationUI instanceof Viewer) {
+
+			data = ((Viewer) configurationUI).getValue();
 		}
 
 		return new ActionEvent(data, this, params);
 	}
 
-	private ConfigView createCustomConfig(ViewDescriptor configDescriptor, final ModuleInstance moduleInstance, final Module module) {
+	private Viewer createCustomConfig(ViewDescriptor configDescriptor, final ModuleInstance moduleInstance, final Module module) {
 
 		List<Parameter> configParameters = createConfigParameters(configDescriptor, module, moduleInstance);
-		final ConfigView view = (ConfigView) Viewers.getView(configDescriptor);
-		view.setValue(configParameters);
-		return view;
+		final Viewer viewer = new Viewer(configDescriptor, configParameters);
+		((ConfigView) viewer.getView()).setAutosaveBindings(true);
+
+		return viewer;
 
 	}
 

@@ -29,11 +29,12 @@ import com.dynamia.cms.site.mail.domain.MailAccount;
 import com.dynamia.cms.site.mail.domain.MailTemplate;
 import com.dynamia.cms.site.mail.domain.MailingContact;
 import com.dynamia.cms.site.mail.services.MailService;
-import com.dynamia.tools.commons.logger.LoggingService;
-import com.dynamia.tools.commons.logger.SLF4JLoggingService;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.integration.Containers;
+
+import tools.dynamia.commons.logger.LoggingService;
+import tools.dynamia.commons.logger.SLF4JLoggingService;
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.integration.Containers;
 
 /**
  *

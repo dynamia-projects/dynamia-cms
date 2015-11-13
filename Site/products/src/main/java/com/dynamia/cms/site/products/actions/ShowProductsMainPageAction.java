@@ -5,20 +5,6 @@
  */
 package com.dynamia.cms.site.products.actions;
 
-import com.dynamia.cms.site.core.CMSUtil;
-import com.dynamia.cms.site.core.actions.ActionEvent;
-import com.dynamia.cms.site.core.actions.SiteAction;
-import com.dynamia.cms.site.core.api.CMSAction;
-import com.dynamia.cms.site.pages.domain.Page;
-import com.dynamia.cms.site.products.ProductsUtil;
-import com.dynamia.cms.site.products.controllers.StoreController;
-import com.dynamia.cms.site.products.domain.Product;
-import com.dynamia.cms.site.products.services.ProductsService;
-import com.dynamia.cms.site.users.UserHolder;
-import com.dynamia.tools.commons.logger.LoggingService;
-import com.dynamia.tools.commons.logger.SLF4JLoggingService;
-import com.dynamia.tools.domain.services.CrudService;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +14,19 @@ import javax.servlet.http.Cookie;
 import org.h2.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.dynamia.cms.site.core.CMSUtil;
+import com.dynamia.cms.site.core.actions.ActionEvent;
+import com.dynamia.cms.site.core.actions.SiteAction;
+import com.dynamia.cms.site.core.api.CMSAction;
+import com.dynamia.cms.site.products.controllers.StoreController;
+import com.dynamia.cms.site.products.domain.Product;
+import com.dynamia.cms.site.products.services.ProductsService;
+import com.dynamia.cms.site.users.UserHolder;
+
+import tools.dynamia.commons.logger.LoggingService;
+import tools.dynamia.commons.logger.SLF4JLoggingService;
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *

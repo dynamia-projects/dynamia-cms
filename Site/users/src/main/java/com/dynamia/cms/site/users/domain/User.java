@@ -10,11 +10,6 @@
  */
 package com.dynamia.cms.site.users.domain;
 
-import com.dynamia.cms.site.core.api.SiteAware;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.commons.StringUtils;
-import com.dynamia.tools.domain.BaseEntity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,20 +17,24 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.dynamia.tools.domain.ValidationError;
-import com.dynamia.tools.domain.contraints.Email;
-import com.dynamia.tools.domain.contraints.NotEmpty;
-import com.dynamia.tools.domain.util.ContactInfo;
+import com.dynamia.cms.site.core.api.SiteAware;
+import com.dynamia.cms.site.core.domain.Site;
 
-import javax.persistence.OneToOne;
-import javax.persistence.UniqueConstraint;
+import tools.dynamia.commons.StringUtils;
+import tools.dynamia.domain.BaseEntity;
+import tools.dynamia.domain.ValidationError;
+import tools.dynamia.domain.contraints.Email;
+import tools.dynamia.domain.contraints.NotEmpty;
+import tools.dynamia.domain.util.ContactInfo;
 
 /**
  * Archivo: Usuario.java Fecha de Creacion: 27/06/2009

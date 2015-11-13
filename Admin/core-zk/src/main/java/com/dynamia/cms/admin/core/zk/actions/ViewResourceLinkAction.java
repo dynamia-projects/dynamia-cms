@@ -11,13 +11,14 @@ import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.domain.SiteDomain;
 import com.dynamia.modules.filemanager.FileManagerAction;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.io.FileInfo;
-import com.dynamia.tools.web.actions.ActionEvent;
-import com.dynamia.tools.web.actions.InstallAction;
-import com.dynamia.tools.web.ui.MessageType;
-import com.dynamia.tools.web.ui.UIMessages;
+
+import tools.dynamia.actions.ActionEvent;
+import tools.dynamia.actions.InstallAction;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.integration.Containers;
+import tools.dynamia.io.FileInfo;
+import tools.dynamia.ui.MessageType;
+import tools.dynamia.ui.UIMessages;
 
 @InstallAction
 public class ViewResourceLinkAction extends FileManagerAction {

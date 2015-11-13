@@ -2,7 +2,8 @@ package com.dynamia.cms.admin.shopping.controllers;
 
 import com.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-import com.dynamia.tools.web.crud.CrudController;
+
+import tools.dynamia.zk.crud.CrudController;
 
 public class ShoppingOrderController extends CrudController<ShoppingOrder> {
 

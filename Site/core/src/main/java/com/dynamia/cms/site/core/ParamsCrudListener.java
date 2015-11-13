@@ -6,8 +6,9 @@
 package com.dynamia.cms.site.core;
 
 import com.dynamia.cms.site.core.api.CMSListener;
-import com.dynamia.tools.domain.query.Parameter;
-import com.dynamia.tools.domain.util.CrudServiceListenerAdapter;
+
+import tools.dynamia.domain.query.Parameter;
+import tools.dynamia.domain.util.CrudServiceListenerAdapter;
 
 /**
  *
@@ -16,20 +17,20 @@ import com.dynamia.tools.domain.util.CrudServiceListenerAdapter;
 @CMSListener
 class ParamsCrudListener extends CrudServiceListenerAdapter<Parameter> {
 
-    @Override
-    public void afterCreate(Parameter entity) {
-        checkHomeVar(entity);
-    }
+	@Override
+	public void afterCreate(Parameter entity) {
+		checkHomeVar(entity);
+	}
 
-    @Override
-    public void afterUpdate(Parameter entity) {
-        checkHomeVar(entity);
-    }
+	@Override
+	public void afterUpdate(Parameter entity) {
+		checkHomeVar(entity);
+	}
 
-    private void checkHomeVar(Parameter entity) {
-        if (DynamiaCMS.HOMEVAR.equals(entity.getName())) {
-            DynamiaCMS.reloadHomePath();
-        }
-    }
+	private void checkHomeVar(Parameter entity) {
+		if (DynamiaCMS.CFG_HOMEVAR.equals(entity.getName())) {
+			DynamiaCMS.reloadHomePath();
+		}
+	}
 
 }

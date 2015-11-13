@@ -5,13 +5,13 @@
  */
 package com.dynamia.cms.site.products;
 
+import com.dynamia.cms.site.core.api.AdminModule;
+import com.dynamia.cms.site.core.api.AdminModuleOption;
+import com.dynamia.cms.site.core.api.CMSModule;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import com.dynamia.cms.site.core.api.AdminModule;
-import com.dynamia.cms.site.core.api.AdminModuleOption;
-import com.dynamia.cms.site.core.api.CMSModule;
 import com.dynamia.cms.site.products.domain.Store;
 
 /**

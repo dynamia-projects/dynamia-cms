@@ -5,10 +5,10 @@ import org.zkoss.bind.Converter;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zkplus.databind.TypeConverter;
 
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.domain.util.DomainUtils;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.web.ui.EntityPickerBox;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.domain.util.DomainUtils;
+import tools.dynamia.integration.Containers;
+import tools.dynamia.zk.crud.ui.EntityPickerBox;
 
 @SuppressWarnings("deprecation")
 public class EntityConverter implements TypeConverter, Converter<Object, Object, Component> {

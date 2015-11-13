@@ -15,8 +15,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.dynamia.cms.site.core.api.Parameterizable;
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.contraints.NotEmpty;
+
+import tools.dynamia.domain.SimpleEntity;
+import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  *

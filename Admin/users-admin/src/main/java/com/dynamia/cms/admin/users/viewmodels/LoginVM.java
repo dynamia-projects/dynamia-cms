@@ -5,9 +5,6 @@
  */
 package com.dynamia.cms.admin.users.viewmodels;
 
-import com.dynamia.tools.commons.logger.LoggingService;
-import com.dynamia.tools.commons.logger.SLF4JLoggingService;
-
 import org.springframework.security.web.WebAttributes;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
@@ -18,6 +15,9 @@ import org.zkoss.zk.ui.Page;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
+
+import tools.dynamia.commons.logger.LoggingService;
+import tools.dynamia.commons.logger.SLF4JLoggingService;
 
 /**
  *

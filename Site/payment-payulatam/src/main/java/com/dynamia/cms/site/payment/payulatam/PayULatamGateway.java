@@ -1,13 +1,11 @@
 package com.dynamia.cms.site.payment.payulatam;
 
-import static com.dynamia.cms.site.payment.PaymentUtils.eq;
 import static com.dynamia.cms.site.payment.PaymentUtils.mapToString;
 import static com.dynamia.cms.site.payment.PaymentUtils.md5;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -27,9 +25,10 @@ import com.dynamia.cms.site.payment.ResponseType;
 import com.dynamia.cms.site.payment.domain.PaymentTransaction;
 import com.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import com.dynamia.cms.site.payment.services.PaymentService;
-import com.dynamia.tools.commons.logger.LoggingService;
-import com.dynamia.tools.commons.logger.SLF4JLoggingService;
-import com.dynamia.tools.domain.services.CrudService;
+
+import tools.dynamia.commons.logger.LoggingService;
+import tools.dynamia.commons.logger.SLF4JLoggingService;
+import tools.dynamia.domain.services.CrudService;
 
 @Service
 public class PayULatamGateway implements PaymentGateway {

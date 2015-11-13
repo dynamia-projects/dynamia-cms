@@ -5,14 +5,14 @@
  */
 package com.dynamia.cms.site.products.ext;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import com.dynamia.cms.site.core.actions.SiteActionManager;
 import com.dynamia.cms.site.core.api.CMSExtension;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.pages.SearchForm;
 import com.dynamia.cms.site.pages.api.SearchProvider;
 import com.dynamia.cms.site.pages.api.SearchResult;
-import com.dynamia.cms.site.products.ProductSearchForm;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *

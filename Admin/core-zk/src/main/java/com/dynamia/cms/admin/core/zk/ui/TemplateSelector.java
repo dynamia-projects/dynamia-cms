@@ -5,14 +5,17 @@
  */
 package com.dynamia.cms.admin.core.zk.ui;
 
-import com.dynamia.cms.site.templates.Template;
-import com.dynamia.cms.site.templates.services.TemplateService;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.viewers.zk.ComponentAliasIndex;
 import java.util.List;
+
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
+
+import com.dynamia.cms.site.templates.Template;
+import com.dynamia.cms.site.templates.services.TemplateService;
+
+import tools.dynamia.integration.Containers;
+import tools.dynamia.zk.ComponentAliasIndex;
 
 /**
  *

@@ -22,7 +22,8 @@ import com.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.services.UserService;
-import com.dynamia.tools.domain.ValidationError;
+
+import tools.dynamia.domain.ValidationError;
 
 /**
  *

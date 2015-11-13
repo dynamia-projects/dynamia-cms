@@ -2,13 +2,11 @@ id: CMSConfig
 view: config
 
 fields:
-    SuperAdminSite:
-        component: superAdminSite
+    SuperAdminSite:        
         description: Admin Site with full system access
 
     HomePath:
-        label: Home Path
-        component: directorybox
+        label: Home Path        
         description: Application Home Folder
         
     DefaultTemplate:

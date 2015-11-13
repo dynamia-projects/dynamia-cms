@@ -5,12 +5,13 @@
  */
 package com.dynamia.cms.site.products;
 
-import com.dynamia.cms.site.products.api.ProductsListener;
-import com.dynamia.cms.site.products.listeners.ProductListenerImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
 import org.springframework.scheduling.annotation.EnableAsync;
+
+import com.dynamia.cms.site.products.api.ProductsListener;
+import com.dynamia.cms.site.products.listeners.ProductListenerImpl;
 
 /**
  *

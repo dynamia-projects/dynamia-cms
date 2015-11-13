@@ -16,8 +16,9 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
-import com.dynamia.tools.commons.StringUtils;
-import com.dynamia.tools.domain.BaseEntity;
+
+import tools.dynamia.commons.StringUtils;
+import tools.dynamia.domain.BaseEntity;
 
 @Entity
 @Table(name = "pay_transactions")

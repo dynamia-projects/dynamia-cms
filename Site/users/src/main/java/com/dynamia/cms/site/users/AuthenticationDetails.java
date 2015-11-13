@@ -5,11 +5,14 @@
  */
 package com.dynamia.cms.site.users;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.tools.integration.Containers;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
+
+import tools.dynamia.integration.Containers;
 
 /**
  *

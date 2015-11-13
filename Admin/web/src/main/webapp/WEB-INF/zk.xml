@@ -16,7 +16,7 @@
 
     <listener>
         <description>Spring JPA Open EntityManager in view</description>
-        <listener-class>com.dynamia.tools.web.OpenEntityManagerInViewListener</listener-class>
+        <listener-class>tools.dynamia.zk.OpenEntityManagerInViewListener</listener-class>
     </listener>
 
     <preference>

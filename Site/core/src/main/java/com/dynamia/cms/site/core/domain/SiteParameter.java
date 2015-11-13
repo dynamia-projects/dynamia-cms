@@ -5,10 +5,6 @@
  */
 package com.dynamia.cms.site.core.domain;
 
-import com.dynamia.cms.site.core.api.Parameter;
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.contraints.NotEmpty;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +13,11 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.dynamia.cms.site.core.api.Parameter;
+
+import tools.dynamia.domain.SimpleEntity;
+import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  *

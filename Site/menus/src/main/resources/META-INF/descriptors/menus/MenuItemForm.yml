@@ -16,18 +16,11 @@ fields:
     href:
     
     target:
-    
-    type:
-        component: typeSelector
-        params:
-            typeExtensionClass: com.dynamia.cms.site.menus.api.MenuItemType
    
     order:
     icon:
     styleClass:
-    backgroundImage:
-    parameters:
-        component: crudview
+      
         
 layout:
     columns: 2

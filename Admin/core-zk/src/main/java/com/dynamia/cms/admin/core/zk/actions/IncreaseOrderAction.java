@@ -1,16 +1,18 @@
 package com.dynamia.cms.admin.core.zk.actions;
 
-import com.dynamia.cms.site.core.Orderable;
-import com.dynamia.tools.commons.ApplicableClass;
-import com.dynamia.tools.domain.AbstractEntity;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.web.actions.InstallAction;
-import com.dynamia.tools.web.crud.AbstractCrudAction;
-import com.dynamia.tools.web.crud.CrudActionEvent;
-import com.dynamia.tools.web.crud.CrudState;
-import com.dynamia.tools.web.ui.MessageType;
-import com.dynamia.tools.web.ui.UIMessages;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.dynamia.cms.site.core.Orderable;
+
+import tools.dynamia.actions.InstallAction;
+import tools.dynamia.commons.ApplicableClass;
+import tools.dynamia.crud.AbstractCrudAction;
+import tools.dynamia.crud.CrudActionEvent;
+import tools.dynamia.crud.CrudState;
+import tools.dynamia.domain.AbstractEntity;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.ui.MessageType;
+import tools.dynamia.ui.UIMessages;
 
 
 /**

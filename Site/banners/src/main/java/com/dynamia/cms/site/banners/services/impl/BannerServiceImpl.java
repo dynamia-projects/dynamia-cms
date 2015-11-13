@@ -7,9 +7,10 @@ import org.springframework.cache.annotation.Cacheable;
 
 import com.dynamia.cms.site.banners.domain.Banner;
 import com.dynamia.cms.site.banners.services.BannerService;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.integration.sterotypes.Service;
+
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.integration.sterotypes.Service;
 
 @Service
 class BannerServiceImpl implements BannerService {

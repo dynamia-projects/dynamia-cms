@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dynamia.cms.admin.shopping.ui.ShoppingOrderDetailsUI;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-import com.dynamia.tools.commons.ApplicableClass;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.web.actions.InstallAction;
-import com.dynamia.tools.web.crud.AbstractCrudAction;
-import com.dynamia.tools.web.crud.CrudActionEvent;
-import com.dynamia.tools.web.crud.CrudState;
-import com.dynamia.tools.web.util.ZKUtil;
+
+import tools.dynamia.actions.InstallAction;
+import tools.dynamia.commons.ApplicableClass;
+import tools.dynamia.crud.AbstractCrudAction;
+import tools.dynamia.crud.CrudActionEvent;
+import tools.dynamia.crud.CrudState;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.zk.util.ZKUtil;
 
 @InstallAction
 public class ViewOrderDetailsAction extends AbstractCrudAction {

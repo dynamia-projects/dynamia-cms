@@ -5,7 +5,6 @@
  */
 package com.dynamia.cms.site.products.dto;
 
-import com.dynamia.tools.domain.util.ContactInfo;
 import java.io.Serializable;
 
 /**
@@ -20,7 +19,13 @@ public class StoreDTO implements Serializable {
 	private static final long serialVersionUID = 936740099546344064L;
 	private String name;
     private Long externalRef;
-    private ContactInfo contactInfo = new ContactInfo();
+    private String address;
+    private String mobileNumber;
+    private String phoneNumber;
+    private String city;
+    private String country;
+    private String email;
+    
     private String image;
 
     public String getImage() {
@@ -47,12 +52,54 @@ public class StoreDTO implements Serializable {
         this.externalRef = externalRef;
     }
 
-    public ContactInfo getContactInfo() {
-        return contactInfo;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setContactInfo(ContactInfo contactInfo) {
-        this.contactInfo = contactInfo;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+   
 
 }

@@ -4,9 +4,10 @@ import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.payment.PaymentGateway;
 import com.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
 import com.dynamia.cms.site.payment.services.PaymentService;
-import com.dynamia.tools.commons.StringUtils;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.web.crud.CrudController;
+
+import tools.dynamia.commons.StringUtils;
+import tools.dynamia.integration.Containers;
+import tools.dynamia.zk.crud.CrudController;
 
 public class PaymentGatewayConfigController extends CrudController<PaymentGatewayConfig> {
 

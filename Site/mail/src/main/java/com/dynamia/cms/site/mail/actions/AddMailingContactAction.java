@@ -8,7 +8,8 @@ import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.mail.domain.MailingContact;
 import com.dynamia.cms.site.mail.services.MailService;
-import com.dynamia.tools.domain.services.CrudService;
+
+import tools.dynamia.domain.services.CrudService;
 
 @CMSAction
 public class AddMailingContactAction implements SiteAction {

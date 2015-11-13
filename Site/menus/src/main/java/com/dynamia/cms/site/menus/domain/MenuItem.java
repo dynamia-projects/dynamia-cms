@@ -16,12 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.dynamia.cms.site.core.Orderable;
 import com.dynamia.cms.site.pages.domain.Page;
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.contraints.NotEmpty;
+
+import tools.dynamia.domain.SimpleEntity;
 
 /**
  *

@@ -7,8 +7,9 @@ package com.dynamia.cms.site.products.listeners;
 
 import com.dynamia.cms.site.core.api.CMSListener;
 import com.dynamia.cms.site.products.domain.ProductCategory;
-import com.dynamia.tools.commons.StringUtils;
-import com.dynamia.tools.domain.util.CrudServiceListenerAdapter;
+
+import tools.dynamia.commons.StringUtils;
+import tools.dynamia.domain.util.CrudServiceListenerAdapter;
 
 /**
  *

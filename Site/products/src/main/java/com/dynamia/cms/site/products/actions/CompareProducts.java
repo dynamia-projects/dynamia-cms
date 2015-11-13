@@ -5,6 +5,12 @@
  */
 package com.dynamia.cms.site.products.actions;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
@@ -14,14 +20,9 @@ import com.dynamia.cms.site.products.ProductCompareGrid;
 import com.dynamia.cms.site.products.ProductsUtil;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.services.ProductsService;
-import com.dynamia.tools.commons.StringUtils;
-import com.dynamia.tools.domain.services.CrudService;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
+import tools.dynamia.commons.StringUtils;
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *

@@ -5,18 +5,19 @@
  */
 package com.dynamia.cms.site.users.ext;
 
-import com.dynamia.cms.site.core.SiteHandleInterceptor;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.dynamia.cms.site.core.api.CMSExtension;
 import com.dynamia.cms.site.core.api.SiteRequestInterceptorAdapter;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.actions.UserMenuAction;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *

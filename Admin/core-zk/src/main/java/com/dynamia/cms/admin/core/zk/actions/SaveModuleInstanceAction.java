@@ -3,26 +3,28 @@ package com.dynamia.cms.admin.core.zk.actions;
 import java.util.List;
 
 import com.dynamia.cms.admin.core.zk.ui.ModuleInstanceUI;
-import com.dynamia.cms.site.core.api.Module;
 import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.core.domain.ModuleInstanceParameter;
-import com.dynamia.tools.domain.query.Parameter;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.viewers.zk.ui.Viewer;
-import com.dynamia.tools.web.actions.AbstractAction;
-import com.dynamia.tools.web.actions.ActionEvent;
-import com.dynamia.tools.web.actions.ActionRenderer;
-import com.dynamia.tools.web.crud.actions.renderers.ToolbarbuttonActionRenderer;
-import com.dynamia.tools.web.ui.UIMessages;
+
+import tools.dynamia.actions.AbstractAction;
+import tools.dynamia.actions.ActionEvent;
+import tools.dynamia.actions.ActionRenderer;
+import tools.dynamia.crud.CrudActionEvent;
+import tools.dynamia.domain.query.Parameter;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.ui.UIMessages;
+import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer;
 
 public class SaveModuleInstanceAction extends AbstractAction {
 
 	private CrudService crudService;
+	private CrudActionEvent sourceEvent;
 
-	public SaveModuleInstanceAction(CrudService crudService) {
+	public SaveModuleInstanceAction(CrudService crudService, CrudActionEvent evt) {
 		setName("Save");
 		setImage("save");
 		this.crudService = crudService;
+		this.sourceEvent = evt;
 	}
 
 	@Override
@@ -53,6 +55,10 @@ public class SaveModuleInstanceAction extends AbstractAction {
 
 		ModuleInstanceUI ui = (ModuleInstanceUI) evt.getSource();
 		ui.getParent().detach();
+
+		if (sourceEvent != null) {
+			sourceEvent.getController().doQuery();
+		}
 	}
 
 	@Override

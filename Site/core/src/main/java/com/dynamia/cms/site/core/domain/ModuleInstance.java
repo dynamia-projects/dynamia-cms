@@ -19,7 +19,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.dynamia.cms.site.core.Orderable;
-import com.dynamia.tools.domain.contraints.NotEmpty;
+
+import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  * @author mario

@@ -6,7 +6,8 @@ import javax.persistence.Table;
 
 import com.dynamia.cms.site.core.Orderable;
 import com.dynamia.cms.site.core.domain.SiteSimpleEntity;
-import com.dynamia.tools.domain.contraints.NotEmpty;
+
+import tools.dynamia.domain.contraints.NotEmpty;
 
 @Entity
 @Table(name = "cts_categories")

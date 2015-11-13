@@ -24,11 +24,12 @@ import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.cms.site.users.domain.UserContactInfo;
 import com.dynamia.cms.site.users.domain.UserProfile;
 import com.dynamia.cms.site.users.services.UserService;
-import com.dynamia.tools.commons.StringUtils;
-import com.dynamia.tools.domain.ValidationError;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.domain.services.ValidatorService;
+
+import tools.dynamia.commons.StringUtils;
+import tools.dynamia.domain.ValidationError;
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.domain.services.ValidatorService;
 
 /**
  *

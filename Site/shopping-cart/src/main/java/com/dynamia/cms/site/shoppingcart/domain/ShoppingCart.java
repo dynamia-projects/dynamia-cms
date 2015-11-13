@@ -5,12 +5,6 @@
  */
 package com.dynamia.cms.site.shoppingcart.domain;
 
-import com.dynamia.cms.site.core.api.SiteAware;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.shoppingcart.domain.enums.ShoppingCartStatus;
-import com.dynamia.cms.site.users.domain.User;
-import com.dynamia.tools.domain.SimpleEntity;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +20,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import com.dynamia.cms.site.core.api.SiteAware;
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.shoppingcart.domain.enums.ShoppingCartStatus;
+import com.dynamia.cms.site.users.domain.User;
+
+import tools.dynamia.domain.SimpleEntity;
 
 /**
  *

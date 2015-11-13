@@ -6,8 +6,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.dynamia.cms.site.core.domain.SiteSimpleEntity;
-import com.dynamia.tools.domain.contraints.Email;
-import com.dynamia.tools.domain.contraints.NotEmpty;
+
+import tools.dynamia.domain.contraints.Email;
+import tools.dynamia.domain.contraints.NotEmpty;
 
 @Entity
 @Table(name = "cts_contacts")

@@ -17,8 +17,9 @@ import com.dynamia.cms.site.payment.services.PaymentService;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
-import com.dynamia.tools.domain.ValidationError;
-import com.dynamia.tools.domain.services.CrudService;
+
+import tools.dynamia.domain.ValidationError;
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *

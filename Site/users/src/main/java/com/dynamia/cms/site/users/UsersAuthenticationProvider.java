@@ -5,13 +5,8 @@
  */
 package com.dynamia.cms.site.users;
 
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.users.domain.User;
-import com.dynamia.cms.site.users.services.UserService;
-import com.dynamia.tools.domain.ValidationError;
-import com.dynamia.tools.domain.contraints.EmailValidator;
-import com.dynamia.tools.domain.services.CrudService;
 import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,7 +14,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.token.Sha512DigestUtils;
-import org.springframework.stereotype.Component;
+
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.users.domain.User;
+import com.dynamia.cms.site.users.services.UserService;
+
+import tools.dynamia.domain.contraints.EmailValidator;
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *

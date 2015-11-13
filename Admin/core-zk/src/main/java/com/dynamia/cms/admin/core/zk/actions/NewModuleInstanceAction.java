@@ -6,13 +6,14 @@ import com.dynamia.cms.admin.core.zk.ui.ModuleInstanceUI;
 import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.core.services.impl.ModulesService;
-import com.dynamia.tools.commons.ApplicableClass;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.web.actions.InstallAction;
-import com.dynamia.tools.web.crud.CrudActionEvent;
-import com.dynamia.tools.web.crud.CrudState;
-import com.dynamia.tools.web.crud.actions.NewAction;
-import com.dynamia.tools.web.util.ZKUtil;
+
+import tools.dynamia.actions.InstallAction;
+import tools.dynamia.commons.ApplicableClass;
+import tools.dynamia.crud.CrudActionEvent;
+import tools.dynamia.crud.CrudState;
+import tools.dynamia.crud.actions.NewAction;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.zk.util.ZKUtil;
 
 @InstallAction
 public class NewModuleInstanceAction extends NewAction {
@@ -39,7 +40,7 @@ public class NewModuleInstanceAction extends NewAction {
 		moduleInstance.setSite(SiteContext.get().getCurrent());
 
 		ModuleInstanceUI ui = new ModuleInstanceUI(moduleInstance);
-		ui.addAction(new SaveModuleInstanceAction(crudService));
+		ui.addAction(new SaveModuleInstanceAction(crudService, evt));
 		ZKUtil.showDialog("New Module Instance", ui, "90%", "90%");
 
 	}

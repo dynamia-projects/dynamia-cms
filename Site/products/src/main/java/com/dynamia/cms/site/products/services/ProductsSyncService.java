@@ -5,14 +5,14 @@
  */
 package com.dynamia.cms.site.products.services;
 
-import com.dynamia.cms.site.core.domain.Site;
+import java.util.List;
+
 import com.dynamia.cms.site.products.api.ProductsDatasource;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import com.dynamia.cms.site.products.dto.ProductDTO;
 import com.dynamia.cms.site.products.dto.StoreDTO;
-import java.util.List;
 
 /**
  *

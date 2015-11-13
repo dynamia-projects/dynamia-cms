@@ -11,11 +11,12 @@ import com.dynamia.cms.site.core.api.ModuleContext;
 import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.services.ProductsService;
-import com.dynamia.tools.commons.collect.PagedList;
-import com.dynamia.tools.domain.query.BooleanOp;
-import com.dynamia.tools.domain.query.QueryConditions;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.services.CrudService;
+
+import tools.dynamia.commons.collect.PagedList;
+import tools.dynamia.domain.query.BooleanOp;
+import tools.dynamia.domain.query.QueryConditions;
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.services.CrudService;
 
 /**
  * Created by Mario on 18/11/2014.

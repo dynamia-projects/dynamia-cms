@@ -1,8 +1,7 @@
 package com.dynamia.cms.site.users;
 
-import com.dynamia.tools.domain.BaseEntity;
-import com.dynamia.tools.domain.util.CrudServiceListenerAdapter;
-import org.springframework.stereotype.Component;
+import tools.dynamia.domain.BaseEntity;
+import tools.dynamia.domain.util.CrudServiceListenerAdapter;
 
 public class SecurityCrudServiceListener extends CrudServiceListenerAdapter<Object> {
 

@@ -8,9 +8,9 @@ import org.zkoss.bind.annotation.Command;
 
 import com.dynamia.cms.site.core.api.AdminModule;
 import com.dynamia.cms.site.core.api.AdminModuleOption;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.web.navigation.ZKNavigationManager;
-import com.dynamia.tools.web.ui.UIMessages;
+
+import tools.dynamia.integration.Containers;
+import tools.dynamia.zk.navigation.ZKNavigationManager;
 
 public class AdminModuleShortcutVM {
 

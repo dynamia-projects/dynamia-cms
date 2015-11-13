@@ -16,10 +16,10 @@ import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.payment.domain.PaymentTransaction;
 import com.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
-import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.cms.site.users.domain.UserContactInfo;
-import com.dynamia.tools.domain.BaseEntity;
-import com.dynamia.tools.domain.contraints.NotEmpty;
+
+import tools.dynamia.domain.BaseEntity;
+import tools.dynamia.domain.contraints.NotEmpty;
 
 @Entity
 @Table(name = "sc_orders", uniqueConstraints = {

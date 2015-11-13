@@ -3,23 +3,20 @@ package com.dynamia.cms.admin.menus.actions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dynamia.cms.admin.menus.ui.MenuItemsUI;
-import com.dynamia.cms.site.core.services.impl.ModulesService;
 import com.dynamia.cms.site.menus.domain.Menu;
 import com.dynamia.cms.site.menus.domain.MenuItem;
-import com.dynamia.tools.commons.ApplicableClass;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.web.actions.InstallAction;
-import com.dynamia.tools.web.crud.CrudActionEvent;
-import com.dynamia.tools.web.crud.CrudState;
-import com.dynamia.tools.web.crud.SubcrudController;
-import com.dynamia.tools.web.crud.actions.NewAction;
-import com.dynamia.tools.web.util.ZKUtil;
+
+import tools.dynamia.actions.InstallAction;
+import tools.dynamia.commons.ApplicableClass;
+import tools.dynamia.crud.CrudActionEvent;
+import tools.dynamia.crud.CrudState;
+import tools.dynamia.crud.actions.NewAction;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.zk.crud.SubcrudController;
+import tools.dynamia.zk.util.ZKUtil;
 
 @InstallAction
 public class NewMenuItemAction extends NewAction {
-
-	@Autowired
-	private ModulesService modulesService;
 
 	@Autowired
 	private CrudService crudService;
@@ -44,7 +41,7 @@ public class NewMenuItemAction extends NewAction {
 		menuItem.setMenu((Menu) controller.getParentEntity());
 
 		MenuItemsUI ui = new MenuItemsUI(menuItem);
-		ui.addAction(new SaveMenuItemAction(crudService));
+		ui.addAction(new SaveMenuItemAction(crudService, evt));
 		ZKUtil.showDialog("New Menu Item", ui, "90%", "90%");
 
 	}

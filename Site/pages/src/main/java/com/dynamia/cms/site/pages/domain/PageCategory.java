@@ -4,13 +4,15 @@
  */
 package com.dynamia.cms.site.pages.domain;
 
-import com.dynamia.cms.site.core.api.SiteAware;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.contraints.NotEmpty;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.dynamia.cms.site.core.api.SiteAware;
+import com.dynamia.cms.site.core.domain.Site;
+
+import tools.dynamia.domain.SimpleEntity;
+import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  *

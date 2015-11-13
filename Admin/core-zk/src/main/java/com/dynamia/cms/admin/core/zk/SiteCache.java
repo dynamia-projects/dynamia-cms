@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.tools.web.ui.UIMessages;
+
+import tools.dynamia.ui.UIMessages;
 
 @Component("siteCache")
 @Scope("session")

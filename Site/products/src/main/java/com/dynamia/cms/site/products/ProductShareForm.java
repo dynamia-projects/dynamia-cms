@@ -5,8 +5,8 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.domain.contraints.Email;
-import com.dynamia.tools.domain.contraints.NotEmpty;
+
+import tools.dynamia.domain.contraints.Email;
 
 public class ProductShareForm implements Serializable {
 

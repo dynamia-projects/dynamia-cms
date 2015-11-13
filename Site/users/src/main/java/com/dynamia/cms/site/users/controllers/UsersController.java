@@ -5,11 +5,6 @@
  */
 package com.dynamia.cms.site.users.controllers;
 
-import com.dynamia.cms.site.core.actions.SiteActionManager;
-import com.dynamia.cms.site.users.UserForm;
-import com.dynamia.cms.site.users.domain.User;
-import com.dynamia.cms.site.users.domain.UserContactInfo;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -22,6 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+
+import com.dynamia.cms.site.core.actions.SiteActionManager;
+import com.dynamia.cms.site.users.UserForm;
+import com.dynamia.cms.site.users.domain.User;
+import com.dynamia.cms.site.users.domain.UserContactInfo;
 
 /**
  *

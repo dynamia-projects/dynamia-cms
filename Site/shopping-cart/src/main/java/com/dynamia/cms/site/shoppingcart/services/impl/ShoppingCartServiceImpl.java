@@ -41,18 +41,15 @@ import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.cms.site.users.domain.UserContactInfo;
-import com.dynamia.tools.commons.BeanMessages;
-import com.dynamia.tools.commons.ClassMessages;
-import com.dynamia.tools.commons.Messages;
-import com.dynamia.tools.commons.SimpleTemplateEngine;
-import com.dynamia.tools.commons.logger.LoggingService;
-import com.dynamia.tools.commons.logger.SLF4JLoggingService;
-import com.dynamia.tools.domain.ValidationError;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.domain.util.DomainUtils;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.integration.sterotypes.Service;
-import com.jhlabs.image.MedianFilter;
+
+import tools.dynamia.commons.ClassMessages;
+import tools.dynamia.commons.logger.LoggingService;
+import tools.dynamia.commons.logger.SLF4JLoggingService;
+import tools.dynamia.domain.ValidationError;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.domain.util.DomainUtils;
+import tools.dynamia.integration.Containers;
+import tools.dynamia.integration.sterotypes.Service;
 
 /**
  *

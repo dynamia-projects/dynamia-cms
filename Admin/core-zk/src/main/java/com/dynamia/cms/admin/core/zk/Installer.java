@@ -12,11 +12,12 @@ import org.springframework.stereotype.Component;
 import com.dynamia.cms.site.core.api.AdminModule;
 import com.dynamia.cms.site.core.api.AdminModuleOption;
 import com.dynamia.cms.site.core.api.ConfigAdminModuleOption;
-import com.dynamia.tools.web.cfg.ConfigPage;
-import com.dynamia.tools.web.crud.CrudPage;
-import com.dynamia.tools.web.navigation.Module;
-import com.dynamia.tools.web.navigation.ModuleProvider;
-import com.dynamia.tools.web.navigation.PageGroup;
+
+import tools.dynamia.crud.CrudPage;
+import tools.dynamia.navigation.Module;
+import tools.dynamia.navigation.ModuleProvider;
+import tools.dynamia.navigation.PageGroup;
+import tools.dynamia.zk.crud.cfg.ConfigPage;
 
 @Component("CoreModule")
 public class Installer implements ModuleProvider {

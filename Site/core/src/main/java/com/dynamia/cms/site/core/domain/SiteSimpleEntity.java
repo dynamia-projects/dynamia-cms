@@ -5,7 +5,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import com.dynamia.cms.site.core.api.SiteAware;
-import com.dynamia.tools.domain.SimpleEntity;
+
+import tools.dynamia.domain.SimpleEntity;
 
 @MappedSuperclass
 public abstract class SiteSimpleEntity extends SimpleEntity implements SiteAware {

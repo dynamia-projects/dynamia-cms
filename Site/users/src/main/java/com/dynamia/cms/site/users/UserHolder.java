@@ -4,15 +4,15 @@
  */
 package com.dynamia.cms.site.users;
 
-import com.dynamia.cms.site.users.domain.User;
-
-import com.dynamia.tools.integration.Containers;
 import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.context.annotation.Scope;
-
 import org.springframework.stereotype.Component;
+
+import com.dynamia.cms.site.users.domain.User;
+
+import tools.dynamia.integration.Containers;
 
 /**
  *

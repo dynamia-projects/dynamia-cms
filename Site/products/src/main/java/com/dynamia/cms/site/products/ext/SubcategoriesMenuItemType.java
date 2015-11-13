@@ -19,7 +19,8 @@ import com.dynamia.cms.site.pages.domain.Page;
 import com.dynamia.cms.site.pages.domain.PageParameter;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.services.ProductsService;
-import com.dynamia.tools.domain.services.CrudService;
+
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *

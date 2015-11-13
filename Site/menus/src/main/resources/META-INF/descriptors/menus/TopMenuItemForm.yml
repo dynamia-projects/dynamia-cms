@@ -1,0 +1,41 @@
+view: form
+id: topMenuItem
+autofields: false
+
+fields:
+
+    name:
+      component: textbox
+    title:
+      component: textbox
+    subtitle:
+      component: textbox
+    
+    page:
+        label: Page (optional)
+        params:
+            fields: site.name,title
+    
+    href:
+      component: textbox
+    
+    target:
+      component: textbox
+    
+    type:
+        component: typeSelector
+        params:
+            typeExtensionClass: com.dynamia.cms.site.menus.api.MenuItemType
+   
+    order:
+      component: intbox
+    icon:
+      component: textbox
+    styleClass:
+      component: textbox
+    backgroundImage:
+      component: textbox
+
+        
+layout:
+    columns: 2

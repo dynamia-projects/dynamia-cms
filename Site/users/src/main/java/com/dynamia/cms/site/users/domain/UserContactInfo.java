@@ -9,8 +9,9 @@ import javax.validation.constraints.NotNull;
 
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.util.ContactInfo;
+
+import tools.dynamia.domain.SimpleEntity;
+import tools.dynamia.domain.util.ContactInfo;
 
 @Entity
 @Table(name = "usr_users_contacts", uniqueConstraints = {

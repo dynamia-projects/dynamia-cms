@@ -14,9 +14,10 @@ import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.ComboitemRenderer;
 
 import com.dynamia.cms.site.payment.PaymentGateway;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.viewers.zk.ComponentAliasIndex;
-import com.dynamia.tools.web.util.ZKUtil;
+
+import tools.dynamia.integration.Containers;
+import tools.dynamia.zk.ComponentAliasIndex;
+import tools.dynamia.zk.util.ZKUtil;
 
 /**
  *

@@ -5,18 +5,19 @@
  */
 package com.dynamia.cms.site.shoppingcart;
 
-import com.dynamia.cms.site.core.SiteContext;
-import com.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
-import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-import com.dynamia.cms.site.users.UserHolder;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.integration.sterotypes.Component;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.context.annotation.Scope;
+
+import com.dynamia.cms.site.core.SiteContext;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
+import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
+import com.dynamia.cms.site.users.UserHolder;
+
+import tools.dynamia.integration.Containers;
+import tools.dynamia.integration.sterotypes.Component;
 
 /**
  *

@@ -6,11 +6,13 @@
 
 package com.dynamia.cms.site.products.listeners;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.dynamia.cms.site.core.api.CMSListener;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.services.ProductsService;
-import com.dynamia.tools.domain.util.CrudServiceListenerAdapter;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import tools.dynamia.domain.util.CrudServiceListenerAdapter;
 
 /**
  *

@@ -5,7 +5,6 @@
  */
 package com.dynamia.cms.site.users.actions;
 
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -17,9 +16,10 @@ import com.dynamia.cms.site.core.actions.SiteActionManager;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.domain.UserContactInfo;
-import com.dynamia.tools.domain.ValidationError;
-import com.dynamia.tools.domain.contraints.NotEmptyValidator;
-import com.dynamia.tools.domain.services.CrudService;
+
+import tools.dynamia.domain.ValidationError;
+import tools.dynamia.domain.contraints.NotEmptyValidator;
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *

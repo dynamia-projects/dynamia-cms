@@ -5,10 +5,13 @@
  */
 package com.dynamia.cms.site.users;
 
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.tools.domain.contraints.NotEmpty;
 import java.io.Serializable;
+
 import javax.validation.constraints.NotNull;
+
+import com.dynamia.cms.site.core.domain.Site;
+
+import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  *

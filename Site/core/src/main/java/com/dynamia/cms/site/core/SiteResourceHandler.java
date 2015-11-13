@@ -16,8 +16,9 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.io.ImageUtil;
+
+import tools.dynamia.integration.Containers;
+import tools.dynamia.io.ImageUtil;
 
 /**
  *

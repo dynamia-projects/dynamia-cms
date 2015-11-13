@@ -2,7 +2,8 @@ package com.dynamia.cms.admin.core.zk.controllers;
 
 import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.core.domain.ModuleInstanceParameter;
-import com.dynamia.tools.web.crud.CrudController;
+
+import tools.dynamia.zk.crud.CrudController;
 
 public class ModuleInstanceParameterController extends CrudController<ModuleInstanceParameter> {
 

@@ -12,8 +12,9 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 
 import com.dynamia.cms.site.core.api.TypeExtension;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.viewers.zk.ComponentAliasIndex;
+
+import tools.dynamia.integration.Containers;
+import tools.dynamia.zk.ComponentAliasIndex;
 
 /**
  *

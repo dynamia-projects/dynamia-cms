@@ -5,17 +5,19 @@
  */
 package com.dynamia.cms.site.products.domain;
 
-import com.dynamia.cms.site.core.Orderable;
-import com.dynamia.cms.site.core.api.SiteAware;
-import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.products.dto.ProductDetailDTO;
-import com.dynamia.tools.domain.SimpleEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.dynamia.cms.site.core.Orderable;
+import com.dynamia.cms.site.core.api.SiteAware;
+import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.products.dto.ProductDetailDTO;
+
+import tools.dynamia.domain.SimpleEntity;
 
 /**
  *

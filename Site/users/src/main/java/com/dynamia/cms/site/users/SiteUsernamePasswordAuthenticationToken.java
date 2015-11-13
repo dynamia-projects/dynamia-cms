@@ -5,10 +5,12 @@
  */
 package com.dynamia.cms.site.users;
 
-import com.dynamia.cms.site.core.domain.Site;
 import java.util.Collection;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+
+import com.dynamia.cms.site.core.domain.Site;
 
 /**
  *

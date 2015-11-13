@@ -1,9 +1,10 @@
 package com.dynamia.cms.site.core.listeners;
 
 import com.dynamia.cms.site.core.domain.ModuleInstance;
-import com.dynamia.tools.commons.StringUtils;
-import com.dynamia.tools.domain.util.CrudServiceListenerAdapter;
-import com.dynamia.tools.integration.sterotypes.Component;
+
+import tools.dynamia.commons.StringUtils;
+import tools.dynamia.domain.util.CrudServiceListenerAdapter;
+import tools.dynamia.integration.sterotypes.Component;
 
 @Component
 public class ModuleInstanceCrudListener extends CrudServiceListenerAdapter<ModuleInstance> {

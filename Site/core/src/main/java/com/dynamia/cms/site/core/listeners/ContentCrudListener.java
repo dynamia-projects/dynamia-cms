@@ -4,10 +4,13 @@
  */
 package com.dynamia.cms.site.core.listeners;
 
-import com.dynamia.cms.site.core.domain.Content;
-import com.dynamia.tools.domain.util.CrudServiceListenerAdapter;
 import java.util.UUID;
+
 import org.springframework.stereotype.Component;
+
+import com.dynamia.cms.site.core.domain.Content;
+
+import tools.dynamia.domain.util.CrudServiceListenerAdapter;
 
 /**
  *

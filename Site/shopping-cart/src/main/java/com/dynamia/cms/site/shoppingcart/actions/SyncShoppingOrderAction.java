@@ -6,13 +6,10 @@
 package com.dynamia.cms.site.shoppingcart.actions;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.dynamia.cms.site.core.actions.ActionEvent;
 import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
-import com.dynamia.cms.site.payment.PaymentForm;
-import com.dynamia.cms.site.payment.PaymentGateway;
 import com.dynamia.cms.site.payment.services.PaymentService;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartUtils;

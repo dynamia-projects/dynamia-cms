@@ -9,15 +9,16 @@ import com.dynamia.cms.site.core.DynamiaCMS;
 import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.modules.filemanager.FileManager;
-import com.dynamia.tools.commons.ApplicableClass;
-import com.dynamia.tools.web.actions.ActionRenderer;
-import com.dynamia.tools.web.actions.InstallAction;
-import com.dynamia.tools.web.crud.AbstractCrudAction;
-import com.dynamia.tools.web.crud.CrudActionEvent;
-import com.dynamia.tools.web.crud.CrudState;
-import com.dynamia.tools.web.crud.actions.renderers.ToolbarbuttonActionRenderer;
-import com.dynamia.tools.web.navigation.ComponentPage;
-import com.dynamia.tools.web.navigation.ZKNavigationManager;
+
+import tools.dynamia.actions.ActionRenderer;
+import tools.dynamia.actions.InstallAction;
+import tools.dynamia.commons.ApplicableClass;
+import tools.dynamia.crud.AbstractCrudAction;
+import tools.dynamia.crud.CrudActionEvent;
+import tools.dynamia.crud.CrudState;
+import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer;
+import tools.dynamia.zk.navigation.ComponentPage;
+import tools.dynamia.zk.navigation.ZKNavigationManager;
 
 /**
  *

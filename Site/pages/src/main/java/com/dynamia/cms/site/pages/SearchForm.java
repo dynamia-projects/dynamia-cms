@@ -5,9 +5,11 @@
  */
 package com.dynamia.cms.site.pages;
 
-import com.dynamia.tools.domain.contraints.NotEmpty;
 import java.io.Serializable;
+
 import javax.servlet.http.HttpServletRequest;
+
+import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  *

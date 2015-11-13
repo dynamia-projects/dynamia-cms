@@ -4,11 +4,6 @@
  */
 package com.dynamia.cms.site.pages.domain;
 
-import com.dynamia.cms.site.core.api.SiteAware;
-import com.dynamia.cms.site.core.domain.Content;
-import com.dynamia.cms.site.core.domain.ContentAuthor;
-import com.dynamia.tools.domain.contraints.NotEmpty;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +20,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import com.dynamia.cms.site.core.api.SiteAware;
+import com.dynamia.cms.site.core.domain.Content;
+import com.dynamia.cms.site.core.domain.ContentAuthor;
+
+import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  *

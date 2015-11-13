@@ -5,8 +5,9 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.InputEvent;
 
 import com.dynamia.cms.site.pages.domain.Page;
-import com.dynamia.tools.viewers.ViewCustomizer;
-import com.dynamia.tools.viewers.zk.form.FormView;
+
+import tools.dynamia.viewers.ViewCustomizer;
+import tools.dynamia.zk.viewers.form.FormView;
 
 public class PageFormCustomizer implements ViewCustomizer<FormView<Page>> {
 

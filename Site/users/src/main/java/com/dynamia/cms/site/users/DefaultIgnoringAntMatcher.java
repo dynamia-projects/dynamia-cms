@@ -5,8 +5,6 @@
  */
 package com.dynamia.cms.site.users;
 
-import org.springframework.stereotype.Component;
-
 /**
  *
  * @author mario

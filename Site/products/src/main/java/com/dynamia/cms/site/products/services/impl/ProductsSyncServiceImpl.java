@@ -5,34 +5,6 @@
  */
 package com.dynamia.cms.site.products.services.impl;
 
-import com.dynamia.cms.site.core.DynamiaCMS;
-import com.dynamia.cms.site.products.domain.Product;
-import com.dynamia.cms.site.products.domain.ProductBrand;
-import com.dynamia.cms.site.products.domain.ProductCategory;
-import com.dynamia.cms.site.products.domain.ProductDetail;
-import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import com.dynamia.cms.site.products.api.ProductsDatasource;
-import com.dynamia.cms.site.products.clients.ProductsDatasourceClient;
-import com.dynamia.cms.site.products.domain.ProductCategoryDetail;
-import com.dynamia.cms.site.products.domain.ProductCreditPrice;
-import com.dynamia.cms.site.products.domain.ProductStock;
-import com.dynamia.cms.site.products.domain.Store;
-import com.dynamia.cms.site.products.dto.ProductDTO;
-import com.dynamia.cms.site.products.dto.ProductBrandDTO;
-import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
-import com.dynamia.cms.site.products.dto.ProductCategoryDetailDTO;
-import com.dynamia.cms.site.products.dto.ProductCreditPriceDTO;
-import com.dynamia.cms.site.products.dto.ProductDetailDTO;
-import com.dynamia.cms.site.products.dto.ProductStockDTO;
-import com.dynamia.cms.site.products.dto.StoreDTO;
-import com.dynamia.cms.site.products.services.ProductsSyncService;
-import com.dynamia.tools.commons.logger.LoggingService;
-import com.dynamia.tools.commons.logger.SLF4JLoggingService;
-import com.dynamia.tools.domain.query.QueryParameters;
-import com.dynamia.tools.domain.services.CrudService;
-import com.dynamia.tools.integration.scheduling.SchedulerUtil;
-import com.dynamia.tools.integration.scheduling.Task;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -43,6 +15,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -51,6 +24,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.dynamia.cms.site.core.DynamiaCMS;
+import com.dynamia.cms.site.products.api.ProductsDatasource;
+import com.dynamia.cms.site.products.clients.ProductsDatasourceClient;
+import com.dynamia.cms.site.products.domain.Product;
+import com.dynamia.cms.site.products.domain.ProductBrand;
+import com.dynamia.cms.site.products.domain.ProductCategory;
+import com.dynamia.cms.site.products.domain.ProductCategoryDetail;
+import com.dynamia.cms.site.products.domain.ProductCreditPrice;
+import com.dynamia.cms.site.products.domain.ProductDetail;
+import com.dynamia.cms.site.products.domain.ProductStock;
+import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import com.dynamia.cms.site.products.domain.Store;
+import com.dynamia.cms.site.products.dto.ProductBrandDTO;
+import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
+import com.dynamia.cms.site.products.dto.ProductCategoryDetailDTO;
+import com.dynamia.cms.site.products.dto.ProductCreditPriceDTO;
+import com.dynamia.cms.site.products.dto.ProductDTO;
+import com.dynamia.cms.site.products.dto.ProductDetailDTO;
+import com.dynamia.cms.site.products.dto.ProductStockDTO;
+import com.dynamia.cms.site.products.dto.StoreDTO;
+import com.dynamia.cms.site.products.services.ProductsSyncService;
+
+import tools.dynamia.commons.logger.LoggingService;
+import tools.dynamia.commons.logger.SLF4JLoggingService;
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.integration.scheduling.SchedulerUtil;
+import tools.dynamia.integration.scheduling.Task;
 
 /**
  * @author mario

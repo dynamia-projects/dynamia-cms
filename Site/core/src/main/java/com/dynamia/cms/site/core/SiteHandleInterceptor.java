@@ -15,9 +15,10 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.dynamia.cms.site.core.api.SiteRequestInterceptor;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
-import com.dynamia.tools.commons.logger.LoggingService;
-import com.dynamia.tools.commons.logger.SLF4JLoggingService;
-import com.dynamia.tools.integration.Containers;
+
+import tools.dynamia.commons.logger.LoggingService;
+import tools.dynamia.commons.logger.SLF4JLoggingService;
+import tools.dynamia.integration.Containers;
 
 /**
  *

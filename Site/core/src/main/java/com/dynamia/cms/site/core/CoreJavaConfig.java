@@ -6,6 +6,7 @@ package com.dynamia.cms.site.core;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

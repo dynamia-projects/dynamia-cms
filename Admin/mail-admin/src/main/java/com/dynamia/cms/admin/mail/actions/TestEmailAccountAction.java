@@ -5,9 +5,6 @@
  */
 package com.dynamia.cms.admin.mail.actions;
 
-import static com.dynamia.tools.viewers.ViewDescriptorBuilder.field;
-import static com.dynamia.tools.viewers.ViewDescriptorBuilder.viewDescriptor;
-
 import java.util.Map;
 
 import org.zkoss.zul.Messagebox;
@@ -15,23 +12,25 @@ import org.zkoss.zul.Messagebox;
 import com.dynamia.cms.site.mail.MailMessage;
 import com.dynamia.cms.site.mail.domain.MailAccount;
 import com.dynamia.cms.site.mail.services.MailService;
-import com.dynamia.tools.commons.ApplicableClass;
-import com.dynamia.tools.integration.Containers;
-import com.dynamia.tools.viewers.ViewDescriptor;
-import com.dynamia.tools.viewers.zk.ui.Viewer;
-import com.dynamia.tools.web.actions.AbstractAction;
-import com.dynamia.tools.web.actions.ActionEvent;
-import com.dynamia.tools.web.actions.ActionEventBuilder;
-import com.dynamia.tools.web.actions.ActionRenderer;
-import com.dynamia.tools.web.actions.InstallAction;
-import com.dynamia.tools.web.crud.AbstractCrudAction;
-import com.dynamia.tools.web.crud.CrudActionEvent;
-import com.dynamia.tools.web.crud.CrudState;
-import com.dynamia.tools.web.crud.actions.renderers.ToolbarbuttonActionRenderer;
-import com.dynamia.tools.web.ui.ActionToolbar;
-import com.dynamia.tools.web.ui.MessageType;
-import com.dynamia.tools.web.ui.UIMessages;
-import com.dynamia.tools.web.util.ZKUtil;
+
+import tools.dynamia.actions.AbstractAction;
+import tools.dynamia.actions.ActionEvent;
+import tools.dynamia.actions.ActionEventBuilder;
+import tools.dynamia.actions.ActionRenderer;
+import tools.dynamia.actions.InstallAction;
+import tools.dynamia.commons.ApplicableClass;
+import tools.dynamia.crud.AbstractCrudAction;
+import tools.dynamia.crud.CrudActionEvent;
+import tools.dynamia.crud.CrudState;
+import tools.dynamia.integration.Containers;
+import tools.dynamia.ui.MessageType;
+import tools.dynamia.ui.UIMessages;
+import tools.dynamia.viewers.ViewDescriptor;
+import static tools.dynamia.viewers.ViewDescriptorBuilder.*;
+import tools.dynamia.zk.actions.ActionToolbar;
+import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer;
+import tools.dynamia.zk.util.ZKUtil;
+import tools.dynamia.zk.viewers.ui.Viewer;
 
 /**
  *
@@ -45,6 +44,7 @@ public class TestEmailAccountAction extends AbstractCrudAction {
 		setDescription("Send a test message using this email account");
 		setImage("mail");
 		setMenuSupported(true);
+
 	}
 
 	@Override

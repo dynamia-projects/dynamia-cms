@@ -1,15 +1,14 @@
 package com.dynamia.cms.site.users;
 
-import com.dynamia.cms.site.users.domain.User;
 import java.util.Collection;
 
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
-import org.springframework.stereotype.Component;
 
+import com.dynamia.cms.site.users.domain.User;
 
-import com.dynamia.tools.integration.Containers;
+import tools.dynamia.integration.Containers;
 
 
 class SpringSecurtyApplicationListener implements ApplicationListener {

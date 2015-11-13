@@ -5,8 +5,6 @@
  */
 package com.dynamia.cms.site.shoppingcart.domain;
 
-import com.dynamia.tools.domain.SimpleEntity;
-import com.dynamia.tools.domain.ValidationError;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -15,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import tools.dynamia.domain.SimpleEntity;
 
 /**
  *

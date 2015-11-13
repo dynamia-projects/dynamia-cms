@@ -34,7 +34,7 @@ public class AdminUsersConfig extends UsersConfig {
 				.authenticationDetailsSource(new AuthenticationDetailsSource())
 				.usernameParameter("username")
 				.passwordParameter("password")
-				.defaultSuccessUrl("/", true)
+				.defaultSuccessUrl("/", false)
 				.loginPage("/login")
 				.permitAll()
 				.and()

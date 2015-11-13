@@ -5,7 +5,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.dynamia.cms.site.payment.PaymentGateway;
-import com.dynamia.tools.domain.SimpleEntity;
+
+import tools.dynamia.domain.SimpleEntity;
 
 @Entity
 @Table(name = "pay_gateway_config")

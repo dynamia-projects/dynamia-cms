@@ -14,7 +14,8 @@ import com.dynamia.cms.site.core.actions.SiteAction;
 import com.dynamia.cms.site.core.api.CMSAction;
 import com.dynamia.cms.site.core.services.SiteService;
 import com.dynamia.cms.site.users.domain.UserContactInfo;
-import com.dynamia.tools.domain.services.CrudService;
+
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *

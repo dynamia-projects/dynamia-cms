@@ -5,13 +5,16 @@
  */
 package com.dynamia.cms.site.products;
 
-import com.dynamia.cms.site.products.domain.Product;
-import com.dynamia.tools.commons.StringUtils;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import com.dynamia.cms.site.products.domain.Product;
+
+import tools.dynamia.commons.StringUtils;
 
 /**
  *
