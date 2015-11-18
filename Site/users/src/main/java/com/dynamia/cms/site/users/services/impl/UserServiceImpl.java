@@ -19,10 +19,9 @@ import com.dynamia.cms.site.mail.domain.MailTemplate;
 import com.dynamia.cms.site.mail.services.MailService;
 import com.dynamia.cms.site.users.PasswordsNotMatchException;
 import com.dynamia.cms.site.users.UserForm;
-import com.dynamia.cms.site.users.domain.Profile;
 import com.dynamia.cms.site.users.domain.User;
 import com.dynamia.cms.site.users.domain.UserContactInfo;
-import com.dynamia.cms.site.users.domain.UserProfile;
+import com.dynamia.cms.site.users.domain.enums.UserProfile;
 import com.dynamia.cms.site.users.services.UserService;
 
 import tools.dynamia.commons.StringUtils;
@@ -76,9 +75,6 @@ public class UserServiceImpl implements UserService {
 
 			crudService.create(user);
 
-			UserProfile basicProfile = new UserProfile(getDefaultProfile(user.getSite()), user);
-			basicProfile.setSite(user.getSite());
-			crudService.create(basicProfile);
 		} else {
 			User actualUser = crudService.find(User.class, user.getId());
 			actualUser.setContactInfo(user.getContactInfo());
@@ -169,48 +165,6 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	private Profile getDefaultProfile(Site site) {
-		QueryParameters qp = QueryParameters.with("site", site).add("internalName", "ROLE_USER");
-		Profile roleUser = crudService.findSingle(Profile.class, qp);
-		if (roleUser == null) {
-			roleUser = new Profile();
-			roleUser.setName("User");
-			roleUser.setSite(site);
-			roleUser.setEditable(false);
-			roleUser = crudService.create(roleUser);
-		}
-
-		return roleUser;
-	}
-
-	private Profile getAdminProfile(Site site) {
-		QueryParameters qp = QueryParameters.with("site", site).add("internalName", "ROLE_ADMIN");
-		Profile roleAdmin = crudService.findSingle(Profile.class, qp);
-		if (roleAdmin == null) {
-			roleAdmin = new Profile();
-			roleAdmin.setName("Admin");
-			roleAdmin.setSite(site);
-			roleAdmin.setEditable(false);
-			roleAdmin = crudService.create(roleAdmin);
-		}
-
-		return roleAdmin;
-	}
-
-	private Profile getEditorProfile(Site site) {
-		QueryParameters qp = QueryParameters.with("site", site).add("internalName", "ROLE_EDITOR");
-		Profile roleAdmin = crudService.findSingle(Profile.class, qp);
-		if (roleAdmin == null) {
-			roleAdmin = new Profile();
-			roleAdmin.setName("Editor");
-			roleAdmin.setSite(site);
-			roleAdmin.setEditable(false);
-			roleAdmin = crudService.create(roleAdmin);
-		}
-
-		return roleAdmin;
-	}
-
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void checkAdminUser(Site site) {
@@ -219,30 +173,17 @@ public class UserServiceImpl implements UserService {
 		if (adminUser == null) {
 			User user = new User();
 			user.setUsername(adminUsername);
-			user.setFullName("Administrator " + site.getName());
+			user.setFirstName("Admin");
+			user.setLastName(site.getName());
 			user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":admin" + site.getKey()));
 			user.setSite(site);
+			user.setProfile(UserProfile.ADMIN);
 			crudService.create(user);
-
-			UserProfile basicProfile = new UserProfile(getDefaultProfile(site), user);
-			basicProfile.setSite(site);
-			crudService.create(basicProfile);
-
-			UserProfile adminProfile = new UserProfile(getAdminProfile(site), user);
-			adminProfile.setSite(site);
-			crudService.create(adminProfile);
-
-			UserProfile editorProfile = new UserProfile(getEditorProfile(site), user);
-			editorProfile.setSite(site);
-			crudService.create(editorProfile);
 		} else {
-
-			if (!adminUser.hasProfile("ROLE_ADMIN")) {
-				UserProfile adminProfile = new UserProfile(getAdminProfile(site), adminUser);
-				adminProfile.setSite(site);
-				crudService.create(adminProfile);
+			if (adminUser.getProfile() != UserProfile.ADMIN) {
+				adminUser.setProfile(UserProfile.ADMIN);
+				crudService.update(adminUser);
 			}
-
 		}
 	}
 

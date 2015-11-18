@@ -35,6 +35,10 @@ import tools.dynamia.domain.contraints.NotEmpty;
 @Table(name = "pg_pages")
 public class Page extends Content implements SiteAware {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1980497517680583352L;
 	@NotEmpty(message = "Enter page title")
 	private String title;
 	@Column(length = 1000)
@@ -42,6 +46,9 @@ public class Page extends Content implements SiteAware {
 	@Basic(fetch = FetchType.LAZY)
 	@Lob
 	private String content;
+	@Column(length = 500)
+	private String summary;
+	private String imageURL;
 	@OneToOne
 	private PageCategory category;
 	private String layout;
@@ -53,17 +60,42 @@ public class Page extends Content implements SiteAware {
 	@NotNull(message = "Select content author")
 	private ContentAuthor author;
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date creationDate;
+	private Date creationDate = new Date();
 	@Temporal(TemporalType.DATE)
-	private Date startDate;
+	private Date startDate = new Date();
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
-	private boolean published;
+	private boolean published = true;
+	private boolean neverExpire = true;
 	private String tags;
 	private String icon;
 	@OneToMany(mappedBy = "page", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PageParameter> parameters = new ArrayList<>();
 	private boolean showTitle = true;
+
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public boolean isNeverExpire() {
+		return neverExpire;
+	}
+
+	public void setNeverExpire(boolean neverExpire) {
+		this.neverExpire = neverExpire;
+	}
 
 	public boolean isShowTitle() {
 		return showTitle;

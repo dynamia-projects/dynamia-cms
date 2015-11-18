@@ -15,8 +15,9 @@ public class CMSeditor extends CKeditor {
 	static {
 		ComponentAliasIndex.getInstance().add(CMSeditor.class);
 		BindingComponentIndex.getInstance().put("value", CMSeditor.class);
-		setFileBrowserTemplate("browse");
-		setFileUploadHandlePage("browse");
+		setFileBrowserTemplate("/browse");
+		setFileUploadHandlePage("/browse");
+		
 	}
 
 	public CMSeditor() {

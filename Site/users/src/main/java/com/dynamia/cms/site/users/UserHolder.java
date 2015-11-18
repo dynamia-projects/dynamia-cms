@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.dynamia.cms.site.users.domain.User;
+import com.dynamia.cms.site.users.domain.enums.UserProfile;
 
 import tools.dynamia.integration.Containers;
 
@@ -40,8 +41,8 @@ public class UserHolder implements Serializable {
 		return user != null && user.getId() != null;
 	}
 
-	public boolean isSuperadmin() {
-		return isAuthenticated() && user.isSuperadmin();
+	public boolean isAdmin() {
+		return isAuthenticated() && user.getProfile() == UserProfile.ADMIN;
 	}
 
 	public String getUserName() {
@@ -54,10 +55,6 @@ public class UserHolder implements Serializable {
 		} else {
 			return "";
 		}
-	}
-
-	public boolean hasProfile(String profileName) {
-		return user.getProfile(profileName) != null;
 	}
 
 	public User getCurrent() {

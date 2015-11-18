@@ -15,8 +15,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -24,14 +24,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
+import com.dynamia.cms.site.users.domain.enums.UserProfile;
 
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.domain.BaseEntity;
-import tools.dynamia.domain.ValidationError;
 import tools.dynamia.domain.contraints.Email;
 import tools.dynamia.domain.contraints.NotEmpty;
 import tools.dynamia.domain.util.ContactInfo;
@@ -67,7 +68,6 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 	private boolean credentialsNonExpired = true;
 	private boolean enabled = true;
 	private boolean passwordExpired;
-	private boolean superadmin;
 
 	@NotNull(message = "Enter user full name")
 	@NotEmpty
@@ -76,8 +76,19 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 	private String firstName;
 	private String lastName;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	private List<UserProfile> profiles = new ArrayList<>();
+	@Enumerated(EnumType.ORDINAL)
+	private UserProfile profile = UserProfile.USER;
+
+	public UserProfile getProfile() {
+		if (profile == null) {
+			profile = UserProfile.USER;
+		}
+		return profile;
+	}
+
+	public void setProfile(UserProfile profile) {
+		this.profile = profile;
+	}
 
 	public String getFirstName() {
 		if (firstName == null) {
@@ -88,6 +99,7 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+		getFullName();
 	}
 
 	public String getLastName() {
@@ -99,14 +111,7 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public boolean isSuperadmin() {
-		return superadmin;
-	}
-
-	public void setSuperadmin(boolean superadmin) {
-		this.superadmin = superadmin;
+		getFullName();
 	}
 
 	public String getUserphoto() {
@@ -136,6 +141,9 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 	}
 
 	public ContactInfo getContactInfo() {
+		if (contactInfo == null) {
+			contactInfo = new ContactInfo();
+		}
 		return contactInfo;
 	}
 
@@ -216,39 +224,12 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 		this.enabled = enabled;
 	}
 
-	public List<UserProfile> getProfiles() {
-		return profiles;
-	}
-
-	public void setProfiles(List<UserProfile> profiles) {
-		this.profiles = profiles;
-	}
-
 	public boolean isPasswordExpired() {
 		return passwordExpired;
 	}
 
 	public void setPasswordExpired(boolean passwordExpired) {
 		this.passwordExpired = passwordExpired;
-	}
-
-	public void addProfile(Profile profile) {
-		if (profile != null) {
-			for (UserProfile p : profiles) {
-				if (p.getProfile().equals(profile)) {
-					throw new ValidationError("Profile " + profile.getName() + " already assigned");
-				}
-			}
-			profiles.add(new UserProfile(profile, this));
-		}
-	}
-
-	public void removeProfile(UserProfile profile) {
-		if (profile != null) {
-			profiles.remove(profile);
-			profile.setProfile(null);
-			profile.setUser(this);
-		}
 	}
 
 	@Override
@@ -264,33 +245,13 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 	@Override
 	public List<GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-		for (int i = 0; i < profiles.size(); i++) {
-			UserProfile perfilUsuario = profiles.get(i);
-			auths.add(perfilUsuario.getProfile());
+
+		auths.add(new SimpleGrantedAuthority("ROLE_" + UserProfile.USER.name()));
+		if (getProfile() != UserProfile.USER) {
+			auths.add(new SimpleGrantedAuthority("ROLE_" + getProfile().name()));
 		}
+
 		return auths;
-	}
-
-	public Profile getProfile(String profileName) {
-		if (getAuthorities() != null) {
-			for (GrantedAuthority grantedAuthority : getAuthorities()) {
-				if (grantedAuthority.getAuthority().equals(profileName)) {
-					return (Profile) grantedAuthority;
-				}
-			}
-		}
-		return null;
-	}
-
-	public String getAssignedProfiles() {
-		StringBuilder sb = new StringBuilder();
-		for (UserProfile profile : profiles) {
-			sb.append(profile.getProfile().getName()).append(", ");
-		}
-		if (sb.length() > 1) {
-			sb.deleteCharAt(sb.lastIndexOf(", "));
-		}
-		return sb.toString();
 	}
 
 	public static User createMock() {
@@ -300,7 +261,4 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 		return user;
 	}
 
-	public boolean hasProfile(String string) {
-		return getProfile(string) != null;
-	}
 }

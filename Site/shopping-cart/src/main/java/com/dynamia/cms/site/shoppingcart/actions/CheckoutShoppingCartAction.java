@@ -53,7 +53,7 @@ public class CheckoutShoppingCartAction implements SiteAction {
 		if (shoppingCart == null || shoppingCart.getQuantity() == 0) {
 			CMSUtil.addWarningMessage("El carrito de compra esta vacio", mv);
 			mv.setView(new RedirectView("/", false, true, false));
-		} else if (config.isPaymentEnabled() || UserHolder.get().isSuperadmin()) {
+		} else if (config.isPaymentEnabled() || UserHolder.get().isAdmin()) {
 			mv.setViewName("shoppingcart/checkout");
 
 			mv.addObject("title", "Confirmar Pedido");

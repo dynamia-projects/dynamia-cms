@@ -4,7 +4,6 @@ import java.nio.file.Path;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,17 +12,9 @@ import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.DynamiaCMS;
 import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.core.domain.SiteDomain;
-
-import tools.dynamia.domain.services.CrudService;
 
 @Controller
 public class FileBrowserController {
-
-	@Autowired
-	private CrudService service;
-
-	
 
 	@RequestMapping("/browse")
 	public ModelAndView login(HttpServletRequest request) {
@@ -32,10 +23,7 @@ public class FileBrowserController {
 
 		try {
 			Site site = SiteContext.get().getCurrent();
-			site = service.reload(site);
-
-			SiteDomain domain = service.findSingle(SiteDomain.class, "site", site);
-			String url = CMSUtil.getSiteURL(domain, "resources");
+			String url = CMSUtil.getSiteURL(site, "resources");
 			Path sitePath = DynamiaCMS.getSitesResourceLocation(site);
 
 			mv.addObject("rootDirectory", sitePath.toFile());
@@ -53,6 +41,5 @@ public class FileBrowserController {
 		return mv;
 
 	}
-
 
 }

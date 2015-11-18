@@ -18,6 +18,7 @@ import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
  */
 @Configuration
 @EnableCaching
+
 public class CoreJavaConfig {
 
     @Bean

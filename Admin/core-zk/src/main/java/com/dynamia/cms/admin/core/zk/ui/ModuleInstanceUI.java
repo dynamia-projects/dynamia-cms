@@ -13,7 +13,6 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.North;
 import org.zkoss.zul.South;
 
-import com.dynamia.cms.admin.core.zk.EntityConverter;
 import com.dynamia.cms.site.core.api.Module;
 import com.dynamia.cms.site.core.domain.ModuleInstance;
 import com.dynamia.cms.site.core.domain.ModuleInstanceParameter;
@@ -106,7 +105,7 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 			field.addParam(ConfigViewRender.PARAM_PARAMETER_NAME, field.getName());
 
 			if (field.getComponentClass() == EntityPickerBox.class) {
-				field.addParam(Viewers.PARAM_CONVERTER, EntityConverter.class.getName());
+				field.addParam(Viewers.PARAM_CONVERTER, converters.Entity.class.getName());
 			}
 		}
 	}
@@ -129,8 +128,7 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 	private Viewer createCustomConfig(ViewDescriptor configDescriptor, final ModuleInstance moduleInstance, final Module module) {
 
 		List<Parameter> configParameters = createConfigParameters(configDescriptor, module, moduleInstance);
-		final Viewer viewer = new Viewer(configDescriptor, configParameters);
-		((ConfigView) viewer.getView()).setAutosaveBindings(true);
+		final Viewer viewer = new Viewer(configDescriptor, configParameters);		
 
 		return viewer;
 

@@ -10,6 +10,8 @@ import com.dynamia.cms.site.core.api.AdminModule;
 import com.dynamia.cms.site.core.api.AdminModuleOption;
 
 import tools.dynamia.integration.Containers;
+import tools.dynamia.navigation.NavigationRestrictions;
+import tools.dynamia.navigation.Page;
 import tools.dynamia.zk.navigation.ZKNavigationManager;
 
 public class AdminModuleShortcutVM {
@@ -21,8 +23,12 @@ public class AdminModuleShortcutVM {
 		for (AdminModule module : Containers.get().findObjects(AdminModule.class)) {
 			for (AdminModuleOption option : module.getOptions()) {
 				if (option.isShortcut()) {
-					option.setPath("admin/" + module.getGroup() + "/" + option.getId());
-					shortcuts.add(option);
+					Page dummy = new Page("x", "x", "x");
+					dummy.addAttribute("OPTION", option);
+					if (NavigationRestrictions.allowAccess(dummy)) {
+						option.setPath("admin/" + module.getGroup() + "/" + option.getId());
+						shortcuts.add(option);
+					}
 				}
 			}
 		}

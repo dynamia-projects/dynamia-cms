@@ -17,21 +17,21 @@ import com.dynamia.cms.site.users.domain.User;
 @CMSModule
 public class UsersAdminModule implements AdminModule {
 
-    @Override
-    public String getGroup() {
-        return "sites";
-    }
+	@Override
+	public String getGroup() {
+		return "sites";
+	}
 
-    @Override
-    public String getName() {
-        return "General";
-    }
+	@Override
+	public String getName() {
+		return "General";
+	}
 
-    @Override
-    public AdminModuleOption[] getOptions() {
-        return new AdminModuleOption[]{
-            new AdminModuleOption("users", "Users", User.class,true,true,"users",true)
-        };
-    }
+	@Override
+	public AdminModuleOption[] getOptions() {
+		return new AdminModuleOption[] {
+				new AdminModuleOption("users", "Users", User.class, false, true, "users", true)
+		};
+	}
 
 }

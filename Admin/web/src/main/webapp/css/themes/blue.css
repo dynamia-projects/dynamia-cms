@@ -2,8 +2,6 @@
 	background-color: #1171a3 !important;
 }
 
-
-
 .content {
 	background-color: #efefef;
 	background-image: url("../../images/LogoCMS.png");
@@ -17,7 +15,6 @@
 	background: none !important;
 	border: 0;
 }
-
 
 .content .shortcutsContainer {
 	background-color: #707070;
@@ -45,7 +42,7 @@
 	background-color: transparent !important;
 }
 
-.z-north, .z-south, .z-west, .z-center, .z-east{
+.z-north, .z-south, .z-west, .z-center, .z-east {
 	border: 0;
 }
 
@@ -72,9 +69,16 @@
 	background-color: #819194;
 	border-radius: 6px;
 	color: white;
-	
 }
 
 .shortcut span {
 	font-size: 10px;
+}
+
+.multiview-panel {
+	overflow: auto;
+}
+
+.viewer-actions-reg {
+	padding: 5px;
 }

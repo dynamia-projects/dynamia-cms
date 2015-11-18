@@ -6,8 +6,8 @@ fields:
     creationDate:
         params:
            converter: converters.Date
+    username:  
+    profile:
     identification:
-    fullName:
-    username:
-    superadmin:
+    fullName:      
     contactInfo:

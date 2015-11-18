@@ -12,6 +12,7 @@ fields:
       component: textbox
     
     page:
+        component: entitypicker
         label: Page (optional)
         params:
             fields: site.name,title
@@ -34,8 +35,9 @@ fields:
     styleClass:
       component: textbox
     backgroundImage:
-      component: textbox
+      label: Background
+      component: resourceSelector
 
         
 layout:
-    columns: 2
+    columns: 3

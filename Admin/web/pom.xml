@@ -55,9 +55,16 @@
 			<artifactId>com.dynamia.cms.admin.shopping</artifactId>
 			<version>1.0.0.Final</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.admin.menus</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dynamia.cms</groupId>
+			<artifactId>com.dynamia.cms.admin.pages</artifactId>
 			<version>1.0.0.Final</version>
 		</dependency>
 
@@ -96,7 +103,7 @@
 			<artifactId>com.dynamia.cms.site.banners</artifactId>
 			<version>${site.cms.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.contacts</artifactId>
@@ -109,8 +116,10 @@
 		<dependency>
 			<groupId>org.zkoss.theme</groupId>
 			<artifactId>atlantic</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.5</version>
 		</dependency>
+
+
 
 		<dependency>
 			<groupId>commons-io</groupId>

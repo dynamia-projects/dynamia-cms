@@ -38,5 +38,21 @@
 		</annotation>
 	</component>
 
+	<component>
+		<component-name>resourceSelector</component-name>
+		<component-class>com.dynamia.cms.admin.core.zk.ui.ResourceSelector</component-class>
+		<widget-class>zul.inp.Bandbox</widget-class>
+		<mold>
+			<mold-name>default</mold-name>
+			<mold-uri>mold/bandbox.js</mold-uri>
+			<css-uri>css/combo.css.dsp</css-uri>
+		</mold>
+		<mold>
+			<mold-name>rounded</mold-name>
+			<mold-uri>mold/bandbox.js</mold-uri>
+			<css-uri>css/combo.css.dsp</css-uri>
+		</mold>
+	</component>
+
 
 </language-addon>

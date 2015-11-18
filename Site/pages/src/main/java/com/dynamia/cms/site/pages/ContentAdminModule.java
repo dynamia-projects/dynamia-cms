@@ -26,15 +26,16 @@ public class ContentAdminModule implements AdminModule {
 
 	@Override
 	public String getName() {
-		return "Site Content";
+		return "Content";
 	}
 
 	@Override
 	public AdminModuleOption[] getOptions() {
 		return new AdminModuleOption[] {
 				new AdminModuleOption("authors", "Authors", ContentAuthor.class),
-				new AdminModuleOption("categories", "Categories", PageCategory.class),
-				new AdminModuleOption("pages", "Pages", Page.class, true, true, "edit", true)
+				new AdminModuleOption("pages", "Pages", Page.class, true, true, "edit", true),
+				new AdminModuleOption("categories", "Pages Categories", PageCategory.class)
+				
 		};
 	}
 

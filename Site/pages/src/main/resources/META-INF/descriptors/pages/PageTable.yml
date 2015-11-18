@@ -1,4 +1,8 @@
 view: table
 beanClass: com.dynamia.cms.site.pages.domain.Page
-hidden: [id,content,parameter,subtitle,tags]
-sortFields: [site,title,showTitle,alias,icon,author,category,type,layout,published,creationDate,startDate,endDate,uuid]
+hidden: [id,content,parameter,subtitle,tags,summary,imageURL]
+sortFields: [site,title,alias,icon,author,category,type,layout,published,showTitle,creationDate,startDate,endDate,neverExpire,uuid]
+
+
+params:
+  orderBy: published, title

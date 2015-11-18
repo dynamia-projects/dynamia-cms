@@ -24,9 +24,9 @@ public class ShoppingCartAdminModule implements AdminModule {
 	@Override
 	public AdminModuleOption[] getOptions() {
 		return new AdminModuleOption[] {
-				new AdminModuleOption("shopConfig", "Configuration", ShoppingSiteConfig.class),
-				new AdminModuleOption("paymentConfig", "Payment Gateway Config", PaymentGatewayConfig.class),
-				new AdminModuleOption("shoppingOrders", "Orders", ShoppingOrder.class,true,true,"shopping-cart",true),
+				new AdminModuleOption("shopConfig", "Configuration", ShoppingSiteConfig.class, false, true),
+				new AdminModuleOption("paymentConfig", "Payment Gateway Config", PaymentGatewayConfig.class, false, true),
+				new AdminModuleOption("shoppingOrders", "Orders", ShoppingOrder.class, true, true, "shopping-cart", true),
 				new AdminModuleOption("shippingCompany", "Shipping Company", ShippingCompany.class)
 
 		};

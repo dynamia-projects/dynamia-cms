@@ -112,6 +112,8 @@
 		<module>products-admin</module>
 		<module>shopping-admin</module>
 		<module>menus-admin</module>
+		<module>pages-admin</module>
 		<module>web</module>
+
 	</modules>
 </project>

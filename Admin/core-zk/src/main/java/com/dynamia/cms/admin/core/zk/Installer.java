@@ -16,6 +16,7 @@ import com.dynamia.cms.site.core.api.ConfigAdminModuleOption;
 import tools.dynamia.crud.CrudPage;
 import tools.dynamia.navigation.Module;
 import tools.dynamia.navigation.ModuleProvider;
+import tools.dynamia.navigation.Page;
 import tools.dynamia.navigation.PageGroup;
 import tools.dynamia.zk.crud.cfg.ConfigPage;
 
@@ -39,12 +40,16 @@ public class Installer implements ModuleProvider {
 					module.addPageGroup(pg);
 				}
 				for (AdminModuleOption option : am.getOptions()) {
+					Page page = null;
+
 					if (option instanceof ConfigAdminModuleOption) {
 						ConfigAdminModuleOption cfg = (ConfigAdminModuleOption) option;
-						pg.addPage(new ConfigPage(cfg.getId(), cfg.getName(), cfg.getDescriptorID()));
+						page = new ConfigPage(cfg.getId(), cfg.getName(), cfg.getDescriptorID());
 					} else {
-						pg.addPage(new CrudPage(option.getId(), option.getName(), option.getCoreClass()));
+						page = new CrudPage(option.getId(), option.getName(), option.getCoreClass());
 					}
+					page.addAttribute("OPTION", option);
+					pg.addPage(page);
 				}
 			}
 		}

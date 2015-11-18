@@ -3,6 +3,7 @@ view: config
 
 fields:
     SuperAdminSite:        
+        label: Admin Site
         description: Admin Site with full system access
 
     HomePath:
@@ -15,4 +16,4 @@ fields:
         
         
 layout:
-    columns: 1
+    columns: 2

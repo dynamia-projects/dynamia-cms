@@ -285,5 +285,10 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 		return clone;
 
 	}
+	
+	@Override
+	public String toString() {
+		return getName();
+	}
 
 }

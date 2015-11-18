@@ -18,7 +18,6 @@ import org.zkoss.zul.Tabpanel;
 import org.zkoss.zul.Tabpanels;
 import org.zkoss.zul.Tabs;
 
-import com.dynamia.cms.admin.core.zk.EntityConverter;
 import com.dynamia.cms.admin.core.zk.ui.TypeSelector;
 import com.dynamia.cms.admin.menus.actions.EditSubmenuAction;
 import com.dynamia.cms.admin.menus.actions.NewSubmenuAction;
@@ -119,6 +118,7 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 		layoutSubmenus.appendChild(new North());
 		layoutSubmenus.appendChild(new Center());
 
+		layoutSubmenus.getNorth().setHeight("60px");
 		layoutSubmenus.getNorth().appendChild(toolbarSubmenus);
 		layoutSubmenus.getCenter().appendChild(subitemsTable);
 
@@ -157,7 +157,7 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 			field.addParam("parameterName", field.getName());
 
 			if (field.getComponentClass() == EntityPickerBox.class) {
-				field.addParam("converter", EntityConverter.class.getName());
+				field.addParam("converter", converters.Entity.class.getName());
 			}
 		}
 	}

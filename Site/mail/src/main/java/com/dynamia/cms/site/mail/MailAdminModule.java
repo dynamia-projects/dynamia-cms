@@ -31,7 +31,7 @@ public class MailAdminModule implements AdminModule {
 	@Override
 	public AdminModuleOption[] getOptions() {
 		return new AdminModuleOption[] {
-				new AdminModuleOption("mailAccounts", "Mail Accounts", MailAccount.class),
+				new AdminModuleOption("mailAccounts", "Mail Accounts", MailAccount.class, false, true),
 				new AdminModuleOption("mailTemplates", "Templates", MailTemplate.class)
 		};
 	}

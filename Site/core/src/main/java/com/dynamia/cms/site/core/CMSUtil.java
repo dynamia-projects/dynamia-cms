@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -27,6 +28,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dynamia.cms.site.core.api.URLProvider;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.domain.SiteDomain;
 import com.dynamia.cms.site.core.html.Option;
@@ -34,6 +36,7 @@ import com.dynamia.cms.site.core.services.SiteService;
 
 import tools.dynamia.commons.CollectionsUtils;
 import tools.dynamia.commons.StringUtils;
+import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.domain.util.ContactInfo;
 import tools.dynamia.integration.Containers;
 
@@ -50,14 +53,21 @@ public class CMSUtil {
 		this.site = site;
 	}
 
+	public static String getSiteURL(Site site, String uri) {
+		CrudService service = Containers.get().findObject(CrudService.class);
+
+		SiteDomain domain = service.findSingle(SiteDomain.class, "site", site);
+		return getSiteURL(domain, uri);
+	}
+
 	public static String getSiteURL(SiteDomain domain, String uri) {
 		if (uri == null) {
 			uri = "";
 		}
 
-		String urltext = String.format("http://%s/" + uri, domain.getName());
+		String urltext = String.format("http://%s/%s", domain.getName(), uri);
 		if (domain.getPort() > 0) {
-			urltext = String.format("http://%s:%s/" + uri, domain.getName(), domain.getPort());
+			urltext = String.format("http://%s:%s/%s", domain.getName(), domain.getPort(), uri);
 		}
 
 		return urltext;
@@ -247,5 +257,35 @@ public class CMSUtil {
 		} catch (UnsupportedEncodingException ex) {
 			throw new AssertionError(ex);
 		}
+	}
+
+	public static String getResourceURL(Site site, File file) {
+
+		if (file == null) {
+			throw new NullPointerException("Resource is null");
+		}
+
+		String url = null;
+		if (file instanceof URLProvider) {
+			url = ((URLProvider) file).getURL();
+		} else {
+
+			String baseUrl = getSiteURL(site, "resources");
+			File resources = DynamiaCMS.getSitesResourceLocation(site).toFile();
+			String filePath = file.getPath();
+			filePath = filePath.substring(filePath.indexOf(resources.getName()) + resources.getName().length() + 1);
+
+			filePath = filePath.replace("\\", "/");
+
+			String separator = "";
+			if (!baseUrl.endsWith("/")) {
+				separator = "/";
+			}
+
+			url = baseUrl + separator + filePath;
+		}
+
+		return url.replace(" ", "%20");
+
 	}
 }

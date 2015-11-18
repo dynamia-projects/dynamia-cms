@@ -3,9 +3,17 @@ beanClass: com.dynamia.cms.site.users.domain.User
 autofields: false
 
 fields:
-    identification:
-    fullName:
     username:
-      component: label
-    superadmin:
+     
+    profile:
+    enabled:
+    
+    identification:
+    firstName:
+    lastName:
+          
+    
     contactInfo:
+
+layout: 
+  columns: 3

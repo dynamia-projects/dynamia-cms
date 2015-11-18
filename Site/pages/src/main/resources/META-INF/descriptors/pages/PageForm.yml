@@ -2,7 +2,7 @@ view: form
 beanClass: com.dynamia.cms.site.pages.domain.Page
 #customizer: com.dynamia.cms.admin.core.zk.PageFormCustomizer
 hidden: [id,uuid,creationDate,parameter,site]
-sortFields: [alias,title,subtitle,type,category,author,layout,icon,startDate,endDate,tags,content,showTitle,published]
+sortFields: [alias,title,subtitle,type,category,author,layout,icon,startDate,endDate,tags,imageURL,summary,content,showTitle,published,neverExpire]
 
 
 fields:
@@ -34,11 +34,28 @@ fields:
             height: 300px
             showLabel: false
             
+    imageURL:
+        label: Image URL
+        component: resourceSelector
+        params:
+            span: 3
+            
+    summary:
+        description: Max 500 characters
+        params:
+            span: 3
+            height: 80px
+            
+            
+    
+            
     parameters:
         component: crudview
         
         
 groups:
+    summary:
+      fields: [imageURL,summary]
     content:
       fields: [content]
 

@@ -13,8 +13,13 @@ import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 
+import com.dynamia.cms.site.core.CMSUtil;
+import com.dynamia.cms.site.core.SiteContext;
+import com.dynamia.cms.site.pages.services.PageService;
 import com.dynamia.modules.filemanager.FileManager;
 
+import tools.dynamia.integration.Containers;
+import tools.dynamia.io.FileInfo;
 import tools.dynamia.ui.MessageType;
 import tools.dynamia.ui.UIMessages;
 
@@ -42,21 +47,15 @@ public class FileBrowserVM {
 	@AfterCompose
 	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		Selectors.wireComponents(view, this, false);
+		PageService pageService = Containers.get().findObject(PageService.class);
+		
 	}
 
 	@Command
 	public void select() {
-		String filePath = fileMgr.getSelectedFilePath();
-		if (filePath != null && !filePath.isEmpty()) {
-			filePath = filePath.replace("\\", "/");
-
-			String separator = "";
-			if (!baseUrl.endsWith("/")) {
-				separator = "/";
-			}
-
-			String path = baseUrl + separator + filePath;
-
+		FileInfo resource = fileMgr.getValue();
+		if (resource != null) {
+			String path = CMSUtil.getResourceURL(SiteContext.get().getCurrent(), resource.getFile());
 			String script = "window.opener.CKEDITOR.tools.callFunction(" +
 					ckEditorFuncNum + ", '" + Executions.getCurrent().encodeURL(path) + "'); window.close(); ";
 
