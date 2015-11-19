@@ -40,7 +40,7 @@ public class EditMenuItemAction extends EditAction {
 			ui.addAction(new SaveMenuItemAction(crudService,evt));
 			ZKUtil.showDialog("Menu Item: "+menuItem.getName(), ui, "90%", "90%");
 		} else {
-			UIMessages.showMessage("Select module instance", MessageType.ERROR);
+			UIMessages.showMessage("Select menu item to edit", MessageType.ERROR);
 		}
 
 	}

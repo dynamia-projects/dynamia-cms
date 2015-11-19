@@ -7,10 +7,15 @@
 
 	<div self="@{define(topmenu)}">
 		<menubar>
+		
+				<menuitem label="Edit Site" onClick="siteMgr.edit()"
+				image="${icons['edit-page:normal']}"  />
+			
+			
 			<menuitem label="Resources"
 				onClick="siteResourcesManagerAction.show()"
 				image="${icons['package:normal']}" />
-			<menuitem label="Apply Changes" onClick="siteCache.clear()"
+			<menuitem label="Apply Changes" onClick="siteMgr.clearCache()"
 				image="${icons['apply:normal']}" />
 
 			<menuitem label="Exit" href="/logout"

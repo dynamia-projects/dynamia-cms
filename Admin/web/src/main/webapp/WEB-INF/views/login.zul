@@ -37,7 +37,7 @@
 				</hlayout>
 				<hlayout hflex="1">
 					<div hflex="true" align="right">
-						<button onClick="@command('login')"
+						<button onClick="@command('login')" zclass="btn btn-success"
 							label="Login" iconSclass="fa fa-check" />
 					</div>
 				</hlayout>

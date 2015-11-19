@@ -32,6 +32,7 @@ public class SyncAllAction extends AbstractCrudAction {
     public SyncAllAction() {
         setName("Sync All Products");
         setGroup(ActionGroup.get("products"));
+        setImage("sync");
         setMenuSupported(true);
     }
 

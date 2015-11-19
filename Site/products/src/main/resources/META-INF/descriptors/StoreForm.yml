@@ -1,0 +1,14 @@
+view: table
+beanClass: com.dynamia.cms.site.products.domain.Store
+autofields: false
+
+fields:
+  name:  
+  image:
+    component: resourceSelector
+  page:
+  contactInfo:
+  
+  
+layout:
+  columns: 3

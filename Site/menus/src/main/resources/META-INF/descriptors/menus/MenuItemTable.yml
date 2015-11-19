@@ -12,6 +12,7 @@ fields:
     page:
     page.category:
         label: Page Category
+    order:
 
         
 params:

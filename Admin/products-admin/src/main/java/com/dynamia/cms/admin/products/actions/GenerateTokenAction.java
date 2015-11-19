@@ -35,6 +35,7 @@ public class GenerateTokenAction extends AbstractCrudAction {
 
     public GenerateTokenAction() {
         setName("Generate Token");
+        setImage("token");
         setGroup(ActionGroup.get("products"));
         setMenuSupported(true);
     }

@@ -10,7 +10,13 @@
 	<style src="/css/default.css" />
 	<style src="/css/viewers.css" />
 	<style src="/css/zkstyles.css" />
+
+	<style src="/css/bootstrap.min.css" />
+	<style src="/css/bootstrap-theme.min.css" />
+
+	<style src="/css/jquery.growl.css" />
 	<style src="/css/themes/blue.css" />
+
 	<style
 		src="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
 
@@ -41,4 +47,7 @@
 		</south>
 	</borderlayout>
 
+	<script type="text/javascript" src="/js/npm.js" />
+	<script type="text/javascript" src="/js/bootstrap.min.js" />
+	<script type="text/javascript" src="/js/jquery.growl.js" />
 </zk>

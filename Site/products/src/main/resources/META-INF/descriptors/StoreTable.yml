@@ -1,0 +1,12 @@
+view: table
+beanClass: com.dynamia.cms.site.products.domain.Store
+autofields: false
+
+fields:
+  name:  
+  page:
+  contactInfo:
+  
+  
+params:
+  orderBy: name

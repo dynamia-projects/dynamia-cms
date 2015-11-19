@@ -19,6 +19,7 @@ import org.zkoss.zul.Tabpanels;
 import org.zkoss.zul.Tabs;
 
 import com.dynamia.cms.admin.core.zk.ui.TypeSelector;
+import com.dynamia.cms.admin.menus.actions.DeleteSubmenuAction;
 import com.dynamia.cms.admin.menus.actions.EditSubmenuAction;
 import com.dynamia.cms.admin.menus.actions.NewSubmenuAction;
 import com.dynamia.cms.site.menus.api.MenuItemType;
@@ -72,6 +73,7 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 		setVflex("1");
 
 		toolbar = new ActionToolbar(this);
+		
 
 		tabbox = new Tabbox();
 		tabbox.setHflex("1");
@@ -83,9 +85,11 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 		tabbox.getTabs().appendChild(new Tab("Submenus"));
 
 		Tabpanel panelMenu = new Tabpanel();
+		panelMenu.setVflex("1");
 		tabbox.getTabpanels().appendChild(panelMenu);
 
 		Tabpanel panelSubmenus = new Tabpanel();
+		panelSubmenus.setVflex("1");
 		tabbox.getTabpanels().appendChild(panelSubmenus);
 		appendChild(tabbox);
 
@@ -118,7 +122,6 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 		layoutSubmenus.appendChild(new North());
 		layoutSubmenus.appendChild(new Center());
 
-		layoutSubmenus.getNorth().setHeight("60px");
 		layoutSubmenus.getNorth().appendChild(toolbarSubmenus);
 		layoutSubmenus.getCenter().appendChild(subitemsTable);
 
@@ -149,6 +152,7 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 	private void initDefaultActions() {
 		addSubmenusAction(new NewSubmenuAction(menuItem));
 		addSubmenusAction(new EditSubmenuAction(menuItem));
+		addSubmenusAction(new DeleteSubmenuAction(menuItem));
 
 	}
 
@@ -210,7 +214,6 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 
 	public void addSubmenusAction(Action action) {
 		toolbarSubmenus.addAction(action);
-
 	}
 
 	public TableView<MenuItem> getSubitemsTable() {

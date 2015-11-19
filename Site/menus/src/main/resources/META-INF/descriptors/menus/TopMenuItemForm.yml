@@ -18,8 +18,8 @@ fields:
             fields: site.name,title
     
     href:
-      component: textbox
-    
+      component: resourceSelector
+          
     target:
       component: textbox
     

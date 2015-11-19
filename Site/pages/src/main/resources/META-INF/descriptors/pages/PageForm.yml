@@ -2,7 +2,7 @@ view: form
 beanClass: com.dynamia.cms.site.pages.domain.Page
 #customizer: com.dynamia.cms.admin.core.zk.PageFormCustomizer
 hidden: [id,uuid,creationDate,parameter,site]
-sortFields: [alias,title,subtitle,type,category,author,layout,icon,startDate,endDate,tags,imageURL,summary,content,showTitle,published,neverExpire]
+sortFields: [title,subtitle,alias,type,category,author,layout,icon,tags,startDate,endDate,imageURL,summary,content,showTitle,published,neverExpire]
 
 
 fields:

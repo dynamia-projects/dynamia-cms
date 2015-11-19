@@ -1,5 +1,7 @@
 package com.dynamia.cms.admin.core.zk.ui;
 
+import org.zkoss.zk.ui.WrongValueException;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Bandbox;
 
@@ -16,6 +18,7 @@ import tools.dynamia.io.FileInfo;
 import tools.dynamia.ui.MessageType;
 import tools.dynamia.ui.UIMessages;
 import tools.dynamia.viewers.impl.DefaultViewDescriptor;
+import tools.dynamia.zk.BindingComponentIndex;
 import tools.dynamia.zk.ComponentAliasIndex;
 import tools.dynamia.zk.util.ZKUtil;
 import tools.dynamia.zk.viewers.ui.Viewer;
@@ -30,6 +33,7 @@ public class ResourceSelector extends Bandbox {
 
 	static {
 		ComponentAliasIndex.getInstance().add(ResourceSelector.class);
+		BindingComponentIndex.getInstance().put("value", ResourceSelector.class);
 	}
 
 	public ResourceSelector() {
@@ -69,6 +73,14 @@ public class ResourceSelector extends Bandbox {
 		}));
 
 		ZKUtil.showDialog("Select Resource", viewer, "90%", "90%");
+	}
+
+	@Override
+	public void setValue(String value) throws WrongValueException {
+		if (getValue() != value) {
+			super.setValue(value);
+			Events.postEvent(new Event(Events.ON_CHANGE, this, value));
+		}
 	}
 
 }

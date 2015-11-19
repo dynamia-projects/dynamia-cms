@@ -1,3 +1,5 @@
+
+
 .header {
 	background-color: #1171a3 !important;
 }
@@ -30,7 +32,7 @@
 .loginContainer .z-window-content {
 	background-color: #efefef !important;
 	background-image: url("../../images/LogoCMS.png") !important;
-	background-position: center top !important;
+	background-position: center 20px !important;
 	background-repeat: no-repeat;
 }
 
@@ -81,4 +83,8 @@
 
 .viewer-actions-reg {
 	padding: 5px;
+}
+
+a:hover{
+	text-decoration: none !important;
 }

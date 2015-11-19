@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="template">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
 
 
-    <div class="page" layout:fragment="content">
+<div class="page" layout:fragment="content">
 
-        <div class="container">
+	<div class="container">
 
-            <div th:include="site/pagetitle::content"  th:if="${page.showTitle}"/>
+		<div th:include="site/pagetitle::content" th:if="${page.showTitle}" />
 
-           
-            <div th:utext="${page.content}">
-                Page Content                    
-            </div>
+		<div class="clearfix"></div>
+		<div th:utext="${page.content}">Page Content</div>
 
 
-        </div>
+	</div>
 
-    </div>
+</div>
 
 </html>

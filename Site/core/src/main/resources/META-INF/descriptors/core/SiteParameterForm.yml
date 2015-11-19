@@ -4,8 +4,8 @@ hidden: [id,site,extra]
 sortFields: [name,value]
 
 fields:
-    
-   
+  value:
+    component: resourceSelector   
       
 layout:
     columns: 1

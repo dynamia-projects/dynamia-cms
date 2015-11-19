@@ -14,6 +14,7 @@ fields:
             fields: site.name,title
     
     href:
+       component: resourceSelector
     
     target:
    

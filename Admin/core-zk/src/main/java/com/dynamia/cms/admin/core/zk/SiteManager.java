@@ -8,22 +8,34 @@ import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
 
+import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.ui.UIMessages;
+import tools.dynamia.zk.crud.CrudView;
 
-@Component("siteCache")
+@Component("siteMgr")
 @Scope("session")
-public class SiteCache {
+public class SiteManager {
 
 	@Autowired
 	private SiteService service;
+	
+	@Autowired
+	private CrudService crudService;
 
-	public void clear() {
+	public void clearCache() {
 		Site site = SiteContext.get().getCurrent();
 		if (site != null) {
 			service.clearCache(site);
 			UIMessages.showMessage("Site Cache cleared successfull");
 		}
 
+	}
+	
+	public void edit(){
+		Site site = crudService.reload(SiteContext.get().getCurrent());
+		
+		
+		CrudView.showUpdateView("Edit "+site, Site.class, site);
 	}
 
 }

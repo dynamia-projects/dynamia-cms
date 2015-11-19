@@ -29,20 +29,20 @@
 <!-- CSS -->
 <!-- Styles -->
 <!-- Bootstrap CSS -->
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
 <link rel="stylesheet" th:href="@{/css/settings.css}" media="screen" />
 <!-- Navigation menu -->
-<link rel="stylesheet" th:href="@{/css/ddlevelsmenu-base.css}"/>
-<link rel="stylesheet" th:href="@{/css/ddlevelsmenu-topbar.css}"/>
+<link rel="stylesheet" th:href="@{/css/ddlevelsmenu-base.css}" />
+<link rel="stylesheet" th:href="@{/css/ddlevelsmenu-topbar.css}" />
 <!-- PrettyPhoto -->
-<link rel="stylesheet" th:href="@{/css/prettyPhoto.css}"/>
+<link rel="stylesheet" th:href="@{/css/prettyPhoto.css}" />
 <!-- cSlider -->
-<link rel="stylesheet" th:href="@{/css/slider.css}"/>
+<link rel="stylesheet" th:href="@{/css/flexslider.css}" />
 <!-- Font awesome CSS -->
-<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
 <!-- Custom CSS -->
-<link th:href="@{/css/style.css}" rel="stylesheet"/>
+<link th:href="@{/css/style.css}" rel="stylesheet" />
 
 </head>
 <body>
@@ -71,7 +71,7 @@
 
 	<!-- Header Start -->
 	<header>
-		<th:block th:include="tpl_mobilemenu::content" />
+		
 
 		<div class="container">
 			<div class="row">
@@ -110,11 +110,12 @@
 		<th:block th:include="tpl_globalmessages::content" />
 	</div>
 
-	<div class="container" th:if="${cmsModules.isUsed('banners')}">
-		<div
-			class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
+
+
+	<div  th:if="${cmsModules.isUsed('banners')}">
+		
 			<th:block th:include="module::position('banners')" />
-		</div>
+		
 	</div>
 
 	<!-- CONTENT -->
@@ -175,10 +176,21 @@
 	<script th:src="@{/js/html5shiv.js}"></script>
 	<!-- Custom JS -->
 	<script th:src="@{/js/custom.js}"></script>
+
+	<script th:src="@{/js/jquery.flexslider.js}" defer=""
+		src="js/jquery.flexslider.js"></script>
 	<!-- This page JS -->
 	<script>
 		/* JS for SLIDER REVOLUTION */
 		jQuery(document).ready(function() {
+
+			jQuery('.bannerslider').flexslider({
+				animation : "fade",
+				start : function(slider) {
+					$('body').removeClass('loading');
+				}
+			});
+
 			jQuery('.tp-banner').revolution({
 				delay : 9000,
 				startheight : 500,

@@ -21,6 +21,7 @@
 	<mvc:annotation-driven />
 	<mvc:resources location="/images/" mapping="/images/**" />
 	<mvc:resources location="/css/" mapping="/css/**" />
+	<mvc:resources location="/js/" mapping="/js/**" />
 
 
 	<bean

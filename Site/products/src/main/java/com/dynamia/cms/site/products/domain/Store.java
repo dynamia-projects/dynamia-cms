@@ -27,6 +27,10 @@ import tools.dynamia.domain.util.ContactInfo;
 @Table(name = "prd_stores")
 public class Store extends SimpleEntity implements SiteAware {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7246043620591262045L;
 	@OneToOne
 	@NotNull
 	private Site site;
