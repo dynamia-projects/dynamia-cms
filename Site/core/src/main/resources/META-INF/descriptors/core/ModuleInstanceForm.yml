@@ -20,8 +20,9 @@ fields:
    
    
    styleClass:
-   order:
-   enabled:
-        
+   
+   includePaths:   
+   order:   
+   enabled:     
 layout:
     columns: 3

@@ -43,4 +43,8 @@ public class MenuContext implements Serializable {
 		return menuItem.getParameter(name);
 	}
 
+	public void update(MenuItem item) {
+		this.menuItem = item;
+	}
+
 }

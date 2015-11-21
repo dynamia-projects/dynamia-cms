@@ -13,7 +13,8 @@ import tools.dynamia.crud.actions.EditAction;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.ui.MessageType;
 import tools.dynamia.ui.UIMessages;
-import tools.dynamia.zk.util.ZKUtil;
+import tools.dynamia.zk.navigation.ComponentPage;
+import tools.dynamia.zk.navigation.ZKNavigationManager;
 
 @InstallAction
 public class EditMenuItemAction extends EditAction {
@@ -38,7 +39,7 @@ public class EditMenuItemAction extends EditAction {
 			menuItem = crudService.reload(menuItem);
 			MenuItemsUI ui = new MenuItemsUI(menuItem);
 			ui.addAction(new SaveMenuItemAction(crudService,evt));
-			ZKUtil.showDialog("Menu Item: "+menuItem.getName(), ui, "90%", "90%");
+			ZKNavigationManager.getInstance().setCurrentPage(new ComponentPage("editMenu"+menuItem.getId(), "Edit Menu "+menuItem, ui));
 		} else {
 			UIMessages.showMessage("Select menu item to edit", MessageType.ERROR);
 		}

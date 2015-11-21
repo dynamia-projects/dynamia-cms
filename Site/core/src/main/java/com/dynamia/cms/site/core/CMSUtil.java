@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -23,6 +22,7 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -47,6 +47,7 @@ import tools.dynamia.integration.Containers;
 public class CMSUtil {
 
 	private Site site;
+	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
 	public CMSUtil(Site site) {
 		super();
@@ -287,5 +288,10 @@ public class CMSUtil {
 
 		return url.replace(" ", "%20");
 
+	}
+
+	public static boolean matchAntPattern(String pattern, String path) {
+		pattern = pattern.trim();
+		return ANT_PATH_MATCHER.match(pattern, path);
 	}
 }

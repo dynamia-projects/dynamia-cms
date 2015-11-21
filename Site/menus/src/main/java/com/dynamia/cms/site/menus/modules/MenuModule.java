@@ -9,6 +9,7 @@ import com.dynamia.cms.site.core.api.AbstractModule;
 import com.dynamia.cms.site.core.api.CMSModule;
 import com.dynamia.cms.site.core.api.ModuleContext;
 import com.dynamia.cms.site.core.domain.ModuleInstance;
+import com.dynamia.cms.site.menus.MenuContext;
 import com.dynamia.cms.site.menus.domain.Menu;
 import com.dynamia.cms.site.menus.domain.MenuItem;
 import com.dynamia.cms.site.menus.services.MenuService;
@@ -44,14 +45,15 @@ public class MenuModule extends AbstractModule {
 		}
 
 		if (menu != null) {
-			List<MenuItem> items = new ArrayList<>(menu.getItems());
-			for (MenuItem menuItem : items) {
+			List<MenuItem> itemsToDisplay = new ArrayList<>();
+			for (MenuItem menuItem : menu.getItems()) {
 				menuItem.getSubitems().size();
-				service.setupMenuItem(menuItem);
+				MenuContext menuContext = service.setupMenuItem(menuItem);
+				itemsToDisplay.add(menuContext.getMenuItem());
 			}
 
 			mod.addObject(PARAM_MENU, menu);
-			mod.addObject("menuitems", items);
+			mod.addObject("menuitems", itemsToDisplay);
 		}
 
 	}

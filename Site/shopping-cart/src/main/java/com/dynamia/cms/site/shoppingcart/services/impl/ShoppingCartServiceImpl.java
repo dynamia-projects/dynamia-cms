@@ -230,6 +230,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 			ShoppingOrder order = crudService.findSingle(ShoppingOrder.class, "transaction", tx);
 			if (order != null) {
 				notifyOrderCompleted(order);
+			} else {
+				logger.error("No shopping order found for transaction " + tx.getUuid());
 			}
 		}
 
@@ -255,6 +257,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 				mailService.send(customerMessage);
 				logger.info("Customer email Sended");
+			} else {
+				logger.error("No email template found for customer Orden Completed notification");
 			}
 		} catch (Exception e) {
 			logger.error("Error sending customer email for order " + order.getNumber(), e);

@@ -1,6 +1,6 @@
 package com.dynamia.cms.admin.menus.actions;
 
-import com.dynamia.cms.admin.menus.ui.MenuItemsUI;
+import com.dynamia.cms.admin.menus.ui.SubmenuItemsUI;
 import com.dynamia.cms.site.menus.domain.MenuItem;
 
 import tools.dynamia.actions.AbstractAction;
@@ -14,7 +14,7 @@ import tools.dynamia.zk.viewers.ui.Viewer;
 
 public class NewSubmenuAction extends AbstractAction {
 
-	private CrudService crudService;
+	protected CrudService crudService;
 	protected MenuItem parent;
 
 	public NewSubmenuAction(MenuItem parent) {
@@ -35,21 +35,24 @@ public class NewSubmenuAction extends AbstractAction {
 	}
 
 	protected void showFormView(String title, MenuItem submenu, ActionEvent evt) {
-		MenuItemsUI ui = (MenuItemsUI) evt.getSource();
+		SubmenuItemsUI ui = (SubmenuItemsUI) evt.getSource();
 		Viewer viewer = new Viewer("form", MenuItem.class, submenu);
 		viewer.addAction(new FastAction("Guardar", e -> {
 			save(ui, e);
 			viewer.getParent().detach();
 			UIMessages.showMessage("Submenu item saved");
+			ui.reloadSubitems();
 		}));
 
 		ZKUtil.showDialog(title, viewer);
 
 	}
 
-	protected void save(MenuItemsUI ui, ActionEvent e) {
-		parent.getSubitems().add((MenuItem) e.getData());
+	protected void save(SubmenuItemsUI ui, ActionEvent e) {
+		MenuItem submenu = (MenuItem) e.getData();
+		parent.getSubitems().add(submenu);
 		ui.reloadSubitems();
+		crudService.save(submenu);
 	}
 
 }

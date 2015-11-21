@@ -28,8 +28,8 @@ public class ModuleContext {
 	public ModuleInstance getModuleInstance() {
 		return moduleInstance;
 	}
-	
-	public ModuleInstanceParameter getParameters(String name){
+
+	public ModuleInstanceParameter getParameters(String name) {
 		return moduleInstance.getParameter(name);
 	}
 

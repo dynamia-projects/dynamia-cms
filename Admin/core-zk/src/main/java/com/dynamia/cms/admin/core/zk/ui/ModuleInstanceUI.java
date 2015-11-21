@@ -12,6 +12,7 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.North;
 import org.zkoss.zul.South;
+import org.zkoss.zul.Vlayout;
 
 import com.dynamia.cms.site.core.api.Module;
 import com.dynamia.cms.site.core.domain.ModuleInstance;
@@ -64,10 +65,12 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 		layout = new Borderlayout();
 		layout.setParent(this);
 		layout.appendChild(new North());
-		layout.appendChild(new South());
 		layout.appendChild(new Center());
 
-		layout.getSouth().appendChild(toolbar);
+		Vlayout top = new Vlayout();
+		layout.getNorth().appendChild(top);
+		top.appendChild(toolbar);
+
 		layout.getCenter().setTitle("Configuration");
 		layout.getCenter().setAutoscroll(true);
 
@@ -75,7 +78,7 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 		TypeSelector typeSelector = (TypeSelector) formView.getFieldComponent("moduleId").getInputComponent();
 		typeSelector.addEventListener(Events.ON_SELECT, evt -> initConfigurationUI());
 
-		layout.getNorth().appendChild(formView);
+		top.appendChild(formView);
 
 	}
 
@@ -128,7 +131,7 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 	private Viewer createCustomConfig(ViewDescriptor configDescriptor, final ModuleInstance moduleInstance, final Module module) {
 
 		List<Parameter> configParameters = createConfigParameters(configDescriptor, module, moduleInstance);
-		final Viewer viewer = new Viewer(configDescriptor, configParameters);		
+		final Viewer viewer = new Viewer(configDescriptor, configParameters);
 
 		return viewer;
 

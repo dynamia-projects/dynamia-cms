@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.Orderable;
 
 import tools.dynamia.domain.contraints.NotEmpty;
@@ -50,6 +51,17 @@ public class ModuleInstance extends Content implements Orderable {
 
 	@Transient
 	private Map<String, Object> model = new HashMap<String, Object>();
+
+	@Column(length = 3000)
+	private String includePaths;
+
+	public String getIncludePaths() {
+		return includePaths;
+	}
+
+	public void setIncludePaths(String includePaths) {
+		this.includePaths = includePaths;
+	}
 
 	@Override
 	public int getOrder() {
@@ -174,6 +186,25 @@ public class ModuleInstance extends Content implements Orderable {
 		}
 
 		return clone;
+	}
+
+	public boolean isPathIncluded(String currentPath) {
+		if (includePaths == null || includePaths.isEmpty()) {
+			return true;
+		}
+
+		if (!includePaths.contains(",")) {
+			return CMSUtil.matchAntPattern(includePaths, currentPath);
+		} else {
+			String[] paths = includePaths.split(",");
+			for (String path : paths) {
+				if (CMSUtil.matchAntPattern(path, currentPath)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 }

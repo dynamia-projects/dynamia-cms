@@ -10,21 +10,33 @@
 		<!-- Main navigation -->
 		<!-- Use the background color class in anchor tag for colorful menu -->
 		<ul>
+			<th:block th:each="mi : ${instance.model.menuitems}">
+				<li
+					th:if="${not #lists.isEmpty(mi.subitems)}">
+					<a href="#" rel="ddsubmenu2" class="blightblue"
+					th:href="@{${mi.href}}" th:class="${mi.styleClass}"
+					th:title="${mi.title}" th:target="${mi.target}"> <i
+						th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
+						<th:block th:text="${mi.name}" />
+				</a>
+					<ul id="ddsubmenu2" class="ddsubmenustyle">
+						<li th:each="smi : ${mi.subitems}"><a
+							th:href="@{${smi.href}}" th:target="${smi.target}"
+							th:title="${smi.title}"> <th:block th:text="${smi.name}" />
+						</a></li>
+					</ul>
+				</li>
 
-			<li th:each="mi : ${instance.model.menuitems}"><a href="#"
-				rel="ddsubmenu2" class="blightblue" th:href="@{${mi.href}}" th:class="${mi.styleClass}"
-				th:title="${mi.title}" th:target="${mi.target}"> <i
-					th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
-					<th:block th:text="${mi.name}" />
-			</a>
-				<ul id="ddsubmenu2" class="ddsubmenustyle"
-					th:if="${not #lists.isEmpty(mi.subitems) and instance.getParameter('subitems')!='false'}">
-					<li th:each="smi : ${mi.subitems}"><a th:href="@{${smi.href}}"
-						th:target="${smi.target}" th:title="${smi.title}"> <th:block
-								th:text="${smi.name}" />
-					</a></li>
-				</ul></li>
-
+				<li
+					th:if="${#lists.isEmpty(mi.subitems)}">
+					<a href="#" class="blightblue"
+					th:href="@{${mi.href}}" th:class="${mi.styleClass}"
+					th:title="${mi.title}" th:target="${mi.target}"> <i
+						th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
+						<th:block th:text="${mi.name}" />
+				</a>
+				</li>
+			</th:block>
 		</ul>
 	</div>
 

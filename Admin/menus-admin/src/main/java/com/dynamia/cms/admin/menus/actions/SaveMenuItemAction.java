@@ -61,9 +61,7 @@ public class SaveMenuItemAction extends AbstractAction {
 
 		UIMessages.showMessage("Menu item saved");
 
-		MenuItemsUI ui = (MenuItemsUI) evt.getSource();
-		ui.getParent().detach();
-
+		
 		if (sourceEvent != null) {
 			sourceEvent.getController().doQuery();
 		}

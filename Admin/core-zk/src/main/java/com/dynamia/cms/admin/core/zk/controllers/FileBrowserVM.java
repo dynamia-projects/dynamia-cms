@@ -16,10 +16,10 @@ import org.zkoss.zk.ui.util.Clients;
 import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.pages.services.PageService;
-import com.dynamia.modules.filemanager.FileManager;
 
 import tools.dynamia.integration.Containers;
 import tools.dynamia.io.FileInfo;
+import tools.dynamia.modules.filemanager.FileManager;
 import tools.dynamia.ui.MessageType;
 import tools.dynamia.ui.UIMessages;
 

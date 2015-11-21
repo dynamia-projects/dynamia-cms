@@ -110,12 +110,7 @@
 		<th:block th:include="tpl_globalmessages::content" />
 	</div>
 
-	<div class="container" th:if="${cmsModules.isUsed('banners')}">
-		<div
-			class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
-			<th:block th:include="module::position('banners')" />
-		</div>
-	</div>
+
 
 	<!-- CONTENT -->
 	<div id="content" layout:fragment="content"></div>

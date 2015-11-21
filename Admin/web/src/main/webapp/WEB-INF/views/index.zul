@@ -7,19 +7,21 @@
 
 	<div self="@{define(topmenu)}">
 		<menubar>
-		
-				<menuitem label="Edit Site" onClick="siteMgr.edit()"
-				image="${icons['edit-page:normal']}"  />
-			
-			
-			<menuitem label="Resources"
-				onClick="siteResourcesManagerAction.show()"
-				image="${icons['package:normal']}" />
-			<menuitem label="Apply Changes" onClick="siteMgr.clearCache()"
-				image="${icons['apply:normal']}" />
 
-			<menuitem label="Exit" href="/logout"
-				image="${icons['cancel:normal'] }" />
+			<menuitem label="Apply" tooltiptext="Apply changes to public site"
+				onClick="siteMgr.clearCache()" image="${icons['apply:normal']}" />
+
+			<menuitem label="Settings" onClick="siteMgr.edit()" tooltiptext="Site settings and parameters"
+				image="${icons['settings:normal']}" />
+
+
+			<menuitem label="Resources" tooltiptext="File manager"
+				onClick="siteResourcesManagerAction.show()"
+				image="${icons['cloud:normal']}" />
+
+
+			<menuitem label="Logout" href="/logout"
+				image="${icons['logout:normal'] }" />
 		</menubar>
 	</div>
 
@@ -34,18 +36,21 @@
 	<borderlayout self="@{define(content)}" apply="${navComposer}"
 		vflex="1">
 
-		<west width="70px" apply="org.zkoss.bind.BindComposer" sclass="shortcutsContainer"
+		<west width="70px" apply="org.zkoss.bind.BindComposer"
+			sclass="shortcutsContainer"
 			viewModel="@id('vm') @init('com.dynamia.cms.admin.core.zk.controllers.AdminModuleShortcutVM')">
 
-			<grid model="@load(vm.shortcuts)" width="100%" vflex="1" 
+			<grid model="@load(vm.shortcuts)" width="100%" vflex="1"
 				oddRowSclass="none" sclass="shortcuts">
 				<template name="model" var="shrt">
 					<row>
-						
-						<a sclass="shortcut" onClick="@command('navigateTo', path=shrt.path)">
-						
+
+						<a sclass="shortcut"
+							onClick="@command('navigateTo', path=shrt.path)">
+
 							<div>
-								<n:i class="fa fa-${shrt.image} fa-2x fa-fw" />
+								<n:i
+									class="fa fa-${shrt.image} fa-2x fa-fw" />
 								<n:br />
 								<n:span>${shrt.name}</n:span>
 							</div>

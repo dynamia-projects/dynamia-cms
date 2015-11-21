@@ -13,7 +13,8 @@ import tools.dynamia.crud.CrudState;
 import tools.dynamia.crud.actions.NewAction;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.zk.crud.SubcrudController;
-import tools.dynamia.zk.util.ZKUtil;
+import tools.dynamia.zk.navigation.ComponentPage;
+import tools.dynamia.zk.navigation.ZKNavigationManager;
 
 @InstallAction
 public class NewMenuItemAction extends NewAction {
@@ -42,7 +43,7 @@ public class NewMenuItemAction extends NewAction {
 
 		MenuItemsUI ui = new MenuItemsUI(menuItem);
 		ui.addAction(new SaveMenuItemAction(crudService, evt));
-		ZKUtil.showDialog("New Menu Item", ui, "90%", "90%");
+		ZKNavigationManager.getInstance().setCurrentPage(new ComponentPage("newMenu"+System.currentTimeMillis(), "New Menu ", ui));
 
 	}
 }

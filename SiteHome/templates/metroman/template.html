@@ -22,7 +22,7 @@
 	<meta th:content="${pi}" property="og:image" content="" />
 </th:block>
 
-<link th:href="@{/img/favicon.ico}" href="img/favicon.ico"
+<link th:href="@{${#objects.nullSafe(siteParams['favicon'],'/img/favicon/favicon.png')}+'.css'}" href="img/favicon.ico"
 	rel="shortcut icon" type="image/vnd.microsoft.icon" />
 
 
@@ -37,10 +37,13 @@
 <link rel="stylesheet" th:href="@{/css/ddlevelsmenu-topbar.css}" />
 <!-- PrettyPhoto -->
 <link rel="stylesheet" th:href="@{/css/prettyPhoto.css}" />
-<!-- cSlider -->
-<link rel="stylesheet" th:href="@{/css/flexslider.css}" />
+
+
 <!-- Font awesome CSS -->
 <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+
+
 <!-- Custom CSS -->
 <link th:href="@{/css/style.css}" rel="stylesheet" />
 
@@ -71,7 +74,7 @@
 
 	<!-- Header Start -->
 	<header>
-		
+
 
 		<div class="container">
 			<div class="row">
@@ -105,23 +108,16 @@
 	<div class="clearfix"></div>
 
 
-
 	<div class="container">
 		<th:block th:include="tpl_globalmessages::content" />
 	</div>
 
 
-
-	<div  th:if="${cmsModules.isUsed('banners')}">
-		
-			<th:block th:include="module::position('banners')" />
-		
-	</div>
+	<th:block th:include="module::position('banners')" />
 
 	<!-- CONTENT -->
-	<div id="content" layout:fragment="content"></div>
-
-
+	<div class="clearfix"></div>
+	<th:block layout:fragment="content" />
 
 	<section id="quicklink" class="mt20"></section>
 	<!-- Footer -->
@@ -150,24 +146,22 @@
 	<!-- Scroll to top -->
 	<span class="totop"><a href="#"><i class="fa fa-angle-up"></i></a></span>
 
+	<th:block th:include="module::stylesheets" />
 
 	<!-- Javascript files -->
 	<!-- jQuery -->
 	<script th:src="@{/js/jquery.js}"></script>
 	<!-- Bootstrap JS -->
 	<script th:src="@{/js/bootstrap.min.js}"></script>
-	<!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
-	<script th:src="@{/js/jquery.themepunch.tools.min.js}"></script>
-	<script th:src="@{/js/jquery.themepunch.revolution.min.js}"></script>
-	<!-- prettyPhoto -->
-	<script th:src="@{/js/jquery.prettyPhoto.js}"></script>
-	<!-- isotope -->
-	<script th:src="@{/js/jquery.isotope.js}"></script>
+
+	<th:block th:include="module::scripts" />
+
+
+
+
 	<!-- Navigation menu -->
 	<script th:src="@{/js/ddlevelsmenu.js}"></script>
-	<!-- jQuery cSlider / Extra script for cslider -->
-	<script th:src="@{/js/jquery.cslider.js}"></script>
-	<script th:src="@{/js/modernizr.custom.69985.js}"></script>
+
 	<!-- Support -->
 	<script th:src="@{/js/filter.js}"></script>
 	<!-- Respond JS for IE8 -->
@@ -176,48 +170,6 @@
 	<script th:src="@{/js/html5shiv.js}"></script>
 	<!-- Custom JS -->
 	<script th:src="@{/js/custom.js}"></script>
-
-	<script th:src="@{/js/jquery.flexslider.js}" defer=""
-		src="js/jquery.flexslider.js"></script>
-	<!-- This page JS -->
-	<script>
-		/* JS for SLIDER REVOLUTION */
-		jQuery(document).ready(function() {
-
-			jQuery('.bannerslider').flexslider({
-				animation : "fade",
-				start : function(slider) {
-					$('body').removeClass('loading');
-				}
-			});
-
-			jQuery('.tp-banner').revolution({
-				delay : 9000,
-				startheight : 500,
-
-				hideThumbs : 10,
-
-				navigationType : "none",
-
-				hideArrowsOnMobile : "on",
-
-				touchenabled : "on",
-				onHoverStop : "on",
-
-				navOffsetHorizontal : 0,
-				navOffsetVertical : 20,
-
-				stopAtSlide : -1,
-				stopAfterLoops : -1,
-
-				shadow : 0,
-
-				fullWidth : "on",
-				fullScreen : "off"
-			});
-		});
-	</script>
-
 
 
 

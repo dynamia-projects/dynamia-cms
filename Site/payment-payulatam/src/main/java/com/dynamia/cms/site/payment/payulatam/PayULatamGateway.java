@@ -74,7 +74,7 @@ public class PayULatamGateway implements PaymentGateway {
 	@Autowired
 	private CrudService crudService;
 
-	private LoggingService logger = new SLF4JLoggingService(PayULatamGateway.class);
+	private LoggingService logger = new SLF4JLoggingService(PayULatamGateway.class,"[==PAYULATAM==] ");
 
 	@Override
 	public String getName() {

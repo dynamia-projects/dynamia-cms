@@ -3,6 +3,7 @@ package com.dynamia.cms.admin.shopping.controllers;
 import com.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 
+import tools.dynamia.domain.query.QueryConditions;
 import tools.dynamia.zk.crud.CrudController;
 
 public class ShoppingOrderController extends CrudController<ShoppingOrder> {
@@ -15,7 +16,7 @@ public class ShoppingOrderController extends CrudController<ShoppingOrder> {
 	@Override
 	protected void beforeQuery() {
 		if (!getParams().containsKey("transaction.status")) {
-			setParemeter("transaction.status", PaymentTransactionStatus.COMPLETED);
+			setParemeter("transaction.status", QueryConditions.in(PaymentTransactionStatus.COMPLETED, PaymentTransactionStatus.PROCESSING));
 		}
 
 		if (!getParams().containsKey("shipped")) {

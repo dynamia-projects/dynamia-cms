@@ -6,3 +6,4 @@ fields:
         component: entitypicker
         params:
             entityClass: com.dynamia.cms.site.products.domain.ProductCategory
+ 

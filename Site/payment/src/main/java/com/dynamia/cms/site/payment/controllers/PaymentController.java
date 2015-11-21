@@ -39,7 +39,7 @@ public class PaymentController {
 	@Autowired
 	private CrudService crudService;
 
-	private LoggingService logger = new SLF4JLoggingService(PaymentController.class);
+	private LoggingService logger = new SLF4JLoggingService(PaymentController.class, "[==PAYMENT==] ");
 
 	@RequestMapping(value = "/{gatewayId}/response", method = RequestMethod.GET)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -82,11 +82,14 @@ public class PaymentController {
 		PaymentTransaction tx = service.findTransaction(gateway, response);
 		logger.info("Commiting payment Transaction " + tx.getUuid());
 		if (!tx.isConfirmed()) {
+			logger.info("Transaction " + tx + " is not confirmed, processing response..");
 			PaymentTransactionStatus oldStatus = tx.getStatus();
 
 			gateway.processResponse(tx, response, type);
 
 			if (oldStatus != tx.getStatus()) {
+				logger.info(
+						"Firing status listener for transaction " + tx + "  new status: " + tx.getStatus() + " - " + tx.getStatusText());
 				fireNewStatusListeners(tx, oldStatus);
 			}
 		}
@@ -103,6 +106,7 @@ public class PaymentController {
 				logger.error("Error firing " + PaymentTransactionListener.class.getSimpleName() + " " + listener, e);
 			}
 		}
+		logger.info("==>Listeners Completed.");
 
 	}
 

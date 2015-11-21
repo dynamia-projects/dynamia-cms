@@ -10,11 +10,12 @@ import com.dynamia.cms.site.core.DynamiaCMS;
 import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.pages.services.PageService;
-import com.dynamia.modules.filemanager.FileManager;
 
 import tools.dynamia.actions.FastAction;
+import tools.dynamia.commons.StringUtils;
 import tools.dynamia.integration.Containers;
 import tools.dynamia.io.FileInfo;
+import tools.dynamia.modules.filemanager.FileManager;
 import tools.dynamia.ui.MessageType;
 import tools.dynamia.ui.UIMessages;
 import tools.dynamia.viewers.impl.DefaultViewDescriptor;
@@ -77,7 +78,7 @@ public class ResourceSelector extends Bandbox {
 
 	@Override
 	public void setValue(String value) throws WrongValueException {
-		if (getValue() != value) {
+		if (!StringUtils.equals(getValue(), value)) {
 			super.setValue(value);
 			Events.postEvent(new Event(Events.ON_CHANGE, this, value));
 		}

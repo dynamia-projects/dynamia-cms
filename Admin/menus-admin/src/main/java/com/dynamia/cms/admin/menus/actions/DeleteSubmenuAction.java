@@ -4,6 +4,8 @@ import com.dynamia.cms.site.menus.domain.MenuItem;
 
 import tools.dynamia.actions.AbstractAction;
 import tools.dynamia.actions.ActionEvent;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.integration.Containers;
 import tools.dynamia.ui.MessageType;
 import tools.dynamia.ui.UIMessages;
 
@@ -24,6 +26,8 @@ public class DeleteSubmenuAction extends AbstractAction {
 			UIMessages.showQuestion("Are you sure?", () -> {
 				parent.getSubitems().remove(submenu);
 				submenu.setParentItem(null);
+				CrudService crudService = Containers.get().findObject(CrudService.class);
+				crudService.delete(submenu);
 			});
 		} else {
 			UIMessages.showMessage("Select submenu", MessageType.WARNING);

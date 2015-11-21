@@ -24,6 +24,21 @@
         <appender-ref ref="consoleAppender" />
     </logger>
     
+    
+     <logger name="org.zkoss" additivity="false">
+        <level value="info" />        
+        <appender-ref ref="consoleAppender" />
+    </logger>
+    
+     <logger name="org.springframework" additivity="false">
+        <level value="info" />        
+        <appender-ref ref="consoleAppender" />
+    </logger>
+    
+     <logger name="org.hibernate" additivity="false">
+        <level value="info" />        
+        <appender-ref ref="consoleAppender" />
+    </logger>
 
  
     <root>

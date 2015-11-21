@@ -68,7 +68,7 @@ public class SiteServiceImpl implements SiteService {
 		System.out.println("FINDING SITE FOR DOMAIN: " + domainName);
 		SiteDomain domain = crudService.findSingle(SiteDomain.class, "name", domainName);
 
-		return domain != null ? domain.getSite() : null;
+		return domain != null ? domain.getSite() : getMainSite();
 	}
 
 	@Override
@@ -78,6 +78,7 @@ public class SiteServiceImpl implements SiteService {
 			SiteService thisServ = Containers.get().findObject(SiteService.class);
 			site = thisServ.getSiteByDomain(request.getServerName());
 		}
+
 		return site;
 	}
 

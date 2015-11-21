@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+
+<body th:fragment="content">
+
+	<!-- Page heading -->
+	<!-- Give background color class on below line (bred, bgreen, borange, bviolet, blightblue, bblue) -->
+	<div class="page-heading blightblue">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="pull-left">
+						<i th:class="${'fa fa-'+icon+' title-icon'}"></i>
+						<th:block th:text="${title}" />
+					</h2>
+					<div class="pull-right heading-meta" th:utext="${subtitle}"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+
+</html>

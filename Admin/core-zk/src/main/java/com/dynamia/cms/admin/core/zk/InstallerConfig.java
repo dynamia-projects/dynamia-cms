@@ -12,6 +12,7 @@ import com.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.crud.CrudPage;
 import tools.dynamia.navigation.Module;
 import tools.dynamia.navigation.ModuleProvider;
+import tools.dynamia.ui.icons.IconSize;
 import tools.dynamia.zk.crud.cfg.ConfigPage;
 
 /**
@@ -23,11 +24,13 @@ public class InstallerConfig implements ModuleProvider {
 
 	@Override
 	public Module getModule() {
-		Module m = new Module("system", "System");
-		m.addPage(new CrudPage("sites", "Sites", Site.class));
-		m.addPage(new ConfigPage("cmsconfig", "Configuration", "CMSConfig"));
+		Module module = new Module("system", "System");
+		module.setIcon("icons:system");
+		module.setIconSize(IconSize.NORMAL);
+		module.addPage(new CrudPage("sites", "Sites", Site.class));
+		module.addPage(new ConfigPage("cmsconfig", "Configuration", "CMSConfig"));
 
-		return m;
+		return module;
 	}
 
 }

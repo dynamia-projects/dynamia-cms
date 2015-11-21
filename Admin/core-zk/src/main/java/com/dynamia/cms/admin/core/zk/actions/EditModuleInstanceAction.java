@@ -14,13 +14,12 @@ import tools.dynamia.crud.actions.EditAction;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.ui.MessageType;
 import tools.dynamia.ui.UIMessages;
+import tools.dynamia.zk.navigation.ComponentPage;
+import tools.dynamia.zk.navigation.ZKNavigationManager;
 import tools.dynamia.zk.util.ZKUtil;
 
 @InstallAction
 public class EditModuleInstanceAction extends EditAction {
-
-	@Autowired
-	private ModulesService modulesService;
 
 	@Autowired
 	private CrudService crudService;
@@ -42,7 +41,11 @@ public class EditModuleInstanceAction extends EditAction {
 			moduleInstance = crudService.reload(moduleInstance);
 			ModuleInstanceUI ui = new ModuleInstanceUI(moduleInstance);
 			ui.addAction(new SaveModuleInstanceAction(crudService, evt));
-			ZKUtil.showDialog(moduleInstance.getTitle(), ui, "90%", "90%");
+			ZKNavigationManager.getInstance()
+					.setCurrentPage(
+							new ComponentPage("editModule" + moduleInstance.getId(), "Edit Module Instance - " + moduleInstance.getAlias(),
+									ui));
+
 		} else {
 			UIMessages.showMessage("Select module instance", MessageType.ERROR);
 		}

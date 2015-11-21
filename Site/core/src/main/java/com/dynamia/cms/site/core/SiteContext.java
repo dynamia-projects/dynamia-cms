@@ -6,14 +6,16 @@
 package com.dynamia.cms.site.core;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.core.services.SiteService;
 
+import tools.dynamia.domain.query.Parameters;
 import tools.dynamia.integration.Containers;
 
 /**
@@ -25,14 +27,19 @@ import tools.dynamia.integration.Containers;
 public class SiteContext implements Serializable {
 
 	@Autowired
-	private SiteService service;
+	private Parameters appParams;
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8050753619943744770L;
 	private Site current;
 	private String siteURL;
 	private String currentURI;
 	private String currentURL;
 	private String previousURI;
 	private String previousURL;
+	private Map<String, Object> attributes = new HashMap<>();
 
 	public static SiteContext get() {
 		return Containers.get().findObject(SiteContext.class);
@@ -78,6 +85,19 @@ public class SiteContext implements Serializable {
 
 	void setSiteURL(String siteURL) {
 		this.siteURL = siteURL;
+	}
+
+	public void setAttribute(String name, Object value) {
+		attributes.put(name, value);
+	}
+
+	public Object getAttribute(String name) {
+		return attributes.get(name);
+	}
+
+	public boolean isSuperAdmin() {
+		String superAdminSite = appParams.getValue(DynamiaCMS.CFG_SUPER_ADMIN_SITE, "main");
+		return superAdminSite.equals(SiteContext.get().getCurrent().getKey());
 	}
 
 }

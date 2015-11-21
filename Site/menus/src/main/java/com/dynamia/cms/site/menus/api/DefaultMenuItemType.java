@@ -23,7 +23,7 @@ public class DefaultMenuItemType implements MenuItemType {
 
 	@Override
 	public void setupMenuItem(MenuContext context) {
-		// TODO Auto-generated method stub
+		
 
 	}
 

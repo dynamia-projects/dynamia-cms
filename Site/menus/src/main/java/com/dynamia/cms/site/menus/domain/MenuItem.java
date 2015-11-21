@@ -200,7 +200,7 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 
 	public void setPage(Page page) {
 		this.page = page;
-		checkHref();
+		
 	}
 
 	public String getType() {

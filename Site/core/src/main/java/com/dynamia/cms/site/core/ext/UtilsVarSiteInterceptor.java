@@ -41,6 +41,7 @@ public class UtilsVarSiteInterceptor extends SiteRequestInterceptorAdapter {
 		if (modelAndView == null) {
 			return;
 		}
+		System.err.println("REQUEST: "+request.getRequestURI());
 
 		String requestURI = request.getRequestURI();
 		String requestURL = request.getRequestURL().toString();
@@ -54,10 +55,11 @@ public class UtilsVarSiteInterceptor extends SiteRequestInterceptorAdapter {
 		modelAndView.addObject("site", site);
 		modelAndView.addObject("siteParams", createParams(site));
 		modelAndView.addObject("cmsUtil", new CMSUtil(site));
-		modelAndView.addObject("cmsModules", new CMSModules(site, modulesService));
-		
-		
-		
+		if (modelAndView.getModel().get("cmsModules") == null) {
+			System.out.println("CREANDO CMS MODULES");
+			modelAndView.addObject("cmsModules", new CMSModules(site, modulesService));
+		}
+
 	}
 
 	private Object createParams(Site site) {

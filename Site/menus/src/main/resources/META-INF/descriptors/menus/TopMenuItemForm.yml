@@ -15,7 +15,8 @@ fields:
         component: entitypicker
         label: Page (optional)
         params:
-            fields: site.name,title
+            entityClass: com.dynamia.cms.site.pages.domain.Page
+            
     
     href:
       component: resourceSelector

@@ -10,13 +10,13 @@ import org.zkoss.zul.Messagebox;
 import com.dynamia.cms.site.core.SiteContext;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.domain.SiteDomain;
-import com.dynamia.modules.filemanager.FileManagerAction;
 
 import tools.dynamia.actions.ActionEvent;
 import tools.dynamia.actions.InstallAction;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.integration.Containers;
 import tools.dynamia.io.FileInfo;
+import tools.dynamia.modules.filemanager.FileManagerAction;
 import tools.dynamia.ui.MessageType;
 import tools.dynamia.ui.UIMessages;
 

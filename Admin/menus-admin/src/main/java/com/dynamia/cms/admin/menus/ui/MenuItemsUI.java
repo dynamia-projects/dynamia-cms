@@ -8,20 +8,13 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Borderlayout;
 import org.zkoss.zul.Center;
-import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.North;
 import org.zkoss.zul.South;
-import org.zkoss.zul.Tab;
-import org.zkoss.zul.Tabbox;
-import org.zkoss.zul.Tabpanel;
-import org.zkoss.zul.Tabpanels;
-import org.zkoss.zul.Tabs;
+import org.zkoss.zul.Vlayout;
+import org.zkoss.zul.Window;
 
 import com.dynamia.cms.admin.core.zk.ui.TypeSelector;
-import com.dynamia.cms.admin.menus.actions.DeleteSubmenuAction;
-import com.dynamia.cms.admin.menus.actions.EditSubmenuAction;
-import com.dynamia.cms.admin.menus.actions.NewSubmenuAction;
 import com.dynamia.cms.site.menus.api.MenuItemType;
 import com.dynamia.cms.site.menus.domain.MenuItem;
 import com.dynamia.cms.site.menus.domain.MenuItemParameter;
@@ -41,9 +34,9 @@ import tools.dynamia.zk.actions.ActionToolbar;
 import tools.dynamia.zk.crud.cfg.ConfigView;
 import tools.dynamia.zk.crud.ui.EntityPickerBox;
 import tools.dynamia.zk.viewers.form.FormView;
-import tools.dynamia.zk.viewers.table.TableView;
+import tools.dynamia.zk.viewers.ui.Viewer;
 
-public class MenuItemsUI extends Div implements ActionEventBuilder {
+public class MenuItemsUI extends Window implements ActionEventBuilder {
 
 	private static final String CONFIG_ID_PREFIX = "menuitem_";
 	/**
@@ -51,81 +44,53 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 	 */
 	private static final long serialVersionUID = -3032514789042367569L;
 	private ActionToolbar toolbar;
-	private ActionToolbar toolbarSubmenus;
+
 	private MenuItem menuItem;
 	private Component configurationUI;
 	private Borderlayout layoutMenu;
-	private Borderlayout layoutSubmenus;
-	private Tabbox tabbox;
-	private FormView<MenuItem> formView;
-	private TableView<MenuItem> subitemsTable;
+
+	private Viewer viewer;
 
 	public MenuItemsUI(MenuItem menuItem) {
-		super();
+
 		this.menuItem = menuItem;
 		initUI();
 		initConfigurationUI();
-		initDefaultActions();
 	}
 
 	private void initUI() {
+		System.err.println("RENDERING MENUS ITEMS UI");
+		getChildren().clear();
 		setHflex("1");
 		setVflex("1");
-
-		toolbar = new ActionToolbar(this);
-		
-
-		tabbox = new Tabbox();
-		tabbox.setHflex("1");
-		tabbox.setVflex("1");
-		tabbox.appendChild(new Tabs());
-		tabbox.appendChild(new Tabpanels());
-
-		tabbox.getTabs().appendChild(new Tab("Menu Item"));
-		tabbox.getTabs().appendChild(new Tab("Submenus"));
-
-		Tabpanel panelMenu = new Tabpanel();
-		panelMenu.setVflex("1");
-		tabbox.getTabpanels().appendChild(panelMenu);
-
-		Tabpanel panelSubmenus = new Tabpanel();
-		panelSubmenus.setVflex("1");
-		tabbox.getTabpanels().appendChild(panelSubmenus);
-		appendChild(tabbox);
 
 		// Menu Item
 
 		layoutMenu = new Borderlayout();
-		layoutMenu.appendChild(new North());
-		layoutMenu.appendChild(new South());
-		layoutMenu.appendChild(new Center());
+		layoutMenu.setParent(this);
+		layoutMenu.setVflex("1");
 
-		layoutMenu.getSouth().appendChild(toolbar);
-		layoutMenu.getCenter().setTitle("Configuration");
-		layoutMenu.getCenter().setAutoscroll(true);
-		panelMenu.appendChild(layoutMenu);
+		North north = new North();
+		north.setParent(layoutMenu);
 
-		formView = (FormView<MenuItem>) Viewers.getView(Viewers.findViewDescriptor("topMenuItem"));
-		formView.setValue(menuItem);
+		Center center = new Center();
+		center.setParent(layoutMenu);
+		center.setTitle("Configuration");
+		center.setAutoscroll(true);
+		
+		Vlayout top = new Vlayout();
+		top.setParent(north);
+			
+
+		toolbar = new ActionToolbar(this);
+		toolbar.setParent(top);
+
+		viewer = new Viewer("topMenuItem", menuItem);
+		FormView formView = (FormView) viewer.getView();
 		TypeSelector typeSelector = (TypeSelector) formView.getFieldComponent("type").getInputComponent();
 		typeSelector.addEventListener(Events.ON_SELECT, evt -> initConfigurationUI());
 
-		layoutMenu.getNorth().appendChild(formView);
-
-		// Submenus
-
-		subitemsTable = (TableView<MenuItem>) Viewers.getView(MenuItem.class, "table", menuItem.getSubitems());
-
-		toolbarSubmenus = new ActionToolbar((source, params) -> new ActionEvent(subitemsTable.getSelected(), this, params));
-
-		layoutSubmenus = new Borderlayout();
-		layoutSubmenus.appendChild(new North());
-		layoutSubmenus.appendChild(new Center());
-
-		layoutSubmenus.getNorth().appendChild(toolbarSubmenus);
-		layoutSubmenus.getCenter().appendChild(subitemsTable);
-
-		panelSubmenus.appendChild(layoutSubmenus);
+		viewer.setParent(top);
 	}
 
 	private void initConfigurationUI() {
@@ -147,13 +112,6 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 		if (configurationUI != null) {
 			layoutMenu.getCenter().appendChild(configurationUI);
 		}
-	}
-
-	private void initDefaultActions() {
-		addSubmenusAction(new NewSubmenuAction(menuItem));
-		addSubmenusAction(new EditSubmenuAction(menuItem));
-		addSubmenusAction(new DeleteSubmenuAction(menuItem));
-
 	}
 
 	private void configureEntityConverter(ViewDescriptor configDescriptor) {
@@ -212,15 +170,4 @@ public class MenuItemsUI extends Div implements ActionEventBuilder {
 		toolbar.addAction(action);
 	}
 
-	public void addSubmenusAction(Action action) {
-		toolbarSubmenus.addAction(action);
-	}
-
-	public TableView<MenuItem> getSubitemsTable() {
-		return subitemsTable;
-	}
-
-	public void reloadSubitems() {
-		subitemsTable.setValue(menuItem.getSubitems());
-	}
 }

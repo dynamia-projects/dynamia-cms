@@ -20,8 +20,6 @@ import com.dynamia.cms.site.pages.domain.PageParameter;
 import com.dynamia.cms.site.products.domain.ProductCategory;
 import com.dynamia.cms.site.products.services.ProductsService;
 
-import tools.dynamia.domain.services.CrudService;
-
 /**
  *
  * @author mario
@@ -35,9 +33,6 @@ public class SubcategoriesMenuItemType implements MenuItemType {
 
 	@Autowired
 	private ProductsService service;
-
-	@Autowired
-	private CrudService crudService;
 
 	@Override
 	public String getId() {
@@ -70,7 +65,11 @@ public class SubcategoriesMenuItemType implements MenuItemType {
 			ProductCategory category = service.getCategoryById(categoryId);
 			if (category != null) {
 				List<ProductCategory> subcategories = service.getSubcategories(category);
-				MenuItem item = context.getMenuItem();
+				MenuItem item = context.getMenuItem().clone();
+				item.setName(context.getMenuItem().getName());
+				item.setTitle(context.getMenuItem().getTitle());
+				item.setOrder(context.getMenuItem().getOrder());
+
 				item.setSubtitle(getCategoryName(category));
 				if (item.getHref() == null) {
 					item.setHref(CATEGORIES_PATH + category.getId() + "/" + category.getAlias());
@@ -105,6 +104,7 @@ public class SubcategoriesMenuItemType implements MenuItemType {
 						}
 					}
 				}
+				context.update(item);
 			}
 		}
 

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+
+<body layout:fragment="content">
+
+
+	<th:block th:include="module::position('page_top_title')" />
+
+	<th:block th:include="site/pagetitle::content"
+		th:if="${page.showTitle}" />
+
+	<th:block th:include="module::position('page_top')" />
+
+	<!-- Content starts -->
+	<div class="content">
+		<div class="container" th:utext="${page.content}"></div>
+	</div>
+
+	<th:block th:include="module::position('page_bottom')" />
+
+</body>
+</html>

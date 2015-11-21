@@ -1,11 +1,29 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
 <!-- Main Menu -->
 
 <body th:fragment="position(name)">
-	<th:block th:each="m : ${cmsModules.getInstances(name)}">
-		<th:block th:include="${cmsModules.getTemplateViewName(m)}::module(${m})" />
+	<th:block th:each="m : ${cmsModules.getInstances(name)}" th:if="${cmsModules.isUsed(name)}">
+		<th:block
+			th:include="${cmsModules.getTemplateViewName(m)}::module(${m})" />
+	</th:block>
+</body>
+
+<body th:fragment="stylesheets">
+	<!-- Modules Stylesheets -->
+	<th:block th:each="m : ${cmsModules.activeModules}">
+		<link th:each="css : ${m.StyleSheetResources}"
+			th:href="@{'/$mods/'+${css.href}}" rel="stylesheet" />
+	</th:block>
+</body>
+
+<body th:fragment="scripts">
+	<!-- Modules Javascripts -->
+	<th:block th:each="m : ${cmsModules.activeModules}">
+		<script th:each="js : ${m.javaScriptResources}"
+			th:src="@{'/$mods/'+${js.src}}"></script>
 	</th:block>
 </body>
 

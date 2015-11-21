@@ -53,9 +53,6 @@ public class SaveModuleInstanceAction extends AbstractAction {
 
 		UIMessages.showMessage("Module instance saved");
 
-		ModuleInstanceUI ui = (ModuleInstanceUI) evt.getSource();
-		ui.getParent().detach();
-
 		if (sourceEvent != null) {
 			sourceEvent.getController().doQuery();
 		}

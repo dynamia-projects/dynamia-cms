@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dynamia.cms.site.banners.domain.Banner;
 import com.dynamia.cms.site.banners.services.BannerService;
+import com.dynamia.cms.site.core.JavaScriptResource;
+import com.dynamia.cms.site.core.StyleSheetResource;
 import com.dynamia.cms.site.core.api.AbstractModule;
 import com.dynamia.cms.site.core.api.CMSModule;
 import com.dynamia.cms.site.core.api.ModuleContext;
@@ -21,6 +23,9 @@ public class BannerSlidersModule extends AbstractModule {
 
 	public BannerSlidersModule() {
 		super("banner_sliders", "Banners Slider", "banners/modules/bannersliders");
+		addResource(new JavaScriptResource("jquery.flexslider", "banners/js/jquery.flexslider.js"));
+		addResource(new JavaScriptResource("banner_sliders", "banners/js/banners.sliders.js"));
+		addResource(new StyleSheetResource("flexslider", "banners/css/flexslider.css"));
 	}
 
 	@Override

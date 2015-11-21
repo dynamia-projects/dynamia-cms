@@ -52,13 +52,14 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public void setupMenuItem(MenuItem menuItem) {
+	public MenuContext setupMenuItem(MenuItem menuItem) {
 
 		MenuItemType typeExtension = getMenuItemType(menuItem);
+		MenuContext context = new MenuContext(menuItem, menuItem.getMenu());
 		if (typeExtension != null) {
-			MenuContext context = new MenuContext(menuItem, menuItem.getMenu());
 			typeExtension.setupMenuItem(context);
 		}
+		return context;
 
 	}
 

@@ -1,6 +1,6 @@
 package com.dynamia.cms.admin.menus.actions;
 
-import com.dynamia.cms.admin.menus.ui.MenuItemsUI;
+import com.dynamia.cms.admin.menus.ui.SubmenuItemsUI;
 import com.dynamia.cms.site.menus.domain.MenuItem;
 
 import tools.dynamia.actions.ActionEvent;
@@ -26,8 +26,9 @@ public class EditSubmenuAction extends NewSubmenuAction {
 	}
 
 	@Override
-	protected void save(MenuItemsUI ui, ActionEvent e) {
-
+	protected void save(SubmenuItemsUI ui, ActionEvent e) {
+		MenuItem submenu = (MenuItem) e.getData();
+		crudService.save(submenu);
 	}
 
 }

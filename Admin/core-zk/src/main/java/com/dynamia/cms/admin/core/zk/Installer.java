@@ -18,6 +18,7 @@ import tools.dynamia.navigation.Module;
 import tools.dynamia.navigation.ModuleProvider;
 import tools.dynamia.navigation.Page;
 import tools.dynamia.navigation.PageGroup;
+import tools.dynamia.ui.icons.IconSize;
 import tools.dynamia.zk.crud.cfg.ConfigPage;
 
 @Component("CoreModule")
@@ -30,7 +31,8 @@ public class Installer implements ModuleProvider {
 	public Module getModule() {
 		Module module = new Module("admin", "Administration");
 		module.setPosition(1);
-		module.setIcon("icons:tool");
+		module.setIcon("icons:admin");
+		module.setIconSize(IconSize.NORMAL);
 
 		if (adminModules != null) {
 			for (AdminModule am : adminModules) {
