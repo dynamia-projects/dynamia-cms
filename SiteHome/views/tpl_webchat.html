@@ -7,7 +7,7 @@
 <body th:fragment="content">
 
 	<!--Start of Tawk.to Script-->
-	<script th:inline="javascript">
+	<script th:inline="javascript" th:if="${siteParams['chatID']!=null}">
 		var $_Tawk_API = {}, $_Tawk_LoadStart = new Date();
 		(function() {
 			var chatID = [[${siteParams['chatID']}]];

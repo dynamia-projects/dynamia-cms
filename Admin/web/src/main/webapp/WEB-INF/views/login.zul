@@ -14,36 +14,42 @@
 			viewModel="@id('vm') @init('com.dynamia.cms.admin.users.viewmodels.LoginVM')"
 			title="${siteContext.current.name} - Login" mode="overlapped"
 			position="center" border="normal" width="400px" height="280px">
+			<n:form action="login" method="post">
+				<vlayout hflex="1" style="margin-top: 10px">
+					<hlayout
+						style="margin-bottom: 15px; border: 1px solid silver; padding: 3px">
+						<n:input type="email" name="username"
+							id="username" style="border: 0; width: 340px"
+							placeholder="Enter username" />
 
-			<vlayout hflex="1" style="margin-top: 10px">
-				<hlayout
-					style="margin-bottom: 15px; border: 1px solid silver">
-					<textbox value="@bind(vm.username)"
-						style="border: 0" placeholder="Enter username" width="340px" />
+						<n:i class="fa fa-user fa-fw"
+							style="line-height: 2" />
+					</hlayout>
 
-					<n:i class="fa fa-user fa-fw"
-						style="line-height: 2" />
-				</hlayout>
+					<hlayout
+						style="margin-bottom: 15px; border: 1px solid silver; padding: 3px">
 
-				<hlayout
-					style="margin-bottom: 15px; border: 1px solid silver">
+						<n:input type="password" name="password"
+							id="password" style="border: 0; width: 340px"
+							placeholder="Enter password" />
 
-					<textbox type="password" value="@bind(vm.password)"
-						style="border: 0" placeholder="Enter password"
-						onOK="@command('login')" width="340px" />
+						<n:i class="fa fa-key fa-fw"
+							style="line-height: 2" />
 
-					<n:i class="fa fa-key fa-fw" style="line-height: 2" />
+					</hlayout>
+					<hlayout hflex="1">
+						<div hflex="true" align="right">
+							<n:button onclick="submit()"
+								class="btn btn-success">
+								<n:i class="fa fa-check"></n:i>
+								Login
+							</n:button>
+						</div>
+					</hlayout>
 
-				</hlayout>
-				<hlayout hflex="1">
-					<div hflex="true" align="right">
-						<button onClick="@command('login')" zclass="btn btn-success"
-							label="Login" iconSclass="fa fa-check" />
-					</div>
-				</hlayout>
-
-				<label value="@bind(vm.message)" sclass="loginMsg" />
-			</vlayout>
+					<label value="@bind(vm.message)" sclass="loginMsg" />
+				</vlayout>
+			</n:form>
 		</window>
 
 	</window>

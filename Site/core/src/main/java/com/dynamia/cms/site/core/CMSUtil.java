@@ -294,4 +294,5 @@ public class CMSUtil {
 		pattern = pattern.trim();
 		return ANT_PATH_MATCHER.match(pattern, path);
 	}
+
 }

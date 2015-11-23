@@ -65,6 +65,9 @@ public class SaveMenuItemAction extends AbstractAction {
 		if (sourceEvent != null) {
 			sourceEvent.getController().doQuery();
 		}
+		
+		MenuItemsUI ui = (MenuItemsUI) evt.getSource();
+		ui.sync(crudService.reload(menuItem));
 	}
 
 	private boolean needSave(MenuItem menuItem) {

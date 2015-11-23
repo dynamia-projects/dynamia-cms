@@ -10,7 +10,6 @@ import org.zkoss.zul.Borderlayout;
 import org.zkoss.zul.Center;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.North;
-import org.zkoss.zul.South;
 import org.zkoss.zul.Vlayout;
 import org.zkoss.zul.Window;
 
@@ -168,6 +167,13 @@ public class MenuItemsUI extends Window implements ActionEventBuilder {
 
 	public void addAction(Action action) {
 		toolbar.addAction(action);
+	}
+	
+	public void sync(MenuItem item){
+		this.menuItem = item;
+		viewer.setValue(null);
+		viewer.setValue(item);
+		initConfigurationUI();
 	}
 
 }

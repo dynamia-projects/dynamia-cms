@@ -69,7 +69,6 @@ public class PageController {
 		return mv;
 	}
 
-
 	private Page loadPage(Site site, String pageAlias, ModelAndView mv) {
 		Page page = null;
 		if (site != null) {
@@ -81,9 +80,19 @@ public class PageController {
 			}
 
 			mv.addObject("page", page);
+			mv.addObject("pageImage", page.getImageURL());
 			mv.addObject("title", page.getTitle());
 			mv.addObject("subtitle", page.getSubtitle());
 			mv.addObject("icon", page.getIcon());
+
+			if (page.getSummary() != null && !page.getSummary().isEmpty()) {
+				mv.addObject("metaDescription", page.getSummary());
+			}
+
+			if (page.getTags() != null && !page.getTags().isEmpty()) {
+				mv.addObject("metaKeywords", page.getTags());
+			}
+
 			if (page.getParameters() != null) {
 				Map<String, Object> pageParams = new HashMap<String, Object>();
 				for (PageParameter param : page.getParameters()) {

@@ -56,6 +56,10 @@ public class SaveModuleInstanceAction extends AbstractAction {
 		if (sourceEvent != null) {
 			sourceEvent.getController().doQuery();
 		}
+
+		ModuleInstanceUI ui = (ModuleInstanceUI) evt.getSource();
+		ui.sync(crudService.reload(moduleInstance));
+
 	}
 
 	@Override

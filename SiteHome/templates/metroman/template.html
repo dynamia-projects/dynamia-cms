@@ -8,8 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="template" content="metroman" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" th:content="${metaDescription}"
-	content="Responisve, Bootstrap, Html5, Css3, Multipuropose, Blog, Portfolio, Ecommerce - All in One Template" />
+<meta name="description" th:content="${metaDescription}" />
 <meta name="author" th:content="${metaAuthor}" content="" />
 <meta name="keywords" th:content="${metaKeywords}" content="" />
 <meta name="copyright" th:content="${metaRights}" content="" />
@@ -21,9 +20,12 @@
 <th:block th:each="pi : ${pageImages}">
 	<meta th:content="${pi}" property="og:image" content="" />
 </th:block>
+<meta th:content="${pageImage}" property="og:image" content="" />
 
-<link th:href="@{${#objects.nullSafe(siteParams['favicon'],'/img/favicon/favicon.png')}+'.css'}" href="img/favicon.ico"
-	rel="shortcut icon" type="image/vnd.microsoft.icon" />
+<link
+	th:href="@{${#objects.nullSafe(siteParams['favicon'],'/img/favicon/favicon.png')}}"
+	href="img/favicon.ico" rel="shortcut icon"
+	type="image/vnd.microsoft.icon" />
 
 
 <!-- CSS -->
@@ -40,13 +42,15 @@
 
 
 <!-- Font awesome CSS -->
-<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
 
 
 
 <!-- Custom CSS -->
 <link th:href="@{/css/style.css}" rel="stylesheet" />
-
+<link th:href="@{/css/template.css}" rel="stylesheet" />
+<th:block th:include="module::position('head_tag')" />
 </head>
 <body>
 
@@ -156,9 +160,6 @@
 
 	<th:block th:include="module::scripts" />
 
-
-
-
 	<!-- Navigation menu -->
 	<script th:src="@{/js/ddlevelsmenu.js}"></script>
 
@@ -169,15 +170,11 @@
 	<!-- HTML5 Support for IE -->
 	<script th:src="@{/js/html5shiv.js}"></script>
 	<!-- Custom JS -->
-	<script th:src="@{/js/custom.js}"></script>
-
-
+	<script th:src="@{/js/template.js}"></script>
 
 
 	<th:block layout:fragment="scripts"></th:block>
-
 	<th:block th:include="tpl_googleAnalytics::content" />
-
 	<th:block th:include="tpl_webchat::content" />
 
 	<script>
@@ -192,5 +189,6 @@
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
 
+	<th:block th:include="module::position('custom_scripts')" />
 </body>
 </html>

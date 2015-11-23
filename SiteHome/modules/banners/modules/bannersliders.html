@@ -5,7 +5,7 @@
 
 <body th:fragment="module(instance)">
 
-	<div th:class="${' container mt10 '+instance.position}">
+	<div th:class="${' container mt10 '+instance.position+' '+instance.styleClass}">
 		<div class="flexslider bannerslider">
 			<ul class="slides">
 				<li th:each="banner : ${instance.model.banners}"><a

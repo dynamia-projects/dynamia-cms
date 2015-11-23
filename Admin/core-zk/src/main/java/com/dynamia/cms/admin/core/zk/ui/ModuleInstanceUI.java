@@ -159,4 +159,10 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 	public void addAction(Action action) {
 		toolbar.addAction(action);
 	}
+	
+	public void sync(ModuleInstance instance){
+		this.moduleInstance = instance;
+		formView.setValue(instance);
+		initConfigurationUI();
+	}
 }
