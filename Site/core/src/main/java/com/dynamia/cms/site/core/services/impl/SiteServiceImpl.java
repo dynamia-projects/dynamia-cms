@@ -20,6 +20,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.dynamia.cms.site.core.CMSUtil;
+import com.dynamia.cms.site.core.DynamiaCMS;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.domain.SiteDomain;
 import com.dynamia.cms.site.core.domain.SiteParameter;
@@ -27,6 +28,7 @@ import com.dynamia.cms.site.core.services.SiteService;
 
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
+import tools.dynamia.domain.query.Parameters;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.integration.Containers;
@@ -43,12 +45,15 @@ public class SiteServiceImpl implements SiteService {
 	@Autowired
 	private CrudService crudService;
 
+	@Autowired
+	private Parameters appParams;
+
 	private LoggingService logger = new SLF4JLoggingService(SiteService.class);
 
 	@Override
 	@Cacheable(value = CACHE_NAME, key = "#root.methodName")
 	public Site getMainSite() {
-		return crudService.findSingle(Site.class, "key", "main");
+		return crudService.findSingle(Site.class, "key", appParams.getValue(DynamiaCMS.CFG_SUPER_ADMIN_SITE, "main"));
 	}
 
 	/**
