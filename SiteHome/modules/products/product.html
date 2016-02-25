@@ -85,7 +85,7 @@
 						<i class="icon-tags"></i> <span
 							th:text="${cmsUtil.formatNumber(prd_product.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
 					</div>
-					<div th:if="${prd_product.price lt prd_product.lastPrice and prd_product.sale}"
+					<div th:if="${prd_product.price lt prd_product.lastPrice and (prd_product.sale or prd_product.showLastPrice)}"
 						class="productpageoldprice">
 						Antes <span
 							th:text="${cmsUtil.formatNumber(prd_product.lastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>

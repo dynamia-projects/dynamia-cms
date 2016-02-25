@@ -1,247 +1,247 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
-<head>
-<title th:text="|${site.name} - ${title}|">Simplepx - Responisve
-	Multipurpose Bootstrap Template</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" th:content="${metaDescription}"
-	content="Responisve, Bootstrap, Html5, Css3, Multipuropose, Blog, Portfolio, Ecommerce - All in One Template" />
-<meta name="author" th:content="${metaAuthor}" content="" />
-<meta name="keywords" th:content="${metaKeywords}" content="" />
-<meta name="copyright" th:content="${metaRights}" content="" />
-<meta name="robots" content="index, follow" />
-<meta th:content="|${site.name} - ${title}|" property="og:title"
-	content="" />
-<meta th:content="${metaDescription}" property="og:description"
-	content="" />
-<th:block th:each="pi : ${pageImages}">
-	<meta th:content="${pi}" property="og:image" content="" />
-</th:block>
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
+    <head>
+        <title th:text="|${site.name} - ${title}|">Simplepx - Responisve
+            Multipurpose Bootstrap Template</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" th:content="${metaDescription}"
+              content="Responisve, Bootstrap, Html5, Css3, Multipuropose, Blog, Portfolio, Ecommerce - All in One Template" />
+        <meta name="author" th:content="${metaAuthor}" content="" />
+        <meta name="keywords" th:content="${metaKeywords}" content="" />
+        <meta name="copyright" th:content="${metaRights}" content="" />
+        <meta name="robots" content="index, follow" />
+        <meta th:content="|${site.name} - ${title}|" property="og:title"
+              content="" />
+        <meta th:content="${metaDescription}" property="og:description"
+              content="" />
+        <th:block th:each="pi : ${pageImages}">
+            <meta th:content="${pi}" property="og:image" content="" />
+        </th:block>
 
-<link th:href="@{/img/favicon.ico}" href="img/favicon.ico"
-	rel="shortcut icon" type="image/vnd.microsoft.icon" />
-
-
-<!-- CSS -->
-<link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.min.css"
-	rel="stylesheet" />
-<!-- Google Webfont -->
-<link
-	href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'
-	rel='stylesheet' type='text/css' />
-<!-- Main Css -->
-<link
-	th:href="@{'/css/'+${#objects.nullSafe(siteParams['color'],'colorlago')}+'.css'}"
-	href="css/color2.css" rel="stylesheet" id="color" />
-
-<!-- Font Icon -->
-<link th:href="@{/css/font-awesome.min.css}"
-	href="css/font-awesome.min.css" rel="stylesheet" />
-<!-- Pop Up -->
-<link th:href="@{/css/prettyPhoto.css}" href="css/prettyPhoto.css"
-	rel="stylesheet" />
-<!-- Animation -->
-<link th:href="@{/css/animate.css}" href="css/animate.css"
-	rel="stylesheet" />
-
-<!-- Template -->
-<link th:href="@{/css/yamm.css}" href="css/yamm.css" rel="stylesheet" />
-<link th:href="@{/css/menu.css}" href="css/menu.css" rel="stylesheet" />
-<link th:href="@{/css/template.css}" href="css/template.css"
-	rel="stylesheet" />
-<link th:href="@{/css/templatext.css}" href="css/templatext.css"
-	rel="stylesheet" />
-
-<!-- REVOLUTION BANNER CSS SETTINGS -->
-<link th:href="@{/plugins/rs-plugin/css/responsive.css}"
-	rel="stylesheet" type="text/css"
-	href="plugins/rs-plugin/css/responsive.css" />
-<link th:href="@{/plugins/rs-plugin/css/settings.css}" rel="stylesheet"
-	type="text/css" href="plugins/rs-plugin/css/settings.css" />
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-              <script src="js/html5shiv.js"></script>
-              <script src="js/respond.min.js"></script> 
-             <![endif]-->
-</head>
-<body>
+        <link th:href="@{/img/favicon.ico}" href="img/favicon.ico"
+              rel="shortcut icon" type="image/vnd.microsoft.icon" />
 
 
-	<div id="fb-root"></div>
+        <!-- CSS -->
+        <link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.min.css"
+              rel="stylesheet" />
+        <!-- Google Webfont -->
+        <link
+            href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'
+            rel='stylesheet' type='text/css' />
+        <!-- Main Css -->
+        <link
+            th:href="@{'/css/'+${#objects.nullSafe(siteParams['color'],'colorlago')}+'.css'}"
+            href="css/color2.css" rel="stylesheet" id="color" />
+
+        <!-- Font Icon -->
+        <link th:href="@{/css/font-awesome.min.css}"
+              href="css/font-awesome.min.css" rel="stylesheet" />
+        <!-- Pop Up -->
+        <link th:href="@{/css/prettyPhoto.css}" href="css/prettyPhoto.css"
+              rel="stylesheet" />
+        <!-- Animation -->
+        <link th:href="@{/css/animate.css}" href="css/animate.css"
+              rel="stylesheet" />
+
+        <!-- Template -->
+        <link th:href="@{/css/yamm.css}" href="css/yamm.css" rel="stylesheet" />
+        <link th:href="@{/css/menu.css}" href="css/menu.css" rel="stylesheet" />
+        <link th:href="@{/css/template.css}" href="css/template.css"
+              rel="stylesheet" />
+        <link th:href="@{/css/templatext.css}" href="css/templatext.css"
+              rel="stylesheet" />
+
+        <!-- REVOLUTION BANNER CSS SETTINGS -->
+        <link th:href="@{/plugins/rs-plugin/css/responsive.css}"
+              rel="stylesheet" type="text/css"
+              href="plugins/rs-plugin/css/responsive.css" />
+        <link th:href="@{/plugins/rs-plugin/css/settings.css}" rel="stylesheet"
+              type="text/css" href="plugins/rs-plugin/css/settings.css" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+                      <script src="js/html5shiv.js"></script>
+                      <script src="js/respond.min.js"></script> 
+                     <![endif]-->
+    </head>
+    <body>
 
 
-	<!-- Header Start -->
-	<header>
-		<th:block th:include="tpl_mobilemenu::content" />
-		<th:block th:include="tpl_topmenu::content" />
-
-		<div class="headerimage hidden-xs hidden-sm"
-			th:style="${'background-image: url('+siteParams['headerimage']+')'}"></div>
-		<div class="headerdetails hidden-xs hidden-sm" style="height: 180px">
-
-			<div class="container">
-
-				<!--Social -->
-				<div class="socialtop pull-right">
-					<th:block th:include="module::position('topHeader')" />
-				</div>
+        <div id="fb-root"></div>
 
 
-				<div class="pull-right topsearch">
+        <!-- Header Start -->
+        <header>
+            <th:block th:include="tpl_mobilemenu::content" />
+            <th:block th:include="tpl_topmenu::content" />
 
-					<!--Top Search -->
-					<div th:include="site/searchform::content" />
-				</div>
-			</div>
-		</div>
-		<th:block th:include="tpl_mainmenu::content" />
-	</header>
-	<!-- Header End -->
-	<div id="maincontainer">
+            <div class="headerimage hidden-xs hidden-sm"
+                 th:style="${'background-image: url('+siteParams['headerimage']+')'}"></div>
+            <div class="headerdetails hidden-xs hidden-sm" style="height: 180px">
+
+                <div class="container">
+
+                    <!--Social -->
+                    <div class="socialtop pull-right">
+                        <th:block th:include="module::position('topHeader')" />
+                    </div>
 
 
+                    <div class="pull-right topsearch">
 
-		<div class="container">
-			<th:block th:include="tpl_globalmessages::content" />
-		</div>
-
-		<div class="container" th:if="${cmsModules.isUsed('banners')}">
-			<div
-				class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
-				<th:block th:include="module::position('banners')" />
-			</div>
-		</div>
-
-		<!-- CONTENT -->
-		<div id="content" layout:fragment="content"></div>
+                        <!--Top Search -->
+                        <div th:include="site/searchform::content" />
+                    </div>
+                </div>
+            </div>
+            <th:block th:include="tpl_mainmenu::content" />
+        </header>
+        <!-- Header End -->
+        <div id="maincontainer">
 
 
 
-		<section id="quicklink" class="mt20"></section>
-		<!-- Footer -->
-		<footer id="footer">
-			<div class="footerimage hidden-xs hidden-sm"
-				th:style="${'background-color: #3A3A3A; color: #999; background-image: url('+siteParams['footerimage']+')'}">
-				<div class="container">
-					<div class="row row-centered">
-						<th:block th:include="module::position('footer')" />
-					</div>
-				</div>
-			</div>
-
-			<div class="visible-xs visible-sm"
-				style="background-color: #3A3A3A; padding-bottom: 10px">
-				<div class="row row-centered">
-					<th:block th:include="module::position('footer')" />
-				</div>
-			</div>
+            <div class="container">
+                <th:block th:include="tpl_globalmessages::content" />
+            </div>
 
 
-			<section class="copyrightbottom">
-				<div class="container">
-					<div class="row">
-						<div class="pull-left">
-							Powered by: <a href="http://www.dynamiasoluciones.com"
-								target="blank"
-								title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing"
-								class="tooltip-test">Dynamia Soluciones IT</a>
-						</div>
-					</div>
-				</div>
-			</section>
+            <div th:if="${cmsModules.isUsed('banners')}"
+                 class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <th:block th:include="module::position('banners')" />
+            </div>
 
-		</footer>
+
+            <!-- CONTENT -->
+            <div id="content" layout:fragment="content"></div>
 
 
 
-		<!-- Got to top -->
-		<a id="gotop"><i class="icon-circle-arrow-up"></i></a>
-	</div>
+            <section id="quicklink" class="mt20"></section>
+            <!-- Footer -->
+            <footer id="footer">
+                <div class="footerimage hidden-xs hidden-sm"
+                     th:style="${'background-color: #3A3A3A; color: #999; background-image: url('+siteParams['footerimage']+')'}">
+                    <div class="container">
+                        <div class="row row-centered">
+                            <th:block th:include="module::position('footer')" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visible-xs visible-sm"
+                     style="background-color: #3A3A3A; padding-bottom: 10px">
+                    <div class="row row-centered">
+                        <th:block th:include="module::position('footer')" />
+                    </div>
+                </div>
 
 
-	<!-- Placed at the end of the document so the pages load faster -->
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script th:src="@{/js/jquery.js}" src="js/jquery.js"></script>
-	<script th:src="@{/js/jquery-migrate-1.2.1.js}"
-		src="js/jquery-migrate-1.2.1.js"></script>
-	<script th:src="@{/js/jquery.easing.js}" src="js/jquery.easing.js"></script>
+                <section class="copyrightbottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="pull-left">
+                                Powered by: <a href="http://www.dynamiasoluciones.com"
+                                               target="blank"
+                                               title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing"
+                                               class="tooltip-test">Dynamia Soluciones IT</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
-	<!-- jQuery Animation -->
-	<script th:src="@{/js/inview.js}" src="js/inview.js"></script>
-	<!-- include jQuery + carouFredSel plugin -->
-	<script th:src="@{/js/jquery.carouFredSel-6.2.1-packed.js}"
-		type="text/javascript" src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
-	<!-- optionally include helper plugins  for carouFredSel-->
-	<script th:src="@{/js/jquery.mousewheel.min.js}" type="text/javascript"
-		src="js/jquery.mousewheel.min.js"></script>
-	<script th:src="@{/js/jquery.touchSwipe.min.js}" type="text/javascript"
-		src="js/jquery.touchSwipe.min.js"></script>
-	<script th:src="@{/js/jquery.transit.min.js}" type="text/javascript"
-		src="js/jquery.transit.min.js"></script>
-	<!-- Jquery Validation-->
-	<script th:src="@{/js/jquery.validate.js}" type="text/javascript"
-		src="js/jquery.validate.js"></script>
-	<!-- Jquery Flexslider-->
-	<script th:src="@{/js/jquery.flexslider.js}" defer=""
-		src="js/jquery.flexslider.js"></script>
-	<!-- Jquery Fancybox Popup-->
-	<script th:src="@{/js/jquery.prettyPhoto.js}"
-		src="js/jquery.prettyPhoto.js"></script>
-	<!-- Jquery Latest Tweet-->
-	<script th:src="@{/js/jquery.tweet.js}" type="text/javascript"
-		src="js/jquery.tweet.js"></script>
-	<!-- Jquery zoom on product page-->
-	<script th:src="@{/js/zoomsl-3.0.min.js}" src="js/zoomsl-3.0.min.js"></script>
+            </footer>
 
-	<!-- Jquery Countdown-->
-	<script th:src="@{/js/jquery.countdown.js}" type="text/javascript"
-		src="js/jquery.countdown.js"></script>
-	<!-- Social -->
-	<script th:src="@{/js/socialstream.jquery.js}" type="text/javascript"
-		src="js/socialstream.jquery.js"></script>
-	<!-- Jquery Map  
+
+
+            <!-- Got to top -->
+            <a id="gotop"><i class="icon-circle-arrow-up"></i></a>
+        </div>
+
+
+        <!-- Placed at the end of the document so the pages load faster -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script th:src="@{/js/jquery.js}" src="js/jquery.js"></script>
+        <script th:src="@{/js/jquery-migrate-1.2.1.js}"
+        src="js/jquery-migrate-1.2.1.js"></script>
+        <script th:src="@{/js/jquery.easing.js}" src="js/jquery.easing.js"></script>
+
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+        <!-- jQuery Animation -->
+        <script th:src="@{/js/inview.js}" src="js/inview.js"></script>
+        <!-- include jQuery + carouFredSel plugin -->
+        <script th:src="@{/js/jquery.carouFredSel-6.2.1-packed.js}"
+        type="text/javascript" src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
+        <!-- optionally include helper plugins  for carouFredSel-->
+        <script th:src="@{/js/jquery.mousewheel.min.js}" type="text/javascript"
+        src="js/jquery.mousewheel.min.js"></script>
+        <script th:src="@{/js/jquery.touchSwipe.min.js}" type="text/javascript"
+        src="js/jquery.touchSwipe.min.js"></script>
+        <script th:src="@{/js/jquery.transit.min.js}" type="text/javascript"
+        src="js/jquery.transit.min.js"></script>
+        <!-- Jquery Validation-->
+        <script th:src="@{/js/jquery.validate.js}" type="text/javascript"
+        src="js/jquery.validate.js"></script>
+        <!-- Jquery Flexslider-->
+        <script th:src="@{/js/jquery.flexslider.js}" defer=""
+        src="js/jquery.flexslider.js"></script>
+        <!-- Jquery Fancybox Popup-->
+        <script th:src="@{/js/jquery.prettyPhoto.js}"
+        src="js/jquery.prettyPhoto.js"></script>
+        <!-- Jquery Latest Tweet-->
+        <script th:src="@{/js/jquery.tweet.js}" type="text/javascript"
+        src="js/jquery.tweet.js"></script>
+        <!-- Jquery zoom on product page-->
+        <script th:src="@{/js/zoomsl-3.0.min.js}" src="js/zoomsl-3.0.min.js"></script>
+
+        <!-- Jquery Countdown-->
+        <script th:src="@{/js/jquery.countdown.js}" type="text/javascript"
+        src="js/jquery.countdown.js"></script>
+        <!-- Social -->
+        <script th:src="@{/js/socialstream.jquery.js}" type="text/javascript"
+        src="js/socialstream.jquery.js"></script>
+        <!-- Jquery Map  
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script> 
       
         <script th:src="@{/js/jquery.gmap.js}" type="text/javascript" src="js/jquery.gmap.js"></script> 
         -->
-	<!-- Jquery CountDown -->
-	<!-- Revolution Slider -->
-	<script
-		th:src="@{/plugins/rs-plugin/js/jquery.themepunch.revolution.min.js}"
-		type="text/javascript"
-		src="plugins/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-	<!-- Ratina View -->
-	<script th:src="@{/js/retina-1.1.0.min.js}" type="text/javascript"
-		src="js/retina-1.1.0.min.js"></script>
+        <!-- Jquery CountDown -->
+        <!-- Revolution Slider -->
+        <script
+            th:src="@{/plugins/rs-plugin/js/jquery.themepunch.revolution.min.js}"
+            type="text/javascript"
+        src="plugins/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+        <!-- Ratina View -->
+        <script th:src="@{/js/retina-1.1.0.min.js}" type="text/javascript"
+        src="js/retina-1.1.0.min.js"></script>
 
-	<!-- Custom -->
-	<script th:src="@{/js/cms.js}" src="js/cms.js"></script>
-	<script th:src="@{/js/custom.js}" src="js/custom.js"></script>
+        <!-- Custom -->
+        <script th:src="@{/js/cms.js}" src="js/cms.js"></script>
+        <script th:src="@{/js/custom.js}" src="js/custom.js"></script>
 
 
-	<th:block layout:fragment="scripts"></th:block>
+        <th:block layout:fragment="scripts"></th:block>
 
-	<th:block th:include="tpl_googleAnalytics::content" />
+        <th:block th:include="tpl_googleAnalytics::content" />
 
-	<th:block th:include="tpl_webchat::content" />
+        <th:block th:include="tpl_webchat::content" />
 
-	<script>
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id))
-				return;
-			js = d.createElement(s);
-			js.id = id;
-			js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>
+        <script>
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
 
-</body>
+    </body>
 </html>

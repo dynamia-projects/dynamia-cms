@@ -4,7 +4,7 @@
 
 
     <body th:fragment="content">
-        <section class="slider container mt10" >
+        <section class="slider mt10" >
             <div class="flexslider" id="mainslider4">
                 <ul class="slides">
                     <li th:each="banner : ${cmsUtil.listFilesNames('banners','jpg')}"> 
