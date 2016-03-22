@@ -1,0 +1,21 @@
+view: table
+beanClass: com.dynamia.cms.site.products.domain.ProductTemplate
+autofields: false
+
+fields:
+  
+    name:   
+    enabled:
+    description:
+    creationDate:
+        params:
+            converters: converters.Date
+    creationTime:
+        params:
+            converters: converters.Time
+    lastUpdate:
+        params:
+            converters: converters.DateTime
+    creator:
+    lastUpdater:
+    

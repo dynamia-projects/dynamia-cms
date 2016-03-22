@@ -1,139 +1,139 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
 
-<div class="maincontainer" layout:fragment="content">
+    <div class="maincontainer" layout:fragment="content">
 
 
-	<div class="container">
-		<!-- Main Title-->
-		<div class="titles animated fadeInUp time3">
-			<div class="pull-left">
-				<h1 class="headinglefttitle">Datos y Productos</h1>
-				<div th:text="${subtitle}" class="headingsubtitle"></div>
-			</div>
-			<i th:class="${icon}"></i>
-		</div>
+        <div class="container">
+            <!-- Main Title-->
+            <div class="titles animated fadeInUp time3">
+                <div class="pull-left">
+                    <h1 class="headinglefttitle">Datos y Productos</h1>
+                    <div th:text="${subtitle}" class="headingsubtitle"></div>
+                </div>
+                <i th:class="${icon}"></i>
+            </div>
 
-		<div class="row mt40">
+            <div class="row mt40">
 
-			<th:block th:include="module::position('checkoutOrderTop')"
-				th:if="${cmsModules.isUsed('checkoutOrderTop')}" />
+                <th:block th:include="module::position('checkoutOrderTop')"
+                          th:if="${cmsModules.isUsed('checkoutOrderTop')}" />
 
-			<form role="form" class="form-horizontal" th:action="@{/shoppingcart/shop/confirm}"
-				th:method="post">
-				<div class="row">
-					<div class="col-md-4">
+                <form role="form" class="form-horizontal" th:action="@{/shoppingcart/shop/confirm}"
+                      th:method="post">
+                    <div class="row">
+                        <div class="col-md-4">
 
-						<h3>
-							<strong>1.</strong> Verifique sus Datos
-						</h3>
-						<div class="form-group" style="margin-bottom: 0px">
-							<label class="col-md-2 orange">CC/NIT</label>
-							<span class="col-md-10 " th:text="${@userHolder.current.identification}"></span>
+                            <h3>
+                                <strong>1.</strong> Verifique sus Datos
+                            </h3>
+                            <div class="form-group" style="margin-bottom: 0px">
+                                <label class="col-md-2 orange">CC/NIT</label>
+                                <span class="col-md-10 " th:text="${@userHolder.current.identification}"></span>
 
-						</div>
+                            </div>
 
-						<div class="form-group" style="margin-bottom: 0px">
-							<label class="col-md-2 orange">Nombres</label>
-							<span class="col-md-10 " th:text="${@userHolder.current.firstName}"></span>
+                            <div class="form-group" style="margin-bottom: 0px">
+                                <label class="col-md-2 orange">Nombres</label>
+                                <span class="col-md-10 " th:text="${@userHolder.current.firstName}"></span>
 
-						</div>
+                            </div>
 
-						<div class="form-group" style="margin-bottom: 0px">
-							<label class="col-md-2 orange">Apellidos</label>
-							<span class="col-md-10" th:text="${@userHolder.current.lastName}"></span>
+                            <div class="form-group" style="margin-bottom: 0px">
+                                <label class="col-md-2 orange">Apellidos</label>
+                                <span class="col-md-10" th:text="${@userHolder.current.lastName}"></span>
 
-						</div>
+                            </div>
 
-						<div class="form-group" style="margin-bottom: 0px">
-							<label class="col-md-2 orange">Email</label>
-							<span class="col-md-10 " th:text="${@userHolder.current.username}"></span>
+                            <div class="form-group" style="margin-bottom: 0px">
+                                <label class="col-md-2 orange">Email</label>
+                                <span class="col-md-10 " th:text="${@userHolder.current.username}"></span>
 
-						</div>
-						<a class="btn btn-primary btn-sm"
-							th:href="@{/users/profile(redirect='/shoppingcart/shop/checkout')}">Editar Datos</a>
-					</div>
+                            </div>
+                            <a class="btn btn-primary btn-sm"
+                               th:href="@{/users/profile(redirect='/shoppingcart/shop/checkout')}">Editar Datos</a>
+                        </div>
 
-					<div class="col-md-4">
-						<h3>
-							<strong>2.</strong> Seleccione Direccion de Facturacion
-						</h3>
-						<select class="form-control" name="billingAddress">
-							<option th:each="uci : ${userContactInfos}" th:value="${uci.id}" th:text="${uci.toString()}"></option>
-						</select>
-						<a class="btn btn-primary btn-sm pull-right"
-							th:href="@{/users/addresses/add(redirect='/shoppingcart/shop/checkout')}">Nueva Direccion</a>
-					</div>
+                        <div class="col-md-4">
+                            <h3>
+                                <strong>2.</strong> Seleccione Direccion de Facturacion
+                            </h3>
+                            <select class="form-control" name="billingAddress">
+                                <option th:each="uci : ${userContactInfos}" th:value="${uci.id}" th:text="${uci.toString()}"></option>
+                            </select>
+                            <a class="btn btn-primary btn-sm pull-right"
+                               th:href="@{/users/addresses/add(redirect='/shoppingcart/shop/checkout')}">Nueva Direccion</a>
+                        </div>
 
-					<div class="col-md-4">
-						<h3>
-							<strong>3.</strong> Seleccione Direccion de Envio
-						</h3>
-						<select class="form-control" name="shippingAddress">
-							<option th:each="uci : ${userContactInfos}" th:value="${uci.id}" th:text="${uci.toString()}"></option>
-						</select>
-						<a class="btn btn-primary btn-sm pull-right"
-							th:href="@{/users/addresses/add(redirect='/shoppingcart/shop/checkout')}">Nueva Direccion</a>
+                        <div class="col-md-4">
+                            <h3>
+                                <strong>3.</strong> Seleccione Direccion de Envio
+                            </h3>
+                            <select class="form-control" name="shippingAddress">
+                                <option th:each="uci : ${userContactInfos}" th:value="${uci.id}" th:text="${uci.toString()}"></option>
+                            </select>
+                            <a class="btn btn-primary btn-sm pull-right"
+                               th:href="@{/users/addresses/add(redirect='/shoppingcart/shop/checkout')}">Nueva Direccion</a>
 
-						<label>
-							<input type="radio" name="deliveryType" value="none" checked="checked" />
-							<b class="orange"> Pago Envio Enlinea</b>
-						</label>
-						<label>
-							<input type="radio" name="deliveryType" value="payAtDelivery" />
-							<b class="orange"> Pago Envio Contraentrega</b>
-						</label>
-						<label>
-							<input type="radio" name="deliveryType" value="pickupAtStore" />
-							<b class="orange"> Recoger en Tienda</b>
-						</label>
-					</div>
-				</div>
+                            <label>
+                                <input type="radio" name="deliveryType" value="none" checked="checked" />
+                                <b class="orange"> Pago Envio Enlinea</b>
+                            </label>
+                            <label>
+                                <input type="radio" name="deliveryType" value="payAtDelivery" />
+                                <b class="orange"> Pago Envio Contraentrega</b>
+                            </label>
+                            <label>
+                                <input type="radio" name="deliveryType" value="pickupAtStore" />
+                                <b class="orange"> Recoger en Tienda</b>
+                            </label>
+                        </div>
+                    </div>
 
-				<div class="row">
-					<div class="col-md-12">
-						<h3>
-							<strong>4.</strong> Comentarios y Observaciones
-						</h3>
-						<textarea rows="3" id="message" name="userComments"
-							placeholder="Ingrese cualquier informacion adicional que debamos tener en cuenta en el envio de su pedido"
-							class="form-control"></textarea>
-					</div>
-				</div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>
+                                <strong>4.</strong> Comentarios y Observaciones
+                            </h3>
+                            <textarea rows="3" id="message" name="userComments"
+                                      placeholder="Ingrese cualquier informacion adicional que debamos tener en cuenta en el envio de su pedido"
+                                      class="form-control"></textarea>
+                        </div>
+                    </div>
 
-				<div class="row">
-					<div class="col-md-12">
-						<h3>
-							<strong>5.</strong> Verifique Detalles del Pedido
-						</h3>
-						<th th:include="shoppingcart/components/orderDetails::content" />
-					</div>
-				</div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>
+                                <strong>5.</strong> Verifique Detalles del Pedido
+                            </h3>
+                            <th th:include="shoppingcart/components/orderDetails::content" />
+                        </div>
+                    </div>
 
-				<div class="row" th:if="${cmsModules.isUsed('checkoutOrderBottom1')}">
-					<div class="col-md-12">
-						<th:block th:include="module::position('checkoutOrderBottom1')" />
-					</div>
-				</div>
+                    <div class="row" th:if="${cmsModules.isUsed('checkoutOrderBottom1')}">
+                        <div class="col-md-12">
+                            <th:block th:include="module::position('checkoutOrderBottom1')" />
+                        </div>
+                    </div>
 
-				<!-- Button -->
-				<div class="row">
-					<div class="col-md-12">
-						<button type="submit" class="btn btn-orange btn-lg">
-							<i class="icon-check icon-white"></i> Confirmar
-						</button>
-					</div>
-				</div>
+                    <!-- Button -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-orange btn-lg">
+                                <i class="icon-check icon-white"></i> Confirmar
+                            </button>
+                        </div>
+                    </div>
 
-				<div class="row" th:if="${cmsModules.isUsed('checkoutOrderBottom2')}">
-					<div class="col-md-12">
-						<th:block th:include="module::position('checkoutOrderBottom2')" />
-					</div>
-				</div>
+                    <div class="row" th:if="${cmsModules.isUsed('checkoutOrderBottom2')}">
+                        <div class="col-md-12">
+                            <th:block th:include="module::position('checkoutOrderBottom2')" />
+                        </div>
+                    </div>
 
-			</form>
-		</div>
-	</div>
-</div>
+                </form>
+            </div>
+        </div>
+    </div>
 </html>

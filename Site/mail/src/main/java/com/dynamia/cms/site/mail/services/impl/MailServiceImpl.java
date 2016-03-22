@@ -1,9 +1,21 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/* 
+ * Copyright 2016 Dynamia Soluciones IT SAS and the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.dynamia.cms.site.mail.services.impl;
 
+import com.dynamia.cms.site.core.StringParser;
 import java.io.File;
 import java.io.StringWriter;
 import java.util.Collection;
@@ -29,6 +41,7 @@ import com.dynamia.cms.site.mail.domain.MailAccount;
 import com.dynamia.cms.site.mail.domain.MailTemplate;
 import com.dynamia.cms.site.mail.domain.MailingContact;
 import com.dynamia.cms.site.mail.services.MailService;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
@@ -43,186 +56,175 @@ import tools.dynamia.integration.Containers;
 @Service
 public class MailServiceImpl implements MailService {
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+    private CrudService crudService;
 
-	private VelocityEngine velocityEngine = new VelocityEngine();
+    @Autowired
+    @Qualifier("mustacheStringParser")
+    private StringParser stringParser;
 
-	private final LoggingService logger = new SLF4JLoggingService(MailService.class);
+    private final LoggingService logger = new SLF4JLoggingService(MailService.class);
 
-	@Override
-	public void send(String to, String subject, String content) {
-		send(new MailMessage(to, subject, content));
-	}
+    @Override
+    public void send(String to, String subject, String content) {
+        send(new MailMessage(to, subject, content));
+    }
 
-	@Override
-	public void send(final MailMessage mailMessage) {
+    @Override
+    public void send(final MailMessage mailMessage) {
 
-		MailAccount account = mailMessage.getMailAccount();
-		if (account == null) {
-			account = getPreferredEmailAccount();
-		}
+        MailAccount account = mailMessage.getMailAccount();
+        if (account == null) {
+            account = getPreferredEmailAccount();
+        }
 
-		if (account == null) {
-			return;
-		}
+        if (account == null) {
+            return;
+        }
 
-		if (mailMessage.getTemplate() != null && !mailMessage.getTemplate().isEnabled()) {
-			return;
-		}
+        if (mailMessage.getTemplate() != null && !mailMessage.getTemplate().isEnabled()) {
+            return;
+        }
 
-		final MailAccount finalAccount = account;
+        final MailAccount finalAccount = account;
 
-		Thread thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
 
-					if (mailMessage.getTemplate() != null) {
-						processTemplate(mailMessage);
-					}
+                    if (mailMessage.getTemplate() != null) {
+                        processTemplate(mailMessage);
+                    }
 
-					JavaMailSenderImpl jmsi = (JavaMailSenderImpl) createMailSender(finalAccount);
-					MimeMessage mimeMessage = jmsi.createMimeMessage();
+                    JavaMailSenderImpl jmsi = (JavaMailSenderImpl) createMailSender(finalAccount);
+                    MimeMessage mimeMessage = jmsi.createMimeMessage();
 
-					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-					helper.setTo(mailMessage.getTo());
-					if (!mailMessage.getTos().isEmpty()) {
-						helper.setTo(mailMessage.getTosAsArray());
-					}
-					String from = finalAccount.getFromAddress();
-					String personal = finalAccount.getName();
-					if (from != null && personal != null) {
-						helper.setFrom(from, personal);
-					}
+                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+                    helper.setTo(mailMessage.getTo());
+                    if (!mailMessage.getTos().isEmpty()) {
+                        helper.setTo(mailMessage.getTosAsArray());
+                    }
+                    String from = finalAccount.getFromAddress();
+                    String personal = finalAccount.getName();
+                    if (from != null && personal != null) {
+                        helper.setFrom(from, personal);
+                    }
 
-					if (!mailMessage.getBccs().isEmpty()) {
-						helper.setBcc(mailMessage.getBccsAsArray());
-					}
+                    if (!mailMessage.getBccs().isEmpty()) {
+                        helper.setBcc(mailMessage.getBccsAsArray());
+                    }
 
-					if (!mailMessage.getCcs().isEmpty()) {
-						helper.setCc(mailMessage.getCcsAsArray());
-					}
+                    if (!mailMessage.getCcs().isEmpty()) {
+                        helper.setCc(mailMessage.getCcsAsArray());
+                    }
 
-					helper.setSubject(mailMessage.getSubject());
-					if (mailMessage.getPlainText() != null && mailMessage.getContent() != null) {
-						helper.setText(mailMessage.getPlainText(), mailMessage.getContent());
-					} else {
-						helper.setText(mailMessage.getContent(), true);
-					}
+                    helper.setSubject(mailMessage.getSubject());
+                    if (mailMessage.getPlainText() != null && mailMessage.getContent() != null) {
+                        helper.setText(mailMessage.getPlainText(), mailMessage.getContent());
+                    } else {
+                        helper.setText(mailMessage.getContent(), true);
+                    }
 
-					for (File archivo : mailMessage.getAttachtments()) {
-						helper.addAttachment(archivo.getName(), archivo);
-					}
+                    for (File archivo : mailMessage.getAttachtments()) {
+                        helper.addAttachment(archivo.getName(), archivo);
+                    }
 
-					fireOnMailSending(mailMessage);
-					logger.info("Sending e-mail " + mailMessage);
-					jmsi.send(mimeMessage);
+                    fireOnMailSending(mailMessage);
+                    logger.info("Sending e-mail " + mailMessage);
+                    jmsi.send(mimeMessage);
 
-					logger.info("Email sended succesfull!");
-					fireOnMailSended(mailMessage);
-				} catch (Exception me) {
-					logger.error("Error sending e-mail " + mailMessage, me);
-					fireOnMailSendFail(mailMessage, me);
-					throw new MailServiceException("Error sending mail message " + mailMessage, me);
+                    logger.info("Email sended succesfull!");
+                    fireOnMailSended(mailMessage);
+                } catch (Exception me) {
+                    logger.error("Error sending e-mail " + mailMessage, me);
+                    fireOnMailSendFail(mailMessage, me);
+                    throw new MailServiceException("Error sending mail message " + mailMessage, me);
 
-				}
-			}
-		});
-		thread.start();
+                }
+            }
+        });
+        thread.start();
 
-	}
+    }
 
-	@Override
-	public MailAccount getPreferredEmailAccount() {
-		MailAccount account = crudService.findSingle(MailAccount.class, "preferred", true);
-		if (account == null) {
-			logger.warn("There is not a preferred email account ");
-		}
-		return account;
-	}
+    @Override
+    public MailAccount getPreferredEmailAccount() {
+        MailAccount account = crudService.findSingle(MailAccount.class, "preferred", true);
+        if (account == null) {
+            logger.warn("There is not a preferred email account ");
+        }
+        return account;
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void setPreferredEmailAccount(MailAccount account) {
-		crudService.batchUpdate(MailAccount.class, "preferred", false, QueryParameters.with("site", account.getSite()));
-		crudService.updateField(account, "preferred", true);
-	}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void setPreferredEmailAccount(MailAccount account) {
+        crudService.batchUpdate(MailAccount.class, "preferred", false, QueryParameters.with("site", account.getSite()));
+        crudService.updateField(account, "preferred", true);
+    }
 
-	private MailSender createMailSender(MailAccount account) {
-		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		mailSender.setHost(account.getServerAddress());
-		mailSender.setPort(account.getPort());
-		mailSender.setUsername(account.getUsername());
-		mailSender.setPassword(account.getPassword());
-		mailSender.setProtocol("smtp");
-		if (account.getEnconding() != null && !account.getEnconding().isEmpty()) {
-			mailSender.setDefaultEncoding(account.getEnconding());
-		}
+    private MailSender createMailSender(MailAccount account) {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost(account.getServerAddress());
+        mailSender.setPort(account.getPort());
+        mailSender.setUsername(account.getUsername());
+        mailSender.setPassword(account.getPassword());
+        mailSender.setProtocol("smtp");
+        if (account.getEnconding() != null && !account.getEnconding().isEmpty()) {
+            mailSender.setDefaultEncoding(account.getEnconding());
+        }
 
-		Properties jmp = new Properties();
-		jmp.setProperty("mail.smtp.auth", String.valueOf(account.isLoginRequired()));
-		jmp.setProperty("mail.smtp.from", account.getFromAddress());
-		jmp.setProperty("mail.smtp.port", String.valueOf(account.getPort()));
-		jmp.setProperty("mail.smtp.starttls.enable", String.valueOf(account.isUseTTLS()));
-		jmp.setProperty("mail.smtp.host", account.getServerAddress());
-		jmp.setProperty("mail.from", account.getFromAddress());
-		jmp.setProperty("mail.personal", account.getName());
+        Properties jmp = new Properties();
+        jmp.setProperty("mail.smtp.auth", String.valueOf(account.isLoginRequired()));
+        jmp.setProperty("mail.smtp.from", account.getFromAddress());
+        jmp.setProperty("mail.smtp.port", String.valueOf(account.getPort()));
+        jmp.setProperty("mail.smtp.starttls.enable", String.valueOf(account.isUseTTLS()));
+        jmp.setProperty("mail.smtp.host", account.getServerAddress());
+        jmp.setProperty("mail.from", account.getFromAddress());
+        jmp.setProperty("mail.personal", account.getName());
 
-		mailSender.setJavaMailProperties(jmp);
+        mailSender.setJavaMailProperties(jmp);
 
-		return mailSender;
+        return mailSender;
 
-	}
+    }
 
-	public void processTemplate(MailMessage message) {
-		if (velocityEngine == null) {
-			throw new MailServiceException("There is not a VelocityEngine configured to process any template");
-		}
+    public void processTemplate(MailMessage message) {
 
-		if (message.getTemplate() == null) {
-			throw new MailServiceException(message + " has no template to process");
-		}
+        if (message.getTemplate() == null) {
+            throw new MailServiceException(message + " has no template to process");
+        }
 
-		StringWriter contentWriter = new StringWriter();
-		StringWriter subjectWriter = new StringWriter();
-		MailTemplate template = message.getTemplate();
-		VelocityContext context = new VelocityContext();
-		if (message.getTemplateModel() != null) {
-			for (Entry<String, Object> entry : message.getTemplateModel().entrySet()) {
-				context.put(entry.getKey(), entry.getValue());
-			}
-		}
+        MailTemplate template = message.getTemplate();
 
-		velocityEngine.evaluate(context, subjectWriter, "log", template.getSubject());
-		velocityEngine.evaluate(context, contentWriter, "log", template.getContent());
-		message.setSubject(subjectWriter.toString());
-		message.setContent(contentWriter.toString());
-	}
+        message.setSubject(stringParser.parse(template.getSubject(), message.getTemplateModel()));
+        message.setContent(stringParser.parse(template.getContent(), message.getTemplateModel()));
+    }
 
-	@Override
-	public boolean existsMailingContact(MailingContact contact) {
-		return crudService.findSingle(MailingContact.class, "emailAddress", contact.getEmailAddress()) != null;
-	}
+    @Override
+    public boolean existsMailingContact(MailingContact contact) {
+        return crudService.findSingle(MailingContact.class, "emailAddress", contact.getEmailAddress()) != null;
+    }
 
-	private void fireOnMailSending(MailMessage message) {
-		Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class);
-		for (MailServiceListener listener : listeners) {
-			listener.onMailSending(message);
-		}
-	}
+    private void fireOnMailSending(MailMessage message) {
+        Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class);
+        for (MailServiceListener listener : listeners) {
+            listener.onMailSending(message);
+        }
+    }
 
-	private void fireOnMailSended(MailMessage message) {
-		Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class);
-		for (MailServiceListener listener : listeners) {
-			listener.onMailSended(message);
-		}
-	}
+    private void fireOnMailSended(MailMessage message) {
+        Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class);
+        for (MailServiceListener listener : listeners) {
+            listener.onMailSended(message);
+        }
+    }
 
-	private void fireOnMailSendFail(MailMessage message, Throwable cause) {
-		Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class);
-		for (MailServiceListener listener : listeners) {
-			listener.onMailSendFail(message, cause);
-		}
-	}
+    private void fireOnMailSendFail(MailMessage message, Throwable cause) {
+        Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class);
+        for (MailServiceListener listener : listeners) {
+            listener.onMailSendFail(message, cause);
+        }
+    }
 }

@@ -8,8 +8,9 @@ fields:
    name:
      params:
          span: 2
-   brand:
+   brand:   
    category:
+   template:
    description:
       params:
           span: 4
@@ -21,12 +22,11 @@ fields:
           span: 4
           height: 200px
    price:
-      params:
-          converter: converters.Integer
+    
    lastPrice:
-      params:
-          converter: converters.Integer
-   
+     
+   storePrice:
+      
    stock:   
    active:
    featured:
@@ -34,21 +34,62 @@ fields:
    newproduct:
       label: New
    status:
+   sellInWeb:
+   sellInStore:
+       
+       
    image:
+       params:
+           span: 2
    image2:
+       params:
+           span: 2
    image3:
+       params:
+           span: 2
    image4:
+       params:
+           span: 2
    videoURL:
+       label: Video URL
+       params:
+           span: 4
+       
+       
+   promoEnabled:
+       label: Enabled
+   promoValue:
+       label: Value
+   promoValueType:
+       label: Value Type
+   promoStartDate:
+       label: Start Date
+   promoEndDate:
+       label: End Date
+   promoName:
+       label: Name
+       
+   details:
+       component: crudview
+   
+   stockDetails:
+       component: crudview
+       
+   creditPrices:
+       component: crudview
 
 groups:
    general:
-       fields: [sku,reference,name,brand,category,description,longDescription]
+       fields: [sku,reference,name,brand,category,template,description,longDescription]
        
    sales:
-       fields: [stock,price,lastPrice]
+       fields: [stock,price,lastPrice,storePrice]
        
    status:
-       fields: [active,featured,sale,newproduct,status]
+       fields: [active,featured,sale,newproduct,status, sellInWeb, sellInStore]
+       
+   promotion:
+       fields: [promoEnabled,promoName,promoValue,promoValueType,promoStartDate,promoEndDate]
        
    images:
        fields: [image,image2,image3,image4]

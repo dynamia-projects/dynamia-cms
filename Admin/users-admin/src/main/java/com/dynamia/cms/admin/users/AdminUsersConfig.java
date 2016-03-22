@@ -16,7 +16,7 @@ import com.dynamia.cms.site.users.UsersConfig;
 
 /**
  *
- * @author mario_2
+ * @author Mario Serrano Leones
  */
 @Configuration
 @EnableWebSecurity

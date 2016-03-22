@@ -1,0 +1,14 @@
+view: table
+beanClass: com.dynamia.cms.site.products.domain.ProductCreditPrice
+autofields: false
+
+fields:
+  
+    number:
+    price:
+        params:
+            converter: converters.Currency
+            header:
+                align: right
+            
+    description:

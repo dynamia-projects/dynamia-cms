@@ -18,7 +18,7 @@ import tools.dynamia.integration.sterotypes.Component;
 
 /**
  *
- * @author mario_2
+ * @author Mario Serrano Leones
  */
 @Component
 @Scope("session")

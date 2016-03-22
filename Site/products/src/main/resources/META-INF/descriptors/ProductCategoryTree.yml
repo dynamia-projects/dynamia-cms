@@ -9,4 +9,6 @@ fields:
     relatedCategory:
        label: Related
     description:
+    template:
+        description: Product Template    
     active:

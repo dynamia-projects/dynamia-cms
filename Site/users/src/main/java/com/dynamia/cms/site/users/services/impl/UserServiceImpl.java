@@ -1,7 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/* 
+ * Copyright 2016 Dynamia Soluciones IT SAS and the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.dynamia.cms.site.users.services.impl;
 
@@ -32,164 +42,163 @@ import tools.dynamia.domain.services.ValidatorService;
 
 /**
  *
- * @author mario_2
+ * @author Mario Serrano Leones
  */
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+    private CrudService crudService;
 
-	@Autowired
-	private MailService mailService;
+    @Autowired
+    private MailService mailService;
 
-	@Autowired
-	private ValidatorService validatorService;
+    @Autowired
+    private ValidatorService validatorService;
 
-	@Override
-	public User getUser(Site site, String name) {
-		QueryParameters qp = QueryParameters.with("site", site).add("username", name);
-		return crudService.findSingle(User.class, qp);
-	}
+    @Override
+    public User getUser(Site site, String name) {
+        QueryParameters qp = QueryParameters.with("site", site).add("username", name);
+        return crudService.findSingle(User.class, qp);
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void saveUser(UserForm form) {
-		User user = form.getData();
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void saveUser(UserForm form) {
+        User user = form.getData();
 
-		if (user.getId() == null) {
-			user.setSite(form.getSite());
-			user.getFullName();
-			validatorService.validate(user);
+        if (user.getId() == null) {
+            user.setSite(form.getSite());
+            user.getFullName();
+            validatorService.validate(user);
 
-			User alreadyUser = getUser(user.getSite(), user.getUsername());
-			if (alreadyUser != null) {
-				throw new ValidationError("Ya existe un usuario con el mismo email ingresado: " + user.getUsername());
-			}
+            User alreadyUser = getUser(user.getSite(), user.getUsername());
+            if (alreadyUser != null) {
+                throw new ValidationError("Ya existe un usuario con el mismo email ingresado: " + user.getUsername());
+            }
 
-			if (!user.getPassword().equals(form.getPasswordConfirm())) {
-				throw new PasswordsNotMatchException(user);
-			}
+            if (!user.getPassword().equals(form.getPasswordConfirm())) {
+                throw new PasswordsNotMatchException(user);
+            }
 
-			user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + user.getPassword()));
+            user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + user.getPassword()));
 
-			crudService.create(user);
+            crudService.create(user);
 
-		} else {
-			User actualUser = crudService.find(User.class, user.getId());
-			actualUser.setContactInfo(user.getContactInfo());
-			actualUser.setFirstName(user.getFirstName());
-			actualUser.setLastName(user.getLastName());
-			actualUser.setFullName(user.getFullName());
-			actualUser.setIdentification(user.getIdentification());
+        } else {
+            User actualUser = crudService.find(User.class, user.getId());
+            actualUser.setContactInfo(user.getContactInfo());
+            actualUser.setFirstName(user.getFirstName());
+            actualUser.setLastName(user.getLastName());
+            actualUser.setFullName(user.getFullName());
+            actualUser.setIdentification(user.getIdentification());
 
-			validatorService.validate(actualUser);
-			crudService.update(actualUser);
-		}
-	}
+            validatorService.validate(actualUser);
+            crudService.update(actualUser);
+        }
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void changePassword(UserForm form) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void changePassword(UserForm form) {
 
-		validatorService.validate(form);
+        validatorService.validate(form);
 
-		User user = crudService.find(User.class, form.getData().getId());
-		String currentPassword = Sha512DigestUtils.shaHex(user.getUsername() + ":" + form.getCurrentPassword());
+        User user = crudService.find(User.class, form.getData().getId());
+        String currentPassword = Sha512DigestUtils.shaHex(user.getUsername() + ":" + form.getCurrentPassword());
 
-		if (!user.getPassword().equals(currentPassword)) {
-			throw new ValidationError("El password actual ingresado es incorrecto.");
-		}
+        if (!user.getPassword().equals(currentPassword)) {
+            throw new ValidationError("El password actual ingresado es incorrecto.");
+        }
 
-		if (!form.getData().getPassword().equals(form.getPasswordConfirm())) {
-			throw new PasswordsNotMatchException(user);
-		}
+        if (!form.getData().getPassword().equals(form.getPasswordConfirm())) {
+            throw new PasswordsNotMatchException(user);
+        }
 
-		String newPassword = form.getData().getPassword();
-		setupPassword(user, newPassword);
-		crudService.save(user);
-	}
+        String newPassword = form.getData().getPassword();
+        setupPassword(user, newPassword);
+        crudService.save(user);
+    }
 
-	private void setupPassword(User user, String newPassword) {
-		user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + newPassword));
-	}
+    private void setupPassword(User user, String newPassword) {
+        user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + newPassword));
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void resetPassword(Site site, String username) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void resetPassword(Site site, String username) {
 
-		String templateName = "ResetPasswordTemplate";
-		QueryParameters params = QueryParameters.with("name", templateName)
-				.add("site", site);
+        String templateName = "ResetPasswordTemplate";
+        QueryParameters params = QueryParameters.with("name", templateName)
+                .add("site", site);
 
-		MailTemplate mailTemplate = crudService.findSingle(MailTemplate.class, params);
-		if (mailTemplate == null) {
-			throw new ValidationError("En estos momentos no podemos reiniciar su password, por favor intente mas tarde");
-		}
+        MailTemplate mailTemplate = crudService.findSingle(MailTemplate.class, params);
+        if (mailTemplate == null) {
+            throw new ValidationError("En estos momentos no podemos reiniciar su password, por favor intente mas tarde");
+        }
 
-		User user = getUser(site, username);
-		if (user == null) {
-			throw new ValidationError("El usuario [" + username + "] no existe en este sitio web");
-		}
+        User user = getUser(site, username);
+        if (user == null) {
+            throw new ValidationError("El usuario [" + username + "] no existe en este sitio web");
+        }
 
-		String newPassword = StringUtils.randomString().substring(0, 7);
-		setupPassword(user, newPassword);
-		crudService.save(user);
+        String newPassword = StringUtils.randomString().substring(0, 7);
+        System.out.println("NEW PASSWORD "+newPassword);
+        setupPassword(user, newPassword);
+        crudService.save(user);
 
-		MailMessage message = new MailMessage(mailTemplate);
-		message.setTo(username);
-		message.getTemplateModel().put("user", user);
-		message.getTemplateModel().put("newpassword", newPassword);
+        MailMessage message = new MailMessage(mailTemplate);
+        message.setTo(username);
+        message.getTemplateModel().put("user", user);
+        message.getTemplateModel().put("newpassword", newPassword);
 
-		mailService.send(message);
-	}
+        mailService.send(message);
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void resetPassword(User user, String newpassword, String newpassword2) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void resetPassword(User user, String newpassword, String newpassword2) {
 
-		if (user == null) {
-			throw new ValidationError("El usuario no existe en este sitio web");
-		}
+        if (user == null) {
+            throw new ValidationError("El usuario no existe en este sitio web");
+        }
 
-		if (newpassword == null || newpassword.isEmpty() || newpassword2 == null || newpassword2.isEmpty()) {
-			throw new ValidationError("Ingrese nuevo password");
-		}
+        if (newpassword == null || newpassword.isEmpty() || newpassword2 == null || newpassword2.isEmpty()) {
+            throw new ValidationError("Ingrese nuevo password");
+        }
 
-		if (!newpassword.equals(newpassword2)) {
-			throw new ValidationError("El nuevo password ingresado no coincide");
-		}
+        if (!newpassword.equals(newpassword2)) {
+            throw new ValidationError("El nuevo password ingresado no coincide");
+        }
 
-		setupPassword(user, newpassword);
-		crudService.save(user);
+        setupPassword(user, newpassword);
+        crudService.save(user);
 
-	}
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void checkAdminUser(Site site) {
-		String adminUsername = "admin@" + site.getKey() + ".login";
-		User adminUser = getUser(site, adminUsername);
-		if (adminUser == null) {
-			User user = new User();
-			user.setUsername(adminUsername);
-			user.setFirstName("Admin");
-			user.setLastName(site.getName());
-			user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":admin" + site.getKey()));
-			user.setSite(site);
-			user.setProfile(UserProfile.ADMIN);
-			crudService.create(user);
-		} else {
-			if (adminUser.getProfile() != UserProfile.ADMIN) {
-				adminUser.setProfile(UserProfile.ADMIN);
-				crudService.update(adminUser);
-			}
-		}
-	}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void checkAdminUser(Site site) {
+        String adminUsername = "admin@" + site.getKey() + ".login";
+        User adminUser = getUser(site, adminUsername);
+        if (adminUser == null) {
+            User user = new User();
+            user.setUsername(adminUsername);
+            user.setFirstName("Admin");
+            user.setLastName(site.getName());
+            user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":admin" + site.getKey()));
+            user.setSite(site);
+            user.setProfile(UserProfile.ADMIN);
+            crudService.create(user);
+        } else if (adminUser.getProfile() != UserProfile.ADMIN) {
+            adminUser.setProfile(UserProfile.ADMIN);
+            crudService.update(adminUser);
+        }
+    }
 
-	@Override
-	public List<UserContactInfo> getContactInfos(User user) {
-		return crudService.find(UserContactInfo.class, "user", user);
-	}
+    @Override
+    public List<UserContactInfo> getContactInfos(User user) {
+        return crudService.find(UserContactInfo.class, "user", user);
+    }
 
 }

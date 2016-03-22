@@ -21,7 +21,7 @@ import tools.dynamia.commons.logger.SLF4JLoggingService;
 
 /**
  *
- * @author mario
+ * @author Mario Serrano Leones
  */
 public class LoginVM {
 

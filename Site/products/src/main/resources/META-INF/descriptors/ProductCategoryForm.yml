@@ -8,13 +8,18 @@ fields:
     
     parent:
         component: label
+    
+    template:
+        description: Product Template
+       
         
     description:
         params:
             multiline: true
             height: 200px
+            span: 2
     
    
 
 layout:
-    columns: 1
+    columns: 2

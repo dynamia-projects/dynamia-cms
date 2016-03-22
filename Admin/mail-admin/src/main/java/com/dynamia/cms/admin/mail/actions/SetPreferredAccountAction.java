@@ -20,7 +20,7 @@ import tools.dynamia.ui.UIMessages;
 
 /**
  *
- * @author mario
+ * @author Mario Serrano Leones
  */
 @InstallAction
 public class SetPreferredAccountAction extends AbstractCrudAction {

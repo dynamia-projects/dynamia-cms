@@ -21,7 +21,7 @@ import tools.dynamia.integration.Containers;
 
 /**
  *
- * @author mario_2
+ * @author Mario Serrano Leones
  */
 @Controller
 public class AdminUsersController {

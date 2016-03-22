@@ -1,0 +1,14 @@
+view: form
+beanClass: com.dynamia.cms.site.products.domain.ProductStock
+autofields: false
+
+fields:
+  
+    store:
+    stock:
+  
+    
+   
+
+layout:
+    columns: 1

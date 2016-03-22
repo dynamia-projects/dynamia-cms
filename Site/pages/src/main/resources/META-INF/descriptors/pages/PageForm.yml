@@ -41,9 +41,10 @@ fields:
             span: 3
             
     summary:
-        description: Max 500 characters
+        description: Max 2000 characters
         params:
             span: 3
+            multiline: true
             height: 80px
             
             

@@ -13,3 +13,5 @@ gen/
 .springBeans
 *.iml
 .idea/
+/SiteHome/pom.xml
+/SiteHomex/nbproject/private/

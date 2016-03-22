@@ -1,7 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/* 
+ * Copyright 2016 Dynamia Soluciones IT SAS and the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package com.dynamia.cms.site.shoppingcart.actions;
 
@@ -19,33 +29,33 @@ import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 
 /**
  *
- * @author mario_2
+ * @author Mario Serrano Leones
  */
 @CMSAction
 public class AddItemToCartAction implements SiteAction {
 
-	@Autowired
-	private ShoppingCartService service;
+    @Autowired
+    private ShoppingCartService service;
 
-	@Override
-	public String getName() {
-		return "addItemToCart";
-	}
+    @Override
+    public String getName() {
+        return "addItemToCart";
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		String code = (String) evt.getData();
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        ModelAndView mv = evt.getModelAndView();
+        String code = (String) evt.getData();
 
-		ShoppingCartItem item = service.getItem(evt.getSite(), code);
-		if (item != null) {
-			ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
-			if (shoppingCart != null) {
-				shoppingCart.addItem(item);
-				CMSUtil.addSuccessMessage(item.getName().toUpperCase() + " agregado exitosamente al carrito", evt.getRedirectAttributes());
-			}
-		}
+        ShoppingCartItem item = service.getItem(evt.getSite(), code);
+        if (item != null) {
+            ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
+            if (shoppingCart != null) {
+                shoppingCart.addItem(item);
+                CMSUtil.addSuccessMessage(item.getName().toUpperCase() + " agregado exitosamente al carrito", evt.getRedirectAttributes());
+            }
+        }
 
-	}
+    }
 
 }

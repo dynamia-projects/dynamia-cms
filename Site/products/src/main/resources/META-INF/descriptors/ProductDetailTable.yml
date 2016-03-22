@@ -1,0 +1,13 @@
+view: table
+beanClass: com.dynamia.cms.site.products.domain.ProductDetail
+autofields: false
+
+fields:    
+    name:
+        params:
+            span: 2
+    value:
+    description:       
+    featured:    
+    imageURL:
+        label: Image URL

@@ -1,0 +1,23 @@
+view: form
+beanClass: com.dynamia.cms.site.products.domain.ProductTemplate
+autofields: false
+
+fields:
+  
+    name:   
+    enabled:
+    description:
+       params:
+          multiline: true
+          span: 2
+          height: 100px
+    content:
+        component: cmseditor
+        params:
+            span: 2
+            height: 400px
+    
+   
+
+layout:
+    columns: 2
