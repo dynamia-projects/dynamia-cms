@@ -15,6 +15,7 @@
  */
 package com.dynamia.cms.site.products.actions;
 
+import com.dynamia.cms.site.core.CMSUtil;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,7 +125,7 @@ class LoadProductCategoryAction implements SiteAction {
         mv.addObject("prd_parentCategory", category.getParent());
         // mv.addObject("prd_specialProducts", specialProducts);
 
-        products = ProductsUtil.setupPagination(products, evt.getRequest(), mv);
+        products = CMSUtil.setupPagination(products, evt.getRequest(), mv);
         ProductsUtil.setupProductsVar(products, mv);
 
     }

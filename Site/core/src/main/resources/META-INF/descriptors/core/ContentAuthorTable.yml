@@ -1,5 +1,25 @@
 view: table
 beanClass: com.dynamia.cms.site.core.domain.ContentAuthor
-hidden: [id]
-sortFields: [firstName,lastName,email]
+autofields: false
+
+fields:
+    
+    firstName:       
+    lastName:      
+    email:        
+    website:
+    twitter:
+    googlePlus:
+    facebook:
+    instagram:
+    linkedin:
+    tumblr:
+    snapchat:
+    pinterest:
+    vk:
+    flickr:
+    vine:
+    meetup:
+    
+        
 

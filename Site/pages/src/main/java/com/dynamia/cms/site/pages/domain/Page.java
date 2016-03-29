@@ -15,6 +15,7 @@
  */
 package com.dynamia.cms.site.pages.domain;
 
+import com.dynamia.cms.site.core.Aliasable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +45,7 @@ import tools.dynamia.domain.contraints.NotEmpty;
  */
 @Entity
 @Table(name = "pg_pages")
-public class Page extends Content implements SiteAware {
+public class Page extends Content implements SiteAware, Aliasable {
 
     /**
      *
@@ -78,6 +79,7 @@ public class Page extends Content implements SiteAware {
     private Date endDate;
     private boolean published = true;
     private boolean neverExpire = true;
+    @Column(length = 2000)
     private String tags;
     private String icon;
     @OneToMany(mappedBy = "page", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -253,6 +255,23 @@ public class Page extends Content implements SiteAware {
 
     @Override
     public String toString() {
+        return getTitle();
+    }
+
+    public Date getPublishedDate() {
+        if (startDate != null && startDate.after(creationDate)) {
+            return startDate;
+        } else {
+            return creationDate;
+        }
+    }
+
+    public boolean hasImage() {
+        return imageURL != null && !imageURL.isEmpty();
+    }
+
+    @Override
+    public String aliasSource() {
         return getTitle();
     }
 

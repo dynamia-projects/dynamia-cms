@@ -73,6 +73,19 @@
                                  th:data-title="${prd_product.name}" title="Your Product Name" />
                         </li>
                     </ul>
+
+                    <div class="mt20">
+                        <th:block th:include="social/components/sharebuttons::content" />
+
+                        <div class="mt40" th:if="false">
+                            <h2 class="heading1">
+                                <span class="maintext">Dejanos tus comentarios</span>
+                            </h2>
+                            <div class="fb-comments" th:attr="data-href=${currentURL}" data-width="100%" data-numposts="5"
+                                 data-colorscheme="light"></div>
+
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Right Details-->
@@ -126,6 +139,10 @@
 
                     <div class="">
                         <span th:text="${prd_product.description}">description</span> <br />
+                        <div class="mt10">
+                            <span>Ultima Actualizacion</span> <strong class="text-primary"
+                                                                      th:text="${#dates.format(prd_config.lastSync, 'dd MMMM yyyy   HH:mm aa')}"></strong>
+                        </div>
 
                     </div>
 
@@ -164,9 +181,7 @@
 
                             <div class="tab-pane active" id="specification">
 
-
                                 <ul class="productinfo">
-
 
                                     <li th:if="${prd_product.brand}">
                                         <span th:text="${'Marca '}" class="productinfoleft">NAME</span> <span class="tooltip-test"
@@ -212,80 +227,84 @@
                     </div>
 
 
-                    <div class="tab-pane clear" id="stocks" th:if="${prd_product.stock gt 0}">
-                        <h3 class="orange hidden-xs hidden-sm">Disponibilidad y Direcciones</h3>
-                        <div class="container">
-                            <div class="row hidden-xs hidden-sm" th:each="det : ${prd_stock_details}">
-                                <div class="col-md-2" th:text="${det.store.contactInfo.city}">VALUE</div>
-                                <div class="col-md-4 orange">
+
+
+                    <!-- Buttons -->
+                    <div class="mt20">
+                        <a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}"
+                           class="btn btn-small btn-danger tooltip-test" data-original-title="Marca el producto como favorito">
+                            <i class="icon-heart icon-white"></i> Favorito
+                        </a>
+                        <a th:href="@{'/store/products/'+${prd_product.id}+'/compare'}"
+                           class="btn btn-small btn-primary tooltip-test" data-original-title="Compara con otros productos">
+                            <i class="icon-refresh icon-white"></i> Comparar
+                        </a>
+                        <a class="btn btn-small btn-primary tooltip-test"
+                           th:href="@{'/store/products/'+${prd_product.id}+'/print'}" target="_blank">
+                            <i class="icon-print icon-white"></i> Imprimir
+                        </a>
+                        <a class="btn btn-small btn-primary tooltip-test" th:href="${'#shareProduct'+prd_product.id}"
+                           data-toggle="modal">
+                            <i class="icon-envelope icon-white"></i> Recomendar a un Amigo
+                        </a>
+                    </div>
+                    <th:block th:include="products/components/sharedialog::content" />
+
+
+
+                </div>
+            </div>
+
+            <div class="clear mt20"  th:unless="${#lists.isEmpty(prd_stock_details)}">
+                <h2 class="heading1" style="padding: 0; margin: 0">
+                    <span class="maintext">Disponibilidad y Direcciones</span>
+                </h2>
+                <div class="container">
+
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li th:each="detGrp : ${prd_stock_details}" th:class="${detGrp.description}" >
+                            <a th:href="${'#'+detGrp.id}" th:text="${detGrp.name}">Name</a>
+                        </li>                                
+                    </ul>
+                    <div class="tab-content">
+                        <div th:class="${'tab-pane '+detGrp.description}"  th:each="detGrp : ${prd_stock_details}" th:id="${detGrp.id}">
+                            <div class="row" th:each="det : ${detGrp.collection}" style="border-bottom: 1px solid #e0e0e0; padding-bottom: 6px">                                        
+                                <div class="col-xs-4 col-md-4 orange">
                                     <a data-toggle="modal" class="tooltip-test" title="Ver direccion"
                                        th:href="${'#store'+det.store.id}" th:text="${det.store.name.toUpperCase()}">NAME</a>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-xs-3 col-md-3">
                                     <span
-                                        th:text="${det.store.contactInfo.phoneNumber+' / '+det.store.contactInfo.mobileNumber}"></span>
+                                        th:text="${det.store.contactInfo.phoneNumber+'  '+det.store.contactInfo.mobileNumber}"></span>
                                     <a data-toggle="modal" class="tooltip-test" th:href="${'#store'+det.store.id}"
                                        title="Ver direccion">
                                         <i class="icon-plus-sign"></i>
                                     </a>
                                 </div>
 
+                                <div class="col-xs-5 col-md-5">
+                                    <span
+                                        th:text="${det.store.contactInfo.address}"></span>                                    
+                                </div>
                                 <th:block th:include="products/components/storedialog::content(${det.store})" />
                             </div>
-                            <div class="row mt10 mb20">
-                                <div class="col-md-12 pull-right">
-                                    <span>Ultima Actualizacion</span> <strong
-                                        th:text="${#dates.format(prd_config.lastSync, 'dd MMMM yyyy   HH:mm aa')}"></strong>
-                                </div>
-                            </div>
-                            <!-- Buttons -->
-                            <div class="productbtn orange ">
-
-
-                                <a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}"
-                                   class="btn btn-small tooltip-test" data-original-title="Marca el producto como favorito">
-                                    <i class="icon-heart icon-white"></i> Favorito
-                                </a>
-                                <a th:href="@{'/store/products/'+${prd_product.id}+'/compare'}"
-                                   class="btn btn-small tooltip-test" data-original-title="Compara con otros productos">
-                                    <i class="icon-refresh icon-white"></i> Comparar
-                                </a>
-                                <a class="btn btn-small tooltip-test"
-                                   th:href="@{'/store/products/'+${prd_product.id}+'/print'}" target="_blank">
-                                    <i class="icon-print icon-white"></i> Imprimir
-                                </a>
-                                <a class="btn btn-small tooltip-test" th:href="${'#shareProduct'+prd_product.id}"
-                                   data-toggle="modal">
-                                    <i class="icon-envelope icon-white"></i> Recomendar a un Amigo
-                                </a>
-                            </div>
-                            <th:block th:include="products/components/sharedialog::content" />
-
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="hidden-xs hidden-sm">
-                <th:block th:include="social/components/sharebuttons::content" />
-
-                <div class="mt40" th:if="false">
-                    <h2 class="heading1">
-                        <span class="maintext">Dejanos tus comentarios</span>
-                    </h2>
-                    <div class="fb-comments" th:attr="data-href=${currentURL}" data-width="100%" data-numposts="5"
-                         data-colorscheme="light"></div>
 
                 </div>
             </div>
+
+
+
         </div>
 
 
 
         <!-- Related Project-->
         <div th:if="${prd_relatedProducts!=null and  not #lists.isEmpty(prd_relatedProducts)}"
-             class="featureprojectcontianer container mt40">
+             class="featureprojectcontianer container mt10">
             <h2 class="heading1">
                 <span class="maintext">Productos Relacionados</span>
             </h2>

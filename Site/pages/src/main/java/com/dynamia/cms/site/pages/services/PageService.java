@@ -20,6 +20,7 @@ import java.util.List;
 import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.pages.domain.Page;
 import com.dynamia.cms.site.pages.domain.PageCategory;
+import java.util.Date;
 
 /**
  *
@@ -46,5 +47,17 @@ public interface PageService {
     public void generateSummary(Page entity);
 
     void generateImageURL(Page entity);
+
+    /**
+     * Find all published pages in indexable by date categories
+     *
+     * @param site
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public List<Page> findPagesByDate(Site site, Date startDate, Date endDate);
+
+    PageCategory getPageCategoryByAlias(Site site, String alias);
 
 }

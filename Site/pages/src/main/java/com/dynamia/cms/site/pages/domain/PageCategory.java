@@ -15,12 +15,14 @@
  */
 package com.dynamia.cms.site.pages.domain;
 
+import com.dynamia.cms.site.core.Aliasable;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.dynamia.cms.site.core.api.SiteAware;
 import com.dynamia.cms.site.core.domain.Site;
+import javax.persistence.Column;
 
 import tools.dynamia.domain.SimpleEntity;
 import tools.dynamia.domain.contraints.NotEmpty;
@@ -31,14 +33,55 @@ import tools.dynamia.domain.contraints.NotEmpty;
  */
 @Entity
 @Table(name = "pg_categories")
-public class PageCategory extends SimpleEntity implements SiteAware {
+public class PageCategory extends SimpleEntity implements SiteAware, Aliasable {
+
+    public static final int DEFAULT_PAGINATION_SIZE = 20;
 
     @NotEmpty(message = "Enter category name")
     private String name;
     private String description;
     @OneToOne
     private Site site;
-    
+    private boolean indexableByDates;
+    @Column(name = "catAlias")
+    private String alias;
+    private boolean hidden;
+    private int paginationSize = DEFAULT_PAGINATION_SIZE;
+
+    public int getPaginationSize() {
+        if (paginationSize <= 0) {
+            paginationSize = DEFAULT_PAGINATION_SIZE;
+        }
+        return paginationSize;
+    }
+
+    public void setPaginationSize(int paginationSize) {
+        this.paginationSize = paginationSize;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public boolean isIndexableByDates() {
+        return indexableByDates;
+    }
+
+    public void setIndexableByDates(boolean indexableByDates) {
+        this.indexableByDates = indexableByDates;
+    }
 
     public String getName() {
         return name;
@@ -67,5 +110,10 @@ public class PageCategory extends SimpleEntity implements SiteAware {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public String aliasSource() {
+        return getName();
     }
 }

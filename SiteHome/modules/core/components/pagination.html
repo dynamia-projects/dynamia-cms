@@ -4,9 +4,9 @@
 
 
     <body th:fragment="content">
-        <th:block th:if="${paginationDatasource!=null and paginationDatasource.pageCount > 1}">
+        <th:block th:if="${productsDatasource!=null and productsDatasource.pageCount > 1}">
             <ul class="pagination pull-right">
-                <li th:class="${paginationDatasource.activePage==i?'active':''}" th:each="i : ${#numbers.sequence(1,__${paginationDatasource.pageCount}__)}">
+                <li th:class="${productsDatasource.activePage==i?'active':''}" th:each="i : ${#numbers.sequence(1,__${productsDatasource.pageCount}__)}">
                     <a  th:text="${i}" th:href="@{${currentURI}(page=${i})}" >#</a>                    
                 </li>
             </ul>

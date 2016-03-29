@@ -29,11 +29,9 @@ import com.dynamia.cms.site.products.ProductsUtil;
 @CMSExtension
 public class ProductsInterceptor extends SiteRequestInterceptorAdapter {
 
-	@Override
-	protected void afterRequest(Site site, ModelAndView mv) {
-
-		ProductsUtil.setupDefaultVars(site, mv);
-
-	}
+    @Override
+    protected void afterRequest(Site site, ModelAndView mv) {
+        ProductsUtil.setupDefaultVars(site, mv);
+    }
 
 }

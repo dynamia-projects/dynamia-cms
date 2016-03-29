@@ -1,14 +1,20 @@
 view: form
 beanClass: com.dynamia.cms.site.pages.domain.PageCategory
-hidden: [id]
-sortFields: [name,description]
+autofields: false
 
 fields:
-       
+    name:
+        params:
+            span: 2
+    alias:    
     description:
         params:
             multiline: true=boolean
             height: 100px
-        
+            span: 3
+    indexableByDates:
+        label: Indexable
+    hidden:
+    paginationSize:
 layout:
-    columns: 1
+    columns: 3

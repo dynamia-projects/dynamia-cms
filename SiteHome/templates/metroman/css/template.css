@@ -1,34 +1,78 @@
 body{
-	overflow-x: hidden;
+    overflow-x: hidden;
 }
 
 .ul-disc-style ul{
-	list-style-type: disc !important;
+    list-style-type: disc !important;
 }
 
 .fullwidth{
-	width:100% !important;
-	max-width: 3000px;	
+    width:100% !important;
+    max-width: 3000px;	
 }
 
 .pd0{
-	padding: 0;
+    padding: 0;
 }
 
 .mg0{
-	margin: 0;
+    margin: 0;
 }
 
 .bd0{
-	border: 0;
+    border: 0;
 }
 
 .flexslider{
-	border: 0 !important;
+    border: 0 !important;
 }
 
 .timeline, .customisable-border{
-	background-color: none !important;
-	border: 0; 
+    background-color: none !important;
+    border: 0; 
 }
 
+.pagesummary{
+    border-bottom: 1px solid silver;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.pagesummary .pageTitle{
+    clear: both;    
+    font-size: 20px
+}
+
+.pagesummary .pageTitle a{
+    color: #333333;
+    text-decoration: none;
+}
+
+.pagesummary .pageTitle a:visited{
+    color: #666666;
+    text-decoration: none;
+}
+
+.pagesummary .pageTitle a:hover{    
+    text-decoration: underline;
+}
+
+.pagesummary .pageauthor{
+    float: left;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.pagesummary .pagedate{
+    float: right;    
+    font-size: 14px;
+}
+
+.pagesummary .pagecontent{
+    clear:both;
+    margin-top: 6px;
+}
+
+.pagesummary .pagecontent img{
+    float: right;    
+}

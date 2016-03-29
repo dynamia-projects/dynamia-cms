@@ -114,12 +114,12 @@ limitations under the License.
                 </configuration>
             </plugin>
 
+         
             <!-- Jetty Configuration -->
             <plugin>
-
-                <groupId>org.mortbay.jetty</groupId>
+                <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>7.4.5.v20110725</version>
+                <version>9.3.7.v20160115</version>
 
 
                 <configuration>
@@ -127,35 +127,26 @@ limitations under the License.
                     <jettyConfig>conf/jetty.xml</jettyConfig>
                     <!--Disable auto scen -->
                     <scanIntervalSeconds>0</scanIntervalSeconds>
-                    <webAppConfig>
+                        <webApp>
                         <contextPath>/</contextPath>
-                    </webAppConfig>
+                    </webApp>
 
-                    <stopPort>9808</stopPort>
+                    <stopPort>9001</stopPort>
                     <stopKey>jetty-stop</stopKey>
 
-                    <connectors>
-                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                            <port>8080</port>
-                            <maxIdleTime>60000</maxIdleTime>
-                        </connector>
-                    </connectors>
+                    <httpConnector>                        
+                        <port>8080</port>
+                    </httpConnector>
 
 
                 </configuration>
 
                 <dependencies>
-                    <dependency>
-                        <groupId>commons-logging</groupId>
-                        <artifactId>commons-logging</artifactId>
-                        <version>1.1.1</version>
-                    </dependency>
-
                     <!-- JDBC Drivers -->
                     <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.26</version>
+                        <groupId>org.mariadb.jdbc</groupId>
+                        <artifactId>mariadb-java-client</artifactId>
+                        <version>1.3.7</version>
                     </dependency>
 
                     <dependency>
@@ -170,10 +161,9 @@ limitations under the License.
                         <artifactId>mail</artifactId>
                         <version>1.4.2</version>
                     </dependency>
-
-
                 </dependencies>
             </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

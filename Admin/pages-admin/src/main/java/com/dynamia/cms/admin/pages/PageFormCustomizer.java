@@ -13,32 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.dynamia.cms.admin.core.zk;
-
-import org.zkforge.ckez.CKeditor;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.InputEvent;
+package com.dynamia.cms.admin.pages;
 
 import com.dynamia.cms.site.pages.domain.Page;
+import com.dynamia.cms.site.users.UserHolder;
 
 import tools.dynamia.viewers.ViewCustomizer;
 import tools.dynamia.zk.viewers.form.FormView;
 
 public class PageFormCustomizer implements ViewCustomizer<FormView<Page>> {
 
-	@Override
-	public void customize(final FormView<Page> view) {
+    @Override
+    public void customize(final FormView<Page> view) {
 
-		CKeditor editor = (CKeditor) view.getFieldComponent("content").getInputComponent();
-		editor.addEventListener("onChange", new EventListener<InputEvent>() {
+        if (UserHolder.get().isAuthenticated()) {
+            view.addEventListener(FormView.ON_VALUE_CHANGED, evt -> {
+                if (view.getValue().getAuthor() == null) {
+                    view.getValue().setAuthor(UserHolder.get().getCurrent().getRelatedAuthor());
+                }
+            });
+        }
 
-			@Override
-			public void onEvent(InputEvent event) throws Exception {
-				view.getValue().setContent(event.getValue());
-
-			}
-		});
-
-	}
+    }
 
 }

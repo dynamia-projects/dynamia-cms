@@ -34,7 +34,10 @@ import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.services.ProductTemplateService;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.cms.site.users.UserHolder;
+import java.util.Collection;
 import java.util.HashMap;
+import tools.dynamia.commons.CollectionsUtils;
+import tools.dynamia.commons.collect.CollectionWrapper;
 
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
@@ -96,11 +99,9 @@ public class ShowProductAction implements SiteAction {
             mv.addObject("prd_story", story);
         }
 
-        QueryParameters sdparams = QueryParameters.with("product", product).orderBy("store.contactInfo.city asc, store.name", true);
-        List<ProductStock> stockDetails = crudService.find(ProductStock.class, sdparams);
-
-        mv.addObject("prd_product", product);
-        mv.addObject("prd_stock_details", stockDetails);
+        loadStockDetails(product, mv);
+        
+        mv.addObject("prd_product", product);        
         mv.addObject("prd_relatedProducts", service.getRelatedProducts(product));
         mv.addObject("prd_config", service.getSiteConfig(evt.getSite()));
         mv.addObject("title", product.getName().toUpperCase() + price);
@@ -128,12 +129,23 @@ public class ShowProductAction implements SiteAction {
         mv.addObject("baseImageUrl", baseImageUrl);
 
         if (templateService.hasTemplate(product)) {
-            mv.addObject("prd_hasTemplate",true);
+            mv.addObject("prd_hasTemplate", true);
             mv.addObject("prd_template", templateService.processTemplate(product, new HashMap<>(mv.getModel())));
-        }else{
-            mv.addObject("prd_hasTemplate",false);
+        } else {
+            mv.addObject("prd_hasTemplate", false);
         }
 
+    }
+
+    private void loadStockDetails(Product product, ModelAndView mv) {
+        QueryParameters sdparams = QueryParameters.with("product", product).orderBy("store.contactInfo.city asc, store.name", true);
+        List<ProductStock> stockDetails = crudService.find(ProductStock.class, sdparams);
+        Collection<CollectionWrapper> stockDetailsGroups = CollectionsUtils.groupBy(stockDetails, ProductStock.class, "store.contactInfo.city");
+        CollectionWrapper firtGroup = CollectionsUtils.findFirst(stockDetailsGroups);
+        if(firtGroup!=null){
+            firtGroup.setDescription("active");
+        }
+        mv.addObject("prd_stock_details",stockDetailsGroups);
     }
 
 }

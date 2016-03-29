@@ -22,7 +22,6 @@ import com.dynamia.cms.site.pages.domain.Page;
 import com.dynamia.cms.site.pages.services.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import tools.dynamia.commons.StringUtils;
 import tools.dynamia.domain.util.CrudServiceListenerAdapter;
 
 /**
@@ -40,10 +39,6 @@ public class PageCrudListener extends CrudServiceListenerAdapter<Page> {
         if (page.getId() == null) {
             page.setCreationDate(new Date());
         }
-        if (page.getAlias() == null || page.getAlias().isEmpty()) {
-            page.setAlias(page.getTitle());
-        }
-        page.setAlias(StringUtils.simplifiedString(page.getAlias()));
 
         if (page.getSummary() == null || page.getSummary().isEmpty()) {
             service.generateSummary(page);

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+
+    <div class="page" layout:fragment="content">
+
+        <div class="container">
+            <th:block th:include="module::position('pageListTitle')" th:if="${cmsModules.isUsed('pageListTitle')}"/>
+
+            <div class="pagesummary" th:each="p : ${pages}">
+                <div class="pagetitle">
+                    <a  th:href="@{'/'+${p.alias}}" th:text="${p.title}">Page Title</a>
+                </div>
+                <div class="pageauthor" th:text="${p.author}">Author</div>
+                <div class="pagedate" th:text="${#dates.format(p.publishedDate, 'dd MMMM yyyy HH:mm')}">Date</div>
+                <div class="pagecontent">
+                    <img  th:if="${p.hasImage()}" th:src="${cmsUtil.thumbnail(p.imageURL,300,300)}" class="img-responsive img-rounded"/>                       
+                    <span th:text="${p.summary}">text</span>
+                    <a class="text-primary" th:href="@{'/'+${p.alias}}">ver mas</a>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div th:include="core/components/pagination::content" />
+
+            <th:block th:include="module::position('pageListFooter')" th:if="${cmsModules.isUsed('pageListFooter')}"/>
+        </div>
+    </div>
+
+</html>

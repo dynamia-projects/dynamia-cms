@@ -1,8 +1,12 @@
 view: table
 beanClass: com.dynamia.cms.site.pages.domain.PageCategory
-hidden: [id]
-sortFields: [name,description]
+autofields: false
 
-
-params:
-  orderBy: name
+fields:
+    name: 
+    alias:    
+    description:        
+    indexableByDates:
+        label: Indexable
+    hidden:
+    paginationSize:

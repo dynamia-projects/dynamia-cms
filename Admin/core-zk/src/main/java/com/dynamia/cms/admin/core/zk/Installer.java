@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 import com.dynamia.cms.site.core.api.AdminModule;
 import com.dynamia.cms.site.core.api.AdminModuleOption;
 import com.dynamia.cms.site.core.api.ConfigAdminModuleOption;
+import org.zkoss.lang.Library;
 
 import tools.dynamia.crud.CrudPage;
 import tools.dynamia.navigation.Module;
@@ -37,6 +38,10 @@ public class Installer implements ModuleProvider {
 
     @Autowired
     private List<AdminModule> adminModules;
+
+    public Installer() {
+        Library.setProperty("org.zkoss.theme.preferred", "atlantic");
+    }
 
     @Override
     public Module getModule() {

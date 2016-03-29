@@ -30,7 +30,6 @@ import com.dynamia.cms.site.pages.domain.PageCategory;
 import com.dynamia.cms.site.pages.services.PageService;
 import org.jsoup.Jsoup;
 
-import tools.dynamia.domain.query.QueryCondition;
 import tools.dynamia.domain.query.QueryConditions;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
@@ -45,8 +44,10 @@ public class PageServiceImpl implements PageService {
     @Autowired
     private CrudService crudService;
 
+    private static final String CACHE_NAME = "pages";
+
     @Override
-    @Cacheable("pages")
+    @Cacheable(CACHE_NAME)
     public Page loadPage(Site site, String alias) {
         QueryParameters qp = QueryParameters.with("alias", alias);
         qp.add("site", site);
@@ -55,35 +56,38 @@ public class PageServiceImpl implements PageService {
     }
 
     @Override
-    @Cacheable("pages")
+    @Cacheable(CACHE_NAME)
     public Page loadPageByUUID(String uuid) {
         return crudService.findSingle(Page.class, "uuid", uuid);
     }
 
     @Override
-    @Cacheable(value = "pages", key = "'pages'+#site.key")
+    @Cacheable(value = CACHE_NAME, key = "'pages'+#site.key")
     public List<Page> getPages(Site site) {
         return crudService.find(Page.class, QueryParameters.with("site", site)
                 .add("published", true)
-                .orderBy("title", true));
+                .orderBy("creationDate"));
     }
 
     @Override
-    @Cacheable(value = "pages", key = "'pagesWC'+#site.key")
+    @Cacheable(value = CACHE_NAME, key = "'pagesWC'+#site.key")
     public List<Page> getPagesWithoutCategory(Site site) {
         return crudService.find(Page.class, QueryParameters.with("site", site)
                 .add("published", true)
                 .add("category", QueryConditions.isNull())
-                .orderBy("title", true));
+                .orderBy("creationDate"));
     }
 
     @Override
-    @Cacheable(value = "pages", key = "'pages'+#site.key+'cat'+#category.id")
+    @Cacheable(value = CACHE_NAME, key = "'pages'+#site.key+'cat'+#category.id")
     public List<Page> getPages(Site site, PageCategory category) {
         return crudService.find(Page.class, QueryParameters.with("site", site)
                 .add("category", category)
+                .add("category.hidden", false)
                 .add("published", true)
-                .orderBy("title", true));
+                .orderBy("creationDate")
+                .paginate(category.getPaginationSize()));
+
     }
 
     @Override
@@ -105,15 +109,30 @@ public class PageServiceImpl implements PageService {
     }
 
     @Override
+    @Cacheable(value = CACHE_NAME, key = "'categories'+#site.key")
     public List<PageCategory> getPagesCategories(Site site) {
-        return crudService.find(PageCategory.class, QueryParameters.with("site", site).orderBy("name", true));
+        return crudService.find(PageCategory.class, QueryParameters.with("site", site)                
+                .orderBy("name"));
+    }
+
+    /**
+     *
+     * @param site
+     * @param alias
+     * @return
+     */
+    @Cacheable(value = CACHE_NAME, key = "'cat'+#alias+#site.key")
+    @Override
+    public PageCategory getPageCategoryByAlias(Site site, String alias) {
+        return crudService.findSingle(PageCategory.class, QueryParameters.with("site", site)
+                .add("alias", alias));
     }
 
     @Override
     public void generateSummary(Page entity) {
         String summary = Jsoup.parse(entity.getContent()).text();
         if (summary.length() > 2000) {
-            summary = summary.substring(0, 1997) + "...";
+            summary = summary.substring(0, 1996) + "...";
         }
         entity.setSummary(summary);
     }
@@ -122,6 +141,23 @@ public class PageServiceImpl implements PageService {
     public void generateImageURL(Page entity) {
         String imageURL = Jsoup.parse(entity.getContent()).select("img[src]").attr("src");
         entity.setImageURL(imageURL);
+    }
+
+    /**
+     *
+     * @param site
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    @Override
+    public List<Page> findPagesByDate(Site site, Date startDate, Date endDate) {
+        return crudService.find(Page.class, QueryParameters.with("site", site)
+                .add("published", true)
+                .add("creationDate", QueryConditions.between(startDate,endDate))
+                .add("category.hidden", false)
+                .add("category.indexableByDates", true));
+
     }
 
 }

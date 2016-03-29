@@ -33,7 +33,6 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
  */
 @Configuration
 @EnableCaching
-
 public class CoreJavaConfig {
 
     @Bean

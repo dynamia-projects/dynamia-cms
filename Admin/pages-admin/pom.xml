@@ -45,6 +45,11 @@
             <artifactId>com.dynamia.cms.admin.core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>com.dynamia.cms.site.users</artifactId>
+            <version>${site.cms.version}</version>
+        </dependency>
 	
     </dependencies>
     <properties>

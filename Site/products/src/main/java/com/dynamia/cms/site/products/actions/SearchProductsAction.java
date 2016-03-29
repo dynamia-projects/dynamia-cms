@@ -15,6 +15,7 @@
  */
 package com.dynamia.cms.site.products.actions;
 
+import com.dynamia.cms.site.core.CMSUtil;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +83,7 @@ public class SearchProductsAction implements SiteAction {
             mv.addObject("title", " No se encontraron productos para la busqueda avanzada");
         }
 
-        products = ProductsUtil.setupPagination(products, evt.getRequest(), mv);
+        products = CMSUtil.setupPagination(products, evt.getRequest(), mv);
         ProductsUtil.setupProductsVar(products, mv);
 
     }

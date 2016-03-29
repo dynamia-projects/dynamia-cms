@@ -6,7 +6,8 @@ sortFields: [name,parent,key,template,description,offline,offlineIcon,offlineMes
 fields:
 
     name:
-      span: 2
+        params:
+            span: 2
     
     key:
         params:

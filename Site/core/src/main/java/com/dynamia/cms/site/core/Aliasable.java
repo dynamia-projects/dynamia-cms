@@ -13,43 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.dynamia.cms.site.core.domain;
-
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
-
-import com.dynamia.cms.site.core.api.SiteAware;
-
-import tools.dynamia.domain.SimpleEntity;
+package com.dynamia.cms.site.core;
 
 /**
  *
  * @author Mario Serrano Leones
+ * @since 1.2.0
  */
-@MappedSuperclass
-public abstract class Content extends SimpleEntity implements SiteAware {
+public interface Aliasable {
 
-    @NotNull
-    private String uuid;
+    public String getAlias();
 
-    @OneToOne
-    @NotNull
-    private Site site;
+    public void setAlias(String alias);
 
-    public String getUuid() {
-        return uuid;
-    }
+    public String aliasSource();
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public Site getSite() {
-        return site;
-    }
-
-    public void setSite(Site site) {
-        this.site = site;
-    }
 }

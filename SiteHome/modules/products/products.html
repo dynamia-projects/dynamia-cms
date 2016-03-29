@@ -1,88 +1,88 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
 
 
-<div class="container" layout:fragment="content">
-	<div class="hidden-sm hidden-xs" style="height: 20px"></div>
-	<div class="row">
+    <div class="container" layout:fragment="content">
+        <div class="hidden-sm hidden-xs" style="height: 20px"></div>
+        <div class="row">
 
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-			<div class="titles animated fadeInUp time3">
-				<div class="pull-left">
-					<h1 th:text="${title}" class="headinglefttitle">Page title</h1>
-				</div>
-				<i th:class="${'icon-'+icon+' animated flip time3'}" class="icon-warning-sign"></i>
-				<!-- Subcategories -->
-				<div class="clearfix" th:include="products/components/subcategoriesmenu::content" />
-
-
-			</div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <div class="titles animated fadeInUp time3">
+                    <div class="pull-left">
+                        <h1 th:text="${title}" class="headinglefttitle">Page title</h1>
+                    </div>
+                    <i th:class="${'icon-'+icon+' animated flip time3'}" class="icon-warning-sign"></i>
+                    <!-- Subcategories -->
+                    <div class="clearfix" th:include="products/components/subcategoriesmenu::content" />
 
 
-			<!--Top Pagination -->
-			<div class="clearfix" />
-			<div class="nav pull-left">
+                </div>
 
-				<a class="btn btn btn-orange btn-sm" th:href="@{${currentURI}}">
-					<span class="icon-asterisk"></span>
-					Todos
-				</a>
-				<a class="btn btn btn-danger btn-sm" th:href="@{${currentURI}+'?new'}">
-					<span class="icon-bookmark-empty"></span>
-					Nuevos
-				</a>
-				<a class="btn btn btn-warning btn-sm" th:href="@{${currentURI}+'?sale'}">
-					<span class="icon-gift"></span>
-					Ofertas
-				</a>
-				<a class="btn btn btn-primary btn-sm" th:href="@{${currentURI}+'?views'}">
-					<span class="icon-eye-open"></span>
-					Mas Vistos
-				</a>
-				<a class="btn btn btn-warning btn-sm" th:href="@{${currentURI}+'?featured'}">
-					<span class="icon-star-empty"></span>
-					Destacados
-				</a>
 
-			</div>
-			<div th:include="products/components/productpagination::content" />
-			<div class="clearfix" />
+                <!--Top Pagination -->
+                <div class="clearfix" />
+                <div class="nav pull-left">
 
-			<div class="row mt40">
+                    <a class="btn btn btn-orange btn-sm" th:href="@{${currentURI}}">
+                        <span class="icon-asterisk"></span>
+                        Todos
+                    </a>
+                    <a class="btn btn btn-danger btn-sm" th:href="@{${currentURI}+'?new'}">
+                        <span class="icon-bookmark-empty"></span>
+                        Nuevos
+                    </a>
+                    <a class="btn btn btn-warning btn-sm" th:href="@{${currentURI}+'?sale'}">
+                        <span class="icon-gift"></span>
+                        Ofertas
+                    </a>
+                    <a class="btn btn btn-primary btn-sm" th:href="@{${currentURI}+'?views'}">
+                        <span class="icon-eye-open"></span>
+                        Mas Vistos
+                    </a>
+                    <a class="btn btn btn-warning btn-sm" th:href="@{${currentURI}+'?featured'}">
+                        <span class="icon-star-empty"></span>
+                        Destacados
+                    </a>
 
-				<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 mt30column"
-					style="border-right: 1px dotted silver;">
-					<!--filters-->
-					<div th:include="products/components/categoryfiltersform::content" class="hidden-xs hidden-sm" />
-					<!-- ADS -->
-					<th:block th:include="module::position('ads_left')" />
-					<!-- ADS END -->
-				</div>
+                </div>
+                <div th:include="core/components/pagination::content" />
+                <div class="clearfix" />
 
-				<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 mt40column">
+                <div class="row mt40">
 
-					<!-- PRODUCTS -->
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12 mt30column"
+                         style="border-right: 1px dotted silver;">
+                        <!--filters-->
+                        <div th:include="products/components/categoryfiltersform::content" class="hidden-xs hidden-sm" />
+                        <!-- ADS -->
+                        <th:block th:include="module::position('ads_left')" />
+                        <!-- ADS END -->
+                    </div>
 
-					<div class="featureprojectcontianer mt40" id="productlist">
-						<div class="featureprojectwrap latestprojectcontianer grid">
+                    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 mt40column">
 
-							<!-- Grid -->
-							<div th:include="products/components/productgrid::frag(${prd_products})" />
+                        <!-- PRODUCTS -->
 
-							<!-- Paging-->
-							<div class="mt40 clearfix">
-								<div th:include="products/components/productpagination::content" />
-							</div>
+                        <div class="featureprojectcontianer mt40" id="productlist">
+                            <div class="featureprojectwrap latestprojectcontianer grid">
 
-						</div>
-					</div>
-				</div>
-			</div>
-			
-		</div>
+                                <!-- Grid -->
+                                <div th:include="products/components/productgrid::frag(${prd_products})" />
 
-	</div>
-</div>
+                                <!-- Paging-->
+                                <div class="mt40 clearfix">
+                                    <div th:include="core/components/pagination::content" />
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 
 </html>

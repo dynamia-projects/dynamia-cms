@@ -31,28 +31,28 @@ import tools.dynamia.commons.logger.SLF4JLoggingService;
 @Service
 public class PageAutoPublisher {
 
-	@Autowired
-	private PageService service;
+    @Autowired
+    private PageService service;
 
-	private LoggingService logger = new SLF4JLoggingService(PageAutoPublisher.class);
+    private LoggingService logger = new SLF4JLoggingService(PageAutoPublisher.class);
 
-	@Scheduled(fixedDelay = 10 * 60 * 60 * 1000)
-	public void sync() {
-		try {
-			logger.info("Publishing pages for today");
-			int r = service.publishPages();
-			logger.info(r + " pages published ");
-		} catch (Exception e) {
-			logger.error("Error publishng pages", e);
-		}
+    @Scheduled(fixedDelay = 10 * 60 * 60 * 1000)
+    public void sync() {
+        try {
+            logger.info("Publishing pages for today");
+            int r = service.publishPages();
+            logger.info(r + " pages published ");
+        } catch (Exception e) {
+            logger.error("Error publishng pages", e);
+        }
 
-		try {
-			logger.info("Unpublishing old pages");
-			int r = service.unpublishPages();
-			logger.info(r + " pages unpublished ");
-		} catch (Exception e) {
-			logger.error("Error unpublishng pages", e);
-		}
-	}
+        try {
+            logger.info("Unpublishing old pages");
+            int r = service.unpublishPages();
+            logger.info(r + " pages unpublished ");
+        } catch (Exception e) {
+            logger.error("Error unpublishng pages", e);
+        }
+    }
 
 }
