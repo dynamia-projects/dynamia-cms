@@ -18,6 +18,7 @@ package com.dynamia.cms.site.products.services;
 import java.util.List;
 
 import com.dynamia.cms.site.products.api.ProductsDatasource;
+import com.dynamia.cms.site.products.domain.ProductBrand;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
@@ -35,7 +36,7 @@ public interface ProductsSyncService {
 
     public List<ProductDTO> synchronizeProducts(ProductsSiteConfig siteCfg);
 
-    public void synchronizeBrands(ProductsSiteConfig siteCfg);
+    public List<ProductBrandDTO> synchronizeBrands(ProductsSiteConfig siteCfg);
 
     public void synchronizeProduct(ProductsSiteConfig siteCfg, ProductDTO product);
 
@@ -64,5 +65,7 @@ public interface ProductsSyncService {
     void downloadProductImages(ProductsSiteConfig siteCfg, ProductDTO product);
 
     void downloadStoreImages(ProductsSiteConfig siteCfg, StoreDTO store);
+
+    void downloadBrandImages(ProductsSiteConfig siteCfg, ProductBrandDTO store);
 
 }

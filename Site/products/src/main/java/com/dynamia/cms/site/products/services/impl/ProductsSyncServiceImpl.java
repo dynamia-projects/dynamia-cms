@@ -56,6 +56,7 @@ import com.dynamia.cms.site.products.dto.ProductDetailDTO;
 import com.dynamia.cms.site.products.dto.ProductStockDTO;
 import com.dynamia.cms.site.products.dto.StoreDTO;
 import com.dynamia.cms.site.products.services.ProductsSyncService;
+import java.io.InputStream;
 
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
@@ -111,14 +112,14 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
         if (remoteCategory.getParent() != null) {
             localCategory.setParent(getLocalEntity(ProductCategory.class, remoteCategory.getParent().getExternalRef(), siteCfg));
-        }else{
-        	localCategory.setParent(null);
+        } else {
+            localCategory.setParent(null);
         }
-        
+
         if (remoteCategory.getRelatedCategoryExternalRef() != null) {
             localCategory.setRelatedCategory(getLocalEntity(ProductCategory.class, remoteCategory.getRelatedCategoryExternalRef(), siteCfg));
-        }else{
-        	localCategory.setRelatedCategory(null);
+        } else {
+            localCategory.setRelatedCategory(null);
         }
 
         crudService.save(localCategory);
@@ -265,7 +266,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void synchronizeBrands(ProductsSiteConfig siteCfg) {
+    public List<ProductBrandDTO> synchronizeBrands(ProductsSiteConfig siteCfg) {
         logger.debug(">>>> STARTING PRODUCT'S BRANDS SYNCHRONIZATION FOR SITE " + siteCfg.getSite().getName() + " <<<<");
 
         ProductsDatasource ds = getDatasource(siteCfg);
@@ -273,6 +274,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         for (ProductBrandDTO remoteBrand : brands) {
             synchronizeBrand(siteCfg, remoteBrand);
         }
+        return brands;
     }
 
     @Override
@@ -287,12 +289,6 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
         crudService.save(localBrand);
 
-        String folder = DynamiaCMS.getSitesResourceLocation(siteCfg.getSite()).resolve(PRODUCTS_FOLDER + File.separator + "brands").toString();
-        try {
-            downloadImage(siteCfg.getDatasourceBrandImagesURL(), localBrand.getImage(), folder);
-        } catch (Exception ex) {
-            logger.error("Error downloading image for product's brand " + localBrand, ex);
-        }
     }
 
     @Override
@@ -347,6 +343,17 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         }
     }
 
+    @Override
+    public void downloadBrandImages(ProductsSiteConfig siteCfg, ProductBrandDTO brand) {
+
+        String folder = DynamiaCMS.getSitesResourceLocation(siteCfg.getSite()).resolve(PRODUCTS_FOLDER + File.separator + "brands").toString();
+        try {
+            downloadImage(siteCfg.getDatasourceBrandImagesURL(), brand.getImage(), folder);
+        } catch (Exception ex) {
+            logger.error("Error downloading image for product's brand " + brand, ex);
+        }
+    }
+
     private void downloadImage(String baseURL, final String imageName, final String localFolder) throws Exception {
 
         if (imageName != null && !imageName.isEmpty()) {
@@ -364,19 +371,15 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
                 Files.createDirectories(folder);
             }
 
-            SchedulerUtil.run(new Task() {
+            try (InputStream in = url.openStream()) {
+                logger.info("-Downloading image " + imageName + " to " + localFolder);
+                Files.copy(in, localFile, StandardCopyOption.REPLACE_EXISTING);
 
-                @Override
-                public void doWork() {
-                    try {
-                        logger.info("Downloading image " + imageName + " to " + localFolder);
-                        Files.copy(url.openStream(), localFile, StandardCopyOption.REPLACE_EXISTING);
-
-                    } catch (IOException ex) {
-                        logger.error("Error downloading image " + imageName, ex);
-                    }
-                }
-            });
+            } catch (IOException ex) {
+                logger.error("-Error downloading image " + imageName, ex);
+            }
+        }else{
+            logger.info("-No image to download");
         }
     }
 
