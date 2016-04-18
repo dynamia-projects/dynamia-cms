@@ -24,10 +24,10 @@ import java.io.Serializable;
 public class ProductStockDTO implements Serializable {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -4070851961458154984L;
-	private Long productExternalRef;
+     *
+     */
+    private static final long serialVersionUID = -4070851961458154984L;
+    private Long productExternalRef;
     private Long storeExternalRef;
     private long stock;
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+    <body th:fragment="frag (prd)">
+
+        <div class="thumbnail productpanel" style="height: 160px">
+
+            <div >
+          
+                <!-- Product Image -->
+                <div style="height: 90px; line-height: 90px" >
+                    <a th:href="@{'/store/products/'+${prd.id}}" href="#"
+                       style="vertical-align: middle; line-height: 1.5">
+                        <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=90,h=90)}"
+                             src="img/product1a.jpg" alt="" />
+                    </a>
+                </div>
+
+
+                <div class="caption">
+                    <div class="mt10 mb10 productname">
+                        <small>
+                        <a th:href="@{'/store/products/'+${prd.id}}" th:text="${prd.name}" href="#">Product Name</a>
+                        </small>
+                    </div>              
+                </div>
+            </div>
+        </div>
+
+
+    </body>
+
+</html>

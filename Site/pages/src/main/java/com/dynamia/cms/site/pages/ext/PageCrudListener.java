@@ -20,6 +20,7 @@ import java.util.Date;
 import com.dynamia.cms.site.core.api.CMSListener;
 import com.dynamia.cms.site.pages.domain.Page;
 import com.dynamia.cms.site.pages.services.PageService;
+import java.io.UnsupportedEncodingException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import tools.dynamia.domain.util.CrudServiceListenerAdapter;
@@ -47,6 +48,8 @@ public class PageCrudListener extends CrudServiceListenerAdapter<Page> {
         if (page.getImageURL() == null || page.getImageURL().isEmpty()) {
             service.generateImageURL(page);
         }
+
+      
 
     }
 

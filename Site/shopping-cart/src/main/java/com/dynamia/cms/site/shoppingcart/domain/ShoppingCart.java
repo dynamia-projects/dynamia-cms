@@ -227,6 +227,9 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
         if (addedItem != null) {
             addedItem.setShoppingCart(null);
             items.remove(addedItem);
+            if (addedItem.getChildren() != null && !addedItem.getChildren().isEmpty()) {
+                addedItem.getChildren().forEach(c -> items.remove(c));
+            }
             compute();
             return true;
         }
@@ -266,7 +269,7 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
 
     public ShoppingCartItem getItemByCode(String code) {
         for (ShoppingCartItem item : items) {
-            if (item.getCode().equals(code)) {
+            if (item.getCode().equals(code) && item.isEditable()) {
                 return item;
             }
         }

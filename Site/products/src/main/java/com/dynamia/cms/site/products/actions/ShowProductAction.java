@@ -31,11 +31,13 @@ import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductStock;
 import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import com.dynamia.cms.site.products.domain.RelatedProduct;
 import com.dynamia.cms.site.products.services.ProductTemplateService;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.cms.site.users.UserHolder;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 import tools.dynamia.commons.CollectionsUtils;
 import tools.dynamia.commons.collect.CollectionWrapper;
 
@@ -100,9 +102,10 @@ public class ShowProductAction implements SiteAction {
         }
 
         loadStockDetails(product, mv);
-        
-        mv.addObject("prd_product", product);        
-        mv.addObject("prd_relatedProducts", service.getRelatedProducts(product));
+        loadRelatedProducts(product, mv);
+        loadGiftsProducts(product, mv);
+
+        mv.addObject("prd_product", product);
         mv.addObject("prd_config", service.getSiteConfig(evt.getSite()));
         mv.addObject("title", product.getName().toUpperCase() + price);
         mv.addObject("subtitle", product.getCategory().getName());
@@ -137,15 +140,33 @@ public class ShowProductAction implements SiteAction {
 
     }
 
+    private void loadRelatedProducts(Product product, ModelAndView mv) {
+        List<Product> products = null;
+        List<RelatedProduct> relateds = service.getRelatedProducts(product, false);
+        if (relateds != null && !relateds.isEmpty()) {
+            products = relateds.stream().map(rp -> rp.getProduct()).collect(Collectors.toList());
+        } else {
+            products = service.getRelatedCategoryProducts(product);
+        }
+        mv.addObject("prd_relatedProducts", products);
+    }
+
     private void loadStockDetails(Product product, ModelAndView mv) {
         QueryParameters sdparams = QueryParameters.with("product", product).orderBy("store.contactInfo.city asc, store.name", true);
         List<ProductStock> stockDetails = crudService.find(ProductStock.class, sdparams);
         Collection<CollectionWrapper> stockDetailsGroups = CollectionsUtils.groupBy(stockDetails, ProductStock.class, "store.contactInfo.city");
         CollectionWrapper firtGroup = CollectionsUtils.findFirst(stockDetailsGroups);
-        if(firtGroup!=null){
+        if (firtGroup != null) {
             firtGroup.setDescription("active");
         }
-        mv.addObject("prd_stock_details",stockDetailsGroups);
+        mv.addObject("prd_stock_details", stockDetailsGroups);
+    }
+
+    private void loadGiftsProducts(Product product, ModelAndView mv) {
+        List<RelatedProduct> gifts = service.getRelatedProducts(product, true);
+        List<Product> products = gifts.stream().filter(rp -> rp.isGift()).map(rp -> rp.getProduct()).collect(Collectors.toList());
+        mv.addObject("prd_gifts", products);
+
     }
 
 }

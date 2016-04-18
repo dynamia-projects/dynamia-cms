@@ -21,12 +21,12 @@ limitations under the License.
 	<parent>
 		<groupId>com.dynamia.cms</groupId>
 		<artifactId>com.dynamia.cms.site.parent</artifactId>
-		<version>1.2.0.Beta</version>
+		<version>1.2.0.Final</version>
 	</parent>
 	<groupId>com.dynamia.cms</groupId>
 	<artifactId>com.dynamia.cms.site.shoppingcart</artifactId>
 	<name>DynamiaCMS Site - ShoppingCart (${project.version})</name>
-	<version>1.2.0.Beta</version>
+	<version>1.2.0.Final</version>
 
 	<packaging>jar</packaging>
 	<build>
@@ -54,17 +54,17 @@ limitations under the License.
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.core</artifactId>
-			<version>1.2.0.Beta</version>
+			<version>1.2.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.users</artifactId>
-			<version>1.2.0.Beta</version>
+			<version>1.2.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.payment</artifactId>
-			<version>1.2.0.Beta</version>
+			<version>1.2.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>javax</groupId>
@@ -77,7 +77,7 @@ limitations under the License.
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.mail</artifactId>
-			<version>1.2.0.Beta</version>
+			<version>1.2.0.Final</version>
 		</dependency>
 	</dependencies>
 </project>

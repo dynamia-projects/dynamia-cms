@@ -46,6 +46,7 @@ import com.dynamia.cms.site.products.domain.ProductCreditPrice;
 import com.dynamia.cms.site.products.domain.ProductDetail;
 import com.dynamia.cms.site.products.domain.ProductStock;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import com.dynamia.cms.site.products.domain.RelatedProduct;
 import com.dynamia.cms.site.products.domain.Store;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
@@ -54,6 +55,7 @@ import com.dynamia.cms.site.products.dto.ProductCreditPriceDTO;
 import com.dynamia.cms.site.products.dto.ProductDTO;
 import com.dynamia.cms.site.products.dto.ProductDetailDTO;
 import com.dynamia.cms.site.products.dto.ProductStockDTO;
+import com.dynamia.cms.site.products.dto.RelatedProductDTO;
 import com.dynamia.cms.site.products.dto.StoreDTO;
 import com.dynamia.cms.site.products.services.ProductsSyncService;
 import java.io.InputStream;
@@ -62,8 +64,6 @@ import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.integration.scheduling.SchedulerUtil;
-import tools.dynamia.integration.scheduling.Task;
 
 /**
  * @author Mario Serrano Leones
@@ -318,6 +318,34 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<RelatedProductDTO> synchronizeRelatedProducts(ProductsSiteConfig siteCfg) {
+        logger.debug(">>>> STARTING RELATED PRODUCTS SYNCHRONIZATION FOR SITE " + siteCfg.getSite().getName() + " <<<<");
+
+        ProductsDatasource ds = getDatasource(siteCfg);
+        List<RelatedProductDTO> related = ds.getRelatedProducts(siteCfg.getParametersAsMap());
+        for (RelatedProductDTO remoteRelated : related) {
+            RelatedProduct localRelated = getLocalEntity(RelatedProduct.class, remoteRelated.getExternalRef(), siteCfg);
+            if (localRelated == null) {
+                localRelated = new RelatedProduct();
+                localRelated.setProduct(getLocalEntity(Product.class, remoteRelated.getProductExternalRef(), siteCfg));
+
+                if (remoteRelated.getTargetCategoryExternalRef() != null) {
+                    localRelated.setTargetCategory(getLocalEntity(ProductCategory.class, remoteRelated.getTargetCategoryExternalRef(), siteCfg));
+                }
+                if (remoteRelated.getTargetProductExternalRef() != null) {
+                    localRelated.setTargetProduct(getLocalEntity(Product.class, remoteRelated.getTargetProductExternalRef(), siteCfg));
+                }
+            }
+
+            localRelated.sync(remoteRelated);
+            if (localRelated.getProduct() != null) {
+                crudService.save(localRelated);
+            }
+        }
+        return related;
+    }
+
     @Override
     public void downloadStoreImages(ProductsSiteConfig siteCfg, StoreDTO store) {
         try {
@@ -378,7 +406,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
             } catch (IOException ex) {
                 logger.error("-Error downloading image " + imageName, ex);
             }
-        }else{
+        } else {
             logger.info("-No image to download");
         }
     }
@@ -457,6 +485,25 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
             }
 
             String sql = "update " + Product.class.getSimpleName() + " pc set active=false where pc.externalRef not in (:ids) and pc.site = :site";
+            Query query = entityMgr.createQuery(sql);
+            query.setParameter("ids", ids);
+            query.setParameter("site", siteCfg.getSite());
+
+            query.executeUpdate();
+
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public void disableRelatedProductsNoInList(ProductsSiteConfig siteCfg, List<RelatedProductDTO> relatedProducts) {
+        if (relatedProducts != null && !relatedProducts.isEmpty()) {
+            List<Long> ids = new ArrayList<>();
+            for (RelatedProductDTO dto : relatedProducts) {
+                ids.add(dto.getExternalRef());
+            }
+
+            String sql = "update " + RelatedProduct.class.getSimpleName() + " pc set active=false where pc.externalRef not in (:ids) and pc.site = :site";
             Query query = entityMgr.createQuery(sql);
             query.setParameter("ids", ids);
             query.setParameter("site", siteCfg.getSite());

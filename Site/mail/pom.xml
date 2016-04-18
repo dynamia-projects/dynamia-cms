@@ -21,12 +21,12 @@ limitations under the License.
     <parent>
         <artifactId>com.dynamia.cms.site.parent</artifactId>
         <groupId>com.dynamia.cms</groupId>
-        <version>1.2.0.Beta</version>
+        <version>1.2.0.Final</version>
     </parent>
     <groupId>com.dynamia.cms</groupId>
     <artifactId>com.dynamia.cms.site.mail</artifactId>
     <name>DynamiaCMS Site - Notifications(${project.version})</name>
-    <version>1.2.0.Beta</version>
+    <version>1.2.0.Final</version>
     <url>http://www.dynamiasoluciones.com</url>
     <build>
         <plugins>

@@ -74,17 +74,12 @@
                         </li>
                     </ul>
 
+
+
                     <div class="mt20">
                         <th:block th:include="social/components/sharebuttons::content" />
 
-                        <div class="mt40" th:if="false">
-                            <h2 class="heading1">
-                                <span class="maintext">Dejanos tus comentarios</span>
-                            </h2>
-                            <div class="fb-comments" th:attr="data-href=${currentURL}" data-width="100%" data-numposts="5"
-                                 data-colorscheme="light"></div>
 
-                        </div>
                     </div>
                 </div>
 
@@ -139,14 +134,28 @@
 
                     <div class="">
                         <span th:text="${prd_product.description}">description</span> <br />
-                        <div class="mt10">
+                        <div class="mt10" style="text-align: right">
                             <span>Ultima Actualizacion</span> <strong class="text-primary"
                                                                       th:text="${#dates.format(prd_config.lastSync, 'dd MMMM yyyy   HH:mm aa')}"></strong>
                         </div>
 
                     </div>
 
-                    <div class="pull-right mt10 hidden-xs hidden-sm"
+                    <div th:unless="${#lists.isEmpty(prd_gifts)}"  class="mt0 clearfix">
+                        <!--GIFT PRODUCTS -->
+                        <h2 class="heading1" style="padding: 0; margin: 0">
+                            <span class="maintext">Lleva gratis</span>
+                        </h2>
+
+                        <ul class="mt20 clearfix " th:each="group : ${cmsUtil.groupCollection(prd_gifts,6)}">
+
+                            <li class="col-lg-2 col-md-2 col-sm-4 col-xs-4" th:each="prd : ${group.collection}">
+                                <div th:include="products/components/productpanelcompact::frag(${prd})"/>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="pull-right mt10 hidden-xs hidden-sm "
                          th:if="${prd_product.stock gt prd_config.minStock}">
                         <button class="btn btn-default btn-lg tooltip-tes" disabled="disabled" th:if="${prd_product.sellInStore and not prd_product.sellInWeb}">
                             <i class="icon-home icon-white"></i>  Disponible en Tiendas 

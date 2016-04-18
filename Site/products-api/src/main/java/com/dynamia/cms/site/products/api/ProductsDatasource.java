@@ -18,6 +18,7 @@ package com.dynamia.cms.site.products.api;
 import com.dynamia.cms.site.products.dto.ProductDTO;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
+import com.dynamia.cms.site.products.dto.RelatedProductDTO;
 import com.dynamia.cms.site.products.dto.StoreDTO;
 import java.util.List;
 import java.util.Map;
@@ -46,4 +47,6 @@ public interface ProductsDatasource {
     public List<StoreDTO> getStores(Map<String, String> params);
 
     public StoreDTO getStore(Long externalRef, Map<String, String> params);
+
+    public List<RelatedProductDTO> getRelatedProducts(Map<String, String> params);
 }

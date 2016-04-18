@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="template">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
 
-<div class="maincontainer" layout:fragment="content">
-
-
-	<div class="container">
-		<!-- Main Title-->
-		<div class="titles animated fadeInUp time3">
-			<div class="pull-left">
-				<h1 class="headinglefttitle" th:text="${title}"></h1>
-				<div th:text="${subtitle}" class="headingsubtitle"></div>
-			</div>
-			<i th:class="${icon}"></i>
-		</div>
-
-		<div class="row" th:if="${cmsModules.isUsed(cartName+'CartTop')}">
-			<div class="col-md-12">
-				<th:block th:include="module::position(cartName+'CartTop')" />
-			</div>
-		</div>
-
-		<div class="row mt40">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">
+    <div class="maincontainer" layout:fragment="content">
 
 
-				<th th:include="shoppingcart/components/table::content" />
+        <div class="container">
+            <!-- Main Title-->
+            <div class="titles animated fadeInUp time3">
+                <div class="pull-left">
+                    <h1 class="headinglefttitle" th:text="${title}"></h1>
+                    <div th:text="${subtitle}" class="headingsubtitle"></div>
+                </div>
+                <i th:class="${icon}"></i>
+            </div>
+
+            <div class="row" th:if="${cmsModules.isUsed(cartName+'CartTop')}">
+                <div class="col-md-12">
+                    <th:block th:include="module::position(cartName+'CartTop')" />
+                </div>
+            </div>
+
+            <div class="row mt40">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">
 
 
-				<form role="form" class="pull-left">
-					<a th:href="@{/shoppingcart/shop/checkout}"
-						th:if="${paymentEnabled and cartName == 'shop'}"
-						class="btn btn-danger tooltip-test">Realizar Pago</a> <a
-						target="_blank" class="btn btn-orange tooltip-test"
-						th:href="@{'/shoppingcart/'+${cartName}+'/print'}"> <i
-						class="icon-print"></i> Imprimir
-					</a>
-				</form>
-			</div>
-		</div>
+                    <th th:include="shoppingcart/components/table::content" />
 
-		<div class="row" th:if="${cmsModules.isUsed(cartName+'CartBottom')}">
-			<div class="col-md-12">
-				<th:block th:include="module::position(cartName+'CartBottom')" />
-			</div>
-		</div>
 
-	</div>
-</div>
+                    <form role="form" class="pull-left">
+                        <a th:href="@{/shoppingcart/shop/checkout}"
+                           th:if="${paymentEnabled and cartName == 'shop'}"
+                           class="btn btn-danger tooltip-test">Realizar Pago</a> <a
+                           target="_blank" class="btn btn-orange tooltip-test"
+                           th:href="@{'/shoppingcart/'+${cartName}+'/print'}"> <i
+                                class="icon-print"></i> Imprimir
+                        </a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row" th:if="${cmsModules.isUsed(cartName+'CartBottom')}">
+                <div class="col-md-12">
+                    <th:block th:include="module::position(cartName+'CartBottom')" />
+                </div>
+            </div>
+
+        </div>
+    </div>
 </html>

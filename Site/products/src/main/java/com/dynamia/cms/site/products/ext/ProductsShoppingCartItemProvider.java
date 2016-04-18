@@ -19,13 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dynamia.cms.site.core.api.CMSExtension;
 import com.dynamia.cms.site.core.domain.Site;
-import com.dynamia.cms.site.products.api.ValueType;
 import com.dynamia.cms.site.products.domain.Product;
+import com.dynamia.cms.site.products.domain.RelatedProduct;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.cms.site.shoppingcart.ShoppingCartItemProvider;
 import com.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
 import java.math.BigDecimal;
-import java.math.MathContext;
+import java.util.List;
 
 /**
  *
@@ -46,21 +46,18 @@ public class ProductsShoppingCartItemProvider implements ShoppingCartItemProvide
                 return null;
             }
 
-            ShoppingCartItem item = new ShoppingCartItem();
-            item.setCode(code);
-            item.setImageURL("/resources/products/images/");
-            item.setImageName(product.getImage());
-            item.setURL("/store/products/" + product.getId());
-            item.setName(product.getName());
-            item.setSku(product.getSku());
-            item.setReference(product.getReference());
-            item.setUnitPrice(product.getPrice());
-            item.setRefId(product.getId());
-            item.setRefClass(Product.class.getName());
-            item.setDescription(product.getDescription());
-            if (product.isPromoEnabled() && product.getPromoValue() != null) {
-                item.setDiscount(product.getRealPromoValue());
-                item.setDiscountName(product.getPromoName());
+            ShoppingCartItem item = createItem(product);
+
+            List<RelatedProduct> related = service.getRelatedProducts(product, true);
+            for (RelatedProduct relatedProduct : related) {
+                ShoppingCartItem childItem = createItem(relatedProduct.getProduct());
+                childItem.setUnitPrice(relatedProduct.getPrice());
+                if (relatedProduct.isGift()) {
+                    childItem.setUnitPrice(BigDecimal.ZERO);                    
+                }
+                childItem.setEditable(false);
+                childItem.setParent(item);
+                item.getChildren().add(childItem);
             }
 
             return item;
@@ -69,6 +66,26 @@ public class ProductsShoppingCartItemProvider implements ShoppingCartItemProvide
             e.printStackTrace();
             return null;
         }
+    }
+
+    private ShoppingCartItem createItem(Product product) {
+        ShoppingCartItem item = new ShoppingCartItem();
+        item.setCode(product.getId().toString());
+        item.setImageURL("/resources/products/images/");
+        item.setImageName(product.getImage());
+        item.setURL("/store/products/" + product.getId());
+        item.setName(product.getName());
+        item.setSku(product.getSku());
+        item.setReference(product.getReference());
+        item.setUnitPrice(product.getPrice());
+        item.setRefId(product.getId());
+        item.setRefClass(Product.class.getName());
+        item.setDescription(product.getDescription());
+        if (product.isPromoEnabled() && product.getPromoValue() != null) {
+            item.setDiscount(product.getRealPromoValue());
+            item.setDiscountName(product.getPromoName());
+        }
+        return item;
     }
 
 }

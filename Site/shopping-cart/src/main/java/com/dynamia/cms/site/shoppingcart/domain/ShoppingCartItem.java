@@ -16,11 +16,14 @@
 package com.dynamia.cms.site.shoppingcart.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -61,6 +64,36 @@ public class ShoppingCartItem extends SimpleEntity {
     private String refClass;
     private BigDecimal discount;
     private String discountName;
+    private boolean editable = true;
+
+    @Transient
+    private List<ShoppingCartItem> children = new ArrayList<>();
+    @Transient
+    private ShoppingCartItem parent;
+
+    public List<ShoppingCartItem> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<ShoppingCartItem> children) {
+        this.children = children;
+    }
+
+    public ShoppingCartItem getParent() {
+        return parent;
+    }
+
+    public void setParent(ShoppingCartItem parent) {
+        this.parent = parent;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
 
     public BigDecimal getDiscount() {
         if (discount == null) {
@@ -204,7 +237,7 @@ public class ShoppingCartItem extends SimpleEntity {
     }
 
     public void setUnitPrice(BigDecimal unitPrice) {
-        if (unitPrice == null || unitPrice.longValue() <= 0) {
+        if (unitPrice == null || unitPrice.longValue() < 0) {
             unitPrice = BigDecimal.ONE;
         }
         this.unitPrice = unitPrice;

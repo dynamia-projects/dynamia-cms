@@ -43,10 +43,12 @@ import com.dynamia.cms.site.products.domain.ProductCategoryDetail;
 import com.dynamia.cms.site.products.domain.ProductDetail;
 import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import com.dynamia.cms.site.products.domain.RelatedProduct;
 import com.dynamia.cms.site.products.domain.Store;
 import com.dynamia.cms.site.products.services.ProductsService;
 import com.dynamia.cms.site.users.UserHolder;
 import com.dynamia.cms.site.users.domain.User;
+import java.util.ArrayList;
 
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.commons.collect.PagedList;
@@ -371,7 +373,7 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     @Cacheable(value = CACHE_NAME, key = "'rld'+#product.id")
-    public List<Product> getRelatedProducts(Product product) {
+    public List<Product> getRelatedCategoryProducts(Product product) {
         QueryParameters qp = new QueryParameters();
         QueryBuilder qb = QueryBuilder.select(Product.class, "p").where("p.active = true");
 
@@ -392,6 +394,40 @@ public class ProductsServiceImpl implements ProductsService {
         query.setMaxResults(getDefaultPageSize(product.getSite()));
         qp.applyTo(query);
         return query.getResultList();
+    }
+
+    /**
+     *
+     * @param product
+     * @param requires
+     * @return
+     */
+    @Override
+    public List<RelatedProduct> getRelatedProducts(Product product, boolean requires) {
+        List<RelatedProduct> relateds = new ArrayList<>();
+
+        relateds.addAll(crudService.find(RelatedProduct.class, QueryParameters.with("active", true)
+                .add("targetProduct", product)
+                .add("required", requires)
+                .orderBy("price", false)));
+
+        List<ProductCategory> categories = new ArrayList<>();
+
+        if (product.getCategory() != null) {
+            categories.add(product.getCategory());
+
+            if (product.getCategory().getParent() != null) {
+                categories.add(product.getCategory().getParent());
+            }
+        }
+        if (!categories.isEmpty()) {
+            relateds.addAll(crudService.find(RelatedProduct.class, QueryParameters.with("active", true)
+                    .add("targetCategory", QueryConditions.in(categories))
+                    .add("required", requires)
+                    .orderBy("price", false)));
+        }
+
+        return relateds;
     }
 
     @Override

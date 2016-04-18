@@ -27,6 +27,7 @@ import com.dynamia.cms.site.products.domain.ProductCategoryDetail;
 import com.dynamia.cms.site.products.domain.ProductDetail;
 import com.dynamia.cms.site.products.domain.ProductUserStory;
 import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import com.dynamia.cms.site.products.domain.RelatedProduct;
 import com.dynamia.cms.site.products.domain.Store;
 import com.dynamia.cms.site.users.domain.User;
 
@@ -58,7 +59,7 @@ public interface ProductsService {
 
 	public List<Product> filterProducts(Site site, ProductSearchForm form);
 
-	public List<Product> getRelatedProducts(Product product);
+	public List<Product> getRelatedCategoryProducts(Product product);
 
 	public void generateToken(ProductsSiteConfig config);
 
@@ -111,5 +112,7 @@ public interface ProductsService {
 	public ProductCategory getCategoryById(Long categoryId);
 
 	List<ProductCategoryDetail> getCategoryDetails(ProductCategory category);
+
+    List<RelatedProduct> getRelatedProducts(Product product, boolean requires);
 
 }

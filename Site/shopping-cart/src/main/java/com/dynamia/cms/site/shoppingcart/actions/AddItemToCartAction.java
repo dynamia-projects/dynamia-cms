@@ -52,6 +52,9 @@ public class AddItemToCartAction implements SiteAction {
             ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
             if (shoppingCart != null) {
                 shoppingCart.addItem(item);
+                if (item.getChildren() != null && !item.getChildren().isEmpty()) {
+                    item.getChildren().forEach(c -> shoppingCart.addItem(c));
+                }
                 CMSUtil.addSuccessMessage(item.getName().toUpperCase() + " agregado exitosamente al carrito", evt.getRedirectAttributes());
             }
         }

@@ -33,26 +33,26 @@ import com.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 @CMSAction
 public class RemoveItemFromCartAction implements SiteAction {
 
-	@Autowired
-	private ShoppingCartService service;
+    @Autowired
+    private ShoppingCartService service;
 
-	@Override
-	public String getName() {
-		return "removeItemFromCart";
-	}
+    @Override
+    public String getName() {
+        return "removeItemFromCart";
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		String code = (String) evt.getData();
-		ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
-		if (shoppingCart != null) {
-			boolean r = shoppingCart.removeItem(code);
-			if (r) {
-				CMSUtil.addSuccessMessage("Item quitado exitosamente del carrito", evt.getRedirectAttributes());
-			}
-		}
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        ModelAndView mv = evt.getModelAndView();
+        String code = (String) evt.getData();
+        ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
+        if (shoppingCart != null) {
+            boolean r = shoppingCart.removeItem(code);
+            if (r) {
+                CMSUtil.addSuccessMessage("Item quitado exitosamente del carrito", evt.getRedirectAttributes());
+            }
+        }
 
-	}
+    }
 
 }

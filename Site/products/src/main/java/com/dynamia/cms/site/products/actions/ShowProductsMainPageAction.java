@@ -89,7 +89,7 @@ public class ShowProductsMainPageAction implements SiteAction {
 
             List<Product> recentViewed = service.getRecentProducts(UserHolder.get().getCurrent());
             Product firstProduct = recentViewed.get(0);
-            List<Product> relatedProducts = service.getRelatedProducts(firstProduct);
+            List<Product> relatedProducts = service.getRelatedCategoryProducts(firstProduct);
             mv.addObject("prd_recentViewedProducts", recentViewed);
             mv.addObject("prd_relatedProducts", relatedProducts);
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class ShowProductsMainPageAction implements SiteAction {
                     recentViewed = sortByIdList(recentViewed, ids);
 
                     Product firstProduct = recentViewed.get(0);
-                    List<Product> relatedProducts = service.getRelatedProducts(firstProduct);
+                    List<Product> relatedProducts = service.getRelatedCategoryProducts(firstProduct);
                     mv.addObject("prd_recentViewedProducts", recentViewed);
                     mv.addObject("prd_relatedProducts", relatedProducts);
                 }

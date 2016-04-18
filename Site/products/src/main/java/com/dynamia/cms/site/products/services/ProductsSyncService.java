@@ -23,6 +23,7 @@ import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import com.dynamia.cms.site.products.dto.ProductDTO;
+import com.dynamia.cms.site.products.dto.RelatedProductDTO;
 import com.dynamia.cms.site.products.dto.StoreDTO;
 
 /**
@@ -67,5 +68,9 @@ public interface ProductsSyncService {
     void downloadStoreImages(ProductsSiteConfig siteCfg, StoreDTO store);
 
     void downloadBrandImages(ProductsSiteConfig siteCfg, ProductBrandDTO store);
+
+    List<RelatedProductDTO> synchronizeRelatedProducts(ProductsSiteConfig siteCfg);
+
+    public void disableRelatedProductsNoInList(ProductsSiteConfig siteCfg, List<RelatedProductDTO> relatedProducts);
 
 }

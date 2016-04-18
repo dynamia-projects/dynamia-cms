@@ -15,7 +15,6 @@
  */
 package com.dynamia.cms.site.products.domain;
 
-import com.dynamia.cms.site.core.CMSUtil;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +36,9 @@ import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.api.ValueType;
 import com.dynamia.cms.site.products.dto.ProductDTO;
 import java.math.MathContext;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
-import tools.dynamia.commons.DateTimeUtils;
 
 import tools.dynamia.domain.SimpleEntity;
 import tools.dynamia.domain.contraints.NotEmpty;

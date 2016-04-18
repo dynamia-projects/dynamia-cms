@@ -26,6 +26,7 @@ import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.dto.ProductBrandDTO;
 import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import com.dynamia.cms.site.products.dto.ProductDTO;
+import com.dynamia.cms.site.products.dto.RelatedProductDTO;
 import com.dynamia.cms.site.products.dto.StoreDTO;
 
 import tools.dynamia.commons.logger.LoggingService;
@@ -87,6 +88,10 @@ public class ProductsSynchronizer {
         }
 
         service.disableProductsNoInList(siteCfg, products);
+
+        logger.info("Related Products");
+        List<RelatedProductDTO> relatedProducts = service.synchronizeRelatedProducts(siteCfg);
+        service.disableRelatedProductsNoInList(siteCfg, relatedProducts);
 
         SchedulerUtil.run(new Task("Images Downloader") {
             @Override

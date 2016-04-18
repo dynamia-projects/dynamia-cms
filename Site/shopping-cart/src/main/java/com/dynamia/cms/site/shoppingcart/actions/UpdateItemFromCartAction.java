@@ -37,34 +37,41 @@ import tools.dynamia.commons.StringUtils;
 @CMSAction
 public class UpdateItemFromCartAction implements SiteAction {
 
-	@Autowired
-	private ShoppingCartService service;
+    @Autowired
+    private ShoppingCartService service;
 
-	@Override
-	public String getName() {
-		return "updateItemFromCart";
-	}
+    @Override
+    public String getName() {
+        return "updateItemFromCart";
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		String code = (String) evt.getData();
-		ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
-		if (shoppingCart != null) {
-			ShoppingCartItem item = shoppingCart.getItemByCode(code);
-			if (item != null) {
-				try {
-					int quantity = Integer.parseInt(evt.getRequest().getParameter("quantity"));
-					item.setQuantity(quantity);
-					shoppingCart.compute();
-					CMSUtil.addSuccessMessage(item.getName().toUpperCase() + " actualizado", evt.getRedirectAttributes());
-				} catch (Exception e) {
-					CMSUtil.addErrorMessage("Ingrese cantidad valida para " + item.getName().toUpperCase(), evt.getRedirectAttributes());
-				}
-			}
-			mv.setView(new RedirectView("/shoppingcart/" + shoppingCart.getName(), true, true, false));
-			mv.addObject("title", StringUtils.capitalizeAllWords(shoppingCart.getName()));
-		}
-	}
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        ModelAndView mv = evt.getModelAndView();
+        String code = (String) evt.getData();
+        ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
+        if (shoppingCart != null) {
+            ShoppingCartItem item = shoppingCart.getItemByCode(code);
+            if (item != null && item.isEditable()) {
+                try {
+                    int quantity = Integer.parseInt(evt.getRequest().getParameter("quantity"));
+                    item.setQuantity(quantity);
+                    updateChildren(item);
+                    shoppingCart.compute();
+                    CMSUtil.addSuccessMessage(item.getName().toUpperCase() + " actualizado", evt.getRedirectAttributes());
+                } catch (Exception e) {
+                    CMSUtil.addErrorMessage("Ingrese cantidad valida para " + item.getName().toUpperCase(), evt.getRedirectAttributes());
+                }
+            }
+            mv.setView(new RedirectView("/shoppingcart/" + shoppingCart.getName(), true, true, false));
+            mv.addObject("title", StringUtils.capitalizeAllWords(shoppingCart.getName()));
+        }
+    }
+
+    private void updateChildren(ShoppingCartItem item) {
+        if (item.getChildren() != null && !item.getChildren().isEmpty()) {
+            item.getChildren().forEach(c -> c.setQuantity(item.getQuantity()));
+        }
+    }
 
 }

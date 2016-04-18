@@ -21,24 +21,30 @@
                 </tr>
                 <tr th:each="item,row : ${cart.items}">
                     <td class="name"><span th:text="${row.index+1}"></span></td>
-                    <td style="width: 50px"><a th:href="@{${item.URL}}"><img
-                                th:src="@{${item.imageURL}+'thumbnails/'+${item.imageName}(w=90,h=90)}"
-                                alt="product"></img></a></td>
-                    <td class="name"><a class="orange" th:href="@{${item.URL}}"
-                                        th:text="${item.name}">MacBook</a><br /> <span
-                                        th:text="${item.description}"></span></td>
-                    <td class="quantity" style="width: 50px">
-                        <form class="form-inline" th:id="${'form'+item.code}"
+                    <td style="width: 50px">
+                        <a th:href="@{${item.URL}}">
+                            <img th:src="@{${item.imageURL}+'thumbnails/'+${item.imageName}(w=90,h=90)}"
+                                 alt="product"></img>
+                        </a>
+                    </td>
+                    <td class="name">                        
+                        <a class="orange" th:href="@{${item.URL}}"
+                           th:text="${item.name}">MacBook</a><br /> <span
+                           th:text="${item.description}"></span>
+                    </td>
+                    <td class="quantity" style="width: 50px; text-align: center">
+                        <form class="form-inline" th:id="${'form'+item.code}" th:if="${item.editable}"
                               th:action="@{'/shoppingcart/'+${cart.name}+'/update/'+${item.code}}"
                               method="get">
-                            <input title="presione ENTER para actualizar" name="quantity" style="text-align: center"
+                            <input title="presione ENTER para actualizar" name="quantity" style="text-align: center" 
                                    type="text" size="1" value="1" th:value="${item.quantity}">
                             </input>
                         </form>
+                        <span th:text="${item.quantity}" th:unless="${item.editable}"></span>
                     </td>
 
                     <td class="total" style="width: 40px"><a class="tooltip-test "
-                                                             title="Borrar"
+                                                             title="Borrar" th:if="${item.editable}"
                                                              th:href="@{'/shoppingcart/'+${cart.name}+'/remove/'+${item.code}(currentURI=${currentURI})}"><i
                                 class="font24 icon-remove-circle"></i></a></td>
                     <td class="price" style="text-align: right"

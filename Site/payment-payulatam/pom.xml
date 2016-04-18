@@ -22,11 +22,11 @@ limitations under the License.
 	<parent>
 		<groupId>com.dynamia.cms</groupId>
 		<artifactId>com.dynamia.cms.site.parent</artifactId>
-		<version>1.2.0.Beta</version>
+		<version>1.2.0.Final</version>
 	</parent>
 	<groupId>com.dynamia.cms</groupId>
 	<artifactId>com.dynamia.cms.site.payment.payulatam</artifactId>
-	<version>1.2.0.Beta</version>
+	<version>1.2.0.Final</version>
 	<name>DynamiaCMS Site - Payment PayULatam (${project.version})</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -57,7 +57,7 @@ limitations under the License.
 		<dependency>
 			<groupId>com.dynamia.cms</groupId>
 			<artifactId>com.dynamia.cms.site.payment</artifactId>
-			<version>1.2.0.Beta</version>
+			<version>1.2.0.Final</version>
 		</dependency>
 	</dependencies>
 </project>
