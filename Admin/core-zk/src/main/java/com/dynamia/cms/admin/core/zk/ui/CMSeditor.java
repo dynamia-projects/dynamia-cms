@@ -16,30 +16,33 @@
 package com.dynamia.cms.admin.core.zk.ui;
 
 import org.zkforge.ckez.CKeditor;
+import tools.dynamia.commons.MapBuilder;
 
 import tools.dynamia.zk.BindingComponentIndex;
 import tools.dynamia.zk.ComponentAliasIndex;
 
 public class CMSeditor extends CKeditor {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4372806043096340598L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -4372806043096340598L;
 
-	static {
-		ComponentAliasIndex.getInstance().add(CMSeditor.class);
-		BindingComponentIndex.getInstance().put("value", CMSeditor.class);
-		setFileBrowserTemplate("/browse");
-		setFileUploadHandlePage("/browse");
-		
-	}
+    static {
+        ComponentAliasIndex.getInstance().add(CMSeditor.class);
+        BindingComponentIndex.getInstance().put("value", CMSeditor.class);
+        setFileBrowserTemplate("/browse");
+        setFileUploadHandlePage("/browse");
 
-	public CMSeditor() {
-		setFilebrowserBrowseUrl("resources");
-		setFilebrowserUploadUrl("resources");
-		
-		
-	}
+    }
+
+    public CMSeditor() {
+        setFilebrowserBrowseUrl("resources");
+        setFilebrowserUploadUrl("resources");
+        setConfig(MapBuilder.put("config.entities_latin", false,
+                "config.entities",false,
+                "config.htmlEncodeOutput",false));
+        
+    }
 
 }

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/WEB-INF/template.zul"?>
+<?meta http-equiv="Content-type" content="text/html;charset=UTF-8" ?>
 <?page title="DynamiaCMS - ${siteContext.current.name}"?>
 <?link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon"?>
 <?link rel="icon" href="/images/favicon.ico" type="image/x-icon"?>
+
 <zk xmlns="http://www.zkoss.org/2005/zul" xmlns:n="native">
 
     <div self="@{define(topmenu)}">

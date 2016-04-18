@@ -33,17 +33,17 @@ import tools.dynamia.domain.services.CrudService;
 @Service
 public class ProductsAutoSynchronizer {
 
-	@Autowired
-	private ProductsSynchronizer synchronizer;
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+    private ProductsSynchronizer synchronizer;
+    @Autowired
+    private CrudService crudService;
 
-	@Scheduled(fixedDelay = 1 * 60 * 60 * 1000)
-	public void sync() {
-		List<ProductsSiteConfig> configs = crudService.findAll(ProductsSiteConfig.class);
-		for (ProductsSiteConfig config : configs) {
-			synchronizer.synchronize(config);
-		}
-	}
+    @Scheduled(fixedDelay = 2 * 60 * 60 * 1000)
+    public void sync() {
+        List<ProductsSiteConfig> configs = crudService.findAll(ProductsSiteConfig.class);
+        for (ProductsSiteConfig config : configs) {
+            synchronizer.synchronize(config);
+        }
+    }
 
 }

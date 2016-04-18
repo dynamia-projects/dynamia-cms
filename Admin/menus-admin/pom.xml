@@ -5,12 +5,12 @@
 	<parent>
 		<artifactId>com.dynamia.cms.admin.parent</artifactId>
 		<groupId>com.dynamia.cms</groupId>
-		<version>1.2.0.Beta</version>
+		<version>1.2.0.Final</version>
 	</parent>
 	<groupId>com.dynamia.cms</groupId>
 	<artifactId>com.dynamia.cms.admin.menus</artifactId>
 	<name>DynamiaCMS Admin - Menus (${project.version})</name>
-	<version>1.2.0.Beta</version>
+	<version>1.2.0.Final</version>
 	<url>http://www.dynamiasoluciones.com</url>
 	<build>
 		<plugins>
