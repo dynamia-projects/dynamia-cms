@@ -19,7 +19,7 @@
    
 
     <logger name="com.dynamia.cms" additivity="false">
-        <level value="debug" />
+        <level value="info" />
         <appender-ref ref="applicationFileLog" />
         <appender-ref ref="consoleAppender" />
     </logger>
