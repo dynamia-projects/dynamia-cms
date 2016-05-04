@@ -15,7 +15,9 @@
  */
 package com.dynamia.cms.site.products.services.impl;
 
+import com.dynamia.cms.site.core.CMSUtil;
 import com.dynamia.cms.site.core.StringParser;
+import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductDetail;
 import com.dynamia.cms.site.products.domain.ProductTemplate;
@@ -112,10 +114,21 @@ public class ProductTemplateServiceImpl implements ProductTemplateService {
     }
 
     private void loadDefaultTemplateModel(Product product, Map<String, Object> templateModel) {
+        Site site = product.getSite();
+
         templateModel.putAll(BeanUtils.getValuesMaps("", product));
+
+        templateModel.put("imageURL", getImageURL(site, product.getImage()));
+        templateModel.put("image2URL", getImageURL(site, product.getImage2()));
+        templateModel.put("image3URL", getImageURL(site, product.getImage3()));
+        templateModel.put("image4URL", getImageURL(site, product.getImage4()));
 
         templateModel.putAll(BeanUtils.getValuesMaps("brand_", product.getBrand()));
         templateModel.putAll(BeanUtils.getValuesMaps("category_", product.getCategory()));
+
+        templateModel.put("brand", product.getBrand().getName());
+        templateModel.put("brand_imageURL", CMSUtil.getSiteURL(site, "/resources/products/brands/thumbnails/" + product.getBrand().getImage()));
+        templateModel.put("category", product.getCategory().getName());
 
         for (ProductDetail detail : product.getDetails()) {
             String name = detail.getName().toLowerCase().trim().replace(" ", "_");
@@ -125,6 +138,14 @@ public class ProductTemplateServiceImpl implements ProductTemplateService {
             templateModel.put(name + "_imageURL", detail.getImageURL());
         }
 
+    }
+
+    private Object getImageURL(Site site, String image) {
+        if (image != null && !image.isEmpty()) {
+            return CMSUtil.getSiteURL(site, "/resources/products/images/" + image);
+        } else {
+            return "";
+        }
     }
 
 }

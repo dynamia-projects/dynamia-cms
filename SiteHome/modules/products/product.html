@@ -5,7 +5,12 @@
     <div class="maincontainer" layout:fragment="content">
 
 
-        <div class="container">
+        <!-- Product Details tab & comments-->
+        <div class="container" th:if="${prd_hasTemplate}" th:utext="${prd_template}">
+            <!-- TEMPLATE CONTENT HERE -->
+        </div>
+
+        <div class="container" th:unless="${prd_hasTemplate}">
             <!-- Main Title-->
             <div class="titles animated fadeInUp time3">
                 <div class="pull-left">
@@ -170,13 +175,9 @@
                            class="btn btn-primary  btn-lg tooltip-test" data-original-title="Cotizar">
                             <i class="icon-external-link icon-white"></i> Cotizar
                         </a>
-                    </div>
-                    <!-- Product Details tab & comments-->
-                    <div class="productdesc clear" style="padding-top: 10px" th:if="${prd_hasTemplate}" th:utext="${prd_template}">
-                        <!-- TEMPLATE CONTENT HERE -->
-                    </div>
+                    </div>              
 
-                    <div class="productdesc clear" th:unless="${prd_hasTemplate}">
+                    <div class="productdesc clear" >
                         <ul class="nav nav-tabs" id="myTab">
                             <li class="active">
                                 <a href="#specification">Caracteristicas</a>
@@ -219,7 +220,6 @@
                                 </ul>
                             </div>
 
-
                             <div class="tab-pane" id="producttag" th:if="${false}">
 
                                 <ul class="tags" th:if="${prd_product.tags!=null}">
@@ -228,14 +228,10 @@
                                             <i class="icon-tag"></i><span th:text="${tag}">Tag HERE</span>
                                         </a>
                                     </li>
-
                                 </ul>
                             </div>
                         </div>
-
                     </div>
-
-
 
 
                     <!-- Buttons -->
@@ -257,59 +253,57 @@
                             <i class="icon-envelope icon-white"></i> Recomendar a un Amigo
                         </a>
                     </div>
-                    <th:block th:include="products/components/sharedialog::content" />
 
 
-
-                </div>
-            </div>
-
-            <div class="clear mt20"  th:unless="${#lists.isEmpty(prd_stock_details)}">
-                <h2 class="heading1" style="padding: 0; margin: 0">
-                    <span class="maintext">Disponibilidad y Direcciones</span>
-                </h2>
-                <div class="container">
-
-                    <ul class="nav nav-tabs" id="myTab">
-                        <li th:each="detGrp : ${prd_stock_details}" th:class="${detGrp.description}" >
-                            <a th:href="${'#'+detGrp.id}" th:text="${detGrp.name}">Name</a>
-                        </li>                                
-                    </ul>
-                    <div class="tab-content">
-                        <div th:class="${'tab-pane '+detGrp.description}"  th:each="detGrp : ${prd_stock_details}" th:id="${detGrp.id}">
-                            <div class="row" th:each="det : ${detGrp.collection}" style="border-bottom: 1px solid #e0e0e0; padding-bottom: 6px">                                        
-                                <div class="col-xs-4 col-md-4 orange">
-                                    <a data-toggle="modal" class="tooltip-test" title="Ver direccion"
-                                       th:href="${'#store'+det.store.id}" th:text="${det.store.name.toUpperCase()}">NAME</a>
-                                </div>
-
-                                <div class="col-xs-3 col-md-3">
-                                    <span
-                                        th:text="${det.store.contactInfo.phoneNumber+'  '+det.store.contactInfo.mobileNumber}"></span>
-                                    <a data-toggle="modal" class="tooltip-test" th:href="${'#store'+det.store.id}"
-                                       title="Ver direccion">
-                                        <i class="icon-plus-sign"></i>
-                                    </a>
-                                </div>
-
-                                <div class="col-xs-5 col-md-5">
-                                    <span
-                                        th:text="${det.store.contactInfo.address}"></span>                                    
-                                </div>
-                                <th:block th:include="products/components/storedialog::content(${det.store})" />
-                            </div>
-                        </div>
-                    </div>
 
 
                 </div>
             </div>
-
-
-
         </div>
 
 
+        <th:block th:include="products/components/sharedialog::content" />
+
+        <div class="container mt20"  th:unless="${#lists.isEmpty(prd_stock_details)}">
+            <h2 class="heading1" style="padding: 0; margin: 0">
+                <span class="maintext">Disponibilidad y Direcciones</span>
+            </h2>
+            <div class="container">
+
+                <ul class="nav nav-tabs" id="myTab">
+                    <li th:each="detGrp : ${prd_stock_details}" th:class="${detGrp.description}" >
+                        <a th:href="${'#'+detGrp.id}" th:text="${detGrp.name}">Name</a>
+                    </li>                                
+                </ul>
+                <div class="tab-content">
+                    <div th:class="${'tab-pane '+detGrp.description}"  th:each="detGrp : ${prd_stock_details}" th:id="${detGrp.id}">
+                        <div class="row" th:each="det : ${detGrp.collection}" style="border-bottom: 1px solid #e0e0e0; padding-bottom: 6px">                                        
+                            <div class="col-xs-4 col-md-4 orange">
+                                <a data-toggle="modal" class="tooltip-test" title="Ver direccion"
+                                   th:href="${'#store'+det.store.id}" th:text="${det.store.name.toUpperCase()}">NAME</a>
+                            </div>
+
+                            <div class="col-xs-3 col-md-3">
+                                <span
+                                    th:text="${det.store.contactInfo.phoneNumber+'  '+det.store.contactInfo.mobileNumber}"></span>
+                                <a data-toggle="modal" class="tooltip-test" th:href="${'#store'+det.store.id}"
+                                   title="Ver direccion">
+                                    <i class="icon-plus-sign"></i>
+                                </a>
+                            </div>
+
+                            <div class="col-xs-5 col-md-5">
+                                <span
+                                    th:text="${det.store.contactInfo.address}"></span>                                    
+                            </div>
+                            <th:block th:include="products/components/storedialog::content(${det.store})" />
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
 
         <!-- Related Project-->
         <div th:if="${prd_relatedProducts!=null and  not #lists.isEmpty(prd_relatedProducts)}"
