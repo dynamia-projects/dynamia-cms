@@ -52,4 +52,6 @@ public interface ProductTemplateService {
      */
     String processTemplate(Product product, Map<String, Object> templateModel);
 
+    void loadDefaultTemplateModel(Product product, Map<String, Object> templateModel);
+
 }

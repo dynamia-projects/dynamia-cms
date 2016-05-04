@@ -32,9 +32,12 @@
         <link
             href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700'
             rel='stylesheet' type='text/css' />
+
+        <link th:href="@{/css/intelfont.css}" href="css/intelfont.css"
+              rel="stylesheet" />
         <!-- Main Css -->
         <link
-            th:href="@{'/css/'+${#objects.nullSafe(siteParams['color'],'colorlago')}+'.css'}"
+            th:href="@{'/css/'+${#objects.nullSafe(siteParams['color'],'colorlagointel')}+'.css'}"
             href="css/color2.css" rel="stylesheet" id="color" />
 
         <!-- Font Icon -->
@@ -54,6 +57,7 @@
               rel="stylesheet" />
         <link th:href="@{/css/templatext.css}" href="css/templatext.css"
               rel="stylesheet" />
+
 
         <!-- REVOLUTION BANNER CSS SETTINGS -->
         <link th:href="@{/plugins/rs-plugin/css/responsive.css}"

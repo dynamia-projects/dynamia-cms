@@ -21,7 +21,9 @@ import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.products.domain.Product;
 import com.dynamia.cms.site.products.domain.ProductDetail;
 import com.dynamia.cms.site.products.domain.ProductTemplate;
+import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import com.dynamia.cms.site.products.services.ProductTemplateService;
+import com.dynamia.cms.site.products.services.ProductsService;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,9 @@ public class ProductTemplateServiceImpl implements ProductTemplateService {
 
     @Autowired
     private CrudService crudService;
+
+    @Autowired
+    private ProductsService productsService;
 
     /**
      * Process product template using VelocityTemplate Engine
@@ -113,21 +118,28 @@ public class ProductTemplateServiceImpl implements ProductTemplateService {
         return template;
     }
 
-    private void loadDefaultTemplateModel(Product product, Map<String, Object> templateModel) {
+    @Override
+    public void loadDefaultTemplateModel(Product product, Map<String, Object> templateModel) {
         Site site = product.getSite();
-
+        CMSUtil util = new CMSUtil(site);
         templateModel.putAll(BeanUtils.getValuesMaps("", product));
+        ProductsSiteConfig config = productsService.getSiteConfig(site);
 
         templateModel.put("imageURL", getImageURL(site, product.getImage()));
         templateModel.put("image2URL", getImageURL(site, product.getImage2()));
         templateModel.put("image3URL", getImageURL(site, product.getImage3()));
         templateModel.put("image4URL", getImageURL(site, product.getImage4()));
+        templateModel.put("priceFormatted", util.formatNumber(product.getPrice(), config.getPricePattern()));
+        templateModel.put("lastPriceFormatted", util.formatNumber(product.getLastPrice(), config.getPricePattern()));
+        templateModel.put("storePriceFormatted", util.formatNumber(product.getStorePrice(), config.getPricePattern()));
+        templateModel.put("realPriceFormatted", util.formatNumber(product.getRealPrice(), config.getPricePattern()));
+        templateModel.put("realLastPriceFormatted", util.formatNumber(product.getRealLastPrice(), config.getPricePattern()));
 
         templateModel.putAll(BeanUtils.getValuesMaps("brand_", product.getBrand()));
         templateModel.putAll(BeanUtils.getValuesMaps("category_", product.getCategory()));
 
         templateModel.put("brand", product.getBrand().getName());
-        templateModel.put("brand_imageURL", CMSUtil.getSiteURL(site, "/resources/products/brands/thumbnails/" + product.getBrand().getImage()));
+        templateModel.put("brand_imageURL", CMSUtil.getSiteURL(site, "resources/products/brands/thumbnails/" + product.getBrand().getImage()));
         templateModel.put("category", product.getCategory().getName());
 
         for (ProductDetail detail : product.getDetails()) {
@@ -138,11 +150,22 @@ public class ProductTemplateServiceImpl implements ProductTemplateService {
             templateModel.put(name + "_imageURL", detail.getImageURL());
         }
 
+        //Actions
+        String productURL = CMSUtil.getSiteURL(site, "store/products/" + product.getId());
+        templateModel.put("productURL", productURL);
+        String actionPath = CMSUtil.getSiteURL(site, "shoppingcart/");
+        templateModel.put("action_addCart", actionPath + "shop/add/" + product.getId() + "?currentURI=/store/products/" + product.getId());
+        templateModel.put("action_addQuote", actionPath + "quote/add/" + product.getId() + "?currentURI=/store/products/" + product.getId());
+        templateModel.put("action_compare", productURL+"/compare");
+        templateModel.put("action_favorite", productURL+"/favorite");
+        templateModel.put("action_print", productURL+"/print");
+        templateModel.put("action_share", productURL+"#shareProduct"+product.getId());
+
     }
 
     private Object getImageURL(Site site, String image) {
         if (image != null && !image.isEmpty()) {
-            return CMSUtil.getSiteURL(site, "/resources/products/images/" + image);
+            return CMSUtil.getSiteURL(site, "resources/products/images/" + image);
         } else {
             return "";
         }

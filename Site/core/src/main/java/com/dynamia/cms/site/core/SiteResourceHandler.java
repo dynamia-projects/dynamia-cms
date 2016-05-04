@@ -29,6 +29,7 @@ import com.dynamia.cms.site.core.domain.Site;
 import com.dynamia.cms.site.core.services.SiteService;
 
 import tools.dynamia.integration.Containers;
+import tools.dynamia.io.IOUtils;
 import tools.dynamia.io.ImageUtil;
 
 /**
@@ -37,72 +38,73 @@ import tools.dynamia.io.ImageUtil;
  */
 public class SiteResourceHandler extends ResourceHttpRequestHandler {
 
-	private final static String THUMBNAILS = "/thumbnails/";
+    private final static String THUMBNAILS = "/thumbnails/";
 
-	@Override
-	protected Resource getResource(HttpServletRequest request) {
-		SiteService coreService = Containers.get().findObject(SiteService.class);
-		Site site = coreService.getSite(request);
-		if (site == null) {
-			site = coreService.getMainSite();
-		}
+    @Override
+    protected Resource getResource(HttpServletRequest request) {
+        SiteService coreService = Containers.get().findObject(SiteService.class);
+        Site site = coreService.getSite(request);
+        if (site == null) {
+            site = coreService.getMainSite();
+        }
 
-		if (site == null) {
-			throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.getServerName());
-		}
+        if (site == null) {
+            throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.getServerName());
+        }
 
-		Path dir = resolveResourceDirectory(site);
+        Path dir = resolveResourceDirectory(site);
 
-		Path resource = Paths.get(request.getPathInfo());
-		resource = resource.subpath(1, resource.getNameCount());
+        Path resource = Paths.get(request.getPathInfo());
+        resource = resource.subpath(1, resource.getNameCount());
 
-		File file = dir.resolve(resource).toFile();
-		if (ImageUtil.isImage(file)) {
+        File file = dir.resolve(resource).toFile();
+        if (ImageUtil.isImage(file)) {
 
-			if (isThumbnail(request)) {
-				file = createOrLoadThumbnail(file, resource.toString(), request);
-			}
+            if (isThumbnail(request)) {
+                file = createOrLoadThumbnail(file, resource.toString(), request);
+            }
 
-			if (!file.exists()) {
-				file = dir.resolve("images/nophoto.jpg").toFile();
-			}
-		}
+            if (!file.exists()) {
+                file = dir.resolve("images/nophoto.jpg").toFile();
+            }
+        }
 
-		return new FileSystemResource(file);
-	}
+        return new FileSystemResource(file);
+    }
 
-	protected Path resolveResourceDirectory(Site site) {
-		return DynamiaCMS.getSitesResourceLocation(site);
-	}
+    protected Path resolveResourceDirectory(Site site) {
+        return DynamiaCMS.getSitesResourceLocation(site);
+    }
 
-	private boolean isThumbnail(HttpServletRequest request) {
-		return request.getPathInfo().contains(THUMBNAILS);
-	}
+    private boolean isThumbnail(HttpServletRequest request) {
+        return request.getPathInfo().contains(THUMBNAILS);
+    }
 
-	private File createOrLoadThumbnail(File file, String uri, HttpServletRequest request) {
+    private File createOrLoadThumbnail(File file, String uri, HttpServletRequest request) {
 
-		String fileName = file.getName();
-		String baseUri = file.getParentFile().getParent();
+        String fileName = file.getName();
+        String baseUri = file.getParentFile().getParent();
 
-		String w = getParam(request, "w", "200");
-		String h = getParam(request, "h", "200");
-		String subfolder = w + "x" + h;
-		File realThumbImg = new File(baseUri + "/" + subfolder + "/" + fileName);
-		if (!realThumbImg.exists()) {
-			File realImg = new File(baseUri, fileName);
-			if (realImg.exists()) {
-				ImageUtil.resizeJPEGImage(realImg, realThumbImg, Integer.parseInt(w), Integer.parseInt(h));
-			}
-		}
-		return realThumbImg;
+        String w = getParam(request, "w", "200");
+        String h = getParam(request, "h", "200");
+        String subfolder = w + "x" + h;
+        File realThumbImg = new File(baseUri + "/" + subfolder + "/" + fileName);
+        if (!realThumbImg.exists()) {
+            File realImg = new File(baseUri, fileName);
+            if (realImg.exists()) {
+                String format = IOUtils.getFileExtension(realImg);
+                ImageUtil.resizeImage(realImg, realThumbImg, format, Integer.parseInt(w), Integer.parseInt(h));
+            }
+        }
+        return realThumbImg;
 
-	}
+    }
 
-	public String getParam(HttpServletRequest request, String name, String defaultValue) {
-		String value = request.getParameter(name);
-		if (value == null || value.trim().isEmpty()) {
-			value = defaultValue;
-		}
-		return value;
-	}
+    public String getParam(HttpServletRequest request, String name, String defaultValue) {
+        String value = request.getParameter(name);
+        if (value == null || value.trim().isEmpty()) {
+            value = defaultValue;
+        }
+        return value;
+    }
 }
