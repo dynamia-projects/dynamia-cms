@@ -1,4 +1,4 @@
 view: table
-beanClass: com.dynamia.cms.site.pages.domain.PageParameter
+beanClass: tools.dynamia.cms.site.pages.domain.PageParameter
 hidden: [id,page]
 sortFields: [name,value,enabled]

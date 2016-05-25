@@ -29,7 +29,7 @@ limitations under the License.
 				 
     
     
-    <context:component-scan base-package="com.dynamia.cms.site" >
+    <context:component-scan base-package="tools.dynamia.cms.site" >
         <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
     
@@ -52,7 +52,7 @@ limitations under the License.
         	<mvc:exclude-mapping path="/images/**"/>
         	<mvc:exclude-mapping path="/img/**"/>
         	
-        	<bean class="com.dynamia.cms.site.core.SiteHandleInterceptor"/>
+        	<bean class="tools.dynamia.cms.site.core.SiteHandleInterceptor"/>
         </mvc:interceptor>
          
     </mvc:interceptors>
@@ -64,7 +64,7 @@ limitations under the License.
     <!-- TemplateResolver <- TemplateEngine <- ViewResolver -->
     <!-- **************************************************************** -->
 
-    <bean id="templateResolver"  class="com.dynamia.cms.site.templates.thymeleaf.ThymeleafTemplateResolver">        
+    <bean id="templateResolver"  class="tools.dynamia.cms.site.templates.thymeleaf.ThymeleafTemplateResolver">        
         <property name="suffix" value=".html" />
         <property name="templateMode" value="HTML5" />
         <property name="cacheable" value="false"/>

@@ -6,5 +6,5 @@ fields:
     category:
         component: entitypicker
         params:
-            entityClass: com.dynamia.cms.site.banners.domain.BannerCategory
+            entityClass: tools.dynamia.cms.site.banners.domain.BannerCategory
         

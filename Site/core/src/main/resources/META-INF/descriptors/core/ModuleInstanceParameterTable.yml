@@ -1,5 +1,5 @@
 view: table
-beanClass: com.dynamia.cms.site.core.domain.ModuleInstanceParameter
+beanClass: tools.dynamia.cms.site.core.domain.ModuleInstanceParameter
 autofields: false
 
 fields:

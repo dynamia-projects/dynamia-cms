@@ -15,7 +15,7 @@
  */
 package com.dynamia.cms.admin.products.controllers;
 
-import com.dynamia.cms.site.products.domain.Product;
+import tools.dynamia.cms.site.products.domain.Product;
 import tools.dynamia.zk.crud.CrudController;
 
 /**

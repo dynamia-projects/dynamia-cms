@@ -1,6 +1,6 @@
 view: crud
-beanClass: com.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
-controller: com.dynamia.cms.admin.shopping.controllers.ShoppingOrderController
+beanClass: tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+controller: tools.dynamia.cms.admin.shopping.controllers.ShoppingOrderController
 
 autofields: false
 

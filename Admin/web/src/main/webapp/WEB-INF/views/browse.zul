@@ -22,7 +22,7 @@
 
 	<borderlayout height="100%" width="100%"
 		apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.dynamia.cms.admin.core.zk.controllers.FileBrowserVM')">
+		viewModel="@id('vm') @init('tools.dynamia.cms.admin.core.zk.controllers.FileBrowserVM')">
 
 		<center>
 			<filemanager id="fileMgr" rootDirectory="${rootDirectory}" />

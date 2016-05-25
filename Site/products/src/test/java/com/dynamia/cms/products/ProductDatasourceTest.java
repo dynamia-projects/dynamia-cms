@@ -15,10 +15,10 @@
  */
 package com.dynamia.cms.products;
 
-import com.dynamia.cms.site.products.api.ProductsDatasource;
-import com.dynamia.cms.site.products.clients.ProductsDatasourceClient;
-import com.dynamia.cms.site.products.dto.ProductDTO;
-import com.dynamia.cms.site.products.dto.ProductCategoryDTO;
+import tools.dynamia.cms.site.products.api.ProductsDatasource;
+import tools.dynamia.cms.site.products.clients.ProductsDatasourceClient;
+import tools.dynamia.cms.site.products.dto.ProductDTO;
+import tools.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Before;

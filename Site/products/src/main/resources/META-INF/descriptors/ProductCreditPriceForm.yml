@@ -1,5 +1,5 @@
 view: form
-beanClass: com.dynamia.cms.site.products.domain.ProductCreditPrice
+beanClass: tools.dynamia.cms.site.products.domain.ProductCreditPrice
 autofields: false
 
 fields:

@@ -18,27 +18,27 @@ limitations under the License.
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
-		<artifactId>com.dynamia.cms.admin.parent</artifactId>
-		<groupId>com.dynamia.cms</groupId>
-		<version>1.2.0.Final</version>
+		<artifactId>tools.dynamia.cms.admin.parent</artifactId>
+		<groupId>tools.dynamia.cms</groupId>
+		<version>2.0.0.Beta</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<name>DynamiaCMS Admin - Core ZK (${project.version})</name>
-	<groupId>com.dynamia.cms</groupId>
-	<artifactId>com.dynamia.cms.admin.core.zk</artifactId>
-	<version>1.2.0.Final</version>
+	<groupId>tools.dynamia.cms</groupId>
+	<artifactId>tools.dynamia.cms.admin.core.zk</artifactId>
+	<version>2.0.0.Beta</version>
 	<url>http://www.dynamiasoluciones.com</url>
 
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>com.dynamia.cms.admin.core</artifactId>
+			<artifactId>tools.dynamia.cms.admin.core</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>com.dynamia.cms.site.templates</artifactId>
+			<artifactId>tools.dynamia.cms.site.templates</artifactId>
 			<version>${site.cms.version}</version>
 		</dependency>
 		<dependency>

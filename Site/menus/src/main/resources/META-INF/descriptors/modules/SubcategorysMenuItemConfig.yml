@@ -5,5 +5,5 @@ fields:
     category:
         component: entitypicker
         params:
-            entityClass: com.dynamia.cms.site.products.domain.ProductCategory
+            entityClass: tools.dynamia.cms.site.products.domain.ProductCategory
  

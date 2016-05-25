@@ -1,5 +1,5 @@
 view: table
-beanClass: com.dynamia.cms.site.mail.domain.MailAccount
+beanClass: tools.dynamia.cms.site.mail.domain.MailAccount
 hidden: [id,password,site]
 sortFields: [preferred,name,username,serverAddress,port,fromAddress,useTTLS,loginRequired,enconding]
 

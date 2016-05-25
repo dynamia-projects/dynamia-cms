@@ -21,8 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import com.dynamia.cms.site.products.services.ProductsSynchronizer;
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import tools.dynamia.cms.site.products.services.ProductsSynchronizer;
 
 import tools.dynamia.domain.services.CrudService;
 

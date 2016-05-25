@@ -9,9 +9,9 @@ import java.util.Map;
 
 import org.zkoss.zul.Messagebox;
 
-import com.dynamia.cms.site.mail.MailMessage;
-import com.dynamia.cms.site.mail.domain.MailAccount;
-import com.dynamia.cms.site.mail.services.MailService;
+import tools.dynamia.cms.site.mail.MailMessage;
+import tools.dynamia.cms.site.mail.domain.MailAccount;
+import tools.dynamia.cms.site.mail.services.MailService;
 
 import tools.dynamia.actions.AbstractAction;
 import tools.dynamia.actions.ActionEvent;

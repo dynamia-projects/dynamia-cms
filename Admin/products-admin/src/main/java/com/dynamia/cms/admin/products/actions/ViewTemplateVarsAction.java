@@ -5,8 +5,8 @@
  */
 package com.dynamia.cms.admin.products.actions;
 
-import com.dynamia.cms.site.products.domain.Product;
-import com.dynamia.cms.site.products.services.ProductTemplateService;
+import tools.dynamia.cms.site.products.domain.Product;
+import tools.dynamia.cms.site.products.services.ProductTemplateService;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;

@@ -6,13 +6,13 @@ fields:
   type:        
     component: enumbox
     params:
-      enumClass: com.dynamia.cms.site.products.modules.ProductCarouselType
+      enumClass: tools.dynamia.cms.site.products.modules.ProductCarouselType
       valuesAsString: true
     
   category:
     component: entitypicker
     params:
-      entityClass: com.dynamia.cms.site.products.domain.ProductCategory
+      entityClass: tools.dynamia.cms.site.products.domain.ProductCategory
   
   status:
     description: Only for CUSTOM type
@@ -22,7 +22,7 @@ fields:
   orderBy:  
     component: enumbox
     params:
-      enumClass: com.dynamia.cms.site.products.modules.ProductOrderField
+      enumClass: tools.dynamia.cms.site.products.modules.ProductOrderField
       valuesAsString: true
   pageSize:
     

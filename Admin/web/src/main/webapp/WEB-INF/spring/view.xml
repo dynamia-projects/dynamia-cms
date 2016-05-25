@@ -13,8 +13,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd">
 
 
-    <import resource="classpath:META-INF/dynamia/zk-viewers.xml"/>
-
-    <bean id="messageDialog" class="com.dynamia.cms.admin.core.zk.JQueryGrowlMessageDisplayer"/>
+    <bean id="messageDialog" class="tools.dynamia.cms.admin.core.zk.JQueryGrowlMessageDisplayer"/>
 
 </beans>

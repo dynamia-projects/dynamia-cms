@@ -1,5 +1,5 @@
 view: form
-beanClass: com.dynamia.cms.site.banners.domain.Banner
+beanClass: tools.dynamia.cms.site.banners.domain.Banner
 autofields: false
 
 fields:

@@ -1,5 +1,5 @@
 view: form
-beanClass: com.dynamia.cms.site.core.domain.ModuleInstance
+beanClass: tools.dynamia.cms.site.core.domain.ModuleInstance
 
 autofields: false
 
@@ -12,7 +12,7 @@ fields:
       label: Type
       component: typeSelector
       params:
-          typeExtensionClass: com.dynamia.cms.site.core.api.Module
+          typeExtensionClass: tools.dynamia.cms.site.core.api.Module
    
    position:
       component: positionSelector

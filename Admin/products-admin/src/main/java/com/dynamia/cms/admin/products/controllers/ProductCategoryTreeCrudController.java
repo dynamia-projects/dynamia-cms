@@ -15,7 +15,7 @@
  */
 package com.dynamia.cms.admin.products.controllers;
 
-import com.dynamia.cms.site.products.domain.ProductCategory;
+import tools.dynamia.cms.site.products.domain.ProductCategory;
 
 import tools.dynamia.zk.crud.TreeCrudController;
 

@@ -3,14 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>com.dynamia.cms.admin.parent</artifactId>
-		<groupId>com.dynamia.cms</groupId>
-		<version>1.2.0.Final</version>
+		<artifactId>tools.dynamia.cms.admin.parent</artifactId>
+		<groupId>tools.dynamia.cms</groupId>
+		<version>2.0.0.Beta</version>
 	</parent>
-	<groupId>com.dynamia.cms</groupId>
-	<artifactId>com.dynamia.cms.admin.menus</artifactId>
+	<groupId>tools.dynamia.cms</groupId>
+	<artifactId>tools.dynamia.cms.admin.menus</artifactId>
 	<name>DynamiaCMS Admin - Menus (${project.version})</name>
-	<version>1.2.0.Final</version>
+	<version>2.0.0.Beta</version>
 	<url>http://www.dynamiasoluciones.com</url>
 	<build>
 		<plugins>
@@ -37,12 +37,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>com.dynamia.cms.site.menus</artifactId>
+			<artifactId>tools.dynamia.cms.site.menus</artifactId>
 			<version>${site.cms.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>com.dynamia.cms.admin.core.zk</artifactId>
+			<artifactId>tools.dynamia.cms.admin.core.zk</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

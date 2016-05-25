@@ -6,7 +6,7 @@ fields:
   menu:
     component: entitypicker
     params:
-      entityClass: com.dynamia.cms.site.menus.domain.Menu
+      entityClass: tools.dynamia.cms.site.menus.domain.Menu
   
 
     

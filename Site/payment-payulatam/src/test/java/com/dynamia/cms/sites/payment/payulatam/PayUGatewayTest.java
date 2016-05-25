@@ -21,7 +21,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.dynamia.cms.site.payment.payulatam.PayULatamGateway;
+import tools.dynamia.cms.site.payment.payulatam.PayULatamGateway;
 
 public class PayUGatewayTest {
 

@@ -1,5 +1,5 @@
 view: form
-beanClass: com.dynamia.cms.site.payment.domain.PaymentGatewayConfig
+beanClass: tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig
 autofields: false
 
 fields:

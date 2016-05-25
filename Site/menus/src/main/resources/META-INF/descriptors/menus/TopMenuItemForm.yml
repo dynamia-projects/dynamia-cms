@@ -15,7 +15,7 @@ fields:
         component: entitypicker
         label: Page (optional)
         params:
-            entityClass: com.dynamia.cms.site.pages.domain.Page
+            entityClass: tools.dynamia.cms.site.pages.domain.Page
             
     
     href:
@@ -27,7 +27,7 @@ fields:
     type:
         component: typeSelector
         params:
-            typeExtensionClass: com.dynamia.cms.site.menus.api.MenuItemType
+            typeExtensionClass: tools.dynamia.cms.site.menus.api.MenuItemType
    
     order:
       component: intbox

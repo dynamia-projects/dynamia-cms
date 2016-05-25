@@ -21,7 +21,7 @@ limitations under the License.
 
 	<component>
 		<component-name>cmseditor</component-name>
-		<component-class>com.dynamia.cms.admin.core.zk.ui.CMSeditor
+		<component-class>tools.dynamia.cms.admin.core.zk.ui.CMSeditor
 		</component-class>
 		<widget-class>ckez.CKeditor</widget-class>
 		<annotation>
@@ -52,7 +52,7 @@ limitations under the License.
 
 	<component>
 		<component-name>resourceSelector</component-name>
-		<component-class>com.dynamia.cms.admin.core.zk.ui.ResourceSelector</component-class>
+		<component-class>tools.dynamia.cms.admin.core.zk.ui.ResourceSelector</component-class>
 		<widget-class>zul.inp.Bandbox</widget-class>
 		<mold>
 			<mold-name>default</mold-name>

@@ -1,4 +1,4 @@
 view: table
-beanClass: com.dynamia.cms.site.menus.domain.MenuItemParameter
+beanClass: tools.dynamia.cms.site.menus.domain.MenuItemParameter
 hidden: [id,menuItem]
 sortFields: [name,value,enabled]

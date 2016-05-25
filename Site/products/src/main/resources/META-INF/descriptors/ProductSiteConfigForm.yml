@@ -1,5 +1,5 @@
 view: form
-beanClass: com.dynamia.cms.site.products.domain.ProductsSiteConfig
+beanClass: tools.dynamia.cms.site.products.domain.ProductsSiteConfig
 hidden: [id,lastSync,token,parametersAsMap]
 sortFields: [pricePattern,defaultCurrency,productsPerPage,productsStockToShow,synchronizationEnabled,showEnabled,quoteEnabled,showBadges, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceUsername,datasourcePassword,mailAccount,shareProductMailTemplate,orderCompletedMailTemplate]
 

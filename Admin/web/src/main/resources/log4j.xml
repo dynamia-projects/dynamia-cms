@@ -18,7 +18,7 @@
 
    
 
-    <logger name="com.dynamia.cms" additivity="false">
+    <logger name="tools.dynamia.cms" additivity="false">
         <level value="info" />
         <appender-ref ref="applicationFileLog" />
         <appender-ref ref="consoleAppender" />

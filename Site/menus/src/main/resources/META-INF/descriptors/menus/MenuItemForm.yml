@@ -1,5 +1,5 @@
 view: form
-beanClass: com.dynamia.cms.site.menus.domain.MenuItem
+beanClass: tools.dynamia.cms.site.menus.domain.MenuItem
 autofields: false
 
 fields:

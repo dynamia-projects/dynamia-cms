@@ -1,5 +1,5 @@
 view: form
-beanClass: com.dynamia.cms.site.products.domain.Product
+beanClass: tools.dynamia.cms.site.products.domain.Product
 autofields: false
 
 fields:

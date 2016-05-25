@@ -20,13 +20,13 @@ limitations under the License.
     xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.dynamia.cms</groupId>
-        <artifactId>com.dynamia.cms.site.parent</artifactId>
-        <version>1.2.0.Final</version>
+        <groupId>tools.dynamia.cms</groupId>
+        <artifactId>tools.dynamia.cms.site.parent</artifactId>
+        <version>2.0.0.Beta</version>
     </parent>
-    <groupId>com.dynamia.cms</groupId>
-    <artifactId>com.dynamia.cms.site.products</artifactId>
-    <version>1.2.0.Final</version>
+    <groupId>tools.dynamia.cms</groupId>
+    <artifactId>tools.dynamia.cms.site.products</artifactId>
+    <version>2.0.0.Beta</version>
     <name>DynamiaCMS Site - Products (${project.version})</name>
     <url>http://maven.apache.org</url>
     <properties>
@@ -62,12 +62,12 @@ limitations under the License.
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.products.api</artifactId>
+            <artifactId>tools.dynamia.cms.site.products.api</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.core</artifactId>
+            <artifactId>tools.dynamia.cms.site.core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -78,17 +78,17 @@ limitations under the License.
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.pages</artifactId>
+            <artifactId>tools.dynamia.cms.site.pages</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.users</artifactId>
+            <artifactId>tools.dynamia.cms.site.users</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.shoppingcart</artifactId>
+            <artifactId>tools.dynamia.cms.site.shoppingcart</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -100,12 +100,12 @@ limitations under the License.
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.menus</artifactId>
+            <artifactId>tools.dynamia.cms.site.menus</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.site.mail</artifactId>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.site.mail</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

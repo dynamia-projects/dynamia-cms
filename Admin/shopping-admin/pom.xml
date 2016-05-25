@@ -4,13 +4,13 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.dynamia.cms</groupId>
-		<artifactId>com.dynamia.cms.admin.parent</artifactId>
-		<version>1.2.0.Final</version>
+		<groupId>tools.dynamia.cms</groupId>
+		<artifactId>tools.dynamia.cms.admin.parent</artifactId>
+		<version>2.0.0.Beta</version>
 	</parent>
-	<groupId>com.dynamia.cms</groupId>
-	<artifactId>com.dynamia.cms.admin.shopping</artifactId>
-	<version>1.2.0.Final</version>
+	<groupId>tools.dynamia.cms</groupId>
+	<artifactId>tools.dynamia.cms.admin.shopping</artifactId>
+	<version>2.0.0.Beta</version>
 	<name>DynamiaCMS Admin - Shopping (${project.version})</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -37,8 +37,8 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.dynamia.cms</groupId>
-			<artifactId>com.dynamia.cms.site.shoppingcart</artifactId>
+			<groupId>tools.dynamia.cms</groupId>
+			<artifactId>tools.dynamia.cms.site.shoppingcart</artifactId>
 			<version>${site.cms.version}</version>
 		</dependency>
 	</dependencies>

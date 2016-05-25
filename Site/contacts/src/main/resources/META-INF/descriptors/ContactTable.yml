@@ -1,5 +1,5 @@
 view: table
-beanClass: com.dynamia.cms.site.contacts.domain.Contact
+beanClass: tools.dynamia.cms.site.contacts.domain.Contact
 autofields: false
 
 fields:

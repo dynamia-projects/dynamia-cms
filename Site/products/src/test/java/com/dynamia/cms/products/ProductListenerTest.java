@@ -15,9 +15,9 @@
  */
 package com.dynamia.cms.products;
 
-import com.dynamia.cms.site.products.api.DataChangedEvent;
-import com.dynamia.cms.site.products.api.ProductsListener;
-import com.dynamia.cms.site.products.clients.ProductsListenerClient;
+import tools.dynamia.cms.site.products.api.DataChangedEvent;
+import tools.dynamia.cms.site.products.api.ProductsListener;
+import tools.dynamia.cms.site.products.clients.ProductsListenerClient;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;

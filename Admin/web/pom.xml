@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>com.dynamia.cms.admin.parent</artifactId>
-        <groupId>com.dynamia.cms</groupId>
-        <version>1.2.0.Final</version>
+        <artifactId>tools.dynamia.cms.admin.parent</artifactId>
+        <groupId>tools.dynamia.cms</groupId>
+        <version>2.0.0.Beta</version>
     </parent>
-    <groupId>com.dynamia.cms</groupId>
-    <artifactId>com.dynamia.cms.admin.web</artifactId>
+    <groupId>tools.dynamia.cms</groupId>
+    <artifactId>tools.dynamia.cms.admin.web</artifactId>
     <packaging>war</packaging>
-    <version>1.2.0.Final</version>
+    <version>2.0.0.Beta</version>
     <name>DynamiaCMS Admin - Web (${project.version})</name>
     <url>http://www.dynamiasoluciones.com</url>
 
@@ -22,91 +22,91 @@
         <!-- ADMIN MODULES -->
 
         <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.admin.core</artifactId>
-            <version>1.2.0.Final</version>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.core</artifactId>
+            <version>2.0.0.Beta</version>
         </dependency>
 
         <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.admin.core.zk</artifactId>
-            <version>1.2.0.Final</version>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.core.zk</artifactId>
+            <version>2.0.0.Beta</version>
         </dependency>
 
         <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.admin.products</artifactId>
-            <version>1.2.0.Final</version>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.products</artifactId>
+            <version>2.0.0.Beta</version>
         </dependency>
         <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.admin.users</artifactId>
-            <version>1.2.0.Final</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.admin.mail</artifactId>
-            <version>1.2.0.Final</version>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.users</artifactId>
+            <version>2.0.0.Beta</version>
         </dependency>
 
         <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.admin.shopping</artifactId>
-            <version>1.2.0.Final</version>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.mail</artifactId>
+            <version>2.0.0.Beta</version>
         </dependency>
 
         <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.admin.menus</artifactId>
-            <version>1.2.0.Final</version>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.shopping</artifactId>
+            <version>2.0.0.Beta</version>
         </dependency>
 
         <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.admin.pages</artifactId>
-            <version>1.2.0.Final</version>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.menus</artifactId>
+            <version>2.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.pages</artifactId>
+            <version>2.0.0.Beta</version>
         </dependency>
 
         <!-- SITE MODULES -->
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.core</artifactId>
+            <artifactId>tools.dynamia.cms.site.core</artifactId>
             <version>${site.cms.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.pages</artifactId>
+            <artifactId>tools.dynamia.cms.site.pages</artifactId>
             <version>${site.cms.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.menus</artifactId>
+            <artifactId>tools.dynamia.cms.site.menus</artifactId>
             <version>${site.cms.version}</version>
         </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>com.dynamia.cms.site.products</artifactId>
+            <artifactId>tools.dynamia.cms.site.products</artifactId>
             <version>${site.cms.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.site.payment.payulatam</artifactId>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.site.payment.payulatam</artifactId>
             <version>${site.cms.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.site.banners</artifactId>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.site.banners</artifactId>
             <version>${site.cms.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.dynamia.cms</groupId>
-            <artifactId>com.dynamia.cms.site.contacts</artifactId>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.site.contacts</artifactId>
             <version>${site.cms.version}</version>
         </dependency>
 

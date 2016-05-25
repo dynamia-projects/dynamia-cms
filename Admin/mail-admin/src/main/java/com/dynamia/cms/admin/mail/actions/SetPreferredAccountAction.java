@@ -7,8 +7,8 @@ package com.dynamia.cms.admin.mail.actions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.dynamia.cms.site.mail.domain.MailAccount;
-import com.dynamia.cms.site.mail.services.MailService;
+import tools.dynamia.cms.site.mail.domain.MailAccount;
+import tools.dynamia.cms.site.mail.services.MailService;
 
 import tools.dynamia.actions.InstallAction;
 import tools.dynamia.commons.ApplicableClass;

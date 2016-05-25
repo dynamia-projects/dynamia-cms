@@ -1,5 +1,5 @@
 view: form
-beanClass: com.dynamia.cms.site.products.domain.ProductsSiteConfigParameter
+beanClass: tools.dynamia.cms.site.products.domain.ProductsSiteConfigParameter
 hidden: [id,siteConfig]
 sortFields: [name,value]
 

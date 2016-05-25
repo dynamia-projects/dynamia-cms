@@ -1,5 +1,5 @@
 view: form
-beanClass: com.dynamia.cms.site.core.domain.Site
+beanClass: tools.dynamia.cms.site.core.domain.Site
 hidden: [id]
 sortFields: [name,parent,key,template,description,offline,offlineIcon,offlineMessage,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
 

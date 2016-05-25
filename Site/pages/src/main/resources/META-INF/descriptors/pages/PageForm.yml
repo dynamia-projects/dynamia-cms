@@ -1,6 +1,6 @@
 view: form
-beanClass: com.dynamia.cms.site.pages.domain.Page
-customizer: com.dynamia.cms.admin.pages.PageFormCustomizer
+beanClass: tools.dynamia.cms.site.pages.domain.Page
+customizer: tools.dynamia.cms.admin.pages.PageFormCustomizer
 hidden: [id,uuid,creationDate,parameter,site,publishedDate]
 sortFields: [title,subtitle,alias,type,category,author,layout,icon,tags,startDate,endDate,imageURL,summary,content,showTitle,published,neverExpire]
 
@@ -25,7 +25,7 @@ fields:
     type:
         component: typeSelector
         params:
-            typeExtensionClass: com.dynamia.cms.site.pages.api.PageTypeExtension
+            typeExtensionClass: tools.dynamia.cms.site.pages.api.PageTypeExtension
         
     content:
         component: cmseditor

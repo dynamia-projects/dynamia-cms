@@ -17,8 +17,8 @@ package com.dynamia.cms.admin.products.actions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import com.dynamia.cms.site.products.services.ProductsSynchronizer;
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import tools.dynamia.cms.site.products.services.ProductsSynchronizer;
 
 import tools.dynamia.actions.ActionGroup;
 import tools.dynamia.actions.InstallAction;
