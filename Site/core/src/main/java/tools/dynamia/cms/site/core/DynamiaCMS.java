@@ -36,9 +36,9 @@ public class DynamiaCMS {
 
     private static final String PREFIX = "CMSConfig_";
 
-    public static final String CFG_HOMEVAR = PREFIX + "HOMEPATH";
-    public static final String CFG_DEFAULT_TEMPLATE = PREFIX + "DEFAULTTEMPLATE";
-    public static final String CFG_SUPER_ADMIN_SITE = PREFIX + "SUPERADMINSITE";
+    public static final String CFG_HOMEVAR = PREFIX + "HomePath";
+    public static final String CFG_DEFAULT_TEMPLATE = PREFIX + "DefaultTemplate";
+    public static final String CFG_SUPER_ADMIN_SITE = PREFIX + "SuperAdminSite";
 
     private static final String TEMPLATES = "templates";
     private static final String VIEWS = "views";
@@ -85,7 +85,7 @@ public class DynamiaCMS {
 
     private static String homePath() {
         if (path == null) {
-            path = ApplicationParameters.get().getValue(CFG_HOMEVAR);
+            path = ApplicationParameters.get().getValue(CFG_HOMEVAR, System.getProperty("cms.home", "."));
         }
         return path;
     }
@@ -106,6 +106,15 @@ public class DynamiaCMS {
 
     public static void reloadHomePath() {
         path = null;
+        initDefaultLocations();
+    }
+
+    public static void initDefaultLocations() {
+        getHomePath();
+        getModulesLocation();
+        getSitesResourceLocation();
+        getTemplatesLocation();
+        getViewLocation();
     }
 
 }

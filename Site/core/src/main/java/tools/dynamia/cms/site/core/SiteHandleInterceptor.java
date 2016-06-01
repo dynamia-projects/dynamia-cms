@@ -36,97 +36,84 @@ import tools.dynamia.integration.Containers;
  */
 public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 
-	@Autowired
-	private SiteService service;
+    @Autowired
+    private SiteService service;
 
-	private final LoggingService logger = new SLF4JLoggingService(SiteHandleInterceptor.class);
+    private final LoggingService logger = new SLF4JLoggingService(SiteHandleInterceptor.class);
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-		Site site = getCurrentSite(request);
-		try {
-			for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
-				interceptor.beforeRequest(site, request, response);
-			}
-		} catch (Exception e) {
-			logger.error("Error calling Site interceptor", e);
-			return false;
-		}
+        Site site = getCurrentSite(request);
+        try {
+            for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
+                interceptor.beforeRequest(site, request, response);
+            }
+        } catch (Exception e) {
+            logger.error("Error calling Site interceptor", e);
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	private Site getCurrentSite(HttpServletRequest request) {
-		Site site = SiteContext.get().getCurrent();
-		if (site == null) {
-			site = service.getSite(request);
-			SiteContext.get().setCurrent(site);
-		}
-		if (site == null) {
-			site = service.getMainSite();
-			SiteContext.get().setCurrent(site);
-		}
-		SiteContext.get().setCurrentURI(request.getRequestURI());
-		SiteContext.get().setCurrentURL(request.getRequestURL().toString());
-		if (SiteContext.get().getSiteURL() == null) {
-			String siteURL = "http://" + request.getServerName();
-			if (request.getServerPort() != 80) {
-				siteURL = siteURL + ":" + request.getServerPort();
-			}
-			SiteContext.get().setSiteURL(siteURL);
-		}
-		return site;
-	}
+    private Site getCurrentSite(HttpServletRequest request) {
+        Site site = SiteContext.get().getCurrent();
+        if (site == null) {
+            site = service.getSite(request);
+            SiteContext.get().setCurrent(site);
+        }
+        if (site == null) {
+            site = service.getMainSite();
+            SiteContext.get().setCurrent(site);
+        }
+        SiteContext.get().setCurrentURI(request.getRequestURI());
+        SiteContext.get().setCurrentURL(request.getRequestURL().toString());
+        if (SiteContext.get().getSiteURL() == null) {
+            String siteURL = "http://" + request.getServerName();
+            if (request.getServerPort() != 80) {
+                siteURL = siteURL + ":" + request.getServerPort();
+            }
+            SiteContext.get().setSiteURL(siteURL);
+        }
+        return site;
+    }
 
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
-			throws Exception {
-		if (modelAndView == null) {
-			return;
-		}
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
+            throws Exception {
+        if (modelAndView == null) {
+            return;
+        }
 
-		Site site = getCurrentSite(request);
+        Site site = getCurrentSite(request);
 
-		loadSiteMetadata(site, modelAndView);
+        loadSiteMetadata(site, modelAndView);
 
-		try {
-			for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
-				interceptor.afterRequest(site, request, response, modelAndView);
-			}
-		} catch (Exception e) {
-			logger.error("Error calling Site interceptor", e);
-		}
+        try {
+            for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
+                interceptor.afterRequest(site, request, response, modelAndView);
+            }
+        } catch (Exception e) {
+            logger.error("Error calling Site interceptor", e);
+        }
 
-		if (site != null && site.isOffline()) {
-			shutdown(site, modelAndView);
-		}
-	}
+    }
 
-	private void shutdown(Site site, ModelAndView mv) {
-		mv.setViewName("error/offline");
-		mv.addObject("title", "OFFLINE!");
-		mv.addObject("site", site);
-		mv.addObject("siteKey", site.getKey());
-		mv.addObject("offlineIcon", site.getOfflineIcon());
-		mv.addObject("offlineMessage", site.getOfflineMessage());
+    private void loadSiteMetadata(Site site, ModelAndView mv) {
+        if (site != null && mv != null) {
+            mv.addObject("siteKey", site.getKey());
+            mv.addObject("site", site);
+            mv.addObject("metaAuthor", site.getMetadataAuthor());
+            mv.addObject("metaRights", site.getMetadataRights());
+            if (!mv.getModel().containsKey("metaDescription")) {
+                mv.addObject("metaDescription", site.getMetadataDescription());
+            }
+            if (!mv.getModel().containsKey("metaKeywords")) {
+                mv.addObject("metaKeywords", site.getMetadataKeywords());
+            }
 
-	}
-
-	private void loadSiteMetadata(Site site, ModelAndView mv) {
-		if (site != null && mv != null) {
-			mv.addObject("siteKey", site.getKey());
-			mv.addObject("site", site);
-			mv.addObject("metaAuthor", site.getMetadataAuthor());
-			mv.addObject("metaRights", site.getMetadataRights());
-			if (!mv.getModel().containsKey("metaDescription")) {
-				mv.addObject("metaDescription", site.getMetadataDescription());
-			}
-			if (!mv.getModel().containsKey("metaKeywords")) {
-				mv.addObject("metaKeywords", site.getMetadataKeywords());
-			}
-
-		}
-	}
+        }
+    }
 
 }

@@ -1,194 +1,194 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
-<head>
-<title th:text="|${site.name} - ${title}|">MetroMan - Responisve
-	Multipurpose Bootstrap Template</title>
-<meta charset="UTF-8"/>
-<meta name="template" content="metroman" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" th:content="${metaDescription}" />
-<meta name="author" th:content="${metaAuthor}" content="" />
-<meta name="keywords" th:content="${metaKeywords}" content="" />
-<meta name="copyright" th:content="${metaRights}" content="" />
-<meta name="robots" content="index, follow" />
-<meta th:content="|${site.name} - ${title}|" property="og:title"
-	content="" />
-<meta th:content="${metaDescription}" property="og:description"
-	content="" />
-<th:block th:each="pi : ${pageImages}">
-	<meta th:content="${pi}" property="og:image" content="" />
-</th:block>
-<meta th:content="${pageImage}" property="og:image" content="" />
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
+    <head>
+        <title th:text="|${site.name} - ${title}|">MetroMan - Responisve
+            Multipurpose Bootstrap Template</title>
+        <meta charset="UTF-8"/>
+        <meta name="template" content="metroman" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" th:content="${metaDescription}" />
+        <meta name="author" th:content="${metaAuthor}" content="" />
+        <meta name="keywords" th:content="${metaKeywords}" content="" />
+        <meta name="copyright" th:content="${metaRights}" content="" />
+        <meta name="robots" content="index, follow" />
+        <meta th:content="|${site.name} - ${title}|" property="og:title"
+              content="" />
+        <meta th:content="${metaDescription}" property="og:description"
+              content="" />
+        <th:block th:each="pi : ${pageImages}">
+            <meta th:content="${pi}" property="og:image" content="" />
+        </th:block>
+        <meta th:content="${pageImage}" property="og:image" content="" />
 
-<link
-	th:href="@{${#objects.nullSafe(siteParams['favicon'],'/img/favicon/favicon.png')}}"
-	href="img/favicon.ico" rel="shortcut icon"
-	type="image/vnd.microsoft.icon" />
-
-
-<!-- CSS -->
-<!-- Styles -->
-<!-- Bootstrap CSS -->
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-<!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
-<link rel="stylesheet" th:href="@{/css/settings.css}" media="screen" />
-<!-- Navigation menu -->
-<link rel="stylesheet" th:href="@{/css/ddlevelsmenu-base.css}" />
-<link rel="stylesheet" th:href="@{/css/ddlevelsmenu-topbar.css}" />
-<!-- PrettyPhoto -->
-<link rel="stylesheet" th:href="@{/css/prettyPhoto.css}" />
+        <link
+            th:href="@{${#objects.nullSafe(siteParams['favicon'],'/img/favicon/favicon.png')}}"
+            href="img/favicon.ico" rel="shortcut icon"
+            type="image/vnd.microsoft.icon" />
 
 
-<!-- Font awesome CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <!-- CSS -->
+        <!-- Styles -->
+        <!-- Bootstrap CSS -->
+        <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+        <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+        <link rel="stylesheet" th:href="@{/css/settings.css}" media="screen" />
+        <!-- Navigation menu -->
+        <link rel="stylesheet" th:href="@{/css/ddlevelsmenu-base.css}" />
+        <link rel="stylesheet" th:href="@{/css/ddlevelsmenu-topbar.css}" />
+        <!-- PrettyPhoto -->
+        <link rel="stylesheet" th:href="@{/css/prettyPhoto.css}" />
+
+
+        <!-- Font awesome CSS -->
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
 
 
 
-<!-- Custom CSS -->
-<link th:href="@{/css/style.css}" rel="stylesheet" />
-<link th:href="@{/css/template.css}" rel="stylesheet" />
-<th:block th:include="module::position('head_tag')" />
-</head>
-<body>
+        <!-- Custom CSS -->
+        <link th:href="@{/css/style.css}" rel="stylesheet" />
+        <link th:href="@{/css/template.css}" rel="stylesheet" />
+        <th:block th:include="module::position('head_tag')" />
+    </head>
+    <body>
 
 
-	<div id="fb-root"></div>
+        <div id="fb-root"></div>
 
-	<div class="slidepanel">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8">
-					<div class="spara">
-						<th:block th:include="module::position('topmenu_left')" />
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="social">
-						<th:block th:include="module::position('topmenu_right')" />
-					</div>
-				</div>
-			</div>
-			<div class="clearfix"></div>
-		</div>
-	</div>
-
-
-	<!-- Header Start -->
-	<header>
+        <div class="slidepanel">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="spara">
+                            <th:block th:include="module::position('topmenu_left')" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="social">
+                            <th:block th:include="module::position('topmenu_right')" />
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
 
 
-		<div class="container">
-			<div class="row">
-				<div class="col-md-3 col-sm-4">
-
-					<!-- Logo starts -->
-
-					<div class="logo">
-						<th:block th:include="module::position('logo')" />
-						<div class="clearfix"></div>
-					</div>
-					<!-- Logo ends -->
-				</div>
-
-				<div class="col-md-9 col-sm-8">
-					<!-- Navbar starts -->
-					<div class="navi pull-right">
-						<th:block th:include="module::position('mainmenu')" />
-					</div>
-
-					<div class="navis"></div>
-					<!-- Navbar ends -->
-
-					<div class="clearfix"></div>
-				</div>
-			</div>
-		</div>
-	</header>
-	<!-- Header End -->
-
-	<div class="clearfix"></div>
+        <!-- Header Start -->
+        <header>
 
 
-	<div class="container">
-		<th:block th:include="tpl_globalmessages::content" />
-	</div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4">
+
+                        <!-- Logo starts -->
+
+                        <div class="logo">
+                            <th:block th:include="module::position('logo')" />
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- Logo ends -->
+                    </div>
+
+                    <div class="col-md-9 col-sm-8">
+                        <!-- Navbar starts -->
+                        <div class="navi pull-right">
+                            <th:block th:include="module::position('mainmenu')" />
+                        </div>
+
+                        <div class="navis"></div>
+                        <!-- Navbar ends -->
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Header End -->
+
+        <div class="clearfix"></div>
 
 
-	<th:block th:include="module::position('banners')" />
-
-	<!-- CONTENT -->
-	<div class="clearfix"></div>
-	<th:block layout:fragment="content" />
-
-	<section id="quicklink" class="mt20"></section>
-	<!-- Footer -->
-	<footer id="footer">
-		<div class="container">
-			<div class="row">
-				<div class="widgets">
-					<th:block th:include="module::position('footer')" />
-				</div>
-			</div>
+        <div class="container">
+            <th:block th:include="tpl_globalmessages::content" />
+        </div>
 
 
-			<div class="row">
-				<div class="col-md-12">
-					Powered by: <a href="http://www.dynamiasoluciones.com"
-						target="blank"
-						title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing"
-						class="tooltip-test">Dynamia Soluciones IT</a>
-				</div>
-			</div>
-		</div>
+        <th:block th:include="module::position('banners')" />
 
-	</footer>
+        <!-- CONTENT -->
+        <div class="clearfix"></div>
+        <th:block layout:fragment="content" />
 
-
-	<!-- Scroll to top -->
-	<span class="totop"><a href="#"><i class="fa fa-angle-up"></i></a></span>
-
-	<th:block th:include="module::stylesheets" />
-
-	<!-- Javascript files -->
-	<!-- jQuery -->
-	<script th:src="@{/js/jquery.js}"></script>
-	<!-- Bootstrap JS -->
-	<script th:src="@{/js/bootstrap.min.js}"></script>
-
-	<th:block th:include="module::scripts" />
-
-	<!-- Navigation menu -->
-	<script th:src="@{/js/ddlevelsmenu.js}"></script>
-
-	<!-- Support -->
-	<script th:src="@{/js/filter.js}"></script>
-	<!-- Respond JS for IE8 -->
-	<script th:src="@{/js/respond.min.js}"></script>
-	<!-- HTML5 Support for IE -->
-	<script th:src="@{/js/html5shiv.js}"></script>
-	<!-- Custom JS -->
-	<script th:src="@{/js/template.js}"></script>
+        <section id="quicklink" class="mt20"></section>
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="widgets">
+                        <th:block th:include="module::position('footer')" />
+                    </div>
+                </div>
 
 
-	<th:block layout:fragment="scripts"></th:block>
-	<th:block th:include="tpl_googleAnalytics::content" />
-	<th:block th:include="tpl_webchat::content" />
+                <div class="row">
+                    <div class="col-md-12">
+                        Powered by: <a href="http://www.dynamiasoluciones.com"
+                                       target="blank"
+                                       title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing"
+                                       class="tooltip-test">Dynamia Soluciones IT</a>
+                    </div>
+                </div>
+            </div>
 
-	<script>
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id))
-				return;
-			js = d.createElement(s);
-			js.id = id;
-			js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>
+        </footer>
 
-	<th:block th:include="module::position('custom_scripts')" />
-</body>
+
+        <!-- Scroll to top -->
+        <span class="totop"><a href="#"><i class="fa fa-angle-up"></i></a></span>
+
+        <th:block th:include="module::stylesheets" />
+
+        <!-- Javascript files -->
+        <!-- jQuery -->
+        <script th:src="@{/js/jquery.js}"></script>
+        <!-- Bootstrap JS -->
+        <script th:src="@{/js/bootstrap.min.js}"></script>
+
+        <th:block th:include="module::scripts" />
+
+        <!-- Navigation menu -->
+        <script th:src="@{/js/ddlevelsmenu.js}"></script>
+
+        <!-- Support -->
+        <script th:src="@{/js/filter.js}"></script>
+        <!-- Respond JS for IE8 -->
+        <script th:src="@{/js/respond.min.js}"></script>
+        <!-- HTML5 Support for IE -->
+        <script th:src="@{/js/html5shiv.js}"></script>
+        <!-- Custom JS -->
+        <script th:src="@{/js/template.js}"></script>
+
+
+        <th:block layout:fragment="scripts"></th:block>
+        <th:block th:include="tpl_googleAnalytics::content" />
+        <th:block th:include="tpl_webchat::content" />
+
+        <script>
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+
+        <th:block th:include="module::position('custom_scripts')" />
+    </body>
 </html>

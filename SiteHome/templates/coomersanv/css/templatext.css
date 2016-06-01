@@ -1,0 +1,173 @@
+.headerimage {
+    height: 150px;
+    margin-top: 35px;
+    width: 100%;
+    position: absolute;
+    z-index: -1000;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+.footerimage {
+    height: 250px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+.topsearch {
+    margin-top: 40px;
+}
+
+/* centered columns styles */
+.row-centered {
+    text-align: center;
+}
+
+.col-centered {
+    display: inline-block;
+    float: none;
+    /* reset the text-align */
+    text-align: left;
+    /* inline-block space fix */
+    margin-right: -4px;
+}
+
+.col-fixed {
+    /* custom width */
+    width: 320px;
+}
+
+.col-min {
+    /* custom min width */
+    min-width: 320px;
+}
+
+.col-max {
+    /* custom max width */
+    max-width: 320px;
+}
+
+.footerimage a:hover{
+    text-decoration: underline !important;
+}
+
+.footerimage .light a{
+    color: white !important;
+}
+
+.footerimage .light h1,.footerimage .light h2,.footerimage .light h3{
+    color: white !important;
+}
+
+.common a:link{
+    color: #337ab7;	
+}
+
+.common a:hover{
+    text-decoration: underline;
+}
+
+
+.panel-red{
+    border-color: #d43f3a;  
+}
+
+.panel-red>.panel-heading {
+    color: #fff;
+    background-color: #d43f3a;
+    border-color: #d43f3a;
+}
+
+.panel-orange{
+    border-color: #f0ad4e;  
+}
+
+.panel-orange>.panel-heading {
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #f0ad4e;
+}
+
+.panel-green{
+    border-color: #339900;  
+}
+
+.panel-green>.panel-heading {
+    color: #fff;
+    background-color: #339900;
+    border-color: #339900;
+}
+
+.panel-black{
+    border-color: #666666;  
+}
+
+.panel-black>.panel-heading {
+    color: #fff;
+    background-color: #666666;
+    border-color: #666666;
+}
+
+.panel-purple{
+    border-color: #9C27B0;  
+}
+
+.panel-purple>.panel-heading {
+    color: #fff;
+    background-color: #9C27B0;
+    border-color: #9C27B0;
+}
+
+.panel150{
+    min-height: 150px;
+}
+
+.pagesummary{
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+.pagesummary .pagetitle{
+    clear: both;    
+    font-size: 34px;
+}
+
+.pagesummary .pagetitle a{
+    color: #333333;
+    text-decoration: none;
+}
+
+.pagesummary .pagetitle a:visited{
+    color: #666666;
+    text-decoration: none;
+}
+
+.pagesummary .pagetitle a:hover{    
+    text-decoration: underline;
+}
+
+.pagesummary .pageauthor{
+    float: left;
+    font-weight: 200;
+    font-size: 16px;
+}
+
+.pagesummary .pagedate{
+    float: right;    
+    font-size: 14px;
+}
+
+.pagesummary .pagecontent{
+    margin-top: 30px;
+    clear: both;
+}
+
+.pagesummary .pagecontent span,.pagesummary .pagecontent a{
+    font-size: 20px;
+}
+
+.pagesummary .pagecontent img{
+    float: right;
+}

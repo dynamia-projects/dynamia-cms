@@ -16,8 +16,11 @@
 package tools.dynamia.cms.site.pages.controllers;
 
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import tools.dynamia.cms.site.pages.PageNotFoundException;
@@ -26,8 +29,10 @@ import tools.dynamia.cms.site.pages.PageNotFoundException;
  *
  * @author Mario Serrano Leones
  */
+@ControllerAdvice
 public class PageErrorController {
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(PageNotFoundException.class)
     public ModelAndView handleException(HttpServletRequest request, PageNotFoundException exception) {
         ModelAndView mv = new ModelAndView("error/404");

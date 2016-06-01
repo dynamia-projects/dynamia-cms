@@ -7,47 +7,47 @@
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
 
-	<style src="/css/default.css" />
-	<style src="/css/viewers.css" />
-	<style src="/css/zkstyles.css" />
+    <style src="/css/default.css" />
+    <style src="/css/viewers.css" />
+    <style src="/css/zkstyles.css" />
 
-	<style src="/css/bootstrap.min.css" />
-	<style src="/css/bootstrap-theme.min.css" />
+    <style src="/css/bootstrap.min.css" />
+    <style src="/css/bootstrap-theme.min.css" />
 
-	<style src="/css/jquery.growl.css" />
-	<style src="/css/themes/blue.css" />
+    <style src="/css/jquery.growl.css" />
+    <style src="/css/themes/blue.css" />
 
-	<style
-		src="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+    <style
+        src="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
 
 
-	<borderlayout id="main" apply="${navComposer}" visible="true">
+    <borderlayout id="main" apply="${navComposer}" visible="true">
 
-		<north sclass="header" height="50px"
-			self="@{insert(headercontainer)}">
-			<div>
-				<div sclass="topMenu" self="@{insert(topmenu)}"></div>
-				<hlayout>
-					<div>
-						<image id="imglogo" src="/images/LogoCMS.png"
-							style="max-height: 30px; margin-top: 10px; margin-left: 10px" />
-					</div>
-					<div self="@{insert(header)}"></div>
-				</hlayout>
-			</div>
-		</north>
+        <north sclass="header" height="50px"
+                       self="@{insert(headercontainer)}">
+            <div>
+                <div sclass="topMenu" self="@{insert(topmenu)}"></div>
+                <hlayout>
+                    <div>
+                        <image id="imglogo" src="/images/LogoCMS.png"
+                                                       style="max-height: 30px; margin-top: 10px; margin-left: 10px" />
+                    </div>
+                    <div self="@{insert(header)}"></div>
+                </hlayout>
+            </div>
+        </north>
 
-		<center sclass="content" autoscroll="false" border="none"
-			self="@{insert(content)}">
+        <center sclass="content" autoscroll="false" border="none"
+                        self="@{insert(content)}">
 
-		</center>
+        </center>
 
-		<south sclass=" footer" self="@{insert(footer)}">
-			<label value="Powered by: Dynamia Soluciones IT" />
-		</south>
-	</borderlayout>
+        <south sclass=" footer" self="@{insert(footer)}">
+            <label value="Powered by: Dynamia Soluciones IT" />
+        </south>
+    </borderlayout>
 
-	<script type="text/javascript" src="/js/npm.js" />
-	<script type="text/javascript" src="/js/bootstrap.min.js" />
-	<script type="text/javascript" src="/js/jquery.growl.js" />
+    <script type="text/javascript" src="/js/npm.js" />
+    <script type="text/javascript" src="/js/bootstrap.min.js" />
+    <script type="text/javascript" src="/js/jquery.growl.js" />
 </zk>

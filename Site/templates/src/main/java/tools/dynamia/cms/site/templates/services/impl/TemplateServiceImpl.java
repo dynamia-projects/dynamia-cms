@@ -100,7 +100,11 @@ public class TemplateServiceImpl implements TemplateService {
         String paramName = "CMSConfig_DefaultTemplate";
         Parameter defaultTemplate = appParams.getParameter(paramName);
         if (defaultTemplate == null) {
-            defaultTemplate = new Parameter(paramName, "dynamical", "Default Template Name");
+            List<Template> installedTemplates = getInstalledTemplates();
+            if (installedTemplates.isEmpty()) {
+                throw new TemplateNotFoundException("Cannot get default template: No templates installed");
+            }
+            defaultTemplate = new Parameter(paramName, installedTemplates.get(0).getName(), "Default Template Name");
             appParams.save(defaultTemplate);
         }
 

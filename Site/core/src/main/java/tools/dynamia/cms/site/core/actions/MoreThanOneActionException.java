@@ -15,13 +15,13 @@
  */
 package tools.dynamia.cms.site.core.actions;
 
-import tools.dynamia.cms.site.core.DynamiaCMSException;
+import tools.dynamia.cms.site.core.CMSException;
 
 /**
  *
  * @author Mario Serrano Leones
  */
-class MoreThanOneActionException extends DynamiaCMSException {
+class MoreThanOneActionException extends CMSException {
 
     private String actionName;
 

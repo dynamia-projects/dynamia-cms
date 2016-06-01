@@ -17,10 +17,16 @@ package tools.dynamia.cms.site.templates;
 
 import java.util.HashMap;
 import java.util.Map;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.templateresolver.TemplateResolver;
+import tools.dynamia.cms.site.templates.thymeleaf.ThymeleafTemplateResolver;
 
 /**
  *
@@ -29,8 +35,33 @@ import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 @Configuration
 public class TemplateJavaConfig {
 
-   
     public static final String DEFAULT_TEMPLATE = "CMSCurrentTemplate";
+
+    @Bean
+    public TemplateResolver templateResolver() {
+        TemplateResolver resolver = new ThymeleafTemplateResolver();
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode("HTML5");
+        resolver.setCacheable(true);
+        return resolver;
+    }
+
+    @Bean
+    public SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine engine = new SpringTemplateEngine();
+
+        engine.addDialect(new LayoutDialect());
+        engine.setTemplateResolver(templateResolver());
+        return engine;
+    }
+
+    @Bean
+    public ViewResolver thymeleafViewResolver() {
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setOrder(1);
+        viewResolver.setTemplateEngine(templateEngine());
+        return viewResolver;
+    }
 
     @Bean
     public SimpleUrlHandlerMapping templateResourcesMapping() {
@@ -57,4 +88,5 @@ public class TemplateJavaConfig {
     public TemplateResourceHandler templateResourcesHandler() {
         return new TemplateResourceHandler();
     }
+
 }

@@ -18,6 +18,7 @@ package tools.dynamia.cms.site.core;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
@@ -79,9 +80,14 @@ public class CMSUtil {
             uri = "";
         }
 
-        String urltext = String.format("http://%s/%s", domain.getName(), uri);
-        if (domain.getPort() > 0) {
-            urltext = String.format("http://%s:%s/%s", domain.getName(), domain.getPort(), uri);
+        String context = "";
+        if (domain.getContext() != null && !domain.getContext().isEmpty()) {
+            context = domain.getContext() + "/";
+        }
+
+        String urltext = String.format("http://%s/%s", domain.getName(), context + uri);
+        if (domain.getPort() > 0 && domain.getPort() != 80) {
+            urltext = String.format("http://%s:%s/%s", domain.getName(), domain.getPort(), context + uri);
         }
 
         return urltext;

@@ -49,7 +49,7 @@ public class PageServiceImpl implements PageService {
     @Override
     @Cacheable(CACHE_NAME)
     public Page loadPage(Site site, String alias) {
-        QueryParameters qp = QueryParameters.with("alias", alias);
+        QueryParameters qp = QueryParameters.with("alias", QueryConditions.eq(alias));
         qp.add("site", site);
         qp.add("published", true);
         return crudService.findSingle(Page.class, qp);
@@ -111,7 +111,7 @@ public class PageServiceImpl implements PageService {
     @Override
     @Cacheable(value = CACHE_NAME, key = "'categories'+#site.key")
     public List<PageCategory> getPagesCategories(Site site) {
-        return crudService.find(PageCategory.class, QueryParameters.with("site", site)                
+        return crudService.find(PageCategory.class, QueryParameters.with("site", site)
                 .orderBy("name"));
     }
 
@@ -154,7 +154,7 @@ public class PageServiceImpl implements PageService {
     public List<Page> findPagesByDate(Site site, Date startDate, Date endDate) {
         return crudService.find(Page.class, QueryParameters.with("site", site)
                 .add("published", true)
-                .add("creationDate", QueryConditions.between(startDate,endDate))
+                .add("creationDate", QueryConditions.between(startDate, endDate))
                 .add("category.hidden", false)
                 .add("category.indexableByDates", true));
 

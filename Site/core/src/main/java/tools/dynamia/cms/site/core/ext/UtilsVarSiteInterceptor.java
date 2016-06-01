@@ -40,47 +40,47 @@ import tools.dynamia.cms.site.core.services.impl.ModulesService;
 @CMSExtension
 public class UtilsVarSiteInterceptor extends SiteRequestInterceptorAdapter {
 
-	@Autowired
-	private SiteService service;
+    @Autowired
+    private SiteService service;
 
-	@Autowired
-	private ModulesService modulesService;
+    @Autowired
+    private ModulesService modulesService;
 
-	@Override
-	public void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) {
-		if (modelAndView == null) {
-			return;
-		}
-		System.err.println("REQUEST: "+request.getRequestURI());
+    @Override
+    public void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) {
+        if (modelAndView == null) {
+            return;
+        }
+        System.err.println("REQUEST: " + request.getRequestURI());
 
-		String requestURI = request.getRequestURI();
-		String requestURL = request.getRequestURL().toString();
+        String requestURI = request.getRequestURI();
+        String requestURL = request.getRequestURL().toString();
 
-		if (requestURI != null) {
-			modelAndView.addObject("currentURI", requestURI);
-		}
-		if (requestURL != null) {
-			modelAndView.addObject("currentURL", requestURL);
-		}
-		modelAndView.addObject("site", site);
-		modelAndView.addObject("siteParams", createParams(site));
-		modelAndView.addObject("cmsUtil", new CMSUtil(site));
-		if (modelAndView.getModel().get("cmsModules") == null) {
-			System.out.println("CREANDO CMS MODULES");
-			modelAndView.addObject("cmsModules", new CMSModules(site, modulesService));
-		}
+        if (requestURI != null) {
+            modelAndView.addObject("currentURI", requestURI);
+        }
+        if (requestURL != null) {
+            modelAndView.addObject("currentURL", requestURL);
+        }
+        modelAndView.addObject("site", site);
+        modelAndView.addObject("siteParams", createParams(site));
+        modelAndView.addObject("cmsUtil", new CMSUtil(site));
+        if (modelAndView.getModel().get("cmsModules") == null) {
+            System.out.println("CREANDO CMS MODULES");
+            modelAndView.addObject("cmsModules", new CMSModules(site, modulesService));
+        }
 
-	}
+    }
 
-	private Object createParams(Site site) {
-		Map<String, String> map = new HashMap<>();
-		try {
-			for (SiteParameter p : service.getSiteParameters(site)) {
-				map.put(p.getName(), p.getValue());
-			}
-		} catch (Exception e) {
-		}
-		return map;
-	}
+    private Object createParams(Site site) {
+        Map<String, String> map = new HashMap<>();
+        try {
+            for (SiteParameter p : service.getSiteParameters(site)) {
+                map.put(p.getName(), p.getValue());
+            }
+        } catch (Exception e) {
+        }
+        return map;
+    }
 
 }

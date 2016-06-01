@@ -19,7 +19,7 @@ package tools.dynamia.cms.site.core;
  *
  * @author Mario Serrano Leones
  */
-public class SiteNotFoundException extends DynamiaCMSException {
+public class SiteNotFoundException extends CMSException {
 
     public SiteNotFoundException() {
     }

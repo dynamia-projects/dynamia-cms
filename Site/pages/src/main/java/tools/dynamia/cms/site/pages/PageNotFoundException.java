@@ -18,14 +18,14 @@ package tools.dynamia.cms.site.pages;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import tools.dynamia.cms.site.core.DynamiaCMSException;
+import tools.dynamia.cms.site.core.CMSException;
 
 /**
  *
  * @author Mario Serrano Leones
  */
 @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "page not found in site")
-public class PageNotFoundException extends DynamiaCMSException {
+public class PageNotFoundException extends CMSException {
 
     private String pageAlias;
     private String siteKey;
@@ -66,6 +66,11 @@ public class PageNotFoundException extends DynamiaCMSException {
 
     public String getSiteKey() {
         return siteKey;
+    }
+
+    @Override
+    public HttpStatus getStatus() {
+        return HttpStatus.NOT_FOUND;
     }
 
 }

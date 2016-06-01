@@ -40,8 +40,16 @@ public class SiteDomain extends SimpleEntity {
     @Column(unique = true)
     private String name;
     private int port;
-
+    private String context;
     private String description;
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
 
     public int getPort() {
         return port;

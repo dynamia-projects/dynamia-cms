@@ -15,13 +15,13 @@
  */
 package tools.dynamia.cms.site.templates;
 
-import tools.dynamia.cms.site.core.DynamiaCMSException;
+import tools.dynamia.cms.site.core.CMSException;
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public class TemplateNotFoundException extends DynamiaCMSException {
+public class TemplateNotFoundException extends CMSException {
 
     public TemplateNotFoundException() {
     }

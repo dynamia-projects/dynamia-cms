@@ -61,8 +61,8 @@ public class ThymeleafTemplateResourceResolver implements IResourceResolver {
 
         //Find first in root template folder
         Path file = TemplateResources.find(site, name);
-        
-         //find view in site folders
+
+        //find view in site folders
         if (Files.notExists(file)) {
             Path siteHome = DynamiaCMS.getSitesResourceLocation(site);
             for (String loc : DynamiaCMS.getRelativeLocations()) {

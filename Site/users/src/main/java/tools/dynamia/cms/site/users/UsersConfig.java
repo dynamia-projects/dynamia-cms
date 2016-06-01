@@ -82,9 +82,9 @@ public class UsersConfig extends WebSecurityConfigurerAdapter {
 
         http.headers()
                 .cacheControl()
-                .xssProtection()
-                .httpStrictTransportSecurity()
-                .contentTypeOptions();
+                .and().xssProtection()
+                .and().httpStrictTransportSecurity()
+                .and().contentTypeOptions();
 
     }
 

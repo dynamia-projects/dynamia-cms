@@ -37,48 +37,48 @@ import org.thymeleaf.TemplateEngine;
 @RequestMapping("/cache")
 public class CacheController {
 
-	@Autowired(required = false)
-	private CacheManager cacheManager;
+    @Autowired(required = false)
+    private CacheManager cacheManager;
 
-	@Autowired(required = false)
-	private TemplateEngine templateEngine;
+    @Autowired(required = false)
+    private TemplateEngine templateEngine;
 
-	private long lastCacheClear;
+    private long lastCacheClear;
 
-	@RequestMapping("/clear/{name}")
-	@ResponseStatus(HttpStatus.OK)
-	public void clearCache(@PathVariable String name, HttpServletRequest request) {
-		if (cacheManager != null) {
-			Cache cache = cacheManager.getCache(name);
-			if (cache != null) {
-				cache.clear();
-			}
-		}
-		lastCacheClear = System.currentTimeMillis();
-	}
+    @RequestMapping("/clear/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public void clearCache(@PathVariable String name, HttpServletRequest request) {
+        if (cacheManager != null) {
+            Cache cache = cacheManager.getCache(name);
+            if (cache != null) {
+                cache.clear();
+            }
+        }
+        lastCacheClear = System.currentTimeMillis();
+    }
 
-	@RequestMapping("/clear")
-	@ResponseStatus(HttpStatus.OK)
-	public void clearAllCache() {
-		if (cacheManager != null) {
-			Collection<String> names = cacheManager.getCacheNames();
-			for (String name : names) {
-				cacheManager.getCache(name).clear();
-			}
-		}
-		lastCacheClear = System.currentTimeMillis();
-	}
+    @RequestMapping("/clear")
+    @ResponseStatus(HttpStatus.OK)
+    public void clearAllCache() {
+        if (cacheManager != null) {
+            Collection<String> names = cacheManager.getCacheNames();
+            for (String name : names) {
+                cacheManager.getCache(name).clear();
+            }
+        }
+        lastCacheClear = System.currentTimeMillis();
+    }
 
-	@RequestMapping("/clear/template")
-	@ResponseStatus(HttpStatus.OK)
-	public void clearTemplate() {
-		if (templateEngine != null) {
-			templateEngine.clearTemplateCache();
-		}
-	}
+    @RequestMapping("/clear/template")
+    @ResponseStatus(HttpStatus.OK)
+    public void clearTemplate() {
+        if (templateEngine != null) {
+            templateEngine.clearTemplateCache();
+        }
+    }
 
-	public long getLastCacheClear() {
-		return lastCacheClear;
-	}
+    public long getLastCacheClear() {
+        return lastCacheClear;
+    }
 
 }

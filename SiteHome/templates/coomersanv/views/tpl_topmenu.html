@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Main Menu -->
+
+<body th:fragment="content">
+	<div class="headerstrip navbar-fixed-top hidden-xs hidden-sm" style="height: 35px; background-color: #303030">
+		<div class="container">
+			<div class="pull-left">
+				<div class="navbar" id="topnav">
+					<div class="navbar-inner">
+						<th:block th:include="module::position('topmenu_left')" />
+					</div>
+				</div>
+			</div>
+
+
+			<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Carrito de Compras')},'icon-shopping-cart')" />
+			<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('quote','Cotizacion')},'icon-external-link')" />
+
+
+			<div class="pull-right">
+				<th:block th:include="users/components/usermenu::content" />
+			</div>
+
+			<div class="pull-right">
+				<div class="navbar" id="topnav">
+					<div class="navbar-inner">
+						<th:block th:include="module::position('topmenu_right')" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

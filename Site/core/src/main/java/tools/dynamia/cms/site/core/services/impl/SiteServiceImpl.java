@@ -23,26 +23,32 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.PostConstruct;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.orm.jpa.EntityManagerFactoryInfo;
 import org.springframework.stereotype.Service;
 
 import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.DynamiaCMS;
+import tools.dynamia.cms.site.core.Orderable;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.domain.SiteDomain;
 import tools.dynamia.cms.site.core.domain.SiteParameter;
 import tools.dynamia.cms.site.core.services.SiteService;
+import tools.dynamia.commons.BeanUtils;
 
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
 import tools.dynamia.domain.query.Parameters;
+import tools.dynamia.domain.query.QueryConditions;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.integration.Containers;
+import tools.dynamia.integration.scheduling.Task;
 
 /**
  *
@@ -51,127 +57,180 @@ import tools.dynamia.integration.Containers;
 @Service("siteService")
 public class SiteServiceImpl implements SiteService {
 
-	private static final String CACHE_NAME = "sites";
+    private static final String CACHE_NAME = "sites";
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+    private EntityManagerFactoryInfo entityManagerFactoryInfo;
 
-	@Autowired
-	private Parameters appParams;
+    @Autowired
+    private CrudService crudService;
 
-	private LoggingService logger = new SLF4JLoggingService(SiteService.class);
+    @Autowired
+    private Parameters appParams;
 
-	@Override
-	@Cacheable(value = CACHE_NAME, key = "#root.methodName")
-	public Site getMainSite() {
-		return crudService.findSingle(Site.class, "key", appParams.getValue(DynamiaCMS.CFG_SUPER_ADMIN_SITE, "main"));
-	}
+    private LoggingService logger = new SLF4JLoggingService(SiteService.class);
 
-	/**
-	 *
-	 * @param key
-	 * @return
-	 */
-	@Override
-	@Cacheable(CACHE_NAME)
-	public Site getSite(String key) {
-		return crudService.findSingle(Site.class, "key", key);
-	}
+    @PostConstruct
+    public void init() {
+        fixOrderableNulls();
+        createMainSite();
+    }
 
-	@Override
-	@Cacheable(CACHE_NAME)
-	public Site getSiteByDomain(String domainName) {
-		System.out.println("FINDING SITE FOR DOMAIN: " + domainName);
-		SiteDomain domain = crudService.findSingle(SiteDomain.class, "name", domainName);
+    @Override
+    @Cacheable(value = CACHE_NAME, key = "#root.methodName")
+    public Site getMainSite() {
+        return crudService.findSingle(Site.class, "key", appParams.getValue(DynamiaCMS.CFG_SUPER_ADMIN_SITE, "main"));
+    }
 
-		return domain != null ? domain.getSite() : getMainSite();
-	}
+    /**
+     *
+     * @param key
+     * @return
+     */
+    @Override
+    @Cacheable(CACHE_NAME)
+    public Site getSite(String key) {
+        return crudService.findSingle(Site.class, "key", key);
+    }
 
-	@Override
-	public Site getSite(HttpServletRequest request) {
-		Site site = null;
-		if (request != null) {
-			SiteService thisServ = Containers.get().findObject(SiteService.class);
-			site = thisServ.getSiteByDomain(request.getServerName());
-		}
+    @Override
+    @Cacheable(CACHE_NAME)
+    public Site getSiteByDomain(String domainName) {
+        System.out.println("FINDING SITE FOR DOMAIN: " + domainName);
+        SiteDomain domain = crudService.findSingle(SiteDomain.class, "name", domainName);
 
-		return site;
-	}
+        return domain != null ? domain.getSite() : getMainSite();
+    }
 
-	@Cacheable(value = CACHE_NAME, key = "'params'+#site.key")
-	@Override
-	public List<SiteParameter> getSiteParameters(Site site) {
-		site = crudService.reload(site);
-		return site.getParameters();
-	}
+    @Override
+    public Site getSite(HttpServletRequest request) {
+        Site site = null;
+        if (request != null) {
+            SiteService thisServ = Containers.get().findObject(SiteService.class);
+            site = thisServ.getSiteByDomain(request.getServerName());
+        }
 
-	@Override
-	public SiteParameter getSiteParameter(Site site, String name, String defaultValue) {
-		SiteParameter siteParameter = crudService.findSingle(SiteParameter.class, QueryParameters.with("site", site).add("name", name));
-		if (siteParameter == null) {
-			siteParameter = new SiteParameter();
-			siteParameter.setSite(site);
-			siteParameter.setName(name);
-			siteParameter.setValue(defaultValue);
-		}
-		return siteParameter;
-	}
+        return site;
+    }
 
-	@Override
-	public String[] getSiteParameterAsArray(Site site, String name) {
-		SiteParameter siteParameter = getSiteParameter(site, name, "");
-		String[] values = siteParameter.getValue().split(",");
-		if (values != null && values.length > 0) {
-			for (int i = 0; i < values.length; i++) {
-				String value = values[i];
-				if (value != null) {
-					values[i] = value.trim();
-				}
-			}
-		} else {
-			values = new String[0];
-		}
+    @Cacheable(value = CACHE_NAME, key = "'params'+#site.key")
+    @Override
+    public List<SiteParameter> getSiteParameters(Site site) {
+        site = crudService.reload(site);
+        return site.getParameters();
+    }
 
-		Arrays.sort(values);
+    @Override
+    public SiteParameter getSiteParameter(Site site, String name, String defaultValue) {
+        SiteParameter siteParameter = crudService.findSingle(SiteParameter.class, QueryParameters.with("site", site).add("name", name));
+        if (siteParameter == null) {
+            siteParameter = new SiteParameter();
+            siteParameter.setSite(site);
+            siteParameter.setName(name);
+            siteParameter.setValue(defaultValue);
+        }
+        return siteParameter;
+    }
 
-		return values;
-	}
+    @Override
+    public String[] getSiteParameterAsArray(Site site, String name) {
+        SiteParameter siteParameter = getSiteParameter(site, name, "");
+        String[] values = siteParameter.getValue().split(",");
+        if (values != null && values.length > 0) {
+            for (int i = 0; i < values.length; i++) {
+                String value = values[i];
+                if (value != null) {
+                    values[i] = value.trim();
+                }
+            }
+        } else {
+            values = new String[0];
+        }
 
-	@Override
-	public void clearCache(Site site) {
+        Arrays.sort(values);
 
-		List<SiteDomain> domains = crudService.find(SiteDomain.class, "site", site);
-		for (SiteDomain domain : domains) {
-			if (domain != null) {
-				String urltext = CMSUtil.getSiteURL(domain, "cache/clear");
-				try {
-					logger.info("Clearing cache for site: " + site + " -> " + urltext);
-					executeHttpRequest(urltext);
-				} catch (MalformedURLException ex) {
-					logger.error("Invalid site domain URL: " + urltext + " site:" + site, ex);
-				} catch (IOException ex) {
-					logger.error("Error trying to clear site cache. Site: " + site, ex);
-				}
-			} else {
-				logger.warn("Cannot clear site cache " + site + ", not accepted domains configured");
-			}
-		}
-	}
+        return values;
+    }
 
-	private String executeHttpRequest(String url) throws MalformedURLException, IOException {
+    @Override
+    public void clearCache(Site site) {
 
-		StringBuilder sb = new StringBuilder();
-		URL request = new URL(url);
-		URLConnection yc = request.openConnection();
-		BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-		String inputLine;
+        List<SiteDomain> domains = crudService.find(SiteDomain.class, "site", site);
+        for (SiteDomain domain : domains) {
+            if (domain != null) {
+                String clearCacheURL = CMSUtil.getSiteURL(domain, "cache/clear");
+                String clearTemplateCacheURL = CMSUtil.getSiteURL(domain, "cache/clear/template");
 
-		while ((inputLine = in.readLine()) != null) {
-			sb.append(inputLine).append("\n");
-		}
-		in.close();
+                try {
+                    logger.info("Clearing cache for site: " + site + " -> " + clearCacheURL);
+                    executeHttpRequest(clearCacheURL);
 
-		return sb.toString();
-	}
+                    logger.info("Clearing template cache for site: " + site + " -> " + clearTemplateCacheURL);
+                    executeHttpRequest(clearTemplateCacheURL);
+                } catch (MalformedURLException ex) {
+                    logger.error("Invalid site domain URL: " + clearCacheURL + " site:" + site, ex);
+                } catch (IOException ex) {
+                    logger.error("Error trying to clear site cache. Site: " + site, ex);
+                }
+            } else {
+                logger.warn("Cannot clear site cache " + site + ", not accepted domains configured");
+            }
+        }
+    }
+
+    private String executeHttpRequest(String url) throws MalformedURLException, IOException {
+
+        StringBuilder sb = new StringBuilder();
+        URL request = new URL(url);
+        URLConnection yc = request.openConnection();
+        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+        String inputLine;
+
+        while ((inputLine = in.readLine()) != null) {
+            sb.append(inputLine).append("\n");
+        }
+        in.close();
+
+        return sb.toString();
+    }
+
+    private void fixOrderableNulls() {
+        List<String> entityClasses = entityManagerFactoryInfo.getPersistenceUnitInfo().getManagedClassNames();
+        for (String className : entityClasses) {
+            try {
+                Object entity = BeanUtils.newInstance(className);
+                if (entity instanceof Orderable) {
+                    crudService.executeWithinTransaction(new Task() {
+                        @Override
+                        public void doWork() {
+                            crudService.batchUpdate(entity.getClass(), "order", 0, QueryParameters.with("order", QueryConditions.isNull()));
+                        }
+                    });
+                }
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    private void createMainSite() {
+        if (crudService.count(Site.class) == 0) {
+
+            Site site = new Site();
+            site.setKey("main");
+
+            site.setDescription("Main Site");
+            site.setName("DynamiaCMS Main Site");
+            site.setOffline(true);
+            site.setOfflineMessage("This is site is not configured yet");
+            crudService.executeWithinTransaction(new Task() {
+                @Override
+                public void doWork() {
+
+                    crudService.create(site);
+                }
+            });
+        }
+    }
 
 }

@@ -77,12 +77,12 @@ limitations under the License.
         <!-- Define error page to react on Java exception -->
         <exception-type>java.lang.Throwable</exception-type>
         <!-- The location of the resource to display in response to the error will point to the Spring MVC handler method -->
-        <location>/error</location>
+        <location>/exception</location>
     </error-page>
  
     <error-page>
         <error-code>404</error-code>
-        <location>/error</location>
+        <location>/exception</location>
     </error-page>
   
 </web-app>

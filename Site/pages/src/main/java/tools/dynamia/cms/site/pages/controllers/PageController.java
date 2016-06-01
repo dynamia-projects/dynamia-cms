@@ -103,9 +103,12 @@ public class PageController {
 
         Site site = coreService.getSite(request);
 
-        Page page = loadPage(site, pageAlias, mv);
-        configurePageType(page, site, mv, request);
-
+        if (site != null && site.isOffline()) {
+            shutdown(site, mv);
+        } else {
+            Page page = loadPage(site, pageAlias, mv);
+            configurePageType(page, site, mv, request);
+        }
         return mv;
     }
 
@@ -172,5 +175,15 @@ public class PageController {
                 pageTypeExt.setupPage(context);
             }
         }
+    }
+
+    private void shutdown(Site site, ModelAndView mv) {
+        mv.setViewName("error/offline");
+        mv.addObject("title", "OFFLINE!");
+        mv.addObject("site", site);
+        mv.addObject("siteKey", site.getKey());
+        mv.addObject("offlineIcon", site.getOfflineIcon());
+        mv.addObject("offlineMessage", site.getOfflineMessage());
+
     }
 }
