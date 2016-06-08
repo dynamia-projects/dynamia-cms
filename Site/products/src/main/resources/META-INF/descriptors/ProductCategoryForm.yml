@@ -1,25 +1,25 @@
 view: form
 beanClass: tools.dynamia.cms.site.products.domain.ProductCategory
-hidden: [id,externalRef]
-sortFields: [parent,name,alias,description,active]
+autofields: false
 
-fields:
-  
+fields: 
     
     parent:
-        component: label
-    
+        component: label        
+    name:
+    alternateName:
+    alias:
+    relatedCategory:    
     template:
-        description: Product Template
-       
+        description: Product Template   
+    
         
     description:
         params:
             multiline: true
-            height: 200px
-            span: 2
+            height: 100px
+            span: 3
     
-   
-
+    order:
 layout:
-    columns: 2
+    columns: 3

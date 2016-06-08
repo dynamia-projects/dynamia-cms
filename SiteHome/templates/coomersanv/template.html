@@ -37,7 +37,7 @@
               rel="stylesheet" />
         <!-- Main Css -->
         <link
-            th:href="@{'/css/'+${#objects.nullSafe(siteParams['color'],'colorlagointel')}+'.css'}"
+            th:href="@{'/css/coomersanv.css'}"
             href="css/color2.css" rel="stylesheet" id="color" />
 
         <!-- Font Icon -->
@@ -88,6 +88,10 @@
             <div class="headerdetails hidden-xs hidden-sm" style="height: 180px">
 
                 <div class="container">
+                    <!--Social -->
+                    <div class="logo pull-left">
+                        <th:block th:include="module::position('logo')" />
+                    </div>
 
                     <!--Social -->
                     <div class="socialtop pull-right">
@@ -149,10 +153,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="pull-left">
-                                Powered by: <a href="http://www.dynamiasoluciones.com"
+                                Powered by: <a href="http://idcae.com/"
                                                target="blank"
-                                               title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing"
-                                               class="tooltip-test">Dynamia Soluciones IT</a>
+                                               title="Interventoria, Consultoria, ERP, PLM, SAP"
+                                               class="tooltip-test">iDCae</a>
                             </div>
                         </div>
                     </div>

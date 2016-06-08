@@ -90,7 +90,7 @@ public class DynamiaCMS {
         return path;
     }
 
-    private static void createDirectoryIfNotExists(Path path) {
+    public static void createDirectoryIfNotExists(Path path) {
         if (Files.notExists(path)) {
             try {
                 Files.createDirectories(path);

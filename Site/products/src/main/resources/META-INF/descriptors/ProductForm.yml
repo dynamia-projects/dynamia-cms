@@ -39,16 +39,28 @@ fields:
        
        
    image:
+       component: resourceUploadlink
        params:
+           subfolder: products/images
+           generateFileName: true
            span: 2
    image2:
+       component: resourceUploadlink
        params:
+           subfolder: products/images
+           generateFileName: true
            span: 2
    image3:
+       component: resourceUploadlink
        params:
+           subfolder: products/images
+           generateFileName: true
            span: 2
    image4:
+       component: resourceUploadlink
        params:
+           subfolder: products/images
+           generateFileName: true
            span: 2
    videoURL:
        label: Video URL
