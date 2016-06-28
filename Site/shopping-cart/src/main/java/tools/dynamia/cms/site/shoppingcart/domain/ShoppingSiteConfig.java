@@ -33,155 +33,155 @@ import tools.dynamia.domain.SimpleEntity;
 @Table(name = "sc_configuration")
 public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 
-	@NotNull
-	@OneToOne
-	private Site site;
-	private String paymentGatewayId;
-	private String paymentGatewayName;
-	private boolean paymentEnabled;
-	private BigDecimal minPaymentAmount;
-	private BigDecimal maxPaymentAmount;
-	private float shipmentPercent;
-	private BigDecimal minShipmentAmount;
-	private String defaultCurrency;
-	private String descriptionTemplate;
-	private String notificationEmails;
-	@OneToOne
-	private MailTemplate orderCompletedMailTemplate;
-	@OneToOne
-	private MailTemplate orderShippedMailTemplate;
-	@OneToOne
-	private MailTemplate notificationMailTemplate;
-	@OneToOne
-	private MailAccount mailAccount;
+    @NotNull
+    @OneToOne
+    private Site site;
+    private String paymentGatewayId;
+    private String paymentGatewayName;
+    private boolean paymentEnabled;
+    private BigDecimal minPaymentAmount;
+    private BigDecimal maxPaymentAmount;
+    private float shipmentPercent;
+    private BigDecimal minShipmentAmount;
+    private String defaultCurrency;
+    private String descriptionTemplate;
+    private String notificationEmails;
+    @OneToOne
+    private MailTemplate orderCompletedMailTemplate;
+    @OneToOne
+    private MailTemplate orderShippedMailTemplate;
+    @OneToOne
+    private MailTemplate notificationMailTemplate;
+    @OneToOne
+    private MailAccount mailAccount;
 
-	public BigDecimal getMinShipmentAmount() {
-		if (minShipmentAmount == null) {
-			minShipmentAmount = BigDecimal.ZERO;
-		}
-		return minShipmentAmount;
-	}
+    public BigDecimal getMinShipmentAmount() {
+        if (minShipmentAmount == null) {
+            minShipmentAmount = BigDecimal.ZERO;
+        }
+        return minShipmentAmount;
+    }
 
-	public void setMinShipmentAmount(BigDecimal minShipmentAmount) {
-		this.minShipmentAmount = minShipmentAmount;
-	}
+    public void setMinShipmentAmount(BigDecimal minShipmentAmount) {
+        this.minShipmentAmount = minShipmentAmount;
+    }
 
-	public BigDecimal getMaxPaymentAmount() {
-		if (maxPaymentAmount == null) {
-			maxPaymentAmount = BigDecimal.ZERO;
-		}
-		return maxPaymentAmount;
-	}
+    public BigDecimal getMaxPaymentAmount() {
+        if (maxPaymentAmount == null) {
+            maxPaymentAmount = BigDecimal.ZERO;
+        }
+        return maxPaymentAmount;
+    }
 
-	public void setMaxPaymentAmount(BigDecimal maxPaymentAmount) {
-		this.maxPaymentAmount = maxPaymentAmount;
-	}
+    public void setMaxPaymentAmount(BigDecimal maxPaymentAmount) {
+        this.maxPaymentAmount = maxPaymentAmount;
+    }
 
-	public float getShipmentPercent() {
-		return shipmentPercent;
-	}
+    public float getShipmentPercent() {
+        return shipmentPercent;
+    }
 
-	public void setShipmentPercent(float shipmentPercent) {
-		this.shipmentPercent = shipmentPercent;
-	}
+    public void setShipmentPercent(float shipmentPercent) {
+        this.shipmentPercent = shipmentPercent;
+    }
 
-	public MailAccount getMailAccount() {
-		return mailAccount;
-	}
+    public MailAccount getMailAccount() {
+        return mailAccount;
+    }
 
-	public void setMailAccount(MailAccount mailAccount) {
-		this.mailAccount = mailAccount;
-	}
+    public void setMailAccount(MailAccount mailAccount) {
+        this.mailAccount = mailAccount;
+    }
 
-	public MailTemplate getOrderCompletedMailTemplate() {
-		return orderCompletedMailTemplate;
-	}
+    public MailTemplate getOrderCompletedMailTemplate() {
+        return orderCompletedMailTemplate;
+    }
 
-	public void setOrderCompletedMailTemplate(MailTemplate orderCompletedMailTemplate) {
-		this.orderCompletedMailTemplate = orderCompletedMailTemplate;
-	}
+    public void setOrderCompletedMailTemplate(MailTemplate orderCompletedMailTemplate) {
+        this.orderCompletedMailTemplate = orderCompletedMailTemplate;
+    }
 
-	public MailTemplate getOrderShippedMailTemplate() {
-		return orderShippedMailTemplate;
-	}
+    public MailTemplate getOrderShippedMailTemplate() {
+        return orderShippedMailTemplate;
+    }
 
-	public void setOrderShippedMailTemplate(MailTemplate orderShippedMailTemplate) {
-		this.orderShippedMailTemplate = orderShippedMailTemplate;
-	}
+    public void setOrderShippedMailTemplate(MailTemplate orderShippedMailTemplate) {
+        this.orderShippedMailTemplate = orderShippedMailTemplate;
+    }
 
-	public MailTemplate getNotificationMailTemplate() {
-		return notificationMailTemplate;
-	}
+    public MailTemplate getNotificationMailTemplate() {
+        return notificationMailTemplate;
+    }
 
-	public void setNotificationMailTemplate(MailTemplate notificationMailTemplate) {
-		this.notificationMailTemplate = notificationMailTemplate;
-	}
+    public void setNotificationMailTemplate(MailTemplate notificationMailTemplate) {
+        this.notificationMailTemplate = notificationMailTemplate;
+    }
 
-	public Site getSite() {
-		return site;
-	}
+    public Site getSite() {
+        return site;
+    }
 
-	public void setSite(Site site) {
-		this.site = site;
-	}
+    public void setSite(Site site) {
+        this.site = site;
+    }
 
-	public String getDescriptionTemplate() {
-		return descriptionTemplate;
-	}
+    public String getDescriptionTemplate() {
+        return descriptionTemplate;
+    }
 
-	public String getNotificationEmails() {
-		return notificationEmails;
-	}
+    public String getNotificationEmails() {
+        return notificationEmails;
+    }
 
-	public void setNotificationEmails(String notificationEmails) {
-		this.notificationEmails = notificationEmails;
-	}
+    public void setNotificationEmails(String notificationEmails) {
+        this.notificationEmails = notificationEmails;
+    }
 
-	public void setDescriptionTemplate(String descriptionTemplate) {
-		this.descriptionTemplate = descriptionTemplate;
-	}
+    public void setDescriptionTemplate(String descriptionTemplate) {
+        this.descriptionTemplate = descriptionTemplate;
+    }
 
-	public String getPaymentGatewayId() {
-		return paymentGatewayId;
-	}
+    public String getPaymentGatewayId() {
+        return paymentGatewayId;
+    }
 
-	public void setPaymentGatewayId(String paymentGatewayId) {
-		this.paymentGatewayId = paymentGatewayId;
-	}
+    public void setPaymentGatewayId(String paymentGatewayId) {
+        this.paymentGatewayId = paymentGatewayId;
+    }
 
-	public String getPaymentGatewayName() {
-		return paymentGatewayName;
-	}
+    public String getPaymentGatewayName() {
+        return paymentGatewayName;
+    }
 
-	public void setPaymentGatewayName(String paymentGatewayName) {
-		this.paymentGatewayName = paymentGatewayName;
-	}
+    public void setPaymentGatewayName(String paymentGatewayName) {
+        this.paymentGatewayName = paymentGatewayName;
+    }
 
-	public boolean isPaymentEnabled() {
-		return paymentEnabled;
-	}
+    public boolean isPaymentEnabled() {
+        return paymentEnabled;
+    }
 
-	public void setPaymentEnabled(boolean paymentEnabled) {
-		this.paymentEnabled = paymentEnabled;
-	}
+    public void setPaymentEnabled(boolean paymentEnabled) {
+        this.paymentEnabled = paymentEnabled;
+    }
 
-	public BigDecimal getMinPaymentAmount() {
-		if (minPaymentAmount == null) {
-			minPaymentAmount = BigDecimal.ZERO;
-		}
-		return minPaymentAmount;
-	}
+    public BigDecimal getMinPaymentAmount() {
+        if (minPaymentAmount == null) {
+            minPaymentAmount = BigDecimal.ZERO;
+        }
+        return minPaymentAmount;
+    }
 
-	public void setMinPaymentAmount(BigDecimal minPaymentAmount) {
-		this.minPaymentAmount = minPaymentAmount;
-	}
+    public void setMinPaymentAmount(BigDecimal minPaymentAmount) {
+        this.minPaymentAmount = minPaymentAmount;
+    }
 
-	public String getDefaultCurrency() {
-		return defaultCurrency;
-	}
+    public String getDefaultCurrency() {
+        return defaultCurrency;
+    }
 
-	public void setDefaultCurrency(String defaultCurrency) {
-		this.defaultCurrency = defaultCurrency;
-	}
+    public void setDefaultCurrency(String defaultCurrency) {
+        this.defaultCurrency = defaultCurrency;
+    }
 
 }

@@ -1,37 +1,40 @@
 view: form
 beanClass: tools.dynamia.cms.site.pages.domain.Page
 customizer: tools.dynamia.cms.admin.pages.PageFormCustomizer
-hidden: [id,uuid,creationDate,parameter,site,publishedDate]
-sortFields: [title,subtitle,alias,type,category,author,layout,icon,tags,startDate,endDate,imageURL,summary,content,showTitle,published,neverExpire]
-
+autofields: false
 
 fields:
     
-    site:
-        params:
-            fields: key,name
-    
-    author:
-        params:
-            fields: firstName,lastName,email
-            
+    title:
+        params: 
+            span: 2
+    alias:
+    subtitle:
     category:
         params:
             fields: name,description
             
-    layout:
-        component: combobox
-        
+    author:
+        params:
+            fields: firstName,lastName,email
+    
     type:
         component: typeSelector
         params:
             typeExtensionClass: tools.dynamia.cms.site.pages.api.PageTypeExtension
+
+
+            
+    layout:
+        component: combobox
+        
+   
         
     content:
         component: cmseditor
         params:
             span: 3
-            height: 300px
+            height: 400px
             showLabel: false
             
     imageURL:
@@ -48,17 +51,28 @@ fields:
             height: 80px
             
             
-    
+    tags:        
+  
+    icon:        
+    startDate:
+    endDate:
+    showTitle:
+    published:
+    neverExpire:
             
     parameters:
         component: crudview
         
         
 groups:
-    summary:
-      fields: [imageURL,summary]
+   
     content:
       fields: [content]
-
+      
+    summary:
+      fields: [imageURL,summary]
+      
+    advanced:
+      fields: [type,layout,tags, icon,startDate,endDate,neverExpire,published, showTitle]
 layout:
     columns: 3

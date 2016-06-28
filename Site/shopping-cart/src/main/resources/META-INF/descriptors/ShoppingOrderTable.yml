@@ -63,4 +63,7 @@ fields:
     params:
       header:
         width: 300px
-  
+
+
+params:
+    orderBy: creationDate desc

@@ -33,72 +33,81 @@ import tools.dynamia.domain.contraints.NotEmpty;
 @Table(name = "ntf_email_templates")
 public class MailTemplate extends SimpleEntity implements SiteAware {
 
-	@NotNull
-	@OneToOne
-	private Site site;
+    @NotNull
+    @OneToOne
+    private Site site;
 
-	@NotEmpty(message = "Enter template name")
-	private String name;
-	private String description;
-	@NotEmpty(message = "Enter subject")
-	private String subject;
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	@NotEmpty(message = "Enter template content")
-	private String content;
-	private boolean enabled = true;
+    @NotEmpty(message = "Enter template name")
+    private String name;
+    private String description;
+    @NotEmpty(message = "Enter subject")
+    private String subject;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @NotEmpty(message = "Enter template content")
+    private String content;
+    private boolean enabled = true;
+    private String templateEngine;
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public String getTemplateEngine() {
+        return templateEngine;
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    public void setTemplateEngine(String templateEngine) {
+        this.templateEngine = templateEngine;
+    }
 
-	public Site getSite() {
-		return site;
-	}
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	public void setSite(Site site) {
-		this.site = site;
-	}
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Site getSite() {
+        return site;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setSite(Site site) {
+        this.site = site;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getSubject() {
-		return subject;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public String getSubject() {
+        return subject;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-	@Override
-	public String toString() {
-		return getName();
-	}
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 
 }

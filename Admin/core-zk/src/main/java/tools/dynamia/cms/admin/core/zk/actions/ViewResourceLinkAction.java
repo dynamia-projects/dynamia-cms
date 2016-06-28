@@ -38,55 +38,55 @@ import tools.dynamia.ui.UIMessages;
 @InstallAction
 public class ViewResourceLinkAction extends FileManagerAction {
 
-	public ViewResourceLinkAction() {
-		setImage("link");
-		setName("View Link");
-		setPosition(Double.MAX_VALUE);
-	}
+    public ViewResourceLinkAction() {
+        setImage("link");
+        setName("View Link");
+        setPosition(Double.MAX_VALUE);
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		List<FileInfo> files = new ArrayList<>();
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        List<FileInfo> files = new ArrayList<>();
 
-		if (evt.getData() instanceof FileInfo) {
-			files.add((FileInfo) evt.getData());
-		} else if (evt.getData() instanceof List) {
-			files.addAll((Collection<? extends FileInfo>) evt.getData());
-		}
+        if (evt.getData() instanceof FileInfo) {
+            files.add((FileInfo) evt.getData());
+        } else if (evt.getData() instanceof List) {
+            files.addAll((Collection<? extends FileInfo>) evt.getData());
+        }
 
-		if (!files.isEmpty()) {
-			try {
-				CrudService crudService = Containers.get().findObject(CrudService.class);
-				Site site = SiteContext.get().getCurrent();
-				site = crudService.reload(site);
-				SiteDomain domain = site.getAcceptedDomains().get(0);
-				String port = "";
-				if (domain.getPort() > 0) {
-					port = ":" + domain.getPort();
-				}
-				String url = "";
-				for (FileInfo file : files) {
-					url = url + getFileURL(file, site, domain, port) + "\n";
-				}
+        if (!files.isEmpty()) {
+            try {
+                CrudService crudService = Containers.get().findObject(CrudService.class);
+                Site site = SiteContext.get().getCurrent();
+                site = crudService.reload(site);
+                SiteDomain domain = site.getAcceptedDomains().get(0);
+                String port = "";
+                if (domain.getPort() > 0) {
+                    port = ":" + domain.getPort();
+                }
+                String url = "";
+                for (FileInfo file : files) {
+                    url = url + getFileURL(file, site, domain, port) + "\n";
+                }
 
-				Messagebox.show(url, "Link", Messagebox.OK, null);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			UIMessages.showMessage("Selecte a file first", MessageType.ERROR);
-		}
+                Messagebox.show(url, "Link", Messagebox.OK, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            UIMessages.showMessage("Selecte a file first", MessageType.ERROR);
+        }
 
-	}
+    }
 
-	private String getFileURL(FileInfo file, Site site, SiteDomain domain, String port) {
-		String path = file.getFile().getPath();
-		path = path.substring(path.indexOf(site.getKey()) + site.getKey().length() + 1);
+    private String getFileURL(FileInfo file, Site site, SiteDomain domain, String port) {
+        String path = file.getFile().getPath();
+        path = path.substring(path.indexOf(site.getKey()) + site.getKey().length() + 1);
 
-		String url = String.format("http://%s%s/resources/%s", domain.getName(), port, path);
-		url = url.trim().replace(" ", "%20").replace("\\", "/");
-		url = Executions.getCurrent().encodeURL(url);
-		return url;
-	}
+        String url = String.format("http://%s%s/resources/%s", domain.getName(), port, path);
+        url = url.trim().replace(" ", "%20").replace("\\", "/");
+        url = Executions.getCurrent().encodeURL(url);
+        return url;
+    }
 
 }

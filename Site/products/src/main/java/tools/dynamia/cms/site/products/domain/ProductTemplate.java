@@ -40,6 +40,15 @@ public class ProductTemplate extends SiteBaseEntity {
     @Basic(fetch = FetchType.LAZY)
     private String content;
     private boolean enabled;
+    private String templateEngine;
+
+    public String getTemplateEngine() {
+        return templateEngine;
+    }
+
+    public void setTemplateEngine(String templateEngine) {
+        this.templateEngine = templateEngine;
+    }
 
     public String getName() {
         return name;

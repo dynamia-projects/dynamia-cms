@@ -370,8 +370,8 @@ html[xmlns] .slides { display: block; }
 /* Direction Nav */
 .flex-direction-nav a { width: 30px; height: 30px; margin: -20px 10px 0 10px; display: block; position: absolute; top: 55%; cursor: pointer; -webkit-transition: all .3s ease; height: 30px; line-height: 24px; overflow: hidden; background: #fff; padding: 5px; text-align: center }
 .flex-direction-nav .flex-disabled { opacity: 0.5!important; filter: alpha(opacity=5); cursor: default; }
-.flex-direction-nav a:before { font-family: "FontAwesome"; font-size: 24px; display: inline-block; content: "ï?“"; }
-.flex-direction-nav a.flex-next:before { content: "ï?”"; }
+.flex-direction-nav a:before { font-family: "FontAwesome"; font-size: 24px; display: inline-block; content: "ï¿½?ï¿½"; }
+.flex-direction-nav a.flex-next:before { content: "ï¿½?ï¿½"; }
 .flex-direction-nav .flex-next { background-position: 100% 0; right: 0px; }
 .flex-direction-nav .flex-prev { left: 0px; }
 .flexslider:hover .flex-next { opacity: 0.8; right: 0px; }
@@ -379,7 +379,7 @@ html[xmlns] .slides { display: block; }
 .flexslider:hover .flex-next:hover, .flexslider:hover .flex-prev:hover { opacity: 1; }
 .flex-direction-nav .disabled { opacity: 0.3!important; filter: alpha(opacity=30); cursor: default; }
 /* Direction Nav carousal */
-.carousel .flex-direction-nav { position: absolute; top: -76px; right: 0 }
+.carousel .flex-direction-nav { position: absolute; top: 0px; right: 0 }
 .carousel.no-title .flex-direction-nav { top: -36px; }
 .carousel .flex-direction-nav a { background: #fffff; height: 25px; width: 25px; line-height: 24px; padding: 0px; color: #7FC31B; position: static ; border:1px solid #ccc}
 .carousel .flex-direction-nav li { display: inline-block; width: 25px; margin: 0px }
@@ -575,8 +575,8 @@ ul.latesttestimonialsfull .detail { margin-left: 60px }
 .ourservicesmin { margin-top: -15px }
 .accrodian-trigger { padding: 8px 8px 8px 0px; display: block; margin: 0px 0 16px 0; border-bottom: 1px solid #E7E7E7; cursor: pointer; font-size: 15px }
 .accrodian-trigger-faq { padding: 8px 8px 8px 0px; display: block; margin: 0px 0 16px 0; border-bottom: 1px solid #E7E7E7; cursor: pointer; font-size: 15px }
-.accrodian-trigger:after, .togglehandle:after, .accrodian-trigger-faq:after { font-family: fontAwesome; content: "ï?§"; float: right }
-.accrodian-trigger.active:after, .togglehandle.active:after, .accrodian-trigger-faq.active:after { font-family: fontAwesome; content: "ï?¨"; float: right }
+.accrodian-trigger:after, .togglehandle:after, .accrodian-trigger-faq:after { font-family: fontAwesome; content: "ï¿½?ï¿½"; float: right }
+.accrodian-trigger.active:after, .togglehandle.active:after, .accrodian-trigger-faq.active:after { font-family: fontAwesome; content: "ï¿½?ï¿½"; float: right }
 .togglehandle { padding: 8px 8px 8px 8px; display: block; margin: 5px 0; border-bottom: 1px solid #E7E7E7; cursor: pointer }
 .ourservicesmin, .mt15r { margin-top: -15px }
 
@@ -643,7 +643,7 @@ ul#portfoliocontainer.column2 li { width: 550px }
 .ourprocess:after { clear: both; content: ''; display: block; height: 0 }
 ul.ourprocess li:hover i { color: #7FC31B; animation : 0.35s linear 0s alternate none 1 featuresicon; -webkit-animation : 0.35s linear 0s alternate none 1 featuresicon }
 .processdetails { margin-left: 115px; padding-right: 30px; position: relative }
-.processdetails:after { content: "ï„?"; position: absolute; right: -10px; top: 25px; font-size: 48px; font-family: FontAwesome; color: #E7E7E7 }
+.processdetails:after { content: "ï¿½?"; position: absolute; right: -10px; top: 25px; font-size: 48px; font-family: FontAwesome; color: #E7E7E7 }
 .processdetails.last:after { content: '' }
 
 /* ------------ Our Client ------------ */
@@ -745,10 +745,10 @@ ul.listoption1, ul.listoption2, ul.listoption3, ul.listoption4, ul.listoption5, 
 ul.listoption1 li, ul.listoption2 li, ul.listoption3 li, ul.listoption4 li, ul.listoption5 li, ul.listoption6 li { display: block; padding: 5px 0 5px 20px }
 ol.listoption1 li { padding: 5px 0 5px 3px; }
 ul.listoption1 li:before { padding: 5px 0 5px 3px; font-family: fontAwesome; content: "ïƒš"; margin-right: 10px; color:#F1B500 }
-ul.listoption2 li:before { padding: 5px 0 5px 3px; font-family: fontAwesome; content: "ï?¡"; margin-right: 10px; color:#F1B500 }
+ul.listoption2 li:before { padding: 5px 0 5px 3px; font-family: fontAwesome; content: "ï¿½?ï¿½"; margin-right: 10px; color:#F1B500 }
 ul.listoption3 li:before { padding: 5px 0 5px 3px; font-family: fontAwesome; content: "ï„¸"; margin-right: 10px; color:#F1B500 }
 ul.listoption4 li:before { padding: 5px 0 5px 3px; font-family: fontAwesome; content: "ï‚¤"; margin-right: 10px; color:#F1B500 }
-ul.listoption5 li:before { padding: 5px 0 5px 3px; font-family: fontAwesome; content: "ï„?"; margin-right: 10px; color:#F1B500 }
+ul.listoption5 li:before { padding: 5px 0 5px 3px; font-family: fontAwesome; content: "ï¿½?"; margin-right: 10px; color:#F1B500 }
 ul.listoption6 li:before { padding: 5px 0 5px 3px; font-family: fontAwesome; content: "ï€Œ"; margin-right: 10px; color:#F1B500 }
 
 /* ------------ Messages ---------- */
@@ -994,7 +994,7 @@ ul.aboutus > i { float: right; font-size: 48px }
 #footer ul { margin: 0px; padding: 0px; list-style: none }
 #footer ul li { list-style: none }
 .contact ul li { padding: 0px; height: 47px; margin-right: 5px }
-.contact ul li.location:before { content: "ï??"; font-family: FontAwesome; margin-right: 10px; font-size: 16px }
+.contact ul li.location:before { content: "ï¿½??"; font-family: FontAwesome; margin-right: 10px; font-size: 16px }
 .contact ul li.phone:before { content: "ï‚•"; font-family: FontAwesome; margin-right: 10px; font-size: 16px }
 .contact ul li.mobile:before { content: "ï„‹"; font-family: FontAwesome; margin-right: 10px; font-size: 24px }
 .contact ul li.email:before { content: "ï€ƒ"; font-family: FontAwesome; margin-right: 10px; font-size: 16px }

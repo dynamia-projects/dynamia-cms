@@ -2,11 +2,3 @@ view: crud
 beanClass: tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig
 controller: tools.dynamia.cms.admin.shopping.controllers.ShoppingSiteConfigController
 autofields: false
-
-
-actions:
-  NewAction:
-    enabled: false
-  
-  DeleteAction:
-    enabled: false

@@ -39,4 +39,19 @@ public class MustacheStringParser implements StringParser {
         return writer.toString();
     }
 
+    @Override
+    public String getId() {
+        return "mustache";
+    }
+
+    @Override
+    public String getName() {
+        return "Mustache";
+    }
+
+    @Override
+    public String getDescription() {
+        return "useful for simple templates";
+    }
+
 }

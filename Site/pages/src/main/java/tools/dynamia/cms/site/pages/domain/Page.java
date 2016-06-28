@@ -16,6 +16,8 @@
 package tools.dynamia.cms.site.pages.domain;
 
 import tools.dynamia.cms.site.core.Aliasable;
+import tools.dynamia.cms.site.core.CMSUtil;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -219,6 +221,7 @@ public class Page extends Content implements SiteAware, Aliasable {
     }
 
     public String getContent() {
+    
         return content;
     }
 

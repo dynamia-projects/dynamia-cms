@@ -27,7 +27,6 @@ import tools.dynamia.cms.site.products.services.ProductsService;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import tools.dynamia.commons.BeanUtils;
@@ -41,10 +40,6 @@ import tools.dynamia.domain.services.CrudService;
 public class ProductTemplateServiceImpl implements ProductTemplateService {
 
     private static final String CACHE_NAME = "products";
-
-    @Autowired
-    @Qualifier("mustacheStringParser")
-    private StringParser stringParser;
 
     @Autowired
     private CrudService crudService;
@@ -74,7 +69,7 @@ public class ProductTemplateServiceImpl implements ProductTemplateService {
         }
 
         loadDefaultTemplateModel(product, templateModel);
-
+        StringParser stringParser = StringParser.get(template.getTemplateEngine());
         return stringParser.parse(template.getContent(), templateModel);
 
     }
@@ -156,10 +151,10 @@ public class ProductTemplateServiceImpl implements ProductTemplateService {
         String actionPath = CMSUtil.getSiteURL(site, "shoppingcart/");
         templateModel.put("action_addCart", actionPath + "shop/add/" + product.getId() + "?currentURI=/store/products/" + product.getId());
         templateModel.put("action_addQuote", actionPath + "quote/add/" + product.getId() + "?currentURI=/store/products/" + product.getId());
-        templateModel.put("action_compare", productURL+"/compare");
-        templateModel.put("action_favorite", productURL+"/favorite");
-        templateModel.put("action_print", productURL+"/print");
-        templateModel.put("action_share", productURL+"#shareProduct"+product.getId());
+        templateModel.put("action_compare", productURL + "/compare");
+        templateModel.put("action_favorite", productURL + "/favorite");
+        templateModel.put("action_print", productURL + "/print");
+        templateModel.put("action_share", productURL + "#shareProduct" + product.getId());
 
     }
 

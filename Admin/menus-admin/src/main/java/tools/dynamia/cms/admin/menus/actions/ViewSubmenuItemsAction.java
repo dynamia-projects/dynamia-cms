@@ -21,48 +21,48 @@ import tools.dynamia.zk.navigation.ZKNavigationManager;
 @InstallAction
 public class ViewSubmenuItemsAction extends AbstractCrudAction {
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+    private CrudService crudService;
 
-	@Autowired
-	private IncreaseOrderAction increaseOrderAction;
+    @Autowired
+    private IncreaseOrderAction increaseOrderAction;
 
-	@Autowired
-	private DecreaseOrderAction decreaseOrderAction;
+    @Autowired
+    private DecreaseOrderAction decreaseOrderAction;
 
-	public ViewSubmenuItemsAction() {
-		setName("Submenus");
-		setImage("menu");
-		setMenuSupported(true);
-	}
+    public ViewSubmenuItemsAction() {
+        setName("Submenus");
+        setImage("menu");
+        setMenuSupported(true);
+    }
 
-	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    @Override
+    public CrudState[] getApplicableStates() {
+        return CrudState.get(CrudState.READ);
+    }
 
-	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(MenuItem.class);
-	}
+    @Override
+    public ApplicableClass[] getApplicableClasses() {
+        return ApplicableClass.get(MenuItem.class);
+    }
 
-	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		MenuItem menuItem = (MenuItem) evt.getData();
-		if (menuItem != null) {
-			menuItem = crudService.reload(menuItem);
-			SubmenuItemsUI ui = new SubmenuItemsUI(menuItem, evt);
-			ui.addAction(new NewSubmenuAction(menuItem));
-			ui.addAction(new EditSubmenuAction(menuItem));
-			ui.addAction(new DeleteSubmenuAction(menuItem));
-			ui.addAction(increaseOrderAction);
-			ui.addAction(decreaseOrderAction);
+    @Override
+    public void actionPerformed(CrudActionEvent evt) {
+        MenuItem menuItem = (MenuItem) evt.getData();
+        if (menuItem != null) {
+            menuItem = crudService.reload(menuItem);
+            SubmenuItemsUI ui = new SubmenuItemsUI(menuItem, evt);
+            ui.addAction(new NewSubmenuAction(menuItem));
+            ui.addAction(new EditSubmenuAction(menuItem));
+            ui.addAction(new DeleteSubmenuAction(menuItem));
+            ui.addAction(increaseOrderAction);
+            ui.addAction(decreaseOrderAction);
 
-			ZKNavigationManager.getInstance()
-					.setCurrentPage(new ComponentPage("viewSubmenus" + menuItem.getId(), "Submenus - " + menuItem.getName(), ui));
-		} else {
-			UIMessages.showMessage("Select menu item to view submenus", MessageType.ERROR);
-		}
+            ZKNavigationManager.getInstance()
+                    .setCurrentPage(new ComponentPage("viewSubmenus" + menuItem.getId(), "Submenus - " + menuItem.getName(), ui));
+        } else {
+            UIMessages.showMessage("Select menu item to view submenus", MessageType.ERROR);
+        }
 
-	}
+    }
 }

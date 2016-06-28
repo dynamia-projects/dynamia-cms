@@ -166,6 +166,15 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 			if (parameter.getExtra() != null && !parameter.getExtra().isEmpty()) {
 				value = parameter.getExtra();
 			}
+			if(value==null || value.isEmpty() && field.getParams().containsKey("copyFrom")){
+				ModuleInstanceParameter source = moduleInstance.getParameter(field.getParams().get("copyFrom").toString());
+				if(source!=null){
+					value = source.getValue();
+					if(source.getExtra()!=null && !source.getExtra().isEmpty()){
+						value = source.getExtra();
+					}
+				}
+			}
 			cfgParameters.add(new Parameter(parameter.getName(), value));
 		}
 		return cfgParameters;

@@ -5,19 +5,24 @@ autofields: false
 fields:
   
     name:   
+    templateEngine:
+       label: Engine
+       component: typeSelector
+       params:
+            typeExtensionClass: tools.dynamia.cms.site.core.StringParser
     enabled:
     description:
        params:
           multiline: true
-          span: 2
+          span: 3
           height: 100px
     content:
         component: cmseditor
         params:
-            span: 2
+            span: 3
             height: 400px
     
    
 
 layout:
-    columns: 2
+    columns: 3

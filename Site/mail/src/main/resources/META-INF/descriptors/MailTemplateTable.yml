@@ -5,6 +5,8 @@ autofields: false
 
 fields:
    name:
+   templateEngine:
+       label: Engine
    enabled:
    description:
 

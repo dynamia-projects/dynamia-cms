@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.site.core.modules;
 
+import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.api.AbstractModule;
 import tools.dynamia.cms.site.core.api.CMSModule;
 import tools.dynamia.cms.site.core.api.ModuleContext;
@@ -36,26 +37,27 @@ public class CustomHtmlModule extends AbstractModule {
 	public void init(ModuleContext context) {
 
 		ModuleInstance instance = context.getModuleInstance();
-		instance.addObject(PARAM_CONTENT, "<b>CUSTOM MODULE NO CONTENT</b>");
-		
+		String contentText = "<b>CUSTOM MODULE NO CONTENT</b>";
+
 		ModuleInstanceParameter content = instance.getParameter(PARAM_CONTENT);
 		if (content != null && content.isEnabled()) {
 			if (content.getExtra() != null && !content.getExtra().isEmpty()) {
-				instance.addObject(PARAM_CONTENT, content.getExtra());
+				contentText = content.getExtra();
 			} else {
-				instance.addObject(PARAM_CONTENT, content.getValue());
+				contentText = content.getValue();
 			}
 		}
 
 		ModuleInstanceParameter contentPlain = instance.getParameter(PARAM_CONTENT_PLAIN);
 		if (contentPlain != null && contentPlain.isEnabled()) {
 			if (contentPlain.getExtra() != null && !contentPlain.getExtra().isEmpty()) {
-				instance.addObject(PARAM_CONTENT, contentPlain.getExtra());
+				contentText = contentPlain.getExtra();
 			} else {
-				instance.addObject(PARAM_CONTENT, contentPlain.getValue());
+				contentText = contentPlain.getValue();
 			}
 		}
-
+		
+		instance.addObject(PARAM_CONTENT, contentText);
 	}
 
 }

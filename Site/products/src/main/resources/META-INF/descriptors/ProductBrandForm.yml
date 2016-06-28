@@ -12,6 +12,11 @@ fields:
           span: 2
           height: 100px
     image:
+       component: resourceUploadlink
+       params:
+           subfolder: products/brands/images
+           generateFileName: true
+       
     
     
    

@@ -101,17 +101,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     public ShoppingSiteConfig getConfiguration(Site site) {
         ShoppingSiteConfig config = crudService.findSingle(ShoppingSiteConfig.class, "site", site);
         if (config == null) {
-            config = new ShoppingSiteConfig();
-            config.setSite(site);
-            config.setDefaultCurrency(NumberFormat.getCurrencyInstance().getCurrency().getCurrencyCode());
-            config.setMinPaymentAmount(BigDecimal.ZERO);
-
-            PaymentGateway gateway = paymentService.getDefaultGateway();
-            if (gateway != null) {
-                config.setPaymentGatewayId(gateway.getId());
-                config.setPaymentGatewayName(gateway.getName());
-            }
-            config = crudService.create(config);
+            throw new ShoppingException("No shopping site configuration found");
         }
 
         return config;
@@ -251,6 +241,36 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     public void notifyOrderCompleted(ShoppingOrder order) {
         ShoppingSiteConfig config = getConfiguration(order.getSite());
         logger.info("Order Completed " + order.getNumber());
+        notifyOrderCustomer(config, order);
+        notifyOrderInternal(config, order);
+    }
+
+    private void notifyOrderInternal(ShoppingSiteConfig config, ShoppingOrder order) {
+        try {
+            if (config.getNotificationMailTemplate() != null) {
+                logger.info("Sending notification email " + config.getNotificationEmails());
+                MailMessage notificationMessage = createMailMessage(config.getNotificationMailTemplate(), config.getMailAccount(), order);
+
+                if (config.getNotificationEmails().contains(",")) {
+                    String[] emails = config.getNotificationEmails().split(",");
+                    for (int i = 0; i < emails.length; i++) {
+                        String otherEmail = emails[i];
+                        notificationMessage.addTo(otherEmail.trim());
+                    }
+                } else {
+                    notificationMessage.setTo(config.getNotificationEmails());
+                }
+
+                mailService.send(notificationMessage);
+                logger.info("Notification email Sended");
+            }
+        } catch (Exception e) {
+            logger.error("Error sending notification email for order " + order.getNumber(), e);
+            e.printStackTrace();
+        }
+    }
+
+    private void notifyOrderCustomer(ShoppingSiteConfig config, ShoppingOrder order) {
         try {
             if (config.getOrderCompletedMailTemplate() != null) {
                 logger.info("Sending customer email " + order.getShoppingCart().getUser().getUsername());
@@ -274,29 +294,6 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
             logger.error("Error sending customer email for order " + order.getNumber(), e);
             e.printStackTrace();
 
-        }
-
-        try {
-            if (config.getNotificationMailTemplate() != null) {
-                logger.info("Sending notification email " + config.getNotificationEmails());
-                MailMessage notificationMessage = createMailMessage(config.getNotificationMailTemplate(), config.getMailAccount(), order);
-
-                if (config.getNotificationEmails().contains(",")) {
-                    String[] emails = config.getNotificationEmails().split(",");
-                    for (int i = 0; i < emails.length; i++) {
-                        String otherEmail = emails[i];
-                        notificationMessage.addTo(otherEmail.trim());
-                    }
-                } else {
-                    notificationMessage.setTo(config.getNotificationEmails());
-                }
-
-                mailService.send(notificationMessage);
-                logger.info("Notification email Sended");
-            }
-        } catch (Exception e) {
-            logger.error("Error sending notification email for order " + order.getNumber(), e);
-            e.printStackTrace();
         }
     }
 

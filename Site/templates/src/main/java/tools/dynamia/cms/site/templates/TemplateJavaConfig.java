@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
@@ -26,6 +28,8 @@ import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
+
+import tools.dynamia.cms.site.templates.thymeleaf.SpringThymeleafCacheManager;
 import tools.dynamia.cms.site.templates.thymeleaf.ThymeleafTemplateResolver;
 
 /**
@@ -35,58 +39,62 @@ import tools.dynamia.cms.site.templates.thymeleaf.ThymeleafTemplateResolver;
 @Configuration
 public class TemplateJavaConfig {
 
-    public static final String DEFAULT_TEMPLATE = "CMSCurrentTemplate";
+	public static final String DEFAULT_TEMPLATE = "CMSCurrentTemplate";
 
-    @Bean
-    public TemplateResolver templateResolver() {
-        TemplateResolver resolver = new ThymeleafTemplateResolver();
-        resolver.setSuffix(".html");
-        resolver.setTemplateMode("HTML5");
-        resolver.setCacheable(true);
-        return resolver;
-    }
+	@Autowired
+	private CacheManager cacheManager;
 
-    @Bean
-    public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine engine = new SpringTemplateEngine();
+	@Bean
+	public TemplateResolver templateResolver() {
+		TemplateResolver resolver = new ThymeleafTemplateResolver();
+		resolver.setSuffix(".html");
+		resolver.setTemplateMode("HTML5");
+		resolver.setCacheable(true);
+		return resolver;
+	}
 
-        engine.addDialect(new LayoutDialect());
-        engine.setTemplateResolver(templateResolver());
-        return engine;
-    }
+	@Bean
+	public SpringTemplateEngine templateEngine() {
+		SpringTemplateEngine engine = new SpringTemplateEngine();
+		engine.addDialect(new LayoutDialect());
+		engine.setTemplateResolver(templateResolver());
+		engine.setCacheManager(new SpringThymeleafCacheManager(cacheManager));
 
-    @Bean
-    public ViewResolver thymeleafViewResolver() {
-        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-        viewResolver.setOrder(1);
-        viewResolver.setTemplateEngine(templateEngine());
-        return viewResolver;
-    }
+		return engine;
+	}
 
-    @Bean
-    public SimpleUrlHandlerMapping templateResourcesMapping() {
+	@Bean
+	public ViewResolver thymeleafViewResolver() {
+		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+		viewResolver.setOrder(1);
+		viewResolver.setTemplateEngine(templateEngine());
+		return viewResolver;
+	}
 
-        TemplateResourceHandler handler = templateResourcesHandler();
-        Map<String, Object> map = new HashMap<>();
-        map.put("css/**", handler);
-        map.put("styles/**", handler);
-        map.put("img/**", handler);
-        map.put("images/**", handler);
-        map.put("assets/**", handler);
-        map.put("js/**", handler);
-        map.put("fonts/**", handler);
-        map.put("font/**", handler);
-        map.put("plugins/**", handler);
+	@Bean
+	public SimpleUrlHandlerMapping templateResourcesMapping() {
 
-        SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
-        mapping.setUrlMap(map);
+		TemplateResourceHandler handler = templateResourcesHandler();
+		Map<String, Object> map = new HashMap<>();
+		map.put("css/**", handler);
+		map.put("styles/**", handler);
+		map.put("img/**", handler);
+		map.put("images/**", handler);
+		map.put("assets/**", handler);
+		map.put("js/**", handler);
+		map.put("fonts/**", handler);
+		map.put("font/**", handler);
+		map.put("plugins/**", handler);
 
-        return mapping;
-    }
+		SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
+		mapping.setUrlMap(map);
 
-    @Bean
-    public TemplateResourceHandler templateResourcesHandler() {
-        return new TemplateResourceHandler();
-    }
+		return mapping;
+	}
+
+	@Bean
+	public TemplateResourceHandler templateResourcesHandler() {
+		return new TemplateResourceHandler();
+	}
 
 }

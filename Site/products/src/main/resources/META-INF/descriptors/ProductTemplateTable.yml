@@ -4,7 +4,9 @@ autofields: false
 
 fields:
   
-    name:   
+    name: 
+    templateEngine:
+        label: Engine
     enabled:
     description:
     creationDate:

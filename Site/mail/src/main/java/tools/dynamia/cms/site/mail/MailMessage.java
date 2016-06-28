@@ -33,17 +33,17 @@ import tools.dynamia.cms.site.mail.domain.MailTemplate;
  */
 public class MailMessage implements Serializable {
 
-    private final Set<String> tos = new HashSet<String>();
-    private final Set<String> ccs = new HashSet<String>();
-    private final Set<String> bccs = new HashSet<String>();
+    private final Set<String> tos = new HashSet<>();
+    private final Set<String> ccs = new HashSet<>();
+    private final Set<String> bccs = new HashSet<>();
     private String to;
     private String subject;
     private String content;
     private String plainText;
-    private final List<File> attachtments = new ArrayList<File>();
+    private final List<File> attachtments = new ArrayList<>();
     private MailAccount mailAccount;
     private MailTemplate template;
-    private Map<String, Object> templateModel = new HashMap<String, Object>();
+    private Map<String, Object> templateModel = new HashMap<>();
 
     public MailMessage() {
     }
@@ -100,15 +100,21 @@ public class MailMessage implements Serializable {
     }
 
     public void addTo(String to) {
-        tos.add(to);
+        if (!tos.contains(to)) {
+            tos.add(to);
+        }
     }
 
     public void addCc(String cc) {
-        ccs.add(cc);
+        if (!ccs.contains(cc)) {
+            ccs.add(cc);
+        }
     }
 
     public void addBcc(String bcc) {
-        bccs.add(bcc);
+        if (!bccs.contains(bcc)) {
+            bccs.add(bcc);
+        }
     }
 
     public void addAttachtment(File file) {
@@ -161,6 +167,10 @@ public class MailMessage implements Serializable {
 
     @Override
     public String toString() {
-        return tos.toString() + " Subject: " + subject;
+        if (!tos.isEmpty()) {
+            return tos.toString() + " Subject: " + subject;
+        } else {
+            return to + " Subject: " + subject;
+        }
     }
 }

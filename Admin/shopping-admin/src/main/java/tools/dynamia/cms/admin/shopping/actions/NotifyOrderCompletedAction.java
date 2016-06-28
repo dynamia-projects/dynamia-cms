@@ -16,39 +16,39 @@ import tools.dynamia.ui.UIMessages;
 @InstallAction
 public class NotifyOrderCompletedAction extends AbstractCrudAction {
 
-	@Autowired
-	private ShoppingCartService service;
+    @Autowired
+    private ShoppingCartService service;
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+    private CrudService crudService;
 
-	public NotifyOrderCompletedAction() {
-		setName("Notify Order");
-		setMenuSupported(true);
+    public NotifyOrderCompletedAction() {
+        setName("Notify Order");
+        setMenuSupported(true);
 
-	}
+    }
 
-	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    @Override
+    public CrudState[] getApplicableStates() {
+        return CrudState.get(CrudState.READ);
+    }
 
-	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(ShoppingOrder.class);
-	}
+    @Override
+    public ApplicableClass[] getApplicableClasses() {
+        return ApplicableClass.get(ShoppingOrder.class);
+    }
 
-	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		final ShoppingOrder shoppingOrder = (ShoppingOrder) evt.getData();
-		if (shoppingOrder != null) {
+    @Override
+    public void actionPerformed(CrudActionEvent evt) {
+        final ShoppingOrder shoppingOrder = (ShoppingOrder) evt.getData();
+        if (shoppingOrder != null) {
 
-			UIMessages.showQuestion("Are you sure?", () -> {
-				service.notifyOrderCompleted(crudService.reload(shoppingOrder));
-				UIMessages.showMessage("Notification sended ");
+            UIMessages.showQuestion("Are you sure?", () -> {
+                service.notifyOrderCompleted(crudService.reload(shoppingOrder));
+                UIMessages.showMessage("Notification sended ");
 
-			});
-		}
-	}
+            });
+        }
+    }
 
 }

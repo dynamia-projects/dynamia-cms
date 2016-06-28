@@ -11,27 +11,27 @@ import tools.dynamia.ui.UIMessages;
 
 public class DeleteSubmenuAction extends AbstractAction {
 
-	private MenuItem parent;
+    private MenuItem parent;
 
-	public DeleteSubmenuAction(MenuItem parent) {
-		this.parent = parent;
-		setName("Delete Submenu");
-		setImage("delete");
-	}
+    public DeleteSubmenuAction(MenuItem parent) {
+        this.parent = parent;
+        setName("Delete Submenu");
+        setImage("delete");
+    }
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		MenuItem submenu = (MenuItem) evt.getData();
-		if (submenu != null) {
-			UIMessages.showQuestion("Are you sure?", () -> {
-				parent.getSubitems().remove(submenu);
-				submenu.setParentItem(null);
-				CrudService crudService = Containers.get().findObject(CrudService.class);
-				crudService.delete(submenu);
-			});
-		} else {
-			UIMessages.showMessage("Select submenu", MessageType.WARNING);
-		}
-	}
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        MenuItem submenu = (MenuItem) evt.getData();
+        if (submenu != null) {
+            UIMessages.showQuestion("Are you sure?", () -> {
+                parent.getSubitems().remove(submenu);
+                submenu.setParentItem(null);
+                CrudService crudService = Containers.get().findObject(CrudService.class);
+                crudService.delete(submenu);
+            });
+        } else {
+            UIMessages.showMessage("Select submenu", MessageType.WARNING);
+        }
+    }
 
 }

@@ -19,30 +19,30 @@ import tools.dynamia.zk.navigation.ZKNavigationManager;
 @InstallAction
 public class EditMenuItemAction extends EditAction {
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+    private CrudService crudService;
 
-	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    @Override
+    public CrudState[] getApplicableStates() {
+        return CrudState.get(CrudState.READ);
+    }
 
-	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(MenuItem.class);
-	}
+    @Override
+    public ApplicableClass[] getApplicableClasses() {
+        return ApplicableClass.get(MenuItem.class);
+    }
 
-	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		MenuItem menuItem = (MenuItem) evt.getData();
-		if (menuItem != null) {
-			menuItem = crudService.reload(menuItem);
-			MenuItemsUI ui = new MenuItemsUI(menuItem);
-			ui.addAction(new SaveMenuItemAction(crudService,evt));
-			ZKNavigationManager.getInstance().setCurrentPage(new ComponentPage("editMenu"+menuItem.getId(), "Edit Menu "+menuItem, ui));
-		} else {
-			UIMessages.showMessage("Select menu item to edit", MessageType.ERROR);
-		}
+    @Override
+    public void actionPerformed(CrudActionEvent evt) {
+        MenuItem menuItem = (MenuItem) evt.getData();
+        if (menuItem != null) {
+            menuItem = crudService.reload(menuItem);
+            MenuItemsUI ui = new MenuItemsUI(menuItem);
+            ui.addAction(new SaveMenuItemAction(crudService, evt));
+            ZKNavigationManager.getInstance().setCurrentPage(new ComponentPage("editMenu" + menuItem.getId(), "Edit Menu " + menuItem, ui));
+        } else {
+            UIMessages.showMessage("Select menu item to edit", MessageType.ERROR);
+        }
 
-	}
+    }
 }

@@ -15,34 +15,91 @@
  */
 package tools.dynamia.cms.admin.core.zk.ui;
 
-import org.zkforge.ckez.CKeditor;
-import tools.dynamia.commons.MapBuilder;
+import java.io.UnsupportedEncodingException;
 
+import org.zkoss.zhtml.Textarea;
+import org.zkoss.zk.ui.WrongValueException;
+
+import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.zk.BindingComponentIndex;
 import tools.dynamia.zk.ComponentAliasIndex;
 
-public class CMSeditor extends CKeditor {
+public class CMSeditor extends Textarea {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4372806043096340598L;
+	private String width = "100%";
+	private String height = "300px";
+	private String calcStyle;
+	private String customStyle;
+	private String chartset = "UTF-8";
 
-    static {
-        ComponentAliasIndex.getInstance().add(CMSeditor.class);
-        BindingComponentIndex.getInstance().put("value", CMSeditor.class);
-        setFileBrowserTemplate("/browse");
-        setFileUploadHandlePage("/browse");
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -4372806043096340598L;
 
-    }
+	static {
+		ComponentAliasIndex.getInstance().add(CMSeditor.class);
+		BindingComponentIndex.getInstance().put("value", CMSeditor.class);
 
-    public CMSeditor() {
-        setFilebrowserBrowseUrl("resources");
-        setFilebrowserUploadUrl("resources");
-        setConfig(MapBuilder.put("config.entities_latin", false,
-                "config.entities",false,
-                "config.htmlEncodeOutput",false));
-        
-    }
+	}
+
+	public CMSeditor() {
+		setSclass("cms-editor");
+		setDynamicProperty("spellcheck", false);
+		setDynamicProperty("onkeydown",
+				"if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}");
+
+	}
+
+	public String getWidth() {
+		return width;
+	}
+
+	public void setWidth(String width) {
+		this.width = width;
+		calcStyle();
+	}
+
+	public String getHeight() {
+		return height;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+		calcStyle();
+	}
+
+	private void calcStyle() {
+		if (customStyle == null) {
+			customStyle = "";
+		}
+		calcStyle = String.format("width: %s; height: %s; %s", width, height, customStyle);
+		super.setStyle(calcStyle);
+	}
+
+	@Override
+	public String getStyle() {
+		return customStyle;
+	}
+
+	@Override
+	public void setStyle(String style) {
+		this.customStyle = style;
+		calcStyle();
+	}
+
+	@Override
+	public void setValue(String value) throws WrongValueException {
+		value = CMSUtil.escapeHtmlContent(value);
+		super.setValue(value);
+	}
+
+	public String getChartset() {
+		return chartset;
+	}
+
+	public void setChartset(String chartset) {
+		this.chartset = chartset;
+	}
 
 }

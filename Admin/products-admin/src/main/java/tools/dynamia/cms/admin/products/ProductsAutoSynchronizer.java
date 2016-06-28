@@ -44,6 +44,7 @@ public class ProductsAutoSynchronizer {
         for (ProductsSiteConfig config : configs) {
             synchronizer.synchronize(config);
         }
+
     }
 
 }

@@ -21,15 +21,19 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import javax.servlet.http.HttpUtils;
+
 import org.thymeleaf.TemplateProcessingParameters;
 import org.thymeleaf.resourceresolver.IResourceResolver;
 
 import tools.dynamia.cms.site.core.DynamiaCMS;
+import tools.dynamia.cms.site.core.SiteContext;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.services.SiteService;
 import tools.dynamia.cms.site.templates.TemplateResources;
 
 import tools.dynamia.integration.Containers;
+import tools.dynamia.io.IOUtils;
 
 /**
  *
@@ -37,67 +41,76 @@ import tools.dynamia.integration.Containers;
  */
 public class ThymeleafTemplateResourceResolver implements IResourceResolver {
 
-    @Override
-    public String getName() {
-        return ThymeleafTemplateResourceResolver.class.getName();
-    }
+	@Override
+	public String getName() {
+		return ThymeleafTemplateResourceResolver.class.getName();
+	}
 
-    @Override
-    public InputStream getResourceAsStream(TemplateProcessingParameters tpp, String name) {
+	@Override
+	public InputStream getResourceAsStream(TemplateProcessingParameters tpp, String name) {
 
-        String siteKey = (String) tpp.getContext().getVariables().get("siteKey");
-        if (siteKey == null) {
-            siteKey = "main";
-        }
+		String siteKey = (String) tpp.getContext().getVariables().get("siteKey");
+		if (siteKey == null) {
+			try {
+				siteKey = SiteContext.get().getCurrent().getKey();
+			} catch (Exception e) {
 
-        return loadFromFile(siteKey, name);
+				e.printStackTrace();
+			}
+		}
 
-    }
+		if (siteKey == null) {
+			siteKey = "main";
+		}
 
-    private InputStream loadFromFile(String siteKey, String name) {
+		return loadFromFile(siteKey, name);
 
-        SiteService coreService = Containers.get().findObject(SiteService.class);
-        Site site = coreService.getSite(siteKey);
+	}
 
-        //Find first in root template folder
-        Path file = TemplateResources.find(site, name);
+	private InputStream loadFromFile(String siteKey, String name) {
 
-        //find view in site folders
-        if (Files.notExists(file)) {
-            Path siteHome = DynamiaCMS.getSitesResourceLocation(site);
-            for (String loc : DynamiaCMS.getRelativeLocations()) {
-                file = siteHome.resolve(loc + File.separator + name);
-                if (Files.exists(file)) {
-                    break;
-                }
-            }
-        }
+		SiteService coreService = Containers.get().findObject(SiteService.class);
+		Site site = coreService.getSite(siteKey);
 
-        //find view in templates sub folders
-        if (Files.notExists(file)) {
-            for (String loc : DynamiaCMS.getRelativeLocations()) {
-                file = TemplateResources.find(site, loc + File.separator + name);
-                if (Files.exists(file)) {
-                    break;
-                }
-            }
-        }
+		// Find first in root template folder
+		Path file = TemplateResources.find(site, name);
 
-        //find in home default folders
-        if (Files.notExists(file)) {
-            Path home = DynamiaCMS.getHomePath();
-            for (String loc : DynamiaCMS.getRelativeLocations()) {
-                file = home.resolve(loc + File.separator + name);
-                if (Files.exists(file)) {
-                    break;
-                }
-            }
-        }
-        try {
-            return Files.newInputStream(file);
-        } catch (IOException e) {
-            return null;
-        }
-    }
+		// find view in site folders
+		if (Files.notExists(file)) {
+			Path siteHome = DynamiaCMS.getSitesResourceLocation(site);
+			for (String loc : DynamiaCMS.getRelativeLocations()) {
+				file = siteHome.resolve(loc + File.separator + name);
+				if (Files.exists(file)) {
+					break;
+				}
+			}
+		}
+
+		// find view in templates sub folders
+		if (Files.notExists(file)) {
+			for (String loc : DynamiaCMS.getRelativeLocations()) {
+				file = TemplateResources.find(site, loc + File.separator + name);
+				if (Files.exists(file)) {
+					break;
+				}
+			}
+		}
+
+		// find in home default folders
+		if (Files.notExists(file)) {
+			Path home = DynamiaCMS.getHomePath();
+			for (String loc : DynamiaCMS.getRelativeLocations()) {
+				file = home.resolve(loc + File.separator + name);
+				if (Files.exists(file)) {
+					break;
+				}
+			}
+		}
+		try {
+			return Files.newInputStream(file);
+		} catch (IOException e) {
+			return null;
+		}
+	}
 
 }

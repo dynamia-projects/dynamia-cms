@@ -44,4 +44,19 @@ public class VelocityStringParser implements StringParser {
         return writer.toString();
     }
 
+    @Override
+    public String getId() {
+        return "velocity";
+    }
+
+    @Override
+    public String getName() {
+        return "Velocity";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Use this if you need advanced template with conditionals and such";
+    }
+
 }

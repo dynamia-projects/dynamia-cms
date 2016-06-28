@@ -15,7 +15,6 @@
  */
 package tools.dynamia.cms.site.core;
 
-import tools.dynamia.cms.site.core.domain.ContentAuthor;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +24,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import tools.dynamia.cms.site.core.domain.Site;
-
 import tools.dynamia.domain.query.Parameters;
 import tools.dynamia.integration.Containers;
 

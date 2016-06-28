@@ -39,6 +39,7 @@ public class InstallerConfig implements ModuleProvider {
         module.setIconSize(IconSize.NORMAL);
         module.addPage(new CrudPage("sites", "Sites", Site.class));
         module.addPage(new ConfigPage("cmsconfig", "Configuration", "CMSConfig"));
+        module.addPage(new GlobalResourcesPage("globalResources", "Global Resources"));
 
         return module;
     }
