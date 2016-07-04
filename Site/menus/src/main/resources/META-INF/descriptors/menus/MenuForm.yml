@@ -17,8 +17,6 @@ fields:
     menuItemStyleClass:
        label: Items Class
        
-    items:
-        component: crudview
  
 groups:
     style:

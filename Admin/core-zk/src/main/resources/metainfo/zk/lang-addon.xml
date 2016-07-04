@@ -16,8 +16,9 @@
 
 	<component>
 		<component-name>cmseditor</component-name>
-		<component-class>tools.dynamia.cms.admin.core.zk.ui.CMSeditor
-		</component-class>
+		<component-class>tools.dynamia.cms.admin.core.zk.ui.CMSeditor</component-class>
+		<widget-class>zul.wgt.Div</widget-class>
+
 		<annotation>
 			<annotation-name>default-bind</annotation-name>
 			<property-name>value</property-name>
@@ -42,6 +43,10 @@
 				<attribute-value>onChange</attribute-value>
 			</attribute>
 		</annotation>
+		<mold>
+			<mold-name>default</mold-name>
+			<mold-uri>mold/div.js</mold-uri>
+		</mold>
 	</component>
 
 	<component>

@@ -21,7 +21,7 @@ fields:
    content:      
       component: cmseditor
       params:
-          multiline: true
+          unescape: true
           height: 400px
           span: 2
           

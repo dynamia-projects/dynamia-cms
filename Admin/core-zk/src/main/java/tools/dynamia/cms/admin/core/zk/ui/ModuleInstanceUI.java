@@ -143,7 +143,8 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 		return new ActionEvent(data, this, params);
 	}
 
-	private Viewer createCustomConfig(ViewDescriptor configDescriptor, final ModuleInstance moduleInstance, final Module module) {
+	private Viewer createCustomConfig(ViewDescriptor configDescriptor, final ModuleInstance moduleInstance,
+			final Module module) {
 
 		List<Parameter> configParameters = createConfigParameters(configDescriptor, module, moduleInstance);
 		final Viewer viewer = new Viewer(configDescriptor, configParameters);
@@ -152,28 +153,36 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 
 	}
 
-	private List<Parameter> createConfigParameters(ViewDescriptor configDescriptor, Module module, ModuleInstance moduleInstance) {
+	private List<Parameter> createConfigParameters(ViewDescriptor configDescriptor, Module module,
+			ModuleInstance moduleInstance) {
 		List<Parameter> cfgParameters = new ArrayList<>();
 
 		for (Field field : configDescriptor.getFields()) {
 			ModuleInstanceParameter parameter = moduleInstance.getParameter(field.getName());
 
 			if (parameter == null) {
-				parameter = new ModuleInstanceParameter(field.getName(), (String) module.getMetadata().get(field.getName()));
+				parameter = new ModuleInstanceParameter(field.getName(),
+						(String) module.getMetadata().get(field.getName()));
 			}
 
 			String value = parameter.getValue();
 			if (parameter.getExtra() != null && !parameter.getExtra().isEmpty()) {
 				value = parameter.getExtra();
 			}
-			if(value==null || value.isEmpty() && field.getParams().containsKey("copyFrom")){
-				ModuleInstanceParameter source = moduleInstance.getParameter(field.getParams().get("copyFrom").toString());
-				if(source!=null){
-					value = source.getValue();
-					if(source.getExtra()!=null && !source.getExtra().isEmpty()){
-						value = source.getExtra();
+			try {
+				if (value == null || value.isEmpty() && field.getParams().get("copyFrom") != null) {
+					ModuleInstanceParameter source = moduleInstance
+							.getParameter(field.getParams().get("copyFrom").toString());
+					if (source != null) {
+						value = source.getValue();
+						if (source.getExtra() != null && !source.getExtra().isEmpty()) {
+							value = source.getExtra();
+						}
 					}
 				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			cfgParameters.add(new Parameter(parameter.getName(), value));
 		}
@@ -183,8 +192,8 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 	public void addAction(Action action) {
 		toolbar.addAction(action);
 	}
-	
-	public void sync(ModuleInstance instance){
+
+	public void sync(ModuleInstance instance) {
 		this.moduleInstance = instance;
 		formView.setValue(instance);
 		initConfigurationUI();

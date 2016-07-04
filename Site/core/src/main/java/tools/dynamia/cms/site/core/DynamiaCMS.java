@@ -32,89 +32,97 @@ import tools.dynamia.domain.query.ApplicationParameters;
  */
 public class DynamiaCMS {
 
-    private static final LoggingService logger = new SLF4JLoggingService(DynamiaCMS.class);
+	private static final LoggingService logger = new SLF4JLoggingService(DynamiaCMS.class);
 
-    private static final String PREFIX = "CMSConfig_";
+	private static final String PREFIX = "CMSConfig_";
 
-    public static final String CFG_HOMEVAR = PREFIX + "HomePath";
-    public static final String CFG_DEFAULT_TEMPLATE = PREFIX + "DefaultTemplate";
-    public static final String CFG_SUPER_ADMIN_SITE = PREFIX + "SuperAdminSite";
+	public static final String CFG_HOMEVAR = PREFIX + "HomePath";
+	public static final String CFG_DEFAULT_TEMPLATE = PREFIX + "DefaultTemplate";
+	public static final String CFG_SUPER_ADMIN_SITE = PREFIX + "SuperAdminSite";
 
-    private static final String TEMPLATES = "templates";
-    private static final String VIEWS = "views";
-    private static final String MODULES = "modules";
-    private static final String SITES = "sites";
-    private static String path;
+	private static final String TEMPLATES = "templates";
+	private static final String VIEWS = "views";
+	private static final String MODULES = "modules";
+	private static final String SITES = "sites";
+	private static final String STATIC = "static";
+	private static String path;
 
-    public static Path getHomePath() {
-        Path home = Paths.get(homePath());
-        createDirectoryIfNotExists(home);
-        return home;
-    }
+	public static Path getHomePath() {
+		Path home = Paths.get(homePath());
+		createDirectoryIfNotExists(home);
+		return home;
+	}
 
-    public static Path getSitesResourceLocation() {
-        Path path = Paths.get(homePath(), SITES);
-        createDirectoryIfNotExists(path);
-        return path;
-    }
+	public static Path getSitesResourceLocation() {
+		Path path = Paths.get(homePath(), SITES);
+		createDirectoryIfNotExists(path);
+		return path;
+	}
 
-    public static Path getSitesResourceLocation(Site site) {
-        Path path = Paths.get(homePath(), SITES, site.getKey());
+	public static Path getSitesResourceLocation(Site site) {
+		Path path = Paths.get(homePath(), SITES, site.getKey());
 
-        createDirectoryIfNotExists(path);
-        return path;
-    }
+		createDirectoryIfNotExists(path);
+		return path;
+	}
 
-    public static Path getModulesLocation() {
-        Path path = Paths.get(homePath(), MODULES);
-        createDirectoryIfNotExists(path);
-        return path;
-    }
+	public static Path getSitesStaticResourceLocation(Site site) {
+		Path path = Paths.get(homePath(), SITES, site.getKey(), STATIC);
 
-    public static Path getTemplatesLocation() {
-        Path path = Paths.get(homePath(), TEMPLATES);
-        createDirectoryIfNotExists(path);
-        return path;
-    }
+		createDirectoryIfNotExists(path);
+		return path;
+	}
 
-    public static Path getViewLocation() {
-        Path path = Paths.get(homePath(), VIEWS);
-        createDirectoryIfNotExists(path);
-        return path;
-    }
+	public static Path getModulesLocation() {
+		Path path = Paths.get(homePath(), MODULES);
+		createDirectoryIfNotExists(path);
+		return path;
+	}
 
-    private static String homePath() {
-        if (path == null) {
-            path = ApplicationParameters.get().getValue(CFG_HOMEVAR, System.getProperty("cms.home", "."));
-        }
-        return path;
-    }
+	public static Path getTemplatesLocation() {
+		Path path = Paths.get(homePath(), TEMPLATES);
+		createDirectoryIfNotExists(path);
+		return path;
+	}
 
-    public static void createDirectoryIfNotExists(Path path) {
-        if (Files.notExists(path)) {
-            try {
-                Files.createDirectories(path);
-            } catch (IOException ex) {
-                logger.error("Error creating DynamiaCMS path " + path, ex);
-            }
-        }
-    }
+	public static Path getViewLocation() {
+		Path path = Paths.get(homePath(), VIEWS);
+		createDirectoryIfNotExists(path);
+		return path;
+	}
 
-    public static String[] getRelativeLocations() {
-        return new String[]{VIEWS, MODULES};
-    }
+	private static String homePath() {
+		if (path == null) {
+			path = ApplicationParameters.get().getValue(CFG_HOMEVAR, System.getProperty("cms.home", "."));
+		}
+		return path;
+	}
 
-    public static void reloadHomePath() {
-        path = null;
-        initDefaultLocations();
-    }
+	public static void createDirectoryIfNotExists(Path path) {
+		if (Files.notExists(path)) {
+			try {
+				Files.createDirectories(path);
+			} catch (IOException ex) {
+				logger.error("Error creating DynamiaCMS path " + path, ex);
+			}
+		}
+	}
 
-    public static void initDefaultLocations() {
-        getHomePath();
-        getModulesLocation();
-        getSitesResourceLocation();
-        getTemplatesLocation();
-        getViewLocation();
-    }
+	public static String[] getRelativeLocations() {
+		return new String[] { VIEWS, MODULES };
+	}
+
+	public static void reloadHomePath() {
+		path = null;
+		initDefaultLocations();
+	}
+
+	public static void initDefaultLocations() {
+		getHomePath();
+		getModulesLocation();
+		getSitesResourceLocation();
+		getTemplatesLocation();
+		getViewLocation();
+	}
 
 }

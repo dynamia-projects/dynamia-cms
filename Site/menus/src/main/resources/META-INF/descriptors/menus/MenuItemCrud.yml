@@ -1,6 +1,9 @@
 view: crud
 beanClass: tools.dynamia.cms.site.menus.domain.MenuItem
 autofields: false
+dataSetView: tree
+parentName: parentItem
+controller: tools.dynamia.cms.admin.menus.controllers.MenuItemTreeCrudController
 
 actions:
     NewAction:    
@@ -8,5 +11,10 @@ actions:
         
     EditAction:
         enabled: false
+        
+    DeleteAction:
+        enabled: false
+        
+   
         
     

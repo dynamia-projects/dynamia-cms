@@ -15,6 +15,8 @@
  */
 package tools.dynamia.cms.site.menus.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,7 @@ import tools.dynamia.cms.site.menus.api.MenuItemType;
 import tools.dynamia.cms.site.menus.domain.Menu;
 import tools.dynamia.cms.site.menus.domain.MenuItem;
 import tools.dynamia.cms.site.menus.services.MenuService;
-
+import tools.dynamia.domain.query.QueryConditions;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.integration.Containers;
@@ -84,6 +86,13 @@ public class MenuServiceImpl implements MenuService {
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	public List<MenuItem> getItems(Menu menu){
+		return crudService.find(MenuItem.class, QueryParameters.with("menu", menu)
+				.add("parentItem", QueryConditions.isNull())
+				.orderBy("order"));
 	}
 
 }

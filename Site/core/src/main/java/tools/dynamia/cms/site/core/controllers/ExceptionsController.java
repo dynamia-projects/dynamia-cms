@@ -17,18 +17,18 @@ package tools.dynamia.cms.site.core.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import tools.dynamia.cms.site.core.CMSException;
 
+import tools.dynamia.cms.site.core.CMSException;
 import tools.dynamia.cms.site.core.DynamiaCMS;
 import tools.dynamia.cms.site.core.api.SiteRequestInterceptor;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.services.SiteService;
-
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
 import tools.dynamia.integration.Containers;
@@ -37,7 +37,7 @@ import tools.dynamia.integration.Containers;
  *
  * @author Mario Serrano Leones
  */
-@ControllerAdvice
+@Controller	
 public class ExceptionsController {
 
     private LoggingService logger = new SLF4JLoggingService(DynamiaCMS.class);

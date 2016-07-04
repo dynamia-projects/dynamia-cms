@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<!-- Main Menu -->
+
+<body th:fragment="module(instance)">
+
+
+	<th:block th:each="mi : ${instance.model.menuitems}">
+		<li th:if="${not #lists.isEmpty(mi.subitems)}"  class="dropdown">
+		
+		<a href="#"
+			th:href="@{${mi.href}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
+			th:title="${mi.title}" th:target="${mi.target}"> <i
+				th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
+				<th:block th:text="${mi.name}" /> <span class="caret"></span>
+		</a>
+			<ul class="dropdown-menu" role="menu">
+				<li th:each="smi : ${mi.subitems}">
+				<a
+					th:class="${smi.styleClass}" th:href="@{${smi.href}}"
+					th:target="${smi.target}" th:title="${smi.title}"> <th:block
+							th:text="${smi.name}" />
+				</a></li>
+			</ul></li>
+
+		<li th:if="${#lists.isEmpty(mi.subitems)}"><a href="#"
+			th:href="@{${mi.href}}" th:class="${mi.styleClass}"
+			th:title="${mi.title}" th:target="${mi.target}"> <i
+				th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
+				<th:block th:text="${mi.name}" />
+		</a></li>
+	</th:block>
+
+
+</body>
+
+</html>

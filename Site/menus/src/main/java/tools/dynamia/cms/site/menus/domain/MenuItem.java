@@ -28,6 +28,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+
 import tools.dynamia.cms.site.core.Orderable;
 import tools.dynamia.cms.site.pages.domain.Page;
 
@@ -39,6 +41,7 @@ import tools.dynamia.domain.SimpleEntity;
  */
 @Entity
 @Table(name = "mn_menuitems")
+@BatchSize(size = 50)
 public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 
 	/**
@@ -211,7 +214,7 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 
 	public void setPage(Page page) {
 		this.page = page;
-		
+
 	}
 
 	public String getType() {
@@ -277,13 +280,13 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 		clone.backgroundImage = backgroundImage;
 		clone.href = href;
 		clone.icon = icon;
-		clone.name = name+" (copy)";
+		clone.name = name + " (copy)";
 		clone.order = order + 1;
 		clone.page = page;
 		clone.styleClass = styleClass;
 		clone.subtitle = subtitle;
 		clone.target = target;
-		clone.title = title+" (copy)";
+		clone.title = title + " (copy)";
 		clone.type = type;
 		clone.menu = menu;
 
@@ -296,7 +299,7 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 		return clone;
 
 	}
-	
+
 	@Override
 	public String toString() {
 		return getName();

@@ -15,11 +15,15 @@
  */
 package tools.dynamia.cms.site.menus.services;
 
+import java.util.List;
+
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.menus.MenuContext;
 import tools.dynamia.cms.site.menus.api.MenuItemType;
 import tools.dynamia.cms.site.menus.domain.Menu;
 import tools.dynamia.cms.site.menus.domain.MenuItem;
+import tools.dynamia.domain.query.QueryConditions;
+import tools.dynamia.domain.query.QueryParameters;
 
 /**
  *
@@ -36,5 +40,7 @@ public interface MenuService {
 	public Menu getMenu(Site site, Long id);
 
 	MenuItemType getMenuItemType(MenuItem menuItem);
+
+	List<MenuItem> getItems(Menu menu);
 
 }

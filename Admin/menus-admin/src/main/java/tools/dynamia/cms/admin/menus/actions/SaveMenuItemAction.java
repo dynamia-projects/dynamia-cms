@@ -17,65 +17,67 @@ import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer;
 
 public class SaveMenuItemAction extends AbstractAction {
 
-    private CrudService crudService;
-    private CrudActionEvent sourceEvent;
+	private CrudService crudService;
+	private CrudActionEvent sourceEvent;
 
-    public SaveMenuItemAction(CrudService crudService, CrudActionEvent evt) {
-        setName("Save");
-        setImage("save");
-        this.crudService = crudService;
-        this.sourceEvent = evt;
-    }
+	public SaveMenuItemAction(CrudService crudService, CrudActionEvent evt) {
+		setName("Save");
+		setImage("save");
+		this.crudService = crudService;
+		this.sourceEvent = evt;
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        List<Parameter> parameters = (List<Parameter>) evt.getData();
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		List<Parameter> parameters = (List<Parameter>) evt.getData();
 
-        MenuItem menuItem = (MenuItem) evt.getParam("menuItem");
 
-        if (needSave(menuItem)) {
-            crudService.save(menuItem);
-        }
+		MenuItemsUI ui = (MenuItemsUI) evt.getSource();
+		MenuItem menuItem = ui.getMenuItem();
 
-        if (parameters != null) {
-            for (Parameter parameter : parameters) {
-                MenuItemParameter itemParameter = menuItem.getParameter(parameter.getName());
-                if (itemParameter == null) {
-                    String value = parameter.getValue();
-                    if (value != null && !value.isEmpty()) {
-                        itemParameter = new MenuItemParameter(parameter.getName(), parameter.getValue());
-                        itemParameter.setEnabled(true);
-                        itemParameter.setMenuItem(menuItem);
-                        if (needSave(menuItem)) {
-                            crudService.save(itemParameter);
-                        }
-                    }
-                } else {
-                    itemParameter.setValue(parameter.getValue());
-                    if (needSave(menuItem)) {
-                        crudService.save(itemParameter);
-                    }
-                }
-            }
-        }
+		if (needSave(menuItem)) {
+			crudService.save(menuItem);
+		}
 
-        UIMessages.showMessage("Menu item saved");
+		if (parameters != null) {
+			for (Parameter parameter : parameters) {
+				MenuItemParameter itemParameter = menuItem.getParameter(parameter.getName());
+				if (itemParameter == null) {
+					String value = parameter.getValue();
+					if (value != null && !value.isEmpty()) {
+						itemParameter = new MenuItemParameter(parameter.getName(), parameter.getValue());
+						itemParameter.setEnabled(true);
+						itemParameter.setMenuItem(menuItem);
+						if (needSave(menuItem)) {
+							crudService.save(itemParameter);
+						}
+					}
+				} else {
+					itemParameter.setValue(parameter.getValue());
+					if (needSave(menuItem)) {
+						crudService.save(itemParameter);
+					}
+				}
+			}
+		}
 
-        if (sourceEvent != null) {
-            sourceEvent.getController().doQuery();
-        }
+		UIMessages.showMessage("Menu item saved");
 
-        MenuItemsUI ui = (MenuItemsUI) evt.getSource();
-        ui.sync(crudService.reload(menuItem));
-    }
+		if (sourceEvent != null) {
+			sourceEvent.getController().doQuery();
+		}
 
-    private boolean needSave(MenuItem menuItem) {
-        return menuItem.getMenu().getId() != null;
-    }
+		ui.getParent().detach();
 
-    @Override
-    public ActionRenderer getRenderer() {
-        return new ToolbarbuttonActionRenderer(true);
-    }
+	}
+
+	private boolean needSave(MenuItem menuItem) {
+		return true;
+	}
+
+	@Override
+	public ActionRenderer getRenderer() {
+		return new ToolbarbuttonActionRenderer(true);
+	}
 
 }

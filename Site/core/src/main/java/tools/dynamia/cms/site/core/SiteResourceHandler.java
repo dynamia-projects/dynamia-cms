@@ -16,13 +16,19 @@
 package tools.dynamia.cms.site.core;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpUtils;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import tools.dynamia.cms.site.core.domain.Site;
@@ -38,73 +44,85 @@ import tools.dynamia.io.ImageUtil;
  */
 public class SiteResourceHandler extends ResourceHttpRequestHandler {
 
-    private final static String THUMBNAILS = "/thumbnails/";
+	private final static String THUMBNAILS = "/thumbnails/";
 
-    @Override
-    protected Resource getResource(HttpServletRequest request) {
-        SiteService coreService = Containers.get().findObject(SiteService.class);
-        Site site = coreService.getSite(request);
-        if (site == null) {
-            site = coreService.getMainSite();
-        }
+	@Override
+	protected Resource getResource(HttpServletRequest request) {
+		
+		SiteService coreService = Containers.get().findObject(SiteService.class);
+		Site site = coreService.getSite(request);
+		if (site == null) {
+			site = coreService.getMainSite();
+		}
 
-        if (site == null) {
-            throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.getServerName());
-        }
+		if (site == null) {
+			throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.getServerName());
+		}
 
-        Path dir = resolveResourceDirectory(site);
+		Path dir = resolveResourceDirectory(site);
 
-        Path resource = Paths.get(request.getPathInfo());
-        resource = resource.subpath(1, resource.getNameCount());
+		Path resource = Paths.get(request.getPathInfo());
 
-        File file = dir.resolve(resource).toFile();
-        if (ImageUtil.isImage(file)) {
+		resource = resource.subpath(1, resource.getNameCount());
+		if (Files.isDirectory(dir.resolve(resource))) {
+			resource = resource.resolve("index.html");
+		}
 
-            if (isThumbnail(request)) {
-                file = createOrLoadThumbnail(file, resource.toString(), request);
-            }
+		File file = dir.resolve(resource).toFile();
+		if (ImageUtil.isImage(file)) {
 
-            if (!file.exists()) {
-                file = dir.resolve("images/nophoto.jpg").toFile();
-            }
-        }
+			if (isThumbnail(request)) {
+				file = createOrLoadThumbnail(file, resource.toString(), request);
+			}
 
-        return new FileSystemResource(file);
-    }
+			if (!file.exists()) {
+				file = dir.resolve("images/nophoto.jpg").toFile();
+			}
+		}
+		if(!file.exists()){
+			return null;
+		}
 
-    protected Path resolveResourceDirectory(Site site) {
-        return DynamiaCMS.getSitesResourceLocation(site);
-    }
+		return new FileSystemResource(file);
+	}
 
-    private boolean isThumbnail(HttpServletRequest request) {
-        return request.getPathInfo().contains(THUMBNAILS);
-    }
+	protected Path resolveResourceDirectory(Site site) {
+		return DynamiaCMS.getSitesResourceLocation(site);
+	}
 
-    private File createOrLoadThumbnail(File file, String uri, HttpServletRequest request) {
+	private boolean isThumbnail(HttpServletRequest request) {
+		return request.getPathInfo().contains(THUMBNAILS);
+	}
 
-        String fileName = file.getName();
-        String baseUri = file.getParentFile().getParent();
+	private File createOrLoadThumbnail(File file, String uri, HttpServletRequest request) {
 
-        String w = getParam(request, "w", "200");
-        String h = getParam(request, "h", "200");
-        String subfolder = w + "x" + h;
-        File realThumbImg = new File(baseUri + "/" + subfolder + "/" + fileName);
-        if (!realThumbImg.exists()) {
-            File realImg = new File(baseUri, fileName);
-            if (realImg.exists()) {
-                String format = IOUtils.getFileExtension(realImg);
-                ImageUtil.resizeImage(realImg, realThumbImg, format, Integer.parseInt(w), Integer.parseInt(h));
-            }
-        }
-        return realThumbImg;
+		String fileName = file.getName();
+		String baseUri = file.getParentFile().getParent();
 
-    }
+		String w = getParam(request, "w", "200");
+		String h = getParam(request, "h", "200");
+		String subfolder = w + "x" + h;
+		File realThumbImg = new File(baseUri + "/" + subfolder + "/" + fileName);
+		if (!realThumbImg.exists()) {
+			File realImg = new File(baseUri, fileName);
+			if (realImg.exists()) {
+				String format = IOUtils.getFileExtension(realImg);
+				ImageUtil.resizeImage(realImg, realThumbImg, format, Integer.parseInt(w), Integer.parseInt(h));
+			}
+		}
+		if (realThumbImg.exists()) {
+			return realThumbImg;
+		} else {
+			return file;
+		}
 
-    public String getParam(HttpServletRequest request, String name, String defaultValue) {
-        String value = request.getParameter(name);
-        if (value == null || value.trim().isEmpty()) {
-            value = defaultValue;
-        }
-        return value;
-    }
+	}
+
+	public String getParam(HttpServletRequest request, String name, String defaultValue) {
+		String value = request.getParameter(name);
+		if (value == null || value.trim().isEmpty()) {
+			value = defaultValue;
+		}
+		return value;
+	}
 }

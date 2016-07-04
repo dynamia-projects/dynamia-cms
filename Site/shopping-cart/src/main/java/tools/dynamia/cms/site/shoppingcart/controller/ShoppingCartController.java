@@ -18,6 +18,7 @@ package tools.dynamia.cms.site.shoppingcart.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -102,7 +103,7 @@ public class ShoppingCartController {
 		return mv;
 	}
 
-	@Secured("ROLE_USER")
+	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/{name}/checkout", method = { RequestMethod.GET })
 	public ModelAndView checkout(@PathVariable String name, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView();
@@ -129,7 +130,7 @@ public class ShoppingCartController {
 		return mv;
 	}
 
-	@Secured("ROLE_USER")
+	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/{name}/confirm", method = { RequestMethod.POST })
 	public ModelAndView confirm(@PathVariable String name, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView();

@@ -15,21 +15,18 @@
  */
 package tools.dynamia.cms.site.core;
 
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.MustacheFactory;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.velocity.app.VelocityEngine;
 
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
+
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.MustacheFactory;
 
 /**
  *
@@ -39,52 +36,66 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 @EnableCaching
 public class CoreJavaConfig {
 
-    @Bean
-    public SimpleUrlHandlerMapping siteResourcesMapping() {
+	@Bean
+	public SimpleUrlHandlerMapping siteResourcesMapping() {
 
-        SiteResourceHandler siteHandler = siteResourcesHandler();
-        ResourceHttpRequestHandler modulesHandler = modulesResourcesHandler();
+		SiteResourceHandler siteHandler = siteResourcesHandler();
+		ResourceHttpRequestHandler modulesHandler = modulesResourcesHandler();
+		SiteStaticResourceHandler staticHandler = siteStaticResourceHandler();
 
-        Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 
-        map.put("resources/**", siteHandler);
-        map.put("$mods/**/*.css", modulesHandler);
-        map.put("$mods/**/*.js", modulesHandler);
-        map.put("$mods/**/*.svg", modulesHandler);
-        map.put("$mods/**/*.eot", modulesHandler);
-        map.put("$mods/**/*.ttf", modulesHandler);
-        map.put("$mods/**/*.woff", modulesHandler);
-        map.put("$mods/**/*.png", modulesHandler);
-        map.put("$mods/**/*.jpg", modulesHandler);
-        map.put("$mods/**/*.gif", modulesHandler);
+		map.put("resources/**", siteHandler);
+		map.put("static/**", staticHandler);
+		map.put("$mods/**/*.css", modulesHandler);
+		map.put("$mods/**/*.js", modulesHandler);
+		map.put("$mods/**/*.json", modulesHandler);
+		map.put("$mods/**/*.svg", modulesHandler);
+		map.put("$mods/**/*.eot", modulesHandler);
+		map.put("$mods/**/*.ttf", modulesHandler);
+		map.put("$mods/**/*.woff", modulesHandler);
+		map.put("$mods/**/*.png", modulesHandler);
+		map.put("$mods/**/*.jpg", modulesHandler);
+		map.put("$mods/**/*.gif", modulesHandler);
+		map.put("$mods/**/*.ini", modulesHandler);
+		map.put("$mods/**/*.yml", modulesHandler);
+		map.put("$mods/**/*.xml", modulesHandler);
+		map.put("$mods/**/*.txt", modulesHandler);
+		map.put("$mods/**/*.md", modulesHandler);
 
-        SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
-        mapping.setUrlMap(map);
+		SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
 
-        return mapping;
-    }
+		mapping.setUrlMap(map);
 
-    @Bean
-    public SiteResourceHandler siteResourcesHandler() {
-        return new SiteResourceHandler();
-    }
+		return mapping;
+	}
 
-    @Bean
-    public ModuleResourcesHandler modulesResourcesHandler() {
-        return new ModuleResourcesHandler();
-    }
+	@Bean
+	public SiteResourceHandler siteResourcesHandler() {
+		return new SiteResourceHandler();
+	}
 
-    @Bean
-    public VelocityEngine velocityEngine() {
-        VelocityEngine engine = new VelocityEngine();
+	@Bean
+	public SiteStaticResourceHandler siteStaticResourceHandler() {
+		return new SiteStaticResourceHandler();
+	}
 
-        return engine;
-    }
+	@Bean
+	public ModuleResourcesHandler modulesResourcesHandler() {
+		return new ModuleResourcesHandler();
+	}
 
-    @Bean
-    public MustacheFactory mustacheFactory() {
-        MustacheFactory mf = new DefaultMustacheFactory();
-        return mf;
-    }
+	@Bean
+	public VelocityEngine velocityEngine() {
+		VelocityEngine engine = new VelocityEngine();
+
+		return engine;
+	}
+
+	@Bean
+	public MustacheFactory mustacheFactory() {
+		MustacheFactory mf = new DefaultMustacheFactory();
+		return mf;
+	}
 
 }

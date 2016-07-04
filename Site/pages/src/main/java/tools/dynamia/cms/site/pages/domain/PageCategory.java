@@ -20,6 +20,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
 import javax.persistence.Column;
@@ -33,87 +35,88 @@ import tools.dynamia.domain.contraints.NotEmpty;
  */
 @Entity
 @Table(name = "pg_categories")
+@BatchSize(size = 10)
 public class PageCategory extends SimpleEntity implements SiteAware, Aliasable {
 
-    public static final int DEFAULT_PAGINATION_SIZE = 20;
+	public static final int DEFAULT_PAGINATION_SIZE = 20;
 
-    @NotEmpty(message = "Enter category name")
-    private String name;
-    private String description;
-    @OneToOne
-    private Site site;
-    private boolean indexableByDates;
-    @Column(name = "catAlias")
-    private String alias;
-    private boolean hidden;
-    private int paginationSize = DEFAULT_PAGINATION_SIZE;
+	@NotEmpty(message = "Enter category name")
+	private String name;
+	private String description;
+	@OneToOne
+	private Site site;
+	private boolean indexableByDates;
+	@Column(name = "catAlias")
+	private String alias;
+	private boolean hidden;
+	private int paginationSize = DEFAULT_PAGINATION_SIZE;
 
-    public int getPaginationSize() {
-        if (paginationSize <= 0) {
-            paginationSize = DEFAULT_PAGINATION_SIZE;
-        }
-        return paginationSize;
-    }
+	public int getPaginationSize() {
+		if (paginationSize <= 0) {
+			paginationSize = DEFAULT_PAGINATION_SIZE;
+		}
+		return paginationSize;
+	}
 
-    public void setPaginationSize(int paginationSize) {
-        this.paginationSize = paginationSize;
-    }
+	public void setPaginationSize(int paginationSize) {
+		this.paginationSize = paginationSize;
+	}
 
-    public boolean isHidden() {
-        return hidden;
-    }
+	public boolean isHidden() {
+		return hidden;
+	}
 
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
-    }
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
 
-    public String getAlias() {
-        return alias;
-    }
+	public String getAlias() {
+		return alias;
+	}
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
 
-    public boolean isIndexableByDates() {
-        return indexableByDates;
-    }
+	public boolean isIndexableByDates() {
+		return indexableByDates;
+	}
 
-    public void setIndexableByDates(boolean indexableByDates) {
-        this.indexableByDates = indexableByDates;
-    }
+	public void setIndexableByDates(boolean indexableByDates) {
+		this.indexableByDates = indexableByDates;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Site getSite() {
-        return site;
-    }
+	public Site getSite() {
+		return site;
+	}
 
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	public void setSite(Site site) {
+		this.site = site;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    @Override
-    public String toString() {
-        return name;
-    }
+	@Override
+	public String toString() {
+		return name;
+	}
 
-    @Override
-    public String aliasSource() {
-        return getName();
-    }
+	@Override
+	public String aliasSource() {
+		return getName();
+	}
 }

@@ -15,13 +15,14 @@
  */
 package tools.dynamia.cms.site.products.domain;
 
-import tools.dynamia.cms.site.core.domain.SiteBaseEntity;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+
+import tools.dynamia.cms.site.core.domain.SiteBaseEntity;
 import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
@@ -71,6 +72,7 @@ public class ProductTemplate extends SiteBaseEntity {
     }
 
     public void setContent(String content) {
+    	
         this.content = content;
     }
 

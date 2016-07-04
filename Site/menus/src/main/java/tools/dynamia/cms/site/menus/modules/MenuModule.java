@@ -61,7 +61,7 @@ public class MenuModule extends AbstractModule {
 
 		if (menu != null) {
 			List<MenuItem> itemsToDisplay = new ArrayList<>();
-			for (MenuItem menuItem : menu.getItems()) {
+			for (MenuItem menuItem : service.getItems(menu)) {
 				menuItem.getSubitems().size();
 				MenuContext menuContext = service.setupMenuItem(menuItem);
 				itemsToDisplay.add(menuContext.getMenuItem());

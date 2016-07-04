@@ -9,3 +9,4 @@ fields:
       span: 2
       height: 300px
       copyFrom: contentPlain
+      unescape: true

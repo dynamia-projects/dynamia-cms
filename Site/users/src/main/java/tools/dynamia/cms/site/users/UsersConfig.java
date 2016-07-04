@@ -30,6 +30,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.domain.util.CrudServiceListener;
@@ -70,21 +71,27 @@ public class UsersConfig extends WebSecurityConfigurerAdapter {
                 .authenticationDetailsSource(new AuthenticationDetailsSource())
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .loginPage(loginPage()).permitAll()
+                .loginPage(loginPage())
+                	.permitAll()
                 .and()
                 .logout()
-                .logoutUrl(logutURL()).deleteCookies("JSESSIONID")
-                .permitAll()
+                	.logoutRequestMatcher(new AntPathRequestMatcher(logutURL()))
+                	.logoutSuccessUrl("/")                	
+                	.deleteCookies("JSESSIONID")                	
                 .and()
                 .rememberMe().key(StringUtils.randomString())
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .exceptionHandling().accessDeniedPage(loginPage());
 
-        http.headers()
+        http.headers()        
                 .cacheControl()
                 .and().xssProtection()
                 .and().httpStrictTransportSecurity()
-                .and().contentTypeOptions();
+                .and().contentTypeOptions()
+                .and().frameOptions().disable();
+        
 
     }
 

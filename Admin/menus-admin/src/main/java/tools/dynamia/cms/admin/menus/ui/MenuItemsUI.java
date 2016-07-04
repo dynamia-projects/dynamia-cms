@@ -174,6 +174,12 @@ public class MenuItemsUI extends Window implements ActionEventBuilder {
 		viewer.setValue(null);
 		viewer.setValue(item);
 		initConfigurationUI();
+		
+		
+	}
+	
+	public MenuItem getMenuItem() {
+		return menuItem;
 	}
 
 }
