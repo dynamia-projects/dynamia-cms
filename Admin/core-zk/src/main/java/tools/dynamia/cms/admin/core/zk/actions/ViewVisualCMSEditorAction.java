@@ -24,14 +24,15 @@ public class ViewVisualCMSEditorAction extends AbstractCMSEditorAction {
 		String content = (String) evt.getData();
 
 		CKeditor ckeditor = new CKeditor();
-		CKeditor.setFileBrowserTemplate("/browse");
-		CKeditor.setFileUploadHandlePage("/browse");
+
 		ckeditor.setValue(content);
 		ckeditor.setHflex("1");
 		ckeditor.setVflex("1");
+		ckeditor.setFilebrowserBrowseUrl("resources");
+		ckeditor.setFilebrowserUploadUrl("resources");
 		ckeditor.addEventListener("onSave", e -> {
 			editor.setValue(ckeditor.getValue());
-			
+
 			ckeditor.getParent().getParent().detach();
 		});
 

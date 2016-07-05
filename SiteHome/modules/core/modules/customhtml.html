@@ -9,7 +9,7 @@
 		<h3 th:if="${instance.titleVisible}">
 			<span class="maintext" th:text="${instance.title}">Title</span>
 		</h3>
-		<div th:utext="${instance.model.content}">Content</div>
+		<th:block th:utext="${instance.model.content}">Content</th:block>
 	</div>
 
 </body>

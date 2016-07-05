@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+
+<div th:fragment="content">
+
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="h1-responsive">				
+				<th:block th:text="${title}">Page Title</th:block>
+				<small class="text-muted" th:text="${subtitle}">Page Subtitle</small>
+			</h1>
+		</div>
+	</div>
+</div>
+
+
+</html>

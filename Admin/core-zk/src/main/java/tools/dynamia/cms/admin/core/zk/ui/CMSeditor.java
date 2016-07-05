@@ -17,6 +17,7 @@ package tools.dynamia.cms.admin.core.zk.ui;
 
 import java.util.Map;
 
+import org.zkforge.ckez.CKeditor;
 import org.zkoss.lang.Objects;
 import org.zkoss.zhtml.Textarea;
 import org.zkoss.zk.ui.WrongValueException;
@@ -51,6 +52,8 @@ public class CMSeditor extends Div implements ActionEventBuilder {
 	static {
 		ComponentAliasIndex.getInstance().add(CMSeditor.class);
 		BindingComponentIndex.getInstance().put("value", CMSeditor.class);
+		CKeditor.setFileBrowserTemplate("/browse");
+		CKeditor.setFileUploadHandlePage("/browse");
 
 	}
 

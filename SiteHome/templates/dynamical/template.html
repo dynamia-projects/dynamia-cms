@@ -31,12 +31,12 @@
 <!-- Bootstrap core CSS -->
 <link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.css"
 	rel="stylesheet" />
-<link th:href="@{/css/custom.min.css}" href="css/custom.min.css"
+<link th:href="@{css/mdb.min.css}" href="css/mdb.min.css"
 	rel="stylesheet" />
 
 <!-- Font awesome CSS -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
 
 
 <!-- Custom styles for this template -->
@@ -56,31 +56,35 @@
 
 	<div id="fb-root"></div>
 
-	<div class="navbar navbar-default navbar-fixed-top">
+	<nav
+		th:class="${'navbar navbar-dark '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}">
+
+
+		<th:block th:include="module::position('logo')" />
+
+		<!-- Collapse button-->
+		<button class="navbar-toggler hidden-sm-up" type="button"
+			data-toggle="collapse" data-target="#collapseEx2">
+			<i class="fa fa-bars"></i>
+		</button>
+
 		<div class="container">
-			<th:block th:include="module::position('top-menu')" />
-		</div>
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<th:block th:include="module::position('logo')" />
-			</div>
-			<div class="collapse navbar-collapse" aria-expanded="false"
-				style="height: 1px;">
+
+
+			<div class="collapse navbar-toggleable-xs" id="collapseEx2">			
+
 				<ul class="nav navbar-nav">
 					<th:block th:include="module::position('navbar')" />
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav pull-right">
 					<th:block th:include="module::position('navbar-right')" />
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
 		</div>
-	</div>
+	</nav>
+	<th:block th:include="module::position('navbar-bottom')" />
+	
 
 	<div class="container">
 		<th:block th:include="tpl_globalmessages::content" />
@@ -93,22 +97,25 @@
 
 	<th:block th:include="module::position('content-top')" />
 
-	<div class="content" layout:fragment="content"></div>
+	<br />
+	<div class="container" layout:fragment="content"></div>
 	<th:block th:include="module::position('content-bottom')" />
 
 
 	<!-- /.container -->
 
-	<footer>
+	<footer id="footer"
+		th:class="${'page-footer center-on-small-only  '+#objects.nullSafe(siteParams['footer-class'],'bg-primary')}">
 
 		<th:block th:include="module::position('footer')" />
 
 		<!-- Scroll to top -->
 		<span class="totop"><a href="#"><i class="fa fa-angle-up"></i></a></span>
 
-		<div class="container">
+		<div class="footer-copyright">
 			<div class="row">
 				<div class="col-md-12">
+					<th:block th:include="module::position('footer-copyright')" />
 					Powered by: <a href="http://cms.dynamia.tools" target="blank"
 						class="tooltip-test">DynamiaCMS</a>
 				</div>
@@ -119,11 +126,18 @@
 
 	<th:block th:include="module::stylesheets" />
 
-	<!-- Bootstrap core JavaScript
-        ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script th:src="@{/js/jquery.js}" src="js/jquery.js"></script>
-	<script th:src="@{/js/bootstrap.min.js}" src="js/bootstrap.min.js"></script>
+
+	<!-- JQuery -->
+	<script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
+
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" th:src="@{/js/tether.min.js}"></script>
+
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" th:src="@{/js/mdb.min.js}"></script>
 
 	<th:block th:include="module::scripts" />
 
