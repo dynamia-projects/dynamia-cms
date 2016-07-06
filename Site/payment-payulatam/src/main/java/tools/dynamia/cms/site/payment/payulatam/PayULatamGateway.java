@@ -40,10 +40,8 @@ import tools.dynamia.cms.site.payment.ResponseType;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
 import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import tools.dynamia.cms.site.payment.services.PaymentService;
-
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
-import tools.dynamia.domain.services.CrudService;
 
 @Service
 public class PayULatamGateway implements PaymentGateway {
@@ -80,16 +78,20 @@ public class PayULatamGateway implements PaymentGateway {
 	private static final String TAX = "tax";
 	private static final String AMOUNT = "amount";
 	private static final String REFERENCE_CODE = "referenceCode";
+	private static final String REFERENCE_SALE = "reference_sale";
 	private static final String TEST_URL = "testUrl";
 	private static final String PRODUCTION_URL = "productionUrl";
 	private static final String RES_STATE_POL = "state_pol";
 
-	@Autowired
 	private PaymentService service;
-	@Autowired
-	private CrudService crudService;
 
-	private LoggingService logger = new SLF4JLoggingService(PayULatamGateway.class,"[==PAYULATAM==] ");
+	private LoggingService logger = new SLF4JLoggingService(PayULatamGateway.class, "[==PAYULATAM==] ");
+
+	@Autowired
+	public PayULatamGateway(PaymentService service) {
+		super();
+		this.service = service;
+	}
 
 	@Override
 	public String getName() {
@@ -102,8 +104,17 @@ public class PayULatamGateway implements PaymentGateway {
 	}
 
 	@Override
-	public String getTransactionLocator() {
-		return REFERENCE_CODE;
+	public String locateTransactionId(Map<String, String> response) {
+		String uuid = null;
+		if (response != null) {
+			uuid = response.get(REFERENCE_CODE);
+			if (uuid == null) {
+				uuid = response.get(REFERENCE_SALE);
+			}
+
+		}
+
+		return uuid;
 	}
 
 	@Override
@@ -113,9 +124,10 @@ public class PayULatamGateway implements PaymentGateway {
 
 	@Override
 	public String[] getResponseParams() {
-		return new String[] { RES_CUS, RES_LAP_PAYMENT_METHOD, RES_POL_RESPONSE_CODE, RES_TRANSACTION_STATE, RES_PSE_BANK,
-				RES_PSE_REFERENCE1, RES_PSE_REFERENCE2, RES_PSE_REFERENCE3, RES_REFERENCE_POL, SIGNATURE, REFERENCE_CODE, MERCHANT_ID,
-				ACCOUNT_ID, TAX_RETURN_BASE, TX_STATE, TX_VALUE, CURRENCY, RES_STATE_POL };
+		return new String[] { RES_CUS, RES_LAP_PAYMENT_METHOD, RES_POL_RESPONSE_CODE, RES_TRANSACTION_STATE,
+				RES_PSE_BANK, RES_PSE_REFERENCE1, RES_PSE_REFERENCE2, RES_PSE_REFERENCE3, RES_REFERENCE_POL, SIGNATURE,
+				REFERENCE_CODE, MERCHANT_ID, ACCOUNT_ID, TAX_RETURN_BASE, TX_STATE, TX_VALUE, CURRENCY, RES_STATE_POL,
+				REFERENCE_SALE };
 	}
 
 	@Override
@@ -124,7 +136,8 @@ public class PayULatamGateway implements PaymentGateway {
 
 		ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = sra.getRequest();
-		String baseUrl = String.format("%s://%s:%d/", request.getScheme(), request.getServerName(), request.getServerPort());
+		String baseUrl = String.format("%s://%s:%d/", request.getScheme(), request.getServerName(),
+				request.getServerPort());
 		baseUrl = baseUrl.replace(":80/", "/");
 		tx.setResponseURL(baseUrl + "payment/" + getId() + "/response");
 		tx.setConfirmationURL(baseUrl + "payment/" + getId() + "/confirmation");
@@ -252,8 +265,8 @@ public class PayULatamGateway implements PaymentGateway {
 			tx.setPaymentMethod(response.get(RES_LAP_PAYMENT_METHOD));
 			tx.setReference(response.get(RES_REFERENCE_POL));
 			tx.setReference2(response.get(RES_CUS));
-			tx.setReference3(
-					response.get(RES_PSE_REFERENCE1) + " " + response.get(RES_PSE_REFERENCE2) + " " + response.get(RES_PSE_REFERENCE3));
+			tx.setReference3(response.get(RES_PSE_REFERENCE1) + " " + response.get(RES_PSE_REFERENCE2) + " "
+					+ response.get(RES_PSE_REFERENCE3));
 			tx.setGatewayResponse(mapToString(response));
 
 			return true;
@@ -266,16 +279,17 @@ public class PayULatamGateway implements PaymentGateway {
 		// $ApiKey~$merchant_id~$referenceCode~$New_value~$currency~$transactionState
 
 		String merchantId = response.get(MERCHANT_ID);
-		String referenceCode = response.get(REFERENCE_CODE);
+		String txuuid = locateTransactionId(response);
 		String value = response.get(TX_VALUE);
 		value = new BigDecimal(value).setScale(1, RoundingMode.HALF_EVEN).floatValue() + "";
 		String currency = response.get(CURRENCY);
 		String state = response.get(TX_STATE);
 
 		String responseSignature = response.get(SIGNATURE);
-		logger.info("PayU ===> Validating Response Signature: " + responseSignature + " == MD5($ApiKey~" + merchantId + "~" + referenceCode
-				+ "~" + value + "~" + currency + "~" + state + ")");
-		String computeSignature = md5(apiKey + "~" + merchantId + "~" + referenceCode + "~" + value + "~" + currency + "~" + state);
+		logger.info("PayU ===> Validating Response Signature: " + responseSignature + " == MD5($ApiKey~" + merchantId
+				+ "~" + txuuid + "~" + value + "~" + currency + "~" + state + ")");
+		String computeSignature = md5(
+				apiKey + "~" + merchantId + "~" + txuuid + "~" + value + "~" + currency + "~" + state);
 
 		return computeSignature.equals(responseSignature);
 	}
@@ -283,7 +297,7 @@ public class PayULatamGateway implements PaymentGateway {
 	public String generateSignature(String apiKey, Map<String, String> params) {
 
 		String merchantId = params.get(MERCHANT_ID);
-		String referenceCode = params.get(REFERENCE_CODE);
+		String txuuid = locateTransactionId(params);
 		String amount = params.get(AMOUNT);
 		String currency = params.get(CURRENCY);
 
@@ -291,7 +305,7 @@ public class PayULatamGateway implements PaymentGateway {
 			throw new PaymentException("No API key provided for PayU Latam");
 		}
 
-		String rawSignature = apiKey + "~" + merchantId + "~" + referenceCode + "~" + amount + "~" + currency;
+		String rawSignature = apiKey + "~" + merchantId + "~" + txuuid + "~" + amount + "~" + currency;
 
 		String signature = md5(rawSignature);
 

@@ -78,7 +78,7 @@ public class PaymentController {
 	@RequestMapping(value = "/{gatewayId}/confirmation", method = { RequestMethod.POST, RequestMethod.GET })
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void gatewayConfirmation(@PathVariable String gatewayId, HttpServletRequest request) {
-
+		logger.info("Confirmation for gateway " + gatewayId + "  REQUEST: " + request.getParameterMap());
 		PaymentTransaction tx = commitTransaction(gatewayId, request, ResponseType.CONFIRMATION);
 		if (!tx.isConfirmed()) {
 			tx.setConfirmed(true);
@@ -103,8 +103,8 @@ public class PaymentController {
 			gateway.processResponse(tx, response, type);
 
 			if (oldStatus != tx.getStatus()) {
-				logger.info(
-						"Firing status listener for transaction " + tx + "  new status: " + tx.getStatus() + " - " + tx.getStatusText());
+				logger.info("Firing status listener for transaction " + tx + "  new status: " + tx.getStatus() + " - "
+						+ tx.getStatusText());
 				fireNewStatusListeners(tx, oldStatus);
 			}
 		}

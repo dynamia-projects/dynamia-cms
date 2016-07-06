@@ -158,13 +158,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void synchronizeProduct(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
-		Product localProduct = null;
-		if (remoteProduct.getExternalRef() != null) {
-			localProduct = getLocalEntity(Product.class, remoteProduct.getExternalRef(), siteCfg);
-		} else if (remoteProduct.getSku() != null) {
-			localProduct = crudService.findSingle(Product.class,
-					QueryParameters.with("sku", remoteProduct.getSku()).add("stie", siteCfg.getSite()));			
-		}
+		Product localProduct = getLocalProduct(siteCfg, remoteProduct);
 		if (localProduct == null) {
 			localProduct = new Product();
 			localProduct.setSite(siteCfg.getSite());
@@ -187,7 +181,8 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void syncProductDetails(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
-		Product localProduct = getLocalEntity(Product.class, remoteProduct.getExternalRef(), siteCfg);
+
+		Product localProduct = getLocalProduct(siteCfg, remoteProduct);
 		if (localProduct == null) {
 			logger.warn(":: Local Product is NULL - Remote Product " + remoteProduct.getName() + " --> "
 					+ remoteProduct.getExternalRef());
@@ -208,9 +203,20 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 		}
 	}
 
+	private Product getLocalProduct(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
+		Product localProduct = null;
+		if (remoteProduct.getExternalRef() != null) {
+			localProduct = getLocalEntity(Product.class, remoteProduct.getExternalRef(), siteCfg);
+		} else if (remoteProduct.getSku() != null) {
+			localProduct = crudService.findSingle(Product.class,
+					QueryParameters.with("sku", remoteProduct.getSku()).add("site", siteCfg.getSite()));
+		}
+		return localProduct;
+	}
+
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void syncProductStockDetails(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
-		Product localProduct = getLocalEntity(Product.class, remoteProduct.getExternalRef(), siteCfg);
+		Product localProduct = getLocalProduct(siteCfg, remoteProduct);
 		if (localProduct == null) {
 			logger.warn(":: Local Product is NULL - Remote Product " + remoteProduct.getName() + " --> "
 					+ remoteProduct.getExternalRef());
@@ -242,7 +248,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void syncProductCreditPrices(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
 
-		Product localProduct = getLocalEntity(Product.class, remoteProduct.getExternalRef(), siteCfg);
+		Product localProduct = getLocalProduct(siteCfg, remoteProduct);
 		if (localProduct == null) {
 			logger.warn(":: Local Product is NULL - Remote Product " + remoteProduct.getName() + " --> "
 					+ remoteProduct.getExternalRef());
@@ -508,17 +514,32 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 	public void disableProductsNoInList(ProductsSiteConfig siteCfg, List<ProductDTO> products) {
 		if (products != null && !products.isEmpty()) {
 			List<Long> ids = new ArrayList<>();
+			List<String> skus = new ArrayList<>();
 			for (ProductDTO dto : products) {
-				ids.add(dto.getExternalRef());
+				if (dto.getExternalRef() != null) {
+					ids.add(dto.getExternalRef());
+				} else if (dto.getSku() != null) {
+					skus.add(dto.getSku());
+				}
 			}
 
-			String sql = "update " + Product.class.getSimpleName()
-					+ " pc set active=false where pc.externalRef not in (:ids) and pc.site = :site";
-			Query query = entityMgr.createQuery(sql);
-			query.setParameter("ids", ids);
-			query.setParameter("site", siteCfg.getSite());
+			if (!ids.isEmpty()) {
+				String sql = "update " + Product.class.getSimpleName()
+						+ " pc set active=false where pc.externalRef not in (:ids) and pc.site = :site";
+				Query query = entityMgr.createQuery(sql);
+				query.setParameter("ids", ids);
+				query.setParameter("site", siteCfg.getSite());
+				query.executeUpdate();
+			}
 
-			query.executeUpdate();
+			if (!skus.isEmpty()) {
+				String sql = "update " + Product.class.getSimpleName()
+						+ " pc set active=false where pc.sku not in (:skus) and pc.site = :site";
+				Query query = entityMgr.createQuery(sql);
+				query.setParameter("skus", skus);
+				query.setParameter("site", siteCfg.getSite());
+				query.executeUpdate();
+			}
 
 		}
 	}
@@ -551,6 +572,9 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 	}
 
 	public <T> T getLocalEntity(Class<T> clazz, Long externalRef, ProductsSiteConfig cfg) {
+		if (externalRef == null) {
+			return null;
+		}
 		QueryParameters qp = QueryParameters.with("externalRef", externalRef).add("site", cfg.getSite());
 
 		return crudService.findSingle(clazz, qp);

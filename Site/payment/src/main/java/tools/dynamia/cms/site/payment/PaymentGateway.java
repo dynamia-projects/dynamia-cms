@@ -21,20 +21,20 @@ import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
 
 public interface PaymentGateway {
 
-    String getName();
+	String getName();
 
-    String getId();
+	String getId();
 
-    String[] getRequiredParams();
+	String[] getRequiredParams();
 
-    String[] getResponseParams();
+	String[] getResponseParams();
 
-    PaymentTransaction newTransaction(String source);
+	PaymentTransaction newTransaction(String source);
 
-    public PaymentForm createForm(PaymentTransaction tx);
+	public PaymentForm createForm(PaymentTransaction tx);
 
-    public boolean processResponse(PaymentTransaction tx, Map<String, String> response, ResponseType type);
+	public boolean processResponse(PaymentTransaction tx, Map<String, String> response, ResponseType type);
 
-    public abstract String getTransactionLocator();
+	String locateTransactionId(Map<String, String> response);
 
 }

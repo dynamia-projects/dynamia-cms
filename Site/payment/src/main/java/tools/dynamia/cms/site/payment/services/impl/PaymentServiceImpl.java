@@ -31,112 +31,110 @@ import tools.dynamia.cms.site.payment.PaymentGateway;
 import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
 import tools.dynamia.cms.site.payment.services.PaymentService;
-
+import tools.dynamia.domain.query.QueryConditions;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.integration.Containers;
 import tools.dynamia.integration.sterotypes.Service;
 
 @Service
-class PaymentServiceImpl implements PaymentService {
+public class PaymentServiceImpl implements PaymentService {
 
-    @Autowired
-    private CrudService crudService;
+	@Autowired
+	private CrudService crudService;
 
-    @PersistenceContext
-    private EntityManager em;
+	@PersistenceContext
+	private EntityManager em;
 
-    /*
+	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see com.dynamia.cms.site.payment.services.impl.PaymentGatewayService#
 	 * getGatewayConfigMap(com.dynamia.cms.site.payment.PaymentGateway,
 	 * java.lang.String)
-     */
-    @Override
-    public Map<String, String> getGatewayConfigMap(PaymentGateway gateway, String source) {
-        List<PaymentGatewayConfig> configs = crudService.find(PaymentGatewayConfig.class,
-                QueryParameters.with("gatewayId", gateway.getId()).add("source", source));
+	 */
+	@Override
+	public Map<String, String> getGatewayConfigMap(PaymentGateway gateway, String source) {
+		List<PaymentGatewayConfig> configs = crudService.find(PaymentGatewayConfig.class,
+				QueryParameters.with("gatewayId", gateway.getId()).add("source", source));
 
-        Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<String, String>();
 
-        for (PaymentGatewayConfig pgc : configs) {
-            map.put(pgc.getName(), pgc.getValue());
-        }
+		for (PaymentGatewayConfig pgc : configs) {
+			map.put(pgc.getName(), pgc.getValue());
+		}
 
-        return map;
-    }
+		return map;
+	}
 
-    /*
+	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dynamia.cms.site.payment.services.impl.PaymentGatewayService#getConfig
-	 * (com.dynamia.cms.site.payment.PaymentGateway, java.lang.String,
+	 * @see com.dynamia.cms.site.payment.services.impl.PaymentGatewayService#
+	 * getConfig (com.dynamia.cms.site.payment.PaymentGateway, java.lang.String,
 	 * java.lang.String)
-     */
-    @Override
-    public PaymentGatewayConfig getConfig(PaymentGateway gateway, String name, String source) {
-        return crudService.findSingle(PaymentGatewayConfig.class,
-                QueryParameters.with("gatewayId", gateway.getId())
-                .add("name", name)
-                .add("source", source));
-    }
+	 */
+	@Override
+	public PaymentGatewayConfig getConfig(PaymentGateway gateway, String name, String source) {
+		return crudService.findSingle(PaymentGatewayConfig.class,
+				QueryParameters.with("gatewayId", gateway.getId()).add("name", name).add("source", source));
+	}
 
-    /*
+	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see com.dynamia.cms.site.payment.services.impl.PaymentGatewayService#
 	 * addGatewayConfig(com.dynamia.cms.site.payment.PaymentGateway,
 	 * java.lang.String, java.lang.String, java.lang.String)
-     */
-    @Override
-    @Transactional
-    public void addGatewayConfig(PaymentGatewayConfig cfg) {
-        PaymentGateway gateway = findGateway(cfg.getGatewayId());
-        PaymentGatewayConfig config = getConfig(gateway, cfg.getName(), cfg.getSource());
-        if (config == null) {
-            config = cfg;
-        } else {
-            config.setValue(cfg.getValue());
-        }
-        crudService.save(config);
-    }
+	 */
+	@Override
+	@Transactional
+	public void addGatewayConfig(PaymentGatewayConfig cfg) {
+		PaymentGateway gateway = findGateway(cfg.getGatewayId());
+		PaymentGatewayConfig config = getConfig(gateway, cfg.getName(), cfg.getSource());
+		if (config == null) {
+			config = cfg;
+		} else {
+			config.setValue(cfg.getValue());
+		}
+		crudService.save(config);
+	}
 
-    @Override
-    public PaymentGateway findGateway(String gatewayId) {
-        for (PaymentGateway gateway : Containers.get().findObjects(PaymentGateway.class)) {
-            if (gateway.getId().equals(gatewayId)) {
-                return gateway;
-            }
-        }
-        throw new PaymentException("PaymentGateway with id [" + gatewayId + "] not found");
-    }
+	@Override
+	public PaymentGateway findGateway(String gatewayId) {
+		for (PaymentGateway gateway : Containers.get().findObjects(PaymentGateway.class)) {
+			if (gateway.getId().equals(gatewayId)) {
+				return gateway;
+			}
+		}
+		throw new PaymentException("PaymentGateway with id [" + gatewayId + "] not found");
+	}
 
-    @Override
-    public PaymentTransaction findTransaction(PaymentGateway gateway, Map<String, String> response) {
-        String uuid = response.get(gateway.getTransactionLocator());
-        PaymentTransaction tx = (PaymentTransaction) em
-                .createQuery("select tx from " + PaymentTransaction.class.getName() + " tx where tx.uuid=:uuid and tx.gatewayId=:gid")
-                .setParameter("uuid", uuid)
-                .setParameter("gid", gateway.getId())
-                .getSingleResult();
+	@Override
+	public PaymentTransaction findTransaction(PaymentGateway gateway, Map<String, String> response) {
+		String uuid = gateway.locateTransactionId(response);
+		if (uuid == null) {
+			throw new PaymentException("No UUID for transaction found " + gateway.getId());
+		}
 
-        if (tx == null) {
-            throw new PaymentException("No transaction found for gateway " + gateway.getId() + " uuid: " + uuid);
-        }
+		PaymentTransaction tx = crudService.findSingle(PaymentTransaction.class, QueryParameters
+				.with("uuid", QueryConditions.eq(uuid)).add("gatewatId", QueryConditions.eq(gateway.getId())));
 
-        return tx;
+		if (tx == null) {
+			throw new PaymentException("No transaction found for gateway " + gateway.getId() + " uuid: " + uuid);
+		}
 
-    }
+		return tx;
 
-    @Override
-    public PaymentGateway getDefaultGateway() {
-        Collection<PaymentGateway> gateways = Containers.get().findObjects(PaymentGateway.class);
-        for (PaymentGateway paymentGateway : gateways) {
-            return paymentGateway;
-        }
+	}
 
-        return null;
-    }
+	@Override
+	public PaymentGateway getDefaultGateway() {
+		Collection<PaymentGateway> gateways = Containers.get().findObjects(PaymentGateway.class);
+		for (PaymentGateway paymentGateway : gateways) {
+			return paymentGateway;
+		}
+
+		return null;
+	}
 }
