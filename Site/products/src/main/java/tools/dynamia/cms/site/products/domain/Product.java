@@ -128,6 +128,17 @@ public class Product extends SimpleEntity implements SiteAware {
 	@OneToOne
 	private ProductTemplate template;
 
+	@OneToOne
+	private ProductTemplate alternateTemplate;
+
+	public ProductTemplate getAlternateTemplate() {
+		return alternateTemplate;
+	}
+
+	public void setAlternateTemplate(ProductTemplate alternateTemplate) {
+		this.alternateTemplate = alternateTemplate;
+	}
+
 	public ProductTemplate getTemplate() {
 		return template;
 	}

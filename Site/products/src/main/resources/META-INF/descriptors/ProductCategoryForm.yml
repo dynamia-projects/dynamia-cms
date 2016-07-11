@@ -13,13 +13,15 @@ fields:
     template:
         description: Product Template   
     
+    alternateTemplate:
+        description: Product Alternate Template   
         
     description:
         params:
             multiline: true
             height: 100px
-            span: 3
+            span: 4
     
     order:
 layout:
-    columns: 3
+    columns: 4

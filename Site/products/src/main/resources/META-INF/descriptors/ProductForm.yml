@@ -11,6 +11,7 @@ fields:
    brand:   
    category:
    template:
+   alternateTemplate:
    description:
       params:
           span: 4
@@ -92,7 +93,7 @@ fields:
 
 groups:
    general:
-       fields: [sku,reference,name,brand,category,template,description,longDescription]
+       fields: [sku,reference,name,brand,category,template,alternateTemplate,description,longDescription]
        
    sales:
        fields: [stock,price,lastPrice,storePrice]

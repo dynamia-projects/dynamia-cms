@@ -69,8 +69,10 @@ public class ShowProductAction implements SiteAction {
 	public void actionPerformed(ActionEvent evt) {
 		ModelAndView mv = evt.getModelAndView();
 
+		boolean simpleMode = false;
 		if ("simple".equals(evt.getRequest().getParameter("mode"))) {
 			mv.setViewName("products/productsimple");
+			simpleMode = true;
 		}
 
 		Product product = null;
@@ -137,7 +139,12 @@ public class ShowProductAction implements SiteAction {
 
 		if (templateService.hasTemplate(product)) {
 			mv.addObject("prd_hasTemplate", true);
-			mv.addObject("prd_template", templateService.processTemplate(product, new HashMap<>(mv.getModel())));
+			if (simpleMode) {
+				mv.addObject("prd_template",
+						templateService.processAlternateTemplate(product, new HashMap<>(mv.getModel())));
+			} else {
+				mv.addObject("prd_template", templateService.processTemplate(product, new HashMap<>(mv.getModel())));
+			}
 		} else {
 			mv.addObject("prd_hasTemplate", false);
 		}

@@ -45,153 +45,164 @@ import tools.dynamia.domain.contraints.NotEmpty;
 @Table(name = "prd_categories")
 public class ProductCategory extends SimpleEntity implements SiteAware, Orderable {
 
-    @OneToOne
-    @NotNull
-    private Site site;
+	@OneToOne
+	@NotNull
+	private Site site;
 
-    @ManyToOne
-    private ProductCategory parent;
-    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
-    private List<ProductCategory> subcategories = new ArrayList<>();
-    @NotNull
-    @NotEmpty(message = "Enter product category name")
-    private String name;
-    private String alternateName;
-    @Column(name = "catAlias")
-    private String alias;
-    private String description;
-    private boolean active;
-    private Long externalRef;
-    @OneToOne
-    private ProductCategory relatedCategory;
+	@ManyToOne
+	private ProductCategory parent;
+	@OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+	private List<ProductCategory> subcategories = new ArrayList<>();
+	@NotNull
+	@NotEmpty(message = "Enter product category name")
+	private String name;
+	private String alternateName;
+	@Column(name = "catAlias")
+	private String alias;
+	private String description;
+	private boolean active;
+	private Long externalRef;
+	@OneToOne
+	private ProductCategory relatedCategory;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    @OrderBy("order")
-    private List<ProductCategoryDetail> details = new ArrayList<>();
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	@OrderBy("order")
+	private List<ProductCategoryDetail> details = new ArrayList<>();
 
-    @Column(name = "catOrder")
-    private int order;
+	@Column(name = "catOrder") 
+	private int order;
 
-    @OneToOne
-    private ProductTemplate template;
+	@OneToOne
+	private ProductTemplate template;
 
-    public ProductTemplate getTemplate() {
-        return template;
-    }
+	@OneToOne
+	private ProductTemplate alternateTemplate;
 
-    public void setTemplate(ProductTemplate template) {
-        this.template = template;
-    }
+	public ProductTemplate getAlternateTemplate() {
+		return alternateTemplate;
+	}
 
-    public int getOrder() {
-        return order;
-    }
+	public void setAlternateTemplate(ProductTemplate alternateTemplate) {
+		this.alternateTemplate = alternateTemplate;
+	}
 
-    public void setOrder(int order) {
-        this.order = order;
-    }
+	public ProductTemplate getTemplate() {
+		return template;
+	}
 
-    public String getAlternateName() {
-        return alternateName;
-    }
+	public void setTemplate(ProductTemplate template) {
+		this.template = template;
+	}
 
-    public void setAlternateName(String alternateName) {
-        this.alternateName = alternateName;
-    }
+	public int getOrder() {
+		return order;
+	}
 
-    public ProductCategory getRelatedCategory() {
-        return relatedCategory;
-    }
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
-    public void setRelatedCategory(ProductCategory relatedCategory) {
-        this.relatedCategory = relatedCategory;
-    }
+	public String getAlternateName() {
+		return alternateName;
+	}
 
-    public String getAlias() {
-        return alias;
-    }
+	public void setAlternateName(String alternateName) {
+		this.alternateName = alternateName;
+	}
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
+	public ProductCategory getRelatedCategory() {
+		return relatedCategory;
+	}
 
-    public Site getSite() {
-        return site;
-    }
+	public void setRelatedCategory(ProductCategory relatedCategory) {
+		this.relatedCategory = relatedCategory;
+	}
 
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	public String getAlias() {
+		return alias;
+	}
 
-    public List<ProductCategoryDetail> getDetails() {
-        return details;
-    }
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
 
-    public void setDetails(List<ProductCategoryDetail> details) {
-        this.details = details;
-    }
+	public Site getSite() {
+		return site;
+	}
 
-    public Long getExternalRef() {
-        return externalRef;
-    }
+	public void setSite(Site site) {
+		this.site = site;
+	}
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
-    }
+	public List<ProductCategoryDetail> getDetails() {
+		return details;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	public void setDetails(List<ProductCategoryDetail> details) {
+		this.details = details;
+	}
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+	public Long getExternalRef() {
+		return externalRef;
+	}
 
-    public ProductCategory getParent() {
-        return parent;
-    }
+	public void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef;
+	}
 
-    public void setParent(ProductCategory parent) {
-        this.parent = parent;
-    }
+	public boolean isActive() {
+		return active;
+	}
 
-    public List<ProductCategory> getSubcategories() {
-        return subcategories;
-    }
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
-    public void setSubcategories(List<ProductCategory> subcategories) {
-        this.subcategories = subcategories;
-    }
+	public ProductCategory getParent() {
+		return parent;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setParent(ProductCategory parent) {
+		this.parent = parent;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public List<ProductCategory> getSubcategories() {
+		return subcategories;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setSubcategories(List<ProductCategory> subcategories) {
+		this.subcategories = subcategories;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void sync(ProductCategoryDTO dto) {
-        name = dto.getName();
-        order = dto.getOrder();
-        alternateName = dto.getAlternateName();
-        active = dto.isActive();
-        description = dto.getDescription();
-        externalRef = dto.getExternalRef();
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    @Override
-    public String toString() {
-        return getName();
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void sync(ProductCategoryDTO dto) {
+		name = dto.getName();
+		order = dto.getOrder();
+		alternateName = dto.getAlternateName();
+		active = dto.isActive();
+		description = dto.getDescription();
+		externalRef = dto.getExternalRef();
+
+	}
+
+	@Override
+	public String toString() {
+		return getName();
+	}
 
 }

@@ -11,4 +11,5 @@ fields:
     description:
     template:
         description: Product Template    
+    alternateTemplate:
     active:

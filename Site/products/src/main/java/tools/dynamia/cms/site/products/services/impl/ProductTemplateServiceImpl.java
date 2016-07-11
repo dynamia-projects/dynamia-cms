@@ -39,131 +39,171 @@ import tools.dynamia.domain.services.CrudService;
 @Service
 public class ProductTemplateServiceImpl implements ProductTemplateService {
 
-    private static final String CACHE_NAME = "products";
+	private static final String CACHE_NAME = "products";
 
-    @Autowired
-    private CrudService crudService;
+	@Autowired
+	private CrudService crudService;
 
-    @Autowired
-    private ProductsService productsService;
+	@Autowired
+	private ProductsService productsService;
 
-    /**
-     * Process product template using VelocityTemplate Engine
-     *
-     * @param product
-     * @return
-     */
-    @Override
-    @Cacheable(value = CACHE_NAME, key = "'template'+#product.id")
-    public String processTemplate(Product product, Map<String, Object> templateModel) {
+	/**
+	 * Process product template using VelocityTemplate Engine
+	 *
+	 * @param product
+	 * @return
+	 */
+	@Override
+	@Cacheable(value = CACHE_NAME, key = "'template'+#product.id")
+	public String processTemplate(Product product, Map<String, Object> templateModel) {
 
-        product = crudService.reload(product);
+		product = crudService.reload(product);
 
-        ProductTemplate template = getTemplate(product);
-        if (template == null) {
-            return null;
-        }
+		ProductTemplate template = getTemplate(product);
+		return processTemplate(product, templateModel, template);
 
-        if (templateModel == null) {
-            templateModel = new HashMap<>();
-        }
+	}
 
-        loadDefaultTemplateModel(product, templateModel);
-        StringParser stringParser = StringParser.get(template.getTemplateEngine());
-        return stringParser.parse(template.getContent(), templateModel);
+	@Override
+	@Cacheable(value = CACHE_NAME, key = "'altTemplate'+#product.id")
+	public String processAlternateTemplate(Product product, Map<String, Object> templateModel) {
 
-    }
+		product = crudService.reload(product);
 
-    /**
-     * Check if product has an enabled template. Internally it just check if
-     * getTemplate(product) result is not null
-     *
-     * @param product
-     * @return
-     */
-    @Override
-    public boolean hasTemplate(Product product) {
-        ProductTemplate template = getTemplate(product);
-        return template != null;
-    }
+		ProductTemplate template = getAlternateTemplate(product);
+		if (template == null) {
+			template = getTemplate(product);
+		}
+		return processTemplate(product, templateModel, template);
 
-    /**
-     * Get an enabled product template from product itself or product category
-     * or product category parent. If product template is not enabled return
-     * null
-     *
-     * @param product
-     * @return
-     */
-    @Override
-    public ProductTemplate getTemplate(Product product) {
-        ProductTemplate template = product.getTemplate();
-        if (template == null && product.getCategory() != null) {
-            template = product.getCategory().getTemplate();
-        }
+	}
 
-        if (template == null && product.getCategory().getParent() != null) {
-            template = product.getCategory().getParent().getTemplate();
-        }
+	private String processTemplate(Product product, Map<String, Object> templateModel, ProductTemplate template) {
+		if (template == null) {
+			return null;
+		}
 
-        if (template != null && !template.isEnabled()) {
-            template = null;
-        }
+		if (templateModel == null) {
+			templateModel = new HashMap<>();
+		}
 
-        return template;
-    }
+		loadDefaultTemplateModel(product, templateModel);
+		StringParser stringParser = StringParser.get(template.getTemplateEngine());
+		return stringParser.parse(template.getContent(), templateModel);
+	}
 
-    @Override
-    public void loadDefaultTemplateModel(Product product, Map<String, Object> templateModel) {
-        Site site = product.getSite();
-        CMSUtil util = new CMSUtil(site);
-        templateModel.putAll(BeanUtils.getValuesMaps("", product));
-        ProductsSiteConfig config = productsService.getSiteConfig(site);
+	/**
+	 * Check if product has an enabled template. Internally it just check if
+	 * getTemplate(product) result is not null
+	 *
+	 * @param product
+	 * @return
+	 */
+	@Override
+	public boolean hasTemplate(Product product) {
+		ProductTemplate template = getTemplate(product);
+		ProductTemplate alternateTemplate = getAlternateTemplate(product);
+		return template != null || alternateTemplate != null;
+	}
 
-        templateModel.put("imageURL", getImageURL(site, product.getImage()));
-        templateModel.put("image2URL", getImageURL(site, product.getImage2()));
-        templateModel.put("image3URL", getImageURL(site, product.getImage3()));
-        templateModel.put("image4URL", getImageURL(site, product.getImage4()));
-        templateModel.put("priceFormatted", util.formatNumber(product.getPrice(), config.getPricePattern()));
-        templateModel.put("lastPriceFormatted", util.formatNumber(product.getLastPrice(), config.getPricePattern()));
-        templateModel.put("storePriceFormatted", util.formatNumber(product.getStorePrice(), config.getPricePattern()));
-        templateModel.put("realPriceFormatted", util.formatNumber(product.getRealPrice(), config.getPricePattern()));
-        templateModel.put("realLastPriceFormatted", util.formatNumber(product.getRealLastPrice(), config.getPricePattern()));
+	/**
+	 * Get an enabled product template from product itself or product category
+	 * or product category parent. If product template is not enabled return
+	 * null
+	 *
+	 * @param product
+	 * @return
+	 */
+	@Override
+	public ProductTemplate getTemplate(Product product) {
+		ProductTemplate template = product.getTemplate();
+		if (template == null && product.getCategory() != null) {
+			template = product.getCategory().getTemplate();
+		}
 
-        templateModel.putAll(BeanUtils.getValuesMaps("brand_", product.getBrand()));
-        templateModel.putAll(BeanUtils.getValuesMaps("category_", product.getCategory()));
+		if (template == null && product.getCategory().getParent() != null) {
+			template = product.getCategory().getParent().getTemplate();
+		}
 
-        templateModel.put("brand", product.getBrand().getName());
-        templateModel.put("brand_imageURL", CMSUtil.getSiteURL(site, "resources/products/brands/thumbnails/" + product.getBrand().getImage()));
-        templateModel.put("category", product.getCategory().getName());
+		if (template != null && !template.isEnabled()) {
+			template = null;
+		}
 
-        for (ProductDetail detail : product.getDetails()) {
-            String name = detail.getName().toLowerCase().trim().replace(" ", "_").replace(".", "").replace(":", "");
-            String value = detail.getValue() + " " + detail.getDescription();
-            value = value.replace("null", "").trim();
-            templateModel.put(name, value);
-            templateModel.put(name + "_imageURL", detail.getImageURL());
-        }
+		return template;
+	}
 
-        //Actions
-        String productURL = CMSUtil.getSiteURL(site, "store/products/" + product.getId());
-        templateModel.put("productURL", productURL);
-        String actionPath = CMSUtil.getSiteURL(site, "shoppingcart/");
-        templateModel.put("action_addCart", actionPath + "shop/add/" + product.getId() + "?currentURI=/store/products/" + product.getId());
-        templateModel.put("action_addQuote", actionPath + "quote/add/" + product.getId() + "?currentURI=/store/products/" + product.getId());
-        templateModel.put("action_compare", productURL + "/compare");
-        templateModel.put("action_favorite", productURL + "/favorite");
-        templateModel.put("action_print", productURL + "/print");
-        templateModel.put("action_share", productURL + "#shareProduct" + product.getId());
+	public ProductTemplate getAlternateTemplate(Product product) {
+		ProductTemplate template = product.getAlternateTemplate();
+		if (template == null && product.getCategory() != null) {
+			template = product.getCategory().getAlternateTemplate();
+		}
 
-    }
+		if (template == null && product.getCategory().getParent() != null) {
+			template = product.getCategory().getParent().getAlternateTemplate();
+		}
 
-    private Object getImageURL(Site site, String image) {
-        if (image != null && !image.isEmpty()) {
-            return CMSUtil.getSiteURL(site, "resources/products/images/" + image);
-        } else {
-            return "";
-        }
-    }
+		if (template != null && !template.isEnabled()) {
+			template = null;
+		}
+
+		return template;
+	}
+
+	@Override
+	public void loadDefaultTemplateModel(Product product, Map<String, Object> templateModel) {
+		Site site = product.getSite();
+		CMSUtil util = new CMSUtil(site);
+		templateModel.putAll(BeanUtils.getValuesMaps("", product));
+		ProductsSiteConfig config = productsService.getSiteConfig(site);
+
+		templateModel.put("imageURL", getImageURL(site, product.getImage()));
+		templateModel.put("image2URL", getImageURL(site, product.getImage2()));
+		templateModel.put("image3URL", getImageURL(site, product.getImage3()));
+		templateModel.put("image4URL", getImageURL(site, product.getImage4()));
+		templateModel.put("priceFormatted", util.formatNumber(product.getPrice(), config.getPricePattern()));
+		templateModel.put("lastPriceFormatted", util.formatNumber(product.getLastPrice(), config.getPricePattern()));
+		templateModel.put("storePriceFormatted", util.formatNumber(product.getStorePrice(), config.getPricePattern()));
+		templateModel.put("realPriceFormatted", util.formatNumber(product.getRealPrice(), config.getPricePattern()));
+		templateModel.put("realLastPriceFormatted",
+				util.formatNumber(product.getRealLastPrice(), config.getPricePattern()));
+
+		templateModel.putAll(BeanUtils.getValuesMaps("brand_", product.getBrand()));
+		templateModel.putAll(BeanUtils.getValuesMaps("category_", product.getCategory()));
+
+		templateModel.put("brand", product.getBrand().getName());
+		templateModel.put("brand_imageURL",
+				CMSUtil.getSiteURL(site, "resources/products/brands/thumbnails/" + product.getBrand().getImage()));
+		templateModel.put("category", product.getCategory().getName());
+
+		for (ProductDetail detail : product.getDetails()) {
+			String name = detail.getName().toLowerCase().trim().replace(" ", "_").replace(".", "").replace(":", "");
+			String value = detail.getValue() + " " + detail.getDescription();
+			value = value.replace("null", "").trim();
+			templateModel.put(name, value);
+			templateModel.put(name + "_imageURL", detail.getImageURL());
+		}
+
+		// Actions
+		String productURL = CMSUtil.getSiteURL(site, "store/products/" + product.getId());
+		templateModel.put("productURL", productURL);
+		String actionPath = CMSUtil.getSiteURL(site, "shoppingcart/");
+		templateModel.put("action_addCart",
+				actionPath + "shop/add/" + product.getId() + "?currentURI=/store/products/" + product.getId());
+		templateModel.put("action_addQuote",
+				actionPath + "quote/add/" + product.getId() + "?currentURI=/store/products/" + product.getId());
+		templateModel.put("action_compare", productURL + "/compare");
+		templateModel.put("action_favorite", productURL + "/favorite");
+		templateModel.put("action_print", productURL + "/print");
+		templateModel.put("action_share", productURL + "#shareProduct" + product.getId());
+
+	}
+
+	private Object getImageURL(Site site, String image) {
+		if (image != null && !image.isEmpty()) {
+			return CMSUtil.getSiteURL(site, "resources/products/images/" + image);
+		} else {
+			return "";
+		}
+	}
 
 }

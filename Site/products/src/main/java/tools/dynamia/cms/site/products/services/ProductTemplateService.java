@@ -19,6 +19,8 @@ import tools.dynamia.cms.site.products.domain.Product;
 import tools.dynamia.cms.site.products.domain.ProductTemplate;
 import java.util.Map;
 
+import org.springframework.cache.annotation.Cacheable;
+
 /**
  *
  * @author Mario Serrano Leones
@@ -53,5 +55,7 @@ public interface ProductTemplateService {
     String processTemplate(Product product, Map<String, Object> templateModel);
 
     void loadDefaultTemplateModel(Product product, Map<String, Object> templateModel);
+
+	String processAlternateTemplate(Product product, Map<String, Object> templateModel);
 
 }
