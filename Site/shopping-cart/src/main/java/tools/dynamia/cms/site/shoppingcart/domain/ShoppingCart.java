@@ -53,6 +53,8 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
     @OneToOne
     private User user;
     @OneToOne
+    private User customer;
+    @OneToOne
     @NotNull
     private Site site;
     private int quantity;
@@ -66,6 +68,7 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
     private List<ShoppingCartItem> items = new ArrayList<>();
     @Enumerated(EnumType.ORDINAL)
     private ShoppingCartStatus status = ShoppingCartStatus.NEW;
+    
 
     private BigDecimal totalDiscount;
 

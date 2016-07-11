@@ -32,14 +32,11 @@ import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
 import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
-
 import tools.dynamia.domain.BaseEntity;
 import tools.dynamia.domain.contraints.NotEmpty;
 
 @Entity
-@Table(name = "sc_orders", uniqueConstraints = {
-		@UniqueConstraint(columnNames = { "site_id", "number" })
-})
+@Table(name = "sc_orders", uniqueConstraints = { @UniqueConstraint(columnNames = { "site_id", "number" }) })
 public class ShoppingOrder extends BaseEntity implements SiteAware {
 
 	@OneToOne
@@ -80,6 +77,15 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 
 	@Column(length = 5000)
 	private String userComments;
+	private String externalRef;
+
+	public String getExternalRef() {
+		return externalRef;
+	}
+
+	public void setExternalRef(String externalRef) {
+		this.externalRef = externalRef;
+	}
 
 	public boolean isPickupAtStore() {
 

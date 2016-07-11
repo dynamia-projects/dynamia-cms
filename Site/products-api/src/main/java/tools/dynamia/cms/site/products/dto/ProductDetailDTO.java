@@ -23,82 +23,91 @@ import java.io.Serializable;
  */
 public class ProductDetailDTO implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1265515027309763424L;
-    private ProductDTO product;
-    private String name;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -1265515027309763424L;
+	private ProductDTO product;
+	private String name;
 
-    private String value;
-    private String description;
-    private Long externalRef;
-    private int order;
-    private String imageURL;
-    private boolean featured;
+	private String value;
+	private String description;
+	private Long externalRef;
+	private int order;
+	private String imageURL;
+	private boolean featured;
+	private boolean filterable;
 
-    public int getOrder() {
-        return order;
-    }
+	public boolean isFilterable() {
+		return filterable;
+	}
 
-    public void setOrder(int order) {
-        this.order = order;
-    }
+	public void setFilterable(boolean filterable) {
+		this.filterable = filterable;
+	}
 
-    public ProductDTO getProduct() {
-        return product;
-    }
+	public int getOrder() {
+		return order;
+	}
 
-    public void setProduct(ProductDTO product) {
-        this.product = product;
-    }
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
-    public Long getExternalRef() {
-        return externalRef;
-    }
+	public ProductDTO getProduct() {
+		return product;
+	}
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
-    }
+	public void setProduct(ProductDTO product) {
+		this.product = product;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public Long getExternalRef() {
+		return externalRef;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    public String getImageURL() {
-        return imageURL;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public boolean isFeatured() {
-        return featured;
-    }
+	public String getImageURL() {
+		return imageURL;
+	}
 
-    public void setFeatured(boolean featured) {
-        this.featured = featured;
-    }
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+
+	public boolean isFeatured() {
+		return featured;
+	}
+
+	public void setFeatured(boolean featured) {
+		this.featured = featured;
+	}
 
 }

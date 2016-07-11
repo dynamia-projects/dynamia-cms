@@ -16,6 +16,6 @@
 package tools.dynamia.cms.site.users.domain.enums;
 
 public enum UserProfile {
-	USER, EDITOR, ADMIN;
+	USER, EDITOR, ADMIN, CUSTOMER;
 
 }

@@ -138,7 +138,7 @@ public class ProductTemplateServiceImpl implements ProductTemplateService {
         templateModel.put("category", product.getCategory().getName());
 
         for (ProductDetail detail : product.getDetails()) {
-            String name = detail.getName().toLowerCase().trim().replace(" ", "_");
+            String name = detail.getName().toLowerCase().trim().replace(" ", "_").replace(".", "").replace(":", "");
             String value = detail.getValue() + " " + detail.getDescription();
             value = value.replace("null", "").trim();
             templateModel.put(name, value);

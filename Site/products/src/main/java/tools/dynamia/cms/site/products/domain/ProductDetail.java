@@ -37,102 +37,112 @@ import tools.dynamia.domain.SimpleEntity;
 @Table(name = "prd_details")
 public class ProductDetail extends SimpleEntity implements SiteAware, Orderable {
 
-    @OneToOne
-    @NotNull
-    private Site site;
+	@OneToOne
+	@NotNull
+	private Site site;
 
-    @ManyToOne
-    private Product product;
-    private String name;
-    @Column(name = "detvalue")
-    private String value;
-    private String description;
-    private Long externalRef;
-    @Column(name = "detorder")
-    private int order;
-    private String imageURL;
-    private boolean featured;
+	@ManyToOne
+	private Product product;
+	private String name;
+	@Column(name = "detvalue")
+	private String value;
+	private String description;
+	private Long externalRef;
+	@Column(name = "detorder")
+	private int order;
+	private String imageURL;
+	private boolean featured;
+	private boolean filterale;
 
-    public String getImageURL() {
-        return imageURL;
-    }
+	public boolean isFilterale() {
+		return filterale;
+	}
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
+	public void setFilterale(boolean filterale) {
+		this.filterale = filterale;
+	}
 
-    public boolean isFeatured() {
-        return featured;
-    }
+	public String getImageURL() {
+		return imageURL;
+	}
 
-    public void setFeatured(boolean featured) {
-        this.featured = featured;
-    }
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
 
-    public int getOrder() {
-        return order;
-    }
+	public boolean isFeatured() {
+		return featured;
+	}
 
-    public void setOrder(int order) {
-        this.order = order;
-    }
+	public void setFeatured(boolean featured) {
+		this.featured = featured;
+	}
 
-    public Site getSite() {
-        return site;
-    }
+	public int getOrder() {
+		return order;
+	}
 
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
-    public Product getProduct() {
-        return product;
-    }
+	public Site getSite() {
+		return site;
+	}
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+	public void setSite(Site site) {
+		this.site = site;
+	}
 
-    public Long getExternalRef() {
-        return externalRef;
-    }
+	public Product getProduct() {
+		return product;
+	}
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
-    }
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public Long getExternalRef() {
+		return externalRef;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    public void sync(ProductDetailDTO dto) {
-        description = dto.getDescription();
-        externalRef = dto.getExternalRef();
-        name = dto.getName();
-        value = dto.getValue();
-        order = dto.getOrder();
-        imageURL = dto.getImageURL();
-        featured = dto.isFeatured();
-    }
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void sync(ProductDetailDTO dto) {
+		description = dto.getDescription();
+		externalRef = dto.getExternalRef();
+		name = dto.getName();
+		value = dto.getValue();
+		order = dto.getOrder();
+		imageURL = dto.getImageURL();
+		featured = dto.isFeatured();
+		filterale = dto.isFilterable();
+	}
 
 }
