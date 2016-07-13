@@ -17,7 +17,6 @@ package tools.dynamia.cms.site.templates;
 
 import java.util.HashMap;
 import java.util.Map;
-import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -27,10 +26,8 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.TemplateResolver;
 
-import tools.dynamia.cms.site.templates.thymeleaf.SpringThymeleafCacheManager;
-import tools.dynamia.cms.site.templates.thymeleaf.ThymeleafTemplateResolver;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 /**
  *
@@ -45,11 +42,11 @@ public class TemplateJavaConfig {
 	private CacheManager cacheManager;
 
 	@Bean
-	public TemplateResolver templateResolver() {
-		TemplateResolver resolver = new ThymeleafTemplateResolver();
+	public SiteTemplateResolver templateResolver() {
+		SiteTemplateResolver resolver = new SiteTemplateResolver();
 		resolver.setSuffix(".html");
-		resolver.setTemplateMode("HTML5");
-		resolver.setCacheable(true);
+		resolver.setTemplateMode("HTML");
+		resolver.setCacheable(false);
 		return resolver;
 	}
 
@@ -58,7 +55,8 @@ public class TemplateJavaConfig {
 		SpringTemplateEngine engine = new SpringTemplateEngine();
 		engine.addDialect(new LayoutDialect());
 		engine.setTemplateResolver(templateResolver());
-		engine.setCacheManager(new SpringThymeleafCacheManager(cacheManager));
+		
+		//engine.setCacheManager(new SpringThymeleafCacheManager(cacheManager));
 
 		return engine;
 	}
