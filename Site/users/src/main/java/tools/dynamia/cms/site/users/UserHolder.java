@@ -21,9 +21,8 @@ import java.util.Date;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import tools.dynamia.cms.site.users.api.UserProfile;
 import tools.dynamia.cms.site.users.domain.User;
-import tools.dynamia.cms.site.users.domain.enums.UserProfile;
-
 import tools.dynamia.integration.Containers;
 
 /**

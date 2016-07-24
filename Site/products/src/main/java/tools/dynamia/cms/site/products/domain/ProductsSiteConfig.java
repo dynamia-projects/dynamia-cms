@@ -90,6 +90,43 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 
 	private int minStock;
 
+	private boolean syncStockDetails;
+	private boolean syncProductDetails;
+	private boolean syncProductImages;
+	private boolean syncProductCreditPrices;
+
+	public boolean isSyncProductCreditPrices() {
+		return syncProductCreditPrices;
+	}
+
+	public void setSyncProductCreditPrices(boolean syncProductCreditPrices) {
+		this.syncProductCreditPrices = syncProductCreditPrices;
+	}
+
+	public boolean isSyncStockDetails() {
+		return syncStockDetails;
+	}
+
+	public void setSyncStockDetails(boolean syncStockDetails) {
+		this.syncStockDetails = syncStockDetails;
+	}
+
+	public boolean isSyncProductDetails() {
+		return syncProductDetails;
+	}
+
+	public void setSyncProductDetails(boolean syncProductDetails) {
+		this.syncProductDetails = syncProductDetails;
+	}
+
+	public boolean isSyncProductImages() {
+		return syncProductImages;
+	}
+
+	public void setSyncProductImages(boolean syncProductImages) {
+		this.syncProductImages = syncProductImages;
+	}
+
 	public int getMinStock() {
 		return minStock;
 	}

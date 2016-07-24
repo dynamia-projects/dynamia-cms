@@ -1,0 +1,23 @@
+view: form
+beanClass: tools.dynamia.cms.site.users.domain.UserSiteConfig
+autofields: false
+
+fields:
+  registrationEnabled:
+  synchronizationEnabled:
+    label: Enabled
+  datasourceURL:
+    label: URL
+  datasourceUsername:
+    label: Username    
+  datasourcePassword:
+    label: Password
+  
+
+groups:
+  synchronizationDatasource:
+    fields: [synchronizationEnabled, datasourceURL, datasourceUsername, datasourcePassword]
+    
+    
+layout:
+  columns: 2 

@@ -17,6 +17,7 @@ package tools.dynamia.cms.site.products.services.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,7 +38,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tools.dynamia.cms.site.core.DynamiaCMS;
 import tools.dynamia.cms.site.products.api.ProductsDatasource;
-import tools.dynamia.cms.site.products.clients.ProductsDatasourceClient;
 import tools.dynamia.cms.site.products.domain.Product;
 import tools.dynamia.cms.site.products.domain.ProductBrand;
 import tools.dynamia.cms.site.products.domain.ProductCategory;
@@ -58,12 +58,11 @@ import tools.dynamia.cms.site.products.dto.ProductStockDTO;
 import tools.dynamia.cms.site.products.dto.RelatedProductDTO;
 import tools.dynamia.cms.site.products.dto.StoreDTO;
 import tools.dynamia.cms.site.products.services.ProductsSyncService;
-import java.io.InputStream;
-
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.web.util.HttpRemotingServiceClient;
 
 /**
  * @author Mario Serrano Leones
@@ -446,11 +445,11 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
 	@Override
 	public ProductsDatasource getDatasource(ProductsSiteConfig cfg) {
-		ProductsDatasourceClient client = new ProductsDatasourceClient();
-		client.setServiceURL(cfg.getDatasourceURL());
-		client.setUsername(cfg.getDatasourceUsername());
-		client.setPassword(cfg.getDatasourcePassword());
-		return client.getProxy();
+		return HttpRemotingServiceClient.build(ProductsDatasource.class)
+				.setServiceURL(cfg.getDatasourceURL())
+				.setUsername(cfg.getDatasourceUsername())
+				.setPassword(cfg.getDatasourcePassword())
+				.getProxy();
 	}
 
 	private void deleteProductsDetails(Product product) {

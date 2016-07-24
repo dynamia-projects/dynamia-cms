@@ -3,9 +3,8 @@ package tools.dynamia.cms.admin.users;
 import tools.dynamia.cms.site.core.api.AdminModuleOption;
 import tools.dynamia.cms.site.core.api.CMSExtension;
 import tools.dynamia.cms.site.users.UserHolder;
+import tools.dynamia.cms.site.users.api.UserProfile;
 import tools.dynamia.cms.site.users.domain.User;
-import tools.dynamia.cms.site.users.domain.enums.UserProfile;
-
 import tools.dynamia.navigation.NavigationElement;
 import tools.dynamia.navigation.NavigationRestriction;
 

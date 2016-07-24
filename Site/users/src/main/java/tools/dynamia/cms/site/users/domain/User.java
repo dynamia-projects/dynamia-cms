@@ -35,8 +35,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.ContentAuthor;
 import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.users.domain.enums.UserProfile;
-
+import tools.dynamia.cms.site.users.api.UserDTO;
+import tools.dynamia.cms.site.users.api.UserProfile;
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.domain.BaseEntity;
 import tools.dynamia.domain.contraints.Email;
@@ -79,6 +79,7 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 
 	private String firstName;
 	private String lastName;
+	private String groupName;
 
 	@Enumerated(EnumType.ORDINAL)
 	private UserProfile profile = UserProfile.USER;
@@ -87,6 +88,25 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 	private ContentAuthor relatedAuthor;
 
 	private String externalRef;
+
+	@OneToOne
+	private User relatedUser;
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+	public User getRelatedUser() {
+		return relatedUser;
+	}
+
+	public void setRelatedUser(User relatedUser) {
+		this.relatedUser = relatedUser;
+	}
 
 	public String getExternalRef() {
 		return externalRef;
@@ -284,6 +304,34 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 		user.setUsername("Anonymous");
 		user.setFullName("Anonymous");
 		return user;
+	}
+
+	public void sync(UserDTO dto) {
+		if (dto.getProfile() != null) {
+			profile = dto.getProfile();
+		}
+
+		username = dto.getEmail();
+		externalRef = dto.getExternalRef();
+		enabled = dto.isEnabled();
+		firstName = dto.getFirstName();
+		lastName = dto.getLastName();
+		fullName = dto.getFullName();
+		if (firstName == null) {
+			firstName = fullName;
+			lastName = "";
+		}
+		identification = dto.getIdentification();
+		groupName = dto.getGroupName();
+		if (contactInfo == null) {
+			contactInfo = new ContactInfo();
+		}
+		contactInfo.setAddress(dto.getAddress());
+		contactInfo.setEmail(dto.getEmail());
+		contactInfo.setPhoneNumber(dto.getPhoneNumber());
+		contactInfo.setMobileNumber(dto.getMobileNumber());
+		contactInfo.setCity(dto.getCity());
+		contactInfo.setCountry(dto.getCountry());
 	}
 
 }

@@ -1,0 +1,15 @@
+view: table
+beanClass: tools.dynamia.cms.site.users.domain.UserSiteConfig
+autofields: false
+
+fields:
+  registrationEnabled:
+    label: Registration
+  synchronizationEnabled:
+    label: Enabled
+  datasourceURL:
+    label: URL
+  datasourceUsername:
+    label: Username    
+  datasourcePassword:
+    label: Password

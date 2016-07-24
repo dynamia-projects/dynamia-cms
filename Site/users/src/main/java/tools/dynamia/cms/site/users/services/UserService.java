@@ -17,10 +17,14 @@ package tools.dynamia.cms.site.users.services;
 
 import java.util.List;
 
+import org.springframework.security.core.token.Sha512DigestUtils;
+import org.springframework.transaction.annotation.Transactional;
+
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.users.UserForm;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
+import tools.dynamia.cms.site.users.domain.UserSiteConfig;
 
 /**
  *
@@ -41,5 +45,9 @@ public interface UserService {
 	public void resetPassword(Site site, String username);
 
 	public void resetPassword(User user, String newpassword, String newpassword2);
+
+	UserSiteConfig getSiteConfig(Site site);
+
+	void setupPassword(User user, String newPassword);
 
 }

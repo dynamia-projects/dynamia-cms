@@ -29,6 +29,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.BatchSize;
+
 import tools.dynamia.cms.site.core.Orderable;
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
@@ -43,6 +45,7 @@ import tools.dynamia.domain.contraints.NotEmpty;
  */
 @Entity
 @Table(name = "prd_categories")
+@BatchSize(size = 50)
 public class ProductCategory extends SimpleEntity implements SiteAware, Orderable {
 
 	@OneToOne
@@ -69,7 +72,7 @@ public class ProductCategory extends SimpleEntity implements SiteAware, Orderabl
 	@OrderBy("order")
 	private List<ProductCategoryDetail> details = new ArrayList<>();
 
-	@Column(name = "catOrder") 
+	@Column(name = "catOrder")
 	private int order;
 
 	@OneToOne

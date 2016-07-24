@@ -19,6 +19,7 @@ import tools.dynamia.cms.site.core.api.AdminModule;
 import tools.dynamia.cms.site.core.api.AdminModuleOption;
 import tools.dynamia.cms.site.core.api.CMSModule;
 import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.cms.site.users.domain.UserSiteConfig;
 
 /**
  *
@@ -34,13 +35,14 @@ public class UsersAdminModule implements AdminModule {
 
 	@Override
 	public String getName() {
-		return "General";
+		return "Users";
 	}
 
 	@Override
 	public AdminModuleOption[] getOptions() {
 		return new AdminModuleOption[] {
-				new AdminModuleOption("users", "Users", User.class, false, true, "users", true)
+				new AdminModuleOption("users", "Users", User.class, false, true, "users", true),
+				new AdminModuleOption("userConfig", "Users Config", UserSiteConfig.class, false, true)
 		};
 	}
 

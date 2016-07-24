@@ -36,20 +36,26 @@ fields:
    
     orderCompletedMailTemplate:   
         label: Order Completed Template
+        
+    synchronizationEnabled:
+        label: Enabled
 groups:
     
     general:
         label: Basic Settings
-        fields: [site,pricePattern,defaultCurrency,productsPerPage,productsStockToShow,synchronizationEnabled,shopEnabled,quoteEnabled,showBadges,minStock]
+        fields: [site,pricePattern,defaultCurrency,productsPerPage,productsStockToShow,shopEnabled,quoteEnabled,showBadges,minStock]
             
     
     datasource:
         label: Datasource Settings
         fields: [datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceUsername,datasourcePassword]
     
+    synchronization:
+        fields: [synchronizationEnabled, syncProductImages,syncProductDetails, syncStockDetails, syncProductCreditPrices]
+    
     email:
         label: Mail Settings
         fields: [mailAccount,shareProductMailTemplate,orderCompletedMailTemplate]
         
 layout:
-    columns: 2
+    columns: 3

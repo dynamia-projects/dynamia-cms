@@ -42,97 +42,105 @@ import tools.dynamia.integration.scheduling.Task;
 @Service
 public class ProductsSynchronizer {
 
-    @Autowired
-    private ProductsSyncService service;
+	@Autowired
+	private ProductsSyncService service;
 
-    @Autowired
-    private SiteService siteService;
+	@Autowired
+	private SiteService siteService;
 
-    @Autowired
-    private CrudService crudService;
+	@Autowired
+	private CrudService crudService;
 
-    private LoggingService logger = new SLF4JLoggingService(ProductsSynchronizer.class);
+	private LoggingService logger = new SLF4JLoggingService(ProductsSynchronizer.class);
 
-    public void synchronize(ProductsSiteConfig siteConfig) {
-        siteConfig = crudService.reload(siteConfig);
+	public void synchronize(ProductsSiteConfig siteConfig) {
+		siteConfig = crudService.reload(siteConfig);
 
-        if (!siteConfig.isSynchronizationEnabled()) {
-            logger.warn("Product Synchronization is NOT enabled for  " + siteConfig.getSite());
-            return;
-        }
-        final ProductsSiteConfig siteCfg = siteConfig;
+		if (!siteConfig.isSynchronizationEnabled()) {
+			logger.warn("Product Synchronization is NOT enabled for  " + siteConfig.getSite());
+			return;
+		}
+		final ProductsSiteConfig siteCfg = siteConfig;
 
-        logger.info("Starting Products Sync for " + siteCfg.getSite());
+		logger.info("Starting Products Sync for " + siteCfg.getSite());
 
-        logger.info("Brands");
-        List<ProductBrandDTO> brands = service.synchronizeBrands(siteCfg);
+		logger.info("Brands");
+		List<ProductBrandDTO> brands = service.synchronizeBrands(siteCfg);
 
-        logger.info("Stores");
-        List<StoreDTO> stores = service.synchronizeStores(siteCfg);
+		logger.info("Stores");
+		List<StoreDTO> stores = service.synchronizeStores(siteCfg);
 
-        logger.info("Categories");
-        List<ProductCategoryDTO> categories = service.synchronizeCategories(siteCfg);
-        service.disableCategoriesNoInList(siteCfg, categories);
+		logger.info("Categories");
+		List<ProductCategoryDTO> categories = service.synchronizeCategories(siteCfg);
+		service.disableCategoriesNoInList(siteCfg, categories);
 
-        logger.info("Products");
-        List<ProductDTO> products = service.synchronizeProducts(siteCfg);
-        for (ProductDTO productDTO : products) {
-            logger.info("-Product Details for " + productDTO.getName());
-            service.syncProductDetails(siteCfg, productDTO);
+		logger.info("Products");
+		List<ProductDTO> products = service.synchronizeProducts(siteCfg);
+		for (ProductDTO productDTO : products) {
+			if (siteCfg.isSyncProductDetails()) {
+				logger.info("-Product Details for " + productDTO.getName());
+				service.syncProductDetails(siteCfg, productDTO);
+			}
 
-            logger.info("-Product Stock for " + productDTO.getName());
-            service.syncProductStockDetails(siteCfg, productDTO);
+			if (siteCfg.isSyncStockDetails()) {
+				logger.info("-Product Stock for " + productDTO.getName());
+				service.syncProductStockDetails(siteCfg, productDTO);
+			}
 
-            logger.info("-Product Prices for " + productDTO.getName());
-            service.syncProductCreditPrices(siteCfg, productDTO);
-        }
+			if (siteCfg.isSyncProductCreditPrices()) {
+				logger.info("-Product Prices for " + productDTO.getName());
+				service.syncProductCreditPrices(siteCfg, productDTO);
+			}
+		}
 
-        service.disableProductsNoInList(siteCfg, products);
+		service.disableProductsNoInList(siteCfg, products);
 
-        logger.info("Related Products");
-        List<RelatedProductDTO> relatedProducts = service.synchronizeRelatedProducts(siteCfg);
-        service.disableRelatedProductsNoInList(siteCfg, relatedProducts);
+		logger.info("Related Products");
+		List<RelatedProductDTO> relatedProducts = service.synchronizeRelatedProducts(siteCfg);
+		service.disableRelatedProductsNoInList(siteCfg, relatedProducts);
 
-        SchedulerUtil.run(new Task("Images Downloader") {
-            @Override
-            public void doWork() {
+		if (siteCfg.isSyncProductImages()) {
+			SchedulerUtil.run(new Task("Images Downloader") {
+				@Override
+				public void doWork() {
 
-                for (ProductBrandDTO brandDTO : brands) {
-                    logger.info("Downloading Brand Images for " + brandDTO.getName());
-                    service.downloadBrandImages(siteCfg, brandDTO);
+					for (ProductBrandDTO brandDTO : brands) {
+						logger.info("Downloading Brand Images for " + brandDTO.getName());
+						service.downloadBrandImages(siteCfg, brandDTO);
 
-                }
+					}
 
-                for (ProductDTO productDTO : products) {
-                    logger.info("Downloading Product Images for " + productDTO.getName());
-                    service.downloadProductImages(siteCfg, productDTO);
-                }
+					for (ProductDTO productDTO : products) {
+						logger.info("Downloading Product Images for " + productDTO.getName());
+						service.downloadProductImages(siteCfg, productDTO);
+					}
 
-                for (StoreDTO storeDTO : stores) {
-                    logger.info("Downloading Store Images for " + storeDTO.getName());
-                    service.downloadStoreImages(siteCfg, storeDTO);
-                }
-                logger.info("Images downloading completed.");
-            }
-        });
+					for (StoreDTO storeDTO : stores) {
+						logger.info("Downloading Store Images for " + storeDTO.getName());
+						service.downloadStoreImages(siteCfg, storeDTO);
+					}
+					logger.info("Images downloading completed.");
+				}
+			});
+		}
 
-        service.update(siteCfg);
-        logger.info("Sync Completed for " + siteCfg.getSite());
+		service.update(siteCfg);
+		logger.info("Sync Completed for " + siteCfg.getSite());
 
-        siteService.clearCache(siteCfg.getSite());
-    }
+		siteService.clearCache(siteCfg.getSite());
+	}
 
-    public void synchronize(ProductsSiteConfig siteCfg, ProductDTO dto) {
-        try {
+	public void synchronize(ProductsSiteConfig siteCfg, ProductDTO dto) {
+		try {
 
-            service.synchronizeProduct(siteCfg, dto);
-            service.syncProductDetails(siteCfg, dto);
-            service.syncProductStockDetails(siteCfg, dto);
-            service.syncProductCreditPrices(siteCfg, dto);
-            service.downloadProductImages(siteCfg, dto);
-            siteService.clearCache(siteCfg.getSite());
-        } catch (Exception e) {
-            logger.error("Error Syncronizing product " + dto.getName() + " for SITE: " + siteCfg.getSite(), e);
-        }
-    }
+			service.synchronizeProduct(siteCfg, dto);
+			service.syncProductDetails(siteCfg, dto);
+			service.syncProductStockDetails(siteCfg, dto);
+			service.syncProductCreditPrices(siteCfg, dto);
+			service.downloadProductImages(siteCfg, dto);
+			siteService.clearCache(siteCfg.getSite());
+		} catch (Exception e) {
+			logger.error("Error Syncronizing product " + dto.getName() + " for SITE: " + siteCfg.getSite(), e);
+		}
+	}
 }

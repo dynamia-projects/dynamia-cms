@@ -69,6 +69,8 @@ public class Product extends SimpleEntity implements SiteAware {
 	private Long externalRef;
 
 	private BigDecimal price;
+	private BigDecimal price2;
+	private BigDecimal cost;
 	private BigDecimal lastPrice;
 	private BigDecimal storePrice;
 
@@ -513,6 +515,22 @@ public class Product extends SimpleEntity implements SiteAware {
 		this.stockDetails = stockDetails;
 	}
 
+	public BigDecimal getPrice2() {
+		return price2;
+	}
+
+	public void setPrice2(BigDecimal price2) {
+		this.price2 = price2;
+	}
+
+	public BigDecimal getCost() {
+		return cost;
+	}
+
+	public void setCost(BigDecimal cost) {
+		this.cost = cost;
+	}
+
 	@Override
 	public String toString() {
 		return name;
@@ -531,6 +549,8 @@ public class Product extends SimpleEntity implements SiteAware {
 		longDescription = dto.getLongDescription();
 		name = dto.getName();
 		price = dto.getPrice();
+		price2 = dto.getPrice2();
+		cost = dto.getCost();
 		sale = dto.isSale();
 		sku = dto.getSku();
 		stock = dto.getStock();
