@@ -15,7 +15,8 @@
                     <a th:href="@{'/store/products/'+${prd.id}}" href="#"
                        style="vertical-align: middle; line-height: 1.5">
                         <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=180,h=180)}"
-                             src="img/product1a.jpg" alt="" />
+                             src="img/product1a.jpg" alt="" th:if="${prd.image!=null}" />
+                        <img th:src="@{/img/product1a.jpg}" alt="" th:if="${prd.image==null}" width="180px" height="180px" />     
                     </a>
                 </div>
                 <span th:if="${prd.sale and prd_config.showBadges}" class="sale tooltip-test"

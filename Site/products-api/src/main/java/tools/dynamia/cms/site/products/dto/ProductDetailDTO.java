@@ -37,6 +37,42 @@ public class ProductDetailDTO implements Serializable {
 	private String imageURL;
 	private boolean featured;
 	private boolean filterable;
+	private String value2;
+	private String color;
+	private String url;
+	private String url2;
+
+	public String getValue2() {
+		return value2;
+	}
+
+	public void setValue2(String value2) {
+		this.value2 = value2;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getUrl2() {
+		return url2;
+	}
+
+	public void setUrl2(String url2) {
+		this.url2 = url2;
+	}
 
 	public boolean isFilterable() {
 		return filterable;
@@ -109,5 +145,7 @@ public class ProductDetailDTO implements Serializable {
 	public void setFeatured(boolean featured) {
 		this.featured = featured;
 	}
+	
+	
 
 }

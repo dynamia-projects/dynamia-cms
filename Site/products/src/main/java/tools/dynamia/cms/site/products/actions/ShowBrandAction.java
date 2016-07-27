@@ -71,7 +71,7 @@ public class ShowBrandAction implements SiteAction {
             mv.addObject("prd_category_details", service.getCategoryDetails(category));
         } else {
             mv.addObject("title", brand.getName());
-            mv.addObject("prd_subcategories", service.getCategories(brand));
+            mv.addObject("prd_categories", service.getCategories(brand));
         }
 
     }

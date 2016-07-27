@@ -10,7 +10,8 @@
                 <!-- Brand Image -->
                 <div style="height:170px;line-height: 170px">
                     <a  th:href="@{'/store/brands/'+${brd.alias}}" href="#" style="vertical-align: middle;line-height: 1.5">                
-                        <img th:src="@{'/resources/products/brands/thumbnails/'+${brd.image}(w=180,h=180)}" src="img/product1a.jpg" alt="" />
+                        <img th:src="@{'/resources/products/brands/thumbnails/'+${brd.image}(w=180,h=180)}" src="img/product1a.jpg" alt="" th:if="${brd.image!=null}"/>
+                        <img th:src="@{/img/product1a.jpg}" alt="" th:if="${brd.image==null}" width="180px" height="180px" />
                     </a>  
                 </div>
             </div>

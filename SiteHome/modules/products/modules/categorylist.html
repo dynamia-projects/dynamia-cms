@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+
+<!--Categories-->
+<body th:fragment="module(instance)">
+
+	<h2>Categorias</h2>
+	<div style="max-height: 600px; overflow: auto">
+		<ul class="nav nav-list submenu categories ">
+			<li th:each="cat : ${instance.model.categories}"><a
+				th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}}"
+				th:class="${(prd_category!=null and cat.id==prd_category.id?'active':'')}"
+				th:text="${cat.name}">Categoria ABC</a>
+
+				<div>
+					<ul>
+						<li th:each="subcat : ${cat.subcategories}"><a
+							style="margin-left: 10px"
+							th:href="@{'/store/categories/'+${subcat.id}+'/'+${subcat.alias}}">
+								<i class="orange">/</i> <span th:text="${subcat.name}">Submenu</span>
+						</a></li>
+					</ul>
+				</div></li>
+
+		</ul>
+	</div>
+
+
+</body>
+
+</html>

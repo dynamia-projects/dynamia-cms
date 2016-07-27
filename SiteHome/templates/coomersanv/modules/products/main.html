@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+<div layout:fragment="content">
+
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+		th:if="${cmsModules.isUsed('storebanners')}">
+		<th:block th:include="module::position('storebanners')" />
+	</div>
+
+	<div class="container">
+
+		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt40column">
+		<th:block th:include="module::position('products_main_left')"
+				th:if="${cmsModules.isUsed('products_main_left')}" />
+		</div>
+
+		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt40column">
+
+
+			<th:block th:include="module::position('maincontent')"
+				th:if="${cmsModules.isUsed('maincontent')}" />
+
+
+			<div
+				th:if="${prd_priceVariations!=null and  not #lists.isEmpty(prd_priceVariations)}"
+				class="featureprojectcontianer container mt40">
+				<h2 class="heading1">
+					<span class="maintext">Mejoraron su precio</span>
+				</h2>
+				<th:block
+					th:include="products/components/productcarousel::frag(${prd_priceVariations},5)" />
+			</div>
+
+
+			<div
+				th:if="${prd_relatedProducts!=null and  not #lists.isEmpty(prd_relatedProducts)}"
+				class="featureprojectcontianer container mt40">
+				<h2 class="heading1">
+					<span class="maintext">Recomendados</span>
+				</h2>
+				<th:block
+					th:include="products/components/productcarousel::frag(${prd_relatedProducts},5)" />
+			</div>
+
+			<div
+				th:if="${prd_recentViewedProducts!=null and  not #lists.isEmpty(prd_recentViewedProducts)}"
+				class="featureprojectcontianer container mt40">
+				<h2 class="heading1">
+					<span class="maintext">Tu historial</span>
+				</h2>
+				<th:block
+					th:include="products/components/productcarousel::frag(${prd_recentViewedProducts},5)" />
+			</div>
+
+
+		</div>
+
+
+	</div>
+</div>
+</html>

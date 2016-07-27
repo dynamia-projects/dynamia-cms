@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+
+    <div class="container" layout:fragment="content">
+
+        <!-- Main Title-->
+        <div class="titles">
+            <div class="pull-left">
+                <h1 class="headinglefttitle">Registro / Inicio de Sesion</h1>
+                <div class="headingsubtitle">Utilice su email y password para acceder o registre una cuenta nueva</div>
+            </div>
+            <i class="icon-key"></i>  </div>
+        <div class="row mt40">
+
+            <!-- Account Login-->
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <section class="newcustomer">
+                    <h2 class="heading2">Soy cliente nuevo </h2>
+                    <div class="loginbox">                        
+                        <!-- register form -->                        
+                        <th:block th:include="users/components/registerform::content"/>
+                    </div>
+                </section>
+                <section class="returncustomer">
+                    <h2 class="heading2">Ya soy cliente / Vendedor</h2>
+                    <div class="loginbox">
+                        <!-- login form -->
+                        <th:block th:include="users/components/loginform::content"/>
+                    </div>
+                </section>
+
+
+            </div>        
+            <!-- Sidebar Start-->
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt40column">
+                <aside>
+
+                </aside>
+            </div>
+            <!-- Sidebar End-->
+
+        </div>
+    </div>
+
+
+</html>

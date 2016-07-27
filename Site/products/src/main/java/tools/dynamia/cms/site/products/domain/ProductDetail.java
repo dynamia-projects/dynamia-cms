@@ -53,6 +53,42 @@ public class ProductDetail extends SimpleEntity implements SiteAware, Orderable 
 	private String imageURL;
 	private boolean featured;
 	private boolean filterale;
+	private String value2;
+	private String color;
+	private String url;
+	private String url2;
+
+	public String getValue2() {
+		return value2;
+	}
+
+	public void setValue2(String value2) {
+		this.value2 = value2;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getUrl2() {
+		return url2;
+	}
+
+	public void setUrl2(String url2) {
+		this.url2 = url2;
+	}
 
 	public boolean isFilterale() {
 		return filterale;
@@ -143,6 +179,10 @@ public class ProductDetail extends SimpleEntity implements SiteAware, Orderable 
 		imageURL = dto.getImageURL();
 		featured = dto.isFeatured();
 		filterale = dto.isFilterable();
+		value2 = dto.getValue2();
+		url = dto.getUrl();
+		url2 = dto.getUrl2();
+		color = dto.getColor();
 	}
 
 }

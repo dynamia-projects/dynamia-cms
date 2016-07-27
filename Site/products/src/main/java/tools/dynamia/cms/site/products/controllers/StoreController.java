@@ -185,8 +185,13 @@ public class StoreController {
 		Site site = siteService.getSite(request);
 
 		ProductSearchForm form = new ProductSearchForm();
-		if (name != null && !name.equals("#null#")) {
-			form.setBrandId(service.getBrandByAlias(site, name).getId());
+		try {
+			if (name != null && !name.equals("#null#")) {
+				form.setBrandId(service.getBrandByAlias(site, name).getId());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		ModelAndView mv = new ModelAndView("products/brand");

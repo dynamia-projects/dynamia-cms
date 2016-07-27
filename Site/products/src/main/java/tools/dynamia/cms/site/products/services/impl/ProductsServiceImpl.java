@@ -53,6 +53,8 @@ import java.util.ArrayList;
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.commons.collect.PagedList;
 import static tools.dynamia.domain.query.QueryConditions.*;
+
+import tools.dynamia.domain.query.BooleanOp;
 import tools.dynamia.domain.query.QueryConditions;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
@@ -156,15 +158,18 @@ public class ProductsServiceImpl implements ProductsService {
 
 	@Override
 	public List<Product> getProducts(ProductCategory category) {
-		QueryParameters qp = QueryParameters.with("active", true);
-		String cat = "category";
+		QueryParameters qp = QueryParameters.with("active", true)
+				.add("site", category.getSite());
+
 		if (category.getParent() == null) {
-			cat = "category.parent";
+			qp.addGroup(QueryParameters.with("category.parent", QueryConditions.eq(category, BooleanOp.OR)).add("category",
+					QueryConditions.eq(category, BooleanOp.OR)), BooleanOp.AND);
+		} else {
+			qp.add("category", category);
 		}
-		qp.add(cat, category);
 
 		qp.paginate(getDefaultPageSize(category.getSite()));
-		qp.orderBy(cat + ".name, price", true);
+		qp.orderBy("name, price", true);
 
 		return crudService.find(Product.class, qp);
 	}
@@ -347,8 +352,8 @@ public class ProductsServiceImpl implements ProductsService {
 	public List<Product> find(Site site, String param) {
 
 		QueryBuilder query = QueryBuilder.select(Product.class, "p").where("p.active = true").and("p.site = :site")
-				.and("(p.name like :param or p.category.parent.name like :param "
-						+ "or p.category.parent.name like :param or p.brand.name like :param "
+				.and("(p.name like :param "
+						+ "or p.category.name like :param or p.brand.name like :param "
 						+ "or p.description like :param or p.sku like :param )")
 				.orderBy("brand.name, p.price");
 
