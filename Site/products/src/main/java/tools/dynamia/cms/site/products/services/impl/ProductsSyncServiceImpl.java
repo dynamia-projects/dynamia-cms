@@ -405,9 +405,9 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 	@Override
 	public void downloadBrandImages(ProductsSiteConfig siteCfg, ProductBrandDTO brand) {
 
-		String folder = DynamiaCMS.getSitesResourceLocation(siteCfg.getSite())
-				.resolve(PRODUCTS_FOLDER + File.separator + "brands").toString();
 		try {
+			String folder = DynamiaCMS.getSitesResourceLocation(siteCfg.getSite())
+					.resolve(PRODUCTS_FOLDER + File.separator + "brands").toString();
 			downloadImage(siteCfg.getDatasourceBrandImagesURL(), brand.getImage(), folder);
 		} catch (Exception ex) {
 			logger.error("Error downloading image for product's brand " + brand, ex);

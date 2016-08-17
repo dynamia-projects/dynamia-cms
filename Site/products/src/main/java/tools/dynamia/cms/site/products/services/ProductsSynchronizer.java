@@ -107,7 +107,6 @@ public class ProductsSynchronizer {
 					for (ProductBrandDTO brandDTO : brands) {
 						logger.info("Downloading Brand Images for " + brandDTO.getName());
 						service.downloadBrandImages(siteCfg, brandDTO);
-
 					}
 
 					for (ProductDTO productDTO : products) {
