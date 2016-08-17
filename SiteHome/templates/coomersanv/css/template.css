@@ -1,110 +1,203 @@
-.contact ul.productinfo li{
-    height: auto;
+.contact ul.productinfo li {
+	height: auto;
 }
 
-
-.brands{
-    height: 30px;
-    overflow: hidden;        
+.brands {
+	height: 30px;
+	overflow: hidden;
 }
 
-ul.brands > li > a{
-    margin: 0;
-    font-size: 13px;
-    padding: 6px;    
+ul.brands>li>a {
+	margin: 0;
+	font-size: 13px;
+	padding: 6px;
 }
 
-ul.brands > li > a:hover{
-    color: black;
-} 
-
-
-ul.subcategories > li > a{
-    margin: 0;
-    font-size: 12px;
-    padding: 6px;    
+ul.brands>li>a:hover {
+	color: black;
 }
 
-ul.subcategories > li + li > a{
-    margin: 0;
+ul.subcategories>li>a {
+	margin: 0;
+	font-size: 12px;
+	padding: 6px;
 }
 
-
-
-#webchat{
- 
-
-    position: fixed;
-    height: 50px;
-    width: 250px;
-    right: 80px;
-    bottom: 0;
-    z-index: 9999;
-    text-align: center;    
-    font-size: 18px
+ul.subcategories>li+li>a {
+	margin: 0;
 }
 
-#webchat a{
-    color: white;
+#webchat {
+	position: fixed;
+	height: 50px;
+	width: 250px;
+	right: 80px;
+	bottom: 0;
+	z-index: 9999;
+	text-align: center;
+	font-size: 18px
 }
 
-.productratecart{
-    margin: 0px; 
+#webchat a {
+	color: white;
 }
 
-.thumbnail .sale, .thumbnail .new, .thumbnail .offer{
-    left: auto;
-    right: 0px;
+.productratecart {
+	margin: 0px;
 }
 
-.productpanel:hover .productname a{
-    color: black;
+.thumbnail .sale, .thumbnail .new, .thumbnail .offer {
+	left: auto;
+	right: 0px;
 }
 
-.productpageprice{
-    width: auto;
+.productpanel:hover .productname a {
+	color: black;
 }
 
-.brand{
-    bottom: -20px;
-    left: 2px;
-    position: absolute;
-    z-index: 999;
-    background-color: white;
-    font-size: 12px;
-    opacity: 0.95;
+.productpageprice {
+	width: auto;
 }
 
-.productname{    
-    height: 43px;
-    overflow: hidden;    
-    text-align: left;
-    font-size: 15px;
+.brand {
+	bottom: -20px;
+	left: 2px;
+	position: absolute;
+	z-index: 999;
+	background-color: white;
+	font-size: 12px;
+	opacity: 0.95;
 }
 
-.productname a{
-    color: #424242;
+.productname {
+	height: 43px;
+	overflow: hidden;
+	text-align: left;
+	font-size: 15px;
 }
 
-.titles{
-    border: 0;
+.productname a {
+	color: #424242;
 }
 
-.oldprice{
-	font-size: inherit; !important
+.titles {
+	border: 0;
 }
 
-.topcart{
+.oldprice {
+	font-size: inherit;
+	!
+	important
+}
+
+.topcart {
 	margin-top: 0px;
 	margin-right: 10px;
 }
 
-.topsearch{
+.topsearch {
 	margin: 0px 45px 0 0;
 }
 
-.headerdetails{
-	padding: 60px 0 30px 0;
+.headerdetails {
+	padding: 0px;
+	border: 0;
 }
 
-sectio
+.container.mt10.banners.container {
+	margin-top: 0;
+	max-width: 100%;
+}
+
+.container.mt10.banners.container {
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+header {
+	padding-bottom: 8px;
+	background: url("/img/header.png");
+	background-size: 100% 100%;
+}
+
+header #mainmenu {
+	background: #2b704a;
+	background: -moz-linear-gradient(top, #2b704a 0%, #019040 100%);
+	background: -webkit-linear-gradient(top, #2b704a 0%, #019040 100%);
+	background: linear-gradient(to bottom, #2b704a 0%, #019040 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2b704a',
+		endColorstr='#019040', GradientType=0);
+}
+
+header #mainmenu .subnav {
+	background-color: transparent;
+	height: 50px;
+	padding: 0px;
+	margin: 0px;
+}
+
+header #mainmenu {
+	-webkit-box-shadow: 0px 5px 15px -4px rgba(0, 0, 0, 0.45);
+	-moz-box-shadow: 0px 5px 15px -4px rgba(0, 0, 0, 0.45);
+	box-shadow: 0px 5px 15px -4px rgba(0, 0, 0, 0.45);
+	border-bottom: 0;
+}
+
+header #mainmenu a.topmenu {
+	color: white;
+	text-transform: none;
+	height: 49px;
+}
+
+header #mainmenu a.topmenu:hover {
+	background: #2b704a;
+}
+
+header #mainmenu a.topmenu.special {
+	color: black;
+	padding: 10px 20px;
+	position: absolute;
+	right: 12px;
+	top: 0;
+	border: 4px double #2b704a;
+	text-transform: uppercase;
+	font-weight: bold;
+	background: #ffeb3f;
+	background: -moz-linear-gradient(top, #ffeb3f 69%, #fceb02 100%);
+	background: -webkit-linear-gradient(top, #ffeb3f 69%, #fceb02 100%);
+	background: linear-gradient(to bottom, #ffeb3f 69%, #fceb02 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffeb3f',
+		endColorstr='#fceb02', GradientType=0);
+}
+
+header #mainmenu a.topmenu.special:hover {
+	background: #fbe100;
+}
+
+.footerimage {
+	background-color: #2b704a;
+}
+
+.simplelinks a {
+	
+	color: #f4f4f4;
+}
+
+.simplelinks a:hover {
+	text-decoration: underline;
+}
+
+.simplelinks {
+	text-align: center
+}
+
+.simplelinks li {
+	display: inline-block;
+	padding: 3px 5px;
+	margin: 12px 0
+}
+
+
+.simplelinks li a:hover {
+	color: #fff
+}

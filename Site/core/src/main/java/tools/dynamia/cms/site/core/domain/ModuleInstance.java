@@ -65,6 +65,7 @@ public class ModuleInstance extends Content implements Orderable {
 
 	@Column(length = 3000)
 	private String includePaths;
+	private String customView;
 
 	public String getIncludePaths() {
 		return includePaths;
@@ -72,6 +73,14 @@ public class ModuleInstance extends Content implements Orderable {
 
 	public void setIncludePaths(String includePaths) {
 		this.includePaths = includePaths;
+	}
+
+	public String getCustomView() {
+		return customView;
+	}
+
+	public void setCustomView(String customView) {
+		this.customView = customView;
 	}
 
 	@Override
@@ -189,6 +198,7 @@ public class ModuleInstance extends Content implements Orderable {
 		clone.styleClass = styleClass;
 		clone.title = title + "- copy";
 		clone.titleVisible = titleVisible;
+		clone.customView = customView;
 
 		for (ModuleInstanceParameter parameter : getParameters()) {
 			ModuleInstanceParameter cloneParam = parameter.clone();

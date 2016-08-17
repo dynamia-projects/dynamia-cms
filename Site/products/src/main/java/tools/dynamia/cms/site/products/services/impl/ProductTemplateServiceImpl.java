@@ -39,7 +39,7 @@ import tools.dynamia.domain.services.CrudService;
 @Service
 public class ProductTemplateServiceImpl implements ProductTemplateService {
 
-	private static final String CACHE_NAME = "products";
+	private static final String CACHE_NAME = "velocity";
 
 	@Autowired
 	private CrudService crudService;
@@ -181,6 +181,10 @@ public class ProductTemplateServiceImpl implements ProductTemplateService {
 			value = value.replace("null", "").trim();
 			templateModel.put(name, value);
 			templateModel.put(name + "_imageURL", detail.getImageURL());
+			templateModel.put(name + "_url", detail.getUrl());
+			templateModel.put(name + "_url2", detail.getUrl2());
+			templateModel.put(name + "_color", detail.getColor());
+			templateModel.put(name + "_value2", detail.getValue2());
 		}
 
 		// Actions

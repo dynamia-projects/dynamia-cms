@@ -79,12 +79,18 @@ public class CMSModules {
 	}
 
 	public String getTemplateViewName(ModuleInstance instance) {
-		Module module = service.getModule(instance);
-		if (module != null) {
-			return module.getTemplateViewName();
+		String view = "error/modulenotfound";
+
+		if (instance.getCustomView() != null && !instance.getCustomView().isEmpty()) {
+			view = instance.getCustomView();
 		} else {
-			return "error/modulenotfound";
+			Module module = service.getModule(instance);
+			if (module != null) {
+				view = module.getTemplateViewName();
+			}
 		}
+
+		return view;
 	}
 
 	public void init(ModuleInstance instance) {

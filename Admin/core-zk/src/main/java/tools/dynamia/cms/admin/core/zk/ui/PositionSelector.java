@@ -15,12 +15,15 @@
  */
 package tools.dynamia.cms.admin.core.zk.ui;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.zkoss.zul.Combobox;
 
 import tools.dynamia.cms.site.core.SiteContext;
 import tools.dynamia.cms.site.templates.Template;
 import tools.dynamia.cms.site.templates.services.TemplateService;
-
 import tools.dynamia.integration.Containers;
 import tools.dynamia.zk.ComponentAliasIndex;
 import tools.dynamia.zk.util.ZKUtil;
@@ -45,7 +48,9 @@ public class PositionSelector extends Combobox {
 		TemplateService service = Containers.get().findObject(TemplateService.class);
 		Template template = service.getTemplate(SiteContext.get().getCurrent());
 		if (template != null) {
-			ZKUtil.fillCombobox(this, template.getPositions());
+			List<String> positions = new ArrayList(template.getPositions());
+			Collections.sort(positions);
+			ZKUtil.fillCombobox(this, positions);
 		}
 
 	}

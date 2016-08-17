@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+
+
+<body th:fragment="module(instance)">
+
+	<ul th:class="${instance.styleClass}">
+		<li th:each="mi : ${instance.model.menuitems}"><a
+			th:class="${(activeMenu == mi? 'active':'')}"
+			th:href="@{${mi.href}}" th:title="${mi.title}"
+			th:target="${mi.target}"> <i
+				th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
+				<th:block th:text="${mi.name}" />
+		</a></li>
+	</ul>
+
+</body>
+
+</html>

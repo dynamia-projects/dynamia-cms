@@ -6,6 +6,8 @@ autofields: false
 fields:
    
    title:
+    params:
+      span: 2
    alias:
    titleVisible:
    moduleId:
@@ -19,10 +21,12 @@ fields:
    
    
    
-   styleClass:
-   
-   includePaths:   
+   styleClass:     
+   customView:  
+   includePaths:
+    params:
+      span: 2 
    order:   
    enabled:     
 layout:
-    columns: 3
+    columns: 4
