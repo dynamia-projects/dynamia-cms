@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
@@ -54,9 +55,7 @@ public class TemplateJavaConfig {
 	public SpringTemplateEngine templateEngine() {
 		SpringTemplateEngine engine = new SpringTemplateEngine();
 		engine.addDialect(new LayoutDialect());
-		engine.setTemplateResolver(templateResolver());
-		
-		//engine.setCacheManager(new SpringThymeleafCacheManager(cacheManager));
+		engine.addTemplateResolver(templateResolver());
 
 		return engine;
 	}
@@ -67,6 +66,14 @@ public class TemplateJavaConfig {
 		viewResolver.setOrder(1);
 		viewResolver.setTemplateEngine(templateEngine());
 		return viewResolver;
+	}
+
+	@Bean
+	public ViewResolver zkViewResolver() {
+		UrlBasedViewResolver vr = new SiteZKViewResolver();
+		vr.setCache(false);
+		vr.setOrder(0);
+		return vr;
 	}
 
 	@Bean

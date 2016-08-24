@@ -24,13 +24,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class DefaultIgnoringAntMatcher implements IgnoringAntMatcher {
 
-    @Override
-    public String[] matchers() {
-        return new String[]{
-            "/styles/**", "/css/**", "/images/**", "/img/**", "/js/**", "/zkau/**", "/resources/**", "/fonts/**",
-            "/font/**", "/plugins/**"
+	@Override
+	public String[] matchers() {
+		return new String[] {
+				"/styles/**", "/css/**", "/images/**", "/img/**", "/js/**", "/zkau/**", "/resources/**", "/fonts/**",
+				"/font/**", "/plugins/**", "/zk/view/resolver/**"
 
-        };
-    }
+		};
+	}
 
 }

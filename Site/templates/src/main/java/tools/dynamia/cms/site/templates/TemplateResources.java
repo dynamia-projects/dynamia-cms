@@ -53,7 +53,7 @@ public class TemplateResources {
 		return templateResource;
 	}
 
-	private static String getTemplateName(Site site) {
+	public static String getTemplateName(Site site) {
 		String name = site.getTemplate();
 		
 		HttpServletRequest request = CMSUtil.getCurrentRequest();

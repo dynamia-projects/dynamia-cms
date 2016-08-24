@@ -83,17 +83,23 @@ public class SiteTemplateResource implements ITemplateResource, Serializable {
 		SiteService coreService = Containers.get().findObject(SiteService.class);
 		Site site = coreService.getSite(siteKey);
 
-		// Find first in root template folder
-		Path file = TemplateResources.find(site, name);
+		Path file = null;
 
 		// find view in site folders
-		if (Files.notExists(file)) {
-			Path siteHome = DynamiaCMS.getSitesResourceLocation(site);
-			for (String loc : DynamiaCMS.getRelativeLocations()) {
+		Path siteHome = DynamiaCMS.getSitesResourceLocation(site);
+		for (String loc : DynamiaCMS.getRelativeLocations()) {
+			file = siteHome.resolve(loc + File.separator + name);
+			if (Files.exists(file)) {
+				break;
+			}
+		}
+
+		// find view in site local templates
+		if (!Files.exists(file)) {
+			String loc = TemplateResources.getTemplateName(site);
+			if (loc != null) {
+				loc = "templates" + File.separator + loc;
 				file = siteHome.resolve(loc + File.separator + name);
-				if (Files.exists(file)) {
-					break;
-				}
 			}
 		}
 
@@ -116,7 +122,14 @@ public class SiteTemplateResource implements ITemplateResource, Serializable {
 					break;
 				}
 			}
+
 		}
+
+		// Find last in root template folder
+		if (Files.notExists(file)) {
+			file = TemplateResources.find(site, name);
+		}
+
 		return file;
 	}
 
@@ -153,6 +166,10 @@ public class SiteTemplateResource implements ITemplateResource, Serializable {
 		}
 
 		return new SiteTemplateResource(templateName, enconding, path.resolve(relativeLocation));
+	}
+
+	public Path getTemplatePath() {
+		return templatePath;
 	}
 
 }

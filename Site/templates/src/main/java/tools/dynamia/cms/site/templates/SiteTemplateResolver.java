@@ -37,6 +37,10 @@ public class SiteTemplateResolver extends AbstractConfigurableTemplateResolver {
 			String template, String resourceName, String characterEncoding,
 			Map<String, Object> templateResolutionAttributes) {
 
+		if (resourceName == null || resourceName.startsWith("<")) {
+			return null;
+		}
+
 		return new SiteTemplateResource(resourceName, characterEncoding);
 	}
 
