@@ -16,24 +16,18 @@
 package tools.dynamia.cms.site.core;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpUtils;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.services.SiteService;
-
 import tools.dynamia.integration.Containers;
 import tools.dynamia.io.IOUtils;
 import tools.dynamia.io.ImageUtil;
@@ -48,7 +42,7 @@ public class SiteResourceHandler extends ResourceHttpRequestHandler {
 
 	@Override
 	protected Resource getResource(HttpServletRequest request) {
-		
+
 		SiteService coreService = Containers.get().findObject(SiteService.class);
 		Site site = coreService.getSite(request);
 		if (site == null) {
@@ -60,10 +54,12 @@ public class SiteResourceHandler extends ResourceHttpRequestHandler {
 		}
 
 		Path dir = resolveResourceDirectory(site);
-
 		Path resource = Paths.get(request.getPathInfo());
 
 		resource = resource.subpath(1, resource.getNameCount());
+		if (isPrivateResource(resource)) {
+			return null;
+		}
 		if (Files.isDirectory(dir.resolve(resource))) {
 			resource = resource.resolve("index.html");
 		}
@@ -79,11 +75,22 @@ public class SiteResourceHandler extends ResourceHttpRequestHandler {
 				file = dir.resolve("images/nophoto.jpg").toFile();
 			}
 		}
-		if(!file.exists()){
+		if (!file.exists()) {
 			return null;
 		}
 
 		return new FileSystemResource(file);
+	}
+
+	private boolean isPrivateResource(Path resource) {
+		for (String folder : DynamiaCMS.getPrivateLocations()) {
+
+			if (resource.toString().startsWith(folder)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected Path resolveResourceDirectory(Site site) {

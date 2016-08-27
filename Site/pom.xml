@@ -84,11 +84,4 @@
     <module>users-api</module>
   </modules>
 
-	<dependencies>
-		<dependency>
-			<groupId>tools.dynamia</groupId>
-			<artifactId>tools.dynamia.zk.crud</artifactId>
-			<version>${dynatools.version}</version>
-		</dependency>
-	</dependencies>
 </project>

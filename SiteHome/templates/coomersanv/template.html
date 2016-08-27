@@ -91,7 +91,9 @@
 
 				<!--Top header -->
 				<div class="pull-right">
+					<th:block th:include="users/components/usermenu::content" />
 					<th:block th:include="module::position('topHeader')" />
+
 				</div>
 
 
@@ -126,21 +128,15 @@
 		<section id="quicklink" class="mt20"></section>
 		<!-- Footer -->
 		<footer id="footer">
-			<div class="footerimage hidden-xs hidden-sm"
-				th:style="${'color: #999; background-image: url('+siteParams['footerimage']+')'}">
+			<div class="footercontent">
 				<div class="container">
-					<div class="row row-centered">
+					<div class="row">
 						<th:block th:include="module::position('footer')" />
 					</div>
 				</div>
 			</div>
 
-			<div class="visible-xs visible-sm"
-				style="background-color: #3A3A3A; padding-bottom: 10px">
-				<div class="row row-centered">
-					<th:block th:include="module::position('footer')" />
-				</div>
-			</div>
+
 
 			<section id="quicklink">
 				<div class="container">

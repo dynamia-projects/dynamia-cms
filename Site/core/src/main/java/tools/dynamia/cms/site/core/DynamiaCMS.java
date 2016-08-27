@@ -112,6 +112,10 @@ public class DynamiaCMS {
 		return new String[] { VIEWS, MODULES };
 	}
 
+	public static String[] getPrivateLocations() {
+		return new String[] { VIEWS, MODULES, TEMPLATES };
+	}
+
 	public static void reloadHomePath() {
 		path = null;
 		initDefaultLocations();

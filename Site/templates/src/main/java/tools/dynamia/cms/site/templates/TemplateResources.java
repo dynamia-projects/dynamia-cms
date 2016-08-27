@@ -16,6 +16,7 @@
 package tools.dynamia.cms.site.templates;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,14 +49,22 @@ public class TemplateResources {
 			currentTemplate = tpltService.getDefaultTemplate().getDirectoryName();
 		}
 
-		Path templateResource = DynamiaCMS.getTemplatesLocation().resolve(currentTemplate + File.separator + resourceName);
+		// find first in local site template resources
+		Path templateResource = DynamiaCMS.getSitesResourceLocation(site)
+				.resolve("templates" + File.separator + currentTemplate + File.separator + resourceName);
+
+		//if not found find in global template resources
+		if (!Files.exists(templateResource)) {
+			templateResource = DynamiaCMS.getTemplatesLocation()
+					.resolve(currentTemplate + File.separator + resourceName);
+		}
 
 		return templateResource;
 	}
 
 	public static String getTemplateName(Site site) {
 		String name = site.getTemplate();
-		
+
 		HttpServletRequest request = CMSUtil.getCurrentRequest();
 		if (request != null) {
 			String sessionTemplate = request.getParameter("setSessionTemplate");

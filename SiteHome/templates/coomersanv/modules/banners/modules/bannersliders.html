@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+
+<body th:fragment="module(instance)">
+
+	<div th:class="${instance.position+' '+instance.styleClass}">
+		<div class="flexslider bannerslider">
+			<ul class="slides">
+				<li th:each="banner : ${instance.model.banners}"><a
+					th:href="${banner.url}"> <img th:src="${banner.imageURL}"
+						src="img/banner1.jpg" th:alt="${banner.title}" />
+				</a></li>
+			</ul>
+		</div>
+	</div>
+
+</body>
+
+</html>

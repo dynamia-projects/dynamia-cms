@@ -7,7 +7,7 @@
 <body th:fragment="module(instance)">
 
 	<h2>Categorias</h2>
-	<div style="max-height: 600px; overflow: auto">
+	<div style="max-height: 700px; overflow: auto">
 		<ul class="nav nav-list submenu categories ">
 			<li th:each="cat : ${instance.model.categories}"><a
 				th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}}"
