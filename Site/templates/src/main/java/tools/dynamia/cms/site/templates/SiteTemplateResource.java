@@ -98,7 +98,7 @@ public class SiteTemplateResource implements ITemplateResource, Serializable {
 		if (!Files.exists(file)) {
 			String loc = TemplateResources.getTemplateName(site);
 			if (loc != null) {
-				loc = "templates" + File.separator + loc;
+				loc = DynamiaCMS.TEMPLATES + File.separator + loc;
 				file = siteHome.resolve(loc + File.separator + name);
 			}
 		}

@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.site.templates.services.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.DirectoryStream;
@@ -45,74 +46,90 @@ import tools.dynamia.domain.query.Parameters;
 @Service
 public class TemplateServiceImpl implements TemplateService {
 
-    @Autowired
-    private Parameters appParams;
+	@Autowired
+	private Parameters appParams;
 
-    private List<Template> loadTemplates() {
-        final List<Template> templates = new ArrayList<>();
-        Path templateDir = DynamiaCMS.getTemplatesLocation();
-        try {
-            DirectoryStream<Path> stream = Files.newDirectoryStream(templateDir);
-            for (Path subdir : stream) {
-                if (Files.isDirectory(subdir)) {
-                    Path templateProperties = subdir.resolve("template.properties");
-                    if (Files.exists(subdir)) {
-                        Properties props = new Properties();
-                        try {
-                            props.load(Files.newBufferedReader(templateProperties, Charset.defaultCharset()));
-                            Template template = Template.build(props, subdir);
-                            templates.add(template);
-                        } catch (Exception ex) {
-                            Logger.getLogger(TemplateServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                }
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(TemplateServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	private List<Template> loadTemplates() {
+		final List<Template> templates = new ArrayList<>();
+		Path templateDir = DynamiaCMS.getTemplatesLocation();
+		try {
+			DirectoryStream<Path> stream = Files.newDirectoryStream(templateDir);
+			for (Path subdir : stream) {
+				if (Files.isDirectory(subdir)) {
+					Template template = loadTemplate(subdir);
+					if (template != null) {
+						templates.add(template);
+					}
+				}
+			}
+		} catch (IOException ex) {
+			Logger.getLogger(TemplateServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+		}
 
-        return templates;
-    }
+		return templates;
+	}
 
-    @Override
-    public List<Template> getInstalledTemplates() {
-        return loadTemplates();
-    }
+	private Template loadTemplate(Path templateDir) {
+		Path templateProperties = templateDir.resolve("template.properties");
+		if (Files.exists(templateDir)) {
+			Properties props = new Properties();
+			try {
+				props.load(Files.newBufferedReader(templateProperties, Charset.defaultCharset()));
+				Template template = Template.build(props, templateDir);
+				return template;
+			} catch (Exception ex) {
+				Logger.getLogger(TemplateServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		return null;
+	}
 
-    @Override
-    public Template getTemplate(String templateName) {
-        for (Template template : loadTemplates()) {
-            if (template.getDirectoryName().equals(templateName)) {
-                return template;
-            }
-        }
-        return null;
-    }
+	@Override
+	public List<Template> getInstalledTemplates() {
+		return loadTemplates();
+	}
 
-    @Override
-    public Template getTemplate(Site site) {
-        return getTemplate(site.getTemplate());
-    }
+	@Override
+	public Template getTemplate(String templateName) {
+		for (Template template : loadTemplates()) {
+			if (template.getDirectoryName().equals(templateName)) {
+				return template;
+			}
+		}
+		return null;
+	}
 
-    @Override
-    public Template getDefaultTemplate() {
-        String paramName = "CMSConfig_DefaultTemplate";
-        Parameter defaultTemplate = appParams.getParameter(paramName);
-        if (defaultTemplate == null) {
-            List<Template> installedTemplates = getInstalledTemplates();
-            if (installedTemplates.isEmpty()) {
-                throw new TemplateNotFoundException("Cannot get default template: No templates installed");
-            }
-            defaultTemplate = new Parameter(paramName, installedTemplates.get(0).getName(), "Default Template Name");
-            appParams.save(defaultTemplate);
-        }
+	@Override
+	public Template getTemplate(Site site) {
+		String templateName = site.getTemplate();
+		Path localTemplateDir = DynamiaCMS.getSitesResourceLocation(site)
+				.resolve(DynamiaCMS.TEMPLATES + File.separator + templateName);
+		Template template = loadTemplate(localTemplateDir);
+		if (template != null) {
+			return template;
+		} else {
+			return getTemplate(templateName);
+		}
+	}
 
-        Template t = getTemplate(defaultTemplate.getValue());
-        if (t == null) {
-            throw new TemplateNotFoundException("Default Template not found. Name: " + defaultTemplate.getName());
-        }
-        return t;
-    }
+	@Override
+	public Template getDefaultTemplate() {
+		String paramName = "CMSConfig_DefaultTemplate";
+		Parameter defaultTemplate = appParams.getParameter(paramName);
+		if (defaultTemplate == null) {
+			List<Template> installedTemplates = getInstalledTemplates();
+			if (installedTemplates.isEmpty()) {
+				throw new TemplateNotFoundException("Cannot get default template: No templates installed");
+			}
+			defaultTemplate = new Parameter(paramName, installedTemplates.get(0).getName(), "Default Template Name");
+			appParams.save(defaultTemplate);
+		}
+
+		Template t = getTemplate(defaultTemplate.getValue());
+		if (t == null) {
+			throw new TemplateNotFoundException("Default Template not found. Name: " + defaultTemplate.getName());
+		}
+		return t;
+	}
 
 }

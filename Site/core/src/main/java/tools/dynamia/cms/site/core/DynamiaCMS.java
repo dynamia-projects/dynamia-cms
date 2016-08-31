@@ -40,11 +40,11 @@ public class DynamiaCMS {
 	public static final String CFG_DEFAULT_TEMPLATE = PREFIX + "DefaultTemplate";
 	public static final String CFG_SUPER_ADMIN_SITE = PREFIX + "SuperAdminSite";
 
-	private static final String TEMPLATES = "templates";
-	private static final String VIEWS = "views";
-	private static final String MODULES = "modules";
-	private static final String SITES = "sites";
-	private static final String STATIC = "static";
+	public static final String TEMPLATES = "templates";
+	public static final String VIEWS = "views";
+	public static final String MODULES = "modules";
+	public static final String SITES = "sites";
+	public static final String STATIC = "static";
 	private static String path;
 
 	public static Path getHomePath() {
