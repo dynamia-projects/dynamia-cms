@@ -69,8 +69,7 @@ ul.subcategories>li+li>a {
 	opacity: 0.95;
 }
 
-.productname {
-	height: 43px;
+.productname {	
 	overflow: hidden;
 	text-align: left;
 	font-size: 15px;
@@ -85,9 +84,7 @@ ul.subcategories>li+li>a {
 }
 
 .oldprice {
-	font-size: inherit;
-	!
-	important
+	font-size: inherit !important;
 }
 
 .topcart {
@@ -196,7 +193,7 @@ header #mainmenu a.topmenu.special:hover {
 	margin: 12px 0
 }
 
-.usermenu{
+.usermenu {
 	padding: 3px 5px;
 	margin: 12px;
 }
@@ -268,31 +265,31 @@ footer * {
 }
 
 .bred {
-    background: #fa3031 !important;
-    color: #fff !important;
-    border: 0px !important;
+	background: #fa3031 !important;
+	color: #fff !important;
+	border: 0px !important;
 }
 
 .blightblue {
-    background: #52b9e9 !important;
-    color: #fff !important;
-    border: 0px !important;
+	background: #52b9e9 !important;
+	color: #fff !important;
+	border: 0px !important;
 }
 
-.simplebanners .flex-next, .simplebanners .flex-prev {
+.simplebanners .flex-next, .simplebanners .flex-prev, .simplebanners .flex-control-nav,
+	.simplebanners .flex-control-paging {
 	display: none;
-	
 }
 
-.productpanel{
-	height: 260px;
+.productpanel {
+	height: 280px;
 }
 
-.productpanel .productname{
+.productpanel .productname {
 	font-size: 12px;
 }
 
-.productpanel .brand{
+.productpanel .brand {
 	font-size: 10px;
 	font-weight: bold;
 }

@@ -36,7 +36,7 @@
 			</span> <span th:if="${prd.promoEnabled}" class="sale tooltip-test"
 				style="font-size: 20px" th:text="${prd.promoValueFormatted}"
 				th:title="${prd.promoName}"> </span>
-			<div class="viewicons">
+			<div class="viewicons" th:if="${@userHolder.authenticated}">
 				<form class="pull-left" target="_blank"
 					action="http://www.facebook.com/sharer.php" method="get">
 					<button type="submit" data-original-title="Compartir"
