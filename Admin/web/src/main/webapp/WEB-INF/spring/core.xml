@@ -27,6 +27,7 @@
 
     <aop:aspectj-autoproxy />
     
+    <!-- MAP CACHE
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
             <set>
@@ -34,5 +35,8 @@
             </set>
         </property>
     </bean>
+     -->
+    
+    <bean id="cacheManager" class="org.springframework.cache.support.NoOpCacheManager" />
 
 </beans>
