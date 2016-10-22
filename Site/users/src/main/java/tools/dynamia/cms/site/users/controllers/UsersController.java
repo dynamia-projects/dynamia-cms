@@ -16,9 +16,13 @@
 package tools.dynamia.cms.site.users.controllers;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +54,15 @@ public class UsersController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null) {
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		return "redirect:/";
+	}
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ModelAndView saveUser(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request) {
 
@@ -65,8 +78,8 @@ public class UsersController {
 		ModelAndView mv = new ModelAndView("users/resetpassword");
 		mv.addObject("title", "Olvide mi Password");
 		UserForm form = new UserForm();
-		form.setData(new User());		
-		mv.addObject("userForm",form);
+		form.setData(new User());
+		mv.addObject("userForm", form);
 		return mv;
 	}
 
@@ -142,15 +155,15 @@ public class UsersController {
 
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/addresses", method = RequestMethod.POST)
-	public ModelAndView saveAddress(@Valid UserContactInfo userContactInfo, BindingResult bindingResult, HttpServletRequest request,
-			RedirectAttributes redirectAttributes) {
+	public ModelAndView saveAddress(@Valid UserContactInfo userContactInfo, BindingResult bindingResult,
+			HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView();
 		String redirect = request.getParameter("currentURI");
 		if (request.getParameter("redirect") != null) {
 			redirect = request.getParameter("redirect");
 		}
 		mv.addObject("redirect", redirect);
-		
+
 		SiteActionManager.performAction("saveUserContactInfo", mv, request, redirectAttributes, userContactInfo);
 
 		return mv;
@@ -178,7 +191,8 @@ public class UsersController {
 
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/addresses/{id}/remove", method = RequestMethod.GET)
-	public ModelAndView removeAddress(@PathVariable Long id, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	public ModelAndView removeAddress(@PathVariable Long id, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView("users/addresses/table");
 		mv.setView(new RedirectView("/users/profile", true, true, false));
 		SiteActionManager.performAction("removeUserContactInfo", mv, request, redirectAttributes, id);

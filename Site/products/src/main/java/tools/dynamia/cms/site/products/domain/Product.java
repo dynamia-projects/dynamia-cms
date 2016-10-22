@@ -87,6 +87,7 @@ public class Product extends SimpleEntity implements SiteAware {
 	private String image3;
 	private String image4;
 	private String videoURL;
+	private String videoURL2;
 
 	private int rate;
 	private Long views = 1L;
@@ -132,6 +133,14 @@ public class Product extends SimpleEntity implements SiteAware {
 
 	@OneToOne
 	private ProductTemplate alternateTemplate;
+
+	public String getVideoURL2() {
+		return videoURL2;
+	}
+
+	public void setVideoURL2(String videoURL2) {
+		this.videoURL2 = videoURL2;
+	}
 
 	public ProductTemplate getAlternateTemplate() {
 		return alternateTemplate;
@@ -565,6 +574,7 @@ public class Product extends SimpleEntity implements SiteAware {
 		sellInWeb = dto.isSellInWeb();
 		showLastPrice = dto.isShowLastPrice();
 		videoURL = dto.getVideoURL();
+		videoURL2 = dto.getVideoURL2();
 		storePrice = dto.getStorePrice();
 		promoEnabled = dto.isPromoEnabled();
 		promoEndDate = dto.getPromoEndDate();

@@ -60,6 +60,7 @@ public class ProductDTO implements Serializable {
 	private String image3;
 	private String image4;
 	private String videoURL;
+	private String videoURL2;
 
 	private String tags;
 
@@ -87,6 +88,14 @@ public class ProductDTO implements Serializable {
 	private Date promoStartDate;
 	private Date promoEndDate;
 	private String promoName;
+
+	public String getVideoURL2() {
+		return videoURL2;
+	}
+
+	public void setVideoURL2(String videoURL2) {
+		this.videoURL2 = videoURL2;
+	}
 
 	public BigDecimal getStorePrice() {
 		return storePrice;

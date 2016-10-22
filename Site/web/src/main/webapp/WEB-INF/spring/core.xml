@@ -35,11 +35,9 @@
 
 
 	<aop:aspectj-autoproxy />
+	<!-- <bean id="cacheManager" class="org.springframework.cache.support.NoOpCacheManager"/> -->
 
-	<bean id="cacheManager" class="org.springframework.cache.support.NoOpCacheManager"/>
-	
 
-<!-- ECACHE 
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
 		p:cache-manager-ref="ehcache">
 	</bean>
@@ -48,6 +46,6 @@
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
 		p:config-location="classpath:ehcache.xml" />
 
--->
+
 
 </beans>
