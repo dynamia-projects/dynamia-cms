@@ -8,12 +8,17 @@ fields:
   paymentGatewayName:
     label: Gateway Name
   paymentEnabled:
+  allowEmptyPayment:
+  
   minPaymentAmount:
   maxPaymentAmount:
   shipmentPercent:
     component: decimalbox
   minShipmentAmount:
   defaultCurrency:
+  autoSendOrders:
+  orderSenderURL:
+  
   descriptionTemplate:
   notificationEmails:
     description: You can use multiple emails address separated by comma

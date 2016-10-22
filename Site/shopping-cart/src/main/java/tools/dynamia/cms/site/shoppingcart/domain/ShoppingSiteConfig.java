@@ -33,155 +33,184 @@ import tools.dynamia.domain.SimpleEntity;
 @Table(name = "sc_configuration")
 public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 
-    @NotNull
-    @OneToOne
-    private Site site;
-    private String paymentGatewayId;
-    private String paymentGatewayName;
-    private boolean paymentEnabled;
-    private BigDecimal minPaymentAmount;
-    private BigDecimal maxPaymentAmount;
-    private float shipmentPercent;
-    private BigDecimal minShipmentAmount;
-    private String defaultCurrency;
-    private String descriptionTemplate;
-    private String notificationEmails;
-    @OneToOne
-    private MailTemplate orderCompletedMailTemplate;
-    @OneToOne
-    private MailTemplate orderShippedMailTemplate;
-    @OneToOne
-    private MailTemplate notificationMailTemplate;
-    @OneToOne
-    private MailAccount mailAccount;
+	@NotNull
+	@OneToOne
+	private Site site;
+	private String paymentGatewayId;
+	private String paymentGatewayName;
+	private boolean paymentEnabled;
+	private boolean allowEmptyPayment;
 
-    public BigDecimal getMinShipmentAmount() {
-        if (minShipmentAmount == null) {
-            minShipmentAmount = BigDecimal.ZERO;
-        }
-        return minShipmentAmount;
-    }
+	private BigDecimal minPaymentAmount;
+	private BigDecimal maxPaymentAmount;
+	private float shipmentPercent;
+	private BigDecimal minShipmentAmount;
+	private String defaultCurrency;
+	private String descriptionTemplate;
+	private String notificationEmails;
+	private String orderSenderURL;
+	private boolean autoSendOrders;
 
-    public void setMinShipmentAmount(BigDecimal minShipmentAmount) {
-        this.minShipmentAmount = minShipmentAmount;
-    }
+	@OneToOne
+	private MailTemplate orderCompletedMailTemplate;
+	@OneToOne
+	private MailTemplate orderShippedMailTemplate;
+	@OneToOne
+	private MailTemplate notificationMailTemplate;
+	@OneToOne
+	private MailAccount mailAccount;
 
-    public BigDecimal getMaxPaymentAmount() {
-        if (maxPaymentAmount == null) {
-            maxPaymentAmount = BigDecimal.ZERO;
-        }
-        return maxPaymentAmount;
-    }
+	public boolean isAutoSendOrders() {
+		return autoSendOrders;
+	}
 
-    public void setMaxPaymentAmount(BigDecimal maxPaymentAmount) {
-        this.maxPaymentAmount = maxPaymentAmount;
-    }
+	public void setAutoSendOrders(boolean autoSendOrders) {
+		this.autoSendOrders = autoSendOrders;
+	}
 
-    public float getShipmentPercent() {
-        return shipmentPercent;
-    }
+	public boolean isAllowEmptyPayment() {
+		return allowEmptyPayment;
+	}
 
-    public void setShipmentPercent(float shipmentPercent) {
-        this.shipmentPercent = shipmentPercent;
-    }
+	public void setAllowEmptyPayment(boolean allowEmptyPayment) {
+		this.allowEmptyPayment = allowEmptyPayment;
+	}
 
-    public MailAccount getMailAccount() {
-        return mailAccount;
-    }
+	public String getOrderSenderURL() {
+		return orderSenderURL;
+	}
 
-    public void setMailAccount(MailAccount mailAccount) {
-        this.mailAccount = mailAccount;
-    }
+	public void setOrderSenderURL(String orderSenderURL) {
+		this.orderSenderURL = orderSenderURL;
+	}
 
-    public MailTemplate getOrderCompletedMailTemplate() {
-        return orderCompletedMailTemplate;
-    }
+	public BigDecimal getMinShipmentAmount() {
+		if (minShipmentAmount == null) {
+			minShipmentAmount = BigDecimal.ZERO;
+		}
+		return minShipmentAmount;
+	}
 
-    public void setOrderCompletedMailTemplate(MailTemplate orderCompletedMailTemplate) {
-        this.orderCompletedMailTemplate = orderCompletedMailTemplate;
-    }
+	public void setMinShipmentAmount(BigDecimal minShipmentAmount) {
+		this.minShipmentAmount = minShipmentAmount;
+	}
 
-    public MailTemplate getOrderShippedMailTemplate() {
-        return orderShippedMailTemplate;
-    }
+	public BigDecimal getMaxPaymentAmount() {
+		if (maxPaymentAmount == null) {
+			maxPaymentAmount = BigDecimal.ZERO;
+		}
+		return maxPaymentAmount;
+	}
 
-    public void setOrderShippedMailTemplate(MailTemplate orderShippedMailTemplate) {
-        this.orderShippedMailTemplate = orderShippedMailTemplate;
-    }
+	public void setMaxPaymentAmount(BigDecimal maxPaymentAmount) {
+		this.maxPaymentAmount = maxPaymentAmount;
+	}
 
-    public MailTemplate getNotificationMailTemplate() {
-        return notificationMailTemplate;
-    }
+	public float getShipmentPercent() {
+		return shipmentPercent;
+	}
 
-    public void setNotificationMailTemplate(MailTemplate notificationMailTemplate) {
-        this.notificationMailTemplate = notificationMailTemplate;
-    }
+	public void setShipmentPercent(float shipmentPercent) {
+		this.shipmentPercent = shipmentPercent;
+	}
 
-    public Site getSite() {
-        return site;
-    }
+	public MailAccount getMailAccount() {
+		return mailAccount;
+	}
 
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	public void setMailAccount(MailAccount mailAccount) {
+		this.mailAccount = mailAccount;
+	}
 
-    public String getDescriptionTemplate() {
-        return descriptionTemplate;
-    }
+	public MailTemplate getOrderCompletedMailTemplate() {
+		return orderCompletedMailTemplate;
+	}
 
-    public String getNotificationEmails() {
-        return notificationEmails;
-    }
+	public void setOrderCompletedMailTemplate(MailTemplate orderCompletedMailTemplate) {
+		this.orderCompletedMailTemplate = orderCompletedMailTemplate;
+	}
 
-    public void setNotificationEmails(String notificationEmails) {
-        this.notificationEmails = notificationEmails;
-    }
+	public MailTemplate getOrderShippedMailTemplate() {
+		return orderShippedMailTemplate;
+	}
 
-    public void setDescriptionTemplate(String descriptionTemplate) {
-        this.descriptionTemplate = descriptionTemplate;
-    }
+	public void setOrderShippedMailTemplate(MailTemplate orderShippedMailTemplate) {
+		this.orderShippedMailTemplate = orderShippedMailTemplate;
+	}
 
-    public String getPaymentGatewayId() {
-        return paymentGatewayId;
-    }
+	public MailTemplate getNotificationMailTemplate() {
+		return notificationMailTemplate;
+	}
 
-    public void setPaymentGatewayId(String paymentGatewayId) {
-        this.paymentGatewayId = paymentGatewayId;
-    }
+	public void setNotificationMailTemplate(MailTemplate notificationMailTemplate) {
+		this.notificationMailTemplate = notificationMailTemplate;
+	}
 
-    public String getPaymentGatewayName() {
-        return paymentGatewayName;
-    }
+	public Site getSite() {
+		return site;
+	}
 
-    public void setPaymentGatewayName(String paymentGatewayName) {
-        this.paymentGatewayName = paymentGatewayName;
-    }
+	public void setSite(Site site) {
+		this.site = site;
+	}
 
-    public boolean isPaymentEnabled() {
-        return paymentEnabled;
-    }
+	public String getDescriptionTemplate() {
+		return descriptionTemplate;
+	}
 
-    public void setPaymentEnabled(boolean paymentEnabled) {
-        this.paymentEnabled = paymentEnabled;
-    }
+	public String getNotificationEmails() {
+		return notificationEmails;
+	}
 
-    public BigDecimal getMinPaymentAmount() {
-        if (minPaymentAmount == null) {
-            minPaymentAmount = BigDecimal.ZERO;
-        }
-        return minPaymentAmount;
-    }
+	public void setNotificationEmails(String notificationEmails) {
+		this.notificationEmails = notificationEmails;
+	}
 
-    public void setMinPaymentAmount(BigDecimal minPaymentAmount) {
-        this.minPaymentAmount = minPaymentAmount;
-    }
+	public void setDescriptionTemplate(String descriptionTemplate) {
+		this.descriptionTemplate = descriptionTemplate;
+	}
 
-    public String getDefaultCurrency() {
-        return defaultCurrency;
-    }
+	public String getPaymentGatewayId() {
+		return paymentGatewayId;
+	}
 
-    public void setDefaultCurrency(String defaultCurrency) {
-        this.defaultCurrency = defaultCurrency;
-    }
+	public void setPaymentGatewayId(String paymentGatewayId) {
+		this.paymentGatewayId = paymentGatewayId;
+	}
+
+	public String getPaymentGatewayName() {
+		return paymentGatewayName;
+	}
+
+	public void setPaymentGatewayName(String paymentGatewayName) {
+		this.paymentGatewayName = paymentGatewayName;
+	}
+
+	public boolean isPaymentEnabled() {
+		return paymentEnabled;
+	}
+
+	public void setPaymentEnabled(boolean paymentEnabled) {
+		this.paymentEnabled = paymentEnabled;
+	}
+
+	public BigDecimal getMinPaymentAmount() {
+		if (minPaymentAmount == null) {
+			minPaymentAmount = BigDecimal.ZERO;
+		}
+		return minPaymentAmount;
+	}
+
+	public void setMinPaymentAmount(BigDecimal minPaymentAmount) {
+		this.minPaymentAmount = minPaymentAmount;
+	}
+
+	public String getDefaultCurrency() {
+		return defaultCurrency;
+	}
+
+	public void setDefaultCurrency(String defaultCurrency) {
+		this.defaultCurrency = defaultCurrency;
+	}
 
 }

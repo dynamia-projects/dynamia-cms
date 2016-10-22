@@ -82,6 +82,7 @@
 		<module>banners</module>
 		<module>contacts</module>
     <module>users-api</module>
+    <module>shopping-cart-api</module>
   </modules>
 
 </project>

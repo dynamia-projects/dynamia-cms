@@ -15,8 +15,6 @@
  */
 package tools.dynamia.cms.site.shoppingcart.services.impl;
 
-import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +50,6 @@ import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import tools.dynamia.cms.site.users.UserHolder;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
-
 import tools.dynamia.commons.ClassMessages;
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
@@ -61,6 +58,9 @@ import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.domain.util.DomainUtils;
 import tools.dynamia.integration.Containers;
 import tools.dynamia.integration.sterotypes.Service;
+import tools.dynamia.web.util.HttpRemotingServiceClient;
+import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSender;
+import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderDTO;
 
 /**
  *
@@ -176,9 +176,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 			order.syncTransaction();
 			order.getShoppingCart().setStatus(ShoppingCartStatus.COMPLETED);
 
-			order.getTransaction().setDescription(
-					"Orden No. " + order.getNumber() + ". Compra de " + order.getShoppingCart().getQuantity()
-							+ " producto(s)");
+			order.getTransaction().setDescription("Orden No. " + order.getNumber() + ". Compra de "
+					+ order.getShoppingCart().getQuantity() + " producto(s)");
 
 			order.getTransaction().setPayerPhoneNumber(order.getBillingAddress().getInfo().getPhoneNumber());
 			order.getTransaction().setPayerMobileNumber(order.getBillingAddress().getInfo().getMobileNumber());
@@ -291,8 +290,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 						config.getMailAccount(), order);
 				User user = order.getShoppingCart().getUser();
 				customerMessage.setTo(user.getUsername());
-				if (user.getContactInfo() != null
-						&& user.getContactInfo().getEmail() != null
+				if (user.getContactInfo() != null && user.getContactInfo().getEmail() != null
 						&& !user.getContactInfo().getEmail().isEmpty()
 						&& !user.getContactInfo().getEmail().equals(user.getUsername())) {
 					customerMessage.addTo(user.getUsername());
@@ -361,8 +359,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 						config.getMailAccount(), order);
 				User user = order.getShoppingCart().getUser();
 				customerMessage.setTo(user.getUsername());
-				if (user.getContactInfo().getEmail() != null
-						&& !user.getContactInfo().getEmail().isEmpty()
+				if (user.getContactInfo().getEmail() != null && !user.getContactInfo().getEmail().isEmpty()
 						&& !user.getContactInfo().getEmail().equals(user.getUsername())) {
 					customerMessage.addTo(user.getContactInfo().getEmail());
 				}
@@ -439,5 +436,24 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		}
 
 		return classMessages.get(key, params);
+	}
+
+	public void sendOrder(ShoppingOrder order) {
+		ShoppingSiteConfig cfg = getConfiguration(order.getSite());
+
+		if (cfg.getOrderSenderURL() == null || cfg.getOrderSenderURL().isEmpty()) {
+			throw new ValidationError("Cannot send order " + order.getNumber() + " because no sender is configured");
+		}
+
+		ShoppingOrderSender sender = HttpRemotingServiceClient.build(ShoppingOrderSender.class)
+				.setServiceURL(cfg.getOrderSenderURL()).getProxy();
+
+		ShoppingOrderDTO dto = order.toDTO();
+		String response = sender.sendOrder(dto);
+
+		if (response != null) {
+			order.setExternalRef(response);
+		}
+		
 	}
 }
