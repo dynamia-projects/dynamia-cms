@@ -37,63 +37,63 @@ import tools.dynamia.domain.SimpleEntity;
 @Table(name = "prd_products_prices")
 public class ProductCreditPrice extends SimpleEntity implements SiteAware {
 
-    @OneToOne
-    @NotNull
-    private Site site;
-    @ManyToOne
-    @NotNull
-    private Product product;
-    private int number;
-    private String description;
-    @NotNull
-    private BigDecimal price;
+	@OneToOne
+	@NotNull
+	private Site site;
+	@ManyToOne
+	@NotNull
+	private Product product;
+	private int number;
+	private String description;
+	@NotNull
+	private BigDecimal price;
 
-    @Override
-    public Site getSite() {
-        return site;
-    }
+	@Override
+	public Site getSite() {
+		return site;
+	}
 
-    @Override
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	@Override
+	public void setSite(Site site) {
+		this.site = site;
+	}
 
-    public Product getProduct() {
-        return product;
-    }
+	public Product getProduct() {
+		return product;
+	}
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
-    public int getNumber() {
-        return number;
-    }
+	public int getNumber() {
+		return number;
+	}
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
+	public void setNumber(int number) {
+		this.number = number;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public BigDecimal getPrice() {
-        return price;
-    }
+	public BigDecimal getPrice() {
+		return price;
+	}
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
 
-    public void sync(ProductCreditPriceDTO dto) {
-        price = dto.getPrice();
-        number = dto.getNumber();
-        description = dto.getDescription();
-    }
+	public void sync(ProductCreditPriceDTO dto) {
+		price = dto.getPrice();
+		number = dto.getNumber();
+		description = dto.getDescription();
+	}
 
 }

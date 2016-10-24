@@ -15,11 +15,18 @@
  */
 package tools.dynamia.cms.site.shoppingcart.services;
 
+import java.util.List;
+
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
+import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.domain.ValidationError;
+import tools.dynamia.web.util.HttpRemotingServiceClient;
+import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSender;
+import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderDTO;
 
 /**
  *
@@ -42,5 +49,9 @@ public interface ShoppingCartService {
 	public abstract void shipOrder(ShoppingOrder shoppingOrder);
 
 	public abstract void notifyOrderShipped(ShoppingOrder order);
+
+	public List<ShoppingOrder> getOrders(User current);
+
+	void sendOrder(ShoppingOrder order);
 
 }

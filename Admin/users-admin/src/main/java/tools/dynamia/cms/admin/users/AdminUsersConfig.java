@@ -37,10 +37,7 @@ public class AdminUsersConfig extends UsersConfig {
                 .defaultSuccessUrl("/", false)
                 .loginPage("/login")
                 .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/logout").logoutSuccessUrl("/login")
-                .and()
+                .and()              
                 .httpBasic();
 
     }

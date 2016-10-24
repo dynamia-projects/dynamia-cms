@@ -55,12 +55,14 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return "redirect:/";
+		ModelAndView mv = new ModelAndView();
+		mv.setView(new RedirectView("/", false, true, false));
+		return mv;
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)

@@ -39,7 +39,7 @@
 						<Set name="password">123</Set>
 						<Call name="addDataSourceProperty">
 							<Arg>url</Arg>
-							<Arg>jdbc:mariadb://localhost:3306/dynamiacms</Arg>
+							<Arg>jdbc:mariadb://localhost:3306/coomersanv</Arg>
 						</Call>
 					</New>
 				</Arg>

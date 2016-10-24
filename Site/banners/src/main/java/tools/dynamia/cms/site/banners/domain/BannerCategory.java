@@ -71,4 +71,5 @@ public class BannerCategory extends SimpleEntity implements SiteAware {
 	public String toString() {
 		return name;
 	}
+
 }

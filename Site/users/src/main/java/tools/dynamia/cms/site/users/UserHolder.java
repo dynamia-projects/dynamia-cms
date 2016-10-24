@@ -33,58 +33,74 @@ import tools.dynamia.integration.Containers;
 @Scope("session")
 public class UserHolder implements Serializable {
 
-    protected User user;
+	protected User user;
 
-    private Date timestamp;
+	private Date timestamp;
 
-    public static UserHolder get() {
-        try {
-            return Containers.get().findObject(UserHolder.class);
-        } catch (Exception e) {
-            UserHolder userHolder = new UserHolder();
-            userHolder.init(User.createMock());
-            return userHolder;
-        }
-    }
+	public static UserHolder get() {
+		try {
+			return Containers.get().findObject(UserHolder.class);
+		} catch (Exception e) {
+			UserHolder userHolder = new UserHolder();
+			userHolder.init(User.createMock());
+			return userHolder;
+		}
+	}
 
-    public boolean isAuthenticated() {
-        return user != null && user.getId() != null;
-    }
+	public boolean isAuthenticated() {
+		return user != null && user.getId() != null;
+	}
 
-    public boolean isAdmin() {
-        return isAuthenticated() && user.getProfile() == UserProfile.ADMIN;
-    }
+	public boolean isAdmin() {
+		return isAuthenticated() && user.getProfile() == UserProfile.ADMIN;
+	}
 
-    public String getUserName() {
-        return user.getUsername().toLowerCase();
-    }
+	public boolean isSeller() {
+		return isAuthenticated() && user.getProfile() == UserProfile.SELLER;
+	}
 
-    public String getFullName() {
-        if (isAuthenticated()) {
-            return user.getFullName();
-        } else {
-            return "";
-        }
-    }
+	public boolean isEditor() {
+		return isAuthenticated() && user.getProfile() == UserProfile.EDITOR;
+	}
 
-    public User getCurrent() {
-        return user;
-    }
+	public String getUserName() {
+		return user.getUsername().toLowerCase();
+	}
 
-    public Date getTimestamp() {
-        return timestamp;
-    }
+	public String getFullName() {
+		if (isAuthenticated()) {
+			return user.getFullName();
+		} else {
+			return "";
+		}
+	}
 
-    void init(User user) {
-        if (user != null) {
-            this.user = user;
-            this.timestamp = new Date();
-        }
-    }
+	public User getCurrent() {
+		return user;
+	}
 
-    public void update(User user) {
-        if (user != null && this.user != null && this.user.equals(user)) {
-            this.user = user;
-        }
-    }
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	public UserProfile getProfile() {
+		if (getCurrent() != null) {
+			return getCurrent().getProfile();
+		} else {
+			return null;
+		}
+	}
+
+	void init(User user) {
+		if (user != null) {
+			this.user = user;
+			this.timestamp = new Date();
+		}
+	}
+
+	public void update(User user) {
+		if (user != null && this.user != null && this.user.equals(user)) {
+			this.user = user;
+		}
+	}
 }

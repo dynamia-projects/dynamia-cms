@@ -37,7 +37,7 @@
 				style="font-size: 20px" th:text="${prd.promoValueFormatted}"
 				th:title="${prd.promoName}"> </span>
 			<div class="viewicons" th:if="${@userHolder.authenticated}">
-				<form class="pull-left" target="_blank"
+				<form class="pull-left" target="_blank" th:if="false"
 					action="http://www.facebook.com/sharer.php" method="get">
 					<button type="submit" data-original-title="Compartir"
 						class="btn btn-inverse tooltip-test">
@@ -51,7 +51,7 @@
 					th:action="@{'/shoppingcart/shop/add/'+${prd.id}}" method="get">
 					<button type="submit" data-original-title="Agregar al Carrito"
 						class="btn btn-inverse tooltip-test">
-						<i class="fa fa-shopcart icon-white"></i>
+						<i class="fa fa-shopping-cart icon-white"></i>
 					</button>
 					<input type="hidden" name="currentURI" id="currentURI"
 						th:value="${currentURI}" />

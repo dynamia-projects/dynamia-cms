@@ -131,8 +131,7 @@ public class UserServiceImpl implements UserService {
 	public void resetPassword(Site site, String username) {
 
 		String templateName = "ResetPasswordTemplate";
-		QueryParameters params = QueryParameters.with("name", templateName)
-				.add("site", site);
+		QueryParameters params = QueryParameters.with("name", templateName).add("site", site);
 
 		MailTemplate mailTemplate = crudService.findSingle(MailTemplate.class, params);
 		if (mailTemplate == null) {
@@ -214,6 +213,22 @@ public class UserServiceImpl implements UserService {
 			config = crudService.create(config);
 		}
 		return config;
+	}
+
+	@Override
+	public List<User> getUserCustomers(User user) {
+
+		List<User> customers = null;
+
+		customers = crudService.find(User.class, QueryParameters.with("profile", UserProfile.USER)
+				.add("relatedUser", user).add("enabled", true).orderBy("fullName"));
+
+		if (customers == null || customers.isEmpty()) {
+			customers = crudService.find(User.class,
+					QueryParameters.with("profile", UserProfile.USER).add("enabled", true).orderBy("fullName"));
+		}
+
+		return customers;
 	}
 
 }

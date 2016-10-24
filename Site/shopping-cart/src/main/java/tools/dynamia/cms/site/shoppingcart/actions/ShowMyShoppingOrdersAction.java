@@ -15,45 +15,43 @@
  */
 package tools.dynamia.cms.site.shoppingcart.actions;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
 
 import tools.dynamia.cms.site.core.actions.ActionEvent;
 import tools.dynamia.cms.site.core.actions.SiteAction;
 import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.core.api.SiteAware;
-import tools.dynamia.cms.site.payment.services.PaymentService;
-import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
-import tools.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
+import tools.dynamia.cms.site.users.UserHolder;
 
 /**
  *
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class SyncShoppingOrderAction implements SiteAction {
+public class ShowMyShoppingOrdersAction implements SiteAction {
 
 	@Autowired
 	private ShoppingCartService service;
 
-	@Autowired
-	private PaymentService paymentService;
-
 	@Override
 	public String getName() {
-		return "syncShoppingOrder";
+		return "showMyShoppingOrders";
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView();
+		mv.setViewName("shoppingcart/myorders");
 
-		ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder();
-		SiteAware cart = ShoppingCartUtils.getShoppingCart(evt.getModelAndView());
+		mv.addObject("title", "Mis Pedidos");
 
-		if (order != null && cart != null && order.getShoppingCart().equals(cart)) {
-			order.sync();
-		}
+		List<ShoppingOrder> orders = service.getOrders(UserHolder.get().getCurrent());
+
+		mv.addObject("orders", orders);
 
 	}
 

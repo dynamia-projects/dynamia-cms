@@ -31,6 +31,7 @@ import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
 import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import tools.dynamia.cms.site.users.UserHolder;
+import tools.dynamia.cms.site.users.api.UserProfile;
 import tools.dynamia.cms.site.users.services.UserService;
 
 import tools.dynamia.domain.ValidationError;
@@ -65,6 +66,11 @@ public class CheckoutShoppingCartAction implements SiteAction {
 			mv.setView(new RedirectView("/", false, true, false));
 		} else if (config.isPaymentEnabled() || UserHolder.get().isAdmin()) {
 			mv.setViewName("shoppingcart/checkout");
+
+			if (UserHolder.get().getProfile() == UserProfile.SELLER) {
+				mv.setViewName("shoppingcart/checkoutSeller");
+				mv.addObject("userCustomers", userService.getUserCustomers(UserHolder.get().getCurrent()));
+			}
 
 			mv.addObject("title", "Confirmar Pedido");
 			mv.addObject("userContactInfos", userService.getContactInfos(UserHolder.get().getCurrent()));

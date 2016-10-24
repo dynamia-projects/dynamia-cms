@@ -36,53 +36,53 @@ import tools.dynamia.domain.SimpleEntity;
 @Table(name = "prd_stocks")
 public class ProductStock extends SimpleEntity implements SiteAware {
 
-    @OneToOne
-    @NotNull
-    private Site site;
+	@OneToOne
+	@NotNull
+	private Site site;
 
-    @NotNull
-    @ManyToOne
-    private Product product;
-    @OneToOne
-    @NotNull
-    private Store store;
-    @Min(value = 0)
-    private long stock;
+	@NotNull
+	@ManyToOne
+	private Product product;
+	@OneToOne
+	@NotNull
+	private Store store;
+	@Min(value = 0)
+	private long stock;
 
-    public Site getSite() {
-        return site;
-    }
+	public Site getSite() {
+		return site;
+	}
 
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	public void setSite(Site site) {
+		this.site = site;
+	}
 
-    public Product getProduct() {
-        return product;
-    }
+	public Product getProduct() {
+		return product;
+	}
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
-    public Store getStore() {
-        return store;
-    }
+	public Store getStore() {
+		return store;
+	}
 
-    public void setStore(Store store) {
-        this.store = store;
-    }
+	public void setStore(Store store) {
+		this.store = store;
+	}
 
-    public long getStock() {
-        return stock;
-    }
+	public long getStock() {
+		return stock;
+	}
 
-    public void setStock(long stock) {
-        this.stock = stock;
-    }
+	public void setStock(long stock) {
+		this.stock = stock;
+	}
 
-    public void sync(ProductStockDTO dto) {
-        stock = dto.getStock();
-    }
+	public void sync(ProductStockDTO dto) {
+		stock = dto.getStock();
+	}
 
 }

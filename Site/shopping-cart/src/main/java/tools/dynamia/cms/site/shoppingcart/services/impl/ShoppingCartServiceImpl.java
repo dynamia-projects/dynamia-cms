@@ -17,6 +17,7 @@ package tools.dynamia.cms.site.shoppingcart.services.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,8 @@ import tools.dynamia.commons.ClassMessages;
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
 import tools.dynamia.domain.ValidationError;
+import tools.dynamia.domain.query.QueryConditions;
+import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.domain.util.DomainUtils;
 import tools.dynamia.integration.Containers;
@@ -128,16 +131,23 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 			throw new ValidationError("El valor maximo de ventas en linea es $" + config.getMaxPaymentAmount());
 		}
 
-		PaymentGateway gateway = paymentService.findGateway(config.getPaymentGatewayId());
-		PaymentTransaction tx = gateway.newTransaction(config.getSite().getKey());
-		tx.setGatewayId(gateway.getId());
-		tx.setCurrency(config.getDefaultCurrency());
-
 		User user = UserHolder.get().getCurrent();
+		shoppingCart.setUser(user);
+
+		PaymentTransaction tx = null;
+
+		if (config.getPaymentGatewayId() != null) {
+			PaymentGateway gateway = paymentService.findGateway(config.getPaymentGatewayId());
+			tx = gateway.newTransaction(config.getSite().getKey());
+			tx.setGatewayId(gateway.getId());
+		} else {
+			tx = newLocalPaymentTransaction();
+		}
+
+		tx.setCurrency(config.getDefaultCurrency());
 		tx.setEmail(user.getUsername());
 		tx.setPayerFullname(user.getFullName());
 		tx.setPayerDocument(user.getIdentification());
-		shoppingCart.setUser(user);
 
 		ShoppingOrder order = new ShoppingOrder();
 		order.setShoppingCart(shoppingCart);
@@ -146,6 +156,15 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		order.setSite(config.getSite());
 
 		return order;
+	}
+
+	private PaymentTransaction newLocalPaymentTransaction() {
+		PaymentTransaction tx = new PaymentTransaction();
+		tx.setGatewayId("local");
+		tx.setStartDate(new Date());
+		tx.setStatus(PaymentTransactionStatus.COMPLETED);
+		tx.setStatusText("");
+		return tx;
 	}
 
 	@Override
@@ -173,14 +192,21 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 				order.getShoppingCart().computeTotalOnly();
 			}
 
+			if (order.isPayLater()) {
+				order.setTransaction(newLocalPaymentTransaction());
+				order.getTransaction().setConfirmed(true);
+			}
+
 			order.syncTransaction();
 			order.getShoppingCart().setStatus(ShoppingCartStatus.COMPLETED);
 
 			order.getTransaction().setDescription("Orden No. " + order.getNumber() + ". Compra de "
 					+ order.getShoppingCart().getQuantity() + " producto(s)");
 
-			order.getTransaction().setPayerPhoneNumber(order.getBillingAddress().getInfo().getPhoneNumber());
-			order.getTransaction().setPayerMobileNumber(order.getBillingAddress().getInfo().getMobileNumber());
+			if (order.getBillingAddress() != null) {
+				order.getTransaction().setPayerPhoneNumber(order.getBillingAddress().getInfo().getPhoneNumber());
+				order.getTransaction().setPayerMobileNumber(order.getBillingAddress().getInfo().getMobileNumber());
+			}
 
 			crudService.create(order);
 		} else {
@@ -438,6 +464,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		return classMessages.get(key, params);
 	}
 
+	@Override
 	public void sendOrder(ShoppingOrder order) {
 		ShoppingSiteConfig cfg = getConfiguration(order.getSite());
 
@@ -453,7 +480,18 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 		if (response != null) {
 			order.setExternalRef(response);
+			order.setSended(true);
 		}
-		
+
+	}
+
+	@Override
+	public List<ShoppingOrder> getOrders(User user) {
+		return crudService.find(ShoppingOrder.class,
+				QueryParameters
+						.with("transaction.status",
+								QueryConditions.in(PaymentTransactionStatus.COMPLETED,
+										PaymentTransactionStatus.PROCESSING))
+						.add("shoppingCart.user", user).orderBy("id", false));
 	}
 }

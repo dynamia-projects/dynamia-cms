@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+<div class="maincontainer" layout:fragment="content">
+
+
+	<div class="container">
+		<!-- Main Title-->
+		<div class="titles animated fadeInUp time3">
+			<div class="pull-left">
+				<h1 class="headinglefttitle">
+					Pedido No. <span th:text="${shoppingOrder.number}"></span> Enviado
+					exitosamente!
+				</h1>
+			</div>
+			<i th:class="icon-shoppingcart"></i>
+		</div>
+
+		<div class="container">
+
+
+
+			<div class="row">
+				<div class="col-md-12">
+
+					<h3>Cliente</h3>
+
+					<div class="form-group">
+						<span class="col-md-12 "
+							th:text="${shoppingOrder.shoppingCart.targetUser.identification}"></span>
+
+					</div>
+
+					<div class="form-group">
+						<span class="col-md-12 "
+							th:text="${shoppingOrder.shoppingCart.targetUser.fullName}"></span>
+
+					</div>
+
+					<div class="form-group">
+						<span class="col-md-10 "
+							th:text="${shoppingOrder.shoppingCart.targetUser.username}"></span>
+
+					</div>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="form-group col-md-12">
+					<h3>Comentarios y Obsevaciones</h3>
+					<span th:text="${shoppingOrder.userComments}"></span>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<h3>Detalles del Pedido</h3>
+				<th th:include="shoppingcart/components/orderDetailsFull::content" />
+			</div>
+
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+
+</html>

@@ -37,91 +37,91 @@ import tools.dynamia.domain.util.ContactInfo;
 @Table(name = "prd_stores")
 public class Store extends SimpleEntity implements SiteAware {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7246043620591262045L;
-    @OneToOne
-    @NotNull
-    private Site site;
-    @NotNull
-    @NotEmpty
-    private String name;
-    private Long externalRef;
-    private ContactInfo contactInfo = new ContactInfo();
-    private String image;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -7246043620591262045L;
+	@OneToOne
+	@NotNull
+	private Site site;
+	@NotNull
+	@NotEmpty
+	private String name;
+	private Long externalRef;
+	private ContactInfo contactInfo = new ContactInfo();
+	private String image;
 
-    @OneToOne
-    private Page page;
+	@OneToOne
+	private Page page;
 
-    public String getImage() {
-        return image;
-    }
+	public String getImage() {
+		return image;
+	}
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+	public void setImage(String image) {
+		this.image = image;
+	}
 
-    public Page getPage() {
-        return page;
-    }
+	public Page getPage() {
+		return page;
+	}
 
-    public void setPage(Page page) {
-        this.page = page;
-    }
+	public void setPage(Page page) {
+		this.page = page;
+	}
 
-    public Site getSite() {
-        return site;
-    }
+	public Site getSite() {
+		return site;
+	}
 
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	public void setSite(Site site) {
+		this.site = site;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Long getExternalRef() {
-        return externalRef;
-    }
+	public Long getExternalRef() {
+		return externalRef;
+	}
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
-    }
+	public void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef;
+	}
 
-    public ContactInfo getContactInfo() {
-        if (contactInfo == null) {
-            contactInfo = new ContactInfo();
-        }
-        return contactInfo;
-    }
+	public ContactInfo getContactInfo() {
+		if (contactInfo == null) {
+			contactInfo = new ContactInfo();
+		}
+		return contactInfo;
+	}
 
-    public void setContactInfo(ContactInfo contactInfo) {
+	public void setContactInfo(ContactInfo contactInfo) {
 
-        this.contactInfo = contactInfo;
-    }
+		this.contactInfo = contactInfo;
+	}
 
-    public void sync(StoreDTO dto) {
-        setName(dto.getName());
-        getContactInfo().setAddress(dto.getAddress());
-        getContactInfo().setCity(dto.getCity());
-        getContactInfo().setCountry(dto.getCountry());
-        getContactInfo().setEmail(dto.getEmail());
-        getContactInfo().setMobileNumber(dto.getMobileNumber());
-        getContactInfo().setPhoneNumber(dto.getPhoneNumber());
-        setExternalRef(dto.getExternalRef());
-        setImage(dto.getImage());
+	public void sync(StoreDTO dto) {
+		setName(dto.getName());
+		getContactInfo().setAddress(dto.getAddress());
+		getContactInfo().setCity(dto.getCity());
+		getContactInfo().setCountry(dto.getCountry());
+		getContactInfo().setEmail(dto.getEmail());
+		getContactInfo().setMobileNumber(dto.getMobileNumber());
+		getContactInfo().setPhoneNumber(dto.getPhoneNumber());
+		setExternalRef(dto.getExternalRef());
+		setImage(dto.getImage());
 
-    }
+	}
 
-    @Override
-    public String toString() {
-        return name;
-    }
+	@Override
+	public String toString() {
+		return name;
+	}
 
 }

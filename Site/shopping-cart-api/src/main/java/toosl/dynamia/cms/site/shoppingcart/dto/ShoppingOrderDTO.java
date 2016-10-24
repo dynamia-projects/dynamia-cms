@@ -13,9 +13,13 @@ public class ShoppingOrderDTO implements Serializable {
 	private String number;
 	private String shippingComments;
 	private String user;
-	private String customer;
 	private String userExternalRef;
+	private String userIdentification;
+
+	private String customer;
 	private String customerExternalRef;
+	private String customerIdentification;
+
 	private int quantity;
 	private BigDecimal subtotal;
 	private BigDecimal totalShipmentPrice;
@@ -47,11 +51,36 @@ public class ShoppingOrderDTO implements Serializable {
 
 	private boolean pickupAtStore;
 	private boolean payAtDelivery;
+	private boolean payLater;
 
 	private String userComments;
 	private String externalRef;
 
 	private List<ShoppingOrderItemDTO> items = new ArrayList<>();
+
+	public boolean isPayLater() {
+		return payLater;
+	}
+
+	public void setPayLater(boolean payLater) {
+		this.payLater = payLater;
+	}
+
+	public String getUserIdentification() {
+		return userIdentification;
+	}
+
+	public void setUserIdentification(String userIdentification) {
+		this.userIdentification = userIdentification;
+	}
+
+	public String getCustomerIdentification() {
+		return customerIdentification;
+	}
+
+	public void setCustomerIdentification(String customerIdentification) {
+		this.customerIdentification = customerIdentification;
+	}
 
 	public Date getTimeStamp() {
 		return timeStamp;

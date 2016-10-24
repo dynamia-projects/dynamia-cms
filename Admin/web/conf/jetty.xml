@@ -21,7 +21,7 @@
         <Arg></Arg>
         <Arg>jdbc/DataSource</Arg>
         <Arg>
-           <New class="org.mariadb.jdbc.MySQLDataSource">
+           <New class="org.mariadb.jdbc.MariaDbDataSource">
                 <Set name="Url">jdbc:mariadb://localhost:3306/coomersanv</Set>
                 <Set name="User">root</Set>
                 <Set name="Password">123</Set>

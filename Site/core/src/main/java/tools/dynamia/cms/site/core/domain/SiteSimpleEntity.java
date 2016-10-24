@@ -26,20 +26,20 @@ import tools.dynamia.domain.SimpleEntity;
 @MappedSuperclass
 public abstract class SiteSimpleEntity extends SimpleEntity implements SiteAware {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8298102526377692771L;
-    @OneToOne
-    @NotNull
-    private Site site;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -8298102526377692771L;
+	@OneToOne
+	@NotNull
+	private Site site;
 
-    public Site getSite() {
-        return site;
-    }
+	public Site getSite() {
+		return site;
+	}
 
-    public void setSite(Site site) {
-        this.site = site;
-    }
+	public void setSite(Site site) {
+		this.site = site;
+	}
 
 }

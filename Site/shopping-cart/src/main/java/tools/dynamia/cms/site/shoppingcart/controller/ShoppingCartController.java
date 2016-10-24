@@ -83,7 +83,8 @@ public class ShoppingCartController {
 	}
 
 	@RequestMapping(value = "/{name}/clear", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView clear(@PathVariable String name, HttpServletRequest request, final RedirectAttributes redirectAttributes) {
+	public ModelAndView clear(@PathVariable String name, HttpServletRequest request,
+			final RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("cartName", name);
 		String redirect = request.getParameter("currentURI");
@@ -105,7 +106,8 @@ public class ShoppingCartController {
 
 	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/{name}/checkout", method = { RequestMethod.GET })
-	public ModelAndView checkout(@PathVariable String name, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	public ModelAndView checkout(@PathVariable String name, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("cartName", name);
 		SiteActionManager.performAction("checkoutShoppingCart", mv, request, redirectAttributes);
@@ -122,7 +124,8 @@ public class ShoppingCartController {
 	}
 
 	@RequestMapping(value = "/{name}/cancel", method = { RequestMethod.GET })
-	public ModelAndView cancel(@PathVariable String name, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	public ModelAndView cancel(@PathVariable String name, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
 
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("cartName", name);
@@ -132,10 +135,42 @@ public class ShoppingCartController {
 
 	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/{name}/confirm", method = { RequestMethod.POST })
-	public ModelAndView confirm(@PathVariable String name, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	public ModelAndView confirm(@PathVariable String name, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("cartName", name);
 		SiteActionManager.performAction("confirmShoppingOrder", mv, request, redirectAttributes);
+
+		return mv;
+	}
+
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/{name}/complete", method = { RequestMethod.GET })
+	public ModelAndView complete(@PathVariable String name, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("cartName", name);
+		SiteActionManager.performAction("completeShoppingOrder", mv, request, redirectAttributes);
+
+		return mv;
+	}
+
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/myorders", method = { RequestMethod.GET })
+	public ModelAndView myorders(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
+
+		SiteActionManager.performAction("showMyShoppingOrders", mv, request, redirectAttributes);
+
+		return mv;
+	}
+
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/order/{id}", method = { RequestMethod.GET })
+	public ModelAndView viewOrder(@PathVariable Long id, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
+		SiteActionManager.performAction("viewShoppingOrder", mv, request, redirectAttributes, id);
 
 		return mv;
 	}

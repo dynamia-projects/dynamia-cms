@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+<div class="maincontainer" layout:fragment="content">
+
+
+	<div class="container">
+		<!-- Main Title-->
+		<div class="titles animated fadeInUp time3">
+			<div class="pull-left">
+				<h1 class="headinglefttitle">
+					Pedido de Compra No. <span th:text="${shoppingOrder.number}"></span>
+				</h1>
+				<div class="headingsubtitle">Este es su pedido, al final de la
+					pagina podra realizar el pago</div>
+			</div>
+			<i th:class="icon-shoppingcart"></i>
+		</div>
+
+		<div class="container pedido">
+
+			<th:block th:include="module::position('confirmOrderTop')"
+				th:if="${cmsModules.isUsed('confirmOrderTop')}" />
+
+			<form id="paymentForm" role="form" class="form-horizontal"
+				th:action="${paymentForm.url}" th:method="${paymentForm.httpMethod}">
+				<div class="row">
+					<div class="col-md-6">
+
+						<h3>Datos de Cliente</h3>
+						<div class="form-group" style="margin-bottom: 0px">
+							<label class="col-md-2 orange">CC/NIT</label> <span
+								class="col-md-10 "
+								th:text="${shoppingOrder.shoppingCart.targetUser.identification}"></span>
+
+						</div>
+
+						<div class="form-group" style="margin-bottom: 0px">
+							<label class="col-md-2 orange">Nombres</label> <span
+								class="col-md-10 "
+								th:text="${shoppingOrder.shoppingCart.targetUser.firstName}"></span>
+
+						</div>
+
+						<div class="form-group" style="margin-bottom: 0px">
+							<label class="col-md-2 orange">Apellidos</label> <span
+								class="col-md-10"
+								th:text="${shoppingOrder.shoppingCart.targetUser.lastName}"></span>
+
+						</div>
+
+						<div class="form-group" style="margin-bottom: 0px">
+							<label class="col-md-2 orange">Email</label> <span
+								class="col-md-10 "
+								th:text="${shoppingOrder.shoppingCart.targetUser.username}"></span>
+
+						</div>
+
+					</div>
+					<!-- Text input-->
+					<div class="col-md-6">
+						<div class="form-group">
+							<h3>Forma de Pago</h3>
+							<address th:if="${shoppingOrder.payLater}">
+								<strong>Otra forma de Pago</strong><br /> <span>Se le
+									notificara via email cuando el pago sea recibido</span>
+							</address>
+							<address th:unless="${shoppingOrder.payLater}">
+								<strong>Pago en linea</strong><br /> <span>Se le
+									notificara via email cuando el pago sea confirmado</span>
+							</address>
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="form-group col-md-12">
+						<h3>Comentarios y Obsevaciones</h3>
+						<span th:text="${shoppingOrder.userComments}"></span>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<h3>Detalles del Pedido</h3>
+					<th th:include="shoppingcart/components/orderDetailsFull::content" />
+				</div>
+
+				<th:block th:include="module::position('confirmOrderBottom1')"
+					th:if="${cmsModules.isUsed('confirmOrderBottom1')}" />
+
+				<!-- Button -->
+				<div class="form-group" th:unless="${shoppingOrder.payLater}">
+					<input type="hidden" th:each="param : ${paymentForm.parameters}"
+						th:name="${param.key}" th:value="${param.value}" />
+					<button data-toggle="modal" href="#payconfirm" type="button"
+						class="btn btn-danger btn-lg">Pagar en Linea</button>
+					<a id="cancelBtn" data-toggle="modal" href="#cancelconfirm"
+						class="btn btn-warning btn-lg"> <i class="icon-ban-circle"></i>
+						Cancelar
+					</a>
+				</div>
+
+				<div class="form-group" th:if="${shoppingOrder.payLater}">
+					<button data-toggle="modal" href="#confirm" type="button"
+						class="btn btn-danger btn-lg">Confirmar Pedido</button>
+					<a id="cancelBtn" data-toggle="modal" href="#cancelconfirm"
+						class="btn btn-warning btn-lg"> <i class="icon-ban-circle"></i>
+						Cancelar
+					</a>
+				</div>
+			</form>
+			<th:block th:include="module::position('confirmOrderBottom2')"
+				th:if="${cmsModules.isUsed('confirmOrderBottom2')}" />
+		</div>
+	</div>
+
+	<div id="confirm" class="modal fade" tabindex="-1" role="dialog"
+		th:if="${shoppingOrder.payLater}" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Confirmar Pedido</h4>
+				</div>
+				<div class="modal-body">
+					<span> Esta seguro que desea confirmar el pedido por <b><span
+							class="orange"
+							th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"></span></b>
+						? 
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-danger" th:href="@{/shoppingcart/shop/complete}">Si, confirmar pedido</a>
+
+					<button type="button" class="btn btn-orange" data-dismiss="modal">No</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="payconfirm" class="modal fade" tabindex="-1" role="dialog"
+		th:unless="${shoppingOrder.payLater}" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Confirmar Pago</h4>
+				</div>
+				<div class="modal-body">
+					<span> Esta seguro que desea iniciar el proceso de pago por
+						<b><span class="orange"
+							th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"></span></b>
+						?
+					</span> <br /> <br /> <span> <b>NOTA:</b> Recuerde dar clic en el
+						enlace <b>Finalizar Transaccion</b> al completar el proceso
+					</span>
+				</div>
+				<div class="modal-footer">
+					<button id="submitBtn" type="button" class="btn btn-danger">Si,
+						iniciar pago</button>
+					<button type="button" class="btn btn-orange" data-dismiss="modal">No</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="cancelconfirm" class="modal fade" tabindex="-1" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Cancelar Pedido</h4>
+				</div>
+				<div class="modal-body">
+					<span>Esta seguro que desea cancelar este pedido?</span> <br /> <span>Esta
+						accion recreara su carrito de compra y podra empezar de nuevo.</span>
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-danger" th:href="@{/shoppingcart/shop/cancel}">Si</a>
+					<button type="button" class="btn btn-orange" data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="scripts">
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#submitBtn").click(function() {
+				$("#submitBtn").attr("disabled", true);
+				$("#submitBtn").text("Procesando...");
+
+				$('#paymentForm').submit();
+			});
+		});
+	</script>
+
+</th:block>
+
+</html>

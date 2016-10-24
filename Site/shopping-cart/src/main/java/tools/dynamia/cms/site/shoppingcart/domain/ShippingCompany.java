@@ -79,4 +79,7 @@ public class ShippingCompany extends SimpleEntity implements SiteAware {
 	public String toString() {
 		return getName();
 	}
+
+	public void addItem(ShoppingCartItem item, int qty) {
+	}
 }

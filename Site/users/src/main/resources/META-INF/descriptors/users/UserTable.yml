@@ -9,5 +9,6 @@ fields:
     username:  
     profile:
     identification:
-    fullName:      
+    fullName:
     contactInfo:
+    relatedUser:

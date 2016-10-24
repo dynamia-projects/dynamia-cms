@@ -23,8 +23,8 @@ import tools.dynamia.cms.site.core.domain.Site;
  */
 public interface SiteAware {
 
-    public Site getSite();
+	public Site getSite();
 
-    public void setSite(Site site);
+	public void setSite(Site site);
 
 }

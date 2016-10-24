@@ -17,9 +17,6 @@ package tools.dynamia.cms.site.users.services;
 
 import java.util.List;
 
-import org.springframework.security.core.token.Sha512DigestUtils;
-import org.springframework.transaction.annotation.Transactional;
-
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.users.UserForm;
 import tools.dynamia.cms.site.users.domain.User;
@@ -49,5 +46,7 @@ public interface UserService {
 	UserSiteConfig getSiteConfig(Site site);
 
 	void setupPassword(User user, String newPassword);
+
+	public List<User> getUserCustomers(User current);
 
 }

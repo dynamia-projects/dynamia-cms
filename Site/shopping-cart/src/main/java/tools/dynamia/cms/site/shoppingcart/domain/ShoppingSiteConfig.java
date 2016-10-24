@@ -40,6 +40,8 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 	private String paymentGatewayName;
 	private boolean paymentEnabled;
 	private boolean allowEmptyPayment;
+	private boolean billingAddressRequired;
+	private boolean shippingAddressRequired;
 
 	private BigDecimal minPaymentAmount;
 	private BigDecimal maxPaymentAmount;
@@ -59,6 +61,22 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 	private MailTemplate notificationMailTemplate;
 	@OneToOne
 	private MailAccount mailAccount;
+
+	public boolean isBillingAddressRequired() {
+		return billingAddressRequired;
+	}
+
+	public void setBillingAddressRequired(boolean billingAddressRequired) {
+		this.billingAddressRequired = billingAddressRequired;
+	}
+
+	public boolean isShippingAddressRequired() {
+		return shippingAddressRequired;
+	}
+
+	public void setShippingAddressRequired(boolean shippingAddressRequired) {
+		this.shippingAddressRequired = shippingAddressRequired;
+	}
 
 	public boolean isAutoSendOrders() {
 		return autoSendOrders;
@@ -211,6 +229,9 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 
 	public void setDefaultCurrency(String defaultCurrency) {
 		this.defaultCurrency = defaultCurrency;
+	}
+
+	public void addItem(ShoppingCartItem item, int qty) {
 	}
 
 }

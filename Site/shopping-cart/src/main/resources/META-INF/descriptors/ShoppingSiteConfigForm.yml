@@ -9,6 +9,8 @@ fields:
     label: Gateway Name
   paymentEnabled:
   allowEmptyPayment:
+  billingAddressRequired:
+  shippingAddressRequired:
   
   minPaymentAmount:
   maxPaymentAmount:

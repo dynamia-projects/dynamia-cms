@@ -119,4 +119,5 @@ public class PageCategory extends SimpleEntity implements SiteAware, Aliasable {
 	public String aliasSource() {
 		return getName();
 	}
+
 }

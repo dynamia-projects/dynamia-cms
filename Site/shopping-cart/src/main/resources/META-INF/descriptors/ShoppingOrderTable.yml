@@ -26,6 +26,15 @@ fields:
     label: Email
   
   
+  shoppingCart.customer.fullName:
+    label: Customer
+  
+  shoppingCart.customer.identification:
+    label: Identificacion
+  
+  shoppingCart.customer.username:
+    label: Email
+  
   shoppingCart.totalPrice:
     label: Total
     params:

@@ -33,7 +33,6 @@ import org.hibernate.annotations.BatchSize;
 
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
-
 import tools.dynamia.domain.SimpleEntity;
 import tools.dynamia.domain.contraints.NotEmpty;
 
@@ -43,7 +42,7 @@ import tools.dynamia.domain.contraints.NotEmpty;
  */
 @Entity
 @Table(name = "mn_menus")
-@BatchSize(size=50)
+@BatchSize(size = 50)
 public class Menu extends SimpleEntity implements Serializable, SiteAware {
 
 	@NotEmpty
@@ -135,4 +134,5 @@ public class Menu extends SimpleEntity implements Serializable, SiteAware {
 	public String toString() {
 		return name;
 	}
+
 }

@@ -17,6 +17,7 @@ package tools.dynamia.cms.site.shoppingcart;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
@@ -38,7 +39,7 @@ public class ShoppingCartUtils {
 		ShoppingCartService service = Containers.get().findObject(ShoppingCartService.class);
 
 		ShoppingSiteConfig config = service.getConfiguration(site);
-		ShoppingCart shoppingCart = getShoppingCart(mv);
+		SiteAware shoppingCart = getShoppingCart(mv);
 		mv.addObject("shoppingConfig", config);
 		boolean paymentEnabled = false;
 		if (config != null) {

@@ -28,9 +28,11 @@ import tools.dynamia.cms.site.payment.PaymentGateway;
 import tools.dynamia.cms.site.payment.services.PaymentService;
 import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
 import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
+import tools.dynamia.cms.site.users.api.UserProfile;
+import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
-
 import tools.dynamia.domain.ValidationError;
 import tools.dynamia.domain.services.CrudService;
 
@@ -61,7 +63,10 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 		mv.setViewName("shoppingcart/confirm");
 
 		mv.addObject("title", "Resumen de Pedido");
+
+		ShoppingSiteConfig config = service.getConfiguration(evt.getSite());
 		ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder();
+
 		if (order.getId() != null) {
 			order = crudService.find(ShoppingOrder.class, order.getId());
 			ShoppingCartHolder.get().setCurrentOrder(order);
@@ -70,33 +75,56 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 		order.setUserComments(evt.getRequest().getParameter("userComments"));
 		order.setBillingAddress(loadContactInfo("billingAddress", evt));
 		order.setShippingAddress(loadContactInfo("shippingAddress", evt));
+		
+		String customer = evt.getRequest().getParameter("customer");
+		if(customer!=null && !customer.equals("0")){
+			Long customerId = Long.parseLong(customer);
+			User userCustomer = crudService.find(User.class,customerId);
+			order.getShoppingCart().setCustomer(userCustomer);
+		}
 
 		String deliveryType = evt.getRequest().getParameter("deliveryType");
-		if(deliveryType==null){
-			deliveryType="";
+		if (deliveryType == null) {
+			deliveryType = "";
 		}
-		if(deliveryType.equals("pickupAtStore")){
+		if (deliveryType.equals("pickupAtStore")) {
 			order.setPickupAtStore(true);
 			order.setPayAtDelivery(false);
-		}else if(deliveryType.equals("payAtDelivery")){
+		} else if (deliveryType.equals("payAtDelivery")) {
 			order.setPickupAtStore(false);
 			order.setPayAtDelivery(true);
 		}
-	
+
+		String paymentType = evt.getRequest().getParameter("paymentType");
+
+		if (paymentType == null) {
+			paymentType = "";
+		}
+
+		if (paymentType.equals("later")) {
+			order.setPayLater(true);
+		}
 
 		try {
 
-			validate(order);
+			validate(order, config);
 			String name = order.getShoppingCart().getName();
 			service.saveOrder(order);
 			ShoppingCartHolder.get().setCurrentOrder(order);
 			ShoppingCartHolder.get().removeCart(name);
 
-			PaymentGateway gateway = paymentService.findGateway(order.getTransaction().getGatewayId());
-			PaymentForm form = gateway.createForm(order.getTransaction());
-
-			mv.addObject("shoppingOrder", order);
+			PaymentForm form = null;
+			if (!order.isPayLater()) {
+				PaymentGateway gateway = paymentService.findGateway(order.getTransaction().getGatewayId());
+				form = gateway.createForm(order.getTransaction());
+				
+			}else{
+				form = new PaymentForm();
+				
+			}
 			mv.addObject("paymentForm", form);
+			mv.addObject("shoppingOrder", order);
+			
 
 		} catch (ValidationError e) {
 			SiteActionManager.performAction("checkoutShoppingCart", mv, evt.getRequest(), evt.getRedirectAttributes());
@@ -106,12 +134,12 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 		}
 	}
 
-	private void validate(ShoppingOrder order) {
-		if (order.getBillingAddress() == null) {
+	private void validate(ShoppingOrder order, ShoppingSiteConfig config) {
+		if (order.getBillingAddress() == null && config.isBillingAddressRequired()) {
 			throw new ValidationError("Seleccione direccion de facturacion");
 		}
 
-		if (!order.isPickupAtStore() && order.getShippingAddress() == null) {
+		if (!order.isPickupAtStore() && order.getShippingAddress() == null && config.isShippingAddressRequired()) {
 			throw new ValidationError("Seleccione direccion de envio o marque la opcion recoger en tienda");
 		} else if (order.isPickupAtStore()) {
 			order.setShippingAddress(null);
@@ -123,6 +151,10 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 
 		if (order.getShoppingCart().getUser() == null) {
 			throw new ValidationError("La orden de pedido no tiene usuario asociado");
+		}
+		
+		if(order.getShoppingCart().getUser().getProfile()==UserProfile.SELLER && order.getShoppingCart().getCustomer()==null){
+			throw new ValidationError("Seleccione cliente");
 		}
 
 	}

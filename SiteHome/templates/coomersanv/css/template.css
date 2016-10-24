@@ -293,3 +293,23 @@ footer * {
 	font-size: 10px;
 	font-weight: bold;
 }
+
+header .topsearch{
+	margin-bottom: 20px;
+}
+
+.topcarts .carticon{
+	float: left;
+	padding: 10px;
+	border: 1px solid silver;
+	margin: 10px;
+}
+
+.topcarts .carttitle{
+	font-weight: bolder;
+	color: #2f84d9;
+}
+
+.pedido .row{
+	margin-bottom: 30px;
+}

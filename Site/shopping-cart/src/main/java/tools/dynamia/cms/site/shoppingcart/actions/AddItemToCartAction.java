@@ -34,31 +34,38 @@ import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 @CMSAction
 public class AddItemToCartAction implements SiteAction {
 
-    @Autowired
-    private ShoppingCartService service;
+	@Autowired
+	private ShoppingCartService service;
 
-    @Override
-    public String getName() {
-        return "addItemToCart";
-    }
+	@Override
+	public String getName() {
+		return "addItemToCart";
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView();
-        String code = (String) evt.getData();
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView();
+		String code = (String) evt.getData();
+		int qty = 1;
+		try {
+			qty = Integer.parseInt(evt.getRequest().getParameter("qty"));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
-        ShoppingCartItem item = service.getItem(evt.getSite(), code);
-        if (item != null) {
-            ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
-            if (shoppingCart != null) {
-                shoppingCart.addItem(item);
-                if (item.getChildren() != null && !item.getChildren().isEmpty()) {
-                    item.getChildren().forEach(c -> shoppingCart.addItem(c));
-                }
-                CMSUtil.addSuccessMessage(item.getName().toUpperCase() + " agregado exitosamente al carrito", evt.getRedirectAttributes());
-            }
-        }
+		ShoppingCartItem item = service.getItem(evt.getSite(), code);
+		if (item != null) {
+			ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
+			if (shoppingCart != null) {
+				shoppingCart.addItem(item, qty);
+				if (item.getChildren() != null && !item.getChildren().isEmpty()) {
+					item.getChildren().forEach(c -> shoppingCart.addItem(c));
+				}
+				CMSUtil.addSuccessMessage(item.getName().toUpperCase() + " agregado exitosamente al carrito",
+						evt.getRedirectAttributes());
+			}
+		}
 
-    }
+	}
 
 }

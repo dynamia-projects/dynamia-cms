@@ -29,9 +29,7 @@ import tools.dynamia.domain.SimpleEntity;
 import tools.dynamia.domain.util.ContactInfo;
 
 @Entity
-@Table(name = "usr_users_contacts", uniqueConstraints = {
-		@UniqueConstraint(columnNames = { "site_id", "user_id" })
-})
+@Table(name = "usr_users_contacts", uniqueConstraints = { @UniqueConstraint(columnNames = { "site_id", "user_id" }) })
 public class UserContactInfo extends SimpleEntity implements SiteAware {
 
 	@OneToOne

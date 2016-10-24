@@ -77,10 +77,28 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 
 	private boolean pickupAtStore;
 	private boolean payAtDelivery;
+	private boolean payLater;
 
 	@Column(length = 5000)
 	private String userComments;
 	private String externalRef;
+	private boolean sended;
+
+	public boolean isSended() {
+		return sended;
+	}
+
+	public void setSended(boolean sended) {
+		this.sended = sended;
+	}
+
+	public boolean isPayLater() {
+		return payLater;
+	}
+
+	public void setPayLater(boolean payLater) {
+		this.payLater = payLater;
+	}
 
 	public String getExternalRef() {
 		return externalRef;
@@ -255,6 +273,7 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 		dto.setShippingComments(shippingComments);
 		dto.setPayAtDelivery(payAtDelivery);
 		dto.setPickupAtStore(pickupAtStore);
+		dto.setPayLater(payLater);
 		dto.setSite(site.getKey());
 		dto.setUserComments(userComments);
 		dto.setExternalRef(externalRef);
@@ -262,14 +281,16 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 		if (shoppingCart != null) {
 			if (shoppingCart.getCustomer() != null) {
 				User customer = shoppingCart.getCustomer();
-				dto.setCustomer(customer.getUsername());
+				dto.setCustomer(customer.getFullName());
 				dto.setCustomerExternalRef(customer.getExternalRef());
+				dto.setCustomerIdentification(customer.getIdentification());
 			}
 
 			if (shoppingCart.getUser() != null) {
 				User user = shoppingCart.getUser();
-				dto.setUser(user.getUsername());
+				dto.setUser(user.getFullName());
 				dto.setUserExternalRef(user.getExternalRef());
+				dto.setUserIdentification(user.getIdentification());
 			}
 
 			dto.setTimeStamp(shoppingCart.getTimeStamp());
@@ -305,7 +326,7 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 			dto.setBillingEmail(ba.getEmail());
 			dto.setBillingPhone(ba.getPhoneNumber());
 		}
-		
+
 		if (shippingAddress != null) {
 			ContactInfo sa = shippingAddress.getInfo();
 			dto.setShippingAddress(sa.getAddress());
@@ -314,8 +335,11 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 			dto.setShippingEmail(sa.getEmail());
 			dto.setShippingPhone(sa.getPhoneNumber());
 		}
-		
+
 		return dto;
+	}
+
+	public void addItem(ShoppingCartItem item, int qty) {
 	}
 
 }

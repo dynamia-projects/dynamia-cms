@@ -64,8 +64,10 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
 	private BigDecimal totalPrice;
 	private BigDecimal totalUnit;
 	private float shipmentPercent;
+
 	@OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
 	private List<ShoppingCartItem> items = new ArrayList<>();
+
 	@Enumerated(EnumType.ORDINAL)
 	private ShoppingCartStatus status = ShoppingCartStatus.NEW;
 
@@ -210,15 +212,19 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
 		this.site = site;
 	}
 
-	public void addItem(ShoppingCartItem item) {
+	public void addItem(ShoppingCartItem item, int qty) {
 		ShoppingCartItem addedItem = getItemByCode(item.getCode());
 		if (addedItem != null) {
-			addedItem.setQuantity(addedItem.getQuantity() + 1);
+			addedItem.setQuantity(addedItem.getQuantity() + qty);
 		} else {
 			items.add(item);
 			item.setShoppingCart(this);
 		}
 		compute();
+	}
+
+	public void addItem(ShoppingCartItem item) {
+		addItem(item, 1);
 	}
 
 	public boolean removeItem(ShoppingCartItem item) {
@@ -288,6 +294,14 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
 
 	public boolean isEmpty() {
 		return items.isEmpty();
+	}
+
+	public User getTargetUser() {
+		if (customer != null) {
+			return customer;
+		} else {
+			return user;
+		}
 	}
 
 }

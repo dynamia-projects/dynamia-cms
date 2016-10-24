@@ -27,6 +27,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.domain.SimpleEntity;
 import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderItemDTO;
 

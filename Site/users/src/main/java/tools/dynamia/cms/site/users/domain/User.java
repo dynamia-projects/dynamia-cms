@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.site.users.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,6 +92,25 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 
 	@OneToOne
 	private User relatedUser;
+
+	private BigDecimal paymentCredit;
+	private BigDecimal currentPaymentCredit;
+
+	public BigDecimal getPaymentCredit() {
+		return paymentCredit;
+	}
+
+	public void setPaymentCredit(BigDecimal paymentCredit) {
+		this.paymentCredit = paymentCredit;
+	}
+
+	public BigDecimal getCurrentPaymentCredit() {
+		return currentPaymentCredit;
+	}
+
+	public void setCurrentPaymentCredit(BigDecimal currentPaymentCredit) {
+		this.currentPaymentCredit = currentPaymentCredit;
+	}
 
 	public String getGroupName() {
 		return groupName;
