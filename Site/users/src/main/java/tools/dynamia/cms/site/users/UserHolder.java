@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import tools.dynamia.cms.site.users.api.UserProfile;
 import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.cms.site.users.ext.CustomerChangeListener;
 import tools.dynamia.integration.Containers;
 
 /**
@@ -34,6 +35,7 @@ import tools.dynamia.integration.Containers;
 public class UserHolder implements Serializable {
 
 	protected User user;
+	protected User customer;
 
 	private Date timestamp;
 
@@ -102,5 +104,16 @@ public class UserHolder implements Serializable {
 		if (user != null && this.user != null && this.user.equals(user)) {
 			this.user = user;
 		}
+	}
+
+	public void setCustomer(User customer) {
+		this.customer = customer;
+		if (customer != null) {
+			Containers.get().findObjects(CustomerChangeListener.class).forEach(l -> l.onCustomerChange(customer));
+		}
+	}
+
+	public User getCustomer() {
+		return customer;
 	}
 }

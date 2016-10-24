@@ -15,6 +15,16 @@ fields:
           converter: converters.Integer
           header:
              align: right
+   price2:
+      params:      
+          converter: converters.Integer
+          header:
+             align: right
+   cost:
+      params:      
+          converter: converters.Integer
+          header:
+             align: right
    lastPrice:
       params:
           converter: converters.Integer

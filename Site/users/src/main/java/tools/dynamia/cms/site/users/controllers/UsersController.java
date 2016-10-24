@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,8 +35,10 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import tools.dynamia.cms.site.core.actions.SiteActionManager;
 import tools.dynamia.cms.site.users.UserForm;
+import tools.dynamia.cms.site.users.UserHolder;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
+import tools.dynamia.domain.services.CrudService;
 
 /**
  *
@@ -44,6 +47,9 @@ import tools.dynamia.cms.site.users.domain.UserContactInfo;
 @Controller
 @RequestMapping("/users")
 public class UsersController {
+
+	@Autowired
+	private CrudService crudService;
 
 	@RequestMapping(value = { "/login", "/save" }, method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request) {
@@ -198,6 +204,35 @@ public class UsersController {
 		ModelAndView mv = new ModelAndView("users/addresses/table");
 		mv.setView(new RedirectView("/users/profile", true, true, false));
 		SiteActionManager.performAction("removeUserContactInfo", mv, request, redirectAttributes, id);
+		return mv;
+	}
+
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/setCustomer", method = {RequestMethod.POST })
+	public ModelAndView setCustomer(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
+
+		String id = request.getParameter("id");
+		Long userId = null;
+		try {
+			userId = Long.parseLong(id);
+			User customer = crudService.find(User.class, userId);
+			UserHolder.get().setCustomer(customer);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		String redirect = request.getParameter("currentURI");
+		if (request.getParameter("redirect") != null) {
+			redirect = request.getParameter("redirect");
+		}
+
+		if (redirect == null) {
+			redirect = "/";
+		}
+
+		mv.setView(new RedirectView(redirect, true, true, false));
+
 		return mv;
 	}
 

@@ -12,3 +12,5 @@ fields:
     fullName:
     contactInfo:
     relatedUser:
+    groupName:
+      label: Group

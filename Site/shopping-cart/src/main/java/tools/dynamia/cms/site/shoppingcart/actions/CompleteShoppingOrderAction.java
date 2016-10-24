@@ -32,6 +32,7 @@ import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
 import tools.dynamia.cms.site.shoppingcart.domain.enums.ShoppingCartStatus;
 import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
+import tools.dynamia.cms.site.users.UserHolder;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
 
 import tools.dynamia.domain.ValidationError;
@@ -80,6 +81,8 @@ public class CompleteShoppingOrderAction implements SiteAction {
 			}
 
 			mv.addObject("shoppingOrder", order);
+
+			UserHolder.get().setCustomer(null);
 
 		} catch (ValidationError e) {
 			SiteActionManager.performAction("confirmShoppingCart", mv, evt.getRequest(), evt.getRedirectAttributes());

@@ -39,12 +39,21 @@ fields:
         
     synchronizationEnabled:
         label: Enabled
+        
+    priceUserGroup:
+      label: Price
+    price2UserGroup:
+      label: Price 2
+    costUserGroup:
+      label: Cost
 groups:
     
     general:
         label: Basic Settings
         fields: [site,pricePattern,defaultCurrency,productsPerPage,productsStockToShow,shopEnabled,quoteEnabled,showBadges,minStock]
             
+    priceUsersGroups:
+        fields: [priceUserGroup,price2UserGroup,costUserGroup]
     
     datasource:
         label: Datasource Settings

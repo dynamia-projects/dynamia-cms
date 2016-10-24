@@ -6,6 +6,14 @@
 
 <body th:fragment="content(cart,icon)">
 
+	<ul th:if="${cart.isEmpty()}">
+		<li class="dropdown hover carticon "><a class="dropdown-toggle">
+				<i th:class="${icon}+' font18'"></i> <span class="carttitle">
+					PEDIDO SIN ITEMS</span> <span
+				th:text="${cmsUtil.formatNumber(cart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$200.000</span>
+			
+		</a></li>
+	</ul>
 
 	<ul th:if="${not cart.isEmpty()}">
 		<li class="dropdown hover carticon "><a class="dropdown-toggle">

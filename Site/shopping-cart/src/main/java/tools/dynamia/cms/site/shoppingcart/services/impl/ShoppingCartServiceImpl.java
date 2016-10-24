@@ -49,6 +49,7 @@ import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
 import tools.dynamia.cms.site.shoppingcart.domain.enums.ShoppingCartStatus;
 import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import tools.dynamia.cms.site.users.UserHolder;
+import tools.dynamia.cms.site.users.api.UserProfile;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
 import tools.dynamia.commons.ClassMessages;
@@ -133,6 +134,11 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 		User user = UserHolder.get().getCurrent();
 		shoppingCart.setUser(user);
+		shoppingCart.setCustomer(UserHolder.get().getCustomer());
+
+		if (user != null && user.getProfile() == UserProfile.SELLER && shoppingCart.getCustomer() == null) {
+			throw new ValidationError("Seleccione cliente para crear orden de pedido");
+		}
 
 		PaymentTransaction tx = null;
 

@@ -298,7 +298,15 @@ header .topsearch{
 	margin-bottom: 20px;
 }
 
+.topcarts .container{
+	background-color:  #dde8c6;
+	margin-top: 10px;
+	border: 1px solid gray;
+	border-radius: 10px; 
+}
+
 .topcarts .carticon{
+	background: white;
 	float: left;
 	padding: 10px;
 	border: 1px solid silver;
@@ -312,4 +320,19 @@ header .topsearch{
 
 .pedido .row{
 	margin-bottom: 30px;
+}
+
+.cambiarCliente{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+
+.cambiarCliente select,.cambiarCliente button{
+	height: 42px;
+}
+
+.topcarts .groupName{
+	padding-top: 10px;
+	font-weight: bolder;
 }

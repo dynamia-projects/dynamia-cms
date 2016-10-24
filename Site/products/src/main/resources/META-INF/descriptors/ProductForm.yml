@@ -23,7 +23,8 @@ fields:
           span: 4
           height: 200px
    price:
-    
+   price2:
+   cost:
    lastPrice:
      
    storePrice:
@@ -96,7 +97,7 @@ groups:
        fields: [sku,reference,name,brand,category,template,alternateTemplate,description,longDescription]
        
    sales:
-       fields: [stock,price,lastPrice,storePrice]
+       fields: [stock,price,price2,cost,lastPrice,storePrice]
        
    status:
        fields: [active,featured,sale,newproduct,status, sellInWeb, sellInStore]

@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.site.products;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -22,10 +23,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.products.domain.Product;
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import tools.dynamia.cms.site.products.services.ProductsService;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
 import tools.dynamia.cms.site.users.UserHolder;
-
+import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.integration.Containers;
 
 /**
@@ -34,9 +36,14 @@ import tools.dynamia.integration.Containers;
  */
 public class ProductsUtil {
 
+	public static ProductsUtil get() {
+		return new ProductsUtil();
+	}
+
 	public static void setupDefaultVars(Site site, ModelAndView mv) {
 		ProductsService service = Containers.get().findObject(ProductsService.class);
 
+		mv.addObject("prdUtil", ProductsUtil.get());
 		mv.addObject("prd_categories", service.getCategories(site));
 		mv.addObject("prd_brands", service.getBrands(site));
 		mv.addObject("prd_config", service.getSiteConfig(site));
@@ -50,7 +57,7 @@ public class ProductsUtil {
 		if (mv.getModel().get("cart") != null) {
 			try {
 				ShoppingCart shoppingCart = (ShoppingCart) mv.getModel().get("cart");
-				if (shoppingCart != null && shoppingCart.getName()!=null) {
+				if (shoppingCart != null && shoppingCart.getName() != null) {
 					switch (shoppingCart.getName()) {
 					case "quote":
 						mv.addObject("title", "Cotizacion");
@@ -92,6 +99,35 @@ public class ProductsUtil {
 
 	public static void setupProductVar(Product product, ModelAndView mv) {
 		mv.addObject("product", product);
+	}
+
+	public BigDecimal getUserPrice(Product product, ProductsSiteConfig cfg) {
+		User user = UserHolder.get().getCurrent();
+		User customer = UserHolder.get().getCustomer();
+
+		String group = null;
+
+		if (customer != null) {
+			group = customer.getGroupName();
+		} else if (user != null) {
+			group = user.getGroupName();
+		}
+
+		if (cfg == null || group == null || group.isEmpty()) {
+			return product.getRealPrice();
+		} else {
+
+			if (cfg.getPriceUserGroup() != null && cfg.getPriceUserGroup().contains(group)) {
+				return product.getPrice();
+			} else if (cfg.getPrice2UserGroup() != null && cfg.getPrice2UserGroup().contains(group)) {
+				return product.getPrice2();
+			} else if (cfg.getCostUserGroup() != null && cfg.getCostUserGroup().contains(group)) {
+				return product.getPrice();
+			} else {
+				return product.getRealPrice();
+			}
+		}
+
 	}
 
 }

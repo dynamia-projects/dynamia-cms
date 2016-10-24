@@ -95,7 +95,7 @@
 				th:if="${@userHolder.authenticated}">
 				<h3>
 					<strong><span
-						th:text="${cmsUtil.formatNumber(prd.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"
+						th:text="${cmsUtil.formatNumber(prdUtil.getUserPrice(prd,prd_config),prd_config.pricePattern+' '+prd_config.defaultCurrency)}"
 						class=" orange">$4459.00</span></strong>
 				</h3>
 

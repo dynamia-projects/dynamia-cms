@@ -33,6 +33,7 @@ import javax.validation.constraints.NotNull;
 
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
+import tools.dynamia.cms.site.products.ProductsUtil;
 import tools.dynamia.cms.site.products.api.ValueType;
 import tools.dynamia.cms.site.products.dto.ProductDTO;
 import java.math.MathContext;

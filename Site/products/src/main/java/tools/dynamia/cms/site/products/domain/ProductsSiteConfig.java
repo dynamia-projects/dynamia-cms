@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -94,6 +95,37 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 	private boolean syncProductDetails;
 	private boolean syncProductImages;
 	private boolean syncProductCreditPrices;
+
+	@Column(length = 4000)
+	private String priceUserGroup;
+	@Column(length = 4000)
+	private String price2UserGroup;
+	@Column(length = 4000)
+	private String costUserGroup;
+
+	public String getPriceUserGroup() {
+		return priceUserGroup;
+	}
+
+	public void setPriceUserGroup(String priceUserGroup) {
+		this.priceUserGroup = priceUserGroup;
+	}
+
+	public String getPrice2UserGroup() {
+		return price2UserGroup;
+	}
+
+	public void setPrice2UserGroup(String price2UserGroup) {
+		this.price2UserGroup = price2UserGroup;
+	}
+
+	public String getCostUserGroup() {
+		return costUserGroup;
+	}
+
+	public void setCostUserGroup(String costUserGroup) {
+		this.costUserGroup = costUserGroup;
+	}
 
 	public boolean isSyncProductCreditPrices() {
 		return syncProductCreditPrices;

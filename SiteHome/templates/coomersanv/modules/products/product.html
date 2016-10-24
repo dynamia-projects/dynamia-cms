@@ -111,7 +111,7 @@
 					<th:block th:unless="${prd_product.hasStorePrice()}">
 						<div class="productpageprice">
 							<i class="icon-tags"></i> <span
-								th:text="${cmsUtil.formatNumber(prd_product.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
+								th:text="${cmsUtil.formatNumber(prdUtil.getUserPrice(prd_product,prd_config) ,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
 						</div>
 
 					</th:block>

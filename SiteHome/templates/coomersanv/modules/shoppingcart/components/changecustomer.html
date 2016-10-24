@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+<body th:fragment="content">
+
+
+	<form class="form-inline cambiarCliente pull-left"
+		th:action="@{/users/setCustomer}" th:if="${@userHolder.seller}"
+		method="post">
+		<select class="form-control" name="id" style="width: 400px">
+			<option value="0">-Cambiar Cliente-</option>
+			<option th:each="uc : ${userCustomers}" th:value="${uc.id}"
+				th:selected="${uc.equals(@userHolder.customer)}"
+				th:text="${uc.fullName+' - '+uc.identification}"></option>
+		</select>
+		<button data-toggle="modal" href="#confirmCustomer" type="button"
+			class="btn btn-success">
+			<i class="fa fa-check"></i>
+		</button>
+
+
+		<div id="confirmCustomer" class="modal fade" tabindex="-1" role="dialog"
+			aria-hidden="true" th:if="${@userHolder.seller}">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Confirmar Accion</h4>
+					</div>
+					<div class="modal-body">
+						<span> Esta seguro que desea cambiar de cliente? Esta
+							accion reinicia el carrito de pedido 
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">
+							<i class="fa fa-check"></i> Si
+						</button>
+
+						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</body>
+</html>

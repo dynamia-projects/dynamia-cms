@@ -67,9 +67,8 @@ public class CheckoutShoppingCartAction implements SiteAction {
 		} else if (config.isPaymentEnabled() || UserHolder.get().isAdmin()) {
 			mv.setViewName("shoppingcart/checkout");
 
-			if (UserHolder.get().getProfile() == UserProfile.SELLER) {
+			if (UserHolder.get().isSeller()) {
 				mv.setViewName("shoppingcart/checkoutSeller");
-				mv.addObject("userCustomers", userService.getUserCustomers(UserHolder.get().getCurrent()));
 			}
 
 			mv.addObject("title", "Confirmar Pedido");
