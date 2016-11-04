@@ -49,4 +49,6 @@ public interface UserService {
 
 	public List<User> getUserCustomers(User current);
 
+	public User getByExternalRef(Site site, String customer);
+
 }

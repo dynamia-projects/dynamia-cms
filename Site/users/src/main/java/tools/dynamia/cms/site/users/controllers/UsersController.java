@@ -208,7 +208,7 @@ public class UsersController {
 	}
 
 	@Secured("ROLE_USER")
-	@RequestMapping(value = "/setCustomer", method = {RequestMethod.POST })
+	@RequestMapping(value = "/setCustomer", method = { RequestMethod.POST })
 	public ModelAndView setCustomer(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView();
 
@@ -233,6 +233,14 @@ public class UsersController {
 
 		mv.setView(new RedirectView(redirect, true, true, false));
 
+		return mv;
+	}
+
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/mycustomers", method = RequestMethod.GET)
+	public ModelAndView myCustomers(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView("users/mycustomers");
+		SiteActionManager.performAction("showMyCustomers", mv, request, redirectAttributes);
 		return mv;
 	}
 

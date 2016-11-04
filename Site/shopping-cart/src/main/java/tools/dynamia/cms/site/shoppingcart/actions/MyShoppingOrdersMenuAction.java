@@ -1,7 +1,5 @@
 package tools.dynamia.cms.site.shoppingcart.actions;
 
-import org.springframework.stereotype.Component;
-
 import tools.dynamia.cms.site.core.api.CMSAction;
 import tools.dynamia.cms.site.users.actions.UserMenuAction;
 
@@ -30,7 +28,7 @@ public class MyShoppingOrdersMenuAction implements UserMenuAction {
 
 	@Override
 	public String action() {
-		return "shoppingcart/myorders";
+		return "shoppingcart/orders";
 	}
 
 }

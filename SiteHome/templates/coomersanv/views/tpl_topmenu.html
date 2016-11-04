@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <!-- Main Menu -->
 
 <body th:fragment="content">
 	<div class="topcarts" th:if="${@userHolder.authenticated}">
 		<div class="container">
-
-			<th:block
-				th:include="shoppingcart/components/changecustomer::content" />
-
-			<th:block
-				th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Resumen de Pedido')},'fa fa-shopping-cart')" />
-			<th:block
-				th:include="shoppingcart/components/topcartQuote::content(${@shoppingCartHolder.getCart('quote','Cotizacion')},'fa fa-file-text')" />
-
-			<div class="pull-right" th:if="${@userHolder.customer!=null}">
-				<h4 class="groupName" th:text="${@userHolder.customer.groupName}"></h4>
+			<div class="col-md-6">
+				<th:block th:include="shoppingcart/components/changecustomer::content" />
 			</div>
-			<div class="pull-right" th:if="${@userHolder.customer==null and not @userHolder.seller}">
-				<h4 class="groupName" th:text="${@userHolder.current.groupName}"></h4>
+			<div class="col-md-6">
+				<th:block
+					th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Resumen de Pedido')},'fa fa-shopping-cart')" />
+				<th:block
+					th:include="shoppingcart/components/topcartQuote::content(${@shoppingCartHolder.getCart('quote','Cotizacion')},'fa fa-file-text')" />
+
+				<div class="pull-right" th:if="${@userHolder.customer!=null}">
+					<h4 class="groupName" th:text="${@userHolder.customer.groupName}"></h4>
+				</div>
+				<div class="pull-right" th:if="${@userHolder.customer==null and not @userHolder.seller}">
+					<h4 class="groupName" th:text="${@userHolder.current.groupName}"></h4>
+				</div>
 			</div>
 		</div>
 	</div>

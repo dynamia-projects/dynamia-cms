@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="template">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
 
 <div class="maincontainer" layout:fragment="content">
 
@@ -45,29 +43,23 @@
 					<tbody>
 						<tr th:each="ord,row : ${orders}">
 							<td><span th:text="${row.index+1}"></span></td>
-							<td><a th:href="@{'/shoppingcart/order/'+${ord.id}}"
-								th:text="${ord.number}" class="orange" /></td>
-							<td><span
-								th:text="${#dates.format(ord.creationDate, 'dd/MMM/yyyy')}"></span></td>
-							<td><span
-								th:text="${#dates.format(ord.creationTime, 'HH:mm')}"></span></td>
-							<td th:if="${@userHolder.seller}"><span
-								style="white-space: nowrap;"
+							<td><a th:href="@{'/shoppingcart/order/'+${ord.id}}" th:text="${ord.number}"
+								class="orange" /></td>
+							<td><span th:text="${#dates.format(ord.creationDate, 'dd/MMM/yyyy')}"></span></td>
+							<td><span th:text="${#dates.format(ord.creationTime, 'HH:mm')}"></span></td>
+							<td th:if="${@userHolder.seller}"><span style="white-space: nowrap;"
 								th:text="${ord.shoppingCart.customer.identification}"></span></td>
-							<td th:if="${@userHolder.seller}"><span
-								th:text="${ord.shoppingCart.customer.fullName}"></span></td>
+							<td th:if="${@userHolder.seller}"><span th:text="${ord.shoppingCart.customer.fullName}"></span></td>
 
 
 							<td style="text-align: right"
 								th:text="${cmsUtil.formatNumber(ord.shoppingCart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
-							<td style="text-align: center"
-								th:text="${ord.shoppingCart.quantity}"></td>
+							<td style="text-align: center" th:text="${ord.shoppingCart.quantity}"></td>
 
 							<td><span th:text="${ord.invoiceNumber}" /></td>
 							<td th:text="${ord.userComments}"></td>
 							<td th:text="${ord.transaction.status}"></td>
-							<td><a th:href="@{'/shoppingcart/order/'+${ord.id}}"
-								class="orange">Detalles</a></td>
+							<td><a th:href="@{'/shoppingcart/order/'+${ord.id}}" class="orange">Detalles</a></td>
 						</tr>
 					</tbody>
 

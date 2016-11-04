@@ -95,6 +95,15 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 
 	private BigDecimal paymentCredit;
 	private BigDecimal currentPaymentCredit;
+	private String code;
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 	public BigDecimal getPaymentCredit() {
 		return paymentCredit;

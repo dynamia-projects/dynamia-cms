@@ -230,5 +230,11 @@ public class UserServiceImpl implements UserService {
 
 		return customers;
 	}
+	
+	@Override
+	public User getByExternalRef(Site site, String externalRef) {
+		return crudService.findSingle(User.class, QueryParameters.with("site", site)
+				.add("externalRef", externalRef));
+	}
 
 }

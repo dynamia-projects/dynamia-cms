@@ -52,6 +52,7 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 	private String notificationEmails;
 	private String orderSenderURL;
 	private boolean autoSendOrders;
+	private String orderStatusURL;
 
 	@OneToOne
 	private MailTemplate orderCompletedMailTemplate;
@@ -61,6 +62,14 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 	private MailTemplate notificationMailTemplate;
 	@OneToOne
 	private MailAccount mailAccount;
+
+	public String getOrderStatusURL() {
+		return orderStatusURL;
+	}
+
+	public void setOrderStatusURL(String orderStatusURL) {
+		this.orderStatusURL = orderStatusURL;
+	}
 
 	public boolean isBillingAddressRequired() {
 		return billingAddressRequired;

@@ -28,6 +28,8 @@ import tools.dynamia.cms.site.core.api.SiteRequestInterceptorAdapter;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.users.UserHolder;
 import tools.dynamia.cms.site.users.actions.UserMenuAction;
+import tools.dynamia.cms.site.users.actions.UserMenuActionEnableable;
+import tools.dynamia.cms.site.users.domain.User;
 
 /**
  *
@@ -36,27 +38,41 @@ import tools.dynamia.cms.site.users.actions.UserMenuAction;
 @CMSExtension
 public class UserMenuInterceptor extends SiteRequestInterceptorAdapter {
 
-    @Autowired
-    private List<UserMenuAction> actions;
+	@Autowired
+	private List<UserMenuAction> allActions;
 
-    @Override
-    protected void afterRequest(Site site, ModelAndView modelAndView) {
-        List<UserMenuAction> orderedActions = new ArrayList<>(actions);
-        Collections.sort(orderedActions, new Comparator<UserMenuAction>() {
+	@Override
+	protected void afterRequest(Site site, ModelAndView modelAndView) {
+		List<UserMenuAction> orderedActions = new ArrayList<>();
 
-            @Override
-            public int compare(UserMenuAction t, UserMenuAction t1) {
-                Integer ua = t.getOrder();
-                Integer ub = t1.getOrder();
-                return ua.compareTo(ub);
-            }
-        });
+		if (UserHolder.get().isAuthenticated()) {
+			for (UserMenuAction action : allActions) {
+				if (action instanceof UserMenuActionEnableable) {
+					User currentUser = UserHolder.get().getCurrent();
+					if (((UserMenuActionEnableable) action).isEnabled(currentUser)) {
+						orderedActions.add(action);
+					}
+				} else {
+					orderedActions.add(action);
 
-        modelAndView.addObject("userMenuActions", orderedActions);
+				}
+			}
 
-        if (UserHolder.get().isAuthenticated() && site == null) {
-            modelAndView.addObject("site", UserHolder.get().getCurrent().getSite());
-        }
-    }
+			Collections.sort(orderedActions, new Comparator<UserMenuAction>() {
+
+				@Override
+				public int compare(UserMenuAction t, UserMenuAction t1) {
+					Integer ua = t.getOrder();
+					Integer ub = t1.getOrder();
+					return ua.compareTo(ub);
+				}
+			});
+
+			modelAndView.addObject("site", UserHolder.get().getCurrent().getSite());
+		}
+
+		modelAndView.addObject("userMenuActions", orderedActions);
+
+	}
 
 }

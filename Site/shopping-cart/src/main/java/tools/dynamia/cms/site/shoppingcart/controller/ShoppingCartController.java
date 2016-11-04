@@ -16,8 +16,8 @@
 package tools.dynamia.cms.site.shoppingcart.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.PathParam;
 
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -156,8 +156,8 @@ public class ShoppingCartController {
 	}
 
 	@PreAuthorize("hasRole('USER')")
-	@RequestMapping(value = "/myorders", method = { RequestMethod.GET })
-	public ModelAndView myorders(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "/orders", method = { RequestMethod.GET })
+	public ModelAndView orders(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView();
 
 		SiteActionManager.performAction("showMyShoppingOrders", mv, request, redirectAttributes);
@@ -171,6 +171,27 @@ public class ShoppingCartController {
 			RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView();
 		SiteActionManager.performAction("viewShoppingOrder", mv, request, redirectAttributes, id);
+
+		return mv;
+	}
+
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/orders/status", method = { RequestMethod.GET })
+	public ModelAndView ordersStatus(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
+
+		SiteActionManager.performAction("showMyOrdersStatus", mv, request, redirectAttributes, null);
+
+		return mv;
+	}
+
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/orders/status/{customer}", method = { RequestMethod.GET })
+	public ModelAndView ordersStatusCustomer(@PathVariable String customer, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
+
+		SiteActionManager.performAction("showMyOrdersStatus", mv, request, redirectAttributes, customer);
 
 		return mv;
 	}

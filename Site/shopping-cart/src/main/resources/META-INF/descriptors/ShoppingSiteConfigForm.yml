@@ -20,6 +20,9 @@ fields:
   defaultCurrency:
   autoSendOrders:
   orderSenderURL:
+    label: Order Sender URL
+  orderStatusURL:
+    label: Order Status URL
   
   descriptionTemplate:
   notificationEmails:
