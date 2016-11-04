@@ -551,10 +551,18 @@ public class Product extends SimpleEntity implements SiteAware {
 		description = dto.getDescription();
 		externalRef = dto.getExternalRef();
 		featured = dto.isFeatured();
-		image = dto.getImage();
-		image2 = dto.getImage2();
-		image3 = dto.getImage3();
-		image4 = dto.getImage4();
+		if (dto.getImage() != null && !dto.getImage().isEmpty()) {
+			image = dto.getImage();
+		}
+		if (dto.getImage2() != null && !dto.getImage2().isEmpty()) {
+			image2 = dto.getImage2();
+		}
+		if (dto.getImage3() != null && !dto.getImage3().isEmpty()) {
+			image3 = dto.getImage3();
+		}
+		if (dto.getImage4() != null && !dto.getImage4().isEmpty()) {
+			image4 = dto.getImage4();
+		}
 		lastPrice = dto.getLastPrice();
 		longDescription = dto.getLongDescription();
 		name = dto.getName();
