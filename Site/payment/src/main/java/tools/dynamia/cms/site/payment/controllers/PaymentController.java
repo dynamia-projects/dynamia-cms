@@ -69,6 +69,7 @@ public class PaymentController {
 			mv.addObject("transaction", tx);
 			mv.addObject("gateway", service.findGateway(gatewayId));
 		} catch (Exception e) {
+			e.printStackTrace();
 			mv.setViewName("redirect:/");
 		}
 		return mv;

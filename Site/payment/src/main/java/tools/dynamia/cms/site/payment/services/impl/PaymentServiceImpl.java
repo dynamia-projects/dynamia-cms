@@ -118,7 +118,7 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 
 		PaymentTransaction tx = crudService.findSingle(PaymentTransaction.class, QueryParameters
-				.with("uuid", QueryConditions.eq(uuid)).add("gatewatId", QueryConditions.eq(gateway.getId())));
+				.with("uuid", QueryConditions.eq(uuid)).add("gatewayId", QueryConditions.eq(gateway.getId())));
 
 		if (tx == null) {
 			throw new PaymentException("No transaction found for gateway " + gateway.getId() + " uuid: " + uuid);
