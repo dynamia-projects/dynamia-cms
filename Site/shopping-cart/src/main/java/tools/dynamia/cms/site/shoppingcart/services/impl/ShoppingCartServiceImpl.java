@@ -19,6 +19,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -64,6 +67,7 @@ import tools.dynamia.integration.Containers;
 import tools.dynamia.integration.sterotypes.Service;
 import tools.dynamia.web.util.HttpRemotingServiceClient;
 import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSender;
+import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSenderException;
 import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderDTO;
 
 /**
@@ -472,6 +476,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 	@Override
 	public void sendOrder(ShoppingOrder order) {
+
+		order = crudService.reload(order);
 		ShoppingSiteConfig cfg = getConfiguration(order.getSite());
 
 		if (cfg.getOrderSenderURL() == null || cfg.getOrderSenderURL().isEmpty()) {
@@ -482,7 +488,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 				.setServiceURL(cfg.getOrderSenderURL()).getProxy();
 
 		ShoppingOrderDTO dto = order.toDTO();
-		String response = sender.sendOrder(dto);
+		String response = sender.sendOrder(dto, cfg.getParametersAsMap());
 
 		if (response != null) {
 			order.setExternalRef(response);
@@ -499,5 +505,63 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 								QueryConditions.in(PaymentTransactionStatus.COMPLETED,
 										PaymentTransactionStatus.PROCESSING))
 						.add("shoppingCart.user", user).orderBy("id", false));
+	}
+
+	@Override
+	@PostConstruct
+
+	public void sendAllOrders() {
+		logger.info("Sending all shopping orders");
+		try {
+			List<Site> sites = crudService.findAll(Site.class);
+			for (Site site : sites) {
+				ShoppingSiteConfig cfg = getConfiguration(site);
+				if (cfg != null && cfg.isAutoSendOrders() && cfg.getOrderSenderURL() != null
+						&& !cfg.getOrderSenderURL().isEmpty()) {
+					ShoppingOrderSender sender = HttpRemotingServiceClient.build(ShoppingOrderSender.class)
+							.setServiceURL(cfg.getOrderSenderURL()).getProxy();
+
+					crudService.executeWithinTransaction(() -> {
+
+						List<ShoppingOrder> orders = crudService.find(ShoppingOrder.class,
+								QueryParameters.with("sended", false)
+										.add("transaction.status", PaymentTransactionStatus.COMPLETED)
+										.add("site", site));
+						logger.info("Sending " + orders.size() + " orders for site " + site.getName());
+
+						sendOrders(sender, orders, cfg);
+					});
+
+				}
+				logger.info("Shopping Orders Sended");
+			}
+		} catch (Exception e) {
+			logger.error("Error sending orders", e);
+	
+		}
+	}
+
+	private void sendOrders(ShoppingOrderSender sender, List<ShoppingOrder> orders, ShoppingSiteConfig cfg) {
+		List<ShoppingOrderDTO> dtos = orders.stream().map(ord -> ord.toDTO()).collect(Collectors.toList());
+
+		if (!dtos.isEmpty()) {
+			logger.info("Calling Sender " + sender);
+			try {
+				Map<String, String> response = sender.sendOrders(dtos, cfg.getParametersAsMap());
+
+				if (response != null) {
+					logger.info("Sending response recieved. " + response.size());
+					for (ShoppingOrder order : orders) {
+						String resp = response.get(order.getNumber());
+						order.setExternalRef(resp);
+						order.setSended(true);
+						crudService.update(order);
+						logger.info("==> Updating order " + order.getNumber() + " ==> " + resp);
+					}
+				}
+			} catch (ShoppingOrderSenderException e) {
+				logger.error("Error", e);
+			}
+		}
 	}
 }

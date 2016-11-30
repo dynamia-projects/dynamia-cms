@@ -32,7 +32,8 @@ fields:
   notificationMailTemplate:
   mailAccount:
   
-
+  parameters:
+        component: crudview
 groups:
     values:
        fields:

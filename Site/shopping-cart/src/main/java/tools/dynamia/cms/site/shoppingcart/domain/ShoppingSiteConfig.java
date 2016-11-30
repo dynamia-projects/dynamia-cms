@@ -16,8 +16,15 @@
 package tools.dynamia.cms.site.shoppingcart.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -26,7 +33,6 @@ import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.mail.domain.MailAccount;
 import tools.dynamia.cms.site.mail.domain.MailTemplate;
-
 import tools.dynamia.domain.SimpleEntity;
 
 @Entity
@@ -62,6 +68,17 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 	private MailTemplate notificationMailTemplate;
 	@OneToOne
 	private MailAccount mailAccount;
+
+	@OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<ShoppingSiteConfigParameter> parameters = new ArrayList<>();
+
+	public List<ShoppingSiteConfigParameter> getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(List<ShoppingSiteConfigParameter> parameters) {
+		this.parameters = parameters;
+	}
 
 	public String getOrderStatusURL() {
 		return orderStatusURL;
@@ -241,6 +258,14 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 	}
 
 	public void addItem(ShoppingCartItem item, int qty) {
+	}
+
+	public Map<String, String> getParametersAsMap() {
+		Map<String, String> params = new HashMap<>();
+		for (ShoppingSiteConfigParameter param : getParameters()) {
+			params.put(param.getName(), param.getValue());
+		}
+		return params;
 	}
 
 }

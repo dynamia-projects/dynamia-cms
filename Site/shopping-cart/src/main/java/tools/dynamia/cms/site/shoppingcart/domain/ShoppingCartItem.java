@@ -284,7 +284,7 @@ public class ShoppingCartItem extends SimpleEntity {
 		dto.setDescription(description);
 		dto.setImageName(imageName);
 		dto.setImageURL(imageURL);
-		dto.setName(discountName);
+		dto.setName(name);
 		dto.setQuantity(quantity);
 		dto.setRefClass(refClass);
 		dto.setRefId(refId);

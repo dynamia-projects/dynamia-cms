@@ -6,9 +6,7 @@
 <body th:fragment="content">
 	<div class="topcarts" th:if="${@userHolder.authenticated}">
 		<div class="container">
-			<div class="col-md-6">
-				<th:block th:include="shoppingcart/components/changecustomer::content" />
-			</div>
+
 			<div class="col-md-6">
 				<th:block
 					th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Resumen de Pedido')},'fa fa-shopping-cart')" />
@@ -18,6 +16,10 @@
 				<div class="pull-right" th:if="${@userHolder.customer!=null}">
 					<h4 class="groupName" th:text="${@userHolder.customer.groupName}"></h4>
 				</div>
+
+			</div>
+			<div class="col-md-6">
+				<th:block th:include="shoppingcart/components/changecustomer::content" />
 				<div class="pull-right" th:if="${@userHolder.customer==null and not @userHolder.seller}">
 					<h4 class="groupName" th:text="${@userHolder.current.groupName}"></h4>
 				</div>

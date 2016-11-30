@@ -1,6 +1,7 @@
 package tools.dynamia.cms.admin.shopping.actions;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.zkoss.zul.Messagebox;
 
 import tools.dynamia.actions.InstallAction;
 import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
@@ -11,14 +12,19 @@ import tools.dynamia.crud.AbstractCrudAction;
 import tools.dynamia.crud.CrudActionEvent;
 import tools.dynamia.crud.CrudState;
 import tools.dynamia.domain.ValidationError;
+import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.ui.MessageType;
 import tools.dynamia.ui.UIMessages;
+import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSenderException;
 
 @InstallAction
 public class SendShoppingOrderAction extends AbstractCrudAction {
 
 	@Autowired
 	private ShoppingCartService service;
+
+	@Autowired
+	private CrudService crudService;
 
 	public SendShoppingOrderAction() {
 		setName("Send Order");
@@ -39,6 +45,7 @@ public class SendShoppingOrderAction extends AbstractCrudAction {
 	public void actionPerformed(CrudActionEvent evt) {
 		ShoppingOrder order = (ShoppingOrder) evt.getData();
 		if (order != null) {
+
 			if (order.isSended()) {
 				throw new ValidationError("Order " + order.getNumber() + " already was sended");
 			}
@@ -47,11 +54,13 @@ public class SendShoppingOrderAction extends AbstractCrudAction {
 				throw new ValidationError("Order is NOT completed");
 			}
 
-			UIMessages.showQuestion("Are you sure ?", () -> {
+			UIMessages.showQuestion("Are you sure send order " + order.getNumber() + "?", () -> {
 				try {
 					service.sendOrder(order);
 					UIMessages.showMessage("Order " + order.getNumber() + " sended successfully");
 					evt.getController().doQuery();
+				} catch (ShoppingOrderSenderException e) {
+					Messagebox.show(e.getMessage());
 				} catch (ValidationError e) {
 					UIMessages.showMessage(e.getMessage(), MessageType.WARNING);
 

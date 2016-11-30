@@ -390,4 +390,8 @@ public class ShoppingOrderDTO implements Serializable {
 		items.add(item);
 	}
 
+	@Override
+	public String toString() {
+		return getNumber();
+	}
 }
