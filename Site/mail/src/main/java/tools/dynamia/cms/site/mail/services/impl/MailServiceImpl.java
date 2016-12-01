@@ -54,211 +54,216 @@ import tools.dynamia.integration.Containers;
 @Service
 public class MailServiceImpl implements MailService {
 
-    @Autowired
-    private CrudService crudService;
-    private Map<Long, MailSenderHolder> senderCache = new HashMap<>();
+	@Autowired
+	private CrudService crudService;
+	private Map<Long, MailSenderHolder> senderCache = new HashMap<>();
 
-    private final LoggingService logger = new SLF4JLoggingService(MailService.class);
+	private final LoggingService logger = new SLF4JLoggingService(MailService.class);
 
-    @Override
-    public void send(String to, String subject, String content) {
-        send(new MailMessage(to, subject, content));
-    }
+	@Override
+	public void send(String to, String subject, String content) {
+		send(new MailMessage(to, subject, content));
+	}
 
-    @Override
-    public void send(final MailMessage mailMessage) {
+	@Override
+	public void send(final MailMessage mailMessage) {
 
-        MailAccount account = mailMessage.getMailAccount();
-        if (account == null) {
-            account = getPreferredEmailAccount();
-        }
+		MailAccount account = mailMessage.getMailAccount();
+		if (account == null) {
+			account = getPreferredEmailAccount();
+		}
 
-        if (account == null) {
-            return;
-        }
+		if (account == null) {
+			return;
+		}
 
-        if (mailMessage.getTemplate() != null && !mailMessage.getTemplate().isEnabled()) {
-            return;
-        }
+		if (mailMessage.getTemplate() != null && !mailMessage.getTemplate().isEnabled()) {
+			return;
+		}
 
-        final MailAccount finalAccount = crudService.reload(account);
+		final MailAccount finalAccount = crudService.reload(account);
 
-        try {
+		try {
 
-            if (mailMessage.getTemplate() != null) {
-                processTemplate(mailMessage);
-            }
+			if (mailMessage.getTemplate() != null) {
+				processTemplate(mailMessage);
+			}
 
-            JavaMailSenderImpl jmsi = (JavaMailSenderImpl) createMailSender(finalAccount);
-            MimeMessage mimeMessage = jmsi.createMimeMessage();
+			JavaMailSenderImpl jmsi = (JavaMailSenderImpl) createMailSender(finalAccount);
+			MimeMessage mimeMessage = jmsi.createMimeMessage();
 
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-            helper.setTo(mailMessage.getTo());
-            if (!mailMessage.getTos().isEmpty()) {
-                helper.setTo(mailMessage.getTosAsArray());
-            }
-            String from = finalAccount.getFromAddress();
-            String personal = finalAccount.getName();
-            if (from != null && personal != null) {
-                helper.setFrom(from, personal);
-            }
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, finalAccount.getEnconding());
 
-            if (!mailMessage.getBccs().isEmpty()) {
-                helper.setBcc(mailMessage.getBccsAsArray());
-            }
+			helper.setTo(mailMessage.getTo());
+			if (!mailMessage.getTos().isEmpty()) {
+				helper.setTo(mailMessage.getTosAsArray());
+			}
+			String from = finalAccount.getFromAddress();
+			String personal = finalAccount.getName();
+			if (from != null && personal != null) {
 
-            if (!mailMessage.getCcs().isEmpty()) {
-                helper.setCc(mailMessage.getCcsAsArray());
-            }
+				helper.setFrom(from, personal);
+				
+			}
 
-            helper.setSubject(mailMessage.getSubject());
-            if (mailMessage.getPlainText() != null && mailMessage.getContent() != null) {
-                helper.setText(mailMessage.getPlainText(), mailMessage.getContent());
-            } else {
-                helper.setText(mailMessage.getContent(), true);
-            }
+			if (!mailMessage.getBccs().isEmpty()) {
+				helper.setBcc(mailMessage.getBccsAsArray());
+			}
 
-            for (File archivo : mailMessage.getAttachtments()) {
-                helper.addAttachment(archivo.getName(), archivo);
-            }
+			if (!mailMessage.getCcs().isEmpty()) {
+				helper.setCc(mailMessage.getCcsAsArray());
+			}
 
-            fireOnMailSending(mailMessage);
-            logger.info("Sending e-mail " + mailMessage);
-            jmsi.send(mimeMessage);
+			helper.setSubject(mailMessage.getSubject());
+			if (mailMessage.getPlainText() != null && mailMessage.getContent() != null) {
+				helper.setText(mailMessage.getPlainText(), mailMessage.getContent());
+			} else {
+				helper.setText(mailMessage.getContent(), true);
+			}
 
-            logger.info("Email sended succesfull!");
-            fireOnMailSended(mailMessage);
-        } catch (Exception me) {
-            logger.error("Error sending e-mail " + mailMessage, me);
-            fireOnMailSendFail(mailMessage, me);
-            throw new MailServiceException("Error sending mail message " + mailMessage, me);
+			for (File archivo : mailMessage.getAttachtments()) {
+				helper.addAttachment(archivo.getName(), archivo);
+			}
 
-        }
+			fireOnMailSending(mailMessage);
+			logger.info("Sending e-mail " + mailMessage);
+			jmsi.send(mimeMessage);
 
-    }
+			logger.info("Email sended succesfull!");
+			fireOnMailSended(mailMessage);
+		} catch (Exception me) {
+			logger.error("Error sending e-mail " + mailMessage, me);
+			fireOnMailSendFail(mailMessage, me);
+			throw new MailServiceException("Error sending mail message " + mailMessage, me);
 
-    @Override
-    public MailAccount getPreferredEmailAccount() {
-        MailAccount account = crudService.findSingle(MailAccount.class, "preferred", true);
-        if (account == null) {
-            logger.warn("There is not a preferred email account ");
-        }
-        return account;
-    }
+		}
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void setPreferredEmailAccount(MailAccount account) {
-        crudService.batchUpdate(MailAccount.class, "preferred", false, QueryParameters.with("site", account.getSite()));
-        crudService.updateField(account, "preferred", true);
-    }
+	}
 
-    private MailSender createMailSender(MailAccount account) {
-        JavaMailSenderImpl mailSender = null;
+	@Override
+	public MailAccount getPreferredEmailAccount() {
+		MailAccount account = crudService.findSingle(MailAccount.class, "preferred", true);
+		if (account == null) {
+			logger.warn("There is not a preferred email account ");
+		}
+		return account;
+	}
 
-        MailSenderHolder holder = senderCache.get(account.getId());
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void setPreferredEmailAccount(MailAccount account) {
+		crudService.batchUpdate(MailAccount.class, "preferred", false, QueryParameters.with("site", account.getSite()));
+		crudService.updateField(account, "preferred", true);
+	}
 
-        if (holder != null) {
-            mailSender = (JavaMailSenderImpl) holder.getSender();
-            if (holder.isOld(account.getTimestamp())) {
-                mailSender = null;
-                senderCache.remove(account.getId());
-            }
-        }
+	private MailSender createMailSender(MailAccount account) {
+		JavaMailSenderImpl mailSender = null;
 
-        if (mailSender == null) {
-            mailSender = new JavaMailSenderImpl();
-            mailSender.setHost(account.getServerAddress());
-            mailSender.setPort(account.getPort());
-            mailSender.setUsername(account.getUsername());
-            mailSender.setPassword(account.getPassword());
-            mailSender.setProtocol("smtp");
-            if (account.getEnconding() != null && !account.getEnconding().isEmpty()) {
-                mailSender.setDefaultEncoding(account.getEnconding());
-            }
+		MailSenderHolder holder = senderCache.get(account.getId());
 
-            Properties jmp = new Properties();
-            jmp.setProperty("mail.smtp.auth", String.valueOf(account.isLoginRequired()));
-            jmp.setProperty("mail.smtp.from", account.getFromAddress());
-            jmp.setProperty("mail.smtp.port", String.valueOf(account.getPort()));
-            jmp.setProperty("mail.smtp.starttls.enable", String.valueOf(account.isUseTTLS()));
-            jmp.setProperty("mail.smtp.host", account.getServerAddress());
-            jmp.setProperty("mail.from", account.getFromAddress());
-            jmp.setProperty("mail.personal", account.getName());
+		if (holder != null) {
+			mailSender = (JavaMailSenderImpl) holder.getSender();
+			if (holder.isOld(account.getTimestamp())) {
+				mailSender = null;
+				senderCache.remove(account.getId());
+			}
+		}
 
-            mailSender.setJavaMailProperties(jmp);
-            try {
-                mailSender.testConnection();
-                senderCache.put(account.getId(), new MailSenderHolder(account.getTimestamp(), mailSender));
-            } catch (MessagingException e) {
-                throw new MailServiceException("Error creating mail sender for account " + account.getName() + " - " + account.getSite(), e);
-            }
-        }
+		if (mailSender == null) {
+			mailSender = new JavaMailSenderImpl();
+			mailSender.setHost(account.getServerAddress());
+			mailSender.setPort(account.getPort());
+			mailSender.setUsername(account.getUsername());
+			mailSender.setPassword(account.getPassword());
+			
+			mailSender.setProtocol("smtp");
+			if (account.getEnconding() != null && !account.getEnconding().isEmpty()) {
+				mailSender.setDefaultEncoding(account.getEnconding());
+			}
 
-        return mailSender;
+			Properties jmp = new Properties();
+			jmp.setProperty("mail.smtp.auth", String.valueOf(account.isLoginRequired()));
+			jmp.setProperty("mail.smtp.from", account.getFromAddress());
+			jmp.setProperty("mail.smtp.port", String.valueOf(account.getPort()));
+			jmp.setProperty("mail.smtp.starttls.enable", String.valueOf(account.isUseTTLS()));
+			jmp.setProperty("mail.smtp.host", account.getServerAddress());
+			jmp.setProperty("mail.from", account.getFromAddress());
+			jmp.setProperty("mail.personal", account.getName());
 
-    }
+			mailSender.setJavaMailProperties(jmp);
+			try {
+				mailSender.testConnection();
+				senderCache.put(account.getId(), new MailSenderHolder(account.getTimestamp(), mailSender));
+			} catch (MessagingException e) {
+				throw new MailServiceException(
+						"Error creating mail sender for account " + account.getName() + " - " + account.getSite(), e);
+			}
+		}
 
-    public void processTemplate(MailMessage message) {
+		return mailSender;
 
-        if (message.getTemplate() == null) {
-            throw new MailServiceException(message + " has no template to process");
-        }
+	}
 
-        MailTemplate template = message.getTemplate();
-        StringParser stringParser = StringParser.get(template.getTemplateEngine());
-        message.setSubject(stringParser.parse(template.getSubject(), message.getTemplateModel()));
-        message.setContent(stringParser.parse(template.getContent(), message.getTemplateModel()));
-    }
+	public void processTemplate(MailMessage message) {
 
-    @Override
-    public boolean existsMailingContact(MailingContact contact) {
-        return crudService.findSingle(MailingContact.class, "emailAddress", contact.getEmailAddress()) != null;
-    }
+		if (message.getTemplate() == null) {
+			throw new MailServiceException(message + " has no template to process");
+		}
 
-    private void fireOnMailSending(MailMessage message) {
-        Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class);
-        for (MailServiceListener listener : listeners) {
-            listener.onMailSending(message);
-        }
-    }
+		MailTemplate template = message.getTemplate();
+		StringParser stringParser = StringParser.get(template.getTemplateEngine());
+		message.setSubject(stringParser.parse(template.getSubject(), message.getTemplateModel()));
+		message.setContent(stringParser.parse(template.getContent(), message.getTemplateModel()));
+	}
 
-    private void fireOnMailSended(MailMessage message) {
-        Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class);
-        for (MailServiceListener listener : listeners) {
-            listener.onMailSended(message);
-        }
-    }
+	@Override
+	public boolean existsMailingContact(MailingContact contact) {
+		return crudService.findSingle(MailingContact.class, "emailAddress", contact.getEmailAddress()) != null;
+	}
 
-    private void fireOnMailSendFail(MailMessage message, Throwable cause) {
-        Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class);
-        for (MailServiceListener listener : listeners) {
-            listener.onMailSendFail(message, cause);
-        }
-    }
+	private void fireOnMailSending(MailMessage message) {
+		Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class);
+		for (MailServiceListener listener : listeners) {
+			listener.onMailSending(message);
+		}
+	}
 
-    class MailSenderHolder {
+	private void fireOnMailSended(MailMessage message) {
+		Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class);
+		for (MailServiceListener listener : listeners) {
+			listener.onMailSended(message);
+		}
+	}
 
-        private long timestamp;
-        private MailSender sender;
+	private void fireOnMailSendFail(MailMessage message, Throwable cause) {
+		Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class);
+		for (MailServiceListener listener : listeners) {
+			listener.onMailSendFail(message, cause);
+		}
+	}
 
-        public MailSenderHolder(long timestamp, MailSender sender) {
-            this.timestamp = timestamp;
-            this.sender = sender;
-        }
+	class MailSenderHolder {
 
-        public MailSender getSender() {
-            return sender;
-        }
+		private long timestamp;
+		private MailSender sender;
 
-        public long getTimestamp() {
-            return timestamp;
-        }
+		public MailSenderHolder(long timestamp, MailSender sender) {
+			this.timestamp = timestamp;
+			this.sender = sender;
+		}
 
-        public boolean isOld(long newtimestamp) {
-            return newtimestamp > timestamp;
-        }
+		public MailSender getSender() {
+			return sender;
+		}
 
-    }
+		public long getTimestamp() {
+			return timestamp;
+		}
+
+		public boolean isOld(long newtimestamp) {
+			return newtimestamp > timestamp;
+		}
+
+	}
 
 }

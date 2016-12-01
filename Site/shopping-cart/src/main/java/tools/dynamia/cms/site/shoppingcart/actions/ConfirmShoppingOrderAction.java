@@ -23,8 +23,10 @@ import tools.dynamia.cms.site.core.actions.ActionEvent;
 import tools.dynamia.cms.site.core.actions.SiteAction;
 import tools.dynamia.cms.site.core.actions.SiteActionManager;
 import tools.dynamia.cms.site.core.api.CMSAction;
+import tools.dynamia.cms.site.payment.PaymentException;
 import tools.dynamia.cms.site.payment.PaymentForm;
 import tools.dynamia.cms.site.payment.PaymentGateway;
+import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
 import tools.dynamia.cms.site.payment.services.PaymentService;
 import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
@@ -75,11 +77,11 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 		order.setUserComments(evt.getRequest().getParameter("userComments"));
 		order.setBillingAddress(loadContactInfo("billingAddress", evt));
 		order.setShippingAddress(loadContactInfo("shippingAddress", evt));
-		
+
 		String customer = evt.getRequest().getParameter("customer");
-		if(customer!=null && !customer.equals("0")){
+		if (customer != null && !customer.equals("0")) {
 			Long customerId = Long.parseLong(customer);
-			User userCustomer = crudService.find(User.class,customerId);
+			User userCustomer = crudService.find(User.class, customerId);
 			order.getShoppingCart().setCustomer(userCustomer);
 		}
 
@@ -113,18 +115,20 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 			ShoppingCartHolder.get().setCurrentOrder(order);
 			ShoppingCartHolder.get().removeCart(name);
 
-			PaymentForm form = null;
+			PaymentForm form = new PaymentForm();
 			if (!order.isPayLater()) {
-				PaymentGateway gateway = paymentService.findGateway(order.getTransaction().getGatewayId());
-				form = gateway.createForm(order.getTransaction());
-				
-			}else{
-				form = new PaymentForm();
-				
-			}
+				try {
+					PaymentGateway gateway = paymentService.findGateway(order.getTransaction().getGatewayId());
+					form = gateway.createForm(order.getTransaction());
+				} catch (PaymentException e) {
+					System.err.println("GATEWAY EXCEPTION:: "+e.getMessage());
+					e.printStackTrace();
+				}
+
+			} 
+			
 			mv.addObject("paymentForm", form);
 			mv.addObject("shoppingOrder", order);
-			
 
 		} catch (ValidationError e) {
 			SiteActionManager.performAction("checkoutShoppingCart", mv, evt.getRequest(), evt.getRedirectAttributes());
@@ -152,8 +156,9 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 		if (order.getShoppingCart().getUser() == null) {
 			throw new ValidationError("La orden de pedido no tiene usuario asociado");
 		}
-		
-		if(order.getShoppingCart().getUser().getProfile()==UserProfile.SELLER && order.getShoppingCart().getCustomer()==null){
+
+		if (order.getShoppingCart().getUser().getProfile() == UserProfile.SELLER
+				&& order.getShoppingCart().getCustomer() == null) {
 			throw new ValidationError("Seleccione cliente");
 		}
 

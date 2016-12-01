@@ -66,6 +66,7 @@ import tools.dynamia.domain.util.DomainUtils;
 import tools.dynamia.integration.Containers;
 import tools.dynamia.integration.sterotypes.Service;
 import tools.dynamia.web.util.HttpRemotingServiceClient;
+import toosl.dynamia.cms.site.shoppingcart.api.Response;
 import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSender;
 import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSenderException;
 import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderDTO;
@@ -488,11 +489,18 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 				.setServiceURL(cfg.getOrderSenderURL()).getProxy();
 
 		ShoppingOrderDTO dto = order.toDTO();
-		String response = sender.sendOrder(dto, cfg.getParametersAsMap());
+		Response response = sender.sendOrder(dto, cfg.getParametersAsMap());
 
 		if (response != null) {
-			order.setExternalRef(response);
-			order.setSended(true);
+			if (response.isError()) {
+				order.setErrorCode(response.getErrorCode());
+				order.setErrorMessage(response.getErrorMessage());
+			} else {
+				order.setErrorCode(null);
+				order.setErrorMessage(null);
+				order.setExternalRef(response.getContent());
+				order.setSended(true);
+			}
 		}
 
 	}
@@ -508,8 +516,6 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 	}
 
 	@Override
-	@PostConstruct
-
 	public void sendAllOrders() {
 		logger.info("Sending all shopping orders");
 		try {
@@ -537,7 +543,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 			}
 		} catch (Exception e) {
 			logger.error("Error sending orders", e);
-	
+
 		}
 	}
 
@@ -547,14 +553,23 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		if (!dtos.isEmpty()) {
 			logger.info("Calling Sender " + sender);
 			try {
-				Map<String, String> response = sender.sendOrders(dtos, cfg.getParametersAsMap());
+				List<Response> response = sender.sendOrders(dtos, cfg.getParametersAsMap());
 
 				if (response != null) {
 					logger.info("Sending response recieved. " + response.size());
 					for (ShoppingOrder order : orders) {
-						String resp = response.get(order.getNumber());
-						order.setExternalRef(resp);
-						order.setSended(true);
+						Response resp = Response.find(response, order.getNumber());
+						if (resp != null) {
+							if (resp.isError()) {
+								order.setErrorCode(resp.getErrorCode());
+								order.setErrorMessage(resp.getErrorMessage());
+							} else {
+								order.setErrorCode(null);
+								order.setErrorMessage(null);
+								order.setExternalRef(resp.getContent());
+								order.setSended(true);
+							}
+						}
 						crudService.update(order);
 						logger.info("==> Updating order " + order.getNumber() + " ==> " + resp);
 					}

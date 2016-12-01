@@ -83,6 +83,25 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 	private String userComments;
 	private String externalRef;
 	private boolean sended;
+	@Column(length = 5000)
+	private String errorMessage;
+	private String errorCode;
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
 
 	public boolean isSended() {
 		return sended;

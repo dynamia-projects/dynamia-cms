@@ -38,6 +38,7 @@
 						<th>Factura</th>
 						<th>Comentarios</th>
 						<th>Estado</th>
+						<th style="max-width: 200px">Validacion</th>
 						<th></th>
 					</thead>
 					<tbody>
@@ -59,6 +60,7 @@
 							<td><span th:text="${ord.invoiceNumber}" /></td>
 							<td th:text="${ord.userComments}"></td>
 							<td th:text="${ord.transaction.status}"></td>
+							<td th:text="${ord.errorMessage}"></td>
 							<td><a th:href="@{'/shoppingcart/order/'+${ord.id}}" class="orange">Detalles</a></td>
 						</tr>
 					</tbody>

@@ -73,6 +73,10 @@ fields:
       header:
         width: 300px
 
+  sended:
+  externalRef:
+  errorCode:
+  errorMessage:
 
 params:
     orderBy: creationDate desc
