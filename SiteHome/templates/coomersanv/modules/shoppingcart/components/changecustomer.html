@@ -7,13 +7,16 @@
 
 	<form class="form-inline cambiarCliente pull-left" th:action="@{/users/setCustomer}"
 		th:if="${@userHolder.seller}" method="post">
+
 		<div class="input-group">
+		
 			<select class="form-control" name="id">
 				<option value="0">-Cambiar Cliente-</option>
 				<option th:each="uc : ${userCustomers}" th:value="${uc.id}"
 					th:selected="${uc.equals(@userHolder.customer)}"
-					th:text="${uc.fullName+' - '+uc.identification}"></option>
+					th:text="${uc.fullName+' - '+uc.identification+' ('+uc.externalRef+')'}"></option>
 			</select> <span class="input-group-btn">
+			<input name="code"  placeholder="Codigo" style="height: 42px" size="6"/>	
 				<button data-toggle="modal" href="#confirmCustomer" type="button" class=" btn btn-success">
 					<i class="fa fa-check"></i>
 				</button>

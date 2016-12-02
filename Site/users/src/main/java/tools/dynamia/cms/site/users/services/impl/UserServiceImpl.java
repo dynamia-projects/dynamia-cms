@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.site.users.services.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -223,18 +224,16 @@ public class UserServiceImpl implements UserService {
 		customers = crudService.find(User.class, QueryParameters.with("profile", UserProfile.USER)
 				.add("relatedUser", user).add("enabled", true).orderBy("fullName"));
 
-		if (customers == null || customers.isEmpty()) {
-			customers = crudService.find(User.class,
-					QueryParameters.with("profile", UserProfile.USER).add("enabled", true).orderBy("fullName"));
+		if (customers == null) {
+			customers = Collections.EMPTY_LIST;
 		}
 
 		return customers;
 	}
-	
+
 	@Override
 	public User getByExternalRef(Site site, String externalRef) {
-		return crudService.findSingle(User.class, QueryParameters.with("site", site)
-				.add("externalRef", externalRef));
+		return crudService.findSingle(User.class, QueryParameters.with("site", site).add("externalRef", externalRef));
 	}
 
 }

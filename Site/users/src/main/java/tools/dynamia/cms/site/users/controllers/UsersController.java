@@ -33,11 +33,16 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.actions.SiteActionManager;
+import tools.dynamia.cms.site.core.domain.Site;
+import tools.dynamia.cms.site.core.services.SiteService;
 import tools.dynamia.cms.site.users.UserForm;
 import tools.dynamia.cms.site.users.UserHolder;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
+import tools.dynamia.domain.query.QueryConditions;
+import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 
 /**
@@ -50,6 +55,9 @@ public class UsersController {
 
 	@Autowired
 	private CrudService crudService;
+
+	@Autowired
+	private SiteService siteService;
 
 	@RequestMapping(value = { "/login", "/save" }, method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request) {
@@ -212,16 +220,28 @@ public class UsersController {
 	public ModelAndView setCustomer(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView();
 
+		Site site = siteService.getSite(request);
 		String id = request.getParameter("id");
-		Long userId = null;
-		try {
-			userId = Long.parseLong(id);
-			User customer = crudService.find(User.class, userId);
-			UserHolder.get().setCustomer(customer);
-		} catch (Exception e) {
-			// TODO: handle exception
+		String code = request.getParameter("code");
+		User customer = null;
+
+		if (code != null && !code.isEmpty()) {
+			customer = crudService.findSingle(User.class,
+					QueryParameters.with("externalRef", QueryConditions.eq(code)).add("site", site));
+
+			if (customer == null) {
+				CMSUtil.addErrorMessage("No se encontro cliente con codigo: " + code, redirectAttributes);
+			}
+		} else if (id != null && !id.equals("0")) {
+			try {
+				customer = crudService.find(User.class, Long.parseLong(id));
+			} catch (Exception e) {
+			}
 		}
 
+		if (customer != null) {
+			UserHolder.get().setCustomer(customer);
+		}
 		String redirect = request.getParameter("currentURI");
 		if (request.getParameter("redirect") != null) {
 			redirect = request.getParameter("redirect");

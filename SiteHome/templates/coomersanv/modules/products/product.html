@@ -196,7 +196,7 @@
 										<span th:text="${det.description}">DESCRIPTION</span>
 								</span></li>
 								
-								<li th:if="${@userHolder.authenticated}"><span class="productinfoleft">Stock</span><span
+								<li th:if="${@userHolder.authenticated and @userHolder.seller}"><span class="productinfoleft">Stock</span><span
 									th:text="${prd_product.stock}">VALUE</span></li>
 								
 								<li><span th:text="${'Visto '}" class="productinfoleft">NAME</span><span
