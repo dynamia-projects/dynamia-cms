@@ -37,7 +37,7 @@ public class MyOrdersStatusMenuAction implements UserMenuActionEnableable {
 
 	@Override
 	public boolean isEnabled(User currentUser) {
-		return true;
+		return currentUser.getSite().isCorporateSite();
 	}
 
 }

@@ -1,9 +1,10 @@
 view: form
 beanClass: tools.dynamia.cms.site.core.domain.Site
 hidden: [id]
-sortFields: [name,parent,key,template,description,offline,offlineIcon,offlineMessage,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
+sortFields: [name,parent,key,template,corporateSite,description,offline,offlineIcon,offlineMessage,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
 
 fields:
+
 
     name:
         params:
@@ -27,6 +28,9 @@ fields:
             
     template:
         component: templateSelector
+        
+    corporateSite:
+   
                 
     offlineMessage:
         params:

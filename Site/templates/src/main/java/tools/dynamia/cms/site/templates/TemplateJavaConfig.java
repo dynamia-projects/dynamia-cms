@@ -27,6 +27,7 @@ import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
@@ -46,7 +47,8 @@ public class TemplateJavaConfig {
 	public SiteTemplateResolver templateResolver() {
 		SiteTemplateResolver resolver = new SiteTemplateResolver();
 		resolver.setSuffix(".html");
-		resolver.setTemplateMode("HTML");
+		resolver.setTemplateMode(TemplateMode.HTML);
+		resolver.setCharacterEncoding("UTF-8");
 		resolver.setCacheable(false);
 		return resolver;
 	}
@@ -54,6 +56,7 @@ public class TemplateJavaConfig {
 	@Bean
 	public SpringTemplateEngine templateEngine() {
 		SpringTemplateEngine engine = new SpringTemplateEngine();
+
 		engine.addDialect(new LayoutDialect());
 		engine.addTemplateResolver(templateResolver());
 
@@ -65,6 +68,8 @@ public class TemplateJavaConfig {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
 		viewResolver.setOrder(1);
 		viewResolver.setTemplateEngine(templateEngine());
+		viewResolver.setCharacterEncoding("UTF-8");
+
 		return viewResolver;
 	}
 

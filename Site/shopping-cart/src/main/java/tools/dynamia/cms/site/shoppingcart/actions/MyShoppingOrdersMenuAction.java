@@ -2,9 +2,11 @@ package tools.dynamia.cms.site.shoppingcart.actions;
 
 import tools.dynamia.cms.site.core.api.CMSAction;
 import tools.dynamia.cms.site.users.actions.UserMenuAction;
+import tools.dynamia.cms.site.users.actions.UserMenuActionEnableable;
+import tools.dynamia.cms.site.users.domain.User;
 
 @CMSAction
-public class MyShoppingOrdersMenuAction implements UserMenuAction {
+public class MyShoppingOrdersMenuAction implements UserMenuActionEnableable {
 
 	@Override
 	public String getLabel() {
@@ -31,4 +33,8 @@ public class MyShoppingOrdersMenuAction implements UserMenuAction {
 		return "shoppingcart/orders";
 	}
 
+	@Override
+	public boolean isEnabled(User currentUser) {
+		return currentUser.getSite().isCorporateSite();
+	}
 }
