@@ -24,7 +24,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -71,14 +70,6 @@ public class TemplateJavaConfig {
 		viewResolver.setCharacterEncoding("UTF-8");
 
 		return viewResolver;
-	}
-
-	@Bean
-	public ViewResolver zkViewResolver() {
-		UrlBasedViewResolver vr = new SiteZKViewResolver();
-		vr.setCache(false);
-		vr.setOrder(0);
-		return vr;
 	}
 
 	@Bean

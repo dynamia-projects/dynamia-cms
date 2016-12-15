@@ -86,11 +86,6 @@
 			<version>${thymeleaf.layout.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>tools.dynamia</groupId>
-			<artifactId>tools.dynamia.zk.crud</artifactId>
-			<version>${dynatools.version}</version>
-		</dependency>
 	</dependencies>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
