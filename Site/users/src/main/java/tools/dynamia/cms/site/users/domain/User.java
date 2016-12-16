@@ -33,6 +33,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.ContentAuthor;
 import tools.dynamia.cms.site.core.domain.Site;
@@ -62,16 +64,20 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 	@Email(message = "Ingrese direccion valida de email")
 	private String username;
 	@Size(min = 5, message = "El password del usuario debe ser minimo de 5 caracteres")
+	@JsonIgnore
 	private String password;
 
 	private ContactInfo contactInfo = new ContactInfo();
 	private String userphoto;
 	private String identification;
-
+	@JsonIgnore
 	private boolean accountNonExpired = true;
+	@JsonIgnore
 	private boolean accountNonLocked = true;
+	@JsonIgnore
 	private boolean credentialsNonExpired = true;
 	private boolean enabled = true;
+	@JsonIgnore
 	private boolean passwordExpired;
 
 	@NotNull(message = "Enter user full name")
@@ -91,6 +97,7 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 	private String externalRef;
 
 	@OneToOne
+	@JsonIgnore
 	private User relatedUser;
 
 	private BigDecimal paymentCredit;
@@ -317,6 +324,7 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 
 	/*--------------------------------------------------*/
 	@Override
+	@JsonIgnore
 	public List<GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
 

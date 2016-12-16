@@ -32,6 +32,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.mail.domain.MailAccount;
@@ -55,13 +57,19 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 	private String pricePattern;
 	private String defaultCurrency;
 
+	@JsonIgnore
 	private String datasourceURL;
+	@JsonIgnore
 	private String datasourceUsername;
+	@JsonIgnore
 	private String datasourcePassword;
+	@JsonIgnore
 	private String datasourceImagesURL;
+	@JsonIgnore
 	private String datasourceBrandImagesURL;
+	@JsonIgnore
 	private String datasourceStoreImagesURL;
-
+	@JsonIgnore
 	private String token;
 
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -80,26 +88,36 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 	private boolean synchronizationEnabled;
 
 	@OneToOne
+	@JsonIgnore
 	private MailAccount mailAccount;
 	@OneToOne
+	@JsonIgnore
 	private MailTemplate shareProductMailTemplate;
 	@OneToOne
+	@JsonIgnore
 	private MailTemplate orderCompletedMailTemplate;
 
 	@OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
 	private List<ProductsSiteConfigParameter> parameters = new ArrayList<>();
-
+	@JsonIgnore
 	private int minStock;
-
+	@JsonIgnore
 	private boolean syncStockDetails;
+	@JsonIgnore
 	private boolean syncProductDetails;
+	@JsonIgnore
 	private boolean syncProductImages;
+	@JsonIgnore
 	private boolean syncProductCreditPrices;
 
 	@Column(length = 4000)
+	@JsonIgnore
 	private String priceUserGroup;
+	@JsonIgnore
 	@Column(length = 4000)
 	private String price2UserGroup;
+	@JsonIgnore
 	@Column(length = 4000)
 	private String costUserGroup;
 
@@ -343,6 +361,7 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 		this.token = token;
 	}
 
+	@JsonIgnore
 	public Map<String, String> getParametersAsMap() {
 		Map<String, String> params = new HashMap<>();
 		for (ProductsSiteConfigParameter param : getParameters()) {

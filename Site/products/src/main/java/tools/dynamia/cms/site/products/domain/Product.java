@@ -31,6 +31,8 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.products.ProductsUtil;
@@ -107,13 +109,16 @@ public class Product extends SimpleEntity implements SiteAware {
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	@OrderBy("order")
+	@JsonIgnore
 	private List<ProductDetail> details = new ArrayList<>();
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<ProductStock> stockDetails = new ArrayList<>();
 
 	@OrderBy("number")
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<ProductCreditPrice> creditPrices = new ArrayList<>();
 
 	private boolean showLastPrice;
@@ -130,9 +135,11 @@ public class Product extends SimpleEntity implements SiteAware {
 	private String promoName;
 
 	@OneToOne
+	@JsonIgnore
 	private ProductTemplate template;
 
 	@OneToOne
+	@JsonIgnore
 	private ProductTemplate alternateTemplate;
 
 	public String getVideoURL2() {

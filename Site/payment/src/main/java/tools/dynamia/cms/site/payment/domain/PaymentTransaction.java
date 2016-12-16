@@ -30,8 +30,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.domain.BaseEntity;
 
@@ -54,6 +55,7 @@ public class PaymentTransaction extends BaseEntity {
 	private String statusText;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
+	@JsonIgnore
 	private String gatewayResponse;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -67,6 +69,7 @@ public class PaymentTransaction extends BaseEntity {
 	private String paymentMethod;
 	private String currency;
 	private String responseCode;
+	@JsonIgnore
 	private String signature;
 	@Column(length = 1000)
 	private String description;

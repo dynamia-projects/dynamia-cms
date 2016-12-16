@@ -31,7 +31,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.BatchSize;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import tools.dynamia.cms.site.core.Orderable;
+import tools.dynamia.cms.site.core.View;
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.products.dto.ProductCategoryDTO;
@@ -53,32 +57,42 @@ public class ProductCategory extends SimpleEntity implements SiteAware, Orderabl
 	private Site site;
 
 	@ManyToOne
+	@JsonIgnore
 	private ProductCategory parent;
 	@OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
 	private List<ProductCategory> subcategories = new ArrayList<>();
 	@NotNull
 	@NotEmpty(message = "Enter product category name")
+	
 	private String name;
 	private String alternateName;
 	@Column(name = "catAlias")
+	
 	private String alias;
+	
 	private String description;
+	
 	private boolean active;
+
 	private Long externalRef;
 	@OneToOne
+	@JsonIgnore
 	private ProductCategory relatedCategory;
 
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	@OrderBy("order")
+	@JsonIgnore
 	private List<ProductCategoryDetail> details = new ArrayList<>();
 
-	@Column(name = "catOrder")
+	@Column(name = "catOrder")	
 	private int order;
 
 	@OneToOne
+	@JsonIgnore
 	private ProductTemplate template;
 
 	@OneToOne
+	@JsonIgnore
 	private ProductTemplate alternateTemplate;
 
 	public ProductTemplate getAlternateTemplate() {

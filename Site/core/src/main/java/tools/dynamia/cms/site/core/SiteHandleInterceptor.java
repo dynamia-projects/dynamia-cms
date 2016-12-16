@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import tools.dynamia.cms.site.core.api.SiteRequestInterceptor;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.services.SiteService;
@@ -36,84 +38,97 @@ import tools.dynamia.integration.Containers;
  */
 public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 
-    @Autowired
-    private SiteService service;
+	@Autowired
+	private SiteService service;
 
-    private final LoggingService logger = new SLF4JLoggingService(SiteHandleInterceptor.class);
+	private final LoggingService logger = new SLF4JLoggingService(SiteHandleInterceptor.class);
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
 
-        Site site = getCurrentSite(request);
-        try {
-            for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
-                interceptor.beforeRequest(site, request, response);
-            }
-        } catch (Exception e) {
-            logger.error("Error calling Site interceptor", e);
-            return false;
-        }
+		Site site = getCurrentSite(request);
+		try {
+			for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
+				interceptor.beforeRequest(site, request, response);
+			}
+		} catch (Exception e) {
+			logger.error("Error calling Site interceptor", e);
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    private Site getCurrentSite(HttpServletRequest request) {
-        Site site = SiteContext.get().getCurrent();
-        if (site == null) {
-            site = service.getSite(request);
-            SiteContext.get().setCurrent(site);
-        }
-        if (site == null) {
-            site = service.getMainSite();
-            SiteContext.get().setCurrent(site);
-        }
-        SiteContext.get().setCurrentURI(request.getRequestURI());
-        SiteContext.get().setCurrentURL(request.getRequestURL().toString());
-        if (SiteContext.get().getSiteURL() == null) {
-            String siteURL = "http://" + request.getServerName();
-            if (request.getServerPort() != 80) {
-                siteURL = siteURL + ":" + request.getServerPort();
-            }
-            SiteContext.get().setSiteURL(siteURL);
-        }
-        return site;
-    }
+	private Site getCurrentSite(HttpServletRequest request) {
+		Site site = SiteContext.get().getCurrent();
+		if (site == null) {
+			site = service.getSite(request);
+			SiteContext.get().setCurrent(site);
+		}
+		if (site == null) {
+			site = service.getMainSite();
+			SiteContext.get().setCurrent(site);
+		}
+		SiteContext.get().setCurrentURI(request.getRequestURI());
+		SiteContext.get().setCurrentURL(request.getRequestURL().toString());
+		if (SiteContext.get().getSiteURL() == null) {
+			String siteURL = "http://" + request.getServerName();
+			if (request.getServerPort() != 80) {
+				siteURL = siteURL + ":" + request.getServerPort();
+			}
+			SiteContext.get().setSiteURL(siteURL);
+		}
+		return site;
+	}
 
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
-            throws Exception {
-        if (modelAndView == null) {
-            return;
-        }
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception {
 
-        Site site = getCurrentSite(request);
+		if (modelAndView == null) {
+			return;
+		}
 
-        loadSiteMetadata(site, modelAndView);
+		boolean isJson = checkJsonRequest(request, modelAndView);
+		if (isJson) {
+			return;
+		}
 
-        try {
-            for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
-                interceptor.afterRequest(site, request, response, modelAndView);
-            }
-        } catch (Exception e) {
-            logger.error("Error calling Site interceptor", e);
-        }
+		Site site = getCurrentSite(request);
 
-    }
+		loadSiteMetadata(site, modelAndView);
 
-    private void loadSiteMetadata(Site site, ModelAndView mv) {
-        if (site != null && mv != null) {
-            mv.addObject("siteKey", site.getKey());
-            mv.addObject("site", site);
-            mv.addObject("metaAuthor", site.getMetadataAuthor());
-            mv.addObject("metaRights", site.getMetadataRights());
-            if (!mv.getModel().containsKey("metaDescription")) {
-                mv.addObject("metaDescription", site.getMetadataDescription());
-            }
-            if (!mv.getModel().containsKey("metaKeywords")) {
-                mv.addObject("metaKeywords", site.getMetadataKeywords());
-            }
+		try {
+			for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
+				interceptor.afterRequest(site, request, response, modelAndView);
+			}
+		} catch (Exception e) {
+			logger.error("Error calling Site interceptor", e);
+		}
 
-        }
-    }
+	}
+
+	private boolean checkJsonRequest(HttpServletRequest request, ModelAndView modelAndView) {
+		boolean json = CMSUtil.isJson(request);
+
+		return json;
+	}
+
+	private void loadSiteMetadata(Site site, ModelAndView mv) {
+		if (site != null && mv != null) {
+			mv.addObject("siteKey", site.getKey());
+			mv.addObject("site", site);
+			mv.addObject("metaAuthor", site.getMetadataAuthor());
+			mv.addObject("metaRights", site.getMetadataRights());
+			if (!mv.getModel().containsKey("metaDescription")) {
+				mv.addObject("metaDescription", site.getMetadataDescription());
+			}
+			if (!mv.getModel().containsKey("metaKeywords")) {
+				mv.addObject("metaKeywords", site.getMetadataKeywords());
+			}
+
+		}
+	}
 
 }

@@ -15,15 +15,26 @@
  */
 package tools.dynamia.cms.site.templates;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.web.accept.ContentNegotiationManager;
+import org.springframework.web.accept.FixedContentNegotiationStrategy;
+import org.springframework.web.accept.MappingMediaTypeFileExtensionResolver;
+import org.springframework.web.accept.PathExtensionContentNegotiationStrategy;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -39,8 +50,29 @@ public class TemplateJavaConfig {
 
 	public static final String DEFAULT_TEMPLATE = "CMSCurrentTemplate";
 
-	@Autowired
-	private CacheManager cacheManager;
+	@Bean
+	public ViewResolver contentNegotiatingViewResolver() {
+
+		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+
+		Map<String, MediaType> mediaTypes = new HashMap<>();
+		mediaTypes.put("html", MediaType.TEXT_HTML);
+		mediaTypes.put("json", MediaType.APPLICATION_JSON);
+
+		ContentNegotiationManager manager = new ContentNegotiationManager(
+				new PathExtensionContentNegotiationStrategy(mediaTypes),
+				new FixedContentNegotiationStrategy(MediaType.TEXT_HTML)
+				);
+		resolver.setContentNegotiationManager(manager);
+
+		// Define all possible view resolvers
+		List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
+		resolvers.add(jsonViewResolver());
+		resolvers.add(thymeleafViewResolver());
+
+		resolver.setViewResolvers(resolvers);
+		return resolver;
+	}
 
 	@Bean
 	public SiteTemplateResolver templateResolver() {
@@ -62,7 +94,6 @@ public class TemplateJavaConfig {
 		return engine;
 	}
 
-	@Bean
 	public ViewResolver thymeleafViewResolver() {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
 		viewResolver.setOrder(1);
@@ -70,6 +101,12 @@ public class TemplateJavaConfig {
 		viewResolver.setCharacterEncoding("UTF-8");
 
 		return viewResolver;
+	}
+
+	public ViewResolver jsonViewResolver() {
+		JsonViewResolver json = new JsonViewResolver();
+		json.setOrder(2);
+		return json;
 	}
 
 	@Bean

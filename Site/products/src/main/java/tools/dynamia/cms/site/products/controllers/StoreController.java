@@ -37,8 +37,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.CookieGenerator;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.SiteContext;
+import tools.dynamia.cms.site.core.View;
 import tools.dynamia.cms.site.core.actions.SiteActionManager;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.services.SiteService;
@@ -149,7 +152,8 @@ public class StoreController {
 
 	@Secured("ROLE_USER")
 	@RequestMapping("/products/{id}/favorite")
-	public ModelAndView productFavorite(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView productFavorite(@PathVariable Long id, HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("products/product");
 		if (UserHolder.get().isAuthenticated()) {
 			System.out.println("USER LOGGED: " + UserHolder.get().getUserName());
@@ -160,14 +164,16 @@ public class StoreController {
 	}
 
 	@RequestMapping("/products/{id}/compare")
-	public ModelAndView productCompare(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView productCompare(@PathVariable Long id, HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		SiteActionManager.performAction("addProductToCompareList", mv, request, response, id);
 		return mv;
 	}
 
 	@RequestMapping("/products/{id}/compare/remove")
-	public ModelAndView productNoCompare(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView productNoCompare(@PathVariable Long id, HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		SiteActionManager.performAction("removeProductFromCompareList", mv, request, response, id);
 		return mv;
@@ -200,7 +206,8 @@ public class StoreController {
 	}
 
 	@RequestMapping("/compare/{ids}")
-	public ModelAndView compare(@PathVariable String ids, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	public ModelAndView compare(@PathVariable String ids, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
 		ModelAndView mv = new ModelAndView("products/compare");
 		SiteActionManager.performAction("compareProducts", mv, request, redirectAttributes, ids.split(","));
 		return mv;
@@ -237,8 +244,8 @@ public class StoreController {
 	}
 
 	@RequestMapping(value = "/share", method = RequestMethod.POST)
-	public ModelAndView share(@Valid ProductShareForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes,
-			HttpServletRequest request) {
+	public ModelAndView share(@Valid ProductShareForm form, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setView(new RedirectView("/store/products/" + form.getProductId(), true, true, false));

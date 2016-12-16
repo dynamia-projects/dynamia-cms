@@ -19,33 +19,37 @@ import java.io.Serializable;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  *
  * @author Mario Serrano Leones
  */
+
 public class SearchForm implements Serializable {
 
-    @NotEmpty
-    private String query;
+	@NotEmpty
+	private String query;
 
-    private HttpServletRequest request;
+	@JsonIgnore
+	private HttpServletRequest request;
 
-    public String getQuery() {
-        return query;
-    }
+	public String getQuery() {
+		return query;
+	}
 
-    public void setQuery(String query) {
-        this.query = query;
-    }
+	public void setQuery(String query) {
+		this.query = query;
+	}
 
-    public HttpServletRequest getRequest() {
-        return request;
-    }
+	public HttpServletRequest getRequest() {
+		return request;
+	}
 
-    public void setRequest(HttpServletRequest request) {
-        this.request = request;
-    }
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
 
 }

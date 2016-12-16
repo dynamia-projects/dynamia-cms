@@ -73,15 +73,7 @@ public class UsersConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .loginPage(loginPage())
                 	.permitAll()
-                .and()
-              /*  .logout()
-                	.logoutUrl(logutURL())
-                	.logoutRequestMatcher(new AntPathRequestMatcher(logutURL()))
-                	.clearAuthentication(true)
-                	.invalidateHttpSession(true)
-                	.logoutSuccessUrl("/")                	
-                	.deleteCookies("JSESSIONID")                	
-                .and()*/
+                .and()     
                 .rememberMe().key(StringUtils.randomString())
                 .and()
                 .httpBasic()
@@ -89,7 +81,7 @@ public class UsersConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedPage(loginPage());
 
         http.headers()        
-                .cacheControl()
+                .cacheControl()                
                 .and().xssProtection()
                 .and().httpStrictTransportSecurity()
                 .and().contentTypeOptions()

@@ -27,7 +27,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import tools.dynamia.cms.site.core.api.SiteAware;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.dynamia.domain.SimpleEntity;
 import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderItemDTO;
 
@@ -41,6 +42,7 @@ public class ShoppingCartItem extends SimpleEntity {
 
 	@ManyToOne
 	@NotNull
+	@JsonIgnore
 	private ShoppingCart shoppingCart;
 	private String code;
 	private String name;
@@ -63,14 +65,17 @@ public class ShoppingCartItem extends SimpleEntity {
 	private String reference;
 	private String sku;
 	private Long refId;
+	@JsonIgnore
 	private String refClass;
 	private BigDecimal discount;
 	private String discountName;
 	private boolean editable = true;
 
 	@Transient
+	@JsonIgnore
 	private List<ShoppingCartItem> children = new ArrayList<>();
 	@Transient
+	@JsonIgnore
 	private ShoppingCartItem parent;
 
 	public List<ShoppingCartItem> getChildren() {

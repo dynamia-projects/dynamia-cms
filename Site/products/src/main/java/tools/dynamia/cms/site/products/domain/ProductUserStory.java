@@ -22,6 +22,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.dynamia.cms.site.users.domain.User;
 
 import tools.dynamia.domain.SimpleEntity;
@@ -35,9 +37,11 @@ import tools.dynamia.domain.SimpleEntity;
 public class ProductUserStory extends SimpleEntity {
 
     @OneToOne
+    @JsonIgnore
     private Product product;
 
     @OneToOne
+    @JsonIgnore
     private User user;
     private long views;
     private long shops;

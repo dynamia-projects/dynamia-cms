@@ -76,6 +76,9 @@ public class ExceptionsController {
         mv.addObject("statusCode", statusCode);
         mv.addObject("uri", requestUri);
         mv.addObject("exception", throwable);
+        if(throwable!=null){
+        	throwable.printStackTrace();
+        }
         Site site = siteService.getSite(request);
         Containers.get().findObjects(SiteRequestInterceptor.class).forEach(i -> {
             i.afterRequest(site, request, response, mv);

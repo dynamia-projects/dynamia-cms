@@ -54,6 +54,7 @@ import tools.dynamia.commons.CollectionsUtils;
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.commons.collect.PagedList;
 import tools.dynamia.commons.collect.PagedListDataSource;
+import tools.dynamia.domain.query.DataPaginator;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.domain.util.ContactInfo;
 import tools.dynamia.integration.Containers;
@@ -64,6 +65,7 @@ import tools.dynamia.integration.Containers;
  */
 public class CMSUtil {
 
+	private static final String _PAGINATION = "_pagination";
 	private Site site;
 	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 	private static final String PAGINATION_DATASOURCE = "paginationDatasource";
@@ -331,7 +333,6 @@ public class CMSUtil {
 		}
 
 		if (datasource != null) {
-			mv.addObject(PAGINATION_DATASOURCE, datasource);
 
 			if (request.getParameter("page") != null) {
 				try {
@@ -340,6 +341,12 @@ public class CMSUtil {
 				} catch (NumberFormatException numberFormatException) {
 					// not a number, ignore it
 				}
+			}
+			if (!isJson(request)) {
+				mv.addObject(PAGINATION_DATASOURCE, datasource);
+			} else {
+				mv.addObject(_PAGINATION, new DataPaginator(datasource.getTotalSize(), datasource.getPageSize(),
+						datasource.getActivePage()));
 			}
 
 			paginableList = datasource.getPageData();
@@ -357,18 +364,16 @@ public class CMSUtil {
 	}
 
 	public static String escapeHtml(String htmlText) {
-		
-		String escape =  StringEscapeUtils.escapeHtml(htmlText);
+
+		String escape = StringEscapeUtils.escapeHtml(htmlText);
 		return escape;
 	}
 
 	public static String escapeHtmlContent(String htmlText) {
-		if(htmlText==null){
+		if (htmlText == null) {
 			return null;
 		}
 		Document document = Jsoup.parse(htmlText);
-
-		
 
 		Elements tags = document.getAllElements().not("script");
 		for (Element tag : tags) {
@@ -379,10 +384,13 @@ public class CMSUtil {
 				}
 			}
 		}
-		
+
 		String html = document.body().html();
 		html = html.replace("&amp;", "&");
 		return html;
 	}
 
+	public static boolean isJson(HttpServletRequest request) {
+		return request.getRequestURI().endsWith(".json");
+	}
 }

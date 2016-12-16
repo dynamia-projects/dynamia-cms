@@ -25,6 +25,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.dynamia.cms.site.core.api.Parameterizable;
 
 import tools.dynamia.domain.SimpleEntity;
@@ -44,12 +46,15 @@ public class Site extends SimpleEntity implements Parameterizable {
 	@NotEmpty
 	private String key;
 	@OneToMany(mappedBy = "site")
+	@JsonIgnore
 	private List<SiteDomain> acceptedDomains = new ArrayList<>();
 
 	@OneToMany(mappedBy = "site", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private List<SiteParameter> parameters = new ArrayList<>();
 
 	@OneToOne
+	@JsonIgnore
 	private Site parent;
 
 	private String description;

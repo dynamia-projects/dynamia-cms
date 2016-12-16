@@ -22,6 +22,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.products.dto.ProductStockDTO;
@@ -42,11 +44,13 @@ public class ProductStock extends SimpleEntity implements SiteAware {
 
 	@NotNull
 	@ManyToOne
+	@JsonIgnore
 	private Product product;
 	@OneToOne
 	@NotNull
 	private Store store;
 	@Min(value = 0)
+	@JsonIgnore
 	private long stock;
 
 	public Site getSite() {

@@ -26,6 +26,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.dynamia.cms.site.core.Orderable;
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
@@ -57,6 +59,7 @@ public class ProductCategoryDetail extends SimpleEntity implements SiteAware, Or
 	private List<String> currentValues;
 
 	@ManyToOne
+	@JsonIgnore
 	private ProductCategory category;
 
 	private boolean filterable = true;
