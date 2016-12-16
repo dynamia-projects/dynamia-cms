@@ -22,6 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
 
@@ -37,6 +39,7 @@ public class UserContactInfo extends SimpleEntity implements SiteAware {
 
 	@OneToOne
 	@NotNull
+	@JsonIgnore
 	private User user;
 	private ContactInfo info = new ContactInfo();
 	private String name;
