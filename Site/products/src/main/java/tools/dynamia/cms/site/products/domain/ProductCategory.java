@@ -32,14 +32,11 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.BatchSize;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 
 import tools.dynamia.cms.site.core.Orderable;
-import tools.dynamia.cms.site.core.View;
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.products.dto.ProductCategoryDTO;
-
 import tools.dynamia.domain.SimpleEntity;
 import tools.dynamia.domain.contraints.NotEmpty;
 

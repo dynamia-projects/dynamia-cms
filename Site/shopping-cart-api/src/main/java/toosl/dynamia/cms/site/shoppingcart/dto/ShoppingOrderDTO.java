@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ShoppingOrderDTO implements Serializable {
 
@@ -57,6 +59,15 @@ public class ShoppingOrderDTO implements Serializable {
 	private String externalRef;
 
 	private List<ShoppingOrderItemDTO> items = new ArrayList<>();
+	private Map<String, String> params = new HashMap<>();
+
+	public Map<String, String> getParams() {
+		return params;
+	}
+
+	public void setParams(Map<String, String> params) {
+		this.params = params;
+	}
 
 	public boolean isPayLater() {
 		return payLater;
