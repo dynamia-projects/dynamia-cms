@@ -21,6 +21,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.BatchSize;
+
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.products.dto.ProductBrandDTO;
@@ -34,6 +36,7 @@ import tools.dynamia.domain.contraints.NotEmpty;
  */
 @Entity
 @Table(name = "prd_brands")
+@BatchSize(size=50)
 public class ProductBrand extends SimpleEntity implements SiteAware {
 
 	@OneToOne

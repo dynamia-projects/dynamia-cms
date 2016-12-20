@@ -21,6 +21,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -30,8 +31,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
+import tools.dynamia.cms.site.payment.PaymentForm;
 import tools.dynamia.cms.site.payment.PaymentGateway;
+import tools.dynamia.cms.site.payment.PaymentHolder;
 import tools.dynamia.cms.site.payment.PaymentTransactionEvent;
 import tools.dynamia.cms.site.payment.PaymentTransactionListener;
 import tools.dynamia.cms.site.payment.ResponseType;
@@ -88,6 +92,25 @@ public class PaymentController {
 			logger.info("Payment Transaaction confirmed - OK");
 		}
 
+	}
+
+	@RequestMapping(value = "/start", method = RequestMethod.GET)
+	public ModelAndView startTransaction() {
+		logger.info("Starting payment transaction..");
+		PaymentTransaction tx = PaymentHolder.get().getCurrentPaymentTransaction();
+		PaymentForm form = PaymentHolder.get().getCurrentPaymentForm();
+		ModelAndView mv = new ModelAndView("payment/start");
+		if (tx != null && tx.getStatus() == PaymentTransactionStatus.NEW && form != null) {
+			tx.setStatus(PaymentTransactionStatus.PROCESSING);
+			crudService.save(tx);
+			mv.addObject("paymentForm", form);
+			mv.addObject("paymentTransaction", tx);
+			logger.info("Redirecting to payment gateway site. TX: "+tx);
+		} else {
+			logger.warn("Payment Transaction Not Valid");
+			mv.setView(new RedirectView("/", true, true, false));
+		}
+		return mv;
 	}
 
 	private PaymentTransaction commitTransaction(String gatewayId, HttpServletRequest request, ResponseType type) {

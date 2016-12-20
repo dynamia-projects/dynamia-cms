@@ -38,12 +38,17 @@
 		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
 
 
+	<cache name="sitesCache" maxElementsInMemory="10000" eternal="false"
+		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
+		maxElementsOnDisk="1000000" diskPersistent="false"
+		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
+
 	<cache name="sites" maxElementsInMemory="100" eternal="false"
 		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
 		maxElementsOnDisk="1000000" diskPersistent="false"
 		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
 
-	<cache name="menus" maxElementsInMemory="100" eternal="false"
+	<cache name="menus" maxElementsInMemory="1000" eternal="false"
 		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
 		maxElementsOnDisk="1000000" diskPersistent="false"
 		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
@@ -53,12 +58,12 @@
 		maxElementsOnDisk="1000000" diskPersistent="false"
 		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
 
-	<cache name="products" maxElementsInMemory="2000" eternal="false"
+	<cache name="products" maxElementsInMemory="10000" eternal="false"
 		timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
 		maxElementsOnDisk="1000000" diskPersistent="false"
 		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
 
-	<cache name="modules" maxElementsInMemory="2000" eternal="false"
+	<cache name="modules" maxElementsInMemory="10000" eternal="false"
 		timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
 		maxElementsOnDisk="1000000" diskPersistent="false"
 		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
@@ -74,7 +79,7 @@
 		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
 
 
-	<cache name="velocity" maxElementsInMemory="10" eternal="false"
+	<cache name="velocity" maxElementsInMemory="100" eternal="false"
 		timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
 		maxElementsOnDisk="1000" diskPersistent="false"
 		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />

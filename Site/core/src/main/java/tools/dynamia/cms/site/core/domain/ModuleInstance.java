@@ -29,6 +29,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.BatchSize;
+
 import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.Orderable;
 
@@ -39,6 +41,7 @@ import tools.dynamia.domain.contraints.NotEmpty;
  */
 @Entity
 @Table(name = "cr_modules_instances")
+@BatchSize(size=20)
 public class ModuleInstance extends Content implements Orderable {
 
 	@NotEmpty(message = "Module ID is required")
@@ -60,12 +63,14 @@ public class ModuleInstance extends Content implements Orderable {
 	@Column(name = "instanceOrder")
 	private int order;
 
-	@Transient
-	private Map<String, Object> model = new HashMap<String, Object>();
-
 	@Column(length = 3000)
 	private String includePaths;
 	private String customView;
+	
+	
+	@Transient
+	private Map<String, Object> model = new HashMap<String, Object>();
+
 
 	public String getIncludePaths() {
 		return includePaths;

@@ -22,6 +22,8 @@ import java.util.Map;
 import org.springframework.context.annotation.Scope;
 
 import tools.dynamia.cms.site.core.SiteContext;
+import tools.dynamia.cms.site.payment.PaymentForm;
+import tools.dynamia.cms.site.payment.PaymentHolder;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 import tools.dynamia.cms.site.users.UserHolder;
@@ -80,6 +82,12 @@ public class ShoppingCartHolder implements Serializable {
 
 	public void setCurrentOrder(ShoppingOrder currentOrder) {
 		this.currentOrder = currentOrder;
+		if (currentOrder == null) {
+			PaymentHolder.get().setCurrentPaymentForm(null);
+			PaymentHolder.get().setCurrentPaymentTransaction(null);
+		} else {
+			PaymentHolder.get().setCurrentPaymentTransaction(currentOrder.getTransaction());
+		}
 	}
 
 }

@@ -26,6 +26,7 @@ import tools.dynamia.cms.site.core.api.CMSAction;
 import tools.dynamia.cms.site.payment.PaymentException;
 import tools.dynamia.cms.site.payment.PaymentForm;
 import tools.dynamia.cms.site.payment.PaymentGateway;
+import tools.dynamia.cms.site.payment.PaymentHolder;
 import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
 import tools.dynamia.cms.site.payment.services.PaymentService;
 import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
@@ -113,6 +114,7 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 			String name = order.getShoppingCart().getName();
 			service.saveOrder(order);
 			ShoppingCartHolder.get().setCurrentOrder(order);
+
 			ShoppingCartHolder.get().removeCart(name);
 
 			PaymentForm form = new PaymentForm();
@@ -120,13 +122,14 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 				try {
 					PaymentGateway gateway = paymentService.findGateway(order.getTransaction().getGatewayId());
 					form = gateway.createForm(order.getTransaction());
+					PaymentHolder.get().setCurrentPaymentForm(form);
 				} catch (PaymentException e) {
-					System.err.println("GATEWAY EXCEPTION:: "+e.getMessage());
+					System.err.println("GATEWAY EXCEPTION:: " + e.getMessage());
 					e.printStackTrace();
 				}
 
-			} 
-			
+			}
+
 			mv.addObject("paymentForm", form);
 			mv.addObject("shoppingOrder", order);
 

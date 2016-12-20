@@ -20,6 +20,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.BatchSize;
+
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
 
@@ -28,6 +30,7 @@ import tools.dynamia.domain.contraints.NotEmpty;
 
 @Entity
 @Table(name = "ban_categories")
+@BatchSize(size=10)
 public class BannerCategory extends SimpleEntity implements SiteAware {
 
 	/**

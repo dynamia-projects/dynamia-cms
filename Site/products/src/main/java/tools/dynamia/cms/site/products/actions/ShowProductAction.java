@@ -16,7 +16,10 @@
 package tools.dynamia.cms.site.products.actions;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,12 +38,8 @@ import tools.dynamia.cms.site.products.domain.RelatedProduct;
 import tools.dynamia.cms.site.products.services.ProductTemplateService;
 import tools.dynamia.cms.site.products.services.ProductsService;
 import tools.dynamia.cms.site.users.UserHolder;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.stream.Collectors;
 import tools.dynamia.commons.CollectionsUtils;
 import tools.dynamia.commons.collect.CollectionWrapper;
-
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 
@@ -75,6 +74,11 @@ public class ShowProductAction implements SiteAction {
 			simpleMode = true;
 		}
 
+		loadProduct(evt, mv, simpleMode);
+
+	}
+
+	private void loadProduct(ActionEvent evt, ModelAndView mv, boolean simpleMode) {
 		Product product = null;
 		Long id = (Long) evt.getData();
 		QueryParameters qp = QueryParameters.with("active", true).add("site", evt.getSite());
@@ -148,7 +152,6 @@ public class ShowProductAction implements SiteAction {
 		} else {
 			mv.addObject("prd_hasTemplate", false);
 		}
-
 	}
 
 	private void loadRelatedProducts(Product product, ModelAndView mv) {

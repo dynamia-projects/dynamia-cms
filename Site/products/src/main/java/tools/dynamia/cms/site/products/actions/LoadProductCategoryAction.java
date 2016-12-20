@@ -16,6 +16,8 @@
 package tools.dynamia.cms.site.products.actions;
 
 import tools.dynamia.cms.site.core.CMSUtil;
+import tools.dynamia.cms.site.core.SiteCache;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,9 @@ class LoadProductCategoryAction implements SiteAction {
 	@Autowired
 	private CrudService crudService;
 
+	@Autowired
+	private SiteCache siteCache;
+
 	@Override
 	public String getName() {
 		return NAME;
@@ -57,8 +62,19 @@ class LoadProductCategoryAction implements SiteAction {
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
+		ModelAndView mv = (ModelAndView) siteCache.get(evt.getSite(), evt.getRequest(),
+				evt.getModelAndView().getViewName());
+		if (mv == null) {
+			mv = evt.getModelAndView();
+			loadProductsFromCategory(evt, mv);
+			siteCache.put(evt.getSite(), evt.getRequest(), mv.getViewName(), mv);
+		} else {
+			evt.getModelAndView().addAllObjects(mv.getModelMap());
+		}
 
+	}
+
+	private void loadProductsFromCategory(ActionEvent evt, ModelAndView mv) {
 		ProductCategory category = null;
 		if (evt.getData() instanceof String) {
 			String alias = (String) evt.getData();
@@ -69,12 +85,11 @@ class LoadProductCategoryAction implements SiteAction {
 		}
 
 		List<Product> products = null;
-		QueryParameters qp = QueryParameters.with("active", true)
-				.add("site", evt.getSite());
+		QueryParameters qp = QueryParameters.with("active", true).add("site", evt.getSite());
 
 		if (category.getParent() == null) {
-			qp.addGroup(QueryParameters.with("category.parent", QueryConditions.eq(category, BooleanOp.OR)).add("category",
-					QueryConditions.eq(category, BooleanOp.OR)), BooleanOp.AND);
+			qp.addGroup(QueryParameters.with("category.parent", QueryConditions.eq(category, BooleanOp.OR))
+					.add("category", QueryConditions.eq(category, BooleanOp.OR)), BooleanOp.AND);
 		} else {
 			qp.add("category", category);
 		}
@@ -129,7 +144,6 @@ class LoadProductCategoryAction implements SiteAction {
 
 		products = CMSUtil.setupPagination(products, evt.getRequest(), mv);
 		ProductsUtil.setupProductsVar(products, mv);
-
 	}
 
 }

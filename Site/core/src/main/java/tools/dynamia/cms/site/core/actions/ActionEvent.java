@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.site.core.actions;
 
+import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.domain.Site;
 import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
@@ -28,13 +29,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 public class ActionEvent implements Serializable {
 
-    private Site site;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6809369433426936140L;
+	private Site site;
     private ModelAndView modelAndView;
     private HttpServletRequest request;
     private HttpServletResponse response;
     private RedirectAttributes redirectAttributes;
     private Object source;
     private Object data;
+ 
 
     ActionEvent(Site site, ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, Object source, Object data) {
         this.site = site;
@@ -73,5 +79,5 @@ public class ActionEvent implements Serializable {
     public Object getData() {
         return data;
     }
-
+   
 }

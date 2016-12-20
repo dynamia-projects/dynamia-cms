@@ -15,11 +15,17 @@
  */
 package tools.dynamia.cms.site.core;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Path;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -31,6 +37,7 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.jsoup.Jsoup;
@@ -392,5 +399,20 @@ public class CMSUtil {
 
 	public static boolean isJson(HttpServletRequest request) {
 		return request.getRequestURI().endsWith(".json");
+	}
+	public static String getChecksum(Serializable object) throws IOException, NoSuchAlgorithmException {
+	    ByteArrayOutputStream baos = null;
+	    ObjectOutputStream oos = null;
+	    try {
+	        baos = new ByteArrayOutputStream();
+	        oos = new ObjectOutputStream(baos);
+	        oos.writeObject(object);
+	        MessageDigest md = MessageDigest.getInstance("MD5");
+	        byte[] thedigest = md.digest(baos.toByteArray());
+	        return DatatypeConverter.printHexBinary(thedigest);
+	    } finally {
+	        oos.close();
+	        baos.close();
+	    }
 	}
 }
