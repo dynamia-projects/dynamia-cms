@@ -53,6 +53,8 @@ public class PaymentTransaction extends BaseEntity {
 	@Enumerated(EnumType.ORDINAL)
 	private PaymentTransactionStatus status = PaymentTransactionStatus.NEW;
 	private String statusText;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date statusDate;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -91,6 +93,12 @@ public class PaymentTransaction extends BaseEntity {
 	private boolean test = false;
 	private boolean confirmed;
 
+	private int responseTries;
+	private String lastStatusText;
+	private PaymentTransactionStatus lastStatus;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastStatusDate;
+
 	public PaymentTransaction() {
 		// TODO Auto-generated constructor stub
 	}
@@ -98,6 +106,48 @@ public class PaymentTransaction extends BaseEntity {
 	public PaymentTransaction(String source) {
 		super();
 		this.source = source;
+	}
+
+	
+	
+	public Date getStatusDate() {
+		return statusDate;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		this.statusDate = statusDate;
+	}
+
+	public int getResponseTries() {
+		return responseTries;
+	}
+
+	public void setResponseTries(int responseTries) {
+		this.responseTries = responseTries;
+	}
+
+	public String getLastStatusText() {
+		return lastStatusText;
+	}
+
+	public void setLastStatusText(String lastStatusText) {
+		this.lastStatusText = lastStatusText;
+	}
+
+	public PaymentTransactionStatus getLastStatus() {
+		return lastStatus;
+	}
+
+	public void setLastStatus(PaymentTransactionStatus lastStatus) {
+		this.lastStatus = lastStatus;
+	}
+
+	public Date getLastStatusDate() {
+		return lastStatusDate;
+	}
+
+	public void setLastStatusDate(Date lastStatusDate) {
+		this.lastStatusDate = lastStatusDate;
 	}
 
 	public boolean isConfirmed() {
@@ -209,6 +259,12 @@ public class PaymentTransaction extends BaseEntity {
 	}
 
 	public void setStatus(PaymentTransactionStatus status) {
+		if (this.status != status) {
+			lastStatus = this.status;
+			lastStatusDate = this.statusDate;
+			this.statusDate = new Date();
+		}
+
 		this.status = status;
 	}
 
@@ -217,6 +273,10 @@ public class PaymentTransaction extends BaseEntity {
 	}
 
 	public void setStatusText(String statusText) {
+		if (this.statusText != statusText) {
+			this.lastStatusText = this.statusText;
+		}
+
 		this.statusText = statusText;
 	}
 
@@ -351,10 +411,10 @@ public class PaymentTransaction extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "PaymentTransaction [uuid=" + uuid + ", gatewayId=" + gatewayId
-				+ ", status=" + status + ", statusText=" + statusText + ", amount=" + amount
-				+ ", taxes=" + taxes + ", taxesBase=" + taxesBase + ", paymentMethod=" + paymentMethod + ", currency=" + currency
-				+ ", responseCode=" + responseCode + ", signature=" + signature + ", description=" + description + ", test=" + test
+		return "PaymentTransaction from " + source + " --> [uuid=" + uuid + ", gatewayId=" + gatewayId + ", status="
+				+ status + ", statusText=" + statusText + ", amount=" + amount + ", taxes=" + taxes + ", taxesBase="
+				+ taxesBase + ", paymentMethod=" + paymentMethod + ", currency=" + currency + ", responseCode="
+				+ responseCode + ", signature=" + signature + ", description=" + description + ", test=" + test
 				+ ", email=" + email + "]";
 	}
 

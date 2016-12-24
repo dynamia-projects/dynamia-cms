@@ -58,7 +58,7 @@ public class PaymentController {
 	@Autowired
 	private CrudService crudService;
 
-	private LoggingService logger = new SLF4JLoggingService(PaymentController.class, "[==PAYMENT==] ");
+	private LoggingService logger = new SLF4JLoggingService(PaymentController.class);
 
 	@RequestMapping(value = "/{gatewayId}/response", method = RequestMethod.GET)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -67,7 +67,6 @@ public class PaymentController {
 
 		try {
 			PaymentTransaction tx = commitTransaction(gatewayId, request, ResponseType.RESPONSE);
-			crudService.save(tx);
 			mv.addObject("title", tx.getStatusText());
 			mv.addObject("subtitle", tx.getReference());
 			mv.addObject("transaction", tx);
@@ -85,12 +84,7 @@ public class PaymentController {
 	public void gatewayConfirmation(@PathVariable String gatewayId, HttpServletRequest request) {
 		logger.info("Confirmation for gateway " + gatewayId + "  REQUEST: " + request.getParameterMap());
 		PaymentTransaction tx = commitTransaction(gatewayId, request, ResponseType.CONFIRMATION);
-		if (!tx.isConfirmed()) {
-			tx.setConfirmed(true);
-			logger.info("Payment Transaction Confirmation " + tx.getUuid() + " - " + tx.getStatusText());
-			crudService.save(tx);
-			logger.info("Payment Transaaction confirmed - OK");
-		}
+		logger.info("Payment Transaction Confirmation Status " + tx);
 
 	}
 
@@ -101,11 +95,12 @@ public class PaymentController {
 		PaymentForm form = PaymentHolder.get().getCurrentPaymentForm();
 		ModelAndView mv = new ModelAndView("payment/start");
 		if (tx != null && tx.getStatus() == PaymentTransactionStatus.NEW && form != null) {
+			logger.info("Processing transaction " + tx.getUuid() + " from " + tx.getSource());
 			tx.setStatus(PaymentTransactionStatus.PROCESSING);
 			crudService.save(tx);
 			mv.addObject("paymentForm", form);
 			mv.addObject("paymentTransaction", tx);
-			logger.info("Redirecting to payment gateway site. TX: "+tx);
+			logger.info("Redirecting to payment gateway site. TX: " + tx);
 		} else {
 			logger.warn("Payment Transaction Not Valid");
 			mv.setView(new RedirectView("/", true, true, false));
@@ -119,11 +114,13 @@ public class PaymentController {
 		Map<String, String> response = parseRequest(gateway.getResponseParams(), request);
 
 		PaymentTransaction tx = service.findTransaction(gateway, response);
-		logger.info("Commiting payment Transaction " + tx.getUuid());
+		logger.info("========================================================");
+		logger.info("Commiting payment Transaction " + tx.getUuid() + " from " + tx.getSource());
 		if (!tx.isConfirmed()) {
+			tx.setResponseTries(tx.getResponseTries() + 1);
+
 			logger.info("Transaction " + tx + " is not confirmed, processing response..");
 			PaymentTransactionStatus oldStatus = tx.getStatus();
-
 			gateway.processResponse(tx, response, type);
 
 			if (oldStatus != tx.getStatus()) {
@@ -133,6 +130,8 @@ public class PaymentController {
 			}
 		}
 
+		logger.info("TX SOURCE: " + tx.getSource());
+		logger.info("========================================================");
 		return tx;
 	}
 

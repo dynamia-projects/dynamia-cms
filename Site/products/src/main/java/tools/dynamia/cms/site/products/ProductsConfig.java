@@ -18,7 +18,6 @@ package tools.dynamia.cms.site.products;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
-import org.springframework.scheduling.annotation.EnableAsync;
 
 import tools.dynamia.cms.site.products.api.ProductsListener;
 import tools.dynamia.cms.site.products.listeners.ProductListenerImpl;
@@ -28,7 +27,6 @@ import tools.dynamia.cms.site.products.listeners.ProductListenerImpl;
  * @author Mario Serrano Leones
  */
 @Configuration
-@EnableAsync
 public class ProductsConfig {
 
     public ProductsConfig() {

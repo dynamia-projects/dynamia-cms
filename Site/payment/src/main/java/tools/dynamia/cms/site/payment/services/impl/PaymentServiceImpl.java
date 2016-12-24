@@ -137,4 +137,10 @@ public class PaymentServiceImpl implements PaymentService {
 
 		return null;
 	}
+
+	@Override
+	public void saveTransaction(PaymentTransaction tx) {
+		crudService.save(tx);
+
+	}
 }

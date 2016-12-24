@@ -22,6 +22,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
@@ -34,6 +35,7 @@ import com.github.mustachejava.MustacheFactory;
  */
 @Configuration
 @EnableCaching
+@EnableAsync
 public class CoreJavaConfig {
 
 	@Bean

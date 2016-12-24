@@ -64,6 +64,8 @@ import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.domain.util.DomainUtils;
 import tools.dynamia.integration.Containers;
+import tools.dynamia.integration.scheduling.SchedulerUtil;
+import tools.dynamia.integration.scheduling.Task;
 import tools.dynamia.integration.sterotypes.Service;
 import tools.dynamia.web.util.HttpRemotingServiceClient;
 import toosl.dynamia.cms.site.shoppingcart.api.Response;
@@ -287,10 +289,13 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 	@Override
 	public void notifyOrderCompleted(ShoppingOrder order) {
+
 		ShoppingSiteConfig config = getConfiguration(order.getSite());
 		logger.info("Order Completed " + order.getNumber());
+
 		notifyOrderCustomer(config, order);
 		notifyOrderInternal(config, order);
+
 	}
 
 	private void notifyOrderInternal(ShoppingSiteConfig config, ShoppingOrder order) {
@@ -310,8 +315,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 					notificationMessage.setTo(config.getNotificationEmails());
 				}
 
-				mailService.send(notificationMessage);
-				logger.info("Notification email Sended");
+				mailService.sendAsync(notificationMessage);
+				logger.info("Notification email queued");
 			}
 		} catch (Exception e) {
 			logger.error("Error sending notification email for order " + order.getNumber(), e);
@@ -334,8 +339,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 					customerMessage.addTo(user.getContactInfo().getEmail());
 				}
 
-				mailService.send(customerMessage);
-				logger.info("Customer email Sended");
+				mailService.sendAsync(customerMessage);
+				logger.info("Customer email queued");
 			} else {
 				logger.error("No email template found for customer Orden Completed notification");
 			}

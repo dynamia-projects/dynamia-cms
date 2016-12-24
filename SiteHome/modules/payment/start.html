@@ -11,9 +11,10 @@
 		<input type="hidden" th:each="payp : ${paymentForm.parameters}" th:name="${payp.key}"
 			th:value="${payp.value}" />
 
-		<noscript>
-			<input type="submit" value="Continuar" class="btn btn-success btn-lg" />
-		</noscript>
+
+		<p>Si el navegador no redirecciona, presione en <input type="submit" value="Continuar" class="btn btn-success btn-sm" />.</p>
+		 
+
 	</form>
 
 
@@ -21,7 +22,6 @@
 
 <th:block layout:fragment="scripts">
 	<script type="text/javascript">
-	
 		$(document).ready(function() {
 			$("#autoPaymentForm").submit();
 		});

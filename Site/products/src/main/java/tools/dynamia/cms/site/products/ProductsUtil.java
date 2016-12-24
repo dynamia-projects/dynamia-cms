@@ -25,6 +25,8 @@ import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.products.domain.Product;
 import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import tools.dynamia.cms.site.products.services.ProductsService;
+import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
+import tools.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
 import tools.dynamia.cms.site.users.UserHolder;
 import tools.dynamia.cms.site.users.domain.User;
@@ -56,7 +58,12 @@ public class ProductsUtil {
 
 		if (mv.getModel().get("cart") != null) {
 			try {
-				ShoppingCart shoppingCart = (ShoppingCart) mv.getModel().get("cart");
+				Object cart = mv.getModel().get("cart");
+				if(cart instanceof String) {
+					cart = ShoppingCartHolder.get().getCart((String) cart);
+				}
+				
+				ShoppingCart shoppingCart = (ShoppingCart) cart;
 				if (shoppingCart != null && shoppingCart.getName() != null) {
 					switch (shoppingCart.getName()) {
 					case "quote":

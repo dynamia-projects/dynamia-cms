@@ -24,8 +24,8 @@
 			<th:block th:include="module::position('confirmOrderTop')"
 				th:if="${cmsModules.isUsed('confirmOrderTop')}" />
 
-			<form id="paymentForm" role="form" class="form-horizontal" th:action="${paymentForm.url}"
-				th:method="${paymentForm.httpMethod}">
+			<form id="paymentForm" role="form" class="form-horizontal" th:action="@{/payment/start}" th:method="GET">
+				
 				<div class="row">
 					<div class="col-md-4">
 
@@ -122,8 +122,8 @@
 
 				<!-- Button -->
 				<div class="form-group">
-					<input type="hidden" th:each="param : ${paymentForm.parameters}" th:name="${param.key}"
-						th:value="${param.value}" />
+
+						
 					<button data-toggle="modal" href="#payconfirm" type="button" class="btn btn-danger btn-lg">Pagar
 						en Linea</button>
 					<a id="cancelBtn" data-toggle="modal" href="#cancelconfirm" class="btn btn-warning btn-lg">

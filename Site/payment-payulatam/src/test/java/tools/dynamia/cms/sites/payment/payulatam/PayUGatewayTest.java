@@ -21,6 +21,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import tools.dynamia.cms.site.payment.ResponseType;
 import tools.dynamia.cms.site.payment.payulatam.PayULatamGateway;
 import tools.dynamia.cms.site.payment.services.impl.PaymentServiceImpl;
 
@@ -34,12 +35,12 @@ public class PayUGatewayTest {
 		response.put("referenceCode", "580C965A81474DAE99DB4ED043FDDF9D");
 		response.put("TX_VALUE", "1990000.00");
 		response.put("currency", "COP");
-		response.put("transactionState", "6");
+		response.put("state_pol", "6");
 		response.put("signature", "15b4a4be299872d8cff29707ace8f7df");
 
 		PayULatamGateway gateway = new PayULatamGateway(new PaymentServiceImpl());
 
-		Assert.assertTrue(gateway.isValidSignature(apiKey, response));
+		Assert.assertTrue(gateway.isValidSignature(apiKey, response,ResponseType.CONFIRMATION));
 	}
 
 }

@@ -15,24 +15,25 @@
  */
 package tools.dynamia.cms.site.mail.services.impl;
 
-import tools.dynamia.cms.site.core.StringParser;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import javax.mail.MessagingException;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import tools.dynamia.cms.site.core.StringParser;
 import tools.dynamia.cms.site.mail.MailMessage;
 import tools.dynamia.cms.site.mail.MailServiceException;
 import tools.dynamia.cms.site.mail.MailServiceListener;
@@ -40,7 +41,6 @@ import tools.dynamia.cms.site.mail.domain.MailAccount;
 import tools.dynamia.cms.site.mail.domain.MailTemplate;
 import tools.dynamia.cms.site.mail.domain.MailingContact;
 import tools.dynamia.cms.site.mail.services.MailService;
-
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
 import tools.dynamia.domain.query.QueryParameters;
@@ -61,8 +61,20 @@ public class MailServiceImpl implements MailService {
 	private final LoggingService logger = new SLF4JLoggingService(MailService.class);
 
 	@Override
+	@Async
+	public void sendAsync(String to, String subject, String content) {
+		send(to, subject, content);
+	}
+
+	@Override
 	public void send(String to, String subject, String content) {
 		send(new MailMessage(to, subject, content));
+	}
+
+	@Override
+	@Async
+	public void sendAsync(MailMessage mailMessage) {
+		send(mailMessage);
 	}
 
 	@Override
@@ -103,7 +115,7 @@ public class MailServiceImpl implements MailService {
 			if (from != null && personal != null) {
 
 				helper.setFrom(from, personal);
-				
+
 			}
 
 			if (!mailMessage.getBccs().isEmpty()) {
@@ -175,7 +187,7 @@ public class MailServiceImpl implements MailService {
 			mailSender.setPort(account.getPort());
 			mailSender.setUsername(account.getUsername());
 			mailSender.setPassword(account.getPassword());
-			
+
 			mailSender.setProtocol("smtp");
 			if (account.getEnconding() != null && !account.getEnconding().isEmpty()) {
 				mailSender.setDefaultEncoding(account.getEnconding());

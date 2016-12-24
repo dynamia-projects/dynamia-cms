@@ -42,6 +42,7 @@ import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import tools.dynamia.cms.site.payment.services.PaymentService;
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
+import tools.dynamia.domain.services.CrudService;
 
 @Service
 public class PayULatamGateway implements PaymentGateway {
@@ -85,12 +86,13 @@ public class PayULatamGateway implements PaymentGateway {
 
 	private PaymentService service;
 
-	private LoggingService logger = new SLF4JLoggingService(PayULatamGateway.class, "[==PAYULATAM==] ");
+	private LoggingService logger = new SLF4JLoggingService(PayULatamGateway.class, "[PAYULATAM] ");
 
 	@Autowired
 	public PayULatamGateway(PaymentService service) {
 		super();
 		this.service = service;
+
 	}
 
 	@Override
@@ -208,20 +210,15 @@ public class PayULatamGateway implements PaymentGateway {
 			tx.setEndDate(new Date());
 		}
 
-		if (!isValidSignature(params.get(API_KEY), response)) {
+		if (!isValidSignature(params.get(API_KEY), response, type)) {
 			tx.setStatus(PaymentTransactionStatus.ERROR);
 			tx.setStatusText("Firma digital invalida");
-			tx.setConfirmed(true);
+			service.saveTransaction(tx);
+			logger.error("Signature is invalid");
 			return false;
 		}
 
-		String txState = null;
-
-		if (type == ResponseType.RESPONSE) {
-			txState = response.get(RES_TRANSACTION_STATE);
-		} else if (type == ResponseType.CONFIRMATION) {
-			txState = response.get(RES_STATE_POL);
-		}
+		String txState = getResponseState(response, type);
 
 		if (txState == null || txState.isEmpty()) {
 			logger.info("NO Transaction State found in response aborting TX: " + tx.getUuid());
@@ -230,7 +227,7 @@ public class PayULatamGateway implements PaymentGateway {
 
 		String statusText = "";
 		PaymentTransactionStatus status = tx.getStatus();
-		if (status == null || status == PaymentTransactionStatus.NEW || status == PaymentTransactionStatus.PROCESSING) {
+		if (status == null || status != PaymentTransactionStatus.COMPLETED) {
 
 			if (txState.equals("4")) {
 				statusText = "Transaccion Aprobada";
@@ -245,6 +242,9 @@ public class PayULatamGateway implements PaymentGateway {
 				statusText = "Transaccion Pendiente";
 				status = PaymentTransactionStatus.PROCESSING;
 				tx.setEndDate(null);
+			} else if (txState.equals("5")) {
+				statusText = "Transaccion Expirada";
+				status = PaymentTransactionStatus.EXPIRED;
 			} else {
 				status = PaymentTransactionStatus.UNKNOWN;
 				statusText = response.get("mensaje");
@@ -258,6 +258,10 @@ public class PayULatamGateway implements PaymentGateway {
 				}
 			}
 
+			if (status == PaymentTransactionStatus.COMPLETED) {
+				tx.setConfirmed(true);
+			}
+
 			tx.setStatus(status);
 			tx.setStatusText(statusText);
 			tx.setBank(response.get(RES_PSE_BANK));
@@ -268,14 +272,28 @@ public class PayULatamGateway implements PaymentGateway {
 			tx.setReference3(response.get(RES_PSE_REFERENCE1) + " " + response.get(RES_PSE_REFERENCE2) + " "
 					+ response.get(RES_PSE_REFERENCE3));
 			tx.setGatewayResponse(mapToString(response));
-
+			service.saveTransaction(tx);
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public boolean isValidSignature(String apiKey, Map<String, String> response) {
+	private String getResponseState(Map<String, String> response, ResponseType type) {
+		String txState = null;
+		if (type == ResponseType.RESPONSE) {
+			txState = response.get(RES_TRANSACTION_STATE);
+		} else if (type == ResponseType.CONFIRMATION) {
+			txState = response.get(RES_STATE_POL);
+
+			if (txState == null || txState.isEmpty()) {
+				txState = response.get(RES_TRANSACTION_STATE);
+			}
+		}
+		return txState;
+	}
+
+	public boolean isValidSignature(String apiKey, Map<String, String> response, ResponseType type) {
 		// $ApiKey~$merchant_id~$referenceCode~$New_value~$currency~$transactionState
 
 		String merchantId = response.get(MERCHANT_ID);
@@ -283,7 +301,7 @@ public class PayULatamGateway implements PaymentGateway {
 		String value = response.get(TX_VALUE);
 		value = new BigDecimal(value).setScale(1, RoundingMode.HALF_EVEN).floatValue() + "";
 		String currency = response.get(CURRENCY);
-		String state = response.get(TX_STATE);
+		String state = getResponseState(response, type);
 
 		String responseSignature = response.get(SIGNATURE);
 		logger.info("PayU ===> Validating Response Signature: " + responseSignature + " == MD5($ApiKey~" + merchantId

@@ -48,6 +48,8 @@ fields:
       header:
         align: center
       
+  transaction.paymentMethod:
+    label: Payment Method
     
   transaction.status:
     label: Status
@@ -55,14 +57,12 @@ fields:
   transaction.statusText:
     label: Status Text
     
-  transaction.uuid:
-    label: Reference
+  
     
   transaction.confirmed:
     label: Confirmed
     
-  transaction.paymentMethod:
-    label: Payment Method
+ 
     
   shippingCompany:
   trackingNumber:
@@ -72,11 +72,13 @@ fields:
     params:
       header:
         width: 300px
-
+        
+  transaction.uuid:
+    label: Reference
   sended:
   externalRef:
   errorCode:
   errorMessage:
 
 params:
-    orderBy: creationDate desc
+    orderBy: number desc

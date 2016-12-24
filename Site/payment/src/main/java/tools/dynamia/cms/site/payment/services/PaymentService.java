@@ -34,5 +34,7 @@ public interface PaymentService {
 	public abstract PaymentTransaction findTransaction(PaymentGateway gateway, Map<String, String> response);
 
 	public abstract PaymentGateway getDefaultGateway();
+	
+	public abstract void saveTransaction(PaymentTransaction tx);
 
 }

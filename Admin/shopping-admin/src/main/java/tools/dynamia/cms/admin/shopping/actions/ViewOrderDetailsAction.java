@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import tools.dynamia.cms.admin.shopping.ui.ShoppingOrderDetailsUI;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-
+import tools.dynamia.actions.ActionRenderer;
 import tools.dynamia.actions.InstallAction;
 import tools.dynamia.commons.ApplicableClass;
 import tools.dynamia.crud.AbstractCrudAction;
 import tools.dynamia.crud.CrudActionEvent;
 import tools.dynamia.crud.CrudState;
 import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer;
 import tools.dynamia.zk.util.ZKUtil;
 
 @InstallAction
@@ -20,9 +21,9 @@ public class ViewOrderDetailsAction extends AbstractCrudAction {
 	private CrudService crudService;
 
 	public ViewOrderDetailsAction() {
-		setName("View Details");
+		setName("Details");
 		setMenuSupported(true);
-		setImage("info");
+		setImage("table");
 	}
 
 	@Override
@@ -46,6 +47,11 @@ public class ViewOrderDetailsAction extends AbstractCrudAction {
 			ui.setStyle("overflow: auto");
 			ZKUtil.showDialog("Shopping Order No. " + shoppingOrder.getNumber(), ui, "90%", "90%");
 		}
+	}
+	
+	@Override
+	public ActionRenderer getRenderer() {
+		return new ToolbarbuttonActionRenderer(true);
 	}
 
 }
