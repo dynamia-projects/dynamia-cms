@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.actions.SiteActionManager;
 
 /**
@@ -59,6 +60,9 @@ public class ShoppingCartController {
 	@RequestMapping(value = "/{name}/add/{itemCode}", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView add(@PathVariable String name, @PathVariable String itemCode, HttpServletRequest request,
 			final RedirectAttributes redirectAttributes) {
+
+		itemCode = CMSUtil.clearJSESSIONID(itemCode);
+
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("cartName", name);
 		String redirect = request.getParameter("currentURI");
@@ -72,6 +76,8 @@ public class ShoppingCartController {
 	@RequestMapping(value = "/{name}/remove/{itemCode}", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView remove(@PathVariable String name, @PathVariable String itemCode, HttpServletRequest request,
 			final RedirectAttributes redirectAttributes) {
+
+		itemCode = CMSUtil.clearJSESSIONID(itemCode);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("cartName", name);
 		String redirect = request.getParameter("currentURI");
@@ -97,6 +103,8 @@ public class ShoppingCartController {
 	@RequestMapping(value = "/{name}/update/{itemCode}", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView update(@PathVariable String name, @PathVariable String itemCode, HttpServletRequest request,
 			final RedirectAttributes redirectAttributes) {
+
+		itemCode = CMSUtil.clearJSESSIONID(itemCode);
 		ModelAndView mv = new ModelAndView("/shopping");
 		mv.addObject("cartName", name);
 		SiteActionManager.performAction("updateItemFromCart", mv, request, redirectAttributes, itemCode);
@@ -192,6 +200,16 @@ public class ShoppingCartController {
 		ModelAndView mv = new ModelAndView();
 
 		SiteActionManager.performAction("showMyOrdersStatus", mv, request, redirectAttributes, customer);
+
+		return mv;
+	}
+
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/newpayment", method = { RequestMethod.GET })
+	public ModelAndView newManualPayment(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
+
+		SiteActionManager.performAction("createNewPayment", mv, request, redirectAttributes);
 
 		return mv;
 	}

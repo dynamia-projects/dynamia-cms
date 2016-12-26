@@ -65,8 +65,9 @@ public class UsersConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests().anyRequest().permitAll();
+        http.sessionManagement().enableSessionUrlRewriting(false);
         http.csrf().disable();
-        http
+        http        		
                 .formLogin()
                 .authenticationDetailsSource(new AuthenticationDetailsSource())
                 .usernameParameter("username")
@@ -86,6 +87,8 @@ public class UsersConfig extends WebSecurityConfigurerAdapter {
                 .and().httpStrictTransportSecurity()
                 .and().contentTypeOptions()
                 .and().frameOptions().disable();
+                
+        		
         
 
     }

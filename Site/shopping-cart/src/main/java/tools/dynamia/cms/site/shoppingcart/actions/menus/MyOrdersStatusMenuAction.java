@@ -1,4 +1,4 @@
-package tools.dynamia.cms.site.shoppingcart.actions;
+package tools.dynamia.cms.site.shoppingcart.actions.menus;
 
 import tools.dynamia.cms.site.core.api.CMSAction;
 import tools.dynamia.cms.site.users.actions.UserMenuAction;

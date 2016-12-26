@@ -18,11 +18,17 @@ fields:
     component: decimalbox
   minShipmentAmount:
   defaultCurrency:
+  paymentTypes:
+  
   autoSendOrders:
   orderSenderURL:
     label: Order Sender URL
   orderStatusURL:
     label: Order Status URL
+    
+  autoSendPayments:
+  paymentsSenderURL:
+    label: Payments Sender URL
   
   descriptionTemplate:
   notificationEmails:
@@ -41,6 +47,12 @@ groups:
        - maxPaymentAmount
        - shipmentPercent
        - minShipmentAmount
+    remote:
+       - orderSenderURL
+       - orderStatusURL
+       - paymentsSenderURL
+       - autoSendOrders
+       - autoSendPayments
     notifications:
        fields:
        - notificationEmails  
@@ -51,4 +63,4 @@ groups:
   
  
 layout:
-  columns: 2
+  columns: 3

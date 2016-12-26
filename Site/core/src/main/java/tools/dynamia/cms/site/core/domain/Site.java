@@ -216,6 +216,20 @@ public class Site extends SimpleEntity implements Parameterizable {
 		this.metadataRights = metadataRights;
 	}
 
+	public String getParameterValue(String name) {
+		for (SiteParameter siteParameter : parameters) {
+			if (siteParameter.getName().equals(name)) {
+				return siteParameter.getValue();
+			}
+		}
+		return null;
+	}
+
+	public boolean isParameter(String name) {
+		String value = getParameterValue(name);
+		return value == null ? false : Boolean.valueOf(value);
+	}
+
 	@Override
 	public String toString() {
 		return String.format("%s (%s)", name, key);

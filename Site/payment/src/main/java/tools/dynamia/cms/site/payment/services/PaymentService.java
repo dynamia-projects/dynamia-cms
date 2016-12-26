@@ -15,11 +15,14 @@
  */
 package tools.dynamia.cms.site.payment.services;
 
+import java.util.List;
 import java.util.Map;
 
 import tools.dynamia.cms.site.payment.PaymentGateway;
+import tools.dynamia.cms.site.payment.domain.ManualPayment;
 import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
+import tools.dynamia.domain.query.QueryParameters;
 
 public interface PaymentService {
 
@@ -34,7 +37,13 @@ public interface PaymentService {
 	public abstract PaymentTransaction findTransaction(PaymentGateway gateway, Map<String, String> response);
 
 	public abstract PaymentGateway getDefaultGateway();
-	
+
 	public abstract void saveTransaction(PaymentTransaction tx);
+
+	public abstract void register(ManualPayment payment);
+
+	List<ManualPayment> findManualPaymentsByPayerCode(String source, String payerCode);
+
+	List<ManualPayment> findManualPayments(String source, String registratorCode, String payerCode);
 
 }

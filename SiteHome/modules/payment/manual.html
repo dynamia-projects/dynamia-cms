@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+
+<div class="maincontainer" layout:fragment="content">
+
+
+	<div class="container">
+		<!-- Main Title-->
+		<div class="titles animated fadeInUp time3">
+			<div class="pull-left">
+				<h1 class="headinglefttitle">Estado de Pago</h1>
+				<div th:text="${subtitle}" class="headingsubtitle"></div>
+			</div>
+			<i class="icon-check"></i>
+		</div>
+
+		<div class="row mt40">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">
+				<table class="table" th:if="${payment!=null}">
+				<tr>
+						<td><label class="orange">Estado</label></td>
+						<td><span>Pago Registrado Exitosamente!</span></td>
+					</tr>
+					<tr>
+						<td><label class="orange">Numero</label></td>
+						<td><span th:text="${payment.number}"></span></td>
+					</tr>
+					<tr>
+						<td><label class="orange">Forma de Pago</label></td>
+						<td><span th:text="${payment.type}"></span></td>
+					</tr>
+					<tr>
+						<td><label class="orange">Valor</label></td>
+						<td><span th:text="${payment.amount}"></span></td>
+					</tr>
+
+					<tr>
+						<td><label class="orange">Fecha</label></td>
+						<td><span th:text="${payment.creationDate}"></span></td>
+					</tr>
+					<tr>
+						<td><label class="orange">Hora</label></td>
+						<td><span th:text="${payment.creationTime}"></span></td>
+					</tr>
+					<tr>
+						<td><label class="orange">Usuario</label></td>
+						<td><span th:text="${payment.registrator}"></span></td>
+					</tr>
+					<tr>
+						<td><label class="orange">Codigo de Usuario</label></td>
+						<td><span th:text="${payment.registratorCode}"></span></td>
+					</tr>
+					<tr>
+						<td><label class="orange">Pagador</label></td>
+						<td><span th:text="${payment.payer}"></span></td>
+					</tr>
+					<tr>
+						<td><label class="orange">Codigo de Pagador</label></td>
+						<td><span th:text="${payment.payerCode}"></span></td>
+					</tr>
+					<tr>
+						<td><label class="orange">Referencia 1</label></td>
+						<td><span th:text="${payment.reference}"></span></td>
+					</tr>
+					<tr>
+						<td><label class="orange">Referencia 2</label></td>
+						<td><span th:text="${payment.reference2}"></span></td>
+					</tr>
+					<tr>
+						<td><label class="orange">Referencia 3</label></td>
+						<td><span th:text="${payment.reference3}"></span></td>
+					</tr>
+					<tr>
+						<td><label class="orange">Observaciones</label></td>
+						<td><span th:text="${payment.description}"></span></td>
+					</tr>
+				</table>
+
+
+			</div>
+		</div>
+		
+
+	</div>
+</div>
+</html>

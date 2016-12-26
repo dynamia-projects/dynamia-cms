@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+
+
+<div class="container" layout:fragment="content">
+
+	<!-- Main Title-->
+	<div class="titles">
+		<div class="pull-left">
+			<h1 class="headinglefttitle">Nuevo Pago</h1>
+			<div class="headingsubtitle" th:text="${subtitle}"></div>
+		</div>
+		<i class="icon-map-marker"></i>
+	</div>
+
+	<div class="row mt40">
+		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+			<form id="userForm" class="form-horizontal" action="#" th:action="@{/payment/manual/register}"
+				th:object="${payment}" method="post">
+
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Forma de Pago <span class="red">*</span></label>
+					<div class="col-lg-3">
+						<select th:field="*{type}" class="form-control">
+							<option th:each="op : ${paymentTypes}" th:value="${op.value}" th:text="${op.name}">TYPE</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Valor <span class="red">*</span></label>
+					<div class="col-lg-10">
+						<input type="number" class="form-control" th:field="*{amount}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Referencia 1</label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" th:field="*{reference}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Referencia 2</label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" th:field="*{reference2}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Referencia 3</label>
+					<div class="col-lg-10">
+						<input type="text" class="form-control" th:field="*{reference3}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Observaciones </label>
+					<div class="col-lg-10">
+						<textarea class="form-control" th:field="*{description}" rows="4">
+						</textarea>
+					</div>
+				</div>
+
+				<input type="submit" class="btn btn-orange pull-right" value="Registrar Pago" />
+
+			</form>
+		</div>
+
+	</div>
+
+</div>
+
+
+</html>

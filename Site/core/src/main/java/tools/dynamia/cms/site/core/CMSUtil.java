@@ -37,6 +37,7 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpUtils;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -400,19 +401,35 @@ public class CMSUtil {
 	public static boolean isJson(HttpServletRequest request) {
 		return request.getRequestURI().endsWith(".json");
 	}
+
 	public static String getChecksum(Serializable object) throws IOException, NoSuchAlgorithmException {
-	    ByteArrayOutputStream baos = null;
-	    ObjectOutputStream oos = null;
-	    try {
-	        baos = new ByteArrayOutputStream();
-	        oos = new ObjectOutputStream(baos);
-	        oos.writeObject(object);
-	        MessageDigest md = MessageDigest.getInstance("MD5");
-	        byte[] thedigest = md.digest(baos.toByteArray());
-	        return DatatypeConverter.printHexBinary(thedigest);
-	    } finally {
-	        oos.close();
-	        baos.close();
-	    }
+		ByteArrayOutputStream baos = null;
+		ObjectOutputStream oos = null;
+		try {
+			baos = new ByteArrayOutputStream();
+			oos = new ObjectOutputStream(baos);
+			oos.writeObject(object);
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			byte[] thedigest = md.digest(baos.toByteArray());
+			return DatatypeConverter.printHexBinary(thedigest);
+		} finally {
+			oos.close();
+			baos.close();
+		}
 	}
+
+	public static String clearJSESSIONID(String path) {
+		if (path != null) {
+
+			String target = ";JSESSIONID";
+
+			if (path.toUpperCase().contains(target)) {
+				int index = path.toUpperCase().indexOf(target);
+				path = path.substring(0, index);
+
+			}
+		}
+		return path;
+	}
+
 }

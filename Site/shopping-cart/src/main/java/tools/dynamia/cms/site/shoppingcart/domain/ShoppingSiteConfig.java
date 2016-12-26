@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -59,6 +60,8 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 	private String orderSenderURL;
 	private boolean autoSendOrders;
 	private String orderStatusURL;
+	private String paymentsSenderURL;
+	private boolean autoSendPayments;
 
 	@OneToOne
 	private MailTemplate orderCompletedMailTemplate;
@@ -71,6 +74,33 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 
 	@OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ShoppingSiteConfigParameter> parameters = new ArrayList<>();
+
+	@Column(length = 3000)
+	private String paymentTypes;
+
+	public String getPaymentsSenderURL() {
+		return paymentsSenderURL;
+	}
+
+	public void setPaymentsSenderURL(String paymentsSenderURL) {
+		this.paymentsSenderURL = paymentsSenderURL;
+	}
+
+	public boolean isAutoSendPayments() {
+		return autoSendPayments;
+	}
+
+	public void setAutoSendPayments(boolean autoSendPayments) {
+		this.autoSendPayments = autoSendPayments;
+	}
+
+	public String getPaymentTypes() {
+		return paymentTypes;
+	}
+
+	public void setPaymentTypes(String paymentTypes) {
+		this.paymentTypes = paymentTypes;
+	}
 
 	public List<ShoppingSiteConfigParameter> getParameters() {
 		return parameters;

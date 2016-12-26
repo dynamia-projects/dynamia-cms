@@ -48,5 +48,7 @@ public class ShoppingCartUtils {
 		mv.addObject("paymentEnabled", paymentEnabled);
 
 	}
+	
+	
 
 }

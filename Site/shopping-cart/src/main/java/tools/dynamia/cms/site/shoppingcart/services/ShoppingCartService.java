@@ -20,6 +20,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import tools.dynamia.cms.site.core.domain.Site;
+import tools.dynamia.cms.site.payment.domain.ManualPayment;
 import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
@@ -29,6 +30,7 @@ import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.domain.ValidationError;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.web.util.HttpRemotingServiceClient;
+import toosl.dynamia.cms.site.shoppingcart.api.ManualPaymentSender;
 import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSender;
 import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderDTO;
 
@@ -59,5 +61,7 @@ public interface ShoppingCartService {
 	void sendOrder(ShoppingOrder order);
 
 	void sendAllOrders();
+
+	void sendAllPayments();
 
 }

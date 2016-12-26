@@ -24,21 +24,27 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import tools.dynamia.cms.site.payment.PaymentException;
 import tools.dynamia.cms.site.payment.PaymentGateway;
+import tools.dynamia.cms.site.payment.domain.ManualPayment;
 import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
 import tools.dynamia.cms.site.payment.services.PaymentService;
+import tools.dynamia.domain.query.ApplicationParameters;
 import tools.dynamia.domain.query.QueryConditions;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.domain.util.DomainUtils;
 import tools.dynamia.integration.Containers;
 import tools.dynamia.integration.sterotypes.Service;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
+
+	private static final String LAST_MANUAL_PAYMENT_NUMBER = "lastManualPaymentNumber-";
 
 	@Autowired
 	private CrudService crudService;
@@ -141,6 +147,50 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public void saveTransaction(PaymentTransaction tx) {
 		crudService.save(tx);
+
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void register(ManualPayment payment) {
+		if (payment.getNumber() == null && payment.getSource() != null) {
+			String paramName = LAST_MANUAL_PAYMENT_NUMBER + payment.getSource();
+			long lastNumber = Long.parseLong(ApplicationParameters.get().getValue(paramName, "0"));
+			lastNumber++;
+
+			ApplicationParameters.get().setParameter(paramName, lastNumber);
+
+			String number = DomainUtils.formatNumberWithZeroes(lastNumber, 10000);
+			payment.setNumber(number);
+		}
+		crudService.save(payment);
+	}
+
+	/**
+	 * 
+	 * @param source
+	 * @param registratorCode
+	 * @param payerCode
+	 * @return
+	 */
+	@Override
+	public List<ManualPayment> findManualPayments(String source, String registratorCode, String payerCode) {
+		return crudService.find(ManualPayment.class,
+				QueryParameters.with("source", source).add("registratorCode", registratorCode)
+						.add("payerCode", payerCode).setAutocreateSearcheableStrings(false));
+
+	}
+
+	/**
+	 * 
+	 * @param source
+	 * @param payerCode
+	 * @return
+	 */
+	@Override
+	public List<ManualPayment> findManualPaymentsByPayerCode(String source, String payerCode) {
+		return crudService.find(ManualPayment.class, QueryParameters.with("source", source).add("payerCode", payerCode)
+				.setAutocreateSearcheableStrings(false));
 
 	}
 }
