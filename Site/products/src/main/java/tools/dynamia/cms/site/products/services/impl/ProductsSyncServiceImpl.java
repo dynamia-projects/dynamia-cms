@@ -353,6 +353,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 			RelatedProduct localRelated = getLocalEntity(RelatedProduct.class, remoteRelated.getExternalRef(), siteCfg);
 			if (localRelated == null) {
 				localRelated = new RelatedProduct();
+				localRelated.setSite(siteCfg.getSite());
 				localRelated.setProduct(getLocalEntity(Product.class, remoteRelated.getProductExternalRef(), siteCfg));
 
 				if (remoteRelated.getTargetCategoryExternalRef() != null) {
@@ -431,8 +432,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 				Files.createDirectories(folder);
 			}
 
-			try (InputStream in = url.openStream()) {
-				logger.info("-Downloading image " + imageName + " to " + localFolder);
+			try (InputStream in = url.openStream()) {				
 				Files.copy(in, localFile, StandardCopyOption.REPLACE_EXISTING);
 
 			} catch (IOException ex) {
@@ -445,11 +445,8 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
 	@Override
 	public ProductsDatasource getDatasource(ProductsSiteConfig cfg) {
-		return HttpRemotingServiceClient.build(ProductsDatasource.class)
-				.setServiceURL(cfg.getDatasourceURL())
-				.setUsername(cfg.getDatasourceUsername())
-				.setPassword(cfg.getDatasourcePassword())
-				.getProxy();
+		return HttpRemotingServiceClient.build(ProductsDatasource.class).setServiceURL(cfg.getDatasourceURL())
+				.setUsername(cfg.getDatasourceUsername()).setPassword(cfg.getDatasourcePassword()).getProxy();
 	}
 
 	private void deleteProductsDetails(Product product) {

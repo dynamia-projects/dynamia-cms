@@ -23,7 +23,8 @@ import org.springframework.stereotype.Service;
 
 import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import tools.dynamia.cms.site.products.services.ProductsSynchronizer;
-
+import tools.dynamia.commons.logger.LoggingService;
+import tools.dynamia.commons.logger.SLF4JLoggingService;
 import tools.dynamia.domain.services.CrudService;
 
 /**
@@ -33,18 +34,25 @@ import tools.dynamia.domain.services.CrudService;
 @Service
 public class ProductsAutoSynchronizer {
 
-    @Autowired
-    private ProductsSynchronizer synchronizer;
-    @Autowired
-    private CrudService crudService;
+	@Autowired
+	private ProductsSynchronizer synchronizer;
+	@Autowired
+	private CrudService crudService;
 
-    @Scheduled(fixedDelay = 2 * 60 * 60 * 1000)
-    public void sync() {
-        List<ProductsSiteConfig> configs = crudService.findAll(ProductsSiteConfig.class);
-        for (ProductsSiteConfig config : configs) {
-            synchronizer.synchronize(config);
-        }
+	private LoggingService logger = new SLF4JLoggingService(ProductsAutoSynchronizer.class);
 
-    }
+	@Scheduled(fixedDelay = 2 * 60 * 60 * 1000)
+	public void sync() {
+		List<ProductsSiteConfig> configs = crudService.find(ProductsSiteConfig.class, "site.offline", false);
+		for (ProductsSiteConfig config : configs) {
+			try {
+				synchronizer.synchronize(config);
+			} catch (Throwable e) {
+				logger.error("Error autosyncrhozing Products Site: " + config.getSite(), e);
+				e.printStackTrace();
+			}
+		}
+
+	}
 
 }

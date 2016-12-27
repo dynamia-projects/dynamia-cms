@@ -528,7 +528,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 	public void sendAllOrders() {
 		logger.info("Sending all shopping orders");
 		try {
-			List<Site> sites = crudService.findAll(Site.class);
+			List<Site> sites = crudService.find(Site.class, "offline", false);
 			for (Site site : sites) {
 				ShoppingSiteConfig cfg = getConfiguration(site);
 				if (cfg != null && cfg.isAutoSendOrders() && cfg.getOrderSenderURL() != null
@@ -560,7 +560,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 	public void sendAllPayments() {
 		logger.info("Sending all manual Payments");
 		try {
-			List<Site> sites = crudService.findAll(Site.class);
+			List<Site> sites = crudService.find(Site.class, "offline", false);
 			for (Site site : sites) {
 				ShoppingSiteConfig cfg = getConfiguration(site);
 				if (cfg != null && cfg.isAutoSendPayments() && cfg.getPaymentsSenderURL() != null
