@@ -61,6 +61,7 @@ public class Site extends SimpleEntity implements Parameterizable {
 	private boolean offline;
 	private String offlineMessage;
 	private String offlineIcon;
+	private String offlineRedirect;
 	private String template = "dynamical";
 	private String metadataKeywords;
 	private String metadataAuthor;
@@ -70,6 +71,14 @@ public class Site extends SimpleEntity implements Parameterizable {
 	private String googleAnalyticsDomain;
 	private String googleSiteVerification;
 	private boolean corporateSite;
+
+	public String getOfflineRedirect() {
+		return offlineRedirect;
+	}
+
+	public void setOfflineRedirect(String offlineRedirect) {
+		this.offlineRedirect = offlineRedirect;
+	}
 
 	public boolean isCorporateSite() {
 		return corporateSite;

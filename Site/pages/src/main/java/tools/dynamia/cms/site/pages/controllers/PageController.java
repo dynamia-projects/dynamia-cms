@@ -16,6 +16,7 @@
 package tools.dynamia.cms.site.pages.controllers;
 
 import tools.dynamia.cms.site.core.CMSUtil;
+import tools.dynamia.cms.site.core.SiteHandleInterceptor;
 import tools.dynamia.cms.site.core.actions.SiteActionManager;
 import java.util.Collection;
 import java.util.HashMap;
@@ -43,7 +44,6 @@ import tools.dynamia.commons.DateInfo;
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
 import tools.dynamia.integration.Containers;
-import tools.dynamia.integration.ObjectMatcher;
 
 /**
  *
@@ -55,7 +55,7 @@ public class PageController {
 	@Autowired
 	private PageService service;
 	@Autowired
-	private SiteService coreService;
+	private SiteService siteService;
 
 	private LoggingService logger = new SLF4JLoggingService(PageController.class);
 
@@ -99,14 +99,22 @@ public class PageController {
 		return mv;
 	}
 
+	@RequestMapping(value = "/offline")
+	public ModelAndView offline(HttpServletRequest request) {
+		Site site = siteService.getSite(request);
+		ModelAndView mv = new ModelAndView();
+		SiteHandleInterceptor.shutdown(site, mv);
+		return mv;
+	}
+
 	private ModelAndView getPage(String pageAlias, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView("site/page");
 
-		Site site = coreService.getSite(request);
+		Site site = siteService.getSite(request);
 
 		if (site != null && site.isOffline()) {
-			shutdown(site, mv);
+			SiteHandleInterceptor.shutdown(site, mv);
 		} else {
 			Page page = loadPage(site, pageAlias, mv);
 			configurePageType(page, site, mv, request);
@@ -125,7 +133,7 @@ public class PageController {
 			}
 
 			mv.addObject("page", page);
-			mv.addObject("pageContent",CMSUtil.escapeHtmlContent(page.getContent()));
+			mv.addObject("pageContent", CMSUtil.escapeHtmlContent(page.getContent()));
 			mv.addObject("pageImage", page.getImageURL());
 			mv.addObject("title", page.getTitle());
 			mv.addObject("subtitle", page.getSubtitle());
@@ -155,13 +163,7 @@ public class PageController {
 
 	private PageTypeExtension getExtension(final String type) {
 		Collection<PageTypeExtension> types = Containers.get().findObjects(PageTypeExtension.class,
-				new ObjectMatcher<PageTypeExtension>() {
-
-					@Override
-					public boolean match(PageTypeExtension object) {
-						return object.getId().equals(type);
-					}
-				});
+				object -> object.getId().equals(type));
 
 		for (PageTypeExtension pageTypeExtension : types) {
 			return pageTypeExtension;
@@ -181,13 +183,5 @@ public class PageController {
 		}
 	}
 
-	private void shutdown(Site site, ModelAndView mv) {
-		mv.setViewName("error/offline");
-		mv.addObject("title", "OFFLINE!");
-		mv.addObject("site", site);
-		mv.addObject("siteKey", site.getKey());
-		mv.addObject("offlineIcon", site.getOfflineIcon());
-		mv.addObject("offlineMessage", site.getOfflineMessage());
 
-	}
 }

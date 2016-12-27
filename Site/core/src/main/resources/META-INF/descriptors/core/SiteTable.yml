@@ -1,4 +1,4 @@
 view: table
 beanClass: tools.dynamia.cms.site.core.domain.Site
 hidden: [id,description,offlineMessage,offlineIcon,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
-sortFields: [name,key,parent,template,offline,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification]
+sortFields: [name,key,parent,template,corporateSite,offline,offlineRedirect,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification]

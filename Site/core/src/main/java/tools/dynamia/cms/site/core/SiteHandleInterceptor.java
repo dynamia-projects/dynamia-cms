@@ -22,12 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 import tools.dynamia.cms.site.core.api.SiteRequestInterceptor;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.services.SiteService;
-
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
 import tools.dynamia.integration.Containers;
@@ -48,6 +45,16 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 
 		Site site = getCurrentSite(request);
+		if (site != null && site.isOffline()) {
+
+			if (site.getOfflineRedirect() != null && !site.getOfflineRedirect().isEmpty()) {
+				response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+				response.setHeader("Location", site.getOfflineRedirect());
+				return false;
+			}
+			return true;
+		}
+
 		try {
 			for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
 				interceptor.beforeRequest(site, request, response);
@@ -90,21 +97,26 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 			return;
 		}
 
-		boolean isJson = checkJsonRequest(request, modelAndView);
+	
+		Site site = getCurrentSite(request);
+		
+		boolean isJson = checkJsonRequest(request, modelAndView);		
 		if (isJson) {
 			return;
 		}
-
-		Site site = getCurrentSite(request);
-
 		loadSiteMetadata(site, modelAndView);
 
-		try {
-			for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
-				interceptor.afterRequest(site, request, response, modelAndView);
+		if (!site.isOffline()) {			
+			
+			try {
+				for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
+					interceptor.afterRequest(site, request, response, modelAndView);
+				}
+			} catch (Exception e) {
+				logger.error("Error calling Site interceptor", e);
 			}
-		} catch (Exception e) {
-			logger.error("Error calling Site interceptor", e);
+		}else{
+			shutdown(site, modelAndView);
 		}
 
 	}
@@ -129,6 +141,16 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 			}
 
 		}
+	}
+
+	public static void shutdown(Site site, ModelAndView mv) {
+		mv.setViewName("error/offline");
+		mv.addObject("title", "OFFLINE!");
+		mv.addObject("site", site);
+		mv.addObject("siteKey", site.getKey());
+		mv.addObject("offlineIcon", site.getOfflineIcon());
+		mv.addObject("offlineMessage", site.getOfflineMessage());
+
 	}
 
 }

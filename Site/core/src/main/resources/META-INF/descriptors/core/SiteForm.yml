@@ -1,7 +1,7 @@
 view: form
 beanClass: tools.dynamia.cms.site.core.domain.Site
 hidden: [id]
-sortFields: [name,parent,key,template,corporateSite,description,offline,offlineIcon,offlineMessage,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
+sortFields: [name,parent,key,template,corporateSite,description,offline,offlineIcon,offlineMessage,offlineRedirect,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
 
 fields:
 
@@ -33,10 +33,10 @@ fields:
    
                 
     offlineMessage:
-        params:
-            multiline: true=boolean
-            height: 70px
-            span: 2
+       
+            
+    offlineRedirect:
+    
             
     googleAnalyticsID:
        label: ID (UA-XXXX)
@@ -66,7 +66,7 @@ groups:
     
     general:
         label: Basic Settings
-        fields: [name,parent,key,template,description,offline,offlineMessage,offlineIcon]
+        fields: [name,parent,key,template,description,offline,offlineMessage,offlineRedirect,offlineIcon]
             
     
     general:
