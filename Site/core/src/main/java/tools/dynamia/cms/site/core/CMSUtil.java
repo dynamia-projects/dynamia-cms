@@ -428,6 +428,14 @@ public class CMSUtil {
 				path = path.substring(0, index);
 
 			}
+
+			target = "%3BJSESSIONID";
+			if (path.toUpperCase().contains(target)) {
+				int index = path.toUpperCase().indexOf(target);
+				path = path.substring(0, index);
+
+			}
+
 		}
 		return path;
 	}
