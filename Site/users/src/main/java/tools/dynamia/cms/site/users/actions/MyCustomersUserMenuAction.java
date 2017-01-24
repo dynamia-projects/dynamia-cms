@@ -34,7 +34,7 @@ public class MyCustomersUserMenuAction implements UserMenuActionEnableable {
 
 	@Override
 	public boolean isEnabled(User currentUser) {
-		return currentUser.getProfile() == UserProfile.SELLER;
+		return  currentUser.getSite().isCorporateSite() && currentUser.getProfile() == UserProfile.SELLER;
 	}
 
 }

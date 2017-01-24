@@ -2,6 +2,7 @@ package tools.dynamia.cms.site.shoppingcart.actions.menus;
 
 import tools.dynamia.cms.site.core.api.CMSAction;
 import tools.dynamia.cms.site.users.actions.UserMenuActionEnableable;
+import tools.dynamia.cms.site.users.api.UserProfile;
 import tools.dynamia.cms.site.users.domain.User;
 
 @CMSAction
@@ -36,7 +37,8 @@ public class NewPaymentMenuAction implements UserMenuActionEnableable {
 	@Override
 	public boolean isEnabled(User currentUser) {
 
-		return currentUser.getSite().isCorporateSite() && currentUser.getSite().isParameter("manualPayments");
+		return currentUser.getSite().isCorporateSite() && currentUser.getSite().isParameter("manualPayments")
+				&& currentUser.getProfile() == UserProfile.SELLER;
 	}
 
 }
