@@ -64,4 +64,6 @@ public interface ShoppingCartService {
 
 	void sendAllPayments();
 
+	public List<ManualPayment> getManualPayments(User user);
+
 }

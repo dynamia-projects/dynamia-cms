@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
 
 <div class="maincontainer" layout:fragment="content">
 
@@ -29,7 +31,7 @@
 						<thead>
 
 							<th>No.</th>
-							
+
 
 							<th>Cliente</th>
 
@@ -40,16 +42,22 @@
 							<th>Ciudad</th>
 							<th>Pais</th>
 							<th class="hidden-xs"></th>
+							<th class="hidden-xs"></th>
 						</thead>
 						<tbody>
 							<tr th:each="cst,row : ${customers}">
 								<td th:text="${row.index+1}"></td>
-								
-								<td><strong th:text="${cst.fullName}" /> (<span th:text="${cst.externalRef}"/>)<br />
-								<span th:text="${cst.identification}" /> <br /> <span th:text="${cst.username}" /><br />
+
+								<td><strong th:text="${cst.fullName}" /> (<span
+									th:text="${cst.externalRef}" />)<br /> <span
+									th:text="${cst.identification}" /> <br /> <span
+									th:text="${cst.username}" /><br />
 									<div class="visible-xs">
-										<a th:href="@{'/shoppingcart/orders/status/'+cst.externalRef}" class=" btn btn-success">Estado
-											de Cuenta</a>
+										<a
+											th:href="@{'/shoppingcart/manual/payments/'+${cst.externalRef}}"
+											class="btn btn-primary">Pagos</a>  <a
+											th:href="@{'/shoppingcart/orders/status/'+cst.externalRef}"
+											class=" btn btn-success">Estado de Cuenta</a>
 									</div></td>
 
 								<td th:text="${cst.groupName}"></td>
@@ -59,7 +67,11 @@
 
 								<td th:text="${cst.contactInfo.city}"></td>
 								<td th:text="${cst.contactInfo.country}"></td>
-								<td class="hidden-xs"><a th:href="@{'/shoppingcart/orders/status/'+${cst.externalRef}}"
+								<td class="hidden-xs"><a
+									th:href="@{'/shoppingcart/manual/payments/'+${cst.externalRef}}"
+									class="btn btn-primary">Pagos</a></td>
+								<td class="hidden-xs"><a
+									th:href="@{'/shoppingcart/orders/status/'+${cst.externalRef}}"
 									class="btn btn-success">Estado de Cuenta</a></td>
 						</tbody>
 

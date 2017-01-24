@@ -213,5 +213,16 @@ public class ShoppingCartController {
 
 		return mv;
 	}
+	
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/manual/payments/{customer}", method = { RequestMethod.GET })
+	public ModelAndView manualPayments(@PathVariable String customer, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
+
+		SiteActionManager.performAction("showManualPayments", mv, request, redirectAttributes, customer);
+
+		return mv;
+	}
 
 }

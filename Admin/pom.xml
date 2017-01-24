@@ -34,7 +34,7 @@
         <dynatools.version>3.0.0.Final</dynatools.version>
         <dynamia.icons.version>3.0.0</dynamia.icons.version>
         <hsql.version>1.8.0.10</hsql.version>
-        <spring.version>4.2.2.RELEASE</spring.version>
+        <spring.version>4.3.5.RELEASE</spring.version>
         <hibernate.version>4.3.6.Final</hibernate.version>
 
 

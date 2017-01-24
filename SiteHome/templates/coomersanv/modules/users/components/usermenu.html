@@ -1,24 +1,31 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorator="template">
 
 <body th:fragment="content">
-	<div th:if="${@userHolder.authenticated eq false}" class="pull-right"  >
-		
-			<ul class="simplelinks">
-				<li><a th:href="@{/users/login}"><i class="fa fa-user"></i>Iniciar Sesion</a></li>
-			</ul>
-		
+	<div th:if="${@userHolder.authenticated eq false}" class="pull-right">
+
+		<ul class="simplelinks">
+			<li><a th:href="@{/users/login}"><i class="fa fa-user"></i>Iniciar
+					Sesion</a></li>
+		</ul>
+
 	</div>
 	<ul class="nav usermenu language pull-right">
-		<li class="dropdown hover" th:if="${@userHolder.authenticated}"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i
-				class="fa fa-user"></i> <span style="text-transform: lowercase" th:text="${ @userHolder.userName}" th:title="${@userHolder.fullName}"
-				class="tooltiptest"></span> <span class="caret"></span> </a>
+		<li class="dropdown hover" th:if="${@userHolder.authenticated}"><a
+			class="dropdown-toggle" data-toggle="dropdown" href="#"><i
+				class="fa fa-user"></i> <span style="text-transform: lowercase"
+				th:text="${ @userHolder.userName}"
+				th:title="${@userHolder.fullName}" class="tooltiptest"></span> <span
+				class="caret"></span> </a>
 
-			<ul class="dropdown-menu" role="menu">
+			<ul class="dropdown-menu" role="menu" style="min-width: 300px; top: 90%">
 				<li><a th:href="@{/users/account}"> <span>Mi Cuenta</span>
 				</a></li>
-				<li th:each="ua : ${userMenuActions}"><a th:href="@{'/'+${ua.action()}}"> <span th:text="${ua.label}"></span>
+				<li th:each="ua : ${userMenuActions}"><a
+					th:href="@{'/'+${ua.action()}}"> <span th:text="${ua.label}"></span>
 				</a></li>
 			</ul></li>
 	</ul>

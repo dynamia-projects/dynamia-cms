@@ -31,6 +31,7 @@ public class NewPaymentAction implements SiteAction {
 
 		ModelAndView mv = evt.getModelAndView();
 		mv.setViewName("payment/new");
+		mv.addObject("title", "Nuevo Pago Manual");
 		ShoppingSiteConfig config = service.getConfiguration(evt.getSite());
 
 		ManualPayment pay = new ManualPayment();

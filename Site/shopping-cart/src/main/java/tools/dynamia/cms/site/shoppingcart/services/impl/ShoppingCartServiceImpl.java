@@ -419,6 +419,12 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		}
 	}
 
+	@Override
+	public List<ManualPayment> getManualPayments(User user) {
+		return crudService.find(ManualPayment.class,
+				QueryParameters.with("payerId", user.getId().toString()).setAutocreateSearcheableStrings(false));
+	}
+
 	private MailMessage createMailMessage(MailTemplate template, MailAccount mailAccount, ShoppingOrder order) {
 		MailMessage message = new MailMessage();
 		message.setMailAccount(mailAccount);

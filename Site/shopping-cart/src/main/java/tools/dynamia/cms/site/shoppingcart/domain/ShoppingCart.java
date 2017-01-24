@@ -217,6 +217,7 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
 		if (addedItem != null) {
 			addedItem.setQuantity(addedItem.getQuantity() + qty);
 		} else {
+			item.setQuantity(qty);
 			items.add(item);
 			item.setShoppingCart(this);
 		}
