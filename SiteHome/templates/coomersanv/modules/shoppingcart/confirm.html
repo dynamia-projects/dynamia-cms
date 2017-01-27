@@ -26,7 +26,7 @@
 				th:if="${cmsModules.isUsed('confirmOrderTop')}" />
 
 			<form id="paymentForm" role="form" class="form-horizontal"
-				th:action="${paymentForm.url}" th:method="${paymentForm.httpMethod}">
+				th:action="@{/payment/start}" th:method="GET">
 				<div class="row">
 					<div class="col-md-6">
 
@@ -94,8 +94,7 @@
 
 				<!-- Button -->
 				<div class="form-group" th:unless="${shoppingOrder.payLater}">
-					<input type="hidden" th:each="param : ${paymentForm.parameters}"
-						th:name="${param.key}" th:value="${param.value}" />
+					
 					<button data-toggle="modal" href="#payconfirm" type="button"
 						class="btn btn-danger btn-lg">Pagar en Linea</button>
 					<a id="cancelBtn" data-toggle="modal" href="#cancelconfirm"
@@ -111,6 +110,36 @@
 						class="btn btn-warning btn-lg"> <i class="icon-ban-circle"></i>
 						Cancelar
 					</a>
+				</div>
+
+				<div id="payconfirm" class="modal fade" tabindex="-1" role="dialog"
+					th:unless="${shoppingOrder.payLater}" aria-hidden="true">
+					<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Confirmar Pago</h4>
+							</div>
+							<div class="modal-body">
+								<span> Esta seguro que desea iniciar el proceso de pago
+									por <b><span class="orange"
+										th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"></span></b>
+									?
+								</span> <br /> <br /> <span> <b>NOTA:</b> Recuerde dar clic en
+									el enlace <b>Finalizar Transaccion o Regresar al Comercio</b>
+									al completar el proceso
+								</span>
+							</div>
+							<div class="modal-footer">
+								<button id="submitBtn" type="submit" class="btn btn-danger">Si,
+									iniciar pago</button>
+								<button type="button" class="btn btn-orange"
+									data-dismiss="modal">No</button>
+
+							</div>
+						</div>
+					</div>
 				</div>
 			</form>
 			<th:block th:include="module::position('confirmOrderBottom2')"
@@ -134,7 +163,8 @@
 						? 
 				</div>
 				<div class="modal-footer">
-					<a class="btn btn-danger" th:href="@{/shoppingcart/shop/complete}">Si, confirmar pedido</a>
+					<a class="btn btn-danger" th:href="@{/shoppingcart/shop/complete}">Si,
+						confirmar pedido</a>
 
 					<button type="button" class="btn btn-orange" data-dismiss="modal">No</button>
 
@@ -144,33 +174,7 @@
 	</div>
 
 
-	<div id="payconfirm" class="modal fade" tabindex="-1" role="dialog"
-		th:unless="${shoppingOrder.payLater}" aria-hidden="true">
-		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Confirmar Pago</h4>
-				</div>
-				<div class="modal-body">
-					<span> Esta seguro que desea iniciar el proceso de pago por
-						<b><span class="orange"
-							th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"></span></b>
-						?
-					</span> <br /> <br /> <span> <b>NOTA:</b> Recuerde dar clic en el
-						enlace <b>Finalizar Transaccion</b> al completar el proceso
-					</span>
-				</div>
-				<div class="modal-footer">
-					<button id="submitBtn" type="button" class="btn btn-danger">Si,
-						iniciar pago</button>
-					<button type="button" class="btn btn-orange" data-dismiss="modal">No</button>
 
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<div id="cancelconfirm" class="modal fade" tabindex="-1" role="dialog"
 		aria-hidden="true">
@@ -194,19 +198,6 @@
 	</div>
 </div>
 
-<th:block layout:fragment="scripts">
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#submitBtn").click(function() {
-				$("#submitBtn").attr("disabled", true);
-				$("#submitBtn").text("Procesando...");
-
-				$('#paymentForm').submit();
-			});
-		});
-	</script>
-
-</th:block>
 
 </html>

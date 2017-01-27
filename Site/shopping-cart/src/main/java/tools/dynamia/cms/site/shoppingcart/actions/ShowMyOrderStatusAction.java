@@ -73,16 +73,15 @@ public class ShowMyOrderStatusAction implements SiteAction {
 		}
 
 		List<OrderStatusDTO> orders = new ArrayList<>();
-
+		User userCustomer = userService.getByExternalRef(evt.getSite(), customer);
+		mv.addObject("customer", userCustomer);
 		try {
 			if (cfg.getOrderStatusURL() != null && !cfg.getOrderStatusURL().isEmpty() && customer != null) {
 				OrderStatusService service = HttpRemotingServiceClient.build(OrderStatusService.class)
 						.setServiceURL(cfg.getOrderStatusURL()).getProxy();
-
+			
+				
 				orders = service.getOrdersStatus(customer);
-
-				User userCustomer = userService.getByExternalRef(evt.getSite(), customer);
-				mv.addObject("customer", userCustomer);
 				
 
 			} else {

@@ -7,9 +7,17 @@ fields:
     label: Gateway ID
   paymentGatewayName:
     label: Gateway Name
-  paymentEnabled:
+  paymentEnabled:    
   minPaymentAmount:
+    params:
+      converter: converters.Decimal
+      header:
+        align: right
   maxPaymentAmount:
+    params:
+      converter: converters.Decimal
+      header:
+        align: right
   shipmentPercent:
   defaultCurrency:
   descriptionTemplate:

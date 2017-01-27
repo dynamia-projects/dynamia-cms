@@ -38,6 +38,7 @@ import tools.dynamia.cms.site.users.services.UserService;
 
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.domain.ValidationError;
+import tools.dynamia.domain.query.QueryConditions;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.domain.services.ValidatorService;
@@ -233,7 +234,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getByExternalRef(Site site, String externalRef) {
-		return crudService.findSingle(User.class, QueryParameters.with("site", site).add("externalRef", externalRef));
+		return crudService.findSingle(User.class, QueryParameters.with("site", site)
+				.add("externalRef", QueryConditions.eq(externalRef)).setAutocreateSearcheableStrings(false));
 	}
 
 }
