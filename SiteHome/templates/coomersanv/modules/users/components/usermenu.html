@@ -14,14 +14,15 @@
 
 	</div>
 	<ul class="nav usermenu language pull-right">
-		<li class="dropdown hover" th:if="${@userHolder.authenticated}"><a
+		<li class="dropdown" th:if="${@userHolder.authenticated}"><a
 			class="dropdown-toggle" data-toggle="dropdown" href="#"><i
 				class="fa fa-user"></i> <span style="text-transform: lowercase"
 				th:text="${ @userHolder.userName}"
 				th:title="${@userHolder.fullName}" class="tooltiptest"></span> <span
-				class="caret"></span> </a>
+						class="caret"></span> </a>
 
-			<ul class="dropdown-menu" role="menu" style="min-width: 300px; top: 90%">
+			<ul class="dropdown-menu" role="menu"
+				style="min-width: 300px; top: 90%">
 				<li><a th:href="@{/users/account}"> <span>Mi Cuenta</span>
 				</a></li>
 				<li th:each="ua : ${userMenuActions}"><a

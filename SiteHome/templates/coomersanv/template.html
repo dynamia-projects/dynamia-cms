@@ -70,6 +70,35 @@
                       <script src="js/html5shiv.js"></script>
                       <script src="js/respond.min.js"></script> 
                      <![endif]-->
+
+
+<style type="text/css">
+.mobilemenu .navbar-header {
+	float: none;
+}
+
+.headerstrip .navbar-toggle {
+	display: block;
+}
+
+.navbar-collapse.collapse {
+	display: none !important;
+}
+
+.navbar-nav.mobilemenu {
+	float: none !important;
+}
+
+.navbar-nav.mobilemenu >li {
+	float: none;
+}
+
+.headerstrip .navbar-collapse.collapse.in {
+	display: block !important;
+	overflow-y: auto !important; 
+}
+</style>
+
 </head>
 <body>
 
@@ -97,7 +126,8 @@
 				</div>
 
 
-				<div class="pull-right topsearch" th:if="${@userHolder.authenticated}">
+				<div class="pull-right topsearch"
+					th:if="${@userHolder.authenticated}">
 
 					<form action="#" class="form-inline" th:action="@{/search}"
 						th:object="${searchForm}" method="get">
