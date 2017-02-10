@@ -1,4 +1,4 @@
-package toosl.dynamia.cms.site.shoppingcart.dto;
+package tools.dynamia.cms.site.payment.api.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

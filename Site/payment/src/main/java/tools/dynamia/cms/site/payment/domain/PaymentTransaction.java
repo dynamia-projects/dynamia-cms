@@ -32,7 +32,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.domain.BaseEntity;
 

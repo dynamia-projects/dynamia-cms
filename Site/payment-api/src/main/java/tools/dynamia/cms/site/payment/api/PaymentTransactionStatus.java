@@ -13,28 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.payment;
+package tools.dynamia.cms.site.payment.api;
 
-import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
-import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
-
-public class PaymentTransactionEvent {
-
-	private PaymentTransaction transaction;
-	private PaymentTransactionStatus oldStatus;
-
-	public PaymentTransactionEvent(PaymentTransaction transaction, PaymentTransactionStatus oldStatus) {
-		super();
-		this.transaction = transaction;
-		this.oldStatus = oldStatus;
-	}
-
-	public PaymentTransaction getTransaction() {
-		return transaction;
-	}
-
-	public PaymentTransactionStatus getOldStatus() {
-		return oldStatus;
-	}
-
+public enum PaymentTransactionStatus {
+	NEW, PROCESSING, COMPLETED, CANCELLED, REJECTED, FAILED, ERROR, UNKNOWN, EXPIRED;
 }

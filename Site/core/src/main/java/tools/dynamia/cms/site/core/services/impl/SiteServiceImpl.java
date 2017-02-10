@@ -179,6 +179,11 @@ public class SiteServiceImpl implements SiteService {
 		}
 	}
 
+	@Override
+	public List<Site> getActiveSites() {
+		return crudService.find(Site.class, QueryParameters.with("active", true));
+	}
+
 	private String executeHttpRequest(String url) throws MalformedURLException, IOException {
 
 		StringBuilder sb = new StringBuilder();

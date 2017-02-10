@@ -39,8 +39,8 @@ import tools.dynamia.cms.site.payment.PaymentHolder;
 import tools.dynamia.cms.site.payment.PaymentTransactionEvent;
 import tools.dynamia.cms.site.payment.PaymentTransactionListener;
 import tools.dynamia.cms.site.payment.ResponseType;
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
-import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import tools.dynamia.cms.site.payment.services.PaymentService;
 
 import tools.dynamia.commons.logger.LoggingService;

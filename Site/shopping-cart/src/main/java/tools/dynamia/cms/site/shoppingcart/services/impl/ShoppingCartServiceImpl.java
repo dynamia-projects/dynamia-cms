@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Propagation;
@@ -39,9 +37,8 @@ import tools.dynamia.cms.site.mail.services.MailService;
 import tools.dynamia.cms.site.payment.PaymentGateway;
 import tools.dynamia.cms.site.payment.PaymentTransactionEvent;
 import tools.dynamia.cms.site.payment.PaymentTransactionListener;
-import tools.dynamia.cms.site.payment.domain.ManualPayment;
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
-import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import tools.dynamia.cms.site.payment.services.PaymentService;
 import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
 import tools.dynamia.cms.site.shoppingcart.ShoppingCartItemProvider;
@@ -56,7 +53,6 @@ import tools.dynamia.cms.site.users.UserHolder;
 import tools.dynamia.cms.site.users.api.UserProfile;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
-import tools.dynamia.commons.BeanUtils;
 import tools.dynamia.commons.ClassMessages;
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
@@ -66,15 +62,11 @@ import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.domain.util.DomainUtils;
 import tools.dynamia.integration.Containers;
-import tools.dynamia.integration.scheduling.SchedulerUtil;
-import tools.dynamia.integration.scheduling.Task;
 import tools.dynamia.integration.sterotypes.Service;
 import tools.dynamia.web.util.HttpRemotingServiceClient;
-import toosl.dynamia.cms.site.shoppingcart.api.ManualPaymentSender;
 import toosl.dynamia.cms.site.shoppingcart.api.Response;
 import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSender;
 import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSenderException;
-import toosl.dynamia.cms.site.shoppingcart.dto.ManualPaymentDTO;
 import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderDTO;
 
 /**
@@ -419,12 +411,6 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		}
 	}
 
-	@Override
-	public List<ManualPayment> getManualPayments(User user) {
-		return crudService.find(ManualPayment.class,
-				QueryParameters.with("payerId", user.getId().toString()).setAutocreateSearcheableStrings(false));
-	}
-
 	private MailMessage createMailMessage(MailTemplate template, MailAccount mailAccount, ShoppingOrder order) {
 		MailMessage message = new MailMessage();
 		message.setMailAccount(mailAccount);
@@ -562,37 +548,6 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		}
 	}
 
-	@Override
-	public void sendAllPayments() {
-		logger.info("Sending all manual Payments");
-		try {
-			List<Site> sites = crudService.find(Site.class, "offline", false);
-			for (Site site : sites) {
-				ShoppingSiteConfig cfg = getConfiguration(site);
-				if (cfg != null && cfg.isAutoSendPayments() && cfg.getPaymentsSenderURL() != null
-						&& !cfg.getPaymentsSenderURL().isEmpty()) {
-					ManualPaymentSender sender = HttpRemotingServiceClient.build(ManualPaymentSender.class)
-							.setServiceURL(cfg.getPaymentsSenderURL()).getProxy();
-
-					crudService.executeWithinTransaction(() -> {
-
-						List<ManualPayment> payments = crudService.find(ManualPayment.class,
-								QueryParameters.with("sended", false).add("source", site.getKey())
-										.setAutocreateSearcheableStrings(false));
-						logger.info("Sending " + payments.size() + " manual payments for site " + site.getName());
-
-						sendPayments(sender, payments, cfg);
-					});
-
-				}
-				logger.info("Manual payments Sended");
-			}
-		} catch (Exception e) {
-			logger.error("Error sending payments", e);
-
-		}
-	}
-
 	private void sendOrders(ShoppingOrderSender sender, List<ShoppingOrder> orders, ShoppingSiteConfig cfg) {
 		List<ShoppingOrderDTO> dtos = orders.stream().map(ord -> ord.toDTO()).collect(Collectors.toList());
 
@@ -626,42 +581,4 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		}
 	}
 
-	private void sendPayments(ManualPaymentSender sender, List<ManualPayment> payments, ShoppingSiteConfig cfg) {
-		List<ManualPaymentDTO> dtos = payments.stream().map(ord -> createDTO(ord)).collect(Collectors.toList());
-
-		if (!dtos.isEmpty()) {
-			logger.info("Calling Sender " + sender);
-			try {
-				List<Response> response = sender.sendPayments(dtos, cfg.getParametersAsMap());
-
-				if (response != null) {
-					logger.info("Sending response recieved. " + response.size());
-					for (ManualPayment payment : payments) {
-						Response resp = Response.find(response, payment.getNumber());
-						if (resp != null) {
-							if (resp.isError()) {
-								payment.setErrorCode(resp.getErrorCode());
-								payment.setErrorMessage(resp.getErrorMessage());
-							} else {
-								payment.setErrorCode(null);
-								payment.setErrorMessage(null);
-								payment.setExternalRef(resp.getContent());
-								payment.setSended(true);
-							}
-						}
-						crudService.update(payment);
-						logger.info("==> Updating payment " + payment.getNumber() + " ==> " + resp);
-					}
-				}
-			} catch (ShoppingOrderSenderException e) {
-				logger.error("Error", e);
-			}
-		}
-	}
-
-	private ManualPaymentDTO createDTO(ManualPayment ord) {
-		ManualPaymentDTO dto = new ManualPaymentDTO();
-		BeanUtils.setupBean(dto, ord);
-		return dto;
-	}
 }

@@ -29,8 +29,8 @@ import javax.validation.constraints.NotNull;
 
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
-import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
 import tools.dynamia.domain.BaseEntity;

@@ -18,9 +18,9 @@
 		<version>2.0.0.Beta</version>
 	</parent>
 	<groupId>tools.dynamia.cms</groupId>
-	<artifactId>tools.dynamia.cms.site.payment</artifactId>
+	<artifactId>tools.dynamia.cms.site.payment.api</artifactId>
 	<version>2.0.0.Beta</version>
-	<name>DynamiaCMS Site - Payment (${project.version})</name>
+	<name>DynamiaCMS Site - Payment API (${project.version})</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -48,50 +48,11 @@
 	</build>
 
 	<dependencies>
-
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-web-api</artifactId>
-			<version>6.0</version>
-			<type>jar</type>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- DynamiaTools -->
-		<dependency>
-			<groupId>tools.dynamia</groupId>
-			<artifactId>tools.dynamia.domain</artifactId>
-			<version>${dynatools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>tools.dynamia</groupId>
-			<artifactId>tools.dynamia.web</artifactId>
-			<version>${dynatools.version}</version>
-		</dependency>
-
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.site.payment.api</artifactId>
-			<version>2.0.0.Beta</version>
-		</dependency>
 	</dependencies>
 </project>

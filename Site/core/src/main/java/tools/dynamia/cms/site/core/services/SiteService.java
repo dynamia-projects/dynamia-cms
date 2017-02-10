@@ -44,4 +44,6 @@ public interface SiteService {
 
 	public abstract String[] getSiteParameterAsArray(Site site, String name);
 
+	public List<Site> getActiveSites();
+
 }

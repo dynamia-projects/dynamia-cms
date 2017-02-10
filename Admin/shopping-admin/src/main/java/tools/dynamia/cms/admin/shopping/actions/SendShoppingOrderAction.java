@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.zul.Messagebox;
 
 import tools.dynamia.actions.InstallAction;
-import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import tools.dynamia.commons.ApplicableClass;

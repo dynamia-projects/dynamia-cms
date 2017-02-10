@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,10 +30,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tools.dynamia.cms.site.payment.PaymentException;
 import tools.dynamia.cms.site.payment.PaymentGateway;
+import tools.dynamia.cms.site.payment.api.PaymentSender;
+import tools.dynamia.cms.site.payment.api.PaymentSenderException;
+import tools.dynamia.cms.site.payment.api.Response;
+import tools.dynamia.cms.site.payment.api.dto.ManualPaymentDTO;
 import tools.dynamia.cms.site.payment.domain.ManualPayment;
 import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
 import tools.dynamia.cms.site.payment.services.PaymentService;
+import tools.dynamia.commons.BeanUtils;
+import tools.dynamia.commons.logger.LoggingService;
+import tools.dynamia.commons.logger.SLF4JLoggingService;
 import tools.dynamia.domain.query.ApplicationParameters;
 import tools.dynamia.domain.query.QueryConditions;
 import tools.dynamia.domain.query.QueryParameters;
@@ -40,6 +48,7 @@ import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.domain.util.DomainUtils;
 import tools.dynamia.integration.Containers;
 import tools.dynamia.integration.sterotypes.Service;
+import tools.dynamia.web.util.HttpRemotingServiceClient;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -51,6 +60,8 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@PersistenceContext
 	private EntityManager em;
+
+	private LoggingService logger = new SLF4JLoggingService(PaymentService.class);
 
 	/*
 	 * (non-Javadoc)
@@ -181,6 +192,13 @@ public class PaymentServiceImpl implements PaymentService {
 
 	}
 
+	@Override
+	public List<ManualPayment> findManualPaymentsByPayerId(String source, String payerId) {
+		return crudService.find(ManualPayment.class,
+				QueryParameters.with("source", source).add("payerId", payerId).setAutocreateSearcheableStrings(false));
+
+	}
+
 	/**
 	 * 
 	 * @param source
@@ -192,5 +210,79 @@ public class PaymentServiceImpl implements PaymentService {
 		return crudService.find(ManualPayment.class, QueryParameters.with("source", source).add("payerCode", payerCode)
 				.setAutocreateSearcheableStrings(false));
 
+	}
+
+	@Override
+	public void sendManualPayments(String source, String serviceUrl, Map<String, String> params) {
+		try {
+			logger.info("Sending all manual Payments");
+
+			if (serviceUrl != null && !serviceUrl.isEmpty()) {
+				PaymentSender sender = HttpRemotingServiceClient.build(PaymentSender.class).setServiceURL(serviceUrl)
+						.getProxy();
+
+				crudService.executeWithinTransaction(() -> {
+
+					List<ManualPayment> payments = crudService.find(ManualPayment.class, QueryParameters
+							.with("sended", false).add("source", source).setAutocreateSearcheableStrings(false));
+					logger.info("Sending " + payments.size() + " manual payments for source " + source);
+
+					sendPayments(sender, payments, params);
+				});
+
+			}
+			logger.info("Manual payments Sended");
+		} catch (Exception e) {
+			logger.error("Error sending manual payments. Source: " + source + ", Service URL: " + serviceUrl, e);
+		}
+	}
+
+	@Override
+	public void sendPayments(String source, String serviceUrl, Map<String, String> params) {
+		try {
+
+		} catch (Exception e) {
+			logger.error("Error sending auto payments. Source: " + source + ", Service URL: " + serviceUrl, e);
+		}
+
+	}
+
+	private void sendPayments(PaymentSender sender, List<ManualPayment> payments, Map<String, String> params) {
+		List<ManualPaymentDTO> dtos = payments.stream().map(ord -> createDTO(ord)).collect(Collectors.toList());
+
+		if (!dtos.isEmpty()) {
+			logger.info("Calling Payment Sender " + sender);
+			try {
+				List<Response> response = sender.sendManualPayments(dtos, params);
+
+				if (response != null) {
+					logger.info("Sending response recieved. " + response.size());
+					for (ManualPayment payment : payments) {
+						Response resp = Response.find(response, payment.getNumber());
+						if (resp != null) {
+							if (resp.isError()) {
+								payment.setErrorCode(resp.getErrorCode());
+								payment.setErrorMessage(resp.getErrorMessage());
+							} else {
+								payment.setErrorCode(null);
+								payment.setErrorMessage(null);
+								payment.setExternalRef(resp.getContent());
+								payment.setSended(true);
+							}
+						}
+						crudService.update(payment);
+						logger.info("==> Updating payment " + payment.getNumber() + " ==> " + resp);
+					}
+				}
+			} catch (PaymentSenderException e) {
+				logger.error("Error", e);
+			}
+		}
+	}
+
+	private ManualPaymentDTO createDTO(ManualPayment ord) {
+		ManualPaymentDTO dto = new ManualPaymentDTO();
+		BeanUtils.setupBean(dto, ord);
+		return dto;
 	}
 }

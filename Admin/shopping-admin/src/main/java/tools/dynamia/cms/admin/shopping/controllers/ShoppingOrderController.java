@@ -1,6 +1,6 @@
 package tools.dynamia.cms.admin.shopping.controllers;
 
-import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
 
 import tools.dynamia.domain.query.QueryConditions;

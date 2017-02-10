@@ -11,6 +11,7 @@ import tools.dynamia.cms.site.core.actions.ActionEvent;
 import tools.dynamia.cms.site.core.actions.SiteAction;
 import tools.dynamia.cms.site.core.api.CMSAction;
 import tools.dynamia.cms.site.payment.domain.ManualPayment;
+import tools.dynamia.cms.site.payment.services.PaymentService;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
 import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
 import tools.dynamia.cms.site.users.UserHolder;
@@ -24,6 +25,9 @@ public class ShowManualPaymentsAction implements SiteAction {
 
 	@Autowired
 	private ShoppingCartService service;
+
+	@Autowired
+	private PaymentService paymentService;
 
 	@Autowired
 	private UserService userService;
@@ -55,7 +59,8 @@ public class ShowManualPaymentsAction implements SiteAction {
 		User user = userService.getByExternalRef(evt.getSite(), customer);
 		if (user != null) {
 			mv.addObject("title", "Pagos Registrados - " + user.getFullName());
-			List<ManualPayment> payments = service.getManualPayments(user);
+			List<ManualPayment> payments = paymentService.findManualPaymentsByPayerId(evt.getSite().getKey(),
+					user.getId().toString());
 			BigDecimal total = BigDecimalUtils.sum("amount", payments);
 
 			mv.addObject("payments", payments);

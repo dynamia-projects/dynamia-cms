@@ -25,7 +25,7 @@ import tools.dynamia.cms.site.core.actions.SiteActionManager;
 import tools.dynamia.cms.site.core.api.CMSAction;
 import tools.dynamia.cms.site.payment.PaymentForm;
 import tools.dynamia.cms.site.payment.PaymentGateway;
-import tools.dynamia.cms.site.payment.domain.enums.PaymentTransactionStatus;
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
 import tools.dynamia.cms.site.payment.services.PaymentService;
 import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
