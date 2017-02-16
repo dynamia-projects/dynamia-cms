@@ -33,6 +33,7 @@ import tools.dynamia.cms.site.payment.PaymentGateway;
 import tools.dynamia.cms.site.payment.PaymentUtils;
 import tools.dynamia.cms.site.payment.api.PaymentSender;
 import tools.dynamia.cms.site.payment.api.PaymentSenderException;
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
 import tools.dynamia.cms.site.payment.api.Response;
 import tools.dynamia.cms.site.payment.api.dto.ManualPaymentDTO;
 import tools.dynamia.cms.site.payment.api.dto.PaymentDTO;
@@ -251,7 +252,11 @@ public class PaymentServiceImpl implements PaymentService {
 				crudService.executeWithinTransaction(() -> {
 
 					List<PaymentTransaction> payments = crudService.find(PaymentTransaction.class, QueryParameters
-							.with("sended", false).add("source", source).setAutocreateSearcheableStrings(false));
+							.with("sended", false).add("source", source)
+							.add("status", PaymentTransactionStatus.COMPLETED)
+							.add("confirmed",true)
+							.add("test", false)
+							.setAutocreateSearcheableStrings(false));
 					logger.info("Sending " + payments.size() + " auto payments for source " + source);
 
 					sendPaymentsTransaction(sender, payments, params);
