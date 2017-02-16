@@ -30,10 +30,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import tools.dynamia.cms.site.payment.PaymentException;
 import tools.dynamia.cms.site.payment.PaymentGateway;
+import tools.dynamia.cms.site.payment.PaymentUtils;
 import tools.dynamia.cms.site.payment.api.PaymentSender;
 import tools.dynamia.cms.site.payment.api.PaymentSenderException;
 import tools.dynamia.cms.site.payment.api.Response;
 import tools.dynamia.cms.site.payment.api.dto.ManualPaymentDTO;
+import tools.dynamia.cms.site.payment.api.dto.PaymentDTO;
 import tools.dynamia.cms.site.payment.domain.ManualPayment;
 import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
@@ -240,7 +242,23 @@ public class PaymentServiceImpl implements PaymentService {
 	@Override
 	public void sendPayments(String source, String serviceUrl, Map<String, String> params) {
 		try {
+			logger.info("Sending all auto Payments");
 
+			if (serviceUrl != null && !serviceUrl.isEmpty()) {
+				PaymentSender sender = HttpRemotingServiceClient.build(PaymentSender.class).setServiceURL(serviceUrl)
+						.getProxy();
+
+				crudService.executeWithinTransaction(() -> {
+
+					List<PaymentTransaction> payments = crudService.find(PaymentTransaction.class, QueryParameters
+							.with("sended", false).add("source", source).setAutocreateSearcheableStrings(false));
+					logger.info("Sending " + payments.size() + " auto payments for source " + source);
+
+					sendPaymentsTransaction(sender, payments, params);
+				});
+
+			}
+			logger.info("Automatic payments Sended");
 		} catch (Exception e) {
 			logger.error("Error sending auto payments. Source: " + source + ", Service URL: " + serviceUrl, e);
 		}
@@ -280,8 +298,47 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 	}
 
+	private void sendPaymentsTransaction(PaymentSender sender, List<PaymentTransaction> payments, Map<String, String> params) {
+		List<PaymentDTO> dtos = payments.stream().map(ord -> createDTO(ord)).collect(Collectors.toList());
+
+		if (!dtos.isEmpty()) {
+			logger.info("Calling Payment Sender " + sender);
+			try {
+				List<Response> response = sender.sendPayments(dtos, params);
+
+				if (response != null) {
+					logger.info("Sending response recieved. " + response.size());
+					for (PaymentTransaction payment : payments) {
+						Response resp = Response.find(response, payment.getUuid());
+						if (resp != null) {
+							if (resp.isError()) {
+								payment.setErrorCode(resp.getErrorCode());
+								payment.setErrorMessage(resp.getErrorMessage());
+							} else {
+								payment.setErrorCode(null);
+								payment.setErrorMessage(null);
+								payment.setExternalRef(resp.getContent());
+								payment.setSended(true);
+							}
+						}
+						crudService.update(payment);
+						logger.info("==> Updating payment " + payment.getUuid() + " ==> " + resp);
+					}
+				}
+			} catch (PaymentSenderException e) {
+				logger.error("Error", e);
+			}
+		}
+	}
+
 	private ManualPaymentDTO createDTO(ManualPayment ord) {
 		ManualPaymentDTO dto = new ManualPaymentDTO();
+		BeanUtils.setupBean(dto, ord);
+		return dto;
+	}
+
+	private PaymentDTO createDTO(PaymentTransaction ord) {
+		PaymentDTO dto = new PaymentDTO();
 		BeanUtils.setupBean(dto, ord);
 		return dto;
 	}

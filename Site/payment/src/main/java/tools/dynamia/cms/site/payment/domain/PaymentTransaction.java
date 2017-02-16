@@ -32,13 +32,14 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import tools.dynamia.cms.site.payment.api.Payment;
 import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.domain.BaseEntity;
 
 @Entity
 @Table(name = "pay_transactions")
-public class PaymentTransaction extends BaseEntity {
+public class PaymentTransaction extends BaseEntity implements Payment {
 
 	/**
 	 * 
@@ -99,6 +100,11 @@ public class PaymentTransaction extends BaseEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastStatusDate;
 
+	private boolean sended;
+	private String errorCode;
+	private String errorMessage;
+	private String externalRef;
+
 	public PaymentTransaction() {
 		// TODO Auto-generated constructor stub
 	}
@@ -108,8 +114,38 @@ public class PaymentTransaction extends BaseEntity {
 		this.source = source;
 	}
 
-	
-	
+	public boolean isSended() {
+		return sended;
+	}
+
+	public void setSended(boolean sended) {
+		this.sended = sended;
+	}
+
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	public String getExternalRef() {
+		return externalRef;
+	}
+
+	public void setExternalRef(String externalRef) {
+		this.externalRef = externalRef;
+	}
+
 	public Date getStatusDate() {
 		return statusDate;
 	}

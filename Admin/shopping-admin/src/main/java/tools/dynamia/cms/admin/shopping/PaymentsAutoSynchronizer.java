@@ -27,7 +27,7 @@ public class PaymentsAutoSynchronizer {
 
 	@Scheduled(fixedRate = 8 * 60 * 1000)
 	public void sync() {
-		List<Site> sites = siteService.getActiveSites();
+		List<Site> sites = siteService.getOnlineSites();
 
 		for (Site site : sites) {
 

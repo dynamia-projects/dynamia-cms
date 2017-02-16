@@ -7,12 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import tools.dynamia.cms.site.payment.api.Payment;
+import tools.dynamia.cms.site.payment.services.PaymentService;
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.domain.BaseEntity;
 
 @Table(name = "pay_manuals")
 @Entity
-public class ManualPayment extends BaseEntity {
+public class ManualPayment extends BaseEntity implements Payment {
 
 	/**
 	 * 
