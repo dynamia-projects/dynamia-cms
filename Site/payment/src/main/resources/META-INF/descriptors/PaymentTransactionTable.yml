@@ -4,8 +4,7 @@ autofields: false
 
 fields:
 
-  uuid:
-    label: TX Reference  
+  document:
   gatewayId:
     label: Gateway  
   status:
@@ -34,6 +33,7 @@ fields:
   description:
   payerFullname:
   payerDocument:
+  payerCode:
   payerPhoneNumber:
   payerMobileNumber:
   email:
@@ -47,13 +47,8 @@ fields:
   sended:
   errorCode:
   errorMessage:
-  
- 
-params:
-  readonly: true
+  uuid:
+    label: TX Reference  
 
-layout:
-  columns: 3
- 
  
   

@@ -33,8 +33,10 @@ public class PaymentDTO implements Serializable {
 	@JsonIgnore
 	private String signature;
 	private String description;
+	private String document;
 	private String payerFullname;
 	private String payerDocument;
+	private String payerCode;
 	private String payerPhoneNumber;
 	private String payerMobileNumber;
 	private String email;
@@ -55,6 +57,22 @@ public class PaymentDTO implements Serializable {
 
 	private Date lastStatusDate;
 	private Map<String, String> params;
+
+	public String getDocument() {
+		return document;
+	}
+
+	public void setDocument(String document) {
+		this.document = document;
+	}
+
+	public String getPayerCode() {
+		return payerCode;
+	}
+
+	public void setPayerCode(String payerCode) {
+		this.payerCode = payerCode;
+	}
 
 	public Map<String, String> getParams() {
 		return params;

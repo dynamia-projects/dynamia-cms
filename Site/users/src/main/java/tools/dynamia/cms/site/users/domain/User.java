@@ -105,6 +105,9 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 	private String code;
 
 	public String getCode() {
+		if(code==null || code.isEmpty()){
+			code = getExternalRef();
+		}
 		return code;
 	}
 
@@ -354,6 +357,7 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 		firstName = dto.getFirstName();
 		lastName = dto.getLastName();
 		fullName = dto.getFullName();
+		
 		if (firstName == null) {
 			firstName = fullName;
 			lastName = "";

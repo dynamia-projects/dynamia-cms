@@ -35,6 +35,7 @@ public class ManualPaymentController {
 				currentPay.setDescription(payment.getDescription());
 				service.register(currentPay);
 				mv.addObject("payment", currentPay);
+				mv.addObject("title","Estado de Pago");
 				PaymentHolder.get().setCurrentManualPayment(null);
 			}
 

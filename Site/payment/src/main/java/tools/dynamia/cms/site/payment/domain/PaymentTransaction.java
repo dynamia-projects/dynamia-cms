@@ -76,8 +76,10 @@ public class PaymentTransaction extends BaseEntity implements Payment {
 	private String signature;
 	@Column(length = 1000)
 	private String description;
+	private String document;
 	private String payerFullname;
 	private String payerDocument;
+	private String payerCode;
 	private String payerPhoneNumber;
 	private String payerMobileNumber;
 	private String email;
@@ -112,6 +114,22 @@ public class PaymentTransaction extends BaseEntity implements Payment {
 	public PaymentTransaction(String source) {
 		super();
 		this.source = source;
+	}
+
+	public String getDocument() {
+		return document;
+	}
+
+	public void setDocument(String document) {
+		this.document = document;
+	}
+
+	public String getPayerCode() {
+		return payerCode;
+	}
+
+	public void setPayerCode(String payerCode) {
+		this.payerCode = payerCode;
 	}
 
 	public boolean isSended() {
