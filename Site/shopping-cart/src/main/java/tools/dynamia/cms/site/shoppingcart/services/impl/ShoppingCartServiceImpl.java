@@ -157,9 +157,10 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 		tx.setCurrency(config.getDefaultCurrency());
 		tx.setEmail(user.getUsername());
 		if (shoppingCart.getCustomer() != null) {
-			tx.setPayerFullname(user.getFullName());
-			tx.setPayerDocument(user.getIdentification());
-			tx.setPayerCode(user.getCode());
+			User customer = shoppingCart.getCustomer();
+			tx.setPayerFullname(customer.getFullName());
+			tx.setPayerDocument(customer.getIdentification());
+			tx.setPayerCode(customer.getCode());
 		} else {
 			tx.setPayerFullname(user.getFullName());
 			tx.setPayerDocument(user.getIdentification());

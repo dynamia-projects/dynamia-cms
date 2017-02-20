@@ -51,6 +51,7 @@ public class SendManualPaymentAction extends AbstractCrudAction {
 		} else {
 			UIMessages.showMessage("Payments URL is not configured", MessageType.ERROR);
 		}
+		evt.getController().doQuery();
 	}
 
 }
