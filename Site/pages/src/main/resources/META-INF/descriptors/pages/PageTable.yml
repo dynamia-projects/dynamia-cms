@@ -1,7 +1,7 @@
 view: table
 beanClass: tools.dynamia.cms.site.pages.domain.Page
 hidden: [id,content,parameter,subtitle,tags,summary,imageURL,publishedDate]
-sortFields: [site,title,alias,icon,author,category,type,layout,published,showTitle,creationDate,startDate,endDate,neverExpire,uuid]
+sortFields: [site,title,alias,icon,author,category,type,layout,published,showTitle,creationDate,lastUpdate,startDate,endDate,neverExpire,uuid]
 
 
 params:

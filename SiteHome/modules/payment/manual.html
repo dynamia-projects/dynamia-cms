@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
 
 <div class="maincontainer" layout:fragment="content">
 
@@ -18,7 +20,7 @@
 		<div class="row mt40">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">
 				<table class="table" th:if="${payment!=null}">
-				<tr>
+					<tr>
 						<td><label class="orange">Estado</label></td>
 						<td><span>Pago Registrado Exitosamente!</span></td>
 					</tr>
@@ -80,7 +82,7 @@
 
 			</div>
 		</div>
-		
+
 
 	</div>
 </div>

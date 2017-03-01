@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="template">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
 
 <div class="maincontainer" layout:fragment="content">
 
@@ -11,9 +9,10 @@
 		<!-- Main Title-->
 		<div class="titles animated fadeInUp time3">
 			<div class="pull-left">
-				<h1 class="headinglefttitle" th:text="${title}">Pagos
-					Registrados</h1>
-				<div class="headingsubtitle">Codigo: <span th:text="${customer.externalRef}"></span></div>
+				<h1 class="headinglefttitle" th:text="${title}">Pagos Registrados</h1>
+				<div class="headingsubtitle">
+					Codigo: <span th:text="${customer.externalRef}"></span>
+				</div>
 			</div>
 			<i class="fa fa-table"></i>
 		</div>
@@ -29,7 +28,7 @@
 							<tr>
 								<th>No.</th>
 								<th>Fecha</th>
-								<th>Hora</th>								
+								<th>Hora</th>
 								<th>Referencia</th>
 								<th>Referencia 2</th>
 								<th>Referencia 3</th>
@@ -41,11 +40,9 @@
 						<tbody>
 							<tr th:each="p : ${payments}">
 								<td th:text="${p.number}"></td>
-								<td><span
-									th:text="${#dates.format(p.creationDate, 'dd/MMM/yyyy')}"></span></td>
-								<td><span
-									th:text="${#dates.format(p.creationTime, 'HH:mm')}"></span></td>
-								
+								<td><span th:text="${#dates.format(p.creationDate, 'dd/MMM/yyyy')}"></span></td>
+								<td><span th:text="${#dates.format(p.creationTime, 'HH:mm')}"></span></td>
+
 								<td th:text="${p.reference}"></td>
 								<td th:text="${p.reference2}"></td>
 								<td th:text="${p.reference3}"></td>

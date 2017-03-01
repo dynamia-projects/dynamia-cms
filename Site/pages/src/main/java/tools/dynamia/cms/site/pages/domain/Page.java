@@ -87,6 +87,16 @@ public class Page extends Content implements SiteAware, Aliasable {
 	@OneToMany(mappedBy = "page", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PageParameter> parameters = new ArrayList<>();
 	private boolean showTitle = true;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastUpdate;
+
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
 
 	public String getImageURL() {
 		return imageURL;

@@ -1,0 +1,108 @@
+.contact ul.productinfo li{
+    height: auto;
+}
+
+
+.brands{
+    height: 30px;
+    overflow: hidden;        
+}
+
+ul.brands > li > a{
+    margin: 0;
+    font-size: 13px;
+    padding: 6px;    
+}
+
+ul.brands > li > a:hover{
+    color: black;
+} 
+
+
+ul.subcategories > li > a{
+    margin: 0;
+    font-size: 12px;
+    padding: 6px;    
+}
+
+ul.subcategories > li + li > a{
+    margin: 0;
+}
+
+
+
+#webchat{
+ 
+
+    position: fixed;
+    height: 50px;
+    width: 250px;
+    right: 80px;
+    bottom: 0;
+    z-index: 9999;
+    text-align: center;    
+    font-size: 18px
+}
+
+#webchat a{
+    color: white;
+}
+
+.productratecart{
+    margin: 0px; 
+}
+
+.thumbnail .sale, .thumbnail .new, .thumbnail .offer{
+    left: auto;
+    right: 0px;
+}
+
+.productpanel:hover .productname a{
+    color: black;
+}
+
+.productpageprice{
+    width: auto;
+}
+
+.brand{
+    bottom: -20px;
+    left: 2px;
+    position: absolute;
+    z-index: 999;
+    background-color: white;
+    font-size: 12px;
+    opacity: 0.95;
+}
+
+.productname{    
+    height: 43px;
+    overflow: hidden;    
+    text-align: left;
+    font-size: 15px;
+}
+
+.productname a{
+    color: #424242;
+}
+
+.titles{
+    border: 0;
+}
+
+.oldprice{
+	font-size: inherit; !important
+}
+
+.topcart{
+	margin-top: 0px;
+	margin-right: 10px;
+}
+
+.topsearch{
+	margin: 0px 45px 0 0;
+}
+
+.headerdetails{
+	padding: 60px 0 30px 0;
+}
