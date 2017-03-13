@@ -5,10 +5,11 @@ autofields: false
 fields:
     title:
         params:
-            span: 3
+            span: 2
             
     
-    subtitle:    
+    subtitle:
+    buttonLabel:    
     category:
     enabled:
     description:

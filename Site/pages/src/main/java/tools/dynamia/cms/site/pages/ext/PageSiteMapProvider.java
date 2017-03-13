@@ -25,8 +25,7 @@ public class PageSiteMapProvider implements SiteMapProvider {
 
 		List<SiteMapURL> urls = new ArrayList<>();
 
-		urls.addAll(service.getPages(site).stream().filter(p -> p.isPublished()).map(p -> createURL(site, p))
-				.collect(Collectors.toList()));
+		service.getPages(site).stream().filter(p -> p.isPublished()).map(p -> createURL(site, p)).forEach(urls::add);
 
 		service.getPagesCategories(site).forEach(p -> {
 			if (p.getAlias() != null && !p.getAlias().isEmpty()) {

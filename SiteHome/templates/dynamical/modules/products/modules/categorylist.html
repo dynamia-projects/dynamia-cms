@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<!--Categories-->
+
+<body th:fragment="module(instance)">
+
+
+	<div class="card store">
+
+		<div th:class="${'card-header '+#objects.nullSafe(instance.styleClass,'primary-color-dark white-text')}" th:text="${instance.title}">
+			Categories
+		</div>
+
+		<div class="card-block">
+
+			<ul class="categories ">
+				<li th:each="cat : ${instance.model.categories}"><a th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}}" th:class="${(prd_category!=null and cat.id==prd_category.id?'active':'')}"
+					 th:text="${cat.name}">Categoria ABC</a>
+
+					<div class="subcategories">
+						<ul>
+							<li th:each="subcat : ${cat.subcategories}">
+								<a style="margin-left: 10px" th:href="@{'/store/categories/'+${subcat.id}+'/'+${subcat.alias}}">
+									<span th:text="${subcat.name}">Submenu</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+
+
+
+
+
+</body>
+
+</html>

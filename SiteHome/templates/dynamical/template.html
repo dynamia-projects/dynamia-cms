@@ -1,90 +1,70 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<meta name="description" th:content="${metaDescription}" />
-<meta name="author" th:content="${metaAuthor}" content="" />
-<meta name="keywords" th:content="${metaKeywords}" content="" />
-<meta name="copyright" th:content="${metaRights}" content="" />
-<meta name="robots" content="index, follow" />
-<meta th:content="|${site.name} - ${title}|" property="og:title"
-	content="" />
-<meta th:content="${metaDescription}" property="og:description"
-	content="" />
-<th:block th:each="pi : ${pageImages}">
-	<meta th:content="${pi}" property="og:image" content="" />
-</th:block>
-<meta th:content="${pageImage}" property="og:image" content="" />
+	<meta name="description" th:content="${metaDescription}" />
+	<meta name="author" th:content="${metaAuthor}" content="" />
+	<meta name="keywords" th:content="${metaKeywords}" content="" />
+	<meta name="copyright" th:content="${metaRights}" content="" />
+	<meta name="robots" content="index, follow" />
+	<meta th:content="|${site.name} - ${title}|" property="og:title" content="" />
+	<meta th:content="${metaDescription}" property="og:description" content="" />
+	<th:block th:each="pi : ${pageImages}">
+		<meta th:content="${pi}" property="og:image" content="" />
+	</th:block>
+	<meta th:content="${pageImage}" property="og:image" content="" />
 
-<link
-	th:href="@{${#objects.nullSafe(siteParams['favicon'],'/img/favicon/favicon.png')}}"
-	href="img/favicon.ico" rel="shortcut icon"
-	type="image/vnd.microsoft.icon" />
+	<link th:href="@{${#objects.nullSafe(siteParams['favicon'],'/img/favicon/favicon.png')}}" href="img/favicon.ico" rel="shortcut icon"
+	 type="image/vnd.microsoft.icon" />
 
 
-<title th:text="|${site.name} - ${title}|">Dynamical Template</title>
+	<title th:text="|${site.name} - ${title}|">Dynamical Template</title>
 
-<!-- Bootstrap core CSS -->
-<link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.css"
-	rel="stylesheet" />
-<link th:href="@{css/mdb.min.css}" href="css/mdb.min.css"
-	rel="stylesheet" />
+	<!-- Bootstrap core CSS -->
+	<link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.css" rel="stylesheet" />
+	<link th:href="@{/css/mdb.min.css}" href="css/mdb.min.css" rel="stylesheet" />
 
-<!-- Font awesome CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+	<!-- Font awesome CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
 
 
-<!-- Custom styles for this template -->
-<link th:href="@{/css/template.css}" href="css/template.css"
-	rel="stylesheet" />
+	<!-- Custom styles for this template -->
+	<link th:href="@{/css/template.css}" href="css/template.css" rel="stylesheet" />
 
-<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-          <script src="js/html5shiv.js"></script>
-          <script src="js/respond.min.js"></script>
-        <![endif]-->
 
-<th:block th:include="module::position('head_tag')" />
+	<th:block th:include="module::position('head_tag')" />
 </head>
 
 <body>
 
 	<div id="fb-root"></div>
 
-	<nav
-		th:class="${'navbar navbar-dark '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}">
+	<!--Navbar-->
+	<th:block th:include="module::position('navbar-top')" />
 
-
-		<th:block th:include="module::position('logo')" />
-
-		<!-- Collapse button-->
-		<button class="navbar-toggler hidden-sm-up" type="button"
-			data-toggle="collapse" data-target="#collapseEx2">
-			<i class="fa fa-bars"></i>
-		</button>
-
+	<nav th:class="${'navbar navbar-toggleable-md navbar-dark '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}" style="position: sticky">
 		<div class="container">
-
-
-			<div class="collapse navbar-toggleable-xs" id="collapseEx2">			
-
-				<ul class="nav navbar-nav">
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1"
+			 aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<a class="navbar-brand" href="#">
+				<th:block th:include="module::position('logo')" />
+			</a>
+			<div class="collapse navbar-collapse" id="navbarNav1">
+				<ul class="navbar-nav mr-auto">
 					<th:block th:include="module::position('navbar')" />
 				</ul>
-				<ul class="nav navbar-nav pull-right">
-					<th:block th:include="module::position('navbar-right')" />
-				</ul>
+				<th:block th:include="site/searchform::content" />
 			</div>
-			<!--/.nav-collapse -->
 		</div>
 	</nav>
+
 	<th:block th:include="module::position('navbar-bottom')" />
-	
+
 
 	<div class="container">
 		<th:block th:include="tpl_globalmessages::content" />
@@ -104,8 +84,7 @@
 
 	<!-- /.container -->
 
-	<footer id="footer"
-		th:class="${'page-footer center-on-small-only  '+#objects.nullSafe(siteParams['footer-class'],'bg-primary')}">
+	<footer id="footer" th:class="${'page-footer center-on-small-only  '+#objects.nullSafe(siteParams['footer-class'],'bg-primary')}">
 
 		<th:block th:include="module::position('footer')" />
 
@@ -115,9 +94,7 @@
 		<div class="footer-copyright">
 			<div class="row">
 				<div class="col-md-12">
-					<th:block th:include="module::position('footer-copyright')" />
-					Powered by: <a href="http://cms.dynamia.tools" target="blank"
-						class="tooltip-test">DynamiaCMS</a>
+					<th:block th:include="module::position('footer-copyright')" /> Powered by: <a href="http://cms.dynamia.tools" target="blank" class="tooltip-test">DynamiaCMS</a>
 				</div>
 			</div>
 		</div>
@@ -145,7 +122,7 @@
 	<th:block th:include="tpl_webchat::content" />
 
 	<script>
-		(function(d, s, id) {
+		(function (d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id))
 				return;
@@ -158,4 +135,5 @@
 
 	<th:block th:include="module::position('custom_scripts')" />
 </body>
+
 </html>

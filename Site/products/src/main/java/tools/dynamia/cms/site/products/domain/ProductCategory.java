@@ -60,16 +60,16 @@ public class ProductCategory extends SimpleEntity implements SiteAware, Orderabl
 	private List<ProductCategory> subcategories = new ArrayList<>();
 	@NotNull
 	@NotEmpty(message = "Enter product category name")
-	
+
 	private String name;
 	private String alternateName;
 	@Column(name = "catAlias")
-	
+
 	private String alias;
-	
+
 	private String description;
-	
-	private boolean active;
+
+	private boolean active = true;
 
 	private Long externalRef;
 	@OneToOne
@@ -81,7 +81,7 @@ public class ProductCategory extends SimpleEntity implements SiteAware, Orderabl
 	@JsonIgnore
 	private List<ProductCategoryDetail> details = new ArrayList<>();
 
-	@Column(name = "catOrder")	
+	@Column(name = "catOrder")
 	private int order;
 
 	@OneToOne

@@ -79,7 +79,7 @@ public class Product extends SimpleEntity implements SiteAware {
 
 	private String priceDescription;
 	private Long stock;
-	private boolean active;
+	private boolean active = true;
 	private boolean featured;
 	private boolean sale;
 	private boolean newproduct;

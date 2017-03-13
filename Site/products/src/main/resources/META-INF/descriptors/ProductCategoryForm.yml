@@ -4,8 +4,7 @@ autofields: false
 
 fields: 
     
-    parent:
-        component: label        
+    parent:        
     name:
     alternateName:
     alias:
@@ -23,5 +22,6 @@ fields:
             span: 4
     
     order:
+    active:
 layout:
     columns: 4

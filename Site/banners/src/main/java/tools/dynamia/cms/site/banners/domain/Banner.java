@@ -31,7 +31,7 @@ import tools.dynamia.domain.SimpleEntity;
 
 @Entity
 @Table(name = "ban_banners")
-@BatchSize(size=10)
+@BatchSize(size = 10)
 public class Banner extends SimpleEntity implements SiteAware, Orderable {
 
 	/**
@@ -52,10 +52,19 @@ public class Banner extends SimpleEntity implements SiteAware, Orderable {
 	private String alternateImageURL;
 	@Column(name = "bannerOrder")
 	private int order;
+	private String buttonLabel;
 
 	@OneToOne
 	@NotNull
 	private BannerCategory category;
+
+	public String getButtonLabel() {
+		return buttonLabel;
+	}
+
+	public void setButtonLabel(String buttonLabel) {
+		this.buttonLabel = buttonLabel;
+	}
 
 	public String getSubtitle() {
 		return subtitle;

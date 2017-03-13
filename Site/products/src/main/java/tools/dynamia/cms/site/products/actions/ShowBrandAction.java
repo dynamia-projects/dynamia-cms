@@ -37,43 +37,45 @@ import tools.dynamia.domain.services.CrudService;
 @CMSAction
 public class ShowBrandAction implements SiteAction {
 
-    @Autowired
-    private ProductsService service;
+	@Autowired
+	private ProductsService service;
 
-    @Autowired
-    private CrudService crudService;
+	@Autowired
+	private CrudService crudService;
 
-    @Override
-    public String getName() {
-        return "showProductBrand";
-    }
+	@Override
+	public String getName() {
+		return "showProductBrand";
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView();
-        ProductSearchForm form = (ProductSearchForm) evt.getData();
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView();
+		ProductSearchForm form = (ProductSearchForm) evt.getData();
 
-        ProductBrand brand = crudService.find(ProductBrand.class, form.getBrandId());
+		if (form.getBrandId() != null) {
+			ProductBrand brand = crudService.find(ProductBrand.class, form.getBrandId());
 
-        mv.addObject("prd_brand", brand);
-        form.setOrder(ProductSearchOrder.MINPRICE);
+			mv.addObject("prd_brand", brand);
+			form.setOrder(ProductSearchOrder.MINPRICE);
 
-        if (!evt.getRequest().getParameterMap().isEmpty()) {
-            form.setDetail(evt.getRequest().getParameter("q"));
-        }
+			if (!evt.getRequest().getParameterMap().isEmpty()) {
+				form.setDetail(evt.getRequest().getParameter("q"));
+			}
 
-        SiteActionManager.performAction("searchProducts", mv, evt.getRequest(), form);
-        ProductCategory category = (ProductCategory) mv.getModel().get("prd_category");
+			SiteActionManager.performAction("searchProducts", mv, evt.getRequest(), form);
+			ProductCategory category = (ProductCategory) mv.getModel().get("prd_category");
 
-        if (category != null) {
-            mv.addObject("title", category.getName());
-            mv.addObject("prd_subcategories", service.getSubcategories(category, brand));
-            mv.addObject("prd_category_details", service.getCategoryDetails(category));
-        } else {
-            mv.addObject("title", brand.getName());
-            mv.addObject("prd_categories", service.getCategories(brand));
-        }
+			if (category != null) {
+				mv.addObject("title", category.getName());
+				mv.addObject("prd_subcategories", service.getSubcategories(category, brand));
+				mv.addObject("prd_category_details", service.getCategoryDetails(category));
+			} else {
+				mv.addObject("title", brand.getName());
+				mv.addObject("prd_categories", service.getCategories(brand));
+			}
 
-    }
+		}
+	}
 
 }

@@ -431,7 +431,12 @@ public class ProductsServiceImpl implements ProductsService {
 
 	private int getDefaultPageSize(Site site) {
 		ProductsService self = Containers.get().findObject(ProductsService.class);
-		return self.getSiteConfig(site).getProductsPerPage();
+		ProductsSiteConfig config = self.getSiteConfig(site);
+		if (config != null) {
+			return config.getProductsPerPage();
+		} else {
+			return 40;
+		}
 	}
 
 	@Override

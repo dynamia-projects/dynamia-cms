@@ -54,8 +54,8 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 	@JoinColumn(unique = true)
 	private Site site;
 
-	private String pricePattern;
-	private String defaultCurrency;
+	private String pricePattern="";
+	private String defaultCurrency="";
 
 	@JsonIgnore
 	private String datasourceURL;

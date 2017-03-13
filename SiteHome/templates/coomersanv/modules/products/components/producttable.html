@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+
+<body th:fragment="frag (productlist)">
+
+	<table class="table table-responsive">
+		<thead>
+			<tr>
+				<th>Foto</th>
+				<th>Codigo</th>
+				<th>Nombre</th>
+				<th>Stock</th>
+				<th align="right">Terceros</th>
+				<th align="right">Asociados</th>
+				<th></th>
+			</tr>
+		</thead>
+
+
+		<tbody>
+			<tr th:each="prd : ${productlist}">
+				<td><img
+					th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=60,h=60)}"
+					src="img/product1a.jpg" alt="" th:if="${prd.image!=null}" /> <img
+					th:src="@{/img/product1a.jpg}" alt="" th:if="${prd.image==null}"
+					width="60px" height="60px" /></td>
+
+				<td th:text="${prd.sku}"></td>
+				<td th:text="${prd.name}"></td>
+				<td align="center" th:text="${prd.stock}"></td>
+				<td align="right"><span
+					th:text="${cmsUtil.formatNumber(prd.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$4459.00</span></td>
+
+				<td align="right"><span
+					th:text="${cmsUtil.formatNumber(prd.price2,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$4459.00</span></td>
+				<td><a class="btn btn-success" href="#"><i class="fa fa-plus"></i></a>  </td>
+			</tr>
+		</tbody>
+
+	</table>
+
+
+</body>
+
+</html>

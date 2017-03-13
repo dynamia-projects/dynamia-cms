@@ -1,40 +1,31 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <!-- Main Menu -->
 
 <body th:fragment="module(instance)">
 
+	<th:block th:each="mi : ${instance.model.menuitems}">		
 
-
-
-	<th:block th:each="mi : ${instance.model.menuitems}">
-
-		<li th:if="${not #lists.isEmpty(mi.subitems)}"
-			class="nav-item dropdown"><a href="#" th:href="@{${mi.href}}"
-			class="nav-link dropdown-toggle" th:id="${'dropdownMenu'+mi.id}"
-			data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-			th:title="${mi.title}" th:target="${mi.target}"> <i
-				th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
+		<li th:if="${not #lists.isEmpty(mi.subitems)}" class="nav-item dropdown btn-group">
+			<a href="#" th:href="@{${mi.href}}" class="nav-link dropdown-toggle btn-group" th:id="${'dropdownMenu'+mi.id}" data-toggle="dropdown"
+			 aria-haspopup="true" aria-expanded="false" th:title="${mi.title}" th:target="${mi.target}"> <i th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
 				<th:block th:text="${mi.name}" /> <span class="caret"></span>
-		</a>
-			<div class="dropdown-menu" data-th-attr="aria-labelledby='dropdownMenu'+${mi.id}">
+			</a>
+			<div class="dropdown-menu dropdown" data-th-attr="aria-labelledby='dropdownMenu'+${mi.id}">
 
-				<a class="dropdown-item" th:each="smi : ${mi.subitems}"
-					th:href="@{${smi.href}}" th:target="${smi.target}"
-					th:title="${smi.title}"> <th:block th:text="${smi.name}" />
+				<a class="dropdown-item" th:each="smi : ${mi.subitems}" th:href="@{${smi.href}}" th:target="${smi.target}" th:title="${smi.title}">
+					<th:block th:text="${smi.name}" />
 				</a>
 			</div>
-			</li>
+		</li>
 
 		<li th:if="${#lists.isEmpty(mi.subitems)}" class="nav-item">
-		<a href="#"
-			th:href="@{${mi.href}}" th:class="${'nav-link '+mi.styleClass}"
-			th:title="${mi.title}" th:target="${mi.target}"> <i
-				th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
+			<a href="#" th:href="@{${mi.href}}" th:class="${'nav-link '+mi.styleClass}" th:title="${mi.title}" th:target="${mi.target}">
+				<i th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
 				<th:block th:text="${mi.name}" />
-		</a></li>
+			</a>
+		</li>
 	</th:block>
 
 

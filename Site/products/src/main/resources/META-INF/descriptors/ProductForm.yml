@@ -2,12 +2,12 @@ view: form
 beanClass: tools.dynamia.cms.site.products.domain.Product
 autofields: false
 
-fields:
-   sku:
-   reference:
+fields:   
    name:
      params:
          span: 2
+   sku:
+   reference:
    brand:   
    category:
    template:
@@ -94,7 +94,7 @@ fields:
 
 groups:
    general:
-       fields: [sku,reference,name,brand,category,template,alternateTemplate,description,longDescription]
+       fields: [name,sku,reference,brand,category,template,alternateTemplate,description,longDescription]
        
    sales:
        fields: [stock,price,price2,cost,lastPrice,storePrice]

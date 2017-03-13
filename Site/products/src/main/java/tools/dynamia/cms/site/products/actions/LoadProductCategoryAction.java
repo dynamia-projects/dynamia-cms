@@ -31,6 +31,7 @@ import tools.dynamia.cms.site.products.ProductsUtil;
 import tools.dynamia.cms.site.products.domain.Product;
 import tools.dynamia.cms.site.products.domain.ProductBrand;
 import tools.dynamia.cms.site.products.domain.ProductCategory;
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import tools.dynamia.cms.site.products.services.ProductsService;
 import tools.dynamia.domain.query.BooleanOp;
 import tools.dynamia.domain.query.QueryConditions;
@@ -75,6 +76,7 @@ class LoadProductCategoryAction implements SiteAction {
 	}
 
 	private void loadProductsFromCategory(ActionEvent evt, ModelAndView mv) {
+		ProductsSiteConfig config = service.getSiteConfig(evt.getSite());
 		ProductCategory category = null;
 		if (evt.getData() instanceof String) {
 			String alias = (String) evt.getData();
@@ -95,7 +97,10 @@ class LoadProductCategoryAction implements SiteAction {
 		}
 
 		qp.orderBy("price", true);
-		qp.paginate(service.getSiteConfig(evt.getSite()).getProductsPerPage());
+
+		if (config != null) {
+			qp.paginate(config.getProductsPerPage());
+		}
 
 		String title = category.getName();
 

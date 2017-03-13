@@ -4,6 +4,8 @@ autofields: false
 
 fields:
     title:
+    subtitle:
+    buttonLabel:
     category:
     enabled:
     imageURL:

@@ -37,19 +37,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.CookieGenerator;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.View;
 import tools.dynamia.cms.site.core.actions.SiteActionManager;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.services.SiteService;
 import tools.dynamia.cms.site.products.ProductSearchForm;
 import tools.dynamia.cms.site.products.ProductShareForm;
+import tools.dynamia.cms.site.products.domain.ProductBrand;
 import tools.dynamia.cms.site.products.services.ProductsService;
 import tools.dynamia.cms.site.users.UserHolder;
-
 import tools.dynamia.commons.StringUtils;
 
 /**
@@ -100,7 +97,10 @@ public class StoreController {
 		Site site = siteService.getSite(request);
 
 		ProductSearchForm form = new ProductSearchForm();
-		form.setBrandId(service.getBrandByAlias(site, brand).getId());
+		ProductBrand productBrand = service.getBrandByAlias(site, brand);
+		if (productBrand != null) {
+			form.setBrandId(productBrand.getId());
+		}
 		form.setCategoryId(id);
 
 		ModelAndView mv = new ModelAndView("products/brand");

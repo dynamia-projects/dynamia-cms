@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+
+<div class="container" layout:fragment="content">
+
+
+	<div class="row mt40">
+
+		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 mt30column">
+			<!--filters-->
+			<div th:include="products/components/filtersform::content"
+				class="hidden-xs hidden-sm" />
+		</div>
+
+		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 mt40column">
+
+			<h2 th:text="${title}">Title</h2>
+			<div th:include="core/components/pagination::content" />
+			<div th:include="products/components/subcategoriesmenu::content" />
+
+
+			<!-- PRODUCTS -->
+
+			<div class="featureprojectcontianer mt40" id="productlist">
+				<div class="featureprojectwrap latestprojectcontianer grid">
+
+					<!-- Grid -->
+					<div th:unless="${@userHolder.seller}"
+						th:include="products/components/productgrid::frag(${prd_products})" />
+
+					<div th:if="${@userHolder.seller}"
+						th:include="products/components/producttable::frag(${prd_products})" />
+
+
+					<!-- Paging-->
+					<div class="mt40 clearfix">
+						<div th:include="core/components/pagination::content" />
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+
+</html>

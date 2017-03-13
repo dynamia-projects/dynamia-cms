@@ -11,7 +11,7 @@
 
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 
-		
+
 
 			<div class="titles animated fadeInUp time3 pull-left">
 
@@ -73,10 +73,15 @@
 						<div class="featureprojectwrap latestprojectcontianer grid">
 
 							<!-- Grid -->
-							<div
+							<div th:unless="${@userHolder.seller}"
 								th:include="products/components/productgrid::frag(${prd_products})" />
 
-							<!-- Paging-->
+							<div th:if="${@userHolder.seller}"
+								th:include="products/components/producttable::frag(${prd_products})" />
+
+
+							
+								<!-- Paging-->
 							<div class="mt40 clearfix">
 								<div th:include="core/components/pagination::content" />
 							</div>
