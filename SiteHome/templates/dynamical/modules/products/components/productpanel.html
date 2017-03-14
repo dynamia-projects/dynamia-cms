@@ -4,7 +4,38 @@
 
 <body th:fragment="frag (prd)">
 
-    <div class="thumbnail productpanel" style="height: 280px">
+    <div class="col-lg-4 col-md-6 col-xs-12 mix">
+        <div class="card card-block store product">
+            <a th:href="@{'/store/products/'+${prd.id}}">
+                <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=200,h=200)}" th:alt="${prd.name}" th:if="${prd.image!=null}"
+                    th:title="${cmsUtil.cropText(prd.description,140)}" class="img-fluid center-block" />
+                <div th:if="${prd.image==null}" style="width: 160px; height: 160px; background-color: silver" />
+            </a>
+
+            <h4 class="card-title d-flex justify-content-center">
+                <a th:href="@{'/store/products/'+${prd.id}}" th:text="${prd.name}" href="#">Product Name</a>
+            </h4>
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-outline-success btn-rounded waves-effect" th:href="@{'/store/products/'+${prd.id}}">
+                    <span th:text="${cmsUtil.formatNumber(prd.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$4459.00</span>
+                </a>
+            </div>
+
+            <div class="d-flex justify-content-around">
+                <div class="d-flex justify-content-start">
+                    <a class="btn btn-primary" th:if="${prd.stock >= prd_config.minStock and prd_config.shopEnabled and prd.sellInWeb}" th:href="@{'/shoppingcart/shop/add/'+${prd.id}}"><i class="fa fa-shopping-cart"></i></a>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-primary" th:if="${prd.stock >= prd_config.minStock and prd_config.shopEnabled and prd.sellInWeb}" th:href="@{'/shoppingcart/shop/add/'+${prd.id}}"><i class="fa fa-shopping-cart"></i></a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="thumbnail productpanel" style="height: 280px" th:if="false">
 
         <div class="relativediv">
             <span class="brand" th:text="${prd.brand!=null?prd.brand.name.toUpperCase():''}">Brand</span>

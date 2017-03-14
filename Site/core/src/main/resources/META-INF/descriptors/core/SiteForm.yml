@@ -60,7 +60,18 @@ fields:
     metadataRights:
         label: Rights
         
-        
+    twitter:
+    googlePlus:
+    facebook:
+    instagram:
+    linkedin:
+    tumblr:
+    snapchat:
+    pinterest:
+    vk:
+    flickr:
+    vine:
+    meetup:
     
 groups:
     
@@ -78,5 +89,10 @@ groups:
         label: Metadata
         fields: [metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
         
+    social:
+        fields: [twitter, googlePlus, facebook,instagram,linkedin, tumblr, 
+        snapchat, pinterest, vk, flickr,vine, meetup]
+        
+        
 layout:
-    columns: 2
+    columns: 4

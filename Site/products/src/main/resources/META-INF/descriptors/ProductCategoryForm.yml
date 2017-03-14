@@ -23,5 +23,8 @@ fields:
     
     order:
     active:
+    
+    details:
+      component: crudview
 layout:
     columns: 4

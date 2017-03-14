@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Products Filter Form-->
+
+<body th:fragment="module(instance)">
+
+	<div class="card store" th:each="det : ${prd_category_details}" th:if="${not #lists.isEmpty(det.currentValues)}">
+
+		<div th:class="${'card-header '+#objects.nullSafe(instance.styleClass,'primary-color-dark white-text')}" th:text="${det.name}">
+			Category Name
+		</div>
+
+		<div class="card-block">
+
+			<ul class="categories ">
+
+				<li th:each="val : ${det.currentValues}">
+					<a th:href="@{${CURRENT_URL}('q'=${det.name}+'='+${val})}">
+						<i class="fa fa-square-o"></i>
+						<span th:text="${val}"></span>
+					</a>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+
+</body>
+
+</html>

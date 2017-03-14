@@ -15,9 +15,6 @@
  */
 package tools.dynamia.cms.site.pages.domain;
 
-import tools.dynamia.cms.site.core.Aliasable;
-import tools.dynamia.cms.site.core.CMSUtil;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,10 +32,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import tools.dynamia.cms.site.core.Aliasable;
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Content;
 import tools.dynamia.cms.site.core.domain.ContentAuthor;
-
 import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
@@ -89,7 +86,19 @@ public class Page extends Content implements SiteAware, Aliasable {
 	private boolean showTitle = true;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdate;
+	
+	private String styleClass;
+	
+	
 
+	public String getStyleClass() {
+		return styleClass;
+	}
+
+	public void setStyleClass(String styleClass) {
+		this.styleClass = styleClass;
+	}
+	
 	public Date getLastUpdate() {
 		return lastUpdate;
 	}

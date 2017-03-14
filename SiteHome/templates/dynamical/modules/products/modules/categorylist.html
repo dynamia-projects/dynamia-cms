@@ -16,13 +16,18 @@
 		<div class="card-block">
 
 			<ul class="categories ">
-				<li th:each="cat : ${instance.model.categories}"><a th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}}" th:class="${(prd_category!=null and cat.id==prd_category.id?'active':'')}"
-					 th:text="${cat.name}">Categoria ABC</a>
+				<li th:each="cat : ${instance.model.categories}">
+					<a th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}}" th:class="${(prd_category!=null and cat.id==prd_category.id?'active':'')}">
+						<i class="fa fa-square-o" th:unless="${prd_category!=null and cat.id==prd_category.id}"></i>
+						<i class="fa fa-check-square-o" th:if="${prd_category!=null and cat.id==prd_category.id}"></i>
+						<span th:text="${cat.name}">Submenu</span>
+					</a>
 
 					<div class="subcategories">
 						<ul>
 							<li th:each="subcat : ${cat.subcategories}">
-								<a style="margin-left: 10px" th:href="@{'/store/categories/'+${subcat.id}+'/'+${subcat.alias}}">
+								<a th:href="@{'/store/categories/'+${subcat.id}+'/'+${subcat.alias}}" th:class="${(prd_category!=null and subcat.id==prd_category.id?'active':'')}">
+									<i class="fa fa-caret-right"></i>
 									<span th:text="${subcat.name}">Submenu</span>
 								</a>
 							</li>
@@ -33,10 +38,6 @@
 			</ul>
 		</div>
 	</div>
-
-
-
-
 
 </body>
 

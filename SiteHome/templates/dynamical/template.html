@@ -43,9 +43,11 @@
 	<div id="fb-root"></div>
 
 	<!--Navbar-->
+	<th:block th:include="tpl_topmenu::content" />
+
 	<th:block th:include="module::position('navbar-top')" />
 
-	<nav th:class="${'navbar navbar-toggleable-md navbar-dark '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}" style="position: sticky">
+	<nav th:class="${'main-nav navbar navbar-toggleable-md navbar-dark '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}">
 		<div class="container">
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1"
 			 aria-expanded="false" aria-label="Toggle navigation">
@@ -77,12 +79,14 @@
 
 	<th:block th:include="module::position('content-top')" />
 
-	<br />
-	<div class="container" layout:fragment="content"></div>
+
+
+	<div>
+		<div class="container" layout:fragment="content"></div>
+	</div>
+
 	<th:block th:include="module::position('content-bottom')" />
 
-
-	<!-- /.container -->
 
 	<footer id="footer" th:class="${'page-footer center-on-small-only  '+#objects.nullSafe(siteParams['footer-class'],'bg-primary')}">
 

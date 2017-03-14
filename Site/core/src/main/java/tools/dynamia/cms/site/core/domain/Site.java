@@ -72,6 +72,115 @@ public class Site extends SimpleEntity implements Parameterizable {
 	private String googleSiteVerification;
 	private boolean corporateSite;
 
+	private String twitter;
+	private String googlePlus;
+	private String facebook;
+	private String instagram;
+	private String linkedin;
+	private String tumblr;
+	private String snapchat;
+	private String pinterest;
+	private String vk;
+	private String flickr;
+	private String vine;
+	private String meetup;
+
+	public String getTwitter() {
+		return twitter;
+	}
+
+	public void setTwitter(String twitter) {
+		this.twitter = twitter;
+	}
+
+	public String getGooglePlus() {
+		return googlePlus;
+	}
+
+	public void setGooglePlus(String googlePlus) {
+		this.googlePlus = googlePlus;
+	}
+
+	public String getFacebook() {
+		return facebook;
+	}
+
+	public void setFacebook(String facebook) {
+		this.facebook = facebook;
+	}
+
+	public String getInstagram() {
+		return instagram;
+	}
+
+	public void setInstagram(String instagram) {
+		this.instagram = instagram;
+	}
+
+	public String getLinkedin() {
+		return linkedin;
+	}
+
+	public void setLinkedin(String linkedin) {
+		this.linkedin = linkedin;
+	}
+
+	public String getTumblr() {
+		return tumblr;
+	}
+
+	public void setTumblr(String tumblr) {
+		this.tumblr = tumblr;
+	}
+
+	public String getSnapchat() {
+		return snapchat;
+	}
+
+	public void setSnapchat(String snapchat) {
+		this.snapchat = snapchat;
+	}
+
+	public String getPinterest() {
+		return pinterest;
+	}
+
+	public void setPinterest(String pinterest) {
+		this.pinterest = pinterest;
+	}
+
+	public String getVk() {
+		return vk;
+	}
+
+	public void setVk(String vk) {
+		this.vk = vk;
+	}
+
+	public String getFlickr() {
+		return flickr;
+	}
+
+	public void setFlickr(String flickr) {
+		this.flickr = flickr;
+	}
+
+	public String getVine() {
+		return vine;
+	}
+
+	public void setVine(String vine) {
+		this.vine = vine;
+	}
+
+	public String getMeetup() {
+		return meetup;
+	}
+
+	public void setMeetup(String meetup) {
+		this.meetup = meetup;
+	}
+
 	public String getOfflineRedirect() {
 		return offlineRedirect;
 	}

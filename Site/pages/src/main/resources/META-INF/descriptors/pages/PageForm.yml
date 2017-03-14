@@ -54,6 +54,7 @@ fields:
     tags:        
   
     icon:        
+    styleClass:
     startDate:
     endDate:
     showTitle:
@@ -73,6 +74,6 @@ groups:
       fields: [imageURL,summary]
       
     advanced:
-      fields: [type,layout,tags, icon,startDate,endDate,neverExpire,published, showTitle]
+      fields: [type,layout,tags, icon,styleClass, startDate,endDate,neverExpire,published, showTitle]
 layout:
     columns: 3

@@ -7,6 +7,12 @@
 
     <div class="row">
         <div class="col-md-12">
+            <a th:href="@{'/store/brands/'+${prd_brand.alias}}" class="pull-right">
+
+                <img class="animated flip time3" th:src="@{'/resources/products/brands/thumbnails/'+${prd_brand.image}(w=120,h=120)}" src="img/product1a.jpg"
+                    th:alt="${prd_brand.name}" />
+            </a>
+
 
             <h1 th:text="${title}" class="doc-title">Page title</h1>
             <!-- Subcategories -->

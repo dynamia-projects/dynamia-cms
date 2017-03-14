@@ -44,27 +44,31 @@ public class SaveModuleInstanceAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		List<Parameter> parameters = (List<Parameter>) evt.getData();
 
 		ModuleInstance moduleInstance = (ModuleInstance) evt.getParam("moduleInstance");
 
 		crudService.save(moduleInstance);
-		for (Parameter parameter : parameters) {
 
-			ModuleInstanceParameter instanceParameter = moduleInstance.getParameter(parameter.getName());
-			if (instanceParameter == null) {
-				String value = parameter.getValue();
-				if (value != null && !value.isEmpty()) {
-					instanceParameter = new ModuleInstanceParameter(parameter.getName(), parameter.getValue());
-					instanceParameter.setEnabled(true);
-					instanceParameter.setModuleInstance(moduleInstance);
+		if (evt.getData() instanceof List) {
+			List<Parameter> parameters = (List<Parameter>) evt.getData();
+
+			for (Parameter parameter : parameters) {
+
+				ModuleInstanceParameter instanceParameter = moduleInstance.getParameter(parameter.getName());
+				if (instanceParameter == null) {
+					String value = parameter.getValue();
+					if (value != null && !value.isEmpty()) {
+						instanceParameter = new ModuleInstanceParameter(parameter.getName(), parameter.getValue());
+						instanceParameter.setEnabled(true);
+						instanceParameter.setModuleInstance(moduleInstance);
+						crudService.save(instanceParameter);
+					}
+				} else {
+					instanceParameter.setValue(parameter.getValue());
 					crudService.save(instanceParameter);
 				}
-			} else {
-				instanceParameter.setValue(parameter.getValue());
-				crudService.save(instanceParameter);
 			}
-		}
+		}	
 
 		UIMessages.showMessage("Module instance saved");
 

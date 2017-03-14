@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<body th:fragment="content">
+    <!--subcategories-->
+
+    <ul class="nav nav-tabs md-pills pills-ins" role="tablist" th:if="${prd_subcategories!=null and not #lists.isEmpty(prd_subcategories)}">
+        <li class="nav-item" th:each="cat : ${prd_subcategories}">
+            <a class="nav-link" th:href="@{'/store/categories/'+${cat.id}+'/'+${cat.alias}}" th:text="${cat.name}" href="#">Categoria ABC</a>
+        </li>
+    </ul>
+
+
+
+    <ul class="breadcrumb" th:if="${prd_parentCategory!=null}">
+
+        <li><a th:text="${prd_parentCategory.name}" th:href="@{'/store/categories/'+${prd_parentCategory.id}+'/'+${prd_parentCategory.alias}}"
+                href="#">Home</a></li>
+        <li class="active" th:text="${title}">Data</li>
+    </ul>
+
+</body>
+
+</html>

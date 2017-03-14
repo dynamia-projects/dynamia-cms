@@ -14,7 +14,7 @@ fields:
     image:
        component: resourceUploadlink
        params:
-           subfolder: products/brands/images
+           subfolder: products/brands
            generateFileName: true
        
     
