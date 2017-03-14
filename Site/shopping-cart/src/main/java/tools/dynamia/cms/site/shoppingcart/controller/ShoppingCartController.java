@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import tools.dynamia.cms.site.core.CMSUtil;
+import tools.dynamia.cms.site.core.SiteContext;
 import tools.dynamia.cms.site.core.actions.SiteActionManager;
 
 /**
@@ -66,12 +67,15 @@ public class ShoppingCartController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("cartName", name);
 		String redirect = request.getParameter("currentURI");
+		redirect = safeRedirect(redirect);
 		mv.setView(new RedirectView(redirect, true, true, false));
 		SiteActionManager.performAction("addItemToCart", mv, request, redirectAttributes, itemCode);
 		SiteActionManager.performAction("syncShoppingOrder", mv, request, redirectAttributes, itemCode);
 
 		return mv;
 	}
+
+	
 
 	@RequestMapping(value = "/{name}/remove/{itemCode}", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView remove(@PathVariable String name, @PathVariable String itemCode, HttpServletRequest request,
@@ -81,6 +85,7 @@ public class ShoppingCartController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("cartName", name);
 		String redirect = request.getParameter("currentURI");
+		redirect = safeRedirect(redirect);
 		mv.setView(new RedirectView(redirect, true, true, false));
 		SiteActionManager.performAction("removeItemFromCart", mv, request, redirectAttributes, itemCode);
 		SiteActionManager.performAction("syncShoppingOrder", mv, request, redirectAttributes, itemCode);
@@ -94,6 +99,7 @@ public class ShoppingCartController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("cartName", name);
 		String redirect = request.getParameter("currentURI");
+		redirect = safeRedirect(redirect);
 		mv.setView(new RedirectView(redirect, true, true, false));
 		SiteActionManager.performAction("clearShoppingCart", mv, request, redirectAttributes, null);
 
@@ -223,6 +229,17 @@ public class ShoppingCartController {
 		SiteActionManager.performAction("showManualPayments", mv, request, redirectAttributes, customer);
 
 		return mv;
+	}
+	
+	private String safeRedirect(String redirect) {
+		if(redirect==null){
+			redirect = SiteContext.get().getPreviousURI();
+		}
+		
+		if(redirect==null){
+			redirect="/";
+		}
+		return redirect;
 	}
 
 }

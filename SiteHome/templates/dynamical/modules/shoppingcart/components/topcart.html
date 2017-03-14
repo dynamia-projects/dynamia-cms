@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="template">
+
+<body th:fragment="content(cart,icon)">
+
+
+    <ul class="navbar-nav topcart pull-left" th:if="${not cart.isEmpty()}">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{'/shoppingcart/'+${cart.name}}" th:title="${cmsUtil.formatNumber(cart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">
+                <i th:class="${icon}"></i>
+                <span class="badge badge-danger" th:text="${ cart.quantity}"></span>
+            </a>
+        </li>
+    </ul>
+
+</body>
+
+</html>

@@ -5,7 +5,7 @@
 <body th:fragment="module(instance)">
 
 	<!--Carousel Wrapper-->
-	<div th:id="${'carousel-'+instance.id}" class="carousel slide carousel-fade white-text" data-ride="carousel" data-interval="false">
+	<div th:id="${'carousel-'+instance.id}" class="banners carousel slide carousel-fade white-text" data-ride="carousel" data-interval="false">
 		<!--Indicators-->
 		<ol class="carousel-indicators">
 			<li data-th-attr="data-target='#carousel-'+${instance.id}" data-slide-to="${i}" th:each="banner,i : ${instance.model.banners}"></li>

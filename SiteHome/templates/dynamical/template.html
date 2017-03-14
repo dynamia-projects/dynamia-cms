@@ -30,6 +30,8 @@
 	<!-- Font awesome CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
 
+	<link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
 
 	<!-- Custom styles for this template -->
 	<link th:href="@{/css/template.css}" href="css/template.css" rel="stylesheet" />
@@ -43,23 +45,31 @@
 	<div id="fb-root"></div>
 
 	<!--Navbar-->
-	<th:block th:include="tpl_topmenu::content" />
 
 	<th:block th:include="module::position('navbar-top')" />
 
 	<nav th:class="${'main-nav navbar navbar-toggleable-md navbar-dark '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}">
 		<div class="container">
+
+			<div class="hidden-md-up pull-right" style="margin-right: 60px">
+				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Cart')},'fa fa-shopping-cart')"
+				/>
+			</div>
+
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1"
 			 aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<a class="navbar-brand" href="#">
 				<th:block th:include="module::position('logo')" />
+
 			</a>
+
+
 			<div class="collapse navbar-collapse" id="navbarNav1">
-				<ul class="navbar-nav mr-auto">
-					<th:block th:include="module::position('navbar')" />
-				</ul>
+				<th:block th:include="module::position('navbar')" />
+				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Cart')},'fa fa-shopping-cart')"
+				/>
 				<th:block th:include="site/searchform::content" />
 			</div>
 		</div>
@@ -109,7 +119,7 @@
 
 
 	<!-- JQuery -->
-	<script type="text/javascript" th:src="@{/js/jquery-2.2.3.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
 
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript" th:src="@{/js/tether.min.js}"></script>
@@ -120,10 +130,16 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" th:src="@{/js/mdb.min.js}"></script>
 
+	<script type="text/javascript" th:src="@{/js/owl.carousel.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/notify.min.js}"></script>
+
+	<script type="text/javascript" th:src="@{/js/dynamical.js}"></script>
+
 	<th:block th:include="module::scripts" />
 
 	<th:block th:include="tpl_googleAnalytics::content" />
 	<th:block th:include="tpl_webchat::content" />
+
 
 	<script>
 		(function (d, s, id) {

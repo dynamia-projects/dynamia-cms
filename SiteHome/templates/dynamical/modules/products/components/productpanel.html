@@ -4,133 +4,39 @@
 
 <body th:fragment="frag (prd)">
 
-    <div class="col-lg-4 col-md-6 col-xs-12 mix">
-        <div class="card card-block store product">
+
+    <div class="card card-block store product">
+        <div class="image">
             <a th:href="@{'/store/products/'+${prd.id}}">
                 <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=200,h=200)}" th:alt="${prd.name}" th:if="${prd.image!=null}"
-                    th:title="${cmsUtil.cropText(prd.description,140)}" class="img-fluid center-block" />
+                    class="img-fluid center-block" />
                 <div th:if="${prd.image==null}" style="width: 160px; height: 160px; background-color: silver" />
             </a>
+        </div>
 
-            <h4 class="card-title d-flex justify-content-center">
-                <a th:href="@{'/store/products/'+${prd.id}}" th:text="${prd.name}" href="#">Product Name</a>
-            </h4>
-            <div class="d-flex justify-content-center">
-                <a class="btn btn-outline-success btn-rounded waves-effect" th:href="@{'/store/products/'+${prd.id}}">
-                    <span th:text="${cmsUtil.formatNumber(prd.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$4459.00</span>
-                </a>
-            </div>
-
-            <div class="d-flex justify-content-around">
-                <div class="d-flex justify-content-start">
-                    <a class="btn btn-primary" th:if="${prd.stock >= prd_config.minStock and prd_config.shopEnabled and prd.sellInWeb}" th:href="@{'/shoppingcart/shop/add/'+${prd.id}}"><i class="fa fa-shopping-cart"></i></a>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <a class="btn btn-primary" th:if="${prd.stock >= prd_config.minStock and prd_config.shopEnabled and prd.sellInWeb}" th:href="@{'/shoppingcart/shop/add/'+${prd.id}}"><i class="fa fa-shopping-cart"></i></a>
-
-                </div>
-            </div>
-
+        <h5 class="card-title d-flex justify-content-center">
+            <a th:href="@{'/store/products/'+${prd.id}}" data-toggle="tooltip" data-placement="top" th:title="${cmsUtil.cropText(prd.description,140)}"
+                th:text="${prd.name}" href="#">Product Name</a>
+        </h5>
+        <div class="card-footer">
+            <span class="left" th:text="${cmsUtil.formatNumber(prd.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"></span>
+            <span class="right">       
+                 <form th:id="addCart" th:if="${prd.stock gt prd_config.minStock and prd_config.shopEnabled and prd.sellInWeb}"
+                          th:action="@{'/shoppingcart/shop/add/'+${prd.id}}" method="get">
+                        <a onclick="$(this).closest('form').submit()" data-toggle="tooltip" data-placement="top" title="Add to Cart"
+                                >
+                            <i class="fa fa-shopping-cart"></i>
+                        </a>
+                        <input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}" />
+                    </form>     
+                
+                    </a>
+                      <a data-toggle="tooltip" data-placement="top" title="Share" target="_blank" th:href="${'http://www.facebook.com/sharer.php?u='+@siteContext.siteURL+'/store/products/'+prd.id}">
+                        <i class="fa fa-share-alt"></i>
+                    </a>                                     
+                </span>
         </div>
     </div>
-
-
-    <div class="thumbnail productpanel" style="height: 280px" th:if="false">
-
-        <div class="relativediv">
-            <span class="brand" th:text="${prd.brand!=null?prd.brand.name.toUpperCase():''}">Brand</span>
-
-            <!-- Product Image -->
-            <div style="height: 170px; line-height: 170px" class="tooltip-test" data-placement="top" data-toogle="tooltip" th:title="${cmsUtil.cropText(prd.description,140)}">
-                <a th:href="@{'/store/products/'+${prd.id}}" href="#" style="vertical-align: middle; line-height: 1.5">
-                    <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=180,h=180)}" src="img/product1a.jpg" alt="" th:if="${prd.image!=null}"
-                    />
-                    <img th:src="@{/img/product1a.jpg}" alt="" th:if="${prd.image==null}" width="180px" height="180px" />
-                </a>
-            </div>
-            <span th:if="${prd.sale and prd_config.showBadges}" class="sale tooltip-test" data-original-title="" title="">
-                    <i class="icon-gift font24"></i> Oferta
-                </span>
-            <span th:if="${prd.featured and prd_config.showBadges}" class="sale tooltip-test" data-original-title="" title="">
-                    <i class="icon-star-empty font24"></i> Destacado
-                </span>
-            <span th:if="${prd.newproduct and prd_config.showBadges}" class="sale tooltip-test" style="background-color: #cc0000" data-original-title=""
-                title="">
-                    <i class="icon-bookmark-empty font24"></i> Nuevo
-                </span>
-            <span th:if="${prd.promoEnabled}" class="sale tooltip-test" style="font-size: 20px" th:text="${prd.promoValueFormatted}"
-                th:title="${prd.promoName}">                    
-                </span>
-            <div class="viewicons">
-                <form class="pull-left" target="_blank" action="http://www.facebook.com/sharer.php" method="get">
-                    <button type="submit" data-original-title="Compartir" class="btn btn-inverse tooltip-test">
-                            <i class="icon-facebook icon-white"></i>
-                        </button>
-                    <input type="hidden" name="u" id="u" th:value="@{${@siteContext.siteURL}+'/store/products/'+${prd.id}}" />
-                </form>
-                <form class="pull-left" th:if="${prd.stock gt prd_config.minStock and prd_config.shopEnabled and prd.sellInWeb}" th:action="@{'/shoppingcart/shop/add/'+${prd.id}}"
-                    method="get">
-                    <button type="submit" data-original-title="Agregar al Carrito" class="btn btn-inverse tooltip-test">
-                            <i class="icon-shopping-cart icon-white"></i>
-                        </button>
-                    <input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}" />
-                </form>
-                <form class="pull-left" th:if="${prd_config.quoteEnabled}" th:action="@{'/shoppingcart/quote/add/'+${prd.id}}" method="get">
-                    <button type="submit" data-original-title="Cotizar" class="btn btn-inverse tooltip-test">
-                            <i class="icon-external-link icon-white"></i>
-                        </button>
-                    <input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}" />
-                </form>
-
-                <form class="pull-left" th:action="@{'/store/products/'+${prd.id}+'/compare'}" method="get">
-                    <button type="submit" data-original-title="Comparar" class="btn btn-inverse tooltip-test">
-                            <i class="icon-refresh icon-white"></i>
-                        </button>
-                </form>
-                <form class="pull-left" th:action="@{'/store/products/'+${prd.id}+'/share'}" method="get">
-                    <button type="submit" data-original-title="Recomendar" class="btn btn-inverse tooltip-test">
-                            <i class="icon-envelope icon-white"></i>
-                        </button>
-                </form>
-            </div>
-        </div>
-        <div class="caption">
-            <div class="mt10 mb10 productname">
-                <a th:href="@{'/store/products/'+${prd.id}}" th:text="${prd.name}" href="#">Product Name</a>
-            </div>
-
-            <div class="productratecart centered" th:unless="${prd.hasStorePrice()}">
-                <h3 th:if="${prd.showLastPrice or prd.promoEnabled}">
-                    <strong><span
-                                th:text="${cmsUtil.formatNumber(prd.realLastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"
-                                class=" oldprice">$4459.00</span></strong>
-                </h3>
-                <h3>
-                    <strong><span
-                                th:text="${cmsUtil.formatNumber(prd.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"
-                                class=" orange">$4459.00</span></strong>
-                </h3>
-
-
-                <span th:text="${prd.priceDescription}"></span>
-            </div>
-
-            <div class="productratecart centered" th:if="${prd.hasStorePrice()}">
-
-                <h3>
-                    <strong><small title="Precio Internet">Internet: </small> <span
-                                th:text="${cmsUtil.formatNumber(prd.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"
-                                class=" orange">$4459.00</span></strong>
-                </h3>
-                <h3>
-                    <small title="Precio en tienda">Normal: </small> <span th:text="${cmsUtil.formatNumber(prd.storePrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"
-                        class=" ">$4459.00</span>
-                </h3>
-            </div>
-
-        </div>
-    </div>
-
 
 </body>
 

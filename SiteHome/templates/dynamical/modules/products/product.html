@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="template">
+
+<div class="page" layout:fragment="content">
+
+
+    <!-- Product Details tab & comments-->
+    <div class="container store" th:if="${prd_hasTemplate}" th:utext="${prd_template}">
+        <!-- TEMPLATE CONTENT HERE -->
+    </div>
+
+    <div class="container store" th:unless="${prd_hasTemplate}">
+
+        <!-- Product-->
+        <div class="row productpage">
+
+            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+
+
+
+                <div class="card card-block">
+                    <a th:if="${prd_product.brand}" th:href="@{'/store/brands/'+${prd_product.brand.alias}}">
+                        <img class="animated flip time3" th:if="${prd_product.brand}" th:src="@{'/resources/products/brands/thumbnails/'+${prd_product.brand.image}(w=100,h=100)}"
+                            th:title="${prd_product.brand.name}" th:alt="${prd_product.brand.name}" />
+                    </a>
+
+                    <div class="pos-abs-top-right">
+                        <span th:if="${prd_product.stock gt prd_config.minStock}" class="badge green">
+                        <i class="fa fa-check"></i> In Stock
+                    </span>
+                    </div>
+
+                    <div id="productImages" class="carousel slide images" data-ride="carousel">
+
+                        <div class="carousel-inner" role="listbox">
+                            <div class="carousel-item active" th:if="${prd_product.image!=null}">
+                                <img class="img-fluid" th:src="@{'/resources/products/images/thumbnails/'+${prd_product.image}(w=340,h=340)}">
+                            </div>
+                            <div class="carousel-item" th:if="${prd_product.image2!=null}">
+                                <img class="img-fluid" th:src="@{'/resources/products/images/thumbnails/'+${prd_product.image2}(w=340,h=340)}">
+                            </div>
+                            <div class="carousel-item" th:if="${prd_product.image3!=null}">
+                                <img class="img-fluid" th:src="@{'/resources/products/images/thumbnails/'+${prd_product.image3}(w=340,h=340)}">
+                            </div>
+                            <div class="carousel-item" th:if="${prd_product.image4!=null}">
+                                <img class="img-fluid" th:src="@{'/resources/products/images/thumbnails/'+${prd_product.image4}(w=340,h=340)}">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#productImages" role="button" data-slide="prev">
+                            <i class="fa fa-angle-left fa-lg"></i>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#productImages" role="button" data-slide="next">
+                            <i class="fa fa-angle-right fa-lg"></i>
+                            <span class="sr-only">Next</span>
+                        </a>
+                        <ol class="carousel-indicators">
+                            <li data-target="#productImages" data-slide-to="0" class="active" th:if="${prd_product.image!=null}">
+                                <img class="img-fluid" th:src="@{'/resources/products/images/thumbnails/'+${prd_product.image}(w=50,h=50)}">
+                            </li>
+                            <li data-target="#productImages" data-slide-to="1" th:if="${prd_product.image2!=null}">
+                                <img class="img-fluid" th:src="@{'/resources/products/images/thumbnails/'+${prd_product.image2}(w=50,h=50)}">
+                            </li>
+                            <li data-target="#productImages" data-slide-to="2" th:if="${prd_product.image3!=null}">
+                                <img class="img-fluid" th:src="@{'/resources/products/images/thumbnails/'+${prd_product.image3}(w=50,h=50)}">
+                            </li>
+                            <li data-target="#productImages" data-slide-to="3" th:if="${prd_product.image4!=null}">
+                                <img class="img-fluid" th:src="@{'/resources/products/images/thumbnails/'+${prd_product.image4}(w=50,h=50)}">
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+             
+            </div>
+
+            <!-- Right Details-->
+            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                <div class=" card card-block">
+
+                    <!--Title  -->
+                    <h3 th:text="${prd_product.name}" class="card-title">Page title</h3>
+
+                    <div class="pos-abs-top-right">
+                        <a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}" class="btn btn-floating btn-warning" title="Favorite" data-toggle="tooltip"
+                            data-placement="top">
+                            <i class="fa fa-heart"></i>
+                        </a>
+                    </div>
+
+                    <div class="productprice" th:unless="${prd_product.showCreditPrices}">
+                        <div th:if="${prd_product.showLastPrice or prd_product.promoEnabled}" class="pull-right">
+                            <span class="productpageoldprice" th:text="${cmsUtil.formatNumber(prd_product.realLastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
+                            <span style="margin-left: 4px; background: #F1B500; color: white; padding: 6px 10px" th:if="${prd_product.promoEnabled}"
+                                th:text="${prd_product.promoValueFormatted}" th:title="${prd_product.promoName}"></span>
+                        </div>
+                        <th:block th:unless="${prd_product.hasStorePrice()}">
+                            <!--PRICE -->
+                            <div class="price">
+                                <span th:text="${cmsUtil.formatNumber(prd_product.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
+                            </div>
+                        </th:block>
+
+                        <th:block th:if="${prd_product.hasStorePrice()}">
+                            <div class="price">
+                                <i class="icon-tags" title="Precio Web"></i> <span th:text="${cmsUtil.formatNumber(prd_product.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
+                            </div>
+
+                            <strong><span>In Store: </span><span th:text="${cmsUtil.formatNumber(prd_product.storePrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span></strong>
+
+                        </th:block>
+                    </div>
+
+                    <div th:if="${prd_product.showCreditPrices}">
+                        <div th:each="cp : ${prd_product.creditPrices}">
+                            <span style="display: inline"> <span class="price"
+                                                                 th:text="${cmsUtil.formatNumber(cp.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
+                            <span style="font-size: larger" th:text="${cp.number+' '+cp.description}"></span>
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="card-text description" th:text="${prd_product.description}">
+                        description
+                    </div>
+
+
+                    <!-- Details and Cart -->
+
+
+                    <form th:if="${prd_config.shopEnabled and prd_product.sellInWeb}" th:action="@{'/shoppingcart/shop/add/'+${prd_product.id}}"
+                        method="get">
+
+                        <ul class="list-simple details">
+                            <li><strong>Brand: </strong> <span th:text="${prd_product.brand.name}"></span> </li>
+                            <li><strong>SKU: </strong> <span th:text="${prd_product.sku}"></span> </li>
+                            <li><strong>Reference: </strong> <span th:text="${prd_product.reference}"></span> </li>
+                            <li th:each="det : ${prd_product.details}">
+                                <strong th:text="${det.name}">Detail: </strong> <span th:text="${det.value}"></span>
+                            </li>
+                            <li><strong>Quantity: </strong> <input type="text" name="qty" id="qty" class="form-control pd0 mg0"
+                                    th:value="1" style="text-align: center; width: 20%; display: inline"></input>
+                            </li>
+                        </ul>
+
+                        <button type="submit" class="btn btn-success btn-block">
+								<i class="fa fa-shopping-cart icon-white"></i> Add to Cart
+							</button>
+
+                        <input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}" />
+                    </form>
+                </div>
+                   <div class="mt20">
+                    <th:block th:include="social/components/sharebuttons::content" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <th:block th:include="products/components/sharedialog::content" />
+
+    <!-- Related Project-->
+    <div th:if="${prd_relatedProducts!=null and  not #lists.isEmpty(prd_relatedProducts)}" class="featureprojectcontianer container mt10">
+        <h2>Related Products</h2>
+        <th:block th:include="products/components/productcarousel::frag(${prd_relatedProducts},4)" />
+    </div>
+</div>
+
+</html>

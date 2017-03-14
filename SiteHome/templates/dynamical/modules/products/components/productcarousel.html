@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<!--Categories-->
+
+<body th:fragment="frag (productlist,columns)">
+
+    <div class="owl-carousel">
+        
+            <div th:include="products/components/productpanel::frag(${prd})" th:each="prd : ${productlist}" />
+        
+    </div>
+</body>
+
+</html>
