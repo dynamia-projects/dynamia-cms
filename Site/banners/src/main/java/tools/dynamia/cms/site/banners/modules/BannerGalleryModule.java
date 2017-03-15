@@ -29,29 +29,43 @@ import tools.dynamia.cms.site.core.api.ModuleContext;
 import tools.dynamia.cms.site.core.domain.ModuleInstanceParameter;
 
 @CMSModule
-public class BannerSlidersModule extends AbstractModule {
+public class BannerGalleryModule extends AbstractModule {
+
+	private static final String PARAM_USE_IMAGES_FOLDER = "useImagesFolder";
 
 	private final static String PARAM_CATEGORY_ID = "category";
+	private final static String PARAM_THUMBNAIL_WIDTH = "thumbnailWidth";
+	private final static String PARAM_THUMBNAIL_HEIGHT = "thumbnailHeight";
 
 	@Autowired
 	private BannerService service;
 
-	public BannerSlidersModule() {
-		super("banner_sliders", "Banners Slider", "banners/modules/bannersliders");
-		addResource(new JavaScriptResource("jquery.flexslider", "banners/js/jquery.flexslider.js"));
-		addResource(new JavaScriptResource("banner_sliders", "banners/js/banners.sliders.js"));
-		addResource(new StyleSheetResource("flexslider", "banners/css/flexslider.css"));
+	public BannerGalleryModule() {
+		super("banners_gallery", "Gallery", "banners/modules/bannersgallery");
+		setDescription("Create a photo gallery using banners images or folder");
+		addResource(
+				new JavaScriptResource("jquery.blueimp-gallery", "banners/js/jquery.blueimp-gallery.min.js"));
+		addResource(new StyleSheetResource("blueimp-gallery", "banners/css/blueimp-gallery.min.css"));
 	}
 
 	@Override
 	public void init(ModuleContext context) {
 
 		ModuleInstanceParameter categoryId = context.getParameter(PARAM_CATEGORY_ID);
+
 		if (categoryId != null) {
 			try {
+				List<Banner> banners = null;
+				if (context.isTrue(PARAM_USE_IMAGES_FOLDER)) {
+					banners = service.createBannersFromCategory(new Long(categoryId.getValue()));
+				} else {
+					banners = service.getBannersByCategory(new Long(categoryId.getValue()));
+				}
 
-				List<Banner> banners = service.getBannersByCategory(new Long(categoryId.getValue()));
 				context.getModuleInstance().addObject("banners", banners);
+				context.getModuleInstance().addObject("width", context.getParameterValue(PARAM_THUMBNAIL_WIDTH, "200"));
+				context.getModuleInstance().addObject("height",
+						context.getParameterValue(PARAM_THUMBNAIL_HEIGHT, "200"));
 
 			} catch (NumberFormatException e) {
 				// ignore

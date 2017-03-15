@@ -4,5 +4,6 @@ autofields: false
 
 fields:
     name:
+    folderImages:
     description:
     

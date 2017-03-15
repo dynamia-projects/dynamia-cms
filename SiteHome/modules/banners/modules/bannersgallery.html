@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<body th:fragment="module(instance)">
+
+
+	<div id="links">
+		<a th:href="${banner.imageURL}" th:title="${banner.title}" data-gallery th:each="banner : ${instance.model.banners}">
+			<img th:src="${cmsUtil.getThumbnailURL(banner.imageURL,instance.model.width,instance.model.height)}" th:alt="${banner.title}">
+		</a>
+	</div>
+
+	<div id="blueimp-gallery" class="blueimp-gallery" data-start-slideshow="true" data-filter=":even">
+		<div class="slides"></div>
+		<h3 class="title"></h3>
+		<a class="prev">‹</a>
+		<a class="next">›</a>
+		<a class="close">×</a>
+		<a class="play-pause"></a>
+		<ol class="indicator"></ol>
+	</div>
+
+</body>
+
+</html>

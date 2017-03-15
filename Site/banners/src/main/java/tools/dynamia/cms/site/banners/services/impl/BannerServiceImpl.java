@@ -15,17 +15,22 @@
  */
 package tools.dynamia.cms.site.banners.services.impl;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 
 import tools.dynamia.cms.site.banners.domain.Banner;
+import tools.dynamia.cms.site.banners.domain.BannerCategory;
 import tools.dynamia.cms.site.banners.services.BannerService;
-
+import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.integration.sterotypes.Service;
+import tools.dynamia.io.FileInfo;
 
 @Service
 class BannerServiceImpl implements BannerService {
@@ -37,19 +42,40 @@ class BannerServiceImpl implements BannerService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.dynamia.cms.site.banners.services.impl.BannerService#getBannersByCategory
-	 * (java.lang.Long)
+	 * @see com.dynamia.cms.site.banners.services.impl.BannerService#
+	 * getBannersByCategory (java.lang.Long)
 	 */
 	@Override
 	@Cacheable(value = CACHE_NAME, key = "'banCat'+#categoryId")
 	public List<Banner> getBannersByCategory(Long categoryId) {
 
-		QueryParameters qp = QueryParameters.with("category.id", categoryId)
-				.add("enabled", true)
-				.orderBy("order", true);
+		QueryParameters qp = QueryParameters.with("category.id", categoryId).add("enabled", true).orderBy("order",
+				true);
 
 		return crudService.find(Banner.class, qp);
+
+	}
+
+	@Override
+	public List<Banner> createBannersFromCategory(Long categoryId) {
+		BannerCategory category = crudService.find(BannerCategory.class, categoryId);
+		if (category != null && category.getFolderImages() != null) {
+			List<Banner> banners = new ArrayList<>();
+			CMSUtil util = new CMSUtil(category.getSite());
+			String[] files = util.listFilesNames(category.getFolderImages(), "jpg,png,gif");
+			if (files != null) {
+				for (String fileName : files) {
+					Banner banner = new Banner();
+					FileInfo fileInfo = new FileInfo(new File(new File(category.getFolderImages()), fileName));
+					banner.setImageURL(CMSUtil.getResourceURL(category.getSite(), fileInfo.getFile()));
+					banner.setTitle(fileInfo.getDescription());
+					banners.add(banner);
+				}
+			}
+			return banners;
+		} else {
+			return Collections.EMPTY_LIST;
+		}
 
 	}
 

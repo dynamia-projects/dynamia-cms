@@ -15,6 +15,10 @@
  */
 package tools.dynamia.cms.site.banners.domain;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -26,7 +30,6 @@ import org.hibernate.annotations.BatchSize;
 import tools.dynamia.cms.site.core.Orderable;
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
-
 import tools.dynamia.domain.SimpleEntity;
 
 @Entity
@@ -152,5 +155,6 @@ public class Banner extends SimpleEntity implements SiteAware, Orderable {
 	public String toString() {
 		return getTitle();
 	}
+
 
 }

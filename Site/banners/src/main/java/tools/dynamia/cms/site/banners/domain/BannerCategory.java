@@ -24,7 +24,6 @@ import org.hibernate.annotations.BatchSize;
 
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
-
 import tools.dynamia.domain.SimpleEntity;
 import tools.dynamia.domain.contraints.NotEmpty;
 
@@ -45,6 +44,18 @@ public class BannerCategory extends SimpleEntity implements SiteAware {
 	@NotEmpty
 	private String name;
 	private String description;
+	private String folderImages;
+	
+		
+	
+
+	public String getFolderImages() {
+		return folderImages;
+	}
+
+	public void setFolderImages(String folderImages) {
+		this.folderImages = folderImages;
+	}
 
 	public Site getSite() {
 		return site;

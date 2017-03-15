@@ -38,8 +38,25 @@ public class ModuleContext {
 		return moduleInstance;
 	}
 
-	public ModuleInstanceParameter getParameters(String name) {
+	public ModuleInstanceParameter getParameter(String name) {
 		return moduleInstance.getParameter(name);
+	}
+
+	public String getParameterValue(String name, String defaultValue) {
+		ModuleInstanceParameter param = getParameter(name);
+		if (param != null) {
+			return param.getValue();
+		} else {
+			return defaultValue;
+		}
+	}
+
+	public String getParameterValue(String name) {
+		return getParameterValue(name, null);
+	}
+
+	public boolean isTrue(String parameterName) {
+		return "true".equalsIgnoreCase(getParameterValue(parameterName, "false"));
 	}
 
 	public Site getSite() {

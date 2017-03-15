@@ -52,6 +52,8 @@ public class ResourceSelector extends Bandbox {
 		BindingComponentIndex.getInstance().put("value", ResourceSelector.class);
 	}
 
+	private boolean useRelativePath;
+
 	public ResourceSelector() {
 		initUI();
 		initEvents();
@@ -80,7 +82,11 @@ public class ResourceSelector extends Bandbox {
 		viewer.addAction(new FastAction("Select Resource", evt -> {
 			FileInfo fileInfo = view.getValue();
 			if (fileInfo != null) {
-				setValue(CMSUtil.getResourceURL(SiteContext.get().getCurrent(), fileInfo.getFile()));
+				if (useRelativePath) {
+					setValue(CMSUtil.getResourceRelativePath(SiteContext.get().getCurrent(), fileInfo.getFile()));
+				} else {
+					setValue(CMSUtil.getResourceURL(SiteContext.get().getCurrent(), fileInfo.getFile()));
+				}
 				viewer.getParent().detach();
 				UIMessages.showMessage("Resource selected");
 			} else {
@@ -97,6 +103,14 @@ public class ResourceSelector extends Bandbox {
 			super.setValue(value);
 			Events.postEvent(new Event(Events.ON_CHANGE, this, value));
 		}
+	}
+
+	public boolean isUseRelativePath() {
+		return useRelativePath;
+	}
+
+	public void setUseRelativePath(boolean useRelativePath) {
+		this.useRelativePath = useRelativePath;
 	}
 
 }

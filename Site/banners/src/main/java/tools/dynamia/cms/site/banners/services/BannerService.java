@@ -23,4 +23,6 @@ public interface BannerService {
 
 	public abstract List<Banner> getBannersByCategory(Long categoryId);
 
+	public abstract List<Banner> createBannersFromCategory(Long categoryId);
+
 }

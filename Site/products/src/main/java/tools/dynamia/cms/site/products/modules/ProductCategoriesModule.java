@@ -35,7 +35,7 @@ public class ProductCategoriesModule extends AbstractModule {
 	public void init(ModuleContext context) {
 		List<ProductCategory> categories = null;
 
-		ModuleInstanceParameter brandId = context.getParameters("brand");
+		ModuleInstanceParameter brandId = context.getParameter("brand");
 		if (brandId != null) {
 			ProductBrand brand = crudService.find(ProductBrand.class, new Long(brandId.getValue()));
 			if (brand != null) {

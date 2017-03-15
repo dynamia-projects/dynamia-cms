@@ -4,6 +4,10 @@ autofields: false
 
 fields:
     name:
+    folderImages:
+        component: resourceSelector
+        params:
+          placeholder: Select folder to autocreate banners  
     description:
         params:
             multiline: true

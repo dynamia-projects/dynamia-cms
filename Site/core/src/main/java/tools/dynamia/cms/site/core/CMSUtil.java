@@ -17,13 +17,15 @@ package tools.dynamia.cms.site.core;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
@@ -37,7 +39,6 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpUtils;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -229,20 +230,23 @@ public class CMSUtil {
 	}
 
 	public String[] listFilesNames(String directory, final String extension) {
-		SiteService service = Containers.get().findObject(SiteService.class);
-		HttpServletRequest request = getCurrentRequest();
-		Site site = service.getSite(request);
+
 		Path path = DynamiaCMS.getSitesResourceLocation(site).resolve(directory);
-		if (extension == null) {
+		if (extension == null || extension.isEmpty()) {
 			return path.toFile().list();
 		} else {
-			return path.toFile().list(new FilenameFilter() {
-
-				@Override
-				public boolean accept(File dir, String name) {
-					return name.toLowerCase().endsWith(extension.toLowerCase());
-
+			String extSplit[] = { extension };
+			if (extension.contains(",")) {
+				extSplit = extension.split(",");
+			}
+			final String extensions[] = extSplit;
+			return path.toFile().list((dir, name) -> {
+				for (String ext : extensions) {
+					if (name.toLowerCase().endsWith(ext.trim().toLowerCase())) {
+						return true;
+					}
 				}
+				return false;
 			});
 		}
 	}
@@ -311,8 +315,9 @@ public class CMSUtil {
 			String baseUrl = getSiteURL(site, "resources");
 			File resources = DynamiaCMS.getSitesResourceLocation(site).toFile();
 			String filePath = file.getPath();
-			filePath = filePath.substring(filePath.indexOf(resources.getName()) + resources.getName().length() + 1);
-
+			if (filePath.startsWith(resources.getName())) {
+				filePath = filePath.substring(filePath.indexOf(resources.getName()) + resources.getName().length() + 1);
+			}
 			filePath = filePath.replace("\\", "/");
 
 			String separator = "";
@@ -323,7 +328,25 @@ public class CMSUtil {
 			url = baseUrl + separator + filePath;
 		}
 
+		return encodeWhiteSpaces(url);
+
+	}
+
+	private static String encodeWhiteSpaces(String url) {
 		return url.replace(" ", "%20");
+	}
+
+	public static String getResourceRelativePath(Site site, File file) {
+
+		if (file == null) {
+			throw new NullPointerException("Resource is null");
+		}
+
+		File resources = DynamiaCMS.getSitesResourceLocation(site).toFile();
+		String filePath = file.getPath();
+		filePath = filePath.substring(filePath.indexOf(resources.getName()) + resources.getName().length() + 1);
+
+		return filePath;
 
 	}
 
@@ -438,6 +461,23 @@ public class CMSUtil {
 
 		}
 		return path;
+	}
+
+	public String getThumbnailURL(String url, String width, String height) {
+		if (url == null) {
+			return null;
+		}
+		try {
+			String filename = Paths.get(new URI(url).getPath()).getFileName().toString();
+			filename = encodeWhiteSpaces(filename);
+			String thumbnail = url.replace(filename, "thumbnails/" + filename + "?w=" + width + "&h=" + height);
+			return thumbnail;
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 }
