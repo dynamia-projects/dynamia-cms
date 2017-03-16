@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+
+<div class="container" layout:fragment="content">
+
+	<!-- Main Title-->
+	<div class="titles">
+		<div class="pull-left">
+			<h1 class="headinglefttitle" th:text="${title}"></h1>
+			<div class="headingsubtitle" th:text="${subtitle}"></div>
+		</div>
+		<i class="icon-map-marker"></i>
+	</div>
+
+	<div layout:fragment="table">
+		<a class="btn btn-primary" th:href="@{/users/addresses/add}">Nueva Direccion</a>
+
+		<div class="row mt40">
+			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" th:each="uci : ${userContactInfos}">
+				<address>
+					<strong><a class="orange" title="Editar" th:href="@{'/users/addresses/'+${uci.id}+'/edit'}" th:text="${uci.name}"></a></strong> <br /> <span
+						th:text="${uci.info.address}"></span><br /> <span th:text="${uci.info.country}"></span>, <span th:text="${uci.info.region}"></span> - <span
+						th:text="${uci.info.city}"></span><br /> <abbr title="Telefono">Tel:</abbr> <span th:text="${uci.info.phoneNumber}"></span><br /> <abbr
+						title="Celular">Cel:</abbr> <span th:text="${uci.info.mobileNumber}"></span><br /> <a th:href="@{'/users/addresses/'+${uci.id}+'/remove'}"><i
+						class="icon-remove-sign"> </i> Borrar</a>
+				</address>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+</html>

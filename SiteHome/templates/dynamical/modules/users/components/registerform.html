@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="template">
+
+<body th:fragment="content">
+
+	<form id="userForm" class="form-vertical" action="#" th:action="@{/users/save}" th:object="${userForm}" method="post">
+		<!--Form without header-->
+		<div class="card">
+			<div class="card-block">
+
+				<!--Header-->
+				<div class="text-center">
+					<h3><i class="fa fa-pencil"></i> Subscribe:</h3>
+					<hr class="mt-2 mb-2">
+				</div>
+
+
+				<!--Body-->
+				<div class="md-form">
+					<i class="fa fa-user prefix"></i>
+					<input type="text" class="form-control" th:field="*{data.firstName}" />
+					<label for="form3">First name</label>
+				</div>
+
+				<div class="md-form">
+					<i class="fa fa-user prefix"></i>
+					<input type="text" class="form-control" th:field="*{data.lastName}" />
+					<label for="form3">Last name</label>
+				</div>
+
+				<div class="md-form">
+					<i class="fa fa-envelope prefix"></i>
+					<input type="email" class="form-control" th:field="*{data.username}" />
+					<label for="form2">Your email</label>
+				</div>
+
+				<div class="md-form">
+					<i class="fa fa-key prefix"></i>
+					<input type="password" class="form-control" th:field="*{data.password}" />
+					<label for="form2">Password</label>
+				</div>
+
+				<div class="md-form">
+					<i class="fa fa-check prefix"></i>
+					<input type="password" class="form-control" th:field="*{passwordConfirm}" />
+					<label for="form2">Confirm Password</label>
+				</div>
+
+				<div class="text-center">
+					<button class="btn btn-deep-orange" type="submit">Send</button>
+				</div>
+				<th:block th:include="module::position('userRegisterBottom')" th:if="${cmsModules.isUsed('userRegisterBottom')}" />
+			</div>
+		</div>
+		<!--/Form without header-->
+
+	</form>
+
+</body>
+
+</html>

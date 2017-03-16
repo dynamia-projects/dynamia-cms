@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="template">
+
+
+<div class="container page" layout:fragment="content">
+
+   
+    <div class="row mt40">
+        <!-- Account Login-->
+        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+            <th:block th:include="users/components/loginform::content" />
+        </div>
+
+        <!-- Sign up-->
+        <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 mt40column">
+            <aside>
+                <th:block th:include="users/components/registerform::content" />
+            </aside>
+        </div>
+       
+    </div>
+</div>
+
+
+</html>

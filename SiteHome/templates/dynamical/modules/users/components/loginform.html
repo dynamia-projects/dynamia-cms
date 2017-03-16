@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="template">
+
+<body th:fragment="content">
+
+    <!--Form without header-->
+    <div class="card">
+        <div class="card-block">
+            <form id="loginForm" class="form-vertical" action="#" th:action="@{/users/login}" method="post">
+                <!--Header-->
+                <div class="text-center">
+                    <h3><i class="fa fa-lock"></i> Login:</h3>
+                    <hr class="mt-2 mb-2">
+                </div>
+
+                <!--Body-->
+                <div class="md-form">
+                    <i class="fa fa-envelope prefix"></i>
+                    <input id="username" name="username" type="email" class="form-control" />
+                    <label for="form2">Your email</label>
+                </div>
+
+                <div class="md-form">
+                    <i class="fa fa-lock prefix"></i>
+                    <input id="password" name="password" type="password" class="form-control" />
+                    <label for="form4">Your password</label>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-primary" type="Submit">Login</button>
+                </div>
+            </form>
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer">
+            <div class="options">               
+                <p>Forgot <a th:href="@{'/users/resetpassword'}">Password?</a></p>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
