@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="template">
+
+<div class="maincontainer page" layout:fragment="content">
+
+
+	<div class="container">
+		<!-- Main Title-->
+		<div class="titles animated fadeInUp time3">
+			<div>
+				<h1 class="headinglefttitle">
+					Shopping Order No.
+					<span th:text="${shoppingOrder.number}"></span>
+				</h1>
+				<div class="headingsubtitle">This is your order, now you can start the payment process</div>
+			</div>
+			<i th:class="icon-shoppingcart"></i>
+		</div>
+
+
+		<div class="container mt20">
+
+			<th:block th:include="module::position('confirmOrderTop')" th:if="${cmsModules.isUsed('confirmOrderTop')}" />
+
+			<form id="paymentForm" role="form" class="form-horizontal" th:action="@{/payment/start}" th:method="GET">
+
+				<div class="row">
+					<div class="card card-block mt20 col-md-4">
+
+						<h3>Contact Info</h3>
+						<div class="form-group" style="margin-bottom: 0px">
+							<label class="col-md-3 ">Ident.</label>
+							<span class="col-md-9 " th:text="${@userHolder.current.identification}"></span>
+
+						</div>
+
+						<div class="form-group" style="margin-bottom: 0px">
+							<label class="col-md-3 ">First Name</label>
+							<span class="col-md-9 " th:text="${@userHolder.current.firstName}"></span>
+
+						</div>
+
+						<div class="form-group" style="margin-bottom: 0px">
+							<label class="col-md-3 ">Last Name</label>
+							<span class="col-md-9" th:text="${@userHolder.current.lastName}"></span>
+
+						</div>
+
+						<div class="form-group" style="margin-bottom: 0px">
+							<label class="col-md-3 ">Email</label>
+							<span class="col-md-9 " th:text="${@userHolder.current.username}"></span>
+
+						</div>
+
+					</div>
+					<!-- Text input-->
+					<div class="card card-block mt20 col-md-4">
+						<div class="form-group">
+							<h3>Billing Address</h3>
+							<address>
+								<strong th:text="${shoppingOrder.billingAddress.name}"></strong> <br />
+								<span th:text="${shoppingOrder.billingAddress.info.address}"></span>
+								<br />
+								<span th:text="${shoppingOrder.billingAddress.info.country}"></span> ,
+								<span th:text="${shoppingOrder.billingAddress.info.region}"></span> -
+								<span th:text="${shoppingOrder.billingAddress.info.city}"></span>
+								<br /> <abbr title="Phone Number"><i class="fa fa-phone"></i></abbr>
+								<span th:text="${shoppingOrder.billingAddress.info.phoneNumber}"></span>
+								<br /> <abbr title="Mobile Number"><i class="fa fa-mobile-phone"></i>:</abbr>
+								<span th:text="${shoppingOrder.billingAddress.info.mobileNumber}"></span>
+								<br />
+							</address>
+						</div>
+					</div>
+
+					<div class="card card-block mt20 col-md-4">
+						<div class="form-group">
+							<h3>Shipping Address</h3>
+
+							<address th:if="${shoppingOrder.pickupAtStore}">
+								<strong>Recoger en tienda</strong><br />
+								<span>Se le notificara via email la tienda donde retirar su mercancia</span>
+							</address>
+
+							<address th:if="${shoppingOrder.shippingAddress!=null}">
+								<strong th:text="${shoppingOrder.shippingAddress.name}"></strong> <br />
+								<span th:text="${shoppingOrder.shippingAddress.info.address}"></span>
+								<br />
+								<span th:text="${shoppingOrder.billingAddress.info.country}"></span> ,
+								<span th:text="${shoppingOrder.shippingAddress.info.region}"></span> -
+								<span th:text="${shoppingOrder.shippingAddress.info.city}"></span>
+								<br /> <abbr title="Phone Number"><i class="fa fa-phone"></i></abbr>
+								<span th:text="${shoppingOrder.shippingAddress.info.phoneNumber}"></span>
+								<br /> <abbr title="Mobile Number"><i class="fa fa-mobile-phone"></i>:</abbr>
+								<span th:text="${shoppingOrder.shippingAddress.info.mobileNumber}"></span>
+								<br />
+							</address>
+						</div>
+					</div>
+				</div>
+				<div class="card card-block mt20 row">
+					<div class="form-group col-md-12">
+						<h3>Comments</h3>
+						<span th:text="${shoppingOrder.userComments}"></span>
+					</div>
+				</div>
+
+
+				<div class="card card-block mt20 row">
+					<h3>Details</h3>
+					<th th:include="shoppingcart/components/orderDetailsFull::content" />
+				</div>
+
+				<th:block th:include="module::position('confirmOrderBottom1')" th:if="${cmsModules.isUsed('confirmOrderBottom1')}" />
+
+				<!-- Button -->
+				<div class="row mt20">
+
+
+					<button type="submit" class="btn btn-success btn-lg"><i class="fa fa-check"></i> Pay online</button>
+					<a id="cancelBtn" data-toggle="modal" href="#cancelconfirm" class="btn btn-danger btn-lg">
+						<i class="icon-ban-circle"></i> Cancel Order
+					</a>
+				</div>
+			</form>
+			<th:block th:include="module::position('confirmOrderBottom2')" th:if="${cmsModules.isUsed('confirmOrderBottom2')}" />
+		</div>
+	</div>
+
+
+	<div id="cancelconfirm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Cancel Order</h4>
+				</div>
+				<div class="modal-body">
+					<span>Are you sure?</span>
+					
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-success" th:href="@{/shoppingcart/shop/cancel}">Yes</a>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="scripts">
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("#submitBtn").click(function () {
+				$("#submitBtn").attr("disabled", true);
+				$("#submitBtn").text("Processing...");
+
+				$('#paymentForm').submit();
+			});
+		});
+	</script>
+
+</th:block>
+
+</html>

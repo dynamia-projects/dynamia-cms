@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<body th:fragment="content">
+		<div id="direcciones" class="container-fluid hidden-xs hidden-sm">
+			<div class="container">
+				<div class="col-close"><a href="#" class="closeTel"><i class="fa fa-times" aria-hidden="true"></i></a></div>
+				<div class="col-mapaTiendas">
+					<div class="col-mapa pull-left">
+						<div class="temporal sticky">
+							<div class="bienvenida">
+								<i class="fa fa-map-marker" aria-hidden="true"></i>
+								<span>Conoce nuestras tiendas</span>
+							</div>
+						</div>
+						<iframe height="380" frameborder="0" width="600" allowfullscreen="" src="" style="border:0" id="mapasede"></iframe>
+					</div>
+					<div class="col-direcciones pull-right">
+						<h3>Selecciona una ciudad:</h3>
+						<span>
+							<select name="ciudades" id="ciudades">
+								<option value="0" selected></option>
+								<option value="1">Cartagena</option>
+								<option value="2">Monteria</option>
+								<option value="3">Santa Marta</option>
+								<option value="4">Riohacha</option>
+								<option value="5">Valledupar</option>
+							</select>
+						</span>
+						<span>
+							<ul id="tiendas">
+								<li class="ciudad inicial sticky">
+									Cada vez estamos mas cerca de ti. Indicanos que ciudad quieres consultar para ayudarte a localizarnos.
+								</li>
+								<li class="ciudad Cartagena">
+									<a href="#" class="sede edificio activo">
+										<span class="nombre">Edificio Compulago (Sede Principal)</span>
+										<span class="direccion">Av. Pedro de Heredia, sector Castellana calle 30b #63-105.</span>
+									</a>
+									<a href="#" class="sede centro-uno">
+										<span class="nombre">C.C. Centro Uno</span>
+										<span class="direccion">Local L-224</span>
+									</a>
+									<a href="#" class="sede plazuela">
+										<span class="nombre">C.C. La Plazuela</span>
+										<span class="direccion">Local L-151</span>
+									</a>
+									<a href="#" class="sede castellana">
+										<span class="nombre">C.C. La Castellana</span>
+										<span class="direccion">Local L-235</span>
+									</a>
+									<a href="#" class="sede av-venezuela">
+										<span class="nombre">Centro Av. Venezuela</span>
+										<span class="direccion">Cra. 10 35-15 Piso 1 L2, Edificio Rumie</span>
+									</a>
+								</li>
+								<li class="ciudad Monteria">
+									<a href="#" class="sede paseo-central">
+										<span class="nombre">C.C. Paseo Central</span>
+										<span class="direccion">Locales L5 L6</span>
+									</a>
+									<a href="#" class="sede alamedas">
+										<span class="nombre">C.C. Alamedas 2</span>
+										<span class="direccion">Local B120</span>
+									</a>
+									<a href="#" class="sede centroM">
+										<span class="nombre">Centro</span>
+										<span class="direccion">Calle 33 #2-69 Esquina</span>
+									</a>
+								</li>
+								<li class="ciudad SantaMarta">
+									<a href="#" class="sede plazuela-23">
+										<span class="nombre">C.C. Plazuela 23</span>
+										<span class="direccion">Local L-29</span>
+									</a>
+									<a href="#" class="sede ocean-mall">
+										<span class="nombre">C.C. Ocean Mall 2</span>
+										<span class="direccion">Local L-22</span>
+									</a>
+									<a href="#" class="sede buenavista">
+										<span class="nombre">C.C. Buenavista</span>
+										<span class="direccion">Local L-21</span>
+									</a>
+								</li>
+								<li class="ciudad Riohacha">
+									<a href="#" class="sede suchiimma">
+										<span class="nombre">C.C. Suchiimma</span>
+										<span class="direccion">Local 7</span>
+									</a>
+								</li>
+								<li class="ciudad Valledupar">
+									<a href="#" class="sede centroV">
+										<span class="nombre">Centro</span>
+										<span class="direccion">Cra. 11 #16a-52 Locales 3 y 4</span>
+									</a>
+									<a href="#" class="sede mayales">
+										<span class="nombre">C.C. Mayales</span>
+										<span class="direccion">Primera etapa Local 057</span>
+									</a>
+								</li>
+							</ul>
+						</span>
+					</div>
+				</div>
+				<div class="col-telefonos">
+					<div><a href="#">Ver Numeros de Contacto</a></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

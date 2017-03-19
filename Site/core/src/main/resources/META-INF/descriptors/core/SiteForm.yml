@@ -1,14 +1,13 @@
 view: form
 beanClass: tools.dynamia.cms.site.core.domain.Site
 hidden: [id]
-sortFields: [name,parent,key,template,corporateSite,description,offline,offlineIcon,offlineMessage,offlineRedirect,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
+sortFields: [name,parent,key,template,mainDomain,corporateSite,description,offline,offlineIcon,offlineMessage,offlineRedirect,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
 
 fields:
 
 
     name:
-        params:
-            span: 2
+      
     
     key:
         params:
@@ -21,10 +20,8 @@ fields:
         component: crudview
     
     description:
-        params:
-            multiline: true
-            height: 100px
-            span: 2
+        params:            
+            span: 3
             
     template:
         component: templateSelector
@@ -60,6 +57,17 @@ fields:
     metadataRights:
         label: Rights
         
+    logoURL:
+      label: Logo URL
+      component: resourceSelector
+      params:
+        span: 2
+      
+    mainDomain:
+      params:
+        span: 2
+    
+        
     twitter:
     googlePlus:
     facebook:
@@ -77,10 +85,10 @@ groups:
     
     general:
         label: Basic Settings
-        fields: [name,parent,key,template,description,offline,offlineMessage,offlineRedirect,offlineIcon]
+        fields: [name,parent,key,template,mainDomain,logoURL, offline,offlineMessage,offlineRedirect,offlineIcon,corporateSite,description]
             
     
-    general:
+    googleAnalytics:
         label: Google Analytics and Tools
         fields: [googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification]
            

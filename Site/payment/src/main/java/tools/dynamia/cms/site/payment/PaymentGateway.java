@@ -29,7 +29,7 @@ public interface PaymentGateway {
 
 	String[] getResponseParams();
 
-	PaymentTransaction newTransaction(String source);
+	PaymentTransaction newTransaction(String source, String baseURL);
 
 	public PaymentForm createForm(PaymentTransaction tx);
 

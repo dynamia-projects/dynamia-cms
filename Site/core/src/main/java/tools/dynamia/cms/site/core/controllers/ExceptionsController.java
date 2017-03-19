@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import tools.dynamia.cms.site.core.CMSException;
 import tools.dynamia.cms.site.core.DynamiaCMS;
+import tools.dynamia.cms.site.core.SiteContext;
 import tools.dynamia.cms.site.core.api.SiteRequestInterceptor;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.services.SiteService;
@@ -37,53 +38,54 @@ import tools.dynamia.integration.Containers;
  *
  * @author Mario Serrano Leones
  */
-@Controller	
+@Controller
 public class ExceptionsController {
 
-    private LoggingService logger = new SLF4JLoggingService(DynamiaCMS.class);
+	private LoggingService logger = new SLF4JLoggingService(DynamiaCMS.class);
 
-    @Autowired
-    private SiteService siteService;
+	@Autowired
+	private SiteService siteService;
 
-    @RequestMapping("/exception")
-    @ExceptionHandler(Exception.class)
-    public ModelAndView error(HttpServletRequest request, HttpServletResponse response, Exception exception) {
-        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-        Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+	@RequestMapping("/exception")
+	@ExceptionHandler(Exception.class)
+	public ModelAndView error(HttpServletRequest request, HttpServletResponse response, Exception exception) {
+		Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+		Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
 
-        if (throwable == null) {
-            throwable = exception;
-        }
+		if (throwable == null) {
+			throwable = exception;
+		}
 
-        if (exception instanceof CMSException) {
-            statusCode = ((CMSException) exception).getStatus().value();
-        }
+		if (exception instanceof CMSException) {
+			statusCode = ((CMSException) exception).getStatus().value();
+		}
 
-        String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri");
-      
-        if (requestUri == null) {
-            requestUri = request.getRequestURI()+ "";
-        }
+		String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri");
 
-        logger.error("ERROR " + statusCode + ": " + requestUri + " on  " + request.getServerName(), throwable);
+		if (requestUri == null) {
+			requestUri = request.getRequestURI() + "";
+		}
 
-        ModelAndView mv = new ModelAndView("error/exception");
-        if (statusCode != null && statusCode == 404) {
-            mv.setViewName("error/404");
-            mv.addObject("pageAlias", requestUri);
-        }
-        mv.addObject("title", "Error");
-        mv.addObject("statusCode", statusCode);
-        mv.addObject("uri", requestUri);
-        mv.addObject("exception", throwable);
-        if(throwable!=null){
-        	throwable.printStackTrace();
-        }
-        Site site = siteService.getSite(request);
-        Containers.get().findObjects(SiteRequestInterceptor.class).forEach(i -> {
-            i.afterRequest(site, request, response, mv);
-        });
-        return mv;
-    }
+		if (statusCode != 404) {
+			logger.error("ERROR " + statusCode + ": " + requestUri + " on  " + request.getServerName(), throwable);
+		} else {
+			logger.warn(String.format("Error 404 - Resource [%s] not found in site [%s]", requestUri, request.getServerName()));
+		}
+		ModelAndView mv = new ModelAndView("error/exception");
+		if (statusCode != null && statusCode == 404) {
+			mv.setViewName("error/404");
+			mv.addObject("pageAlias", requestUri);
+		}
+		mv.addObject("title", "Error");
+		mv.addObject("statusCode", statusCode);
+		mv.addObject("uri", requestUri);
+		mv.addObject("exception", throwable);
+	
+		Site site = siteService.getSite(request);
+		Containers.get().findObjects(SiteRequestInterceptor.class).forEach(i -> {
+			i.afterRequest(site, request, response, mv);
+		});
+		return mv;
+	}
 
 }

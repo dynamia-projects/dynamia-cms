@@ -315,7 +315,7 @@ public class CMSUtil {
 			String baseUrl = getSiteURL(site, "resources");
 			File resources = DynamiaCMS.getSitesResourceLocation(site).toFile();
 			String filePath = file.getPath();
-			if (filePath.startsWith(resources.getName())) {
+			if (file.exists()) {
 				filePath = filePath.substring(filePath.indexOf(resources.getName()) + resources.getName().length() + 1);
 			}
 			filePath = filePath.replace("\\", "/");
@@ -478,6 +478,16 @@ public class CMSUtil {
 		}
 
 		return null;
+	}
+
+	public String parseTemplate(String template, String engine, Map<String, Object> model) {
+		if (engine != null && !engine.isEmpty() && model!=null) {
+			StringParser parser = StringParser.get(engine);
+			if (parser != null) {
+				template = parser.parse(template, model);
+			}
+		}
+		return template;
 	}
 
 }

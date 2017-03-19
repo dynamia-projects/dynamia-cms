@@ -44,7 +44,7 @@
 			<mvc:exclude-mapping path="/assets/**" />
 			<mvc:exclude-mapping path="/images/**" />
 			<mvc:exclude-mapping path="/img/**" />
-
+		
 			<bean class="tools.dynamia.cms.site.core.SiteHandleInterceptor" />
 		</mvc:interceptor>
 

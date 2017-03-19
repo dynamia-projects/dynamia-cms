@@ -71,7 +71,9 @@ public class Site extends SimpleEntity implements Parameterizable {
 	private String googleAnalyticsDomain;
 	private String googleSiteVerification;
 	private boolean corporateSite;
+	private String mainDomain;
 
+	private String logoURL;
 	private String twitter;
 	private String googlePlus;
 	private String facebook;
@@ -84,6 +86,22 @@ public class Site extends SimpleEntity implements Parameterizable {
 	private String flickr;
 	private String vine;
 	private String meetup;
+
+	public String getMainDomain() {
+		return mainDomain;
+	}
+
+	public void setMainDomain(String mainDomain) {
+		this.mainDomain = mainDomain;
+	}
+
+	public String getLogoURL() {
+		return logoURL;
+	}
+
+	public void setLogoURL(String logoURL) {
+		this.logoURL = logoURL;
+	}
 
 	public String getTwitter() {
 		return twitter;

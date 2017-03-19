@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Products Filter Form-->
+
+<body th:fragment="content">
+    <div class="card">
+        <form id="loginForm" class="form-vertical" th:action="@{/store/search}" th:object="${prd_searchForm}" th:method="get">
+
+            <div class="card-block">
+                <!--Header-->
+                <div class="text-center">
+                    <h3><i class="fa fa-search"></i> Search:</h3>
+                    <hr class="mt-2 mb-2">
+                </div>
+
+                <!--Body-->
+                <div class="md-form">
+                    <select th:field="*{categoryId}" id="category" class="form-control">
+                        <option th:value="${null}">All</option>
+                        <option th:each="cat : ${prd_categories}" th:text="${cat.name}" th:value="${cat.id}">Option one</option>
+                    </select>
+                    <label  class="fix-label" for="category">Category</label>
+                </div>
+
+
+                <!-- Select Multiple -->
+                <div class="md-form">
+                    <select th:field="*{brandId}" id="brand" class="form-control">
+                    <option  th:value="${null}">All</option>
+                    <option th:each="brd : ${prd_brands}" th:text="${brd.name}" th:value="${brd.id}">Option one</option>
+                </select>
+                    <label  class="fix-label" for="brand">Brands</label>
+                </div>
+
+                <!-- Text input-->
+                <div class="md-form">
+                    <input th:field="*{name}" id="name" name="" type="text" class="form-control" />
+                    <label for="name">Product Name</label>
+                </div>
+
+                <!-- Text input-->
+                <div class="md-form">
+                    <input th:field="*{minPrice}" id="minPrice" type="number" class="form-control" />
+                    <label for="minPrice">Min Price</label>
+                </div>
+
+                <div class="md-form">
+
+                    <input th:field="*{maxPrice}" id="maxPrice" type="number" class="form-control" />
+                    <label for="maxPrice">Max Price</label>
+                </div>
+
+
+                <div class="md-form">                    
+                    <select th:field="*{order}" id="order" class="form-control">
+                        <option value="NAME">Name</option>
+                        <option value="MINPRICE">Min Price</option>
+                        <option value="MAXPRICE">Max Price</option>
+                        <option value="RATE">Rate</option>
+                        <option value="VIEWS">Views</option>                   
+                    </select>
+                    <label class="fix-label" for="order">Sort by</label>
+                </div>
+
+
+
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer">
+                <div class="options">
+                    <button type="submit" class="btn btn-success btn-lg"> <i class="fa fa-search"></i> Search  </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+</body>
+
+</html>

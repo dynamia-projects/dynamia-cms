@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import tools.dynamia.cms.site.core.domain.Site;
+import tools.dynamia.cms.site.core.services.SiteService;
 import tools.dynamia.domain.query.Parameters;
 import tools.dynamia.integration.Containers;
 
@@ -35,78 +36,91 @@ import tools.dynamia.integration.Containers;
 @Scope("session")
 public class SiteContext implements Serializable {
 
-    @Autowired
-    private Parameters appParams;
+	@Autowired
+	private Parameters appParams;
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8050753619943744770L;
-    private Site current;
-    private String siteURL;
-    private String currentURI;
-    private String currentURL;
-    private String previousURI;
-    private String previousURL;
-    private Map<String, Object> attributes = new HashMap<>();
+	@Autowired
+	private SiteService service;
 
-    public static SiteContext get() {
-        return Containers.get().findObject(SiteContext.class);
-    }
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 8050753619943744770L;
+	private Site current;
+	private String siteURL;
+	private String currentURI;
+	private String currentURL;
+	private String previousURI;
+	private String previousURL;
+	private Map<String, Object> attributes = new HashMap<>();
 
-    public Site getCurrent() {
-        return current;
-    }
+	public static SiteContext get() {
+		return Containers.get().findObject(SiteContext.class);
+	}
 
-    public void setCurrent(Site current) {
-        this.current = current;
-    }
+	public Site getCurrent() {
+		return current;
+	}
 
-    public String getCurrentURI() {
-        return currentURI;
-    }
+	public void setCurrent(Site current) {
+		this.current = current;
+	}
 
-    void setCurrentURI(String currentURI) {
-        this.previousURI = this.currentURI;
-        this.currentURI = currentURI;
-    }
+	public String getCurrentURI() {
+		return currentURI;
+	}
 
-    public String getCurrentURL() {
-        return currentURL;
-    }
+	void setCurrentURI(String currentURI) {
+		this.previousURI = this.currentURI;
+		this.currentURI = currentURI;
+	}
 
-    void setCurrentURL(String currentURL) {
-        this.previousURL = this.currentURL;
-        this.currentURL = currentURL;
-    }
+	public String getCurrentURL() {
+		return currentURL;
+	}
 
-    public String getPreviousURI() {
-        return previousURI;
-    }
+	void setCurrentURL(String currentURL) {
+		this.previousURL = this.currentURL;
+		this.currentURL = currentURL;
+	}
 
-    public String getPreviousURL() {
-        return previousURL;
-    }
+	public String getPreviousURI() {
+		return previousURI;
+	}
 
-    public String getSiteURL() {
-        return siteURL;
-    }
+	public String getPreviousURL() {
+		return previousURL;
+	}
 
-    void setSiteURL(String siteURL) {
-        this.siteURL = siteURL;
-    }
+	public String getSiteURL() {
+		return siteURL;
+	}
 
-    public void setAttribute(String name, Object value) {
-        attributes.put(name, value);
-    }
+	void setSiteURL(String siteURL) {
+		this.siteURL = siteURL;
+	}
 
-    public Object getAttribute(String name) {
-        return attributes.get(name);
-    }
+	public void setAttribute(String name, Object value) {
+		attributes.put(name, value);
+	}
 
-    public boolean isSuperAdmin() {
-        String superAdminSite = appParams.getValue(DynamiaCMS.CFG_SUPER_ADMIN_SITE, "main");
-        return superAdminSite.equals(SiteContext.get().getCurrent().getKey());
-    }
+	public Object getAttribute(String name) {
+		return attributes.get(name);
+	}
+
+	public boolean isSuperAdmin() {
+		String superAdminSite = appParams.getValue(DynamiaCMS.CFG_SUPER_ADMIN_SITE, "main");
+		return superAdminSite.equals(SiteContext.get().getCurrent().getKey());
+	}
+
+	public void reload() {
+		if (current != null) {
+			Site reloaded = service.getSite(current.getKey());
+			if (reloaded != null) {
+				current = reloaded;
+			}
+		}
+
+	}
 
 }

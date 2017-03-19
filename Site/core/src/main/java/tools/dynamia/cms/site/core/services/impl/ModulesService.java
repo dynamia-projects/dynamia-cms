@@ -20,6 +20,8 @@ import java.util.List;
 import tools.dynamia.cms.site.core.api.Module;
 import tools.dynamia.cms.site.core.domain.ModuleInstance;
 import tools.dynamia.cms.site.core.domain.Site;
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.util.QueryBuilder;
 
 public interface ModulesService {
 
@@ -45,5 +47,7 @@ public interface ModulesService {
 	public abstract void initModuleInstance(ModuleInstance moduleInstance);
 
 	List<Module> getInstalledModules();
+
+	List<String> getAllUsedPositions(Site site);
 
 }

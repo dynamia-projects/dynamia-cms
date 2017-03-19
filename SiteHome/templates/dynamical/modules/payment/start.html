@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="template">
+
+<div class="maincontainer page" layout:fragment="content">
+
+	<div class="container">
+
+		<h3>Starting payment..</h3>
+		<form id="autoPaymentForm" role="form" class="form-horizontal" th:action="${paymentForm.url}" th:method="${paymentForm.httpMethod}">
+
+			<input type="hidden" th:each="payp : ${paymentForm.parameters}" th:name="${payp.key}" th:value="${payp.value}" />
+
+
+			<p>
+				If browser wont redirect press <input type="submit" value="Continue" class="btn btn-success btn-sm" />
+			</p>
+
+
+		</form>
+	
+	</div>
+
+</div>
+
+<th:block layout:fragment="scripts">
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#autoPaymentForm").submit();
+		});
+	</script>
+</th:block>
+
+<th:block layout:fragment="javascripts">
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#autoPaymentForm").submit();
+		});
+	</script>
+</th:block>
+
+
+</html>

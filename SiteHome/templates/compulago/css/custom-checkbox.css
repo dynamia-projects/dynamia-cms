@@ -1,0 +1,76 @@
+body{font-family: 'Khula', sans-serif;background-color: #ededed}
+#fondo{transition: all 0.5s ease 0s;position: fixed;width: 100%; height: 100%;left: 0;top:0;opacity: 0.4;background-color: #000;z-index:10000;display: none;}
+#fondo.sticky{transition: all 0.5s ease 0s;display:block;}
+
+header .encabezado-checkout{background-color: #b0c80b;}
+header .encabezado-checkout .ayuda {color: #fff;font-size: 20px;padding-top: 14px;text-align: right;}
+
+#main-content .content-area .estado-compra {padding: 0;}
+#maincontent .izquierda .datos-configuracion{overflow:hidden;background-color: #fff;padding:10px;}
+#maincontent .derecha .resumen{background-color: #fff;padding:10px;}
+#maincontent .centro{margin-bottom:15px;}
+#maincontent .centro .espacio-usuario{background-color: #fff;padding:10px;}
+#maincontent .centro .espacio-usuario .bienvenida{display: inline-block;}
+#maincontent .centro .espacio-usuario a {color: #000;font-size: 15px;margin-left: 6px;text-decoration: underline;}
+#maincontent .centro .espacio-usuario p{display: inline-block;}
+#maincontent .centro .espacio-usuario .mensaje {color: #646464;display: block;font-size: 18px;}
+
+#maincontent .izquierda{margin-bottom: 50px;padding-bottom:20px !important;}
+#maincontent .izquierda .medios-pagos{background-color: #fff;}
+#maincontent .izquierda .medios-pagos button.boton-titulo {width:100%;background-color: #fff;border:none;border-bottom: 1px solid #ccc;}
+#maincontent .izquierda .medios-pagos button.boton-titulo i {color: #646464;font-size: 22px;margin-top: 15px;}
+#maincontent .izquierda a.guardar {background: #b0c80b none repeat scroll 0 0;border-radius: 5px;color: #fff;display: block;font-size: 21px;margin-bottom: 10px;margin-top: 10px;padding: 5px;text-align: center;}
+#maincontent .izquierda a.guardar:hover{background:#ffa200;}
+select#direccion-1, select#direccion-2, select#pais, select#departamento, select#ciudad {-webkit-appearance: button;-webkit-border-radius: 2px;-webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);-webkit-padding-end: 20px;-webkit-padding-start: 2px;-webkit-user-select: none;background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);background-position: 97% center;background-repeat: no-repeat;border: 1px solid #AAA;color: #555;font-size: inherit;overflow: hidden;padding: 5px 10px;text-overflow: ellipsis;white-space: nowrap;width: 100%;}
+#datoAdicional, #datoDireccion {border: 1px solid #aaa;color:#555;}
+input#nombreDireccion, input#datoTelefono, input#datoCelular {border: 1px solid #aaa;width: 100%;padding:5px 10px;}
+input#datoTelefono, input#datoCelular {width:50%;}
+#maincontent .izquierda .medios-pagos .direccion-nueva{margin-bottom:20px;}
+
+#maincontent .derecha {margin-bottom: 50px;}
+#maincontent .derecha .resumen > h3 {margin-top: 5px;}
+#maincontent .derecha .resumen .item {border-bottom: 1px dashed #ccc;padding: 0;margin-top:10px;}
+#maincontent .derecha .resumen .item .imagen {padding:0px;}
+#maincontent .derecha .resumen .item .descripcion > span {display: block;font-size: 10px;line-height: 13px;}
+#maincontent .derecha .resumen .item .descripcion > span.precio {font-size: 12px;font-weight: bold;text-align: right;}
+#maincontent .derecha .resumen .item .descripcion > span.nombre {font-weight: bold;text-transform: uppercase;}
+#maincontent .derecha .resumen .editar {padding: 0;}
+#maincontent .derecha .resumen .editar > a {display: block;font-size: 15px;padding-bottom: 10px;padding-top: 10px;text-decoration: underline;}
+#maincontent .derecha .resumen .total-boxcarrito {background: #ccc none repeat scroll 0 0;font-weight: bold;padding-bottom: 3px;padding-top: 8px;}
+#maincontent .derecha .seguridad-compra {margin-top: 15px;padding: 0;}
+#maincontent .derecha .seguridad-compra .fa-lock {font-size: 60px;}
+#maincontent .derecha .seguridad-compra .fa-truck {font-size: 60px;}
+#maincontent .derecha .seguridad-compra .fa-undo {font-size: 60px;}
+#maincontent .derecha .seguridad-compra span {padding:0px;line-height: 15px;text-align: center;}
+#maincontent .derecha .seguridad-compra span a {color:#646464;}
+#maincontent .derecha .seguridad-compra span a:hover {color:#444;}
+
+#maincontent .izquierda .medios-pagos .datos-cliente {border-top: 1px solid #ededed;color: #999;margin-top: 15px;padding-bottom: 10px;padding-top: 10px;}
+#maincontent .izquierda .medios-pagos .datos-cliente h4 {font-weight: bold;margin:0px;}
+#maincontent .izquierda .medios-pagos .datos-cliente span{display:block;}
+#maincontent .izquierda .medios-pagos .datos-envio {margin-bottom:15px;padding: 10px;border: 1px solid #ededed;border-radius: 5px;color:#999;}
+#maincontent .izquierda .medios-pagos .datos-envio span.titulo {border-bottom: 1px dashed #999;display: block;font-weight: bold;margin-bottom: 7px;padding: 2px;text-align: center;text-transform: uppercase;}
+#maincontent .izquierda .medios-pagos .datos-envio .direccion-envio {background: #ededed none repeat scroll 0 0;border-radius: 5px;margin-bottom: 15px;padding: 10px;}
+#maincontent .izquierda .medios-pagos .datos-envio .direccion-envio > span {display: block;}
+#maincontent .izquierda .medios-pagos .datos-envio .direccion-facturacion {background: #ededed none repeat scroll 0 0;border-radius: 5px;margin-bottom: 15px;padding: 10px;}
+#maincontent .izquierda .medios-pagos .datos-envio .direccion-facturacion > span {display: block;}
+#maincontent .izquierda .medios-pagos .datos-envio .datos-adicionales {background: #ededed none repeat scroll 0 0;border-radius: 5px;padding: 10px;}
+#maincontent .izquierda .medios-pagos .datos-envio .datos-adicionales > span {display: block;}
+#maincontent .izquierda .medios-pagos .datos-envio .boton-pagar{padding:5px;}
+#maincontent .izquierda .medios-pagos .boton-pagar a {background: #b0c80b none repeat scroll 0 0;border-radius: 5px;color: #fff;display: block;font-size: 21px;margin-bottom: 10px;margin-top: 10px;padding: 5px;text-align: center;}
+#maincontent .izquierda .medios-pagos .boton-pagar a:hover{background:#ffa200;}
+
+#collapseInfo .subtitulo {text-align: center;
+    font-size: 25px;
+    font-family: open sans condensed;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+footer #pie {background-color: #fff;bottom: 0;font-size: 12px;position: fixed;width: 100%;}
+footer #pie .info{}
+footer #pie .info ul{list-style: none;padding-left: 0;}
+footer #pie .info ul li{float: left; padding:10px;}
+footer #pie .info ul li.nomcompulago{color:#b0c80b;}

@@ -77,7 +77,6 @@ public class ProductsUtil {
 					}
 				}
 			} catch (Exception e) {
-				System.err.println("Error Loading shopping CART");
 				e.printStackTrace();
 			}
 		}

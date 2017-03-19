@@ -15,7 +15,6 @@
  */
 package tools.dynamia.cms.site.core.modules;
 
-import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.api.AbstractModule;
 import tools.dynamia.cms.site.core.api.CMSModule;
 import tools.dynamia.cms.site.core.api.ModuleContext;
@@ -27,6 +26,7 @@ public class CustomHtmlModule extends AbstractModule {
 
 	private static final String PARAM_CONTENT = "content";
 	private static final String PARAM_CONTENT_PLAIN = "contentPlain";
+	private static final String PARAM_TEMPLATE_ENGINE = "templateEngine";
 
 	public CustomHtmlModule() {
 		super("custom_html", "Custom Html", "core/modules/customhtml");
@@ -56,7 +56,11 @@ public class CustomHtmlModule extends AbstractModule {
 				contentText = contentPlain.getValue();
 			}
 		}
-		
+
+		String templateEngine = context.getParameterValue(PARAM_TEMPLATE_ENGINE);
+
+		instance.addObject(PARAM_TEMPLATE_ENGINE, templateEngine);
+
 		instance.addObject(PARAM_CONTENT, contentText);
 	}
 

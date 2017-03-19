@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="template">
+
+<div class="maincontainer page" layout:fragment="content">
+
+
+    <div class="container">
+        <h1 class="doc-title">Order Checkout</h1>
+        <div th:text="${subtitle}" class="headingsubtitle"></div>
+
+        <div class="row mt40">
+
+            <th:block th:include="module::position('checkoutOrderTop')" th:if="${cmsModules.isUsed('checkoutOrderTop')}" />
+
+            <form role="form" class="form-horizontal" th:action="@{/shoppingcart/shop/confirm}" th:method="post">
+                <div class="row">
+                    <div class="card card-block col-md-4 mt20">
+
+                        <h3>
+                            <strong>1.</strong> Contact Info
+                        </h3>
+                        <div class="form-group" style="margin-bottom: 0px">
+                            <label class="col-md-3 ">Ident.</label>
+                            <span class="col-md-9 " th:text="${@userHolder.current.identification}"></span>
+
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0px">
+                            <label class="col-md-3 ">First Name</label>
+                            <span class="col-md-9 " th:text="${@userHolder.current.firstName}"></span>
+
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0px">
+                            <label class="col-md-3 ">Last Name</label>
+                            <span class="col-md-9" th:text="${@userHolder.current.lastName}"></span>
+
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0px">
+                            <label class="col-md-3 ">Email</label>
+                            <span class="col-md-9 " th:text="${@userHolder.current.username}"></span>
+
+                        </div>
+                        <a class="btn btn-primary btn-sm" th:href="@{/users/profile(redirect='/shoppingcart/shop/checkout')}">Edit</a>
+                    </div>
+
+                    <div class="card card-block col-md-4 mt20">
+                        <h3>
+                            <strong>2.</strong> Billing Address
+                        </h3>
+                        <select class="form-control" name="billingAddress">
+                                <option th:each="uci : ${userContactInfos}" th:value="${uci.id}" th:text="${uci.toString()}"></option>
+                            </select>
+                        <a class="btn btn-primary btn-sm pull-right" th:href="@{/users/addresses/add(redirect='/shoppingcart/shop/checkout')}">New Address</a>
+                    </div>
+
+                    <div class="card card-block col-md-4 mt20">
+                        <h3>
+                            <strong>3.</strong> Shipping Address
+                        </h3>
+                        <select class="form-control" name="shippingAddress">
+                                <option th:each="uci : ${userContactInfos}" th:value="${uci.id}" th:text="${uci.toString()}"></option>
+                            </select>
+                        <a class="btn btn-primary btn-sm pull-right" th:href="@{/users/addresses/add(redirect='/shoppingcart/shop/checkout')}">New Address</a>
+
+                        <label>
+                                <input type="radio" name="deliveryType" value="none" checked="checked" />
+                                <b> Pay online</b>
+                            </label>
+                        <label th:if="false">
+                                <input type="radio" name="deliveryType" value="payAtDelivery" />
+                                <b> Pago Envio Contraentrega</b>
+                            </label>
+                        <label th:if="false">
+                                <input type="radio" name="deliveryType" value="pickupAtStore" />
+                                <b> Recoger en Tienda</b>
+                            </label>
+                    </div>
+                </div>
+
+                <div class="row mt20">
+                    <div class="card card-block col-md-12">
+                        <h3>
+                            <strong>4.</strong> Comments
+                        </h3>
+                        <textarea rows="3" id="message" name="userComments" 
+                            class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mt20" >
+                    <div class="card card-block col-md-12">
+                        <h3>
+                            <strong>5.</strong> Check order Details
+                        </h3>
+                        <th th:include="shoppingcart/components/orderDetails::content" />
+                    </div>
+                </div>
+
+                <div class="row mt20" th:if="${cmsModules.isUsed('checkoutOrderBottom1')}">
+                    <div class="col-md-12">
+                        <th:block th:include="module::position('checkoutOrderBottom1')" />
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="row mt20">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fa fa-check-circle"></i> Checkout
+                            </button>
+                    </div>
+                </div>
+
+                <div class="row" th:if="${cmsModules.isUsed('checkoutOrderBottom2')}">
+                    <div class="col-md-12">
+                        <th:block th:include="module::position('checkoutOrderBottom2')" />
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+</html>

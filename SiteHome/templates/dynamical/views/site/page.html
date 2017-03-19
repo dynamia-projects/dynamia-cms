@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+
+    <div class="page" layout:fragment="content">
+
+        <div class="container">
+            <th:block th:include="module::position('page-title')" th:if="${cmsModules.isUsed('page-title')}"/>
+            <div th:include="site/pagetitle::content" th:if="${page.showTitle}" />
+
+            <div class="clearfix"></div>
+            <th:block th:include="module::position('page-content')" th:if="${cmsModules.isUsed('page-content')}"/>
+            <div th:utext="${pageContent}">Page Content</div>
+            <th:block th:include="module::position('page-footer')" th:if="${cmsModules.isUsed('page-footer')}"/>
+
+        </div>
+
+    </div>
+
+</html>

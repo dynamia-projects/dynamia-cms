@@ -9,7 +9,7 @@
 		<h3 th:if="${instance.titleVisible}">
 			<span class="maintext" th:text="${instance.title}">Title</span>
 		</h3>
-		<th:block th:utext="${instance.model.content}">Content</th:block>
+		<th:block th:utext="${cmsUtil.parseTemplate(instance.model.content, instance.model.templateEngine, _springMvcModel)}">Content</th:block>
 	</div>
 
 </body>

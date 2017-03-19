@@ -1,4 +1,22 @@
 view: table
 beanClass: tools.dynamia.cms.site.core.domain.Site
-hidden: [id,description,offlineMessage,offlineIcon,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
-sortFields: [name,key,parent,template,corporateSite,offline,offlineRedirect,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification]
+autofields: false
+
+fields:
+  id:
+  name:
+  key:
+  template:
+  parent:
+  corporateSite:
+  offline:
+  googleAnalyticsID:
+    label: Googlge Analytics ID
+  
+  description:
+    params:
+      header:
+        width: 400px
+        
+params:
+  showRowNumber: false

@@ -13,7 +13,7 @@
 
             <div class="clearfix"></div>
             <th:block th:include="module::position('pageContent')" th:if="${cmsModules.isUsed('pageContent')}"/>
-            <div th:utext="${page.content}">Page Content</div>
+            <div th:utext="${pageContent}">Page Content</div>
             <th:block th:include="module::position('pageFooter')" th:if="${cmsModules.isUsed('pageFooter')}"/>
 
         </div>

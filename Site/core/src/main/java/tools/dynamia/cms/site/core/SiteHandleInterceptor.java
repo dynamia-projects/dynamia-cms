@@ -15,6 +15,9 @@
  */
 package tools.dynamia.cms.site.core;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,6 +37,9 @@ import tools.dynamia.integration.Containers;
  * @author Mario Serrano Leones
  */
 public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
+
+	private static final String SPRING_MVC_MODEL = "_springMvcModel";
+	private List<String> excludes = Arrays.asList("jpg", "gif", "png", "tiff", "css", "js", "svg", "bmp", "ttf");
 
 	@Autowired
 	private SiteService service;
@@ -56,14 +62,26 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		try {
-			for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
-				interceptor.beforeRequest(site, request, response);
+			if (isInterceptable(request)) {
+				for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
+					interceptor.beforeRequest(site, request, response);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error calling Site interceptor", e);
 			return false;
 		}
 
+		return true;
+	}
+
+	private boolean isInterceptable(HttpServletRequest request) {
+		String uri = request.getRequestURI();
+		for (String ext : excludes) {
+			if (uri.endsWith("exception") || uri.endsWith("." + ext)) {
+				return false;
+			}
+		}
 		return true;
 	}
 
@@ -86,6 +104,8 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 			}
 			SiteContext.get().setSiteURL(siteURL);
 		}
+		SiteContext.get().reload();
+		site = SiteContext.get().getCurrent();
 		return site;
 	}
 
@@ -97,27 +117,31 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 			return;
 		}
 
-	
 		Site site = getCurrentSite(request);
-		
-		boolean isJson = checkJsonRequest(request, modelAndView);		
+
+		boolean isJson = checkJsonRequest(request, modelAndView);
 		if (isJson) {
 			return;
 		}
 		loadSiteMetadata(site, modelAndView);
 
-		if (!site.isOffline()) {			
-			
+		if (!site.isOffline()) {
+
 			try {
-				for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
-					interceptor.afterRequest(site, request, response, modelAndView);
+				if (isInterceptable(request)) {
+					for (SiteRequestInterceptor interceptor : Containers.get()
+							.findObjects(SiteRequestInterceptor.class)) {
+						interceptor.afterRequest(site, request, response, modelAndView);
+					}
 				}
 			} catch (Exception e) {
 				logger.error("Error calling Site interceptor", e);
 			}
-		}else{
+		} else {
 			shutdown(site, modelAndView);
 		}
+
+		modelAndView.addObject(SPRING_MVC_MODEL, modelAndView.getModel());
 
 	}
 

@@ -5,14 +5,15 @@ import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.zul.Messagebox;
 
+import tools.dynamia.actions.InstallAction;
+import tools.dynamia.cms.site.core.CMSUtil;
+import tools.dynamia.cms.site.core.SiteContext;
 import tools.dynamia.cms.site.payment.PaymentForm;
 import tools.dynamia.cms.site.payment.PaymentGateway;
 import tools.dynamia.cms.site.payment.PaymentUtils;
 import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
 import tools.dynamia.cms.site.payment.services.PaymentService;
-
-import tools.dynamia.actions.InstallAction;
 import tools.dynamia.commons.ApplicableClass;
 import tools.dynamia.crud.AbstractCrudAction;
 import tools.dynamia.crud.CrudActionEvent;
@@ -41,7 +42,7 @@ public class TestGatewayAction extends AbstractCrudAction {
 	@Override
 	public void actionPerformed(CrudActionEvent evt) {
 		PaymentGateway gateway = service.getDefaultGateway();
-		PaymentTransaction tx = gateway.newTransaction("main");
+		PaymentTransaction tx = gateway.newTransaction("main", CMSUtil.getSiteURL(SiteContext.get().getCurrent(), "/"));
 		tx.setCurrency("COP");
 		tx.setEmail("user@emails.com");
 		tx.setAmount(new BigDecimal(1000));

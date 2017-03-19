@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<body th:fragment="content">
+
+    <nav th:if="${paginationDatasource!=null and paginationDatasource.pageCount > 1}">
+        <ul class="pagination pg-dark">
+            <!--Arrow left-->
+            <li class="page-item">
+                <a class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+
+            <!--Numbers-->
+            <li th:class="'page-item '+ ${paginationDatasource.activePage==i?'active':''}" th:each="i : ${#numbers.sequence(1,__${paginationDatasource.pageCount}__)}">
+                <a class="page-link" th:text="${i}" th:href="@{${currentURI}(page=${i})}">#</a>
+            </li>
+
+
+            <!--Arrow right-->
+            <li class="page-item">
+                <a class="page-link" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+</body>
+
+</html>

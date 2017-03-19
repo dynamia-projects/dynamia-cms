@@ -15,12 +15,13 @@
  */
 package tools.dynamia.cms.site.pages.services;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.pages.domain.Page;
 import tools.dynamia.cms.site.pages.domain.PageCategory;
-import java.util.Date;
 
 /**
  *
@@ -58,6 +59,20 @@ public interface PageService {
      */
     public List<Page> findPagesByDate(Site site, Date startDate, Date endDate);
 
+    /**
+     * 
+     * @param site
+     * @param alias
+     * @return
+     */
     PageCategory getPageCategoryByAlias(Site site, String alias);
+
+    /**
+     * 
+     * @param page
+     * @param model
+     * @return
+     */
+	String parsePageContent(Page page, Map<String, Object> model);
 
 }

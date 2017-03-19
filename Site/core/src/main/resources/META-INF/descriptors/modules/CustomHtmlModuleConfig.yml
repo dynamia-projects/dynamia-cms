@@ -10,3 +10,9 @@ fields:
       height: 300px
       copyFrom: contentPlain
       unescape: true
+      
+  templateEngine:
+       component: typeSelector
+       params:
+            typeExtensionClass: tools.dynamia.cms.site.core.StringParser
+      

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
+    <head>
+        <title th:text="|${site.name} - ${title}|">Compulago - Marcamos la diferencia</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta name="description" th:content="${metaDescription}" content="Responsive, Bootstrap, Html5, Css3, Multipuropose, Blog, Portfolio, Ecommerce - All in One Template" />
+        <meta name="author" th:content="${metaAuthor}" content="" />
+        <meta name="keywords" th:content="${metaKeywords}" content="" />
+        <meta name="copyright" th:content="${metaRights}" content="" />
+        <meta name="robots" content="index, follow" />
+        <meta th:content="|${site.name} - ${title}|" property="og:title" content="" />
+        <meta th:content="${metaDescription}" property="og:description" content="" />
+        <meta name="google-site-verification" content="hemwukLf8eySpytvVlcOfFAiU4Y4WzD7ibQyUQQLPzY" />
+        <meta http-equiv="Expires" content="0">
+        <meta http-equiv="Last-Modified" content="0">
+        <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+        <meta http-equiv="Pragma" content="no-cache">        
+<th:block th:each="pi : ${pageImages}">
+        <meta th:content="${pi}" property="og:image" content="" />
+</th:block>
+        <link th:href="@{/img/favicon.ico}" href="img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+		<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Khula:400,800,700,600,300">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
+		<link rel="stylesheet" th:href="@{/js/bootstrap/3.3.7/css/bootstrap.css}" href="js/bootstrap/3.3.7/css/bootstrap.css">
+		<link rel="stylesheet" th:href="@{/js/font-awesome/4.7.0/css/font-awesome.min.css}" href="js/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" th:href="@{/js/bxslider/jquery.bxslider.css}" href="js/bxslider/jquery.bxslider.css">
+		<link rel="stylesheet" th:href="@{/js/owlcarousel/owl.carousel.min.css}" href="js/owlcarousel/owl.carousel.min.css">
+		<link rel="stylesheet" th:href="@{/js/owlcarousel/owl.theme.default.min.css}" href="js/owlcarousel/owl.theme.default.min.css">
+		<link rel="stylesheet" th:href="@{/js/flexslider/flexslider.css}" href="/js/flexslider/flexslider.css">
+		<link rel="stylesheet" th:href="@{/js/animate.css}" href="frm/animate.css">
+		<link rel="stylesheet" th:href="@{/css/custom7.css}" href="css/custom7.css">
+	</head>  
+	<body>
+<!-- ****************************** Apoyos ***********************************-->
+<!-- Fondos -->
+		<div id="fondo"></div>
+		<div id="fondo-full"></div>
+<!-- Fin Fondos -->
+<!-- banda inferior compras -->
+		<div class="banda-inferior hidden-md hidden-lg">
+			<div class="opt usuario">
+				<a th:href="@{/users/login}" class="sesion" th:if="${@userHolder.authenticated eq false}"><img src="/img/user.png" class="img-responsive"/></a>
+				<a th:href="@{/users/account}" class="sesion" th:if="${@userHolder.authenticated}"><img src="/img/user-on.png" class="img-responsive"/></a>
+			</div>
+			<div class="opt carrito"><a href="/shoppingcart/shop"><img src="/img/shop.png" class="img-responsive"/></a></div>
+		</div>
+<!-- Fin banda inferior compras -->
+		<div id="status" class="status"></div>
+<!-- Nota -->
+		<th:block th:include="tpl_globalmessages::content" ></th:block>
+		<div id="nota2">
+			<div class="texto pull-right">
+				<span class="titulo"></span>
+				<span class="contenido"></span>
+			</div>
+		</div>
+<!-- Fin Nota -->
+<!-- Cuadro Catalogos -->
+		<div id="box-catalogos" class="container-fluid">
+			<div class="row">
+				<span class="cerrar col-md-12">
+					<a href="#"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+				</span>
+			</div>
+			<div class="row">
+				<div class="visualizador col-md-12">
+					<div class="recuadro col-md-12">
+						<span class="titulo col-md-12">Encabezado Visor</span>
+						<div class="contenido col-md-12">
+							<embed src="" id="espacio-pdf" type="application/pdf" class="col-md-12 nopadding archivo-pdf"> 
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+<!-- Fin Cuadro Catalogos -->
+<!-- Cuadro video -->
+		<div id="box-videos" class="container-fluid">
+			<div class="row">
+				<span class="cerrar col-md-12">
+					<a href="#"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+				</span>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="visualizador col-md-12">
+						<div class="recuadro col-md-12">
+							<span class="titulo col-md-12">Encabezado Visor</span>
+							<div class="contenido col-md-12">
+								<iframe width="100%" height="550px" id="espacio-video" src="" frameborder="0" allowfullscreen></iframe> 
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+<!-- Fin Cuadro video -->
+<!-- **************************** Fin Apoyos *********************************-->
+
+<!-- **************************** Encabezado *********************************-->
+		<header>
+<!-- Banda verde(Menu Movil) -->
+			<div id="middle-header" class="container-fluid hidden-md hidden-lg">
+				<div class="row">
+
+					<div class="toggled"><i class="fa fa-bars" aria-hidden="true"></i></div>
+					<div class="logo-header-movil"><a href="/"><img class="img-responsive" src="/img/logo-compulago-blanco2.png"></a></div>
+					<div class="menu-movil col-xs-12 col-sm-12 col-md-12 nopadding">
+						<div class="inicio col-xs-2 col-sm-1 col-md-1"><a href="/"><i class="fa fa-home" aria-hidden="true"></i></a></div>
+						<div class="buscador col-xs-10 col-sm-11 col-md-11">
+							<th:block th:include="site/searchform::content"></th:block>
+						</div>
+						<div class="contenido col-xs-12 col-sm-12 col-md-12 nopadding">
+							<th:block th:include="tpl_bigmenu::content"></th:block>											
+						</div>
+					</div>
+				</div>
+			</div>
+<!-- Fin Banda verde(Menu Movil) -->
+
+
+<!-- Banda Gris Oscuro(Menu TOP)-->		
+			<div id="top-header" class="container-fluid hidden-xs hidden-sm">
+				<div class="container">
+					<div class="row">
+						<div class="opt-left col-xs-12 col-sm-4 col-md-4">
+							<button type="button"><i class="fa fa-chevron-down"></i> Telefonos de Contacto</button>
+						</div>
+						<div class="opt-center col-xs-12 col-sm-4 col-md-4">
+							<a href="mailto:admin@bootexperts.com"><i class="fa fa-envelope-o"></i> E-mail: atencionalcliente@compulago.net</a>
+						</div>
+						<div class="opt-right col-xs-12 col-sm-4 col-md-4">
+							<div class="opt-user">
+								<a th:href="@{/users/login}" class="sesion" th:if="${@userHolder.authenticated eq false}"><i class="fa fa-user-circle" aria-hidden="true"></i> Iniciar Sesión</a>
+								<a th:href="@{/users/account}" class="sesion" th:if="${@userHolder.authenticated}"><i class="fa fa-user-circle" aria-hidden="true"></i> <span>Ver Perfil</span></a>
+								<a href="favoritos.html"><i class="fa fa-heart"></i> Favoritos (<span id="numFavoritos">0</span>)</a>
+								<a href="#"><i class="fa fa-signal"></i> Comparar</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+<!-- Fin Banda Gris Oscuro(Menu TOP)-->
+<!-- Banda verde(Menu MIDDLE) -->
+			<div id="middle-header" class="container-fluid hidden-xs hidden-sm">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-3 logo-header"><a href="#"><img class="img-responsive" src="/img/logo-compulago-blanco2.png"></a></div>
+						<div class="col-md-6 search-header">
+							<div class="buscador">
+								<th:block th:include="site/searchform::content"></th:block>
+							</div>
+						</div>
+						<div class="hidden-xs hidden-sm col-md-3 shoping-header">
+							<th:block th:include="shoppingcart/components/carCounter::content(${@shoppingCartHolder.getCart('shop','Carrito de Compras')})" ></th:block>
+						</div>
+					</div>
+				</div>			
+			</div>
+<!-- Fin Banda verde(Menu MIDDLE) -->
+<!-- Banda Gris Claro(Menu Main) -->
+			<div id="mainmenu-header" class="container-fluid hidden-xs hidden-sm">
+				<div class="header-box container">
+					<div class="tools-container row">
+						<div class="mainmenu col-md-12">
+							<nav>
+								<ul class="main">
+									<li class="home"><a href="/" ><i class="fa fa-home" aria-hidden="true"></i><br><span>inicio</span></a></li>
+									<li>
+										<div class="all-categories">
+											<div class="all-trigger">
+											  <div class="menu-toggle" id="toggle">
+											    <span></span>
+											  </div>
+											  <div class="cat-label">
+											    <strong>
+											      <span>Ver todas las</span>
+											      <br>Categorías</strong><i class="fa fa-chevron-down"></i>
+											  </div>
+											</div>
+<!-- Menu Categorias -->
+											<th:block th:include="tpl_bigmenu::content"></th:block>
+<!-- Fin Menu Categorias -->
+										</div>
+									</li>
+
+									<li>
+										<a href="/201702-pagina-destacados">Destacados</a>
+									</li>
+									<li>
+										<a href="#">Ofertas Hoy</a>
+									</li>
+									<li class="col-catalogos">
+										<button type="button">Catalogos en PDF</button>
+									</li>
+									<li>
+										<a href="/quienes-somos">¿Quienes Somos?</a>
+									</li>
+									<li>
+										<a href="#">Contactenos</a>
+									</li>
+									<li class="col-mapaTiendas">
+										<button type="button">Nuestras Tiendas</button>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+<!-- Fin Banda Gris Claro(Menu Main) -->
+<!-- div deslizable Telefonos contacto -->
+			<th:block th:include="tpl_telefonosContacto::content"></th:block>
+<!-- Fin div deslizable Telefonos contacto -->
+
+<!-- div deslizable Direccion Sedes -->
+			<th:block th:include="tpl_direccionSedes::content"></th:block>
+<!-- Fin div deslizable Direccion Sedes -->
+
+<!-- div deslizable Catalogo PDF -->
+			<th:block th:include="tpl_catalogosPDF::content"></th:block>
+<!-- Fin div deslizable Catalogo PDF -->
+
+<!-- Encabezado Flotante -->
+			<div id="header-scroll" class="container-fluid hidden-xs hidden-sm">
+				<div class="header-box container">
+					<div class="tools-container row">
+						<div class="col-md-3"><a href="#"><img class="img-responsive" src="/img/logo-compulago-blanco2.png"></a></div>
+						<div class="all-categories col-md-2 hidden-xs hidden-sm">
+
+							<div class="all-trigger">
+							  <div class="menu-toggle" id="toggle">
+							    <span></span>
+							  </div>
+							  <div class="cat-label">
+							    <strong>
+							      <span>Ver todas las</span>
+							      <br>Categorías</strong><i class="fa fa-chevron-down"></i>
+							  </div>
+							</div>
+<!-- Menu Categorias -->
+							<th:block th:include="tpl_bigmenu::content"></th:block>
+<!-- Fin Menu Categorias -->
+						</div>
+						<div class="buscador hidden-xs hidden-sm col-md-4">
+							<form method="get" class="form-inline" action="/search">
+								<div class="input-group">
+									<input type="search" value="" name="query" id="query" class="form-control" placeholder="¿Qué estás buscando?">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="submit">
+											<div class="circle">
+												<i class="fa fa-search"></i>
+											</div>
+										</button>
+									</span>
+								</div>
+							</form>
+						</div>
+
+						<div class="opt-adicionales hidden-sm hidden-xs">
+							<ul>
+								<li>
+									<a href="#" class="circle heart">
+										<i class="fa fa-heart"></i>	
+										<span class="tip">Favoritos</span>
+										<span id="numFavoritos-flotante" class="numFavoritos-flotante">0</span>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="circle signal">
+										<i class="fa fa-signal"></i>	
+										<span class="tip">Comparar</span>
+									</a>
+								</li>
+								<li>
+									<a th:href="@{/users/login}" class="circle user" th:if="${@userHolder.authenticated eq false}">
+										<i class="fa fa-user" aria-hidden="true"></i> 
+										<span class="tip">Iniciar</span>
+									</a>
+									<a th:href="@{/users/account}" class="circle user" th:if="${@userHolder.authenticated}">
+										<i class="fa fa-user" aria-hidden="true"></i> 
+										<span class="tip">Ver Perfil</span>
+									</a>
+								</li>
+							</ul>
+							<div class="shoping-header">
+								<th:block th:include="shoppingcart/components/carCounter::content(${@shoppingCartHolder.getCart('shop','Carrito de Compras')})" ></th:block>								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+<!-- Fin Encabezado Flotante -->
+		</header>
+<!-- ************************* Fin Encabezado ********************************-->
+
+
+<!-- **************************** Cuerpo **************************************-->
+		<div id="slider-header" class="container-fluid" th:if="${cmsModules.isUsed('201702-slider')}">
+<!-- Slider -->
+			<th:block th:include="module::position('201702-slider')" ></th:block> 
+<!-- Fin Slider -->
+		</div>
+		<div id="aviso-1" class="container-fluid" th:if="${cmsModules.isUsed('201702-aviso-1')}">
+<!-- Espacio Aviso 1 -->
+			<th:block th:include="module::position('201702-aviso-1')" ></th:block> 
+<!-- Fin Espacio Aviso 1 -->
+		</div>
+
+<!-- Pestanas Caracteristicas de productos -->
+		<div class="generals-space2 container-fluid hidden-sm hidden-xs">
+			<div class="container">
+				<div class="col-md-12 col-lg-12">
+					<div class="row">
+						<div class="menu-generals2 col-md-12 col-lg-12">
+							<ul>
+								<li class="pestana pestana-1"><a href="#caracteristicas-generales"><span>Caracteristicas generales</span></a></li>
+								<li class="pestana pestana-2"><a href="#details"><span>Ficha Tecnica</span></a></li>
+								<li class="pestana pestana-4"><a href="#garantias"><span>Garantia y devoluciones</span></a></li>
+								<li class="pestana pestana-3"><a href="#relacionados"><span>Productos relacionados</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+<!-- Fin Pestanas Caracteristicas de productos -->
+
+<!-- Inicio Espacios centrales Template -->
+		<div id="main-content" class="container-fluid">
+			<div class="content-area container">
+				<div class="row">
+					<div class="left-space col-xs-12 col-md-3 col-lg-3" th:if="${cmsModules.isUsed('201702-left-space')}">
+<!-- Espacio Izquierdo -->
+						<th:block th:include="module::position('201702-left-space')" ></th:block> 
+<!-- Fin Espacio Izquierdo -->
+					</div>
+					<div class="center-space col-xs-12 col-md-9 col-lg-9" th:if="${cmsModules.isUsed('201702-center-space')}">
+<!-- Espacio Centro -->
+						<th:block th:include="module::position('201702-center-space')" ></th:block> 
+<!-- Fin espacio Centro -->
+					</div>
+				</div>
+				<div class="row">
+<!-- Resultados Generales -->
+					<div class="result-space col-xs-12 col-md-12 col-md-12" layout:fragment="content"></div>
+<!-- Fin Resultados Generales -->
+				</div>
+			</div>
+		</div>
+<!-- Fin Espacios centrales Template -->
+
+<!-- ************************** Fin Cuerpo ************************************-->
+
+<!-- ************************** Pie de Pagina *********************************-->
+<!-- Pie de Pagina -->
+		<footer>
+			<div class="pie container-fluid">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-2">
+							<ul>
+								<li class="titulo">Nuestra Empresa</li>
+								<li><a href="/quienes-somos">¿Quienes Somos?</a></li>
+								<li><a href="/10-razones-para-elegirnos">10 Razones para elegirnos</a></li>
+								<li><a href="#">Nuestras Tiendas</a></li>
+							</ul>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-2">
+							<ul>
+								<li class="titulo">Catálogo en Línea</li>
+								<li><a href="#">Conoce nuestro catálogo de computadores de escritorio, portátiles, tablets, impresoras y otros accesorios.</a></li>
+								<li><a href="#">Ver Catálogo</a></li>
+							</ul>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-2">
+							<ul>
+								<li class="titulo">Enlaces de Interes</li>
+								<li><a href="/metodos-de-pago">Metodos de Pago</a></li>
+								<li><a href="#">Terminos y condiciones</a></li>
+								<li><a href="#">Politicas de Garantía</a></li>
+							</ul>							
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-2"></div>
+						<div class="col-xs-12 col-sm-12 col-md-2">
+							<div class="row">
+								<div class="titulo col-md-12">Atención al cliente</div>
+								<div class="col-md-6">
+									<ul>
+										<li class="subtitulo">Cartagena</li>
+										<li>(5) 693 0423</li>
+										<li class="subtitulo">Montería</li>
+										<li>(5) 781 0939</li>
+										<li class="subtitulo">Riohacha</li>
+										<li>(5) 729 2442</li>
+									</ul>
+								</div>
+								<div class="col-md-6">
+									<ul>
+										<li class="subtitulo">Santa Marta</li>
+										<li>(5) 421 3646</li>
+										<li class="subtitulo">Valledupar</li>
+										<li>(5) 588 5289</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-2">
+							<ul>
+								<li>Siguenos en:</li>
+								<li>
+									<ul class="redes-sociales">
+										<li><a target="_blank" href="https://www.facebook.com/compulagoweb/"><i aria-hidden="true" class="fa fa-facebook-official"></i></a></li>
+										<li><a target="_blank" href="https://twitter.com/compulagoweb"><i aria-hidden="true" class="fa fa-twitter"></i></a></li>
+										<li><a target="_blank" href="https://www.youtube.com/channel/UCgVu2qJUML4axIHxxsk8Bqg"><i aria-hidden="true" class="fa fa-youtube-play"></i></a></li>
+										<li><a target="_blank" href="https://www.instagram.com/compulagoweb/"><i aria-hidden="true" class="fa fa-instagram"></i></a></li>
+									</ul>									
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>		
+<!-- Fin Pie de Pagina -->
+<!-- *********************** Fin Pie de Pagina ********************************-->
+
+<!-- ************************** Contenido JS **********************************-->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="/js/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="/js/bxslider/jquery.bxslider.min.js"></script>
+		<script src="/js/owlcarousel/owl.carousel.min.js"></script>
+		<script src="/js/flexslider/jquery.flexslider.js"></script>
+<!--Start of Tawk.to Script-->
+		<script th:inline="javascript" th:if="${siteParams['chatID']!=null}">
+			var $_Tawk_API = {}, $_Tawk_LoadStart = new Date();
+			(function() {
+				var chatID = [[${siteParams['chatID']}]];
+				var s1 = document.createElement("script"), s0 = document
+						.getElementsByTagName("script")[0];
+				s1.async = true;
+				s1.src = 'https://embed.tawk.to/'+chatID+'/default';
+				s1.charset = 'UTF-8';
+				s1.setAttribute('crossorigin', '*');
+				s0.parentNode.insertBefore(s1, s0);
+			})();
+
+			$_Tawk_API.onStatusChange = function (status){
+				console.log(status);
+				if(status === 'online')
+				{
+					document.getElementById('status').innerHTML = '<a href="javascript:void(Tawk_API.toggle())"><img src="/img/chat-on.png" class="img-responsive"/></a>';
+				}
+				else if(status === 'away')
+				{
+					document.getElementById('status').innerHTML = '<img src="/img/chat-away.png" class="img-responsive"/>';
+				}
+				else if(status === 'offline')
+				{
+					document.getElementById('status').innerHTML = '<img src="/img/chat-off.png" class="img-responsive"/>';
+				}
+			};
+		</script>
+<!--End of tawk.to Status Code -->
+<!-- Google-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-47407827-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- Fin Google-->
+
+		<script src="/js/custom3.js"></script>
+<!-- ************************ Fin Contenido JS ********************************-->				
+	</body>
+</html>
+	      

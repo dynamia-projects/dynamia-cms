@@ -86,10 +86,17 @@ public class Page extends Content implements SiteAware, Aliasable {
 	private boolean showTitle = true;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdate;
-	
+	private String templateEngine;
+
 	private String styleClass;
-	
-	
+
+	public String getTemplateEngine() {
+		return templateEngine;
+	}
+
+	public void setTemplateEngine(String templateEngine) {
+		this.templateEngine = templateEngine;
+	}
 
 	public String getStyleClass() {
 		return styleClass;
@@ -98,7 +105,7 @@ public class Page extends Content implements SiteAware, Aliasable {
 	public void setStyleClass(String styleClass) {
 		this.styleClass = styleClass;
 	}
-	
+
 	public Date getLastUpdate() {
 		return lastUpdate;
 	}

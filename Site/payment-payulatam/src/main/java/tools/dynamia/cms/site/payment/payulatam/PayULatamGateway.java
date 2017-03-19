@@ -24,14 +24,10 @@ import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import tools.dynamia.cms.site.payment.PaymentException;
 import tools.dynamia.cms.site.payment.PaymentForm;
@@ -42,7 +38,6 @@ import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
 import tools.dynamia.cms.site.payment.services.PaymentService;
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
-import tools.dynamia.domain.services.CrudService;
 
 @Service
 public class PayULatamGateway implements PaymentGateway {
@@ -133,25 +128,20 @@ public class PayULatamGateway implements PaymentGateway {
 	}
 
 	@Override
-	public PaymentTransaction newTransaction(String source) {
+	public PaymentTransaction newTransaction(String source, String baseURL) {
 		PaymentTransaction tx = new PaymentTransaction(source);
 
-		ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = sra.getRequest();
-		String baseUrl = String.format("%s://%s:%d/", request.getScheme(), request.getServerName(),
-				request.getServerPort());
-		baseUrl = baseUrl.replace(":80/", "/");
-		tx.setResponseURL(baseUrl + "payment/" + getId() + "/response");
-		tx.setConfirmationURL(baseUrl + "payment/" + getId() + "/confirmation");
+		tx.setResponseURL(baseURL + "payment/" + getId() + "/response");
+		tx.setConfirmationURL(baseURL + "payment/" + getId() + "/confirmation");
 		return tx;
 	}
 
 	@Override
 	public PaymentForm createForm(PaymentTransaction tx) {
-
+		Map<String, String> params = service.getGatewayConfigMap(this, tx.getSource());
 		PaymentForm form = new PaymentForm();
 		form.setHttpMethod("post");
-		Map<String, String> params = service.getGatewayConfigMap(this, tx.getSource());
+		
 		boolean test = false;
 		if (!"1".equals(params.get(TEST))) {
 			test = tx.isTest();

@@ -17,8 +17,7 @@
 		</th:block>
 		<meta th:content="${pageImage}" property="og:image" content="" />
 
-		<link th:href="@{${#objects.nullSafe(siteParams['favicon'],'/img/favicon/favicon.png')}}" href="img/favicon.ico" rel="shortcut icon"
-		type="image/vnd.microsoft.icon" />
+		<link th:href="@{${siteParams['favicon']}}" href="img/favicon.ico" rel="shortcut icon"	/>
 
 		<title th:text="|${site.name} - ${title}|">Dynamical Template</title>
 
@@ -35,7 +34,9 @@
 		<!-- Custom styles for this template -->
 		<link th:href="@{/css/template.css}" href="css/template.css" rel="stylesheet" />
 
-		<th:block th:include="module::position('head_tag')" />
+		<th:block th:include="module::position('head-tag')" />
+		
+		<th:block th:include="module::stylesheets" />
 	</head>
 
 	<body>
@@ -46,7 +47,7 @@
 
 		<th:block th:include="module::position('navbar-top')" />
 
-		<nav th:class="${'main-nav navbar navbar-toggleable-md navbar-dark '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}">
+		<nav th:unless="${site.isParameter('disableHeader')}" th:class="${'main-nav navbar navbar-toggleable-md navbar-dark '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}">
 			<div class="container">
 
 				<div class="hidden-md-up pull-right" style="margin-right: 60px">
@@ -87,7 +88,7 @@
 
 		<th:block th:include="module::position('content-bottom')" />
 
-		<footer id="footer" th:class="${'page-footer center-on-small-only  '+#objects.nullSafe(siteParams['footer-class'],'bg-primary')}">
+		<footer id="footer" th:unless="${site.isParameter('disableFooter')}" th:class="${'page-footer center-on-small-only  '+#objects.nullSafe(siteParams['footer-class'],'bg-primary')}">
 
 			<th:block th:include="module::position('footer')" />
 
@@ -104,7 +105,7 @@
 			</div>
 		</footer>
 
-		<th:block th:include="module::stylesheets" />
+		
 
 		<!-- JQuery -->
 		<script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
@@ -124,6 +125,8 @@
 		<script type="text/javascript" th:src="@{/js/dynamical.js}"></script>
 
 		<th:block th:include="module::scripts" />
+		<th:block layout:fragment="javascripts"/>
+		
 
 		<th:block th:include="tpl_googleAnalytics::content" />
 		<th:block th:include="tpl_webchat::content" />

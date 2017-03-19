@@ -59,7 +59,8 @@ public class ModulesServiceImpl implements ModulesService {
 	@Override
 	@Cacheable(value = CACHE_NAME, key = "#site.key+#position")
 	public List<ModuleInstance> getModules(Site site, String position) {
-		QueryParameters params = QueryParameters.with("site", site).add("enabled", true).add("position", QueryConditions.eq(position));
+		QueryParameters params = QueryParameters.with("site", site).add("enabled", true).add("position",
+				QueryConditions.eq(position));
 		List<ModuleInstance> instances = crudService.find(ModuleInstance.class, params);
 		for (ModuleInstance moduleInstance : instances) {
 			moduleInstance.getParameters().size();
@@ -73,7 +74,16 @@ public class ModulesServiceImpl implements ModulesService {
 	@Cacheable(value = CACHE_NAME, key = "'positions'+#site.key")
 	public List<String> getUsedPositions(Site site) {
 		QueryParameters params = QueryParameters.with("site", site).add("enabled", true);
-		QueryBuilder queryBuilder = QueryBuilder.select(ModuleInstance.class, "m", "position").where(params).groupBy("position");
+		QueryBuilder queryBuilder = QueryBuilder.select(ModuleInstance.class, "m", "position").where(params)
+				.groupBy("position");
+		return crudService.executeQuery(queryBuilder, params);
+	}
+
+	@Override
+	public List<String> getAllUsedPositions(Site site) {
+		QueryParameters params = QueryParameters.with("site", site);
+		QueryBuilder queryBuilder = QueryBuilder.select(ModuleInstance.class, "m", "position").where(params)
+				.groupBy("position");
 		return crudService.executeQuery(queryBuilder, params);
 	}
 

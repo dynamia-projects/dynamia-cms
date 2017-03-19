@@ -71,7 +71,11 @@
                         </ol>
                     </div>
                 </div>
-             
+
+                <div class="mt20">
+                    <th:block th:include="social/components/sharebuttons::content" />
+
+                </div>
             </div>
 
             <!-- Right Details-->
@@ -132,13 +136,14 @@
                     <form th:if="${prd_config.shopEnabled and prd_product.sellInWeb}" th:action="@{'/shoppingcart/shop/add/'+${prd_product.id}}"
                         method="get">
 
-                        <ul class="list-simple details">
-                            <li><strong>Brand: </strong> <span th:text="${prd_product.brand.name}"></span> </li>
+                        <ul class="list-simple">
+                            <li th:if="${prd_product.brand}" ><strong>Brand: </strong>
+                                <a th:href="@{'/store/brands/'+${prd_product.brand.alias}}">
+                                    <span th:text="${prd_product.brand.name}"></span>
+                                </a>
+                            </li>
                             <li><strong>SKU: </strong> <span th:text="${prd_product.sku}"></span> </li>
                             <li><strong>Reference: </strong> <span th:text="${prd_product.reference}"></span> </li>
-                            <li th:each="det : ${prd_product.details}">
-                                <strong th:text="${det.name}">Detail: </strong> <span th:text="${det.value}"></span>
-                            </li>
                             <li><strong>Quantity: </strong> <input type="text" name="qty" id="qty" class="form-control pd0 mg0"
                                     th:value="1" style="text-align: center; width: 20%; display: inline"></input>
                             </li>
@@ -151,10 +156,27 @@
                         <input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}" />
                     </form>
                 </div>
-                   <div class="mt20">
-                    <th:block th:include="social/components/sharebuttons::content" />
+                <div class="card mt20" th:unless="${prd_product.details.isEmpty()}">
 
+                    <div th:class="${'card-header '+#objects.nullSafe(siteParams['backgroundClass'],'primary-color-dark white-text')}">
+                        <a class="white-text" data-toggle="collapse" href="#details" aria-expanded="false" aria-controls="details">
+                            <i class="fa fa-table"></i> Details
+                        </a>
+
+                        <a class="float-right white-text" data-toggle="collapse" href="#details" aria-expanded="false" aria-controls="details">
+                            <i class="fa fa-angle-double-down"></i>
+                        </a>
+                    </div>
+
+                    <div id="details" class="collapse card-block">
+                        <ul class="list-simple details">
+                            <li th:each="det : ${prd_product.details}">
+                                <strong th:text="${det.name}">Detail: </strong> <span th:text="${det.value}"></span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>

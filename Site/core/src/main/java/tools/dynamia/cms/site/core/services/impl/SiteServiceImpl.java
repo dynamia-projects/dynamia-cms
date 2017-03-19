@@ -90,16 +90,20 @@ public class SiteServiceImpl implements SiteService {
 	@Override
 	@Cacheable(CACHE_NAME)
 	public Site getSite(String key) {
-		return crudService.findSingle(Site.class, "key", key);
+		return crudService.findSingle(Site.class, "key", QueryConditions.eq(key));
 	}
 
 	@Override
 	@Cacheable(CACHE_NAME)
 	public Site getSiteByDomain(String domainName) {
 		System.out.println("FINDING SITE FOR DOMAIN: " + domainName);
-		SiteDomain domain = crudService.findSingle(SiteDomain.class, "name", domainName);
+		Site site = crudService.findSingle(Site.class, "mainDomain", QueryConditions.eq(domainName));
+		if (site == null) {
+			SiteDomain domain = crudService.findSingle(SiteDomain.class, "name", QueryConditions.eq(domainName));
+			site = domain != null ? domain.getSite() : getMainSite();
+		}
 
-		return domain != null ? domain.getSite() : getMainSite();
+		return site;
 	}
 
 	@Override

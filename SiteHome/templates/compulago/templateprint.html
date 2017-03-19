@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es"> 
+    <head>
+        <title th:text="|${site.name} - ${title}|">Compulago - Marcamos la diferencia</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta name="description" th:content="${metaDescription}" content="Responsive, Bootstrap, Html5, Css3, Multipuropose, Blog, Portfolio, Ecommerce - All in One Template" />
+        <meta name="author" th:content="${metaAuthor}" content="" />
+        <meta name="keywords" th:content="${metaKeywords}" content="" />
+        <meta name="copyright" th:content="${metaRights}" content="" />
+        <meta name="robots" content="index, follow" />
+        <meta th:content="|${site.name} - ${title}|" property="og:title" content="" />
+        <meta th:content="${metaDescription}" property="og:description" content="" />
+        <meta http-equiv="Expires" content="0">
+        <meta http-equiv="Last-Modified" content="0">
+        <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+        <meta http-equiv="Pragma" content="no-cache">        
+<th:block th:each="pi : ${pageImages}">
+        <meta th:content="${pi}" property="og:image" content="" />
+</th:block>
+        <link th:href="@{/img/favicon.ico}" href="img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+        <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Khula:400,800,700,600,300">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
+        <link rel="stylesheet" th:href="@{/js/bootstrap/3.3.7/css/bootstrap.css}" href="js/bootstrap/3.3.7/css/bootstrap.css">
+        <link rel="stylesheet" th:href="@{/js/font-awesome/4.7.0/css/font-awesome.min.css}" href="js/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" th:href="@{/css/custom2.css}" href="css/custom2.css">
+    </head>
+    <body style="margin: 10px">
+
+<!-- Header Start -->  
+    	<div id="logo-impresion" class="container-fluid">
+            <div class="col-sm-5 col-md-5">
+                <img th:title="${name}" th:alt="${name}" th:src="@{${#objects.nullSafe(siteParams['logo'],'/img/compulago-impresion-carrito-compra.png')}}" class="img-responsive" title="Simplepx" alt="Simplepx" src="img/compulago-impresion-carrito-compra.png"/>
+            </div>
+        </div>
+<!-- Header End -->
+
+        <div id="doc-impresion" class="container" layout:fragment="content"></div>
+
+        <script>
+            print();
+        </script>
+    </body>
+</html>

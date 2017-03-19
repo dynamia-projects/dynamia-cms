@@ -26,6 +26,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.HtmlTableBuilder;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.domain.SiteParameter;
@@ -147,13 +148,12 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 		if (config.getPaymentGatewayId() != null) {
 			PaymentGateway gateway = paymentService.findGateway(config.getPaymentGatewayId());
-			tx = gateway.newTransaction(config.getSite().getKey());
+			tx = gateway.newTransaction(config.getSite().getKey(), CMSUtil.getSiteURL(config.getSite(), "/"));
 			tx.setGatewayId(gateway.getId());
 		} else {
 			tx = newLocalPaymentTransaction();
 		}
 
-		
 		tx.setCurrency(config.getDefaultCurrency());
 		tx.setEmail(user.getUsername());
 		if (shoppingCart.getCustomer() != null) {
@@ -169,7 +169,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
 		ShoppingOrder order = new ShoppingOrder();
 		order.setShoppingCart(shoppingCart);
-		order.setTransaction(tx);		
+		order.setTransaction(tx);
 		order.sync();
 		order.setSite(config.getSite());
 

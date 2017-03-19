@@ -94,7 +94,6 @@ public class CMSModules {
 	public void init(ModuleInstance instance) {
 		service.initModuleInstance(instance);
 		activeInstances.add(instance);
-
 	}
 
 	public Set<ModuleInstance> getActiveInstances() {

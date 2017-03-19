@@ -133,7 +133,7 @@ public class PageController {
 			}
 
 			mv.addObject("page", page);
-			mv.addObject("pageContent", CMSUtil.escapeHtmlContent(page.getContent()));
+			mv.addObject("pageContent", page.getContent());
 			mv.addObject("pageImage", page.getImageURL());
 			mv.addObject("title", page.getTitle());
 			mv.addObject("subtitle", page.getSubtitle());
@@ -182,6 +182,5 @@ public class PageController {
 			}
 		}
 	}
-
 
 }

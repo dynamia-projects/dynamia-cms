@@ -18,16 +18,24 @@ package tools.dynamia.cms.site.pages.ext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.ModelAndView;
 
+import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.SiteContext;
 import tools.dynamia.cms.site.core.api.CMSExtension;
 import tools.dynamia.cms.site.core.api.SiteRequestInterceptor;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.pages.domain.Page;
+import tools.dynamia.cms.site.pages.services.PageService;
 
 @CMSExtension
+@Order(Integer.MAX_VALUE)
 public class PagesSiteInterceptor implements SiteRequestInterceptor {
+
+	@Autowired
+	private PageService service;
 
 	@Override
 	public void beforeRequest(Site site, HttpServletRequest request, HttpServletResponse response) {
@@ -36,7 +44,8 @@ public class PagesSiteInterceptor implements SiteRequestInterceptor {
 	}
 
 	@Override
-	public void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) {
+	public void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response,
+			ModelAndView modelAndView) {
 		Page page = (Page) modelAndView.getModel().get("page");
 		if (page == null) {
 			page = new Page();
@@ -46,8 +55,11 @@ public class PagesSiteInterceptor implements SiteRequestInterceptor {
 			page.setSubtitle((String) modelAndView.getModel().get("subtitle"));
 			page.setIcon((String) modelAndView.getModel().get("icon"));
 			page.setType("auto");
-			
+
 			modelAndView.addObject("page", page);
+			modelAndView.addObject("pageContent", page.getContent());
+		} else if (page.getTemplateEngine() != null && modelAndView.getModel().containsKey("pageContent")) {
+			modelAndView.addObject("pageContent", service.parsePageContent(page, modelAndView.getModel()));
 		}
 
 	}

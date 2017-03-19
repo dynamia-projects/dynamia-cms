@@ -20,19 +20,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.accept.FixedContentNegotiationStrategy;
-import org.springframework.web.accept.MappingMediaTypeFileExtensionResolver;
 import org.springframework.web.accept.PathExtensionContentNegotiationStrategy;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.thymeleaf.spring4.SpringTemplateEngine;
@@ -93,6 +87,7 @@ public class TemplateJavaConfig {
 
 		return engine;
 	}
+	
 
 	public ViewResolver thymeleafViewResolver() {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
