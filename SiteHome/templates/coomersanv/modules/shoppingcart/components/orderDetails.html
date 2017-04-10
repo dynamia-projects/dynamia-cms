@@ -16,8 +16,10 @@
 				<th>Codigo</th>
 				<th>Nombre</th>
 				<th>Cant.</th>
-				<th width="100px">Precio Unit.</th>
-				<th>Total</th>
+				<th>Precio</th>
+				<th>Subtotal</th>
+				<th>IVA</th>
+				<th>TOTAL</th>
 			</tr>
 			<tr th:each="item,row : ${shoppingOrder.shoppingCart.items}">
 				<td class="name"><span th:text="${row.index+1}"></span></td>
@@ -34,6 +36,10 @@
 				<td class="price" style="text-align: right"
 					th:text="${cmsUtil.formatNumber(item.unitPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$120.68</td>
 				<td class="total" style="text-align: right"
+					th:text="${cmsUtil.formatNumber(item.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+				<td class="total" style="text-align: right"
+					th:text="${cmsUtil.formatNumber(item.taxes,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+				<td class="total" style="text-align: right"
 					th:text="${cmsUtil.formatNumber(item.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
 
 			</tr>
@@ -41,9 +47,13 @@
 				<td style="text-align: right" colspan="4"><b>Articulos</b></td>
 				<td style="text-align: center"
 					th:text="${shoppingOrder.shoppingCart.quantity}"></td>
-				<td style="text-align: right" colspan="1"><b>Subtotal</b></td>
+				<td style="text-align: right" colspan="1"><b>Totales</b></td>
 				<td style="text-align: right"
 					th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+				<td style="text-align: right"
+					th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalTaxes,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+				<td style="text-align: right"
+					th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
 			</tr>
 
 

@@ -136,8 +136,6 @@ public class ConfirmShoppingOrderAction implements SiteAction {
 		} catch (ValidationError e) {
 			SiteActionManager.performAction("checkoutShoppingCart", mv, evt.getRequest(), evt.getRedirectAttributes());
 			CMSUtil.addErrorMessage(e.getMessage(), mv);
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

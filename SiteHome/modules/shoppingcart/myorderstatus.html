@@ -49,6 +49,7 @@
 					<thead>
 						<th></th>
 						<th>Documento</th>
+						<th>Tipo</th>
 						<th>Fecha</th>
 						<th>Vencimiento</th>
 
@@ -62,6 +63,7 @@
 						<tr th:each="ord,row : ${orders}">
 							<td><span th:text="${row.index+1}"></span></td>
 							<td th:text="${ord.number}"></td>
+							<td th:text="${ord.type}"></td>
 
 							<td><span th:text="${#dates.format(ord.date, 'dd/MMM/yyyy')}"></span></td>
 							<td><span th:text="${#dates.format(ord.dueDate, 'dd/MMM/yyyy')}"></span></td>

@@ -53,14 +53,14 @@
 					</table>
 					<table class="table">
 						<tbody style="font-size: 12px">
-							<tr th:if="false">
+							<tr>
 								<td class="textright"><b>Sub-Total:</b></td>
 								<td class="textright"
 									th:text="${cmsUtil.formatNumber(cart.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$500.00</td>
 								<td></td>
 							</tr>
-							<tr th:if="false">
-								<td class="textright"><b>Impuestos:</b></td>
+							<tr>
+								<td class="textright"><b>IVA:</b></td>
 								<td class="textright"
 									th:text="${cmsUtil.formatNumber(cart.totalTaxes,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$2.00</td>
 								<td></td>

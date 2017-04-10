@@ -89,6 +89,52 @@ public class ProductDTO implements Serializable {
 	private Date promoEndDate;
 	private String promoName;
 
+	private String taxName;
+	private double taxPercent;
+	private boolean taxable;
+	private boolean taxIncluded;
+	private String unit;
+
+	public boolean isTaxIncluded() {
+		return taxIncluded;
+	}
+
+	public void setTaxIncluded(boolean taxIncluded) {
+		this.taxIncluded = taxIncluded;
+	}
+
+	public String getTaxName() {
+		return taxName;
+	}
+
+	public void setTaxName(String taxName) {
+		this.taxName = taxName;
+	}
+
+	public double getTaxPercent() {
+		return taxPercent;
+	}
+
+	public void setTaxPercent(double taxPercent) {
+		this.taxPercent = taxPercent;
+	}
+
+	public boolean isTaxable() {
+		return taxable;
+	}
+
+	public void setTaxable(boolean taxable) {
+		this.taxable = taxable;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
 	public String getVideoURL2() {
 		return videoURL2;
 	}

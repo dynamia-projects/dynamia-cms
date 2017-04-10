@@ -34,7 +34,7 @@
 					</tr>
 					<tr>
 						<td><label class="orange">Valor</label></td>
-						<td><span th:text="${payment.amount}"></span></td>
+						<td><span th:text="${cmsUtil.formatNumber(payment.amount,'$###,###')}"></span></td>
 					</tr>
 
 					<tr>

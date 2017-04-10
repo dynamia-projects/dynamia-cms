@@ -1,150 +1,152 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<meta name="description" th:content="${metaDescription}" />
-		<meta name="author" th:content="${metaAuthor}" content="" />
-		<meta name="keywords" th:content="${metaKeywords}" content="" />
-		<meta name="copyright" th:content="${metaRights}" content="" />
-		<meta name="robots" content="index, follow" />
-		<meta th:content="|${site.name} - ${title}|" property="og:title" content="" />
-		<meta th:content="${metaDescription}" property="og:description" content="" />
-		<th:block th:each="pi : ${pageImages}">
-			<meta th:content="${pi}" property="og:image" content="" />
-		</th:block>
-		<meta th:content="${pageImage}" property="og:image" content="" />
+	<meta name="description" th:content="${metaDescription}" />
+	<meta name="author" th:content="${metaAuthor}" content="" />
+	<meta name="keywords" th:content="${metaKeywords}" content="" />
+	<meta name="copyright" th:content="${metaRights}" content="" />
+	<meta name="robots" content="index, follow" />
+	<meta th:content="|${site.name} - ${title}|" property="og:title" content="" />
+	<meta th:content="${metaDescription}" property="og:description" content="" />
+	<th:block th:each="pi : ${pageImages}">
+		<meta th:content="${pi}" property="og:image" content="" />
+	</th:block>
+	<meta th:content="${pageImage}" property="og:image" content="" />
 
-		<link th:href="@{${siteParams['favicon']}}" href="img/favicon.ico" rel="shortcut icon"	/>
+	<link th:href="@{${siteParams['favicon']}}" href="img/favicon.ico" rel="shortcut icon" />
 
-		<title th:text="|${site.name} - ${title}|">Dynamical Template</title>
+	<title th:text="|${site.name} - ${title}|">Dynamical Template</title>
 
-		<!-- Bootstrap core CSS -->
-		<link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.css" rel="stylesheet" />
-		<link th:href="@{/css/mdb.min.css}" href="css/mdb.min.css" rel="stylesheet" />
+	<!-- Bootstrap core CSS -->
+	<link th:href="@{/css/bootstrap.min.css}" href="css/bootstrap.css" rel="stylesheet" />
+	<link th:href="@{/css/mdb.min.css}" href="css/mdb.min.css" rel="stylesheet" />
 
-		<!-- Font awesome CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+	<!-- Font awesome CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
 
-		<link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" />
-		<link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+	<link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
 
-		<!-- Custom styles for this template -->
-		<link th:href="@{/css/template.css}" href="css/template.css" rel="stylesheet" />
+	<!-- Custom styles for this template -->
+	<link th:href="@{/css/template.css}" href="css/template.css" rel="stylesheet" />
 
-		<th:block th:include="module::position('head-tag')" />
-		
-		<th:block th:include="module::stylesheets" />
-	</head>
+	<th:block th:include="module::position('head-tag')" />
 
-	<body>
+	<th:block th:include="module::stylesheets" />
+</head>
 
-		<div id="fb-root"></div>
+<body>
 
-		<!--Navbar-->
+	<div id="fb-root"></div>
 
-		<th:block th:include="module::position('navbar-top')" />
+	<!--Navbar-->
 
-		<nav th:unless="${site.isParameter('disableHeader')}" th:class="${'main-nav navbar navbar-toggleable-md navbar-dark '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}">
-			<div class="container">
+	<th:block th:include="module::position('navbar-top')" />
 
-				<div class="hidden-md-up pull-right" style="margin-right: 60px">
-					<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Cart')},'fa fa-shopping-cart')"
-					/>
-				</div>
+	<nav th:unless="${site.isParameter('disableHeader')}" th:class="${'main-nav navbar navbar-toggleable-md navbar-dark '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}">
+		<div class="container">
 
-				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1"
-				aria-expanded="false" aria-label="Toggle navigation">
+			<div class="hidden-md-up pull-right" style="margin-right: 60px">
+				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Cart')},'fa fa-shopping-cart')"
+				/>
+			</div>
+
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1"
+			 aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<a class="navbar-brand" href="#">
+			<a class="navbar-brand" href="/">
 				<th:block th:include="module::position('logo')" />
-				</a>
+			</a>
 
-				<div class="collapse navbar-collapse" id="navbarNav1">
-					<th:block th:include="module::position('navbar')" />
-					<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Cart')},'fa fa-shopping-cart')"
-					/>
-					<th:block th:include="site/searchform::content" />
+			<div class="collapse navbar-collapse" id="navbarNav1">
+				<th:block th:include="module::position('navbar')" />
+				<ul class="navbar-nav ml-auto"></ul>
+				<th:block th:include="module::position('navbar-right')" />
+				<th:block th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Cart')},'fa fa-shopping-cart')"
+				/>
+				<th:block th:include="site/searchform::content" th:unless="${site.isParameter('disableSearch')}" />
+			</div>
+		</div>
+	</nav>
+
+	<th:block th:include="module::position('navbar-bottom')" />
+
+	<div class="container">
+		<th:block th:include="tpl_globalmessages::content" />
+	</div>
+
+	<th:block th:include="module::position('banners')" />
+
+	<th:block th:include="module::position('content-top')" />
+
+	<div>
+		<div class="container" layout:fragment="content"></div>
+	</div>
+
+	<th:block th:include="module::position('content-bottom')" />
+
+	<footer id="footer" th:unless="${site.isParameter('disableFooter')}" th:class="${'page-footer center-on-small-only  '+#objects.nullSafe(siteParams['footer-class'],'bg-primary')}">
+
+		<th:block th:include="module::position('footer')" />
+
+		<!-- Scroll to top -->
+		<span class="totop"><a href="#"><i class="fa fa-angle-up"></i></a></span>
+
+		<div class="footer-copyright">
+			<div class="row">
+				<th:block th:include="module::position('footer-copyright')" /> 
+				<div class="col-md-12" th:unless="${cmsModules.isUsed('footer-copyright')}">					
+					Powered by: <a href="http://cms.dynamia.tools" target="blank" class="tooltip-test">DynamiaCMS</a>
 				</div>
 			</div>
-		</nav>
-
-		<th:block th:include="module::position('navbar-bottom')" />
-
-		<div class="container">
-			<th:block th:include="tpl_globalmessages::content" />
 		</div>
+	</footer>
 
-		<th:block th:include="module::position('banners')" />
 
-		<th:block th:include="module::position('content-top')" />
 
-		<div>
-			<div class="container" layout:fragment="content"></div>
-		</div>
+	<!-- JQuery -->
+	<script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
 
-		<th:block th:include="module::position('content-bottom')" />
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" th:src="@{/js/tether.min.js}"></script>
 
-		<footer id="footer" th:unless="${site.isParameter('disableFooter')}" th:class="${'page-footer center-on-small-only  '+#objects.nullSafe(siteParams['footer-class'],'bg-primary')}">
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
 
-			<th:block th:include="module::position('footer')" />
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" th:src="@{/js/mdb.min.js}"></script>
 
-			<!-- Scroll to top -->
-			<span class="totop"><a href="#"><i class="fa fa-angle-up"></i></a></span>
+	<script type="text/javascript" th:src="@{/js/owl.carousel.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/notify.min.js}"></script>
 
-			<div class="footer-copyright">
-				<div class="row">
-					<div class="col-md-12">
-						<th:block th:include="module::position('footer-copyright')" />
-						Powered by: <a href="http://cms.dynamia.tools" target="blank" class="tooltip-test">DynamiaCMS</a>
-					</div>
-				</div>
-			</div>
-		</footer>
+	<script type="text/javascript" th:src="@{/js/dynamical.js}"></script>
 
-		
+	<th:block th:include="module::scripts" />
+	<th:block layout:fragment="javascripts" />
 
-		<!-- JQuery -->
-		<script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
 
-		<!-- Bootstrap tooltips -->
-		<script type="text/javascript" th:src="@{/js/tether.min.js}"></script>
+	<th:block th:include="tpl_googleAnalytics::content" />
+	<th:block th:include="tpl_webchat::content" />
 
-		<!-- Bootstrap core JavaScript -->
-		<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script>
+		(function (d, s, id) {
+			var js,
+				fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id))
+				return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
 
-		<!-- MDB core JavaScript -->
-		<script type="text/javascript" th:src="@{/js/mdb.min.js}"></script>
-
-		<script type="text/javascript" th:src="@{/js/owl.carousel.min.js}"></script>
-		<script type="text/javascript" th:src="@{/js/notify.min.js}"></script>
-
-		<script type="text/javascript" th:src="@{/js/dynamical.js}"></script>
-
-		<th:block th:include="module::scripts" />
-		<th:block layout:fragment="javascripts"/>
-		
-
-		<th:block th:include="tpl_googleAnalytics::content" />
-		<th:block th:include="tpl_webchat::content" />
-
-		<script>
-			( function(d, s, id) {
-					var js,
-					    fjs = d.getElementsByTagName(s)[0];
-					if (d.getElementById(id))
-						return;
-					js = d.createElement(s);
-					js.id = id;
-					js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
-					fjs.parentNode.insertBefore(js, fjs);
-				}(document, 'script', 'facebook-jssdk'));
-		</script>
-
-		<th:block th:include="module::position('custom_scripts')" />
-	</body>
+	<th:block th:include="module::position('custom_scripts')" />
+</body>
 
 </html>

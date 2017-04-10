@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Main Menu -->
+
+<body th:fragment="module(instance)">
+
+
+	<th:block th:utext="${cmsUtil.parseTemplate(instance.model.content, instance.model.templateEngine, _springMvcModel)}">Content</th:block>
+
+
+</body>
+
+</html>

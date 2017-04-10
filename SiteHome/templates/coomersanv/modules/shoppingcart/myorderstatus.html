@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
 
 <div class="maincontainer" layout:fragment="content">
+
+
 
 
 	<div class="container">
@@ -28,76 +32,139 @@
 
 					<h3>Cliente</h3>
 					<div class="form-group">
-						<label class="orange">NIT</label> <span th:text="${customer.identification}"></span>
+						<label class="orange">NIT</label> <span
+							th:text="${customer.identification}"></span>
 
 					</div>
 
 					<div class="form-group">
-						<label class=" orange">Razon Social</label> <span th:text="${customer.fullName}"></span>
+						<label class=" orange">Razon Social</label> <span
+							th:text="${customer.fullName}"></span>
 
 					</div>
 
 
 					<div class="form-group">
-						<label class=" orange">Email</label> <span th:text="${customer.username}"></span>
+						<label class=" orange">Email</label> <span
+							th:text="${customer.username}"></span>
 
 					</div>
 				</div>
 
+				<div class="table-responsive">
+					<table th:unless="${#lists.isEmpty(orders)}"
+						class="table table-striped table-bordered">
+						<thead>
+							<tr>
+								<th width="20px"></th>
+								<th>No.</th>
+								<th>Documento</th>
+								<th>Tipo</th>
+								<th>Fecha</th>
+								<th>Vencimiento</th>
 
-				<table th:unless="${#lists.isEmpty(orders)}" class="table table-striped table-bordered">
-					<thead>
-						<th></th>
-						<th>Documento</th>
-						<th>Fecha</th>
-						<th>Vencimiento</th>
+								<th>Total</th>
+								<th>Pagado</th>
+								<th>Saldo</th>
+								<th>Dias</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="ord,row : ${orders}">
+								<tr data-toggle="collapse"
+									th:attr="data-target='#details'+${ord.number}"
+									class="accordion-toggle">
+									<td><button class="btn btn-primary btn-xs"
+											title="Detalles">
+											<i class="fa fa-plus"></i>
+										</button></td>
+									<td><span th:text="${row.index+1}"></span></td>
+									<td th:text="${ord.number}" th:title="${ord.id}"></td>
+									<td th:text="${ord.type}"></td>
+									<td><span
+										th:text="${#dates.format(ord.date, 'dd/MMM/yyyy')}"></span></td>
+									<td><span
+										th:text="${#dates.format(ord.dueDate, 'dd/MMM/yyyy')}"></span></td>
 
-						<th>Total</th>
-						<th>Pagado</th>
-						<th>Saldo</th>
-						<th>Dias</th>
+									<td style="text-align: right"
+										th:text="${cmsUtil.formatNumber(ord.total,prd_config.pricePattern)}">$589.50</td>
 
-					</thead>
-					<tbody>
-						<tr th:each="ord,row : ${orders}">
-							<td><span th:text="${row.index+1}"></span></td>
-							<td th:text="${ord.number}"></td>
+									<td style="text-align: right"
+										th:text="${cmsUtil.formatNumber(ord.paid,prd_config.pricePattern)}">$589.50</td>
 
-							<td><span th:text="${#dates.format(ord.date, 'dd/MMM/yyyy')}"></span></td>
-							<td><span th:text="${#dates.format(ord.dueDate, 'dd/MMM/yyyy')}"></span></td>
+									<td style="text-align: right"
+										th:text="${cmsUtil.formatNumber(ord.balance,prd_config.pricePattern)}">$589.50</td>
+									<td th:text="${ord.days}"></td>
+								</tr>
+								<tr>
+									<td colspan="10" class="hiddenRow" style="padding: 0">
+										<div class="accordian-body collapse"  style="padding: 8px"
+											th:id="'details'+${ord.number}">
+											<table class="table">
+												<thead>
+													<tr>
+														<th>Codigo</th>
+														<th>Descripcion</th>
+														<th>Fecha Despacho</th>
+														<th>Cant</th>
+														<th>Precio</th>
+														<th>Subtotal</th>
+														<th>%</th>
+														<th>IVA</th>
+														<th>TOTAL</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="det : ${ord.details}">
+														<td th:text="${det.code}"></td>
+														<td th:text="${det.description}"></td>
+														<td><span
+															th:text="${#dates.format(det.shipDate, 'dd/MMM/yyyy')}"></span>
+														</td>
+														<td th:text="${det.quantity}"></td>
+														<td style="text-align: right"
+															th:text="${cmsUtil.formatNumber(det.price,prd_config.pricePattern)}">$589.50</td>
 
-							<td style="text-align: right"
-								th:text="${cmsUtil.formatNumber(ord.total,prd_config.pricePattern)}">$589.50</td>
+														<td style="text-align: right"
+															th:text="${cmsUtil.formatNumber(det.total,prd_config.pricePattern)}">$589.50</td>
 
-							<td style="text-align: right"
-								th:text="${cmsUtil.formatNumber(ord.paid,prd_config.pricePattern)}">$589.50</td>
+														<td th:text="${det.vatPercent}"></td>
+														<td style="text-align: right"
+															th:text="${cmsUtil.formatNumber(det.vat,prd_config.pricePattern)}">$589.50</td>
 
-							<td style="text-align: right"
-								th:text="${cmsUtil.formatNumber(ord.balance,prd_config.pricePattern)}">$589.50</td>
-							<td th:text="${ord.days}"></td>
-						</tr>
-					</tbody>
-					<tfoot>
-						<tr>
-							<th style="text-align: right" colspan="4">TOTALES</th>
-							<th style="text-align: right"
-								th:text="${cmsUtil.formatNumber(sumTotal,prd_config.pricePattern)}"></th>
-							<th style="text-align: right"
-								th:text="${cmsUtil.formatNumber(sumPaid,prd_config.pricePattern)}"></th>
-							<th style="text-align: right"
-								th:text="${cmsUtil.formatNumber(sumBalance,prd_config.pricePattern)}"></th>
-							<th></th>
-						</tr>
-					</tfoot>
 
-				</table>
+														<td style="text-align: right"
+															th:text="${cmsUtil.formatNumber(det.vat+det.total,prd_config.pricePattern)}">$589.50</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</td>
+								</tr>
+							</th:block>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th style="text-align: right" colspan="6">TOTALES</th>
+								<th style="text-align: right"
+									th:text="${cmsUtil.formatNumber(sumTotal,prd_config.pricePattern)}"></th>
+								<th style="text-align: right"
+									th:text="${cmsUtil.formatNumber(sumPaid,prd_config.pricePattern)}"></th>
+								<th style="text-align: right"
+									th:text="${cmsUtil.formatNumber(sumBalance,prd_config.pricePattern)}"></th>
+								<th></th>
+							</tr>
+						</tfoot>
 
+					</table>
+				</div>
 
 			</div>
 			<div class="alert alert-success" th:if="${#lists.isEmpty(orders)}">
 
 				<h2>
-					<strong><i class="fa fa-check"></i></strong> No tiene cuentas pendientes
+					<strong><i class="fa fa-check"></i></strong> No tiene cuentas
+					pendientes
 				</h2>
 			</div>
 		</div>

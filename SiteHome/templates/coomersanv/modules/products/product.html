@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
- layout:decorator="template">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
 
 <div class="maincontainer" layout:fragment="content">
 
 
 	<!-- Product Details tab & comments-->
-	<div class="container" th:if="${prd_hasTemplate}" th:utext="${prd_template}">
+	<div class="container" th:if="${prd_hasTemplate}"
+		th:utext="${prd_template}">
 		<!-- TEMPLATE CONTENT HERE -->
 	</div>
 
@@ -14,14 +17,16 @@
 		<!-- Main Title-->
 		<div class="titles animated fadeInUp time3">
 			<div class="pull-left">
-				<h1 th:text="${prd_product.name}" class="headinglefttitle">Page title
-				</h1>
+				<h1 th:text="${prd_product.name}" class="headinglefttitle">Page
+					title</h1>
 
 				<div th:text="${'Codigo: '+prd_product.sku}" class="headingsubtitle"></div>
-				<div th:text="${'Referencia: '+prd_product.reference}" class="headingsubtitle"></div>
+				<div th:text="${'Referencia: '+prd_product.reference}"
+					class="headingsubtitle"></div>
 				<div class="headingsubtitle">
-					<span>Marca o Fabricante</span> <a class="orange" th:if="${prd_product.brand}" th:text="${prd_product.brand.name}" th:href="@{'/store/brands/'+${prd_product.brand.alias}}"
-					/>
+					<span>Marca o Fabricante</span> <a class="orange"
+						th:if="${prd_product.brand}" th:text="${prd_product.brand.name}"
+						th:href="@{'/store/brands/'+${prd_product.brand.alias}}" />
 				</div>
 			</div>
 			<div class="pull-right mt10"></div>
@@ -33,30 +38,50 @@
 			<div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
 
 
-				<h4 class="orange" th:if="${prd_product.stock gt prd_config.minStock}">
+				<h4 class="orange"
+					th:if="${prd_product.stock gt prd_config.minStock}">
 					<i class="icon-check-sign"></i> En Inventario
 				</h4>
 
 
 				<ul class="thumbnails mainimage clearfix mt40">
-					<li><img th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="my-foto-container"
-						 src="img/product1big.jpg" th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}"
-						 title="Your Product Name" /></li>
+					<li><img
+						th:src="@{'/resources/products/images/'+${prd_product.image}}"
+						th:title="${prd_product.name}" class="my-foto-container"
+						src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image}}"
+						th:data-title="${prd_product.name}" title="Your Product Name" /></li>
 				</ul>
 
 				<ul class="thumbnails mainimage clearfix">
-					<li th:if="${prd_product.image!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img th:src="@{'/resources/products/images/'+${prd_product.image}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg"
-						 th:data-large="@{'/resources/products/images/'+${prd_product.image}}" th:data-title="${prd_product.name}" title="Your Product Name"
-						/></li>
-					<li th:if="${prd_product.image2!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img th:src="@{'/resources/products/images/'+${prd_product.image2}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg"
-						 th:data-large="@{'/resources/products/images/'+${prd_product.image2}}" th:data-title="${prd_product.name}" title="Your Product Name"
-						/></li>
-					<li th:if="${prd_product.image3!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img th:src="@{'/resources/products/images/'+${prd_product.image3}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg"
-						 th:data-large="@{'/resources/products/images/'+${prd_product.image3}}" th:data-title="${prd_product.name}" title="Your Product Name"
-						/></li>
-					<li th:if="${prd_product.image4!=null}" class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img th:src="@{'/resources/products/images/'+${prd_product.image4}}" th:title="${prd_product.name}" class="zoom" src="img/product1big.jpg"
-						 th:data-large="@{'/resources/products/images/'+${prd_product.image4}}" th:data-title="${prd_product.name}" title="Your Product Name"
-						/></li>
+					<li th:if="${prd_product.image!=null}"
+						class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img
+						th:src="@{'/resources/products/images/'+${prd_product.image}}"
+						th:title="${prd_product.name}" class="zoom"
+						src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image}}"
+						th:data-title="${prd_product.name}" title="Your Product Name" /></li>
+					<li th:if="${prd_product.image2!=null}"
+						class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img
+						th:src="@{'/resources/products/images/'+${prd_product.image2}}"
+						th:title="${prd_product.name}" class="zoom"
+						src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image2}}"
+						th:data-title="${prd_product.name}" title="Your Product Name" /></li>
+					<li th:if="${prd_product.image3!=null}"
+						class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img
+						th:src="@{'/resources/products/images/'+${prd_product.image3}}"
+						th:title="${prd_product.name}" class="zoom"
+						src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image3}}"
+						th:data-title="${prd_product.name}" title="Your Product Name" /></li>
+					<li th:if="${prd_product.image4!=null}"
+						class="producthtumb col-lg-3 col-md-3 col-xs-3 col-sm-3"><img
+						th:src="@{'/resources/products/images/'+${prd_product.image4}}"
+						th:title="${prd_product.name}" class="zoom"
+						src="img/product1big.jpg"
+						th:data-large="@{'/resources/products/images/'+${prd_product.image4}}"
+						th:data-title="${prd_product.name}" title="Your Product Name" /></li>
 				</ul>
 
 
@@ -72,14 +97,21 @@
 			<div class="col-lg-7 col-md-7 col-xs-12 col-sm-12 mt40column">
 
 				<div class="productprice" th:if="${@userHolder.authenticated}">
-					<div th:if="${prd_product.showLastPrice or prd_product.promoEnabled}" class="pull-right">
-						<span class="productpageoldprice" th:text="${cmsUtil.formatNumber(prd_product.realLastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
-						<span style="margin-left: 4px; background: #F1B500; color: white; padding: 6px 10px" th:if="${prd_product.promoEnabled}"
-						 th:text="${prd_product.promoValueFormatted}" th:title="${prd_product.promoName}"> </span>
+					<div
+						th:if="${prd_product.showLastPrice or prd_product.promoEnabled}"
+						class="pull-right">
+						<span class="productpageoldprice"
+							th:text="${cmsUtil.formatNumber(prd_product.realLastPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
+						<span
+							style="margin-left: 4px; background: #F1B500; color: white; padding: 6px 10px"
+							th:if="${prd_product.promoEnabled}"
+							th:text="${prd_product.promoValueFormatted}"
+							th:title="${prd_product.promoName}"> </span>
 					</div>
 					<th:block th:unless="${prd_product.hasStorePrice()}">
 						<div class="productpageprice">
-							<i class="icon-tags"></i> <span th:text="${cmsUtil.formatNumber(prdUtil.getUserPrice(prd_product,prd_config) ,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
+							<i class="icon-tags"></i> <span
+								th:text="${cmsUtil.formatNumber(prdUtil.getUserPrice(prd_product,prd_config) ,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
 						</div>
 
 					</th:block>
@@ -89,7 +121,8 @@
 							th:text="${cmsUtil.formatNumber(prd_product.storePrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
 						</strong>
 						<div class="productpageprice">
-							<i class="icon-tags" title="Precio Web"></i> <span th:text="${cmsUtil.formatNumber(prd_product.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
+							<i class="icon-tags" title="Precio Web"></i> <span
+								th:text="${cmsUtil.formatNumber(prd_product.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$230.00</span>
 
 						</div>
 					</th:block>
@@ -107,7 +140,8 @@
 				<div class="">
 					<span th:text="${prd_product.description}">description</span> <br />
 					<div class="mt10" style="text-align: right">
-						<span>Ultima Actualizacion</span> <strong class="text-primary" th:text="${#dates.format(prd_config.lastSync, 'dd MMMM yyyy   HH:mm aa')}"></strong>
+						<span>Ultima Actualizacion</span> <strong class="text-primary"
+							th:text="${#dates.format(prd_config.lastSync, 'dd MMMM yyyy   HH:mm aa')}"></strong>
 					</div>
 
 				</div>
@@ -118,36 +152,50 @@
 						<span class="maintext">Lleva gratis</span>
 					</h2>
 
-					<ul class="mt20 clearfix " th:each="group : ${cmsUtil.groupCollection(prd_gifts,6)}">
+					<ul class="mt20 clearfix "
+						th:each="group : ${cmsUtil.groupCollection(prd_gifts,6)}">
 
-						<li class="col-lg-2 col-md-2 col-sm-4 col-xs-4" th:each="prd : ${group.collection}">
-							<div th:include="products/components/productpanelcompact::frag(${prd})" />
+						<li class="col-lg-2 col-md-2 col-sm-4 col-xs-4"
+							th:each="prd : ${group.collection}">
+							<div
+								th:include="products/components/productpanelcompact::frag(${prd})" />
 						</li>
 					</ul>
 				</div>
 
-				<div class="pull-right mt10 " th:if="${prd_product.stock gt prd_config.minStock}">
-					<button class="btn btn-default btn-lg tooltip-tes" disabled="disabled" th:if="${prd_product.sellInStore and not prd_product.sellInWeb}">
+				<div class="pull-right mt10 "
+					th:if="${prd_product.stock gt prd_config.minStock}">
+					<button class="btn btn-default btn-lg tooltip-tes"
+						disabled="disabled"
+						th:if="${prd_product.sellInStore and not prd_product.sellInWeb}">
 						<i class="icon-home icon-white"></i> Disponible en Tiendas
 					</button>
 
-					<form class="pull-left form-inline" th:if="${prd_config.shopEnabled and prd_product.sellInWeb and @userHolder.authenticated}"
-					 th:action="@{'/shoppingcart/shop/add/'+${prd_product.id}}" method="get">
+					<form class="pull-left form-inline"
+						th:if="${prd_config.shopEnabled and prd_product.sellInWeb and @userHolder.authenticated}"
+						th:action="@{'/shoppingcart/shop/add/'+${prd_product.id}}"
+						method="get">
 						<div class="input-group input-group-lg">
 
 
-							<input type="text" name="qty" id="qty" class="form-control" th:value="1" style="width: 20px; text-align: center" />
+							<input type="number" name="qty" id="qty" class="form-control"
+								th:value="1" style="width: 20px; text-align: center" />
 
 							<button type="submit" class="btn btn-danger btn-lg">
 								<i class="fa fa-shopping-cart icon-white"></i> Agregar al Pedido
 
 							</button>
 						</div>
-						<input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}" />
+						<input type="hidden" name="currentURI" id="currentURI"
+							th:value="${currentURI}" />
 					</form>
 
-					<a th:if="${false and prd_config.quoteEnabled  and @userHolder.authenticated} " th:href="@{'/shoppingcart/quote/add/'+${prd_product.id}(currentURI='/')}"
-					 class="btn btn-primary  btn-lg tooltip-test" data-original-title="Cotizar"> <i class="fa fa-file-text icon-white"></i> Cotizar
+					<a
+						th:if="${false and prd_config.quoteEnabled  and @userHolder.authenticated} "
+						th:href="@{'/shoppingcart/quote/add/'+${prd_product.id}(currentURI='/')}"
+						class="btn btn-primary  btn-lg tooltip-test"
+						data-original-title="Cotizar"> <i
+						class="fa fa-file-text icon-white"></i> Cotizar
 					</a>
 				</div>
 
@@ -163,7 +211,9 @@
 
 							<ul class="productinfo">
 
-								<li th:if="${prd_product.brand}"><span th:text="${'Marca '}" class="productinfoleft">NAME</span> <span class="tooltip-test" title="Ver otros productos de esta marca">
+								<li th:if="${prd_product.brand}"><span
+									th:text="${'Marca '}" class="productinfoleft">NAME</span> <span
+									class="tooltip-test" title="Ver otros productos de esta marca">
 										<strong> <a class="orange"
 											th:text="${prd_product.brand.name}"
 											th:href="@{'/store/brands/'+${prd_product.brand.alias}}"
@@ -171,15 +221,26 @@
 									</strong>
 								</span></li>
 
+								<li><span class="productinfoleft">Unidad de Medida</span> <span>
+										<span th:text="${prd_product.unit}">VALUE</span> 
+								</span></li>
+								
+									<li><span class="productinfoleft">Impuesto</span> <span>
+										<span th:text="${prd_product.taxName}">VALUE</span> 
+								</span></li>
 
-								<li th:each="det : ${prd_product.details}"><span th:text="${det.name}" class="productinfoleft">NAME</span> <span>
-										<span th:text="${det.value}">VALUE</span> <span th:text="${det.description}">DESCRIPTION</span>
-									</span>
-								</li>
+								<li th:each="det : ${prd_product.details}"><span
+									th:text="${det.name}" class="productinfoleft">NAME</span> <span>
+										<span th:text="${det.value}">VALUE</span> <span
+										th:text="${det.description}">DESCRIPTION</span>
+								</span></li>
 
-								<li th:if="${@userHolder.authenticated and @userHolder.seller}"><span class="productinfoleft">Stock</span><span th:text="${prd_product.stock}">VALUE</span></li>
+								<li th:if="${@userHolder.authenticated and @userHolder.seller}"><span
+									class="productinfoleft">Stock</span><span
+									th:text="${prd_product.stock}">VALUE</span></li>
 
-								<li><span th:text="${'Visto '}" class="productinfoleft">NAME</span><span th:text="${prd_product.views+' veces'}">VALUE</span></li>
+								<li><span th:text="${'Visto '}" class="productinfoleft">NAME</span><span
+									th:text="${prd_product.views+' veces'}">VALUE</span></li>
 								<li th:if="${prd_product.externalLink!=null}"><span></span>
 									<span class="productinfoleft"><a class="orange"
 										target="_blank" th:href="@{${prd_product.externalLink}}">Mas
@@ -192,9 +253,9 @@
 
 							<ul class="tags" th:if="${prd_product.tags!=null}">
 								<li th:each="tag : ${#strings.setSplit(prd_product.tags,',')}">
-									<a>
-										<i class="icon-tag"></i><span th:text="${tag}">Tag HERE</span>
-									</a>
+									<a> <i class="icon-tag"></i><span th:text="${tag}">Tag
+											HERE</span>
+								</a>
 								</li>
 							</ul>
 						</div>
@@ -204,16 +265,20 @@
 
 				<!-- Buttons -->
 				<div class="mt20">
-					<a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}" class="btn btn-small btn-danger tooltip-test" data-original-title="Marca el producto como favorito">
-					<i class="icon-heart icon-white"></i> Favorito
-					</a>
-					<a th:href="@{'/store/products/'+${prd_product.id}+'/compare'}" class="btn btn-small btn-primary tooltip-test"
-					 data-original-title="Compara con otros productos"> <i class="icon-refresh icon-white"></i> Comparar
-					</a>
-					<a class="btn btn-small btn-primary tooltip-test" th:href="@{'/store/products/'+${prd_product.id}+'/print'}" target="_blank">
-					<i class="icon-print icon-white"></i> Imprimir
-					</a>
-					<a class="btn btn-small btn-primary tooltip-test" th:href="${'#shareProduct'+prd_product.id}" data-toggle="modal">
+					<a th:href="@{'/store/products/'+${prd_product.id}+'/favorite'}"
+						class="btn btn-small btn-danger tooltip-test"
+						data-original-title="Marca el producto como favorito"> <i
+						class="icon-heart icon-white"></i> Favorito
+					</a> <a th:href="@{'/store/products/'+${prd_product.id}+'/compare'}"
+						class="btn btn-small btn-primary tooltip-test"
+						data-original-title="Compara con otros productos"> <i
+						class="icon-refresh icon-white"></i> Comparar
+					</a> <a class="btn btn-small btn-primary tooltip-test"
+						th:href="@{'/store/products/'+${prd_product.id}+'/print'}"
+						target="_blank"> <i class="icon-print icon-white"></i>
+						Imprimir
+					</a> <a class="btn btn-small btn-primary tooltip-test"
+						th:href="${'#shareProduct'+prd_product.id}" data-toggle="modal">
 						<i class="icon-envelope icon-white"></i> Recomendar a un Amigo
 					</a>
 				</div>
@@ -228,32 +293,43 @@
 
 	<th:block th:include="products/components/sharedialog::content" />
 
-	<div class="container mt20" th:unless="${#lists.isEmpty(prd_stock_details)}">
+	<div class="container mt20"
+		th:unless="${#lists.isEmpty(prd_stock_details)}">
 		<h2 class="heading1" style="padding: 0; margin: 0">
 			<span class="maintext">Disponibilidad y Direcciones</span>
 		</h2>
 		<div class="container">
 
 			<ul class="nav nav-tabs" id="myTab">
-				<li th:each="detGrp : ${prd_stock_details}" th:class="${detGrp.description}"><a th:href="${'#'+detGrp.id}" th:text="${detGrp.name}">Name</a></li>
+				<li th:each="detGrp : ${prd_stock_details}"
+					th:class="${detGrp.description}"><a th:href="${'#'+detGrp.id}"
+					th:text="${detGrp.name}">Name</a></li>
 			</ul>
 			<div class="tab-content">
-				<div th:class="${'tab-pane '+detGrp.description}" th:each="detGrp : ${prd_stock_details}" th:id="${detGrp.id}">
-					<div class="row" th:each="det : ${detGrp.collection}" style="border-bottom: 1px solid #e0e0e0; padding-bottom: 6px">
+				<div th:class="${'tab-pane '+detGrp.description}"
+					th:each="detGrp : ${prd_stock_details}" th:id="${detGrp.id}">
+					<div class="row" th:each="det : ${detGrp.collection}"
+						style="border-bottom: 1px solid #e0e0e0; padding-bottom: 6px">
 						<div class="col-xs-4 col-md-4 orange">
-							<a data-toggle="modal" class="tooltip-test" title="Ver direccion" th:href="${'#store'+det.store.id}" th:text="${det.store.name.toUpperCase()}">NAME</a>
+							<a data-toggle="modal" class="tooltip-test" title="Ver direccion"
+								th:href="${'#store'+det.store.id}"
+								th:text="${det.store.name.toUpperCase()}">NAME</a>
 						</div>
 
 						<div class="col-xs-3 col-md-3">
-							<span th:text="${det.store.contactInfo.phoneNumber+'  '+det.store.contactInfo.mobileNumber}"></span>
-							<a data-toggle="modal" class="tooltip-test" th:href="${'#store'+det.store.id}" title="Ver direccion"> <i class="icon-plus-sign"></i>
+							<span
+								th:text="${det.store.contactInfo.phoneNumber+'  '+det.store.contactInfo.mobileNumber}"></span>
+							<a data-toggle="modal" class="tooltip-test"
+								th:href="${'#store'+det.store.id}" title="Ver direccion"> <i
+								class="icon-plus-sign"></i>
 							</a>
 						</div>
 
 						<div class="col-xs-5 col-md-5">
 							<span th:text="${det.store.contactInfo.address}"></span>
 						</div>
-						<th:block th:include="products/components/storedialog::content(${det.store})" />
+						<th:block
+							th:include="products/components/storedialog::content(${det.store})" />
 					</div>
 				</div>
 			</div>
@@ -263,11 +339,14 @@
 	</div>
 
 	<!-- Related Project-->
-	<div th:if="${prd_relatedProducts!=null and  not #lists.isEmpty(prd_relatedProducts)}" class="featureprojectcontianer container mt10">
+	<div
+		th:if="${prd_relatedProducts!=null and  not #lists.isEmpty(prd_relatedProducts)}"
+		class="featureprojectcontianer container mt10">
 		<h2 class="heading1">
 			<span class="maintext">Productos Relacionados</span>
 		</h2>
-		<th:block th:include="products/components/productcarousel::frag(${prd_relatedProducts},5)" />
+		<th:block
+			th:include="products/components/productcarousel::frag(${prd_relatedProducts},5)" />
 
 	</div>
 </div>

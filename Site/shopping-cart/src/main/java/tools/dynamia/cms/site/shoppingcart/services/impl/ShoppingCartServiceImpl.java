@@ -226,7 +226,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 				order.getTransaction().setPayerMobileNumber(order.getBillingAddress().getInfo().getMobileNumber());
 			}
 
-			crudService.create(order);
+			crudService.save(order);
 		} else {
 			crudService.update(order);
 		}

@@ -3,13 +3,6 @@ html, body {
 	background-color: #f5f5f5;
 }
 
-@media (min-width: 768px){
-
-	.main-nav{
-		height: 80px;
-	}
-}
-
 .totop {
 	position: fixed;
 	bottom: 10px;
@@ -26,6 +19,10 @@ html, body {
 	font-size: 25px;
 	background: #454545;
 	border-radius: 6px;
+}
+
+.navbar-brand img{
+	max-height: 35px;
 }
 
 .bg-android-green {
@@ -50,6 +47,10 @@ html, body {
 
 .bg-android-lighblue {
 	background-color: #3366cc;
+}
+
+.bg-dark-green{
+	background-color: #283c1e;
 }
 
 .scrolling-navbar {
@@ -388,4 +389,27 @@ ul.share-buttons .sr-only {
 .doc-title{
 	border-bottom: 1px solid silver;
 	padding-bottom: 10px;
+}
+
+.feature-box {
+    text-align: center;
+}
+
+.feature-box .features-big .fa {
+    font-size: 4rem;
+}
+
+.feature-box .features-big .feature-title {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.feature-box .feature-title {
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.feature-box .features-big .feature-title {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }

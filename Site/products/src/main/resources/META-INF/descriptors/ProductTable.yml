@@ -8,6 +8,7 @@ fields:
    name:
    brand:
    category:
+   unit:
    template:
    alternateTemplate:
    price:
@@ -35,6 +36,8 @@ fields:
           converter: converters.Integer
           header:
              align: right
+   
+
    stock:
       params:
          header:
@@ -43,6 +46,11 @@ fields:
       params:
          header:
             align: center
+   taxName:      
+   taxPercent:
+      params:          
+          header:
+             align: center
    active:
    featured:
    sale:

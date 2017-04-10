@@ -26,6 +26,8 @@ import tools.dynamia.cms.site.products.domain.RelatedProduct;
 import tools.dynamia.cms.site.products.services.ProductsService;
 import tools.dynamia.cms.site.shoppingcart.ShoppingCartItemProvider;
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
+import tools.dynamia.commons.BeanUtils;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -73,6 +75,8 @@ public class ProductsShoppingCartItemProvider implements ShoppingCartItemProvide
 
 	private ShoppingCartItem createItem(Product product, ProductsSiteConfig cfg) {
 		ShoppingCartItem item = new ShoppingCartItem();
+		BeanUtils.setupBean(item, product);
+		item.setId(null);
 		item.setCode(product.getId().toString());
 		item.setImageURL("/resources/products/images/");
 		item.setImageName(product.getImage());

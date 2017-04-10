@@ -336,3 +336,7 @@ header .topsearch{
 	padding-top: 10px;
 	font-weight: bolder;
 }
+
+td.hiddenRow:has(div.collapse){
+	display: none;
+}

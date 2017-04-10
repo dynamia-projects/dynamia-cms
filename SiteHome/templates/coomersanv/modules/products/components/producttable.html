@@ -5,41 +5,62 @@
 
 <body th:fragment="frag (productlist)">
 
-	<table class="table table-responsive">
+	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th>Foto</th>
+				<th th:if="false">Foto</th>
 				<th>Codigo</th>
 				<th>Nombre</th>
+				<th>Unidad</th>
+				<th>IVA</th>
 				<th>Stock</th>
 				<th align="right">Terceros</th>
 				<th align="right">Asociados</th>
-				<th></th>
+				<th width="150px"></th>
 			</tr>
 		</thead>
 
 
 		<tbody>
-			<tr th:each="prd : ${productlist}">
-				<td><img
+			<tr th:id="'prod'+${prd.id}" th:each="prd : ${productlist}">
+				<td th:if="false"><img
 					th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=60,h=60)}"
 					src="img/product1a.jpg" alt="" th:if="${prd.image!=null}" /> <img
 					th:src="@{/img/product1a.jpg}" alt="" th:if="${prd.image==null}"
 					width="60px" height="60px" /></td>
 
 				<td th:text="${prd.sku}"></td>
-				<td th:text="${prd.name}"></td>
+				<td><a th:href="@{'/store/products/'+${prd.id}}" class="orange"
+					th:text="${prd.name}"></a></td>
+				<td th:text="${prd.unit}"></td>
+				<td th:text="${prd.taxPercent}"></td>
 				<td align="center" th:text="${prd.stock}"></td>
 				<td align="right"><span
 					th:text="${cmsUtil.formatNumber(prd.price,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$4459.00</span></td>
 
 				<td align="right"><span
 					th:text="${cmsUtil.formatNumber(prd.price2,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$4459.00</span></td>
-				<td><a class="btn btn-success" href="#"><i class="fa fa-plus"></i></a>  </td>
+				<td>
+					<form class="form-inline"
+						th:if="${prd.stock gt prd_config.minStock and prd_config.shopEnabled and prd.sellInWeb}"
+						th:action="@{'/shoppingcart/shop/add/'+${prd.id}}" method="get">
+
+						<input type="number" name="qty" id="qty" th:value="1"
+							style="min-width: 70px; width: 70px" />
+						<button type="submit" data-original-title="Agregar al Carrito"
+							class="btn btn-primary tooltip-test">
+							<i class="fa fa-shopping-cart icon-white"></i>
+						</button>
+						<input type="hidden" name="currentURI" id="currentURI"
+							th:value="${currentURI+'#prod'+prd.id}" />
+					</form>
+
+				</td>
 			</tr>
 		</tbody>
 
 	</table>
+
 
 
 </body>

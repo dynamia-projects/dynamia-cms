@@ -38,6 +38,8 @@ import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.products.ProductsUtil;
 import tools.dynamia.cms.site.products.api.ValueType;
 import tools.dynamia.cms.site.products.dto.ProductDTO;
+import tools.dynamia.commons.BeanUtils;
+
 import java.math.MathContext;
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -141,6 +143,52 @@ public class Product extends SimpleEntity implements SiteAware {
 	@OneToOne
 	@JsonIgnore
 	private ProductTemplate alternateTemplate;
+
+	private String taxName;
+	private double taxPercent;
+	private boolean taxable;
+	private boolean taxIncluded;
+	private String unit;
+
+	public boolean isTaxIncluded() {
+		return taxIncluded;
+	}
+
+	public void setTaxIncluded(boolean taxIncluded) {
+		this.taxIncluded = taxIncluded;
+	}
+
+	public String getTaxName() {
+		return taxName;
+	}
+
+	public void setTaxName(String taxName) {
+		this.taxName = taxName;
+	}
+
+	public double getTaxPercent() {
+		return taxPercent;
+	}
+
+	public void setTaxPercent(double taxPercent) {
+		this.taxPercent = taxPercent;
+	}
+
+	public boolean isTaxable() {
+		return taxable;
+	}
+
+	public void setTaxable(boolean taxable) {
+		this.taxable = taxable;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
 
 	public String getVideoURL2() {
 		return videoURL2;
@@ -554,6 +602,8 @@ public class Product extends SimpleEntity implements SiteAware {
 	}
 
 	public void sync(ProductDTO dto) {
+		BeanUtils.setupBean(this, dto);
+
 		active = dto.isActive();
 		description = dto.getDescription();
 		externalRef = dto.getExternalRef();

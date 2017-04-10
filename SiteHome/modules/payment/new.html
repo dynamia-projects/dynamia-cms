@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
 
 
 <div class="container" layout:fragment="content">
@@ -16,61 +18,115 @@
 
 	<div class="row mt40">
 		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-			<form id="userForm" class="form-horizontal" action="#" th:action="@{/payment/manual/register}"
-				th:object="${payment}" method="post">
+			<form id="manualPaymentForm" class="form-horizontal" action="#"
+				role="form" data-toggle="validator"
+				th:action="@{/payment/manual/register}" th:object="${payment}"
+				method="post">
 
 
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Forma de Pago <span class="red">*</span></label>
+					<label class="col-lg-2 control-label">Forma de Pago <span
+						class="red">*</span></label>
 					<div class="col-lg-3">
-						<select th:field="*{type}" class="form-control">
-							<option th:each="op : ${paymentTypes}" th:value="${op.value}" th:text="${op.name}">TYPE</option>
+						<select id="forma" th:field="*{type}" class="form-control">
+							<option th:each="op : ${paymentTypes}" th:value="${op.value}"
+								th:text="${op.name}">TYPE</option>
 						</select>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Valor <span class="red">*</span></label>
+					<label class="col-lg-2 control-label">Valor <span
+						class="red">*</span></label>
 					<div class="col-lg-10">
-						<input type="number" class="form-control" th:field="*{amount}" />
+						<input id="valor" type="number" class="form-control" required
+							th:field="*{amount}" placeholder="Valor sin comas ni puntos" />
+						<div class="help-block with-errors"></div>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Referencia 1</label>
+					<label class="col-lg-2 control-label">Referencia 1 <span
+						class="red">*</span></label>
 					<div class="col-lg-10">
-						<input type="text" class="form-control" th:field="*{reference}" />
+						<input id="ref1" type="text" class="form-control" required
+							th:field="*{reference}"
+							placeholder="Numero de consignacion o cheque" />
+						<div class="help-block with-errors"></div>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label class="col-lg-2 control-label">Referencia 2</label>
+					<label class="col-lg-2 control-label">Referencia 2 <span
+						class="red">*</span></label>
 					<div class="col-lg-10">
-						<input type="text" class="form-control" th:field="*{reference2}" />
+						<input id="ref2" type="text" class="form-control" required
+							th:field="*{reference2}"
+							placeholder="nombre de banco o punto de pago" />
+						<div class="help-block with-errors"></div>
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="col-lg-2 control-label">Referencia 3</label>
 					<div class="col-lg-10">
-						<input type="text" class="form-control" th:field="*{reference3}" />
+						<input id="ref3" type="text" class="form-control"
+							th:field="*{reference3}" />
 					</div>
 				</div>
 
 				<div class="form-group">
 					<label class="col-lg-2 control-label">Observaciones </label>
 					<div class="col-lg-10">
-						<textarea class="form-control" th:field="*{description}" rows="4">
+						<textarea id="observaciones" class="form-control"
+							th:field="*{description}" rows="4"
+							placeholder="comentarios adicionales del pago recibido">
 						</textarea>
 					</div>
 				</div>
 
-				<input type="submit" class="btn btn-orange pull-right" value="Registrar Pago" />
+				<div class="well well-danger"><span class="red">*</span>  Verifique los campos obligatorios		</div>
+
+				<button data-toggle="modal" href="#confirm" type="submit" onclick="formatValor()"
+					class=" btn btn-success">
+					Registrar Pago <i class="fa fa-check"></i>
+				</button>
+
+				<div id="confirm" class="modal fade" tabindex="-1" role="dialog"
+					aria-hidden="true">
+					<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Confirmar Pago</h4>
+							</div>
+							<div class="modal-body">
+								<span> Esta seguro que desea registrar pago a <b
+									th:text="${@userHolder.customer.fullName}"></b> por <b class="orange" id="valorF">$000</b> ?
+								</span>
+							</div>
+							<div class="modal-footer">
+								<input type="submit" class="btn btn-orange"
+									value="Si, Continuar" />
+								<button type="button" class="btn btn-orange"
+									data-dismiss="modal">No</button>
+
+							</div>
+						</div>
+					</div>
+				</div>
 
 			</form>
 		</div>
 
 	</div>
+	
+	<script>
+		function formatValor(){
+			$("#valorF").text('$'+$("#valor").val().toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));	
+		}	
+	</script>
 
 </div>
 

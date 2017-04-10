@@ -29,6 +29,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import tools.dynamia.commons.BeanUtils;
+import tools.dynamia.commons.BigDecimalUtils;
 import tools.dynamia.domain.SimpleEntity;
 import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderItemDTO;
 
@@ -58,6 +60,7 @@ public class ShoppingCartItem extends SimpleEntity {
 	@NotNull
 	private BigDecimal totalPrice = BigDecimal.ZERO;
 	private BigDecimal shipmentPrice = BigDecimal.ZERO;
+	private BigDecimal subtotal = BigDecimal.ZERO;
 	private String imageURL;
 	private String imageName;
 	private String URL;
@@ -77,6 +80,60 @@ public class ShoppingCartItem extends SimpleEntity {
 	@Transient
 	@JsonIgnore
 	private ShoppingCartItem parent;
+
+	private String taxName;
+	private double taxPercent;
+	private boolean taxable;
+	private boolean taxIncluded;
+	private String unit;
+
+	public BigDecimal getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(BigDecimal subtotal) {
+		this.subtotal = subtotal;
+	}
+
+	public String getTaxName() {
+		return taxName;
+	}
+
+	public void setTaxName(String taxName) {
+		this.taxName = taxName;
+	}
+
+	public double getTaxPercent() {
+		return taxPercent;
+	}
+
+	public void setTaxPercent(double taxPercent) {
+		this.taxPercent = taxPercent;
+	}
+
+	public boolean isTaxable() {
+		return taxable;
+	}
+
+	public void setTaxable(boolean taxable) {
+		this.taxable = taxable;
+	}
+
+	public boolean isTaxIncluded() {
+		return taxIncluded;
+	}
+
+	public void setTaxIncluded(boolean taxIncluded) {
+		this.taxIncluded = taxIncluded;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
 
 	public List<ShoppingCartItem> getChildren() {
 		return children;
@@ -260,12 +317,33 @@ public class ShoppingCartItem extends SimpleEntity {
 
 	void compute() {
 		if (quantity > 0 && unitPrice != null && unitPrice.longValue() > 0) {
-			totalPrice = unitPrice.add(getDiscount()).multiply(new BigDecimal(quantity));
+			subtotal = unitPrice.add(getDiscount()).multiply(new BigDecimal(quantity));
 		}
+
+		if (taxable && taxPercent > 0) {
+			taxes = BigDecimalUtils.computePercent(unitPrice, taxPercent, taxIncluded)
+					.multiply(new BigDecimal(quantity));
+		}
+
+		if (shoppingCart.getShipmentPercent() > 0) {
+			shipmentPrice = BigDecimalUtils.computePercent(subtotal, shoppingCart.getShipmentPercent(), false);
+
+		}
+
+		if (shipmentPrice == null) {
+			shipmentPrice = BigDecimal.ZERO;
+		}
+
+		if (taxes == null) {
+			taxes = BigDecimal.ZERO;
+		}
+
+		totalPrice = subtotal.add(taxes).add(shipmentPrice);
 	}
 
 	public ShoppingCartItem clone() {
-		ShoppingCartItem clone = new ShoppingCartItem();
+		ShoppingCartItem clone = BeanUtils.clone(this, "id");
+		clone.setId(null);
 		clone.code = code;
 		clone.description = description;
 		clone.imageName = imageName;
@@ -285,6 +363,7 @@ public class ShoppingCartItem extends SimpleEntity {
 
 	public ShoppingOrderItemDTO toDTO() {
 		ShoppingOrderItemDTO dto = new ShoppingOrderItemDTO();
+		BeanUtils.setupBean(dto, this);		
 		dto.setCode(code);
 		dto.setDescription(description);
 		dto.setImageName(imageName);

@@ -4,9 +4,9 @@
 <!-- Main Menu -->
 
 <body th:fragment="module(instance)">
+	<ul class="navbar-nav mr-auto">
+		<th:block th:each="mi : ${instance.model.menuitems}">
 
-	<th:block th:each="mi : ${instance.model.menuitems}">
-		<ul class="navbar-nav mr-auto">
 			<li th:if="${not #lists.isEmpty(mi.subitems)}" class="nav-item dropdown btn-group">
 				<a href="#" th:href="@{${mi.href}}" class="nav-link dropdown-toggle btn-group" th:id="${'dropdownMenu'+mi.id}" data-toggle="dropdown"
 				 aria-haspopup="true" aria-expanded="false" th:title="${mi.title}" th:target="${mi.target}"> <i th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
@@ -26,8 +26,8 @@
 					<th:block th:text="${mi.name}" />
 				</a>
 			</li>
-		</ul>
-	</th:block>
+		</th:block>
+	</ul>
 
 </body>
 

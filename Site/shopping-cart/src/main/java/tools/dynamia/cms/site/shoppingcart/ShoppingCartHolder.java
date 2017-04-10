@@ -90,4 +90,9 @@ public class ShoppingCartHolder implements Serializable {
 		}
 	}
 
+	public void clearAll() {
+		currentOrder = null;
+		carts.clear();
+	}
+
 }

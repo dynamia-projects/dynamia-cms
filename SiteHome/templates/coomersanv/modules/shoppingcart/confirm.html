@@ -86,7 +86,7 @@
 
 				<div class="form-group">
 					<h3>Detalles del Pedido</h3>
-					<th th:include="shoppingcart/components/orderDetailsFull::content" />
+					<th th:include="shoppingcart/components/orderDetails::content" />
 				</div>
 
 				<th:block th:include="module::position('confirmOrderBottom1')"
@@ -94,7 +94,7 @@
 
 				<!-- Button -->
 				<div class="form-group" th:unless="${shoppingOrder.payLater}">
-					
+
 					<button data-toggle="modal" href="#payconfirm" type="button"
 						class="btn btn-danger btn-lg">Pagar en Linea</button>
 					<a id="cancelBtn" data-toggle="modal" href="#cancelconfirm"

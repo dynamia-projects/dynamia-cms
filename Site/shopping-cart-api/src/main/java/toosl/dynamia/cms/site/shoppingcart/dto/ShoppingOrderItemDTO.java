@@ -26,6 +26,51 @@ public class ShoppingOrderItemDTO implements Serializable {
 	private String refClass;
 	private BigDecimal discount;
 	private String discountName;
+	private String taxName;
+	private double taxPercent;
+	private boolean taxable;
+	private boolean taxIncluded;
+	private String unit;
+
+	public String getTaxName() {
+		return taxName;
+	}
+
+	public void setTaxName(String taxName) {
+		this.taxName = taxName;
+	}
+
+	public double getTaxPercent() {
+		return taxPercent;
+	}
+
+	public void setTaxPercent(double taxPercent) {
+		this.taxPercent = taxPercent;
+	}
+
+	public boolean isTaxable() {
+		return taxable;
+	}
+
+	public void setTaxable(boolean taxable) {
+		this.taxable = taxable;
+	}
+
+	public boolean isTaxIncluded() {
+		return taxIncluded;
+	}
+
+	public void setTaxIncluded(boolean taxIncluded) {
+		this.taxIncluded = taxIncluded;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
 
 	public String getCode() {
 		return code;

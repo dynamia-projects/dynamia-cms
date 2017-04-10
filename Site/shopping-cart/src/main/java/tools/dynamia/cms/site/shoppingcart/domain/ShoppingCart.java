@@ -269,13 +269,9 @@ public class ShoppingCart extends SimpleEntity implements SiteAware {
 			totalShipmentPrice = totalShipmentPrice.add(item.getShipmentPrice());
 			totalDiscount = totalDiscount.add(item.getDiscount());
 			totalUnit = totalUnit.add(item.getUnitPrice());
-			subtotal = subtotal.add(item.getTotalPrice());
+			subtotal = subtotal.add(item.getSubtotal());
 		}
 
-		if (shipmentPercent > 0) {
-			totalShipmentPrice = subtotal.multiply(new BigDecimal(shipmentPercent / 100));
-
-		}
 
 		computeTotalOnly();
 	}
