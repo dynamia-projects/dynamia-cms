@@ -37,6 +37,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import tools.dynamia.cms.site.core.DynamiaCMS;
+import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.products.api.ProductsDatasource;
 import tools.dynamia.cms.site.products.domain.Product;
 import tools.dynamia.cms.site.products.domain.ProductBrand;
@@ -48,6 +49,7 @@ import tools.dynamia.cms.site.products.domain.ProductStock;
 import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import tools.dynamia.cms.site.products.domain.RelatedProduct;
 import tools.dynamia.cms.site.products.domain.Store;
+import tools.dynamia.cms.site.products.domain.StoreContact;
 import tools.dynamia.cms.site.products.dto.ProductBrandDTO;
 import tools.dynamia.cms.site.products.dto.ProductCategoryDTO;
 import tools.dynamia.cms.site.products.dto.ProductCategoryDetailDTO;
@@ -56,6 +58,7 @@ import tools.dynamia.cms.site.products.dto.ProductDTO;
 import tools.dynamia.cms.site.products.dto.ProductDetailDTO;
 import tools.dynamia.cms.site.products.dto.ProductStockDTO;
 import tools.dynamia.cms.site.products.dto.RelatedProductDTO;
+import tools.dynamia.cms.site.products.dto.StoreContactDTO;
 import tools.dynamia.cms.site.products.dto.StoreDTO;
 import tools.dynamia.cms.site.products.services.ProductsSyncService;
 import tools.dynamia.commons.logger.LoggingService;
@@ -165,8 +168,12 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 		localProduct.sync(remoteProduct);
 
 		if (remoteProduct.getCategory() != null) {
-			localProduct.setCategory(
-					getLocalEntity(ProductCategory.class, remoteProduct.getCategory().getExternalRef(), siteCfg));
+			ProductCategory localCategory = getLocalEntity(ProductCategory.class,
+					remoteProduct.getCategory().getExternalRef(), siteCfg);
+
+			if (localCategory != null) {
+				localProduct.setCategory(localCategory);
+			}
 		}
 
 		if (remoteProduct.getBrand() != null) {
@@ -174,7 +181,11 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 					.setBrand(getLocalEntity(ProductBrand.class, remoteProduct.getBrand().getExternalRef(), siteCfg));
 		}
 
-		crudService.save(localProduct);
+		if (localProduct.getCategory() != null) {
+			crudService.save(localProduct);
+		} else {
+			logger.warn("Cannot save product " + localProduct.getName() + ". Category is null");
+		}
 
 	}
 
@@ -340,6 +351,21 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
 		crudService.save(localStore);
 
+		if (siteCfg.isSyncStoreContacts() && remoteStore.getContacts() != null) {
+			for (StoreContactDTO remoteContact : remoteStore.getContacts()) {
+				StoreContact localStoreContact = getLocalEntity(StoreContact.class, remoteContact.getExternalRef(),
+						siteCfg);
+				if (localStoreContact == null) {
+					localStoreContact = new StoreContact();
+					localStoreContact.setSite(siteCfg.getSite());
+					localStoreContact.setStore(localStore);
+				}
+				localStoreContact.sync(remoteContact);
+				crudService.save(localStoreContact);
+			}
+
+		}
+
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -385,6 +411,22 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 			logger.error("Error downloading image from product " + store.getName() + " for Site: "
 					+ siteCfg.getSite().getName(), ex);
 		}
+
+		try {
+			if (siteCfg.isSyncStoreContacts() && store.getContacts() != null) {
+
+				String folder = DynamiaCMS.getSitesResourceLocation(siteCfg.getSite())
+						.resolve(STORES_FOLDER + File.separator + "contacts").toString();
+
+				for (StoreContactDTO contact : store.getContacts()) {
+					logger.info("Downloading image for store contact " + contact.getName());
+					downloadImage(siteCfg.getDatasourceStoreContactImagesURL(), contact.getImage(), folder);
+				}
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	@Override
@@ -417,6 +459,11 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
 	private void downloadImage(String baseURL, final String imageName, final String localFolder) throws Exception {
 
+		if (baseURL == null || baseURL.isEmpty()) {
+			logger.info("-No base URL  to download images");
+			return;
+		}
+
 		if (imageName != null && !imageName.isEmpty()) {
 
 			String separator = "/";
@@ -432,7 +479,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 				Files.createDirectories(folder);
 			}
 
-			try (InputStream in = url.openStream()) {				
+			try (InputStream in = url.openStream()) {
 				Files.copy(in, localFile, StandardCopyOption.REPLACE_EXISTING);
 
 			} catch (IOException ex) {

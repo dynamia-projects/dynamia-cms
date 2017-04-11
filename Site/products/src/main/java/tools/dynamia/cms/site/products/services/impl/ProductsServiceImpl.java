@@ -159,6 +159,11 @@ public class ProductsServiceImpl implements ProductsService {
 
 	@Override
 	public List<Product> getProducts(ProductCategory category) {
+		return getProducts(category, "price", true);
+	}
+
+	@Override
+	public List<Product> getProducts(ProductCategory category, String orderfield, boolean asc) {
 		QueryParameters qp = QueryParameters.with("active", true).add("site", category.getSite());
 
 		if (category.getParent() == null) {
@@ -169,7 +174,7 @@ public class ProductsServiceImpl implements ProductsService {
 		}
 
 		qp.paginate(getDefaultPageSize(category.getSite()));
-		qp.orderBy("name, price", true);
+		qp.orderBy(orderfield, asc);
 
 		return crudService.find(Product.class, qp);
 	}

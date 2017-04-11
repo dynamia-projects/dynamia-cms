@@ -26,17 +26,16 @@ import org.zkoss.zul.Center;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.North;
-import org.zkoss.zul.South;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Vlayout;
-
-import tools.dynamia.cms.site.core.api.Module;
-import tools.dynamia.cms.site.core.domain.ModuleInstance;
-import tools.dynamia.cms.site.core.domain.ModuleInstanceParameter;
-import tools.dynamia.cms.site.core.services.impl.ModulesService;
 
 import tools.dynamia.actions.Action;
 import tools.dynamia.actions.ActionEvent;
 import tools.dynamia.actions.ActionEventBuilder;
+import tools.dynamia.cms.site.core.api.Module;
+import tools.dynamia.cms.site.core.domain.ModuleInstance;
+import tools.dynamia.cms.site.core.domain.ModuleInstanceParameter;
+import tools.dynamia.cms.site.core.services.impl.ModulesService;
 import tools.dynamia.commons.MapBuilder;
 import tools.dynamia.domain.query.Parameter;
 import tools.dynamia.integration.Containers;
@@ -45,7 +44,6 @@ import tools.dynamia.viewers.ViewDescriptor;
 import tools.dynamia.viewers.ViewDescriptorNotFoundException;
 import tools.dynamia.viewers.util.Viewers;
 import tools.dynamia.zk.actions.ActionToolbar;
-import tools.dynamia.zk.crud.cfg.ConfigView;
 import tools.dynamia.zk.crud.cfg.ConfigViewRender;
 import tools.dynamia.zk.crud.ui.EntityPickerBox;
 import tools.dynamia.zk.viewers.form.FormView;
@@ -115,6 +113,11 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 
 		if (configurationUI != null) {
 			layout.getCenter().appendChild(configurationUI);
+		}
+
+		if (formView != null && module != null) {
+			Textbox customView = (Textbox) formView.getFieldComponent("customView").getInputComponent();
+			customView.setPlaceholder(module.getTemplateViewName());
 		}
 	}
 

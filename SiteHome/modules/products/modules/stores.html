@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+
+<!--Categories-->
+<body th:fragment="module(instance)">
+
+	<h2>Sucursales</h2>
+
+	<ul class="nav nav-list submenu categories ">
+		<li th:each="store : ${instance.model.stores}"><a href="#"> <span
+				th:text="${store.contactInfo.city}"></span> <span
+				th:text="${store.name}"></span>
+		</a>
+
+			<ul>
+				<li th:each="strContact : ${store.contacts}"><img
+					th:src="@{'/resources/stores/contacts/'+${strContact.image}}"
+					class="img-circle" style="max-height: 50px"></img> <span
+					th:text="${strContact.name}+' '+${strContact.lastName}"></span> 
+					<!-- Fields					
+					name;
+					lastName;
+					image;
+					department;
+					jobTitle;
+					contactInfo.email;
+					contactInfo.address;
+					contactInfo.mobileNumber;
+					contactInfo.phoneNumber;
+					contactInfo.city;
+					contactInfo.country;
+					
+					 --></li>
+			</ul></li>
+
+
+	</ul>
+
+
+
+</body>
+
+</html>

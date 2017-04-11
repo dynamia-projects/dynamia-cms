@@ -54,6 +54,8 @@ public class ProductCategoryDetail extends SimpleEntity implements SiteAware, Or
 	private Long externalRef;
 	@Column(name = "detorder")
 	private int order;
+	private long stock;
+	private long totalRef;
 
 	@Transient
 	private List<String> currentValues;
@@ -69,6 +71,22 @@ public class ProductCategoryDetail extends SimpleEntity implements SiteAware, Or
 			currentValues = new ArrayList<String>();
 		}
 		return currentValues;
+	}
+
+	public long getStock() {
+		return stock;
+	}
+
+	public void setStock(long stock) {
+		this.stock = stock;
+	}
+
+	public long getTotalRef() {
+		return totalRef;
+	}
+
+	public void setTotalRef(long totalRef) {
+		this.totalRef = totalRef;
 	}
 
 	public boolean isFilterable() {

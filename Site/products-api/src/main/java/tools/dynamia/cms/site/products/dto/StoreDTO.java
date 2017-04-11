@@ -16,6 +16,8 @@
 package tools.dynamia.cms.site.products.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,44 +25,53 @@ import java.io.Serializable;
  */
 public class StoreDTO implements Serializable {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 936740099546344064L;
 	private String name;
-    private Long externalRef;
-    private String address;
-    private String mobileNumber;
-    private String phoneNumber;
-    private String city;
-    private String country;
-    private String email;
-    
-    private String image;
+	private Long externalRef;
+	private String address;
+	private String mobileNumber;
+	private String phoneNumber;
+	private String city;
+	private String country;
+	private String email;
+	private String image;
 
-    public String getImage() {
-        return image;
-    }
+	private List<StoreContactDTO> contacts = new ArrayList<>();
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+	public List<StoreContactDTO> getContacts() {
+		return contacts;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setContacts(List<StoreContactDTO> contacts) {
+		this.contacts = contacts;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getImage() {
+		return image;
+	}
 
-    public Long getExternalRef() {
-        return externalRef;
-    }
+	public void setImage(String image) {
+		this.image = image;
+	}
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
-    }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Long getExternalRef() {
+		return externalRef;
+	}
+
+	public void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef;
+	}
 
 	public String getAddress() {
 		return address;
@@ -109,7 +120,5 @@ public class StoreDTO implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-   
 
 }

@@ -18,6 +18,8 @@ package tools.dynamia.cms.site.products.actions;
 import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.SiteCache;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,8 @@ import tools.dynamia.domain.services.CrudService;
 class LoadProductCategoryAction implements SiteAction {
 
 	public static final String NAME = "loadProductCategory";
+	private static final List<String> ORDER_FIELDS = Collections
+			.unmodifiableList(Arrays.asList("name", "price", "brand.name", "views"));
 
 	@Autowired
 	private ProductsService service;
@@ -68,7 +72,7 @@ class LoadProductCategoryAction implements SiteAction {
 		if (mv == null) {
 			mv = evt.getModelAndView();
 			loadProductsFromCategory(evt, mv);
-			siteCache.put(evt.getSite(), evt.getRequest(), mv.getViewName(), mv);
+			siteCache.put(evt.getSite(), evt.getRequest(), mv.getViewName(), mv);		
 		} else {
 			evt.getModelAndView().addAllObjects(mv.getModelMap());
 		}
@@ -76,6 +80,13 @@ class LoadProductCategoryAction implements SiteAction {
 	}
 
 	private void loadProductsFromCategory(ActionEvent evt, ModelAndView mv) {
+		String orderfield = evt.getRequest().getParameter("order");
+		boolean asc = "1".equals(evt.getRequest().getParameter("asc"));
+
+		if (orderfield == null || !ORDER_FIELDS.contains(orderfield)) {
+			orderfield = "price";
+		}
+
 		ProductsSiteConfig config = service.getSiteConfig(evt.getSite());
 		ProductCategory category = null;
 		if (evt.getData() instanceof String) {
@@ -96,7 +107,7 @@ class LoadProductCategoryAction implements SiteAction {
 			qp.add("category", category);
 		}
 
-		qp.orderBy("price", true);
+		qp.orderBy(orderfield, asc);
 
 		if (config != null) {
 			qp.paginate(config.getProductsPerPage());
@@ -116,7 +127,7 @@ class LoadProductCategoryAction implements SiteAction {
 		} else if (evt.getRequest().getParameterMap().containsKey("views")) {
 			qp.orderBy("views", false);
 			products = crudService.find(Product.class, qp);
-		} else if (!evt.getRequest().getParameterMap().isEmpty()) {
+		} else if (evt.getRequest().getParameter("q") != null) {
 			ProductSearchForm form = new ProductSearchForm();
 			form.setCategoryId(category.getId());
 			form.setDetail(evt.getRequest().getParameter("q"));
@@ -131,8 +142,9 @@ class LoadProductCategoryAction implements SiteAction {
 				title = title + " " + form.getDetail().replaceAll("=", " ");
 			}
 			products = service.filterProducts(evt.getSite(), form);
+		
 		} else {
-			products = service.getProducts(category);
+			products = service.getProducts(category, orderfield, asc);
 		}
 		// List<Product> specialProducts = service.getSpecialProducts(category);
 		List<ProductCategory> subcategories = service.getSubcategories(category);
@@ -145,6 +157,8 @@ class LoadProductCategoryAction implements SiteAction {
 		mv.addObject("prd_subcategories", subcategories);
 		mv.addObject("prd_categoryBrands", categoryBrands);
 		mv.addObject("prd_parentCategory", category.getParent());
+		mv.addObject("orderfield", orderfield);
+		mv.addObject("asc", asc);
 		// mv.addObject("prd_specialProducts", specialProducts);
 
 		products = CMSUtil.setupPagination(products, evt.getRequest(), mv);

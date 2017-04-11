@@ -30,7 +30,8 @@ import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import tools.dynamia.cms.site.products.domain.RelatedProduct;
 import tools.dynamia.cms.site.products.domain.Store;
 import tools.dynamia.cms.site.users.domain.User;
-
+import tools.dynamia.domain.query.BooleanOp;
+import tools.dynamia.domain.query.QueryConditions;
 import tools.dynamia.domain.query.QueryParameters;
 
 /**
@@ -114,5 +115,7 @@ public interface ProductsService {
 	List<ProductCategoryDetail> getCategoryDetails(ProductCategory category);
 
     List<RelatedProduct> getRelatedProducts(Product product, boolean requires);
+
+	List<Product> getProducts(ProductCategory category, String orderfield, boolean asc);
 
 }

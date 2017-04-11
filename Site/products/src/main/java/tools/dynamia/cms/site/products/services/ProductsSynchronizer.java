@@ -109,14 +109,14 @@ public class ProductsSynchronizer {
 						service.downloadBrandImages(siteCfg, brandDTO);
 					}
 
-					for (ProductDTO productDTO : products) {
-						logger.info("Downloading Product Images for " + productDTO.getName());
-						service.downloadProductImages(siteCfg, productDTO);
-					}
-
 					for (StoreDTO storeDTO : stores) {
 						logger.info("Downloading Store Images for " + storeDTO.getName());
 						service.downloadStoreImages(siteCfg, storeDTO);
+					}
+
+					for (ProductDTO productDTO : products) {
+						logger.info("Downloading Product Images for " + productDTO.getName());
+						service.downloadProductImages(siteCfg, productDTO);
 					}
 					logger.info("Images downloading completed.");
 				}

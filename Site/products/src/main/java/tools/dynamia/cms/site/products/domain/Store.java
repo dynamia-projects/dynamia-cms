@@ -15,7 +15,12 @@
  */
 package tools.dynamia.cms.site.products.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -53,6 +58,17 @@ public class Store extends SimpleEntity implements SiteAware {
 
 	@OneToOne
 	private Page page;
+
+	@OneToMany(mappedBy = "store", orphanRemoval = true, cascade = CascadeType.ALL)
+	private List<StoreContact> contacts = new ArrayList<>();
+
+	public List<StoreContact> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<StoreContact> contacts) {
+		this.contacts = contacts;
+	}
 
 	public String getImage() {
 		return image;

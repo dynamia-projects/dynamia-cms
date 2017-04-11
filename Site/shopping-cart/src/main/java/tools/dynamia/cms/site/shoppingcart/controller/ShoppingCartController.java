@@ -30,6 +30,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.SiteContext;
 import tools.dynamia.cms.site.core.actions.SiteActionManager;
+import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
+import tools.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
 
 /**
  *
@@ -74,8 +76,6 @@ public class ShoppingCartController {
 
 		return mv;
 	}
-
-	
 
 	@RequestMapping(value = "/{name}/remove/{itemCode}", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView remove(@PathVariable String name, @PathVariable String itemCode, HttpServletRequest request,
@@ -126,6 +126,17 @@ public class ShoppingCartController {
 		mv.addObject("cartName", name);
 		SiteActionManager.performAction("checkoutShoppingCart", mv, request, redirectAttributes);
 
+		return mv;
+	}
+
+	@PreAuthorize("hasRole('USER')")
+	@RequestMapping(value = "/{name}/checkout/{item}", method = { RequestMethod.GET })
+	public ModelAndView checkoutItem(@PathVariable String name, @PathVariable String item, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
+
+		ShoppingCartHolder.get().clearAll();
+		ModelAndView mv = add(name, item, request, redirectAttributes);
+		mv = checkout(name, request, redirectAttributes);
 		return mv;
 	}
 
@@ -219,7 +230,7 @@ public class ShoppingCartController {
 
 		return mv;
 	}
-	
+
 	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(value = "/manual/payments/{customer}", method = { RequestMethod.GET })
 	public ModelAndView manualPayments(@PathVariable String customer, HttpServletRequest request,
@@ -230,14 +241,14 @@ public class ShoppingCartController {
 
 		return mv;
 	}
-	
+
 	private String safeRedirect(String redirect) {
-		if(redirect==null){
+		if (redirect == null) {
 			redirect = SiteContext.get().getPreviousURI();
 		}
-		
-		if(redirect==null){
-			redirect="/";
+
+		if (redirect == null) {
+			redirect = "/";
 		}
 		return redirect;
 	}

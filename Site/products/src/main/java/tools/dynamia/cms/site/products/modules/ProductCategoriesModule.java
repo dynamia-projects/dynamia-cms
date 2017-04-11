@@ -43,6 +43,16 @@ public class ProductCategoriesModule extends AbstractModule {
 			}
 		}
 
+		try {
+			long parentCategoryId = Long.parseLong(context.getParameterValue("parentCategory", "0"));
+			if (parentCategoryId > 0) {
+				ProductCategory parentCategory = crudService.find(ProductCategory.class, parentCategoryId);
+				categories = service.getSubcategories(parentCategory);
+			}
+		} catch (Exception e) {			
+			e.printStackTrace();
+		}
+
 		if (categories == null || categories.isEmpty()) {
 			categories = service.getCategories(context.getSite());
 		}

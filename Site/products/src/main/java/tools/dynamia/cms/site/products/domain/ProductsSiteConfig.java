@@ -54,8 +54,8 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 	@JoinColumn(unique = true)
 	private Site site;
 
-	private String pricePattern="";
-	private String defaultCurrency="";
+	private String pricePattern = "";
+	private String defaultCurrency = "";
 
 	@JsonIgnore
 	private String datasourceURL;
@@ -69,6 +69,8 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 	private String datasourceBrandImagesURL;
 	@JsonIgnore
 	private String datasourceStoreImagesURL;
+	@JsonIgnore
+	private String datasourceStoreContactImagesURL;
 	@JsonIgnore
 	private String token;
 
@@ -110,6 +112,8 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 	private boolean syncProductImages;
 	@JsonIgnore
 	private boolean syncProductCreditPrices;
+	@JsonIgnore
+	private boolean syncStoreContacts;
 
 	@Column(length = 4000)
 	@JsonIgnore
@@ -120,6 +124,22 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 	@JsonIgnore
 	@Column(length = 4000)
 	private String costUserGroup;
+
+	public String getDatasourceStoreContactImagesURL() {
+		return datasourceStoreContactImagesURL;
+	}
+
+	public void setDatasourceStoreContactImagesURL(String datasourceStoreContactImagesURL) {
+		this.datasourceStoreContactImagesURL = datasourceStoreContactImagesURL;
+	}
+
+	public boolean isSyncStoreContacts() {
+		return syncStoreContacts;
+	}
+
+	public void setSyncStoreContacts(boolean syncStoreContacts) {
+		this.syncStoreContacts = syncStoreContacts;
+	}
 
 	public String getPriceUserGroup() {
 		return priceUserGroup;

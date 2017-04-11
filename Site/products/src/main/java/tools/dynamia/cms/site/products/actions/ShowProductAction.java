@@ -35,6 +35,7 @@ import tools.dynamia.cms.site.products.domain.ProductStock;
 import tools.dynamia.cms.site.products.domain.ProductUserStory;
 import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import tools.dynamia.cms.site.products.domain.RelatedProduct;
+import tools.dynamia.cms.site.products.domain.Store;
 import tools.dynamia.cms.site.products.services.ProductTemplateService;
 import tools.dynamia.cms.site.products.services.ProductsService;
 import tools.dynamia.cms.site.users.UserHolder;
@@ -168,7 +169,9 @@ public class ShowProductAction implements SiteAction {
 	private void loadStockDetails(Product product, ModelAndView mv) {
 		QueryParameters sdparams = QueryParameters.with("product", product)
 				.orderBy("store.contactInfo.city asc, store.name", true);
-		List<ProductStock> stockDetails = crudService.find(ProductStock.class, sdparams);
+		List<ProductStock> stockDetails = crudService.find(ProductStock.class, sdparams);	
+		
+		
 		Collection<CollectionWrapper> stockDetailsGroups = CollectionsUtils.groupBy(stockDetails, ProductStock.class,
 				"store.contactInfo.city");
 		CollectionWrapper firtGroup = CollectionsUtils.findFirst(stockDetailsGroups);

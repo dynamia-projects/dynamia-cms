@@ -1,7 +1,7 @@
 view: form
 beanClass: tools.dynamia.cms.site.products.domain.ProductsSiteConfig
 hidden: [id,lastSync,token,parametersAsMap]
-sortFields: [pricePattern,defaultCurrency,productsPerPage,productsStockToShow,synchronizationEnabled,showEnabled,quoteEnabled,showBadges, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceUsername,datasourcePassword,mailAccount,shareProductMailTemplate,orderCompletedMailTemplate]
+sortFields: [pricePattern,defaultCurrency,productsPerPage,productsStockToShow,synchronizationEnabled,showEnabled,quoteEnabled,showBadges, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceStoreContactImagesURL,datasourceUsername,datasourcePassword,mailAccount,shareProductMailTemplate,orderCompletedMailTemplate]
 
 fields:            
     
@@ -16,6 +16,9 @@ fields:
     
     datasourceStoreImagesURL:
         label: Stores Images URL
+        
+    datasourceStoreContactImagesURL:
+        label: Stores Contacts Images URL
     
     datasourceUsername:
         label: Username
@@ -57,10 +60,10 @@ groups:
     
     datasource:
         label: Datasource Settings
-        fields: [datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceUsername,datasourcePassword]
+        fields: [datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceStoreContactImagesURL,datasourceUsername,datasourcePassword]
     
     synchronization:
-        fields: [synchronizationEnabled, syncProductImages,syncProductDetails, syncStockDetails, syncProductCreditPrices]
+        fields: [synchronizationEnabled, syncProductImages,syncProductDetails, syncStockDetails, syncProductCreditPrices, syncStoreContacts]
     
     email:
         label: Mail Settings
