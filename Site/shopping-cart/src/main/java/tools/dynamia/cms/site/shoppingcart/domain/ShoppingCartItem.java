@@ -42,6 +42,10 @@ import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderItemDTO;
 @Table(name = "sc_shopping_carts_items")
 public class ShoppingCartItem extends SimpleEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -883947947386952432L;
 	@ManyToOne
 	@NotNull
 	@JsonIgnore
@@ -64,7 +68,8 @@ public class ShoppingCartItem extends SimpleEntity {
 	private String imageURL;
 	private String imageName;
 	private String URL;
-
+	private String brandName;
+	private String categoryName;
 	private String reference;
 	private String sku;
 	private Long refId;
@@ -86,6 +91,22 @@ public class ShoppingCartItem extends SimpleEntity {
 	private boolean taxable;
 	private boolean taxIncluded;
 	private String unit;
+
+	public String getBrandName() {
+		return brandName;
+	}
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 
 	public BigDecimal getSubtotal() {
 		return subtotal;
@@ -316,7 +337,7 @@ public class ShoppingCartItem extends SimpleEntity {
 	}
 
 	void compute() {
-		if (quantity > 0 && unitPrice != null && unitPrice.longValue() > 0) {
+		if (quantity > 0 && unitPrice != null && unitPrice.doubleValue() > 0) {
 			subtotal = unitPrice.add(getDiscount()).multiply(new BigDecimal(quantity));
 		}
 
@@ -363,7 +384,7 @@ public class ShoppingCartItem extends SimpleEntity {
 
 	public ShoppingOrderItemDTO toDTO() {
 		ShoppingOrderItemDTO dto = new ShoppingOrderItemDTO();
-		BeanUtils.setupBean(dto, this);		
+		BeanUtils.setupBean(dto, this);
 		dto.setCode(code);
 		dto.setDescription(description);
 		dto.setImageName(imageName);

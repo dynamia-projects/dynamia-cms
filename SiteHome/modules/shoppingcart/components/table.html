@@ -1,75 +1,76 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="template">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
 
-    <body th:fragment="content">
+<body th:fragment="content">
 
-        <!-- Cart-->
-        <div class="cart-info">
-            <table class="table table-striped table-bordered">
-                <tr>
-                    <th class="image">No.</th>
-                    <th class="image">Imagen</th>
-                    <th class="name">Nombre</th>
-                    <th class="quantity">Cantidad</th>
-                    <th class="total">Accion</th>
-                    <th class="price" >Precio Unit.</th>
-                    <th class="price">Descuento Unit.</th>
-                    <th class="total">Total</th>
-                </tr>
-                <tr th:each="item,row : ${cart.items}">
-                    <td class="name"><span th:text="${row.index+1}"></span></td>
-                    <td style="width: 50px">
-                        <a th:href="@{${item.URL}}">
-                            <img th:src="@{${item.imageURL}+'thumbnails/'+${item.imageName}(w=90,h=90)}"
-                                 alt="product"></img>
-                        </a>
-                    </td>
-                    <td class="name">                        
-                        <a class="orange" th:href="@{${item.URL}}"
-                           th:text="${item.name}">MacBook</a><br /> <span
-                           th:text="${item.description}"></span>
-                    </td>
-                    <td class="quantity" style="width: 50px; text-align: center">
-                        <form class="form-inline" th:id="${'form'+item.code}" th:if="${item.editable}"
-                              th:action="@{'/shoppingcart/'+${cart.name}+'/update/'+${item.code}}"
-                              method="get">
-                            <input title="presione ENTER para actualizar" name="quantity" style="text-align: center" 
-                                   type="text" size="1" value="1" th:value="${item.quantity}">
-                            </input>
-                        </form>
-                        <span th:text="${item.quantity}" th:unless="${item.editable}"></span>
-                    </td>
+	<!-- Cart-->
+	<div class="cart-info">
+		<table class="table table-striped table-bordered">
+			<tr>
+				<th class="image">No.</th>
+				<th class="image">Imagen</th>
+				<th class="name">Nombre</th>
+				<th class="quantity">Cantidad</th>
+				<th class="total">Accion</th>
+				<th class="price">Precio Unit.</th>
+				<th class="price">Descuento Unit.</th>
+				<th class="total">Total</th>
+			</tr>
+			<tr th:each="item,row : ${cart.items}">
+				<td class="name"><span th:text="${row.index+1}"></span></td>
+				<td style="width: 50px"><a th:href="@{${item.URL}}"> <img
+						th:src="@{${item.imageURL}+'thumbnails/'+${item.imageName}(w=90,h=90)}"
+						alt="product"></img>
+				</a></td>
+				<td class="name">
+					<div>
+						<span th:text="${item.brandName}"></span> <span
+							th:text="${item.reference}"></span>
+					</div> <a class="orange" th:href="@{${item.URL}}" th:text="${item.name}">MacBook</a><br />
+					<span th:text="${item.description}"></span>
+				</td>
+				<td class="quantity" style="width: 50px; text-align: center">
+					<form class="form-inline" th:id="${'form'+item.code}"
+						th:if="${item.editable}"
+						th:action="@{'/shoppingcart/'+${cart.name}+'/update/'+${item.code}}"
+						method="get">
+						<input title="presione ENTER para actualizar" name="quantity"
+							style="text-align: center" type="text" size="1" value="1"
+							th:value="${item.quantity}"> </input>
+					</form> <span th:text="${item.quantity}" th:unless="${item.editable}"></span>
+				</td>
 
-                    <td class="total" style="width: 40px"><a class="tooltip-test "
-                                                             title="Borrar" th:if="${item.editable}"
-                                                             th:href="@{'/shoppingcart/'+${cart.name}+'/remove/'+${item.code}(currentURI=${currentURI})}"><i
-                                class="font24 icon-remove-circle"></i></a></td>
-                    <td class="price" style="text-align: right"
-                        th:text="${cmsUtil.formatNumber(item.unitPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$120.68</td>
-                    <td class="price" style="text-align: right" th:title="${item.discountName}"
-                        th:text="${cmsUtil.formatNumber(item.discount,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$120.68</td>
-                    <td class="total" style="text-align: right"
-                        th:text="${cmsUtil.formatNumber(item.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+				<td class="total" style="width: 40px"><a class="tooltip-test "
+					title="Borrar" th:if="${item.editable}"
+					th:href="@{'/shoppingcart/'+${cart.name}+'/remove/'+${item.code}(currentURI=${currentURI})}"><i
+						class="font24 icon-remove-circle"></i></a></td>
+				<td class="price" style="text-align: right"
+					th:text="${cmsUtil.formatNumber(item.unitPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$120.68</td>
+				<td class="price" style="text-align: right"
+					th:title="${item.discountName}"
+					th:text="${cmsUtil.formatNumber(item.discount,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$120.68</td>
+				<td class="total" style="text-align: right"
+					th:text="${cmsUtil.formatNumber(item.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
 
-                </tr>
-                <tr>
-                    <td style="text-align: right" colspan="3"><b>Totales</b></td>
-                    <td style="text-align: center" th:text="${cart.quantity}"></td>           
-                    <td style="text-align: center"></td>  
-                    <td style="text-align: right"
-                        th:text="${cmsUtil.formatNumber(cart.totalUnit,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>                    
-                    <td style="text-align: right"
-                        th:text="${cmsUtil.formatNumber(cart.totalDiscount,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>                    
-                    <td style="text-align: right"
-                        th:text="${cmsUtil.formatNumber(cart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+			</tr>
+			<tr>
+				<td style="text-align: right" colspan="3"><b>Totales</b></td>
+				<td style="text-align: center" th:text="${cart.quantity}"></td>
+				<td style="text-align: center"></td>
+				<td style="text-align: right"
+					th:text="${cmsUtil.formatNumber(cart.totalUnit,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+				<td style="text-align: right"
+					th:text="${cmsUtil.formatNumber(cart.totalDiscount,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+				<td style="text-align: right"
+					th:text="${cmsUtil.formatNumber(cart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
 
-                </tr>
-            </table>
+			</tr>
+		</table>
 
-        </div>
+	</div>
 
-    </body>
+</body>
 </html>

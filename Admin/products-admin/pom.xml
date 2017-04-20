@@ -58,5 +58,10 @@ limitations under the License.
 			<artifactId>tools.dynamia.cms.site.products</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>tools.dynamia.cms.admin.importer</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 </project>

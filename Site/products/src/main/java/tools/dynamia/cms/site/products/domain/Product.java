@@ -678,4 +678,20 @@ public class Product extends SimpleEntity implements SiteAware {
 		return realValue;
 	}
 
+	public ProductCategory getParentCategory() {
+		if (category != null && category.getParent() != null) {
+			return category.getParent();
+		} else {
+			return category;
+		}
+	}
+
+	public ProductCategory getSubcategory() {
+		if (category != null && category.getParent() != null) {
+			return category;
+		} else {
+			return null;
+		}
+	}
+
 }

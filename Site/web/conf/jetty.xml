@@ -31,7 +31,7 @@
 		<Arg>jdbc/DataSource</Arg>
 		<Arg>
 			<New class="org.mariadb.jdbc.MariaDbDataSource">
-				<Set name="url">jdbc:mariadb://localhost:3306/compulagoweb</Set>
+				<Set name="url">jdbc:mariadb://localhost:3306/dynamiacms</Set>
 				<Set name="user">root</Set>
 				<Set name="password">123</Set>		
 			</New>

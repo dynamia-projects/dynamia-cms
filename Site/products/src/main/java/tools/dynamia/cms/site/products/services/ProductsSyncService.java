@@ -15,6 +15,13 @@
  */
 package tools.dynamia.cms.site.products.services;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import tools.dynamia.cms.site.products.api.ProductsDatasource;
@@ -72,5 +79,7 @@ public interface ProductsSyncService {
     List<RelatedProductDTO> synchronizeRelatedProducts(ProductsSiteConfig siteCfg);
 
     public void disableRelatedProductsNoInList(ProductsSiteConfig siteCfg, List<RelatedProductDTO> relatedProducts);
+
+	void downloadImage(String baseURL, final String imageName, final String localFolder) throws Exception;
 
 }

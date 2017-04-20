@@ -413,3 +413,10 @@ ul.share-buttons .sr-only {
     margin-top: 2rem;
     margin-bottom: 1rem;
 }
+
+/*Quicklink*/
+#quicklink { background: #444444; color: #969ba4 }
+.quicklinks { text-align: center }
+.quicklinks li { display: inline-block; padding: 3px 10px; margin: 12px 0 }
+.quicklinks li + li { border-left: 1px solid #555555 }
+.quicklinks li a:hover { color: #fff }

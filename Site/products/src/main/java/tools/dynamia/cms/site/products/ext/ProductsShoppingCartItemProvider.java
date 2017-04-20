@@ -88,10 +88,17 @@ public class ProductsShoppingCartItemProvider implements ShoppingCartItemProvide
 		item.setRefId(product.getId());
 		item.setRefClass(Product.class.getName());
 		item.setDescription(product.getDescription());
+		if (product.getCategory() != null) {
+			item.setCategoryName(product.getCategory().getName());
+		}
+		if (product.getBrand() != null) {
+			item.setBrandName(product.getBrand().getName());
+		}
 		if (product.isPromoEnabled() && product.getPromoValue() != null) {
 			item.setDiscount(product.getRealPromoValue());
 			item.setDiscountName(product.getPromoName());
 		}
+
 		return item;
 	}
 

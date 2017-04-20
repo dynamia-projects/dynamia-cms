@@ -457,7 +457,8 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 		}
 	}
 
-	private void downloadImage(String baseURL, final String imageName, final String localFolder) throws Exception {
+	@Override
+	public void downloadImage(String baseURL, final String imageName, final String localFolder) throws Exception {
 
 		if (baseURL == null || baseURL.isEmpty()) {
 			logger.info("-No base URL  to download images");

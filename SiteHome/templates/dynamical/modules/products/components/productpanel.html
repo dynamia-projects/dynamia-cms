@@ -6,6 +6,7 @@
 
 
     <div class="card card-block store product">
+    	<div><span th:text="${prd.brand}"></span> <span th:text="${prd.reference}"></span></div>
         <div class="image">
             <a th:href="@{'/store/products/'+${prd.id}}">
                 <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=200,h=200)}" th:alt="${prd.name}" th:if="${prd.image!=null}"
