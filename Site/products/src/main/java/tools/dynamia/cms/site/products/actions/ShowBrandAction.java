@@ -15,6 +15,8 @@
  */
 package tools.dynamia.cms.site.products.actions;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,6 +75,11 @@ public class ShowBrandAction implements SiteAction {
 			} else {
 				mv.addObject("title", brand.getName());
 				mv.addObject("prd_categories", service.getCategories(brand));
+			}
+
+			if (category != null) {
+				List<ProductBrand> categoryBrands = service.getBrands(category);
+				mv.addObject("prd_categoryBrands", categoryBrands);
 			}
 
 		}

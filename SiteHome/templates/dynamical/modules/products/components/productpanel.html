@@ -6,12 +6,18 @@
 
 
     <div class="card card-block store product">
-    	<div><span th:text="${prd.brand}"></span> <span th:text="${prd.reference}"></span></div>
+        <div><small th:text="${prd.reference}"></small> 
+                <img class="noshadow" style="display: inline;float: right;" th:src="@{'/resources/products/brands/thumbnails/'+${prd.brand.image}(w=60,h=60)}" 
+                    th:alt="${prd.brand}" th:if="${prd.brand!=null}" />
+        </div>
+        
         <div class="image">
             <a th:href="@{'/store/products/'+${prd.id}}">
                 <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=200,h=200)}" th:alt="${prd.name}" th:if="${prd.image!=null}"
                     class="img-fluid center-block" />
-                <div th:if="${prd.image==null}" style="width: 160px; height: 160px; background-color: silver" />
+                <img src="/resources/products/images/thumbnails/no_image.png?w=200&h=200" th:if="${prd.image==null}" class="img-fluid center-block"
+                />
+
             </a>
         </div>
 
