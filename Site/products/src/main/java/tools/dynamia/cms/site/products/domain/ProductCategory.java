@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.site.products.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 

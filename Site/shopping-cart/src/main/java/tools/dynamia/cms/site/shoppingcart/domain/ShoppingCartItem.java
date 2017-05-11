@@ -348,7 +348,8 @@ public class ShoppingCartItem extends SimpleEntity {
 
 		if (shoppingCart.getShipmentPercent() > 0) {
 			shipmentPrice = BigDecimalUtils.computePercent(subtotal, shoppingCart.getShipmentPercent(), false);
-
+		} else {
+			shipmentPrice = BigDecimal.ZERO;
 		}
 
 		if (shipmentPrice == null) {
