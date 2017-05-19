@@ -84,14 +84,15 @@
 		<module>mail</module>
 		<module>products-api</module>
 		<module>products</module>
-		<module>shopping-cart</module>
-		<module>payment</module>
-		<module>payment-payulatam</module>
+		<module>shopping-cart</module>		
 		<module>banners</module>
 		<module>contacts</module>
 		<module>users-api</module>
 		<module>shopping-cart-api</module>
 		<module>payment-api</module>
+		<module>payment</module>
+		<module>payment-payulatam</module>
+		<module>payment-paypal</module>
 	</modules>
 
 </project>
