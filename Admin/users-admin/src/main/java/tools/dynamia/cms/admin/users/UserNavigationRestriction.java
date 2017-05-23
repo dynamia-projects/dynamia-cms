@@ -21,8 +21,13 @@ public class UserNavigationRestriction implements NavigationRestriction {
 		AdminModuleOption option = (AdminModuleOption) element.getAttribute("OPTION");
 		if (option != null) {
 			User user = UserHolder.get().getCurrent();
-			return (option.isEditorAllowed() && (user.getProfile() == UserProfile.EDITOR || user.getProfile() == UserProfile.ADMIN))
-					|| (option.isAdminAllowed() && user.getProfile() == UserProfile.ADMIN);
+			if (user != null) {
+				return (option.isEditorAllowed()
+						&& (user.getProfile() == UserProfile.EDITOR || user.getProfile() == UserProfile.ADMIN))
+						|| (option.isAdminAllowed() && user.getProfile() == UserProfile.ADMIN);
+			}else{
+				return null;
+			}
 		} else {
 			return null;
 		}

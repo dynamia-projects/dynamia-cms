@@ -27,7 +27,7 @@ limitations under the License.
     
     <!-- JNDI Datasource factory -->
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="jdbc/DataSource" />
+        <property name="jndiName" value="jdbc/dynamiacms" />
     </bean>
 
 

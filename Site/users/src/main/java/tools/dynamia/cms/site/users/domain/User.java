@@ -104,8 +104,39 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 	private BigDecimal currentPaymentCredit;
 	private String code;
 
+	@Column(length = 1000)
+	private String auxField1;
+	@Column(length = 1000)
+	private String auxField2;
+	@Column(length = 1000)
+	private String auxField3;
+	@Column(length = 1000)
+	private String auxField4;
+	@Column(length = 1000)
+	private String auxField5;
+	@Column(length = 1000)
+	private String auxField6;
+	@Column(length = 1000)
+	private String auxField7;
+	@Column(length = 1000)
+	private String auxField8;
+	@Column(length = 1000)
+	private String auxField9;
+	@Column(length = 1000)
+	private String auxField10;
+	@Column(length = 1000)
+	private String auxField11;
+	@Column(length = 1000)
+	private String auxField12;
+	@Column(length = 1000)
+	private String auxField13;
+	@Column(length = 1000)
+	private String auxField14;
+	@Column(length = 1000)
+	private String auxField15;
+
 	public String getCode() {
-		if(code==null || code.isEmpty()){
+		if (code == null || code.isEmpty()) {
 			code = getExternalRef();
 		}
 		return code;
@@ -357,7 +388,7 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 		firstName = dto.getFirstName();
 		lastName = dto.getLastName();
 		fullName = dto.getFullName();
-		
+
 		if (firstName == null) {
 			firstName = fullName;
 			lastName = "";
@@ -373,6 +404,126 @@ public class User extends BaseEntity implements UserDetails, SiteAware {
 		contactInfo.setMobileNumber(dto.getMobileNumber());
 		contactInfo.setCity(dto.getCity());
 		contactInfo.setCountry(dto.getCountry());
+	}
+
+	public String getAuxField1() {
+		return auxField1;
+	}
+
+	public void setAuxField1(String auxField1) {
+		this.auxField1 = auxField1;
+	}
+
+	public String getAuxField2() {
+		return auxField2;
+	}
+
+	public void setAuxField2(String auxField2) {
+		this.auxField2 = auxField2;
+	}
+
+	public String getAuxField3() {
+		return auxField3;
+	}
+
+	public void setAuxField3(String auxField3) {
+		this.auxField3 = auxField3;
+	}
+
+	public String getAuxField4() {
+		return auxField4;
+	}
+
+	public void setAuxField4(String auxField4) {
+		this.auxField4 = auxField4;
+	}
+
+	public String getAuxField5() {
+		return auxField5;
+	}
+
+	public void setAuxField5(String auxField5) {
+		this.auxField5 = auxField5;
+	}
+
+	public String getAuxField6() {
+		return auxField6;
+	}
+
+	public void setAuxField6(String auxField6) {
+		this.auxField6 = auxField6;
+	}
+
+	public String getAuxField7() {
+		return auxField7;
+	}
+
+	public void setAuxField7(String auxField7) {
+		this.auxField7 = auxField7;
+	}
+
+	public String getAuxField8() {
+		return auxField8;
+	}
+
+	public void setAuxField8(String auxField8) {
+		this.auxField8 = auxField8;
+	}
+
+	public String getAuxField9() {
+		return auxField9;
+	}
+
+	public void setAuxField9(String auxField9) {
+		this.auxField9 = auxField9;
+	}
+
+	public String getAuxField10() {
+		return auxField10;
+	}
+
+	public void setAuxField10(String auxField10) {
+		this.auxField10 = auxField10;
+	}
+
+	public String getAuxField11() {
+		return auxField11;
+	}
+
+	public void setAuxField11(String auxField11) {
+		this.auxField11 = auxField11;
+	}
+
+	public String getAuxField12() {
+		return auxField12;
+	}
+
+	public void setAuxField12(String auxField12) {
+		this.auxField12 = auxField12;
+	}
+
+	public String getAuxField13() {
+		return auxField13;
+	}
+
+	public void setAuxField13(String auxField13) {
+		this.auxField13 = auxField13;
+	}
+
+	public String getAuxField14() {
+		return auxField14;
+	}
+
+	public void setAuxField14(String auxField14) {
+		this.auxField14 = auxField14;
+	}
+
+	public String getAuxField15() {
+		return auxField15;
+	}
+
+	public void setAuxField15(String auxField15) {
+		this.auxField15 = auxField15;
 	}
 
 }

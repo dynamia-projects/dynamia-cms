@@ -35,12 +35,11 @@ import tools.dynamia.cms.site.products.domain.ProductStock;
 import tools.dynamia.cms.site.products.domain.ProductUserStory;
 import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
 import tools.dynamia.cms.site.products.domain.RelatedProduct;
-import tools.dynamia.cms.site.products.domain.Store;
 import tools.dynamia.cms.site.products.services.ProductTemplateService;
 import tools.dynamia.cms.site.products.services.ProductsService;
 import tools.dynamia.cms.site.users.UserHolder;
-import tools.dynamia.commons.CollectionsUtils;
 import tools.dynamia.commons.collect.CollectionWrapper;
+import tools.dynamia.commons.collect.CollectionsUtils;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 

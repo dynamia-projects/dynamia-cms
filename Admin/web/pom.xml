@@ -14,6 +14,13 @@
 	<name>DynamiaCMS Admin - Web (${project.version})</name>
 	<url>http://www.dynamiasoluciones.com</url>
 
+	<properties>
+		<name>DynamiaCMS</name>
+		<author>Dynamia Soluciones IT</author>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+	</properties>
+
 	<dependencies>
 
 
@@ -100,6 +107,12 @@
 
 		<dependency>
 			<groupId>tools.dynamia.cms</groupId>
+			<artifactId>tools.dynamia.cms.site.payment.paypal</artifactId>
+			<version>${site.cms.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>tools.dynamia.cms</groupId>
 			<artifactId>tools.dynamia.cms.site.banners</artifactId>
 			<version>${site.cms.version}</version>
 		</dependency>
@@ -112,15 +125,6 @@
 
 		<!-- OTHERS -->
 
-
-		<dependency>
-			<groupId>org.zkoss.theme</groupId>
-			<artifactId>atlantic</artifactId>
-			<version>1.0.5</version>
-		</dependency>
-
-
-
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -131,6 +135,12 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>tools.dynamia.themes</groupId>
+			<artifactId>tools.dynamia.themes.dynamical</artifactId>
+			<version>3.1.0.Beta</version>
 		</dependency>
 
 
@@ -149,7 +159,12 @@
 
 	<build>
 		<finalName>cms-admin</finalName>
-
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -228,16 +243,5 @@
 		</plugins>
 
 	</build>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.zkoss.zkforge</groupId>
-				<artifactId>ckez</artifactId>
-				<version>4.3.3.0</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+
 </project>

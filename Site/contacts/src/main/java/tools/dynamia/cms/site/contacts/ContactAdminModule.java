@@ -26,19 +26,24 @@ public class ContactAdminModule implements AdminModule {
 
 	@Override
 	public String getGroup() {
-		return "Content";
+		return "Contacts";
 	}
 
 	@Override
 	public String getName() {
-		return "Site Content";
+		return "Contacts";
+	}
+	
+	@Override
+	public String getImage() {
+		return "fa-users";
 	}
 
 	@Override
 	public AdminModuleOption[] getOptions() {
 		return new AdminModuleOption[] {
-				new AdminModuleOption("contacts", "Contacts", Contact.class, true, true, "sitemap", true),
-				new AdminModuleOption("contactsCategory", "Contacts Categories", ContactCategory.class)
+				new AdminModuleOption("contacts", "List", Contact.class, true, true, "sitemap", true),
+				new AdminModuleOption("contactsCategory", "Categories", ContactCategory.class)
 		};
 	}
 

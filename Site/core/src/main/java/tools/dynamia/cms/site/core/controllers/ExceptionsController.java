@@ -80,6 +80,7 @@ public class ExceptionsController {
 		mv.addObject("statusCode", statusCode);
 		mv.addObject("uri", requestUri);
 		mv.addObject("exception", throwable);
+		mv.addObject("contextPath",request.getContextPath());
 	
 		Site site = siteService.getSite(request);
 		Containers.get().findObjects(SiteRequestInterceptor.class).forEach(i -> {

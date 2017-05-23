@@ -17,6 +17,9 @@ package tools.dynamia.cms.site.users.services;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.users.UserForm;
 import tools.dynamia.cms.site.users.domain.User;
@@ -50,5 +53,9 @@ public interface UserService {
 	public List<User> getUserCustomers(User current);
 
 	public User getByExternalRef(Site site, String customer);
+
+	void enableUser(User user);
+
+	void disableUser(User user);
 
 }

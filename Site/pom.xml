@@ -20,7 +20,7 @@
 	<properties>
 		<name>DynamiaCMS Site</name>
 
-		<dynatools.version>3.0.0.Final</dynatools.version>
+		<dynatools.version>3.1.0.Beta</dynatools.version>
 		<dynamia.icons.version>1.0</dynamia.icons.version>
 		<hsql.version>1.8.0.10</hsql.version>
 	

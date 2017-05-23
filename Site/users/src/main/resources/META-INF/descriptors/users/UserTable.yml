@@ -8,6 +8,7 @@ fields:
            converter: converters.Date
     username:  
     profile:
+    enabled:
     identification:
     fullName:
     contactInfo:

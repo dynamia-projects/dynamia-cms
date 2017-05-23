@@ -39,7 +39,12 @@ public class ProductsAdminModule implements AdminModule {
 
     @Override
     public String getName() {
-        return "Products";
+        return "Store";
+    }
+    
+    @Override
+    public String getImage() {
+    	return "fa-home";
     }
 
     @Override
@@ -49,7 +54,7 @@ public class ProductsAdminModule implements AdminModule {
             new AdminModuleOption("products", "Products", Product.class, true, true, "th", true),
             new AdminModuleOption("categories", "Categories", ProductCategory.class),
             new AdminModuleOption("brands", "Brands", ProductBrand.class),
-            new AdminModuleOption("stores", "Stores", Store.class),
+            new AdminModuleOption("stores", "Branches", Store.class),
             new AdminModuleOption("templates", "Templates", ProductTemplate.class)};
 
     }

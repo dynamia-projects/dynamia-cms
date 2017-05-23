@@ -21,7 +21,7 @@ import tools.dynamia.cms.site.users.UsersConfig;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true, prePostEnabled = true, securedEnabled = true)
-@Order(1)
+@Order(0)
 public class AdminUsersConfig extends UsersConfig {
 
     @Override

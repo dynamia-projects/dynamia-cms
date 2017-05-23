@@ -44,6 +44,7 @@ public class AdminUsersController {
 		SiteContext.get().setCurrent(site);
 
 		ModelAndView mv = new ModelAndView("login");
+		mv.addObject("contextPath", request.getContextPath());
 
 		return mv;
 	}

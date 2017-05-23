@@ -26,19 +26,24 @@ public class BannerAdminModule implements AdminModule {
 
 	@Override
 	public String getGroup() {
-		return "Content";
+		return "banners";
 	}
 
 	@Override
 	public String getName() {
-		return "Site Content";
+		return "Banners";
+	}
+	
+	@Override
+	public String getImage() {
+		return "fa-photo";
 	}
 
 	@Override
 	public AdminModuleOption[] getOptions() {
 		return new AdminModuleOption[]{
-			new AdminModuleOption("banners", "Banners", Banner.class,true,true,"photo",true),
-			new AdminModuleOption("bannersCategory", "Banners Categories", BannerCategory.class)
+			new AdminModuleOption("banners", "Items", Banner.class,true,true,"photo",true),
+			new AdminModuleOption("bannersCategory", "Categories", BannerCategory.class)
 		};
 	}
 

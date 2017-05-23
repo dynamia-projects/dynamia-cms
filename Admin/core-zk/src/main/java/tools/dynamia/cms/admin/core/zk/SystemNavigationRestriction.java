@@ -27,7 +27,11 @@ public class SystemNavigationRestriction implements NavigationRestriction {
     @Override
     public Boolean allowAccess(NavigationElement element) {
         if (element.getId().equals("system")) {
-            return SiteContext.get().isSuperAdmin();
+            try {
+				return SiteContext.get().isSuperAdmin();
+			} catch (Exception e) {
+				return false;
+			}
         }
 
         return null;

@@ -30,12 +30,13 @@ import tools.dynamia.cms.site.mail.domain.MailTemplate;
 import tools.dynamia.cms.site.mail.services.MailService;
 import tools.dynamia.cms.site.users.PasswordsNotMatchException;
 import tools.dynamia.cms.site.users.UserForm;
+import tools.dynamia.cms.site.users.UsersConfig;
 import tools.dynamia.cms.site.users.api.UserProfile;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
 import tools.dynamia.cms.site.users.domain.UserSiteConfig;
 import tools.dynamia.cms.site.users.services.UserService;
-
+import tools.dynamia.commons.MapBuilder;
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.domain.ValidationError;
 import tools.dynamia.domain.query.QueryConditions;
@@ -70,6 +71,11 @@ public class UserServiceImpl implements UserService {
 	public void saveUser(UserForm form) {
 		User user = form.getData();
 
+		UserSiteConfig config = getSiteConfig(form.getSite());
+		if (!config.isRegistrationEnabled()) {
+			throw new ValidationError("User registration is not enabled for this site");
+		}
+
 		if (user.getId() == null) {
 			user.setSite(form.getSite());
 			user.getFullName();
@@ -86,7 +92,13 @@ public class UserServiceImpl implements UserService {
 
 			user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + user.getPassword()));
 
-			crudService.create(user);
+			if (config.isRegistrationValidated()) {
+				user.setEnabled(false);
+			}
+
+			user = crudService.create(user);
+
+			notifyUser(user);
 
 		} else {
 			User actualUser = crudService.find(User.class, user.getId());
@@ -236,6 +248,51 @@ public class UserServiceImpl implements UserService {
 	public User getByExternalRef(Site site, String externalRef) {
 		return crudService.findSingle(User.class, QueryParameters.with("site", site)
 				.add("externalRef", QueryConditions.eq(externalRef)).setAutocreateSearcheableStrings(false));
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void enableUser(User user) {
+		if (user != null) {
+			user.setEnabled(true);
+			crudService.update(user);
+
+			notifyUser(user);
+		}
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void disableUser(User user) {
+		if (user != null) {
+			user.setEnabled(false);
+			crudService.update(user);
+		}
+	}
+
+	private void notifyUser(User user) {
+		UserSiteConfig config = getSiteConfig(user.getSite());
+
+		if (config != null && config.getRegistrationCompletedTemplate() != null
+				&& config.getRegistrationPendingTemplate() != null) {
+			MailMessage msg = new MailMessage();
+			if (user.isEnabled()) {
+				msg.setTemplate(config.getRegistrationCompletedTemplate());
+			} else {
+				msg.setTemplate(config.getRegistrationPendingTemplate());
+			}
+			msg.setTemplateModel(MapBuilder.put("user", user));
+
+			if (user.getContactInfo().getEmail() != null) {
+				msg.setTo(user.getContactInfo().getEmail());
+			} else {
+				msg.setTo(user.getUsername());
+			}
+
+			mailService.send(msg);
+
+		}
+
 	}
 
 }

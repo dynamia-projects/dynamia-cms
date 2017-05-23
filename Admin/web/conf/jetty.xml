@@ -19,7 +19,7 @@
     <!-- JDBC Resource -->
     <New id="DSTest" class="org.eclipse.jetty.plus.jndi.Resource">
         <Arg></Arg>
-        <Arg>jdbc/DataSource</Arg>
+        <Arg>jdbc/dynamiacms</Arg>
         <Arg>
            <New class="org.mariadb.jdbc.MariaDbDataSource">
                 <Set name="Url">jdbc:mariadb://localhost:3306/dynamiacms</Set>

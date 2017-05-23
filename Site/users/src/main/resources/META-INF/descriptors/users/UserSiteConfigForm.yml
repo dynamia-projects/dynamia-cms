@@ -1,10 +1,22 @@
-view: table
+view: form
 beanClass: tools.dynamia.cms.site.users.domain.UserSiteConfig
 autofields: false
 
 fields:
   registrationEnabled:
-    label: Registration
+    label: Registration  
+  registrationValidated:
+  registrationPendingMessage:
+    params:
+      multiline: true
+      height: 100px
+  registrationCompletedMessage:
+    params:
+      multiline: true
+      height: 100px
+  registrationPendingTemplate:
+  registrationCompletedTemplate:
+  
   synchronizationEnabled:
     label: Enabled
   datasourceURL:
@@ -13,3 +25,32 @@ fields:
     label: Username    
   datasourcePassword:
     label: Password
+  
+  
+  auxFieldName1:
+  auxFieldName2:
+  auxFieldName3:
+  auxFieldName4:
+  auxFieldName5:
+  auxFieldName6:
+  auxFieldName7:
+  auxFieldName8:
+  auxFieldName9:
+  auxFieldName10:
+  auxFieldName11:
+  auxFieldName12:
+  auxFieldName13:
+  auxFieldName14:
+  auxFieldName15:
+    
+    
+groups:
+  general:
+    fields: [registrationEnabled,registrationValidated, registrationPendingMessage, registrationCompletedMessage, registrationPendingTemplate, registrationCompletedTemplate]
+  synchronization:
+    fields: [synchronizationEnabled, datasourceURL, datasourceUsername, datasourcePassword ]
+  customFieldsConfig:
+    fields: [auxFieldName1,auxFieldName2,  auxFieldName3,  auxFieldName4,  auxFieldName5,  auxFieldName6,  auxFieldName7,  auxFieldName8,  auxFieldName9,  auxFieldName10,  auxFieldName11,  auxFieldName12,  auxFieldName13,  auxFieldName14,  auxFieldName15]    
+    
+    
+    

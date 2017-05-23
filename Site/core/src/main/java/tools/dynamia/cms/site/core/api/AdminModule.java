@@ -26,5 +26,11 @@ public interface AdminModule {
 
     String getName();
     
+    default String getImage(){
+    	return null;
+    }
+    
     AdminModuleOption[] getOptions();
+    
+    
 }
