@@ -35,13 +35,18 @@ public class MailAdminModule implements AdminModule {
 
 	@Override
 	public String getName() {
-		return "Mails Settings";
+		return "Email";
+	}
+	
+	@Override
+	public String getImage() {
+		return "fa-envelope";
 	}
 
 	@Override
 	public AdminModuleOption[] getOptions() {
 		return new AdminModuleOption[] {
-				new AdminModuleOption("mailAccounts", "Mail Accounts", MailAccount.class, false, true),
+				new AdminModuleOption("mailAccounts", "Accounts", MailAccount.class, false, true),
 				new AdminModuleOption("mailTemplates", "Templates", MailTemplate.class)
 		};
 	}

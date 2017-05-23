@@ -19,11 +19,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.velocity.app.VelocityEngine;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import com.github.mustachejava.DefaultMustacheFactory;
@@ -34,9 +40,13 @@ import com.github.mustachejava.MustacheFactory;
  * @author Mario Serrano Leones
  */
 @Configuration
-@EnableCaching
 @EnableAsync
-public class CoreJavaConfig {
+@EnableWebMvc
+@ComponentScan(basePackages = "tools.dynamia", excludeFilters = {
+		@ComponentScan.Filter(classes = Configuration.class, type = FilterType.ANNOTATION),
+		@ComponentScan.Filter(value = Controller.class, type = FilterType.ANNOTATION) })
+@ComponentScan(basePackages = { "com.dynamia" })
+public class SiteMainConfig extends WebMvcConfigurerAdapter {
 
 	@Bean
 	public SimpleUrlHandlerMapping siteResourcesMapping() {
@@ -98,6 +108,22 @@ public class CoreJavaConfig {
 	public MustacheFactory mustacheFactory() {
 		MustacheFactory mf = new DefaultMustacheFactory();
 		return mf;
+	}
+
+	@Bean
+	public LocaleChangeInterceptor localeChangeInterceptor() {
+		return new LocaleChangeInterceptor();
+	}
+
+	public SiteHandleInterceptor siteHandleInterceptor() {
+		return new SiteHandleInterceptor();
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+
+		registry.addInterceptor(siteHandleInterceptor()).addPathPatterns("/**").excludePathPatterns("/resources/**",
+				"/css/**", "/styles/**", "/js/**", "/fonts/**", "/font/**", "/assets/**", "/images/**", "/img/**");
 	}
 
 }

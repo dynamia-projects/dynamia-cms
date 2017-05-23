@@ -1,4 +1,4 @@
-package tools.dynamia.cms.admin.users;
+package tools.dynamia.cms.site.users;
 
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;

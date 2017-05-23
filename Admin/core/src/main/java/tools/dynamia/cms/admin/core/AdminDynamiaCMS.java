@@ -46,15 +46,15 @@ import tools.dynamia.commons.logger.SLF4JLoggingService;
 @ComponentScan(basePackages = {"tools.dynamia.app","tools.dynamia.zk"})
 
 @ComponentScan(basePackages = { "com.dynamia.icons", "com.dynamia.modules" })
-public class DynamiaCMS extends MvcConfiguration {
+public class AdminDynamiaCMS extends MvcConfiguration {
 
-	public DynamiaCMS() {
+	public AdminDynamiaCMS() {
 		System.err.println("Starting DynamiaCMS application config");
 	}
 
 	@Bean
 	public LoggingService cmsLoggingService() {
-		return new SLF4JLoggingService(DynamiaCMS.class);
+		return new SLF4JLoggingService(AdminDynamiaCMS.class);
 	}
 
 	@Bean

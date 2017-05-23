@@ -30,19 +30,24 @@ public class UsersAdminModule implements AdminModule {
 
 	@Override
 	public String getGroup() {
-		return "sites";
+		return "users";
 	}
 
 	@Override
 	public String getName() {
 		return "Users";
 	}
+	
+	@Override
+	public String getImage() {
+		return "fa-user";
+	}
 
 	@Override
 	public AdminModuleOption[] getOptions() {
 		return new AdminModuleOption[] {
-				new AdminModuleOption("users", "Users", User.class, false, true, "users", true),
-				new AdminModuleOption("userConfig", "Users Config", UserSiteConfig.class, false, true)
+				new AdminModuleOption("users", "List", User.class, false, true, "users", true),
+				new AdminModuleOption("userConfig", "Configuration", UserSiteConfig.class, false, true)
 		};
 	}
 

@@ -41,9 +41,6 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 	private static final String SPRING_MVC_MODEL = "_springMvcModel";
 	private List<String> excludes = Arrays.asList("jpg", "gif", "png", "tiff", "css", "js", "svg", "bmp", "ttf");
 
-	@Autowired
-	private SiteService service;
-
 	private final LoggingService logger = new SLF4JLoggingService(SiteHandleInterceptor.class);
 
 	@Override
@@ -86,6 +83,7 @@ public class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	private Site getCurrentSite(HttpServletRequest request) {
+		SiteService service = Containers.get().findObject(SiteService.class);
 		Site site = SiteContext.get().getCurrent();
 		if (site == null) {
 			site = service.getSite(request);
