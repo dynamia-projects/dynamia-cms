@@ -9,10 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+
+import tools.dynamia.app.ApplicationUserInfo;
 import tools.dynamia.cms.site.core.DynamiaCMS;
 
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.services.SiteService;
+import tools.dynamia.cms.site.users.UserHolder;
 import tools.dynamia.cms.site.users.services.UserService;
 
 import tools.dynamia.integration.sterotypes.Component;
@@ -25,23 +28,25 @@ import tools.dynamia.integration.sterotypes.Component;
 @Scope("session")
 public class Initializer {
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private SiteService siteService;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private SiteService siteService;
 
-    public void init(HttpServletRequest request) {
+	public void init(HttpServletRequest request) {
 
-        if (userService != null && request != null && siteService != null) {
-            Site site = siteService.getSite(request);
-            if (site != null) {
-                userService.checkAdminUser(site);
+		if (userService != null && request != null && siteService != null) {
+			Site site = siteService.getSite(request);
+			if (site != null) {
+				userService.checkAdminUser(site);
 
-                if ("main".equals(site.getKey())) {
-                    DynamiaCMS.initDefaultLocations();
-                }
-            }
-        }
-    }
+				if ("main".equals(site.getKey())) {
+					DynamiaCMS.initDefaultLocations();
+				}
+			}
+
+		
+		}
+	}
 
 }

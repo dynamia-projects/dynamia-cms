@@ -21,10 +21,12 @@ import java.util.Date;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import tools.dynamia.app.ApplicationUserInfo;
 import tools.dynamia.cms.site.users.api.UserProfile;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.ext.CustomerChangeListener;
 import tools.dynamia.integration.Containers;
+import tools.dynamia.web.util.HttpUtils;
 
 /**
  *
@@ -97,6 +99,16 @@ public class UserHolder implements Serializable {
 		if (user != null) {
 			this.user = user;
 			this.timestamp = new Date();
+
+			ApplicationUserInfo.get().setDate(UserHolder.get().getCurrent().getCreationDate());
+			ApplicationUserInfo.get().setFullName(UserHolder.get().getCurrent().getFullName());
+			String image = UserHolder.get().getCurrent().getUserphoto();
+			if (image == null) {
+				image = HttpUtils.getServerPath() + "/images/user.png";
+
+			}
+
+			ApplicationUserInfo.get().setImage(image);
 		}
 	}
 

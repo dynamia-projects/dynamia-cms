@@ -29,7 +29,7 @@ public class ApplySystemConfigAction extends SaveConfigAction {
     public ApplySystemConfigAction() {
         setName("Apply");
         setImage("refresh");
-        setPosition(10);
+        setPosition(1);
     }
 
     @Override

@@ -31,25 +31,24 @@ import tools.dynamia.zk.crud.CrudView;
 @Scope("session")
 public class SiteManager {
 
-    @Autowired
-    private SiteService service;
+	@Autowired
+	private SiteService service;
 
-    @Autowired
-    private CrudService crudService;
+	@Autowired
+	private CrudService crudService;
 
-    public void clearCache() {
-        Site site = SiteContext.get().getCurrent();
-        if (site != null) {
-            service.clearCache(site);
-            UIMessages.showMessage("Site Cache cleared successfull");
-        }
+	public void clearCache() {
+		Site site = SiteContext.get().getCurrent();
+		if (site != null) {
+			service.clearCache(site);
+			UIMessages.showMessage("Site Cache cleared successfull");
+		}
 
-    }
+	}
 
-    public void edit() {
-        Site site = crudService.reload(SiteContext.get().getCurrent());
-
-        CrudView.showUpdateView("Edit " + site, Site.class, site);
-    }
+	public void edit() {
+		Site site = crudService.reload(SiteContext.get().getCurrent());
+		CrudView.showUpdateView("Edit " + site, Site.class, site);
+	}
 
 }
