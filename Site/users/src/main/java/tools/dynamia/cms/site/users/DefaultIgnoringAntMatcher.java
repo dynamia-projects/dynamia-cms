@@ -27,7 +27,7 @@ public class DefaultIgnoringAntMatcher implements IgnoringAntMatcher {
 	@Override
 	public String[] matchers() {
 		return new String[] { "/styles/**", "/css/**", "/images/**", "/img/**", "/js/**", "/zkau/**", "/resources/**",
-				"/fonts/**", "/font/**", "/plugins/**", "/zk/view/resolver/**", "/static/**"
+				"/fonts/**", "/font/**", "/plugins/**", "/zk/view/resolver/**", "/static/**","/payment/**"
 
 		};
 	}

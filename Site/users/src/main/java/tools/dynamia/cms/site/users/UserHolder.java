@@ -18,13 +18,18 @@ package tools.dynamia.cms.site.users;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import tools.dynamia.app.ApplicationUserInfo;
+import tools.dynamia.cms.site.core.SiteContext;
+import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.users.api.UserProfile;
 import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.cms.site.users.domain.UserSiteConfig;
 import tools.dynamia.cms.site.users.ext.CustomerChangeListener;
+import tools.dynamia.cms.site.users.services.UserService;
 import tools.dynamia.integration.Containers;
 import tools.dynamia.web.util.HttpUtils;
 
@@ -40,6 +45,9 @@ public class UserHolder implements Serializable {
 	protected User customer;
 
 	private Date timestamp;
+
+	@Autowired
+	private UserService service;
 
 	public static UserHolder get() {
 		try {
@@ -127,5 +135,13 @@ public class UserHolder implements Serializable {
 
 	public User getCustomer() {
 		return customer;
+	}
+
+	public UserSiteConfig getConfig() {
+		Site site = SiteContext.get().getCurrent();
+		if (site != null) {
+			return service.getSiteConfig(site);
+		}
+		return new UserSiteConfig();
 	}
 }

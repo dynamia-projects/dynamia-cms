@@ -86,6 +86,15 @@ public class Site extends SimpleEntity implements Parameterizable {
 	private String flickr;
 	private String vine;
 	private String meetup;
+	private boolean searchEnabled;
+
+	public boolean isSearchEnabled() {
+		return searchEnabled;
+	}
+
+	public void setSearchEnabled(boolean searchEnabled) {
+		this.searchEnabled = searchEnabled;
+	}
 
 	public String getMainDomain() {
 		return mainDomain;

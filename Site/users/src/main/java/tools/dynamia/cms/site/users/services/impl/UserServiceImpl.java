@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.token.Sha512DigestUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -50,6 +51,8 @@ import tools.dynamia.domain.services.ValidatorService;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+	private static final String CACHE_NAME = "users";
 
 	@Autowired
 	private CrudService crudService;
@@ -219,6 +222,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
+	@Cacheable(value = CACHE_NAME, key = "'cfg'+#site.key")
 	public UserSiteConfig getSiteConfig(Site site) {
 		UserSiteConfig config = crudService.findSingle(UserSiteConfig.class, "site", site);
 		if (config == null) {

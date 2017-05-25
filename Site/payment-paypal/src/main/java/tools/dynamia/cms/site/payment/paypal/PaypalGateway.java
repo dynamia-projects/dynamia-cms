@@ -102,6 +102,11 @@ public class PaypalGateway implements PaymentGateway {
 	public PaymentTransaction newTransaction(String source, String baseURL) {
 		PaymentTransaction tx = new PaymentTransaction(source);
 
+		if (!baseURL.endsWith("/")) {
+			baseURL += "/";
+		}
+
+		tx.setBaseURL(baseURL);
 		tx.setResponseURL(baseURL + "payment/" + getId() + "/response");
 		tx.setConfirmationURL(baseURL + "payment/" + getId() + "/confirmation");
 		return tx;
@@ -129,9 +134,15 @@ public class PaypalGateway implements PaymentGateway {
 		form.addParam(BUSINESS, params.get(ACCOUNT_NAME));
 		form.addParam(CUSTOM, tx.getUuid());
 		form.addParam(INVOICE, tx.getDocument());
+
 		form.addParam("charset", "utf-8");
 		form.addParam("return", tx.getResponseURL());
+		form.addParam("rm", "0");
+		form.addParam("cancel_return", tx.getBaseURL());
+		form.addParam("notify_url", tx.getConfirmationURL());
+
 		form.addParam("currency_code", tx.getCurrency());
+		form.addParam("item_name", tx.getDocument() + " - " + tx.getDescription());
 		form.addParam("amount", tx.getAmount().toString());
 		form.addParam("first_name", tx.getPayerFullname());
 		form.addParam("last_name", tx.getPayerDocument());

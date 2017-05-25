@@ -68,6 +68,7 @@ fields:
         span: 2
     
         
+    searchEnabled:
     twitter:
     googlePlus:
     facebook:
@@ -81,11 +82,12 @@ fields:
     vine:
     meetup:
     
+    
 groups:
     
     general:
         label: Basic Settings
-        fields: [name,parent,key,template,mainDomain,logoURL, offline,offlineMessage,offlineRedirect,offlineIcon,corporateSite,description]
+        fields: [name,parent,key,template,mainDomain,logoURL, offline,offlineMessage,offlineRedirect,offlineIcon,corporateSite,searchEnabled,description]
             
     
     googleAnalytics:

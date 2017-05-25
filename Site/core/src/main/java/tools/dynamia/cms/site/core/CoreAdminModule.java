@@ -29,12 +29,12 @@ public class CoreAdminModule implements AdminModule {
 
 	@Override
 	public String getGroup() {
-		return "sites";
+		return "content";
 	}
 
 	@Override
 	public String getName() {
-		return "General";
+		return "Content";
 	}
 
 	@Override

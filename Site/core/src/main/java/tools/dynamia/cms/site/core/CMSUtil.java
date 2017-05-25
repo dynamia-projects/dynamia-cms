@@ -53,6 +53,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import tools.dynamia.cms.site.core.api.URLProvider;
 import tools.dynamia.cms.site.core.domain.Site;
@@ -481,13 +482,19 @@ public class CMSUtil {
 	}
 
 	public String parseTemplate(String template, String engine, Map<String, Object> model) {
-		if (engine != null && !engine.isEmpty() && model!=null) {
+		if (engine != null && !engine.isEmpty() && model != null) {
 			StringParser parser = StringParser.get(engine);
 			if (parser != null) {
 				template = parser.parse(template, model);
 			}
 		}
 		return template;
+	}
+
+	public static void redirectHome(ModelAndView mv) {
+		if (mv != null) {
+			mv.setView(new RedirectView("/", true, true, false));
+		}
 	}
 
 }

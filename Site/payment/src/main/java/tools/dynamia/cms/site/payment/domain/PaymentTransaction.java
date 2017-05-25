@@ -95,6 +95,7 @@ public class PaymentTransaction extends BaseEntity implements Payment {
 	private String confirmationURL;
 	private boolean test = false;
 	private boolean confirmed;
+	private String baseURL;
 
 	private int responseTries;
 	private String lastStatusText;
@@ -114,6 +115,14 @@ public class PaymentTransaction extends BaseEntity implements Payment {
 	public PaymentTransaction(String source) {
 		super();
 		this.source = source;
+	}
+
+	public String getBaseURL() {
+		return baseURL;
+	}
+
+	public void setBaseURL(String baseURL) {
+		this.baseURL = baseURL;
 	}
 
 	public String getDocument() {

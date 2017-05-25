@@ -21,7 +21,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -42,7 +41,6 @@ import tools.dynamia.cms.site.payment.ResponseType;
 import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
 import tools.dynamia.cms.site.payment.services.PaymentService;
-
 import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
 import tools.dynamia.domain.services.CrudService;
@@ -60,7 +58,7 @@ public class PaymentController {
 
 	private LoggingService logger = new SLF4JLoggingService(PaymentController.class);
 
-	@RequestMapping(value = "/{gatewayId}/response", method = RequestMethod.GET)
+	@RequestMapping(value = "/{gatewayId}/response", method = { RequestMethod.GET, RequestMethod.POST })
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public ModelAndView gatewayResponse(@PathVariable String gatewayId, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("payment/response");
@@ -73,7 +71,8 @@ public class PaymentController {
 			mv.addObject("gateway", service.findGateway(gatewayId));
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:/");
+			mv.setView(new RedirectView("/", true, true, false));
+
 		}
 		return mv;
 	}
@@ -112,8 +111,11 @@ public class PaymentController {
 
 		PaymentGateway gateway = service.findGateway(gatewayId);
 		Map<String, String> response = parseRequest(gateway.getResponseParams(), request);
-
+		System.out.println(request.getParameterMap());
 		PaymentTransaction tx = service.findTransaction(gateway, response);
+
+		System.out.println(request.getParameterNames());
+
 		logger.info("========================================================");
 		logger.info("Commiting payment Transaction " + tx.getUuid() + " from " + tx.getSource());
 		if (!tx.isConfirmed()) {
