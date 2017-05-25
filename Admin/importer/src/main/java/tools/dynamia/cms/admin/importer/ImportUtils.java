@@ -103,9 +103,12 @@ public class ImportUtils {
 				try {
 					String fieldName = fields[i];
 					if (fieldName != null && !fieldName.isEmpty()) {
-						BeanUtils.setFieldValue(fieldName, bean, getCellValueObject(row, i));
+						Object value = getCellValueObject(row, i);
+						if (value != null) {
+							BeanUtils.setFieldValue(fieldName, bean, value);
+						}
 					}
-				} catch (Exception e) {
+				} catch (Throwable e) {
 					// TODO: handle exception
 				}
 			}

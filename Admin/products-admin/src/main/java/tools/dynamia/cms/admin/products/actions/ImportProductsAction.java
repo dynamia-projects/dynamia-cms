@@ -94,7 +94,7 @@ public class ImportProductsAction extends AbstractCrudAction {
 		public List<Product> importFromExcel(InputStream excelFile, ProgressMonitor monitor) throws Exception {
 			Site site = SiteContext.get().getCurrent();
 			return ImportUtils.importExcel(Product.class, excelFile, monitor, row -> {
-
+				System.out.println("Importing product - Row " + row.getRowNum());
 				String sku = ImportUtils.getCellValue(row, 0);
 				String ref = ImportUtils.getCellValue(row, 1);
 				String name = ImportUtils.getCellValue(row, 2);
@@ -103,41 +103,55 @@ public class ImportProductsAction extends AbstractCrudAction {
 				Product p = findProduct(site, sku, ref, name, externalRef);
 				if (p == null) {
 					p = new Product();
-					ImportUtils.tryToParse(row, p, "sku", "reference", "name", null, null, null, "status", "cost",
-							"price", "taxPercent", "taxName", "taxIncluded", "stock", "description", null, null, null,
-							null, "externalRef");
+				}
+				ImportUtils.tryToParse(row, p, "sku", "reference", "name", null, null, null, "status", "cost", "price",
+						"taxPercent", "taxName", "taxIncluded", "stock", "description", null, null, null, null,
+						"externalRef");
 
-					if(!isValid(sku)){
-						sku = System.currentTimeMillis()+"";
-					}
-					
-					p.setSku(sku);
-					p.setReference(ref);
-					try {
-						p.setCost(new BigDecimal(ImportUtils.getCellValueObject(row, 7).toString()));
-					} catch (Exception e) {
-					}
-					try {
-						p.setPrice(new BigDecimal(ImportUtils.getCellValueObject(row, 8).toString()));
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				if (!isValid(sku)) {
+					sku = System.currentTimeMillis() + "";
+				}
 
-					try {
-						Object stock = ImportUtils.getCellValueObject(row, 12);
-						if (isValid(stock) && stock instanceof Number) {
-							p.setStock(((Number) stock).longValue());
-						}
-					} catch (Exception e) {
-						// TODO: handle exception
+				p.setSku(sku);
+				p.setReference(ref);
+
+				if (p.getDescription() != null && p.getDescription().length() > 1000) {
+					p.setLongDescription(p.getDescription());
+					p.setDescription(p.getDescription().substring(0, 999));
+				}
+
+				try {
+					p.setCost(new BigDecimal(ImportUtils.getCellValueObject(row, 7).toString()));
+				} catch (Exception e) {
+				}
+				try {
+					Object priceValue = ImportUtils.getCellValueObject(row, 8);
+					if (priceValue != null) {
+						p.setPrice(new BigDecimal(priceValue.toString()));
 					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				try {
+					Object stock = ImportUtils.getCellValueObject(row, 12);
+					if (isValid(stock) && stock instanceof Number) {
+						p.setStock(((Number) stock).longValue());
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
 				}
 
 				String brandName = ImportUtils.getCellValue(row, 3);
 				String categoryName = ImportUtils.getCellValue(row, 4);
 				String subcategoryName = ImportUtils.getCellValue(row, 5);
-				p.setBrand(getBrand(site, brandName));
+				try {
+
+					p.setBrand(getBrand(site, brandName));
+				} catch (Exception e1) {
+					System.err.println("Error loading brand");
+				}
 				p.setCategory(getCategory(site, categoryName, subcategoryName));
 
 				int[] imagesCols = { 14, 15, 16, 17 };
@@ -147,7 +161,7 @@ public class ImportProductsAction extends AbstractCrudAction {
 					try {
 						String imageName = downloadImage(site, imageURL);
 						switch (i) {
-						case 0:							
+						case 0:
 							p.setImage(imageName);
 							break;
 						case 1:
@@ -164,8 +178,12 @@ public class ImportProductsAction extends AbstractCrudAction {
 							break;
 						}
 					} catch (Exception e) {
-						System.err.println("Cannot download image "+i + e.getMessage());
+						System.err.println("Cannot download image " + i + e.getMessage());
 					}
+				}
+
+				if (p.getCategory() == null) {
+					p = null;
 				}
 
 				return p;
@@ -219,17 +237,21 @@ public class ImportProductsAction extends AbstractCrudAction {
 		}
 
 		private ProductBrand getBrand(Site site, String brandName) {
-			ProductBrand brand = crudService.findSingle(ProductBrand.class,
-					QueryParameters.with("site", site).add("name", QueryConditions.eq(brandName)));
+			if (isValid(brandName)) {
+				ProductBrand brand = crudService.findSingle(ProductBrand.class,
+						QueryParameters.with("site", site).add("name", QueryConditions.eq(brandName)));
 
-			if (brand == null) {
-				brand = new ProductBrand();
-				brand.setName(brandName);
-				brand.setSite(site);
-				crudService.create(brand);
+				if (brand == null) {
+					brand = new ProductBrand();
+					brand.setName(brandName);
+					brand.setSite(site);
+					crudService.create(brand);
+				}
+				return brand;
+			} else {
+				return null;
 			}
 
-			return brand;
 		}
 
 		private Product findProduct(Site site, String sku, String ref, String name, Long externalRef) {
