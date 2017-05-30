@@ -29,11 +29,13 @@ public class ShoppingOrderDetailsUI extends Div {
 		FormView<PaymentTransaction> txFormView = (FormView<PaymentTransaction>) Viewers.getView(PaymentTransaction.class, "form",
 				shoppingOrder.getTransaction());
 		txFormView.setReadOnly(true);
+		txFormView.setVflex("min");
 
 		TableView<ShoppingCartItem> itemTableView = (TableView<ShoppingCartItem>) Viewers.getView(ShoppingCartItem.class, "table",
 				shoppingOrder.getShoppingCart().getItems());
+
+		itemTableView.setVflex(null);
 		itemTableView.setHeight("400px");
-		itemTableView.setVflex(false);
 
 		orderFormView.setParent(this);
 

@@ -12,10 +12,11 @@ import tools.dynamia.crud.CrudActionEvent;
 import tools.dynamia.crud.CrudState;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer;
+import tools.dynamia.zk.crud.actions.ViewDataAction;
 import tools.dynamia.zk.util.ZKUtil;
 
 @InstallAction
-public class ViewOrderDetailsAction extends AbstractCrudAction {
+public class ViewOrderDetailsAction extends ViewDataAction {
 
 	@Autowired
 	private CrudService crudService;

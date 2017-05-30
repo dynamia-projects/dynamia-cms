@@ -15,5 +15,5 @@ actions:
   DeleteAction:
     enabled: false
     
-  ViewDateAction:
+  ViewDataAction:
     enabled: false
