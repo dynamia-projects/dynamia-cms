@@ -68,6 +68,7 @@ import tools.dynamia.domain.query.DataPaginator;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.domain.util.ContactInfo;
 import tools.dynamia.integration.Containers;
+import tools.dynamia.io.VirtualFile;
 
 /**
  *
@@ -345,7 +346,13 @@ public class CMSUtil {
 
 		File resources = DynamiaCMS.getSitesResourceLocation(site).toFile();
 		String filePath = file.getPath();
-		filePath = filePath.substring(filePath.indexOf(resources.getName()) + resources.getName().length() + 1);
+		if (file instanceof VirtualFile) {
+			filePath = file.getPath();
+		} else {
+			filePath = filePath.substring(filePath.indexOf(resources.getName()) + resources.getName().length() + 1);
+			filePath = filePath.replace("\\", "/");
+		}
+		filePath = "/resources/" + filePath;
 
 		return filePath;
 
