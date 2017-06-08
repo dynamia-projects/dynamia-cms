@@ -375,26 +375,30 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
 		ProductsDatasource ds = getDatasource(siteCfg);
 		List<RelatedProductDTO> related = ds.getRelatedProducts(siteCfg.getParametersAsMap());
-		for (RelatedProductDTO remoteRelated : related) {
-			RelatedProduct localRelated = getLocalEntity(RelatedProduct.class, remoteRelated.getExternalRef(), siteCfg);
-			if (localRelated == null) {
-				localRelated = new RelatedProduct();
-				localRelated.setSite(siteCfg.getSite());
-				localRelated.setProduct(getLocalEntity(Product.class, remoteRelated.getProductExternalRef(), siteCfg));
+		if (related != null) {
+			for (RelatedProductDTO remoteRelated : related) {
+				RelatedProduct localRelated = getLocalEntity(RelatedProduct.class, remoteRelated.getExternalRef(),
+						siteCfg);
+				if (localRelated == null) {
+					localRelated = new RelatedProduct();
+					localRelated.setSite(siteCfg.getSite());
+					localRelated
+							.setProduct(getLocalEntity(Product.class, remoteRelated.getProductExternalRef(), siteCfg));
 
-				if (remoteRelated.getTargetCategoryExternalRef() != null) {
-					localRelated.setTargetCategory(getLocalEntity(ProductCategory.class,
-							remoteRelated.getTargetCategoryExternalRef(), siteCfg));
+					if (remoteRelated.getTargetCategoryExternalRef() != null) {
+						localRelated.setTargetCategory(getLocalEntity(ProductCategory.class,
+								remoteRelated.getTargetCategoryExternalRef(), siteCfg));
+					}
+					if (remoteRelated.getTargetProductExternalRef() != null) {
+						localRelated.setTargetProduct(
+								getLocalEntity(Product.class, remoteRelated.getTargetProductExternalRef(), siteCfg));
+					}
 				}
-				if (remoteRelated.getTargetProductExternalRef() != null) {
-					localRelated.setTargetProduct(
-							getLocalEntity(Product.class, remoteRelated.getTargetProductExternalRef(), siteCfg));
-				}
-			}
 
-			localRelated.sync(remoteRelated);
-			if (localRelated.getProduct() != null) {
-				crudService.save(localRelated);
+				localRelated.sync(remoteRelated);
+				if (localRelated.getProduct() != null) {
+					crudService.save(localRelated);
+				}
 			}
 		}
 		return related;
