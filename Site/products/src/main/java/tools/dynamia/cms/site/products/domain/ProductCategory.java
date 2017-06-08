@@ -93,6 +93,16 @@ public class ProductCategory extends SimpleEntity implements SiteAware, Orderabl
 	@JsonIgnore
 	private ProductTemplate alternateTemplate;
 
+	private Long productsCount;
+
+	public Long getProductsCount() {
+		return productsCount;
+	}
+
+	public void setProductsCount(Long productsCount) {
+		this.productsCount = productsCount;
+	}
+
 	public ProductTemplate getAlternateTemplate() {
 		return alternateTemplate;
 	}

@@ -278,11 +278,17 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 
 	public void syncTransaction() {
 		if (shoppingCart != null && transaction != null) {
-			transaction.setDocument(getNumber());			
+			transaction.setDocument(getNumber());
 			transaction.setAmount(shoppingCart.getTotalPrice());
 			transaction.setTaxes(shoppingCart.getTotalTaxes());
 			if (transaction.getTaxes() != null && transaction.getTaxes().longValue() > 0) {
 				transaction.setTaxesBase(shoppingCart.getSubtotal());
+			}
+
+			if (getShippingAddress() != null) {
+				transaction.setShippingAddress(getShippingAddress().getInfo().getAddress());
+				transaction.setShippingCity(getShippingAddress().getInfo().getCity());
+			
 			}
 		}
 	}

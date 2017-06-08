@@ -46,6 +46,9 @@ public class ProductsSynchronizer {
 	private ProductsSyncService service;
 
 	@Autowired
+	private ProductsService productsService;
+
+	@Autowired
 	private SiteService siteService;
 
 	@Autowired
@@ -98,6 +101,9 @@ public class ProductsSynchronizer {
 		logger.info("Related Products");
 		List<RelatedProductDTO> relatedProducts = service.synchronizeRelatedProducts(siteCfg);
 		service.disableRelatedProductsNoInList(siteCfg, relatedProducts);
+
+		logger.info("Compute product count by category");
+		productsService.computeProductCountByCategory(siteCfg.getSite());
 
 		if (siteCfg.isSyncProductImages()) {
 			SchedulerUtil.run(new Task("Images Downloader") {

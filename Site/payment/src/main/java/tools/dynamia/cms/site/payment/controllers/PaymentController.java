@@ -22,13 +22,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -77,13 +77,19 @@ public class PaymentController {
 		return mv;
 	}
 
-	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/{gatewayId}/confirmation", method = { RequestMethod.POST, RequestMethod.GET })
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void gatewayConfirmation(@PathVariable String gatewayId, HttpServletRequest request) {
-		logger.info("Confirmation for gateway " + gatewayId + "  REQUEST: " + request.getParameterMap());
-		PaymentTransaction tx = commitTransaction(gatewayId, request, ResponseType.CONFIRMATION);
-		logger.info("Payment Transaction Confirmation Status " + tx);
+	@Transactional
+	public ResponseEntity<String> gatewayConfirmation(@PathVariable String gatewayId, HttpServletRequest request) {
+		try {
+			logger.info("Confirmation for gateway " + gatewayId + "  REQUEST: " + request.getParameterMap());
+			PaymentTransaction tx = commitTransaction(gatewayId, request, ResponseType.CONFIRMATION);
+			logger.info("Payment Transaction Confirmation Status " + tx);
+			return ResponseEntity.ok("TX " + tx.getUuid() + " STATUS: " + tx.getStatus().toString());
+		} catch (Exception e) {
+			logger.error("Error processing tx confirmation. GatewayID: " + gatewayId + ". Error: " + e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Gateway " + gatewayId + " -->" + e.getMessage());
+		}
 
 	}
 

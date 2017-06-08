@@ -182,7 +182,7 @@ public class ProductsServiceImpl implements ProductsService {
 	@Override
 	public List<Product> getProducts(ProductBrand brand) {
 		QueryParameters qp = QueryParameters.with("active", true);
-		qp.add("brand", brand);
+				qp.add("brand", brand);
 		qp.orderBy("price", true);
 		qp.paginate(getDefaultPageSize(brand.getSite()));
 		return crudService.find(Product.class, qp);
@@ -261,7 +261,7 @@ public class ProductsServiceImpl implements ProductsService {
 	@Cacheable(value = CACHE_NAME, key = "'fea'+#site.key")
 	public List<Product> getFeaturedProducts(Site site) {
 		QueryParameters qp = QueryParameters.with("active", true);
-		qp.add("featured", true);
+				qp.add("featured", true);
 		qp.paginate(getDefaultPageSize(site) + 2);
 		qp.orderBy("brand.name, price", true);
 		PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp);
@@ -272,7 +272,7 @@ public class ProductsServiceImpl implements ProductsService {
 	@Cacheable(value = CACHE_NAME, key = "'sale'+#site.key")
 	public List<Product> getSaleProducts(Site site) {
 		QueryParameters qp = QueryParameters.with("active", true);
-		qp.add("sale", true);
+				qp.add("sale", true);
 		qp.paginate(getDefaultPageSize(site) + 2);
 		qp.orderBy("brand.name, price", true);
 		PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp);
@@ -307,7 +307,7 @@ public class ProductsServiceImpl implements ProductsService {
 	@Override
 	public List<Product> getProductsById(List<Long> ids) {
 		QueryParameters qp = QueryParameters.with("active", true);
-		qp.add("id", QueryConditions.in(ids));
+				qp.add("id", QueryConditions.in(ids));
 		return crudService.find(Product.class, qp);
 	}
 
@@ -643,6 +643,18 @@ public class ProductsServiceImpl implements ProductsService {
 		}
 
 		return details;
+	}
+
+	@Override
+	@Transactional
+	public int computeProductCountByCategory(Site site) {
+		if (site != null) {
+			String sql = "update ProductCategory pc set pc.productsCount = (select count(p) from Product p where p.active=true and p.site = :site and p.category.id = pc.id) where pc.site = :site ";
+			int result = entityManager.createQuery(sql).setParameter("site", site).executeUpdate();
+
+			return result;
+		}
+		return 0;
 	}
 
 }

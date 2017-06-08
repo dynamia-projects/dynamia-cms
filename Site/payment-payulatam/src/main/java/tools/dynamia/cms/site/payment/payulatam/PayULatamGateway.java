@@ -42,6 +42,8 @@ import tools.dynamia.commons.logger.SLF4JLoggingService;
 @Service
 public class PayULatamGateway implements PaymentGateway {
 
+	private static final String SHIPPING_CITY = "shippingCity";
+	private static final String SHIPPING_ADDRESS = "shippingAddress";
 	private static final String PAYER_FULL_NAME = "payerFullName";
 	private static final String PAYER_DOCUMENT = "payerDocument";
 	private static final String PAYER_MOBILE_PHONE = "payerMobilePhone";
@@ -185,6 +187,8 @@ public class PayULatamGateway implements PaymentGateway {
 		form.addParam(RESPONSE_URL, tx.getResponseURL());
 		form.addParam(CONFIRMATION_URL, tx.getConfirmationURL());
 		form.addParam(DESCRIPTION, tx.getDescription());
+		form.addParam(SHIPPING_ADDRESS, tx.getShippingAddress());
+		form.addParam(SHIPPING_CITY, tx.getShippingCity());
 		tx.setSignature(generateSignature(params.get(API_KEY), form.getParameters()));
 		form.addParam(SIGNATURE, tx.getSignature());
 

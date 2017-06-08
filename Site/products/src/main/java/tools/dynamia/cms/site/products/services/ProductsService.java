@@ -17,6 +17,8 @@ package tools.dynamia.cms.site.products.services;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.products.ProductSearchForm;
 import tools.dynamia.cms.site.products.ProductShareForm;
@@ -117,5 +119,7 @@ public interface ProductsService {
     List<RelatedProduct> getRelatedProducts(Product product, boolean requires);
 
 	List<Product> getProducts(ProductCategory category, String orderfield, boolean asc);
+
+	int computeProductCountByCategory(Site site);
 
 }

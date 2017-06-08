@@ -108,6 +108,10 @@ public class PaymentTransaction extends BaseEntity implements Payment {
 	private String errorMessage;
 	private String externalRef;
 
+	private String shippingAddress;
+	private String shippingCity;
+	private String shippingCountry;
+
 	public PaymentTransaction() {
 		// TODO Auto-generated constructor stub
 	}
@@ -115,6 +119,30 @@ public class PaymentTransaction extends BaseEntity implements Payment {
 	public PaymentTransaction(String source) {
 		super();
 		this.source = source;
+	}
+
+	public String getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(String shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+
+	public String getShippingCity() {
+		return shippingCity;
+	}
+
+	public void setShippingCity(String shippingCity) {
+		this.shippingCity = shippingCity;
+	}
+
+	public String getShippingCountry() {
+		return shippingCountry;
+	}
+
+	public void setShippingCountry(String shippingCountry) {
+		this.shippingCountry = shippingCountry;
 	}
 
 	public String getBaseURL() {

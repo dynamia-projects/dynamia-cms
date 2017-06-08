@@ -12,4 +12,7 @@ fields:
     template:
         description: Product Template    
     alternateTemplate:
+    productsCount:
+      label: Products
     active:
+    
