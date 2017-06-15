@@ -36,7 +36,7 @@ import tools.dynamia.domain.contraints.NotEmpty;
  */
 @Entity
 @Table(name = "prd_brands")
-@BatchSize(size=50)
+@BatchSize(size = 50)
 public class ProductBrand extends SimpleEntity implements SiteAware {
 
 	@OneToOne
@@ -111,7 +111,9 @@ public class ProductBrand extends SimpleEntity implements SiteAware {
 	public void sync(ProductBrandDTO r) {
 		description = r.getDescription();
 		externalRef = r.getExternalRef();
-		image = r.getImage();
+		if (r.getImage() != null && !r.getImage().isEmpty()) {
+			image = r.getImage();
+		}
 		name = r.getName();
 		website = r.getWebsite();
 	}
