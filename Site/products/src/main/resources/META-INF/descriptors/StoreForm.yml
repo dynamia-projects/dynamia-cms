@@ -1,6 +1,7 @@
-view: table
+view: form
 beanClass: tools.dynamia.cms.site.products.domain.Store
 autofields: false
+
 
 fields:
   name:  
@@ -8,7 +9,9 @@ fields:
     component: resourceSelector
   page:
   contactInfo:
-  
+  contacts:
+    description: Store Contacts or Sellers
+    component: crudview
   
 layout:
   columns: 3

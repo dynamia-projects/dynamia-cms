@@ -58,6 +58,8 @@ public interface ProductsSyncService {
 
     void disableProductsNoInList(ProductsSiteConfig siteCfg, List<ProductDTO> products);
 
+    void deleteStoreContactsNoInList(ProductsSiteConfig siteCfg, List<StoreDTO> stores);
+
     public void update(ProductsSiteConfig siteCfg);
 
     public void synchronizeStore(ProductsSiteConfig config, StoreDTO dto);

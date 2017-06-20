@@ -73,6 +73,13 @@ public class ProductsSynchronizer {
 		logger.info("Stores");
 		List<StoreDTO> stores = service.synchronizeStores(siteCfg);
 
+		try {
+			service.deleteStoreContactsNoInList(siteCfg,stores);
+
+		}catch (Exception e){
+
+		}
+
 		logger.info("Categories");
 		List<ProductCategoryDTO> categories = service.synchronizeCategories(siteCfg);
 		service.disableCategoriesNoInList(siteCfg, categories);
