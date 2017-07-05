@@ -31,7 +31,6 @@ import tools.dynamia.cms.site.mail.domain.MailTemplate;
 import tools.dynamia.cms.site.mail.services.MailService;
 import tools.dynamia.cms.site.users.PasswordsNotMatchException;
 import tools.dynamia.cms.site.users.UserForm;
-import tools.dynamia.cms.site.users.UsersConfig;
 import tools.dynamia.cms.site.users.api.UserProfile;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
@@ -46,257 +45,285 @@ import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.domain.services.ValidatorService;
 
 /**
- *
  * @author Mario Serrano Leones
  */
 @Service
 public class UserServiceImpl implements UserService {
 
-	private static final String CACHE_NAME = "users";
+    private static final String CACHE_NAME = "users";
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+    private CrudService crudService;
 
-	@Autowired
-	private MailService mailService;
+    @Autowired
+    private MailService mailService;
 
-	@Autowired
-	private ValidatorService validatorService;
+    @Autowired
+    private ValidatorService validatorService;
 
-	@Override
-	public User getUser(Site site, String name) {
-		QueryParameters qp = QueryParameters.with("site", site).add("username", name);
-		return crudService.findSingle(User.class, qp);
-	}
+    @Override
+    public User getUser(Site site, String name) {
+        QueryParameters qp = QueryParameters.with("site", site).add("username", name);
+        return crudService.findSingle(User.class, qp);
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void saveUser(UserForm form) {
-		User user = form.getData();
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void saveUser(UserForm form) {
+        User user = form.getData();
 
-		UserSiteConfig config = getSiteConfig(form.getSite());
-		if (!config.isRegistrationEnabled()) {
-			throw new ValidationError("User registration is not enabled for this site");
-		}
+        UserSiteConfig config = getSiteConfig(form.getSite());
+        if (!config.isRegistrationEnabled()) {
+            throw new ValidationError("User registration is not enabled for this site");
+        }
 
-		if (user.getId() == null) {
-			user.setSite(form.getSite());
-			user.getFullName();
-			validatorService.validate(user);
+        if (user.getId() == null) {
+            user.setSite(form.getSite());
+            user.getFullName();
+            validatorService.validate(user);
 
-			User alreadyUser = getUser(user.getSite(), user.getUsername());
-			if (alreadyUser != null) {
-				throw new ValidationError("Ya existe un usuario con el mismo email ingresado: " + user.getUsername());
-			}
+            User alreadyUser = getUser(user.getSite(), user.getUsername());
+            if (alreadyUser != null) {
+                throw new ValidationError("Ya existe un usuario con el mismo email ingresado: " + user.getUsername());
+            }
 
-			if (!user.getPassword().equals(form.getPasswordConfirm())) {
-				throw new PasswordsNotMatchException(user);
-			}
+            if (!user.getPassword().equals(form.getPasswordConfirm())) {
+                throw new PasswordsNotMatchException(user);
+            }
 
-			user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + user.getPassword()));
+            user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + user.getPassword()));
 
-			if (config.isRegistrationValidated()) {
-				user.setEnabled(false);
-			}
+            if (config.isRegistrationValidated()) {
+                user.setEnabled(false);
+            }
 
-			user = crudService.create(user);
+            if (config.isRequireEmailActivation()) {
+                user.startEmailValidation();
+            }
 
-			notifyUser(user);
+            user = crudService.create(user);
 
-		} else {
-			User actualUser = crudService.find(User.class, user.getId());
-			actualUser.setContactInfo(user.getContactInfo());
-			actualUser.setFirstName(user.getFirstName());
-			actualUser.setLastName(user.getLastName());
-			actualUser.setFullName(user.getFullName());
-			actualUser.setIdentification(user.getIdentification());
 
-			validatorService.validate(actualUser);
-			crudService.update(actualUser);
-		}
-	}
+            if(config.isRequireEmailActivation()){
+                notifyValidationRequired(user);
+            }
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void changePassword(UserForm form) {
+            notifyUserRegistration(user);
 
-		validatorService.validate(form);
+        } else {
+            User actualUser = crudService.find(User.class, user.getId());
+            actualUser.setContactInfo(user.getContactInfo());
+            actualUser.setFirstName(user.getFirstName());
+            actualUser.setLastName(user.getLastName());
+            actualUser.setFullName(user.getFullName());
+            actualUser.setIdentification(user.getIdentification());
 
-		User user = crudService.find(User.class, form.getData().getId());
-		String currentPassword = Sha512DigestUtils.shaHex(user.getUsername() + ":" + form.getCurrentPassword());
+            validatorService.validate(actualUser);
+            crudService.update(actualUser);
+        }
+    }
 
-		if (!user.getPassword().equals(currentPassword)) {
-			throw new ValidationError("El password actual ingresado es incorrecto.");
-		}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void changePassword(UserForm form) {
 
-		if (!form.getData().getPassword().equals(form.getPasswordConfirm())) {
-			throw new PasswordsNotMatchException(user);
-		}
+        validatorService.validate(form);
 
-		String newPassword = form.getData().getPassword();
-		setupPassword(user, newPassword);
-		crudService.save(user);
-	}
+        User user = crudService.find(User.class, form.getData().getId());
+        String currentPassword = Sha512DigestUtils.shaHex(user.getUsername() + ":" + form.getCurrentPassword());
 
-	@Override
-	public void setupPassword(User user, String newPassword) {
-		user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + newPassword));
-	}
+        if (!user.getPassword().equals(currentPassword)) {
+            throw new ValidationError("El password actual ingresado es incorrecto.");
+        }
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void resetPassword(Site site, String username) {
+        if (!form.getData().getPassword().equals(form.getPasswordConfirm())) {
+            throw new PasswordsNotMatchException(user);
+        }
 
-		String templateName = "ResetPasswordTemplate";
-		QueryParameters params = QueryParameters.with("name", templateName).add("site", site);
+        String newPassword = form.getData().getPassword();
+        setupPassword(user, newPassword);
+        crudService.save(user);
+    }
 
-		MailTemplate mailTemplate = crudService.findSingle(MailTemplate.class, params);
-		if (mailTemplate == null) {
-			throw new ValidationError(
-					"En estos momentos no podemos reiniciar su password, por favor intente mas tarde");
-		}
+    @Override
+    public void setupPassword(User user, String newPassword) {
+        user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + newPassword));
+    }
 
-		User user = getUser(site, username);
-		if (user == null) {
-			throw new ValidationError("El usuario [" + username + "] no existe en este sitio web");
-		}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void resetPassword(Site site, String username) {
 
-		String newPassword = StringUtils.randomString().substring(0, 7);
-		System.out.println("NEW PASSWORD " + newPassword);
-		setupPassword(user, newPassword);
-		crudService.save(user);
+        String templateName = "ResetPasswordTemplate";
+        QueryParameters params = QueryParameters.with("name", templateName).add("site", site);
 
-		MailMessage message = new MailMessage(mailTemplate);
-		message.setTo(username);
-		message.getTemplateModel().put("user", user);
-		message.getTemplateModel().put("newpassword", newPassword);
+        MailTemplate mailTemplate = crudService.findSingle(MailTemplate.class, params);
+        if (mailTemplate == null) {
+            throw new ValidationError(
+                    "En estos momentos no podemos reiniciar su password, por favor intente mas tarde");
+        }
 
-		mailService.send(message);
-	}
+        User user = getUser(site, username);
+        if (user == null) {
+            throw new ValidationError("El usuario [" + username + "] no existe en este sitio web");
+        }
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void resetPassword(User user, String newpassword, String newpassword2) {
+        String newPassword = StringUtils.randomString().substring(0, 7);
+        System.out.println("NEW PASSWORD " + newPassword);
+        setupPassword(user, newPassword);
+        crudService.save(user);
 
-		if (user == null) {
-			throw new ValidationError("El usuario no existe en este sitio web");
-		}
+        MailMessage message = new MailMessage(mailTemplate);
+        message.setTo(username);
+        message.getTemplateModel().put("user", user);
+        message.getTemplateModel().put("newpassword", newPassword);
 
-		if (newpassword == null || newpassword.isEmpty() || newpassword2 == null || newpassword2.isEmpty()) {
-			throw new ValidationError("Ingrese nuevo password");
-		}
+        mailService.send(message);
+    }
 
-		if (!newpassword.equals(newpassword2)) {
-			throw new ValidationError("El nuevo password ingresado no coincide");
-		}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void resetPassword(User user, String newpassword, String newpassword2) {
 
-		setupPassword(user, newpassword);
-		crudService.save(user);
+        if (user == null) {
+            throw new ValidationError("El usuario no existe en este sitio web");
+        }
 
-	}
+        if (newpassword == null || newpassword.isEmpty() || newpassword2 == null || newpassword2.isEmpty()) {
+            throw new ValidationError("Ingrese nuevo password");
+        }
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void checkAdminUser(Site site) {
-		String adminUsername = "admin@" + site.getKey() + ".login";
-		User adminUser = getUser(site, adminUsername);
-		if (adminUser == null) {
-			User user = new User();
-			user.setUsername(adminUsername);
-			user.setFirstName("Admin");
-			user.setLastName(site.getName());
-			user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":admin" + site.getKey()));
-			user.setSite(site);
-			user.setProfile(UserProfile.ADMIN);
-			crudService.create(user);
-		} else if (adminUser.getProfile() != UserProfile.ADMIN) {
-			adminUser.setProfile(UserProfile.ADMIN);
-			crudService.update(adminUser);
-		}
-	}
+        if (!newpassword.equals(newpassword2)) {
+            throw new ValidationError("El nuevo password ingresado no coincide");
+        }
 
-	@Override
-	public List<UserContactInfo> getContactInfos(User user) {
-		return crudService.find(UserContactInfo.class, "user", user);
-	}
+        setupPassword(user, newpassword);
+        crudService.save(user);
 
-	@Override
-	@Transactional
-	@Cacheable(value = CACHE_NAME, key = "'cfg'+#site.key")
-	public UserSiteConfig getSiteConfig(Site site) {
-		UserSiteConfig config = crudService.findSingle(UserSiteConfig.class, "site", site);
-		if (config == null) {
-			config = new UserSiteConfig();
-			config.setSite(site);
-			config = crudService.create(config);
-		}
-		return config;
-	}
+    }
 
-	@Override
-	public List<User> getUserCustomers(User user) {
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void checkAdminUser(Site site) {
+        String adminUsername = "admin@" + site.getKey() + ".login";
+        User adminUser = getUser(site, adminUsername);
+        if (adminUser == null) {
+            User user = new User();
+            user.setUsername(adminUsername);
+            user.setFirstName("Admin");
+            user.setLastName(site.getName());
+            user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":admin" + site.getKey()));
+            user.setSite(site);
+            user.setProfile(UserProfile.ADMIN);
+            crudService.create(user);
+        } else if (adminUser.getProfile() != UserProfile.ADMIN) {
+            adminUser.setProfile(UserProfile.ADMIN);
+            crudService.update(adminUser);
+        }
+    }
 
-		List<User> customers = null;
+    @Override
+    public List<UserContactInfo> getContactInfos(User user) {
+        return crudService.find(UserContactInfo.class, "user", user);
+    }
 
-		customers = crudService.find(User.class, QueryParameters.with("profile", UserProfile.USER)
-				.add("relatedUser", user).add("enabled", true).orderBy("fullName"));
+    @Override
+    @Transactional
+    @Cacheable(value = CACHE_NAME, key = "'cfg'+#site.key")
+    public UserSiteConfig getSiteConfig(Site site) {
+        UserSiteConfig config = crudService.findSingle(UserSiteConfig.class, "site", site);
+        if (config == null) {
+            config = new UserSiteConfig();
+            config.setSite(site);
+            config = crudService.create(config);
+        }
+        return config;
+    }
 
-		if (customers == null) {
-			customers = Collections.EMPTY_LIST;
-		}
+    @Override
+    public List<User> getUserCustomers(User user) {
 
-		return customers;
-	}
+        List<User> customers = null;
 
-	@Override
-	public User getByExternalRef(Site site, String externalRef) {
-		return crudService.findSingle(User.class, QueryParameters.with("site", site)
-				.add("externalRef", QueryConditions.eq(externalRef)).setAutocreateSearcheableStrings(false));
-	}
+        customers = crudService.find(User.class, QueryParameters.with("profile", UserProfile.USER)
+                .add("relatedUser", user).add("enabled", true).orderBy("fullName"));
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void enableUser(User user) {
-		if (user != null) {
-			user.setEnabled(true);
-			crudService.update(user);
+        if (customers == null) {
+            customers = Collections.EMPTY_LIST;
+        }
 
-			notifyUser(user);
-		}
-	}
+        return customers;
+    }
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void disableUser(User user) {
-		if (user != null) {
-			user.setEnabled(false);
-			crudService.update(user);
-		}
-	}
+    @Override
+    public User getByExternalRef(Site site, String externalRef) {
+        return crudService.findSingle(User.class, QueryParameters.with("site", site)
+                .add("externalRef", QueryConditions.eq(externalRef)).setAutocreateSearcheableStrings(false));
+    }
 
-	private void notifyUser(User user) {
-		UserSiteConfig config = getSiteConfig(user.getSite());
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void enableUser(User user) {
+        if (user != null) {
+            user.setEnabled(true);
+            crudService.update(user);
 
-		if (config != null && config.getRegistrationCompletedTemplate() != null
-				&& config.getRegistrationPendingTemplate() != null) {
-			MailMessage msg = new MailMessage();
-			if (user.isEnabled()) {
-				msg.setTemplate(config.getRegistrationCompletedTemplate());
-			} else {
-				msg.setTemplate(config.getRegistrationPendingTemplate());
-			}
-			msg.setTemplateModel(MapBuilder.put("user", user));
+            notifyUserRegistration(user);
+        }
+    }
 
-			if (user.getContactInfo().getEmail() != null) {
-				msg.setTo(user.getContactInfo().getEmail());
-			} else {
-				msg.setTo(user.getUsername());
-			}
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void disableUser(User user) {
+        if (user != null) {
+            user.setEnabled(false);
+            crudService.update(user);
+        }
+    }
 
-			mailService.send(msg);
+    @Override
+    public User getUserByValidationKey(Site site, String key) {
+        return crudService.findSingle(User.class, QueryParameters.with("site", site)
+                .add("validationKey", QueryConditions.eq(key)));
+    }
 
-		}
+    private void notifyValidationRequired(User user) {
+        UserSiteConfig config = getSiteConfig(user.getSite());
 
-	}
+        if (config != null && config.getEmailValidationTemplate() != null) {
+            MailMessage msg = new MailMessage();
+            msg.setTemplate(config.getEmailValidationTemplate());
+            msg.setTemplateModel(MapBuilder.put("user", user));
+            msg.setTo(user.getUsername());
+
+            mailService.send(msg);
+
+        }
+    }
+
+    private void notifyUserRegistration(User user) {
+        UserSiteConfig config = getSiteConfig(user.getSite());
+
+        if (config != null && config.getRegistrationCompletedTemplate() != null
+                && config.getRegistrationPendingTemplate() != null) {
+            MailMessage msg = new MailMessage();
+            if (user.isEnabled()) {
+                msg.setTemplate(config.getRegistrationCompletedTemplate());
+            } else {
+                msg.setTemplate(config.getRegistrationPendingTemplate());
+            }
+            msg.setTemplateModel(MapBuilder.put("user", user));
+
+            if (user.getContactInfo().getEmail() != null) {
+                msg.setTo(user.getContactInfo().getEmail());
+            } else {
+                msg.setTo(user.getUsername());
+            }
+
+            mailService.send(msg);
+
+        }
+
+    }
 
 }

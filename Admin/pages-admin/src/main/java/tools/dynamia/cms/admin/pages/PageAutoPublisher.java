@@ -39,7 +39,7 @@ public class PageAutoPublisher {
     @Scheduled(fixedDelay = 10 * 60 * 60 * 1000)
     public void sync() {
         try {
-            logger.info("Publishing pages for today");
+            logger.info("Publishing pages for now");
             int r = service.publishPages();
             logger.info(r + " pages published ");
         } catch (Exception e) {

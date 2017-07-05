@@ -25,6 +25,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import tools.dynamia.cms.site.core.api.SiteAware;
+import tools.dynamia.cms.site.core.domain.City;
 import tools.dynamia.cms.site.core.domain.Site;
 
 import tools.dynamia.domain.SimpleEntity;
@@ -41,6 +42,8 @@ public class UserContactInfo extends SimpleEntity implements SiteAware {
 	@NotNull
 	@JsonIgnore
 	private User user;
+	@OneToOne
+	private City city;
 	private ContactInfo info = new ContactInfo();
 	private String name;
 	@Column(length = 3000)
@@ -91,4 +94,11 @@ public class UserContactInfo extends SimpleEntity implements SiteAware {
 		return String.format("%s (%s, %s)", name, info.getCity(), info.getAddress());
 	}
 
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
 }

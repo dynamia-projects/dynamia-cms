@@ -28,6 +28,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import tools.dynamia.cms.site.core.api.SiteAware;
+import tools.dynamia.cms.site.core.domain.Region;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
@@ -368,4 +369,16 @@ public class ShoppingOrder extends BaseEntity implements SiteAware {
 	public void addItem(ShoppingCartItem item, int qty) {
 	}
 
+	public void checkRegionTaxes(){
+		if(shippingAddress!=null && shippingAddress.getCity()!=null && shippingAddress.getCity().getRegion()!=null){
+			Region region = shippingAddress.getCity().getRegion();
+			if(region.getTaxPercent()>0){
+				for (ShoppingCartItem item: shoppingCart.getItems()){
+					item.setTaxName(region.getTaxName());
+					item.setTaxPercent(region.getTaxPercent());
+				}
+				shoppingCart.compute();
+			}
+		}
+	}
 }

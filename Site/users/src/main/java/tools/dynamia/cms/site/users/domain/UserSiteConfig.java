@@ -34,6 +34,11 @@ public class UserSiteConfig extends SiteSimpleEntity {
 	@OneToOne
 	private MailTemplate registrationCompletedTemplate;
 
+	@OneToOne
+	private MailTemplate emailValidationTemplate;
+
+	private boolean requireEmailActivation;
+
 	private String auxFieldName1;
 	private String auxFieldName2;
 	private String auxFieldName3;
@@ -250,4 +255,19 @@ public class UserSiteConfig extends SiteSimpleEntity {
 		this.datasourcePassword = datasourcePassword;
 	}
 
+	public boolean isRequireEmailActivation() {
+		return requireEmailActivation;
+	}
+
+	public void setRequireEmailActivation(boolean requireEmailActivation) {
+		this.requireEmailActivation = requireEmailActivation;
+	}
+
+	public MailTemplate getEmailValidationTemplate() {
+		return emailValidationTemplate;
+	}
+
+	public void setEmailValidationTemplate(MailTemplate emailValidationTemplate) {
+		this.emailValidationTemplate = emailValidationTemplate;
+	}
 }

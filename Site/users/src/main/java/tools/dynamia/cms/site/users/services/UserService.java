@@ -58,4 +58,5 @@ public interface UserService {
 
 	void disableUser(User user);
 
+    User getUserByValidationKey(Site site, String key);
 }

@@ -15,3 +15,7 @@ fields:
     relatedUser:
     groupName:
       label: Group
+    validated:
+    validationKey:
+    validationDateLimit:
+    validationDate:

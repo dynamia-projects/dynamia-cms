@@ -20,105 +20,139 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Mario Serrano Leones
  */
 public class StoreDTO implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 936740099546344064L;
-	private String name;
-	private Long externalRef;
-	private String address;
-	private String mobileNumber;
-	private String phoneNumber;
-	private String city;
-	private String country;
-	private String email;
-	private String image;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 936740099546344064L;
+    private String name;
+    private Long externalRef;
+    private String address;
+    private String mobileNumber;
+    private String phoneNumber;
+    private String city;
+    private String country;
+    private String email;
+    private String image;
+    private String image2;
+    private String image3;
+    private String image4;
+    private String info;
 
-	private List<StoreContactDTO> contacts = new ArrayList<>();
+    public String getImage2() {
+        return image2;
+    }
 
-	public List<StoreContactDTO> getContacts() {
-		return contacts;
-	}
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
 
-	public void setContacts(List<StoreContactDTO> contacts) {
-		this.contacts = contacts;
-	}
+    public String getImage3() {
+        return image3;
+    }
 
-	public String getImage() {
-		return image;
-	}
+    public void setImage3(String image3) {
+        this.image3 = image3;
+    }
 
-	public void setImage(String image) {
-		this.image = image;
-	}
+    public String getImage4() {
+        return image4;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setImage4(String image4) {
+        this.image4 = image4;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private List<StoreContactDTO> contacts = new ArrayList<>();
 
-	public Long getExternalRef() {
-		return externalRef;
-	}
+    public List<StoreContactDTO> getContacts() {
+        return contacts;
+    }
 
-	public void setExternalRef(Long externalRef) {
-		this.externalRef = externalRef;
-	}
+    public void setContacts(List<StoreContactDTO> contacts) {
+        this.contacts = contacts;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public String getImage() {
+        return image;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-	public String getMobileNumber() {
-		return mobileNumber;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    public Long getExternalRef() {
+        return externalRef;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public void setExternalRef(Long externalRef) {
+        this.externalRef = externalRef;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 }

@@ -411,6 +411,10 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
             String folder = DynamiaCMS.getSitesResourceLocation(siteCfg.getSite())
                     .resolve(STORES_FOLDER + File.separator + "images").toString();
             downloadImage(siteCfg.getDatasourceStoreImagesURL(), store.getImage(), folder);
+            downloadImage(siteCfg.getDatasourceStoreImagesURL(), store.getImage2(), folder);
+            downloadImage(siteCfg.getDatasourceStoreImagesURL(), store.getImage3(), folder);
+            downloadImage(siteCfg.getDatasourceStoreImagesURL(), store.getImage4(), folder);
+
 
         } catch (Exception ex) {
             logger.error("Error downloading image from product " + store.getName() + " for Site: "

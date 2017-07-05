@@ -16,6 +16,7 @@ fields:
       height: 100px
   registrationPendingTemplate:
   registrationCompletedTemplate:
+  requireEmailActivation:
   
   synchronizationEnabled:
     label: Enabled
@@ -46,7 +47,7 @@ fields:
     
 groups:
   general:
-    fields: [registrationEnabled,registrationValidated, registrationPendingMessage, registrationCompletedMessage, registrationPendingTemplate, registrationCompletedTemplate]
+    fields: [registrationEnabled,registrationValidated, registrationPendingMessage, registrationCompletedMessage, registrationPendingTemplate, registrationCompletedTemplate, requireEmailActivation]
   synchronization:
     fields: [synchronizationEnabled, datasourceURL, datasourceUsername, datasourcePassword ]
   customFieldsConfig:

@@ -18,11 +18,7 @@ package tools.dynamia.cms.site.products.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import tools.dynamia.cms.site.core.api.SiteAware;
@@ -55,6 +51,36 @@ public class Store extends SimpleEntity implements SiteAware {
 	private Long externalRef;
 	private ContactInfo contactInfo = new ContactInfo();
 	private String image;
+	private String image2;
+	private String image3;
+	private String image4;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	private String info;
+
+	public String getImage2() {
+		return image2;
+	}
+
+	public void setImage2(String image2) {
+		this.image2 = image2;
+	}
+
+	public String getImage3() {
+		return image3;
+	}
+
+	public void setImage3(String image3) {
+		this.image3 = image3;
+	}
+
+	public String getImage4() {
+		return image4;
+	}
+
+	public void setImage4(String image4) {
+		this.image4 = image4;
+	}
 
 	@OneToOne
 	private Page page;
@@ -131,7 +157,19 @@ public class Store extends SimpleEntity implements SiteAware {
 		getContactInfo().setMobileNumber(dto.getMobileNumber());
 		getContactInfo().setPhoneNumber(dto.getPhoneNumber());
 		setExternalRef(dto.getExternalRef());
-		setImage(dto.getImage());
+		if(dto.getImage()!=null && !dto.getImage().isEmpty()) {
+			setImage(dto.getImage());
+		}
+		if(dto.getImage2()!=null && !dto.getImage2().isEmpty()) {
+			setImage2(dto.getImage2());
+		}
+		if(dto.getImage3()!=null && !dto.getImage3().isEmpty()) {
+			setImage3(dto.getImage3());
+		}
+		if(dto.getImage4()!=null && !dto.getImage4().isEmpty()) {
+			setImage4(dto.getImage4());
+		}
+		setInfo(dto.getInfo());
 
 	}
 
@@ -140,4 +178,11 @@ public class Store extends SimpleEntity implements SiteAware {
 		return name;
 	}
 
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
 }

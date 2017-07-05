@@ -102,6 +102,8 @@ public class Product extends SimpleEntity implements SiteAware {
 
 	private String externalLink;
 
+	private String quality;
+
 	@OneToOne
 	@NotNull(message = "Select product category")
 	private ProductCategory category;
@@ -648,6 +650,7 @@ public class Product extends SimpleEntity implements SiteAware {
 		promoStartDate = dto.getPromoStartDate();
 		promoValue = dto.getPromoValue();
 		promoValueType = dto.getPromoValueType();
+		quality = dto.getQuality();
 
 		checkPromo();
 	}
@@ -694,4 +697,11 @@ public class Product extends SimpleEntity implements SiteAware {
 		}
 	}
 
+	public String getQuality() {
+		return quality;
+	}
+
+	public void setQuality(String quality) {
+		this.quality = quality;
+	}
 }

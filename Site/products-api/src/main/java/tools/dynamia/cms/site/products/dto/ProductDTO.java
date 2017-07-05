@@ -94,6 +94,7 @@ public class ProductDTO implements Serializable {
 	private boolean taxable;
 	private boolean taxIncluded;
 	private String unit;
+	private String quality;
 
 	public boolean isTaxIncluded() {
 		return taxIncluded;
@@ -468,4 +469,11 @@ public class ProductDTO implements Serializable {
 		return name;
 	}
 
+	public String getQuality() {
+		return quality;
+	}
+
+	public void setQuality(String quality) {
+		this.quality = quality;
+	}
 }
