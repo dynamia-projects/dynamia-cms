@@ -271,11 +271,12 @@ public class UsersController {
     }
 
 
-    @GetMapping("/activate/{key}")
+    @RequestMapping(value = "/activate/{key}", method = RequestMethod.GET)
     public ModelAndView activateUserByEmail(@PathVariable String key, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
 
-        ModelAndView mv = new ModelAndView("users/activated");
+        ModelAndView mv = new ModelAndView();
+        mv.setView(new RedirectView("/", true, true, false));
 
         if (key == null || key.isEmpty()) {
             CMSUtil.addErrorMessage("Invalid validation key", redirectAttributes);
@@ -292,13 +293,13 @@ public class UsersController {
                     UserSiteConfig config = service.getSiteConfig(site);
 
                     if (user.isEnabled()) {
-                        CMSUtil.addSuccessMessage("User "+user+" already activated", redirectAttributes);
+                        CMSUtil.addSuccessMessage("User " + user + " already activated", redirectAttributes);
 
                     } else if (DateTimeUtils.isFuture(user.getValidationDateLimit())) {
                         user.setValidationDate(DateTimeUtils.now());
                         user.setValidated(true);
 
-                        if(!config.isRegistrationValidated()) {
+                        if (!config.isRegistrationValidated()) {
 
                             service.enableUser(user);
                         }

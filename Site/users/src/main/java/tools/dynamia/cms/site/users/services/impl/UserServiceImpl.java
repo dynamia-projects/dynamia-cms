@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Site site, String name) {
-        QueryParameters qp = QueryParameters.with("site", site).add("username", name);
+        QueryParameters qp = QueryParameters.with("site", site).add("username", QueryConditions.eq(name));
         return crudService.findSingle(User.class, qp);
     }
 
@@ -295,6 +295,7 @@ public class UserServiceImpl implements UserService {
             msg.setTemplate(config.getEmailValidationTemplate());
             msg.setTemplateModel(MapBuilder.put("user", user));
             msg.setTo(user.getUsername());
+            msg.setMailAccount(config.getMailAccount());
 
             mailService.send(msg);
 
@@ -307,6 +308,7 @@ public class UserServiceImpl implements UserService {
         if (config != null && config.getRegistrationCompletedTemplate() != null
                 && config.getRegistrationPendingTemplate() != null) {
             MailMessage msg = new MailMessage();
+            msg.setMailAccount(config.getMailAccount());
             if (user.isEnabled()) {
                 msg.setTemplate(config.getRegistrationCompletedTemplate());
             } else {

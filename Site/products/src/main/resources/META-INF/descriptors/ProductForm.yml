@@ -92,6 +92,8 @@ fields:
    creditPrices:
        component: crudview
 
+   reviews:
+       component: crudview
 groups:
    general:
        fields: [name,sku,reference,brand,category,template,alternateTemplate,description,longDescription]

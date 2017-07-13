@@ -1,109 +1,109 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 
 
 <body th:fragment="frag (prd)">
 
-	<div class="thumbnail productpanel">
+<div class="thumbnail productpanel">
 
-		<div class="relativediv">
+    <div class="relativediv">
 			<span class="brand"
-				th:text="${prd.brand!=null?prd.brand.name.toUpperCase():''}">Brand</span>
+                  th:text="${prd.brand!=null?prd.brand.name.toUpperCase():''}">Brand</span>
 
-			<!-- Product Image -->
-			<div style="height: 170px; line-height: 170px" class="tooltip-test"
-				data-placement="top" data-toogle="tooltip"
-				th:title="${cmsUtil.cropText(prd.description,140)}">
-				<a th:href="@{'/store/products/'+${prd.id}}" href="#"
-					style="vertical-align: middle; line-height: 1.5"> <img
-					th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=180,h=180)}"
-					src="img/product1a.jpg" alt="" th:if="${prd.image!=null}" /> <img
-					th:src="@{/img/product1a.jpg}" alt="" th:if="${prd.image==null}"
-					width="180px" height="180px" />
-				</a>
-			</div>
-			<span th:if="${prd.sale and prd_config.showBadges}"
-				class="sale tooltip-test" data-original-title="" title=""> <i
-				class="icon-gift font24"></i> Oferta
+        <!-- Product Image -->
+        <div style="height: 170px; line-height: 170px" class="tooltip-test"
+             data-placement="top" data-toogle="tooltip"
+             th:title="${cmsUtil.cropText(prd.description,140)}">
+            <a th:href="@{'/store/products/'+${prd.id}}" href="#"
+               style="vertical-align: middle; line-height: 1.5"> <img
+                    th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=180,h=180)}"
+                    src="img/product1a.jpg" alt="" th:if="${prd.image!=null}"/> <img
+                    th:src="@{/img/product1a.jpg}" alt="" th:if="${prd.image==null}"
+                    width="180px" height="180px"/>
+            </a>
+        </div>
+        <span th:if="${prd.sale and prd_config.showBadges}"
+              class="sale tooltip-test" data-original-title="" title=""> <i
+                class="icon-gift font24"></i> Oferta
 			</span> <span th:if="${prd.featured and prd_config.showBadges}"
-				class="sale tooltip-test" data-original-title="" title=""> <i
-				class="icon-star-empty font24"></i> Destacado
+                          class="sale tooltip-test" data-original-title="" title=""> <i
+            class="icon-star-empty font24"></i> Destacado
 			</span> <span th:if="${prd.newproduct and prd_config.showBadges}"
-				class="sale tooltip-test" style="background-color: #cc0000"
-				data-original-title="" title=""> <i
-				class="icon-bookmark-empty font24"></i> Nuevo
+                          class="sale tooltip-test" style="background-color: #cc0000"
+                          data-original-title="" title=""> <i
+            class="icon-bookmark-empty font24"></i> Nuevo
 			</span> <span th:if="${prd.promoEnabled}" class="sale tooltip-test"
-				style="font-size: 20px" th:text="${prd.promoValueFormatted}"
-				th:title="${prd.promoName}"> </span>
-			<div class="viewicons" th:if="${@userHolder.authenticated}">
-				<form class="pull-left" target="_blank" th:if="false"
-					action="http://www.facebook.com/sharer.php" method="get">
-					<button type="submit" data-original-title="Compartir"
-						class="btn btn-inverse tooltip-test">
-						<i class="fa fa-facebook icon-white"></i>
-					</button>
-					<input type="hidden" name="u" id="u"
-						th:value="@{${@siteContext.siteURL}+'/store/products/'+${prd.id}}" />
-				</form>
-				<form class="pull-left"
-					th:if="${prd.stock gt prd_config.minStock and prd_config.shopEnabled and prd.sellInWeb}"
-					th:action="@{'/shoppingcart/shop/add/'+${prd.id}}" method="get">
-					<button type="submit" data-original-title="Agregar al Carrito"
-						class="btn btn-inverse tooltip-test">
-						<i class="fa fa-shopping-cart icon-white"></i>
-					</button>
-					<input type="hidden" name="currentURI" id="currentURI"
-						th:value="${currentURI}" />
-				</form>
-				<form class="pull-left" th:if="${prd_config.quoteEnabled}"
-					th:action="@{'/shoppingcart/quote/add/'+${prd.id}}" method="get">
-					<button type="submit" data-original-title="Cotizar"
-						class="btn btn-inverse tooltip-test">
-						<i class="fa fa-external-link icon-white"></i>
-					</button>
-					<input type="hidden" name="currentURI" id="currentURI"
-						th:value="${currentURI}" />
-				</form>
+                          style="font-size: 20px" th:text="${prd.promoValueFormatted}"
+                          th:title="${prd.promoName}"> </span>
+        <div class="viewicons" th:if="${@userHolder.authenticated}">
+            <form class="pull-left" target="_blank" th:if="false"
+                  action="http://www.facebook.com/sharer.php" method="get">
+                <button type="submit" data-original-title="Compartir"
+                        class="btn btn-inverse tooltip-test">
+                    <i class="fa fa-facebook icon-white"></i>
+                </button>
+                <input type="hidden" name="u" id="u"
+                       th:value="@{${@siteContext.siteURL}+'/store/products/'+${prd.id}}"/>
+            </form>
+            <form class="pull-left"
+                  th:if="${prd.stock gt prd_config.minStock and prd_config.shopEnabled and prd.sellInWeb}"
+                  th:action="@{'/shoppingcart/shop/add/'+${prd.id}}" method="get">
+                <button type="submit" data-original-title="Agregar al Carrito"
+                        class="btn btn-inverse tooltip-test">
+                    <i class="fa fa-shopping-cart icon-white"></i>
+                </button>
+                <input type="hidden" name="currentURI" id="currentURI"
+                       th:value="${currentURI}"/>
+            </form>
+            <form class="pull-left" th:if="${prd_config.quoteEnabled}"
+                  th:action="@{'/shoppingcart/quote/add/'+${prd.id}}" method="get">
+                <button type="submit" data-original-title="Cotizar"
+                        class="btn btn-inverse tooltip-test">
+                    <i class="fa fa-external-link icon-white"></i>
+                </button>
+                <input type="hidden" name="currentURI" id="currentURI"
+                       th:value="${currentURI}"/>
+            </form>
 
-				<form class="pull-left" th:if="false"
-					th:action="@{'/store/products/'+${prd.id}+'/compare'}" method="get">
-					<button type="submit" data-original-title="Comparar"
-						class="btn btn-inverse tooltip-test">
-						<i class="fa fa-refresh icon-white"></i>
-					</button>
-				</form>
-				<form class="pull-left"
-					th:action="@{'/store/products/'+${prd.id}+'/share'}" method="get">
-					<button type="submit" data-original-title="Recomendar"
-						class="btn btn-inverse tooltip-test">
-						<i class="fa fa-envelope icon-white"></i>
-					</button>
-				</form>
-			</div>
-		</div>
-		<div class="caption">
-			<!-- Nombre -->
-			<div class="mt10  productname">
-				<a th:href="@{'/store/products/'+${prd.id}}" th:text="${prd.name}"
-					href="#">Product Name</a>
-			</div>
+            <form class="pull-left" th:if="false"
+                  th:action="@{'/store/products/'+${prd.id}+'/compare'}" method="get">
+                <button type="submit" data-original-title="Comparar"
+                        class="btn btn-inverse tooltip-test">
+                    <i class="fa fa-refresh icon-white"></i>
+                </button>
+            </form>
+            <form class="pull-left"
+                  th:action="@{'/store/products/'+${prd.id}+'/share'}" method="get">
+                <button type="submit" data-original-title="Recomendar"
+                        class="btn btn-inverse tooltip-test">
+                    <i class="fa fa-envelope icon-white"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="caption">
+        <!-- Nombre -->
+        <div class="mt10  productname">
+            <a th:href="@{'/store/products/'+${prd.id}}" th:text="${prd.name}"
+               href="#">Product Name</a>
+        </div>
 
-			<!-- Precio -->
-			<div class="productratecart centered"
-				th:unless="${prd.hasStorePrice()}"
-				th:if="${@userHolder.authenticated}">
-				<h3>
-					<strong><span
-						th:text="${cmsUtil.formatNumber(prdUtil.getUserPrice(prd,prd_config),prd_config.pricePattern+' '+prd_config.defaultCurrency)}"
-						class=" orange">$4459.00</span></strong>
-				</h3>
+        <!-- Precio -->
+        <div class="productratecart centered"
+             th:unless="${prd.hasStorePrice()}"
+             th:if="${@userHolder.authenticated}">
+            <h3>
+                <strong><span
+                        th:text="${cmsUtil.formatNumber(prdUtil.getUserPrice(prd,prd_config),prd_config.pricePattern+' '+prd_config.defaultCurrency)}"
+                        class=" orange">$4459.00</span></strong>
+            </h3>
 
-			</div>
+        </div>
 
 
-		</div>
-	</div>
+    </div>
+</div>
 
 
 </body>

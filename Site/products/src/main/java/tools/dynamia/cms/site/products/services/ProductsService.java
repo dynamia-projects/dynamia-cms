@@ -17,20 +17,13 @@ package tools.dynamia.cms.site.products.services;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.products.ProductSearchForm;
 import tools.dynamia.cms.site.products.ProductShareForm;
-import tools.dynamia.cms.site.products.domain.Product;
-import tools.dynamia.cms.site.products.domain.ProductBrand;
-import tools.dynamia.cms.site.products.domain.ProductCategory;
-import tools.dynamia.cms.site.products.domain.ProductCategoryDetail;
-import tools.dynamia.cms.site.products.domain.ProductDetail;
-import tools.dynamia.cms.site.products.domain.ProductUserStory;
-import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import tools.dynamia.cms.site.products.domain.RelatedProduct;
-import tools.dynamia.cms.site.products.domain.Store;
+import tools.dynamia.cms.site.products.domain.*;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.domain.query.BooleanOp;
 import tools.dynamia.domain.query.QueryConditions;
@@ -122,4 +115,13 @@ public interface ProductsService {
 
 	int computeProductCountByCategory(Site site);
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    void saveReview(Product product, String comment, int rate);
+
+    ProductReview getUserReview(Product product, User user);
+
+    @Transactional
+    void computeProductRate(Product product);
+
+    List<ProductReview> getTopReviews(Product product, int max);
 }

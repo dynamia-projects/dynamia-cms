@@ -1,11 +1,10 @@
 view: table
 beanClass: tools.dynamia.cms.site.mail.domain.MailAccount
-hidden: [id,password,site]
-sortFields: [preferred,name,username,serverAddress,port,fromAddress,useTTLS,loginRequired,enconding]
+autofields: false
 
 fields:
-   useTTLS:
-       label: TTLS
+
+
        
    preferred:
        label: P
@@ -14,4 +13,15 @@ fields:
        params:
            trueIcon: star
            falseIcon: staroff
-           width: 32px
+           header:
+              width: 32px
+
+   name:
+   username:
+   serverAddress:
+   port:
+   fromAddress:
+   useTTLS:
+         label: TTLS
+   loginRequired:
+   enconding:

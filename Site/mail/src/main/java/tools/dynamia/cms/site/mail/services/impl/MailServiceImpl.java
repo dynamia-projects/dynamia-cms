@@ -254,28 +254,4 @@ public class MailServiceImpl implements MailService {
 		}
 	}
 
-	class MailSenderHolder {
-
-		private long timestamp;
-		private MailSender sender;
-
-		public MailSenderHolder(long timestamp, MailSender sender) {
-			this.timestamp = timestamp;
-			this.sender = sender;
-		}
-
-		public MailSender getSender() {
-			return sender;
-		}
-
-		public long getTimestamp() {
-			return timestamp;
-		}
-
-		public boolean isOld(long newtimestamp) {
-			return newtimestamp > timestamp;
-		}
-
-	}
-
 }

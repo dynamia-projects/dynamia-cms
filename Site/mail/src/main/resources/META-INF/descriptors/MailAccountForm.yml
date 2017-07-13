@@ -1,13 +1,23 @@
 view: form
 beanClass: tools.dynamia.cms.site.mail.domain.MailAccount
-hidden: [id,preferred,site]
-sortFields: [name,username,password,serverAddress,port,fromAddress,useTTLS,loginRequired,enconding]
-
+autofields: false
 
 fields:
-   useTTLS:
-       label: TTLS
-       
+
+
+   name:
+    params:
+      span: 2
    username:
-       params:
-           span: 2
+
+
+   password:
+   serverAddress:
+   port:
+   fromAddress:
+
+   useTTLS:
+         label: TTLS
+
+   loginRequired:
+   enconding:

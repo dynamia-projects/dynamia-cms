@@ -6,6 +6,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import tools.dynamia.cms.site.core.domain.SiteSimpleEntity;
+import tools.dynamia.cms.site.mail.domain.MailAccount;
 import tools.dynamia.cms.site.mail.domain.MailTemplate;
 
 @Entity
@@ -36,6 +37,9 @@ public class UserSiteConfig extends SiteSimpleEntity {
 
 	@OneToOne
 	private MailTemplate emailValidationTemplate;
+
+	@OneToOne
+	private MailAccount mailAccount;
 
 	private boolean requireEmailActivation;
 
@@ -269,5 +273,13 @@ public class UserSiteConfig extends SiteSimpleEntity {
 
 	public void setEmailValidationTemplate(MailTemplate emailValidationTemplate) {
 		this.emailValidationTemplate = emailValidationTemplate;
+	}
+
+	public MailAccount getMailAccount() {
+		return mailAccount;
+	}
+
+	public void setMailAccount(MailAccount mailAccount) {
+		this.mailAccount = mailAccount;
 	}
 }

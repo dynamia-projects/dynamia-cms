@@ -189,6 +189,9 @@
         <h2>Related Products</h2>
         <th:block th:include="products/components/productcarousel::frag(${prd_relatedProducts},4)" />
     </div>
+
+    <!-- Reviews -->
+    <th:block th:include="products/reviews::content"></th:block>
 </div>
 
 </html>

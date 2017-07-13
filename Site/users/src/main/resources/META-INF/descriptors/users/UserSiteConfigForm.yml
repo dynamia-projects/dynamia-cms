@@ -17,6 +17,8 @@ fields:
   registrationPendingTemplate:
   registrationCompletedTemplate:
   requireEmailActivation:
+  emailValidationTemplate:
+  mailAccount:
   
   synchronizationEnabled:
     label: Enabled
@@ -47,7 +49,7 @@ fields:
     
 groups:
   general:
-    fields: [registrationEnabled,registrationValidated, registrationPendingMessage, registrationCompletedMessage, registrationPendingTemplate, registrationCompletedTemplate, requireEmailActivation]
+    fields: [registrationEnabled,registrationValidated, registrationPendingMessage, registrationCompletedMessage, registrationPendingTemplate, registrationCompletedTemplate, requireEmailActivation, emailValidationTemplate,mailAccount]
   synchronization:
     fields: [synchronizationEnabled, datasourceURL, datasourceUsername, datasourcePassword ]
   customFieldsConfig:

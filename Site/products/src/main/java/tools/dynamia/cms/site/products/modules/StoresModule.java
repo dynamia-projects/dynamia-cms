@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.api.AbstractModule;
 import tools.dynamia.cms.site.core.api.CMSModule;
 import tools.dynamia.cms.site.core.api.ModuleContext;
@@ -33,7 +34,10 @@ public class StoresModule extends AbstractModule {
 	public void init(ModuleContext context) {
 		List<Store> stores = service.getStores(context.getSite());
 		stores.forEach(s -> s.getContacts().size());
+
 		context.getModuleInstance().addObject("stores", stores);
+
+
 
 	}
 
