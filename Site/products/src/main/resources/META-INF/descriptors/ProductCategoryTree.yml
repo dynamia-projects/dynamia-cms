@@ -6,6 +6,9 @@ autofields: false
 fields:
     id:
     name:
+      params:
+        header:
+          width: 200px
     relatedCategory:
        label: Related
     description:
@@ -15,4 +18,4 @@ fields:
     productsCount:
       label: Products
     active:
-    
+    externalRef:

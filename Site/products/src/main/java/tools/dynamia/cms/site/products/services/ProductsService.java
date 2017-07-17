@@ -121,7 +121,7 @@ public interface ProductsService {
     ProductReview getUserReview(Product product, User user);
 
     @Transactional
-    void computeProductRate(Product product);
+    void computeProductStars(Product product);
 
     List<ProductReview> getTopReviews(Product product, int max);
 }

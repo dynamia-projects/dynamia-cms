@@ -139,8 +139,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         }
     }
 
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override	    
     public List<ProductDTO> synchronizeProducts(ProductsSiteConfig siteCfg) {
         logger.debug(">>>> STARTING PRODUCTS SYNCHRONIZATION FOR SITE " + siteCfg.getSite().getName() + " <<<<");
         ProductsDatasource ds = getDatasource(siteCfg);
@@ -150,7 +149,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
             logger.debug("Synchronizing product. Site:  " + siteCfg.getSite().getName() + " Name:"
                     + remoteProduct.getName());
             try {
-                synchronizeProduct(siteCfg, remoteProduct);
+            	crudService.executeWithinTransaction(()->synchronizeProduct(siteCfg, remoteProduct));
             } catch (Exception e) {
                 logger.error("Error Synchronizing Product: " + remoteProduct.getName(), e);
             }
@@ -182,7 +181,8 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
                     .setBrand(getLocalEntity(ProductBrand.class, remoteProduct.getBrand().getExternalRef(), siteCfg));
         }
 
-        if (localProduct.getCategory() != null) {
+        if (localProduct.getCategory() != null) {	
+        	logger.info("Saving product "+localProduct.getName());
             crudService.save(localProduct);
         } else {
             logger.warn("Cannot save product " + localProduct.getName() + ". Category is null");

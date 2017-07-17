@@ -1,7 +1,6 @@
 package tools.dynamia.cms.site.products.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -66,6 +65,13 @@ public class ProductReviewsController {
 
         try {
             service.saveReview(product, comment, star);
+            try {
+                service.computeProductStars(product);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
             CMSUtil.addSuccessMessage("Gracias por escribir una reseña de este producto", redirectAttributes);
         } catch (ValidationError e) {
             CMSUtil.addErrorMessage(e.getMessage(), redirectAttributes);
@@ -76,7 +82,7 @@ public class ProductReviewsController {
     }
 
     @GetMapping("/{id}/reviews")
-    public List<ProductReview> getReviews(@PathVariable Long id, @RequestParam(required = false, defaultValue = "30") int max, HttpServletRequest request){
+    public List<ProductReview> getReviews(@PathVariable Long id, @RequestParam(required = false, defaultValue = "30") int max, HttpServletRequest request) {
         Product product = crudService.find(Product.class, id);
 
         if (product == null || !product.getSite().equals(siteService.getSite(request))) {
@@ -84,7 +90,6 @@ public class ProductReviewsController {
         }
 
 
-
-        return service.getTopReviews(product,max);
+        return service.getTopReviews(product, max);
     }
 }

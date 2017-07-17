@@ -22,6 +22,7 @@ fields:
             span: 4
     
     order:
+    externalRef:
     active:
     
     details:

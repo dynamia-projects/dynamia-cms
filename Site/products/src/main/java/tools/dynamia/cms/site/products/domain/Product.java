@@ -92,13 +92,13 @@ public class Product extends SimpleEntity implements SiteAware {
     private String videoURL;
     private String videoURL2;
 
-    private double stars;
-    private long stars1Count;
-    private long stars2Count;
-    private long stars3Count;
-    private long stars4Count;
-    private long stars5Count;
-    private long reviews;
+    private Double stars;
+    private Long stars1Count;
+    private Long stars2Count;
+    private Long stars3Count;
+    private Long stars4Count;
+    private Long stars5Count;
+    private Long reviews;
     private Long views = 1L;
 
     @Column(length = 5000)
@@ -156,43 +156,43 @@ public class Product extends SimpleEntity implements SiteAware {
     private boolean taxIncluded;
     private String unit;
 
-    public long getStars1Count() {
+    public Long getStars1Count() {
         return stars1Count;
     }
 
-    public void setStars1Count(long stars1Count) {
+    public void setStars1Count(Long stars1Count) {
         this.stars1Count = stars1Count;
     }
 
-    public long getStars2Count() {
+    public Long getStars2Count() {
         return stars2Count;
     }
 
-    public void setStars2Count(long stars2Count) {
+    public void setStars2Count(Long stars2Count) {
         this.stars2Count = stars2Count;
     }
 
-    public long getStars3Count() {
+    public Long getStars3Count() {
         return stars3Count;
     }
 
-    public void setStars3Count(long stars3Count) {
+    public void setStars3Count(Long stars3Count) {
         this.stars3Count = stars3Count;
     }
 
-    public long getStars4Count() {
+    public Long getStars4Count() {
         return stars4Count;
     }
 
-    public void setStars4Count(long stars4Count) {
+    public void setStars4Count(Long stars4Count) {
         this.stars4Count = stars4Count;
     }
 
-    public long getStars5Count() {
+    public Long getStars5Count() {
         return stars5Count;
     }
 
-    public void setStars5Count(long stars5Count) {
+    public void setStars5Count(Long stars5Count) {
         this.stars5Count = stars5Count;
     }
 
@@ -450,11 +450,11 @@ public class Product extends SimpleEntity implements SiteAware {
         this.name = name;
     }
 
-    public double getStars() {
+    public Double getStars() {
         return stars;
     }
 
-    public void setStars(double stars) {
+    public void setStars(Double stars) {
         this.stars = stars;
     }
 
