@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+
+
+<div class="container" layout:fragment="content">
+
+	<!-- Main Title-->
+	<div class="titles">
+		<div class="pull-left">
+			<h1 class="headinglefttitle">Validacion de Email</h1>
+		</div>
+		<i class="icon-ok-circle"></i>
+	</div>
+	<div class="row mt40">
+
+
+
+		<div th:if="${valid}">
+
+			<h3>Gracias por verificar su correo</h3>
+			<h4>
+				<span th:text="${user.fullName}"></span> ya puede iniciar sesion y
+				empezar a comprar
+			</h4>
+		</div>
+
+
+		<div th:unless="${valid}">
+			<h3>No se pudo verificar correo</h3>
+			<h4 th:text="${message}"></h4>
+		</div>
+
+
+
+	</div>
+
+</div>
+
+
+</html>

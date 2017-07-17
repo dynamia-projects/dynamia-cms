@@ -56,270 +56,267 @@ import tools.dynamia.domain.services.CrudService;
 @RequestMapping("/users")
 public class UsersController {
 
-    @Autowired
-    private CrudService crudService;
+	@Autowired
+	private CrudService crudService;
 
-    @Autowired
-    private SiteService siteService;
+	@Autowired
+	private SiteService siteService;
 
-    @Autowired
-    private UserService service;
+	@Autowired
+	private UserService service;
 
-    @RequestMapping(value = {"/login", "/save"}, method = RequestMethod.GET)
-    public ModelAndView login(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("users/login");
-        mv.addObject("title", "Inicio de Sesion");
-        SiteActionManager.performAction("loginUser", mv, request);
+	@RequestMapping(value = { "/login", "/save" }, method = RequestMethod.GET)
+	public ModelAndView login(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("users/login");
+		mv.addObject("title", "Inicio de Sesion");
+		SiteActionManager.performAction("loginUser", mv, request);
 
-        return mv;
-    }
+		return mv;
+	}
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-        ModelAndView mv = new ModelAndView();
-        mv.setView(new RedirectView("/", false, true, false));
-        return mv;
-    }
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null) {
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		ModelAndView mv = new ModelAndView();
+		mv.setView(new RedirectView("/", false, true, false));
+		return mv;
+	}
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public ModelAndView saveUser(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request) {
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public ModelAndView saveUser(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request) {
 
-        ModelAndView mv = new ModelAndView("users/save");
-        mv.addObject("title", "Registro de Usuarios");
-        SiteActionManager.performAction("saveUser", mv, request, user);
+		ModelAndView mv = new ModelAndView("users/save");
+		mv.addObject("title", "Registro de Usuarios");
+		SiteActionManager.performAction("saveUser", mv, request, user);
 
-        return mv;
-    }
+		return mv;
+	}
 
-    @RequestMapping(value = "/resetpassword", method = RequestMethod.GET)
-    public ModelAndView resetPassword(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("users/resetpassword");
-        mv.addObject("title", "Olvide mi Password");
-        UserForm form = new UserForm();
-        form.setData(new User());
-        mv.addObject("userForm", form);
-        return mv;
-    }
+	@RequestMapping(value = "/resetpassword", method = RequestMethod.GET)
+	public ModelAndView resetPassword(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("users/resetpassword");
+		mv.addObject("title", "Olvide mi Password");
+		UserForm form = new UserForm();
+		form.setData(new User());
+		mv.addObject("userForm", form);
+		return mv;
+	}
 
-    @RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
-    public ModelAndView resetPassword(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request,
-                                      RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView("users/resetpassword");
-        mv.addObject("title", "Olvide mi Password");
-        SiteActionManager.performAction("resetPassword", mv, request, redirectAttributes, user);
-        return mv;
-    }
+	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
+	public ModelAndView resetPassword(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView("users/resetpassword");
+		mv.addObject("title", "Olvide mi Password");
+		SiteActionManager.performAction("resetPassword", mv, request, redirectAttributes, user);
+		return mv;
+	}
 
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/account", method = RequestMethod.GET)
-    public ModelAndView account(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("users/account");
-        mv.addObject("title", "Mi Cuenta");
-        return mv;
-    }
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/account", method = RequestMethod.GET)
+	public ModelAndView account(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("users/account");
+		mv.addObject("title", "Mi Cuenta");
+		return mv;
+	}
 
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/changepassword", method = RequestMethod.GET)
-    public ModelAndView changePassword(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("users/changepassword");
-        mv.addObject("title", "Cambiar Password");
-        SiteActionManager.performAction("updateUser", mv, request);
-        return mv;
-    }
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/changepassword", method = RequestMethod.GET)
+	public ModelAndView changePassword(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("users/changepassword");
+		mv.addObject("title", "Cambiar Password");
+		SiteActionManager.performAction("updateUser", mv, request);
+		return mv;
+	}
 
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/changepassword", method = RequestMethod.POST)
-    public ModelAndView changePassword(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request,
-                                       RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView("users/accounts");
-        SiteActionManager.performAction("changePassword", mv, request, redirectAttributes, user);
-        return mv;
-    }
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/changepassword", method = RequestMethod.POST)
+	public ModelAndView changePassword(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView("users/accounts");
+		SiteActionManager.performAction("changePassword", mv, request, redirectAttributes, user);
+		return mv;
+	}
 
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public ModelAndView profile(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("users/profile");
-        mv.addObject("title", "Mis Datos");
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public ModelAndView profile(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("users/profile");
+		mv.addObject("title", "Mis Datos");
 
-        SiteActionManager.performAction("updateUser", mv, request);
+		SiteActionManager.performAction("updateUser", mv, request);
 
-        mv.addObject("redirect", request.getParameter("redirect"));
-        return mv;
-    }
+		mv.addObject("redirect", request.getParameter("redirect"));
+		return mv;
+	}
 
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/profile", method = RequestMethod.POST)
-    public ModelAndView profile(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request,
-                                RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView("users/account");
-        SiteActionManager.performAction("saveUserProfile", mv, request, redirectAttributes, user);
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/profile", method = RequestMethod.POST)
+	public ModelAndView profile(@Valid UserForm user, BindingResult bindingResult, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView("users/account");
+		SiteActionManager.performAction("saveUserProfile", mv, request, redirectAttributes, user);
 
-        if (request.getParameter("redirect") != null) {
-            mv.setView(new RedirectView(request.getParameter("redirect"), true, true, false));
-        }
+		if (request.getParameter("redirect") != null) {
+			mv.setView(new RedirectView(request.getParameter("redirect"), true, true, false));
+		}
 
-        return mv;
-    }
+		return mv;
+	}
 
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/addresses", method = RequestMethod.GET)
-    public ModelAndView addresses(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("users/addresses/table");
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/addresses", method = RequestMethod.GET)
+	public ModelAndView addresses(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("users/addresses/table");
 
-        SiteActionManager.performAction("showUserContactInfos", mv, request);
-        return mv;
-    }
+		SiteActionManager.performAction("showUserContactInfos", mv, request);
+		return mv;
+	}
 
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/addresses", method = RequestMethod.POST)
-    public ModelAndView saveAddress(@Valid UserContactInfo userContactInfo, BindingResult bindingResult,
-                                    HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView();
-        String redirect = request.getParameter("currentURI");
-        if (request.getParameter("redirect") != null) {
-            redirect = request.getParameter("redirect");
-        }
-        mv.addObject("redirect", redirect);
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/addresses", method = RequestMethod.POST)
+	public ModelAndView saveAddress(@Valid UserContactInfo userContactInfo, BindingResult bindingResult,
+			HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
+		String redirect = request.getParameter("currentURI");
+		if (request.getParameter("redirect") != null) {
+			redirect = request.getParameter("redirect");
+		}
+		mv.addObject("redirect", redirect);
 
-        SiteActionManager.performAction("saveUserContactInfo", mv, request, redirectAttributes, userContactInfo);
+		SiteActionManager.performAction("saveUserContactInfo", mv, request, redirectAttributes, userContactInfo);
 
-        return mv;
-    }
+		return mv;
+	}
 
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/addresses/add", method = RequestMethod.GET)
-    public ModelAndView addAddress(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("users/addresses/form");
-        SiteActionManager.performAction("addUserContactInfo", mv, request);
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/addresses/add", method = RequestMethod.GET)
+	public ModelAndView addAddress(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("users/addresses/form");
+		SiteActionManager.performAction("addUserContactInfo", mv, request);
 
-        mv.addObject("redirect", request.getParameter("redirect"));
+		mv.addObject("redirect", request.getParameter("redirect"));
 
-        return mv;
-    }
+		return mv;
+	}
 
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/addresses/{id}/edit", method = RequestMethod.GET)
-    public ModelAndView editAddress(@PathVariable Long id, HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("users/addresses/form");
-        SiteActionManager.performAction("editUserContactInfo", mv, request, id);
-        mv.addObject("redirect", request.getParameter("redirect"));
-        return mv;
-    }
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/addresses/{id}/edit", method = RequestMethod.GET)
+	public ModelAndView editAddress(@PathVariable Long id, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("users/addresses/form");
+		SiteActionManager.performAction("editUserContactInfo", mv, request, id);
+		mv.addObject("redirect", request.getParameter("redirect"));
+		return mv;
+	}
 
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/addresses/{id}/remove", method = RequestMethod.GET)
-    public ModelAndView removeAddress(@PathVariable Long id, HttpServletRequest request,
-                                      RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView("users/addresses/table");
-        mv.setView(new RedirectView("/users/profile", true, true, false));
-        SiteActionManager.performAction("removeUserContactInfo", mv, request, redirectAttributes, id);
-        return mv;
-    }
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/addresses/{id}/remove", method = RequestMethod.GET)
+	public ModelAndView removeAddress(@PathVariable Long id, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView("users/addresses/table");
+		mv.setView(new RedirectView("/users/profile", true, true, false));
+		SiteActionManager.performAction("removeUserContactInfo", mv, request, redirectAttributes, id);
+		return mv;
+	}
 
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/setCustomer", method = {RequestMethod.POST})
-    public ModelAndView setCustomer(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView();
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/setCustomer", method = { RequestMethod.POST })
+	public ModelAndView setCustomer(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView();
 
-        Site site = siteService.getSite(request);
-        String id = request.getParameter("id");
-        String code = request.getParameter("code");
-        User customer = null;
+		Site site = siteService.getSite(request);
+		String id = request.getParameter("id");
+		String code = request.getParameter("code");
+		User customer = null;
 
-        if (code != null && !code.isEmpty()) {
-            customer = crudService.findSingle(User.class,
-                    QueryParameters.with("externalRef", QueryConditions.eq(code)).add("site", site));
+		if (code != null && !code.isEmpty()) {
+			customer = crudService.findSingle(User.class,
+					QueryParameters.with("externalRef", QueryConditions.eq(code)).add("site", site));
 
-            if (customer == null) {
-                CMSUtil.addErrorMessage("No se encontro cliente con codigo: " + code, redirectAttributes);
-            }
-        } else if (id != null && !id.equals("0")) {
-            try {
-                customer = crudService.find(User.class, Long.parseLong(id));
-            } catch (Exception e) {
-            }
-        }
+			if (customer == null) {
+				CMSUtil.addErrorMessage("No se encontro cliente con codigo: " + code, redirectAttributes);
+			}
+		} else if (id != null && !id.equals("0")) {
+			try {
+				customer = crudService.find(User.class, Long.parseLong(id));
+			} catch (Exception e) {
+			}
+		}
 
-        if (customer != null) {
-            UserHolder.get().setCustomer(customer);
-        }
-        String redirect = request.getParameter("currentURI");
-        if (request.getParameter("redirect") != null) {
-            redirect = request.getParameter("redirect");
-        }
+		if (customer != null) {
+			UserHolder.get().setCustomer(customer);
+		}
+		String redirect = request.getParameter("currentURI");
+		if (request.getParameter("redirect") != null) {
+			redirect = request.getParameter("redirect");
+		}
 
-        if (redirect == null) {
-            redirect = "/";
-        }
+		if (redirect == null) {
+			redirect = "/";
+		}
 
-        mv.setView(new RedirectView(redirect, true, true, false));
+		mv.setView(new RedirectView(redirect, true, true, false));
 
-        return mv;
-    }
+		return mv;
+	}
 
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/mycustomers", method = RequestMethod.GET)
-    public ModelAndView myCustomers(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView("users/mycustomers");
-        SiteActionManager.performAction("showMyCustomers", mv, request, redirectAttributes);
-        return mv;
-    }
+	@Secured("ROLE_USER")
+	@RequestMapping(value = "/mycustomers", method = RequestMethod.GET)
+	public ModelAndView myCustomers(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView("users/mycustomers");
+		SiteActionManager.performAction("showMyCustomers", mv, request, redirectAttributes);
+		return mv;
+	}
 
+	@RequestMapping(value = "/activate/{key}", method = RequestMethod.GET)
+	public ModelAndView activateUserByEmail(@PathVariable String key, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
 
-    @RequestMapping(value = "/activate/{key}", method = RequestMethod.GET)
-    public ModelAndView activateUserByEmail(@PathVariable String key, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		ModelAndView mv = new ModelAndView("users/validated");
+		mv.addObject("valid", false);
 
+		if (key == null || key.isEmpty()) {
+			CMSUtil.addErrorMessage("Invalid validation key", redirectAttributes);
+		} else {
+			String message = "";
 
-        ModelAndView mv = new ModelAndView();
-        mv.setView(new RedirectView("/", true, true, false));
+			Site site = siteService.getSite(request);
 
-        if (key == null || key.isEmpty()) {
-            CMSUtil.addErrorMessage("Invalid validation key", redirectAttributes);
-        } else {
+			if (site != null) {
+				User user = service.getUserByValidationKey(site, key);
 
+				if (user != null) {
 
-            Site site = siteService.getSite(request);
+					UserSiteConfig config = service.getSiteConfig(site);
 
-            if (site != null) {
-                User user = service.getUserByValidationKey(site, key);
+					if (user.isEnabled()) {
+						message = "El usuario " + user + " ya fue activado";
 
-                if (user != null) {
+					} else {
+						user.setValidationDate(DateTimeUtils.now());
+						user.setValidated(true);
 
-                    UserSiteConfig config = service.getSiteConfig(site);
+						if (!config.isRegistrationValidated()) {
+							service.enableUser(user);
+							mv.addObject("valid", true);
+						}
+						mv.addObject("user", user);
+					}
+				} else {
+					message = "Link invalido, no se encuentra usuario asociado";
 
-                    if (user.isEnabled()) {
-                        CMSUtil.addSuccessMessage("User " + user + " already activated", redirectAttributes);
+				}
+			} else {
+				message = "Sitio web invalido";
+			}
+			mv.addObject("message", message);
 
-                    } else if (DateTimeUtils.isFuture(user.getValidationDateLimit())) {
-                        user.setValidationDate(DateTimeUtils.now());
-                        user.setValidated(true);
+		}
 
-                        if (!config.isRegistrationValidated()) {
+		return mv;
 
-                            service.enableUser(user);
-                        }
-                        mv.addObject("user", user);
-                    } else {
-                        CMSUtil.addErrorMessage("Link has expired", redirectAttributes);
-                    }
-                } else {
-                    CMSUtil.addErrorMessage("User not found", redirectAttributes);
-
-                }
-
-            } else {
-                CMSUtil.addErrorMessage("Unknow site " + request.getLocalAddr(), redirectAttributes);
-            }
-
-        }
-
-        return mv;
-
-    }
+	}
 
 }
