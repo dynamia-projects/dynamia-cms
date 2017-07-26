@@ -20,52 +20,66 @@ import javax.validation.constraints.NotNull;
 @Table(name = "prd_reviews")
 public class ProductReview extends SiteBaseEntity {
 
-    @OneToOne
-    @NotNull
-    private User user;
+	@OneToOne
+	@NotNull
+	private User user;
 
-    @OneToOne
-    @NotNull
-    @JsonIgnore
-    private Product product;
+	@OneToOne
+	@NotNull
+	@JsonIgnore
+	private Product product;
 
-    @NotEmpty
-    @Column(length = 1000)
-    private String comment;
-    @Min(1)
-    @Max(5)
-    private int stars = 5;
+	@NotEmpty
+	@Column(length = 1000)
+	private String comment;
+	@Min(1)
+	@Max(5)
+	private int stars = 5;
 
-    public User getUser() {
-        return user;
-    }
+	private boolean verified;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public boolean isVerified() {
+		return verified;
+	}
 
-    public Product getProduct() {
-        return product;
-    }
+	public void setVerified(boolean verified) {
+		this.verified = verified;
+	}
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public String getComment() {
-        return comment;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+	public Product getProduct() {
+		return product;
+	}
 
-    public int getStars() {
-        return stars;
-    }
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
-    public void setStars(int rate) {
-        this.stars = rate;
-    }
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public int getStars() {
+		return stars;
+	}
+
+	public void setStars(int rate) {
+		this.stars = rate;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s review %s with %s stars and say %s", user,product,stars,comment);
+	}
 }
-

@@ -11,6 +11,7 @@ fields:
    enabled:     
    position:
    order:
+   customView:
    uuid:
 
 params:

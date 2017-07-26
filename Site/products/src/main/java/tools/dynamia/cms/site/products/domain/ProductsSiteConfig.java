@@ -71,6 +71,7 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 	private String datasourceStoreImagesURL;
 	@JsonIgnore
 	private String datasourceStoreContactImagesURL;
+
 	@JsonIgnore
 	private String token;
 
@@ -124,6 +125,16 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 	@JsonIgnore
 	@Column(length = 4000)
 	private String costUserGroup;
+
+	private String reviewsConnectorURL;
+
+	public String getReviewsConnectorURL() {
+		return reviewsConnectorURL;
+	}
+
+	public void setReviewsConnectorURL(String reviewsConnectorURL) {
+		this.reviewsConnectorURL = reviewsConnectorURL;
+	}
 
 	public String getDatasourceStoreContactImagesURL() {
 		return datasourceStoreContactImagesURL;

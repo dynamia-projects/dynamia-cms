@@ -1,671 +1,763 @@
-var generalsPositionBottom;
-var caracteristicasPositionTop;
-var fichaPositionTop;
-var enviosPositionTop;
-var garantiaPositionTop;
+// JavaScript Document
 
-$(document).ready(function(){
-	setTimeout(ocultarNota,5000);
-	leerfavoritos();
-	$('[data-toggle="tooltip"]').tooltip();
-	$('.owl-carousel').owlCarousel({
-	    loop:true,
-	    margin:10,
-	    slideBy:4,
-	    autoplayTimeout:10000,
-	    responsiveClass:true,
-	    rewind:true,
-	    autoplay:true,
-	    autoplayHoverPause:true,
-	    dots:false,
-	    navText:['<i class="icon-left-open"><i class="fa fa-angle-left"></i>','<i class="icon-right-open"><i class="fa fa-angle-right"></i></i>'],
-	    responsive:{
-	        0:{
-	            items:1,
-	            nav:true
-	        },
-	        600:{
-	            items:3,
-	            nav:false
-	        },
-	        1000:{
-	            items:4,
-	            nav:true,
-	            loop:false
-	        }
-	    }
-	})
+$(document).ready(function() {
+// Home page Slider 1	
+    $('.home1').revolution(
+            {
+                delay: 9000,
+                startheight: 550,
+                startwidth: 1200,
+                hideThumbs: 200,
+                thumbWidth: 100, // Thumb With and Height and Amount (only if navigation Tyope set to thumb !)
+                thumbHeight: 50,
+                thumbAmount: 5,
+                navigationType: "bullet", // bullet, tmyTabclasshumb, none
+                navigationArrows: "solo", // nexttobullets, solo (old name verticalcentered), none
+
+                navigationStyle: "square", // round,square,navbar,round-old,square-old,navbar-old, or any from the list in the docu (choose between 50+ different item), custom
 
 
-	$('.owl-carousel-relacionados').owlCarousel({
-	    loop:true,
-	    margin:10,
-	    slideBy:4,
-	    autoplayTimeout:10000,
-	    responsiveClass:true,
-	    rewind:true,
-	    autoplay:true,
-	    autoplayHoverPause:true,
-	    dots:false,
-	    navText:['<i class="icon-left-open"><i class="fa fa-angle-left"></i>','<i class="icon-right-open"><i class="fa fa-angle-right"></i></i>'],
-	    responsive:{
-	        0:{
-	            items:1,
-	            nav:true
-	        },
-	        600:{
-	            items:3,
-	            nav:false
-	        },
-	        1000:{
-	            items:4,
-	            nav:true,
-	            loop:false
-	        }
-	    }
-	})
+                navigationHAlign: "center", // Vertical Align top,center,bottom
+                navigationVAlign: "bottom", // Horizontal Align left,center,right
+                navigationHOffset: 0,
+                navigationVOffset: 20,
+                soloArrowLeftHalign: "left",
+                soloArrowLeftValign: "center",
+                soloArrowLeftHOffset: 20,
+                soloArrowLeftVOffset: 20,
+                soloArrowRightHalign: "right",
+                soloArrowRightValign: "center",
+                soloArrowRightHOffset: 20,
+                soloArrowRightVOffset: 20,
+                touchenabled: "on", // Enable Swipe Function : on/off
+                onHoverStop: "on", // Stop Banner Timet at Hover on Slide on/off
+
+                stopAtSlide: -1, // Stop Timer if Slide "x" has been Reached. If stopAfterLoops set to 0, then it stops already in the first Loop at slide X which defined. -1 means do not stop at any slide. stopAfterLoops has no sinn in this case.
+                stopAfterLoops: -1, // Stop Timer if All slides has been played "x" times. IT will stop at THe slide which is defined via stopAtSlide:x, if set to -1 slide never stop automatic
+
+                hideCaptionAtLimit: 0, // It Defines if a caption should be shown under a Screen Resolution ( Basod on The Width of Browser)
+                hideAllCaptionAtLilmit: 0, // Hide all The Captions if Width of Browser is less then this value
+                hideSliderAtLimit: 0, // Hide the whole slider, and stop also functions if Width of Browser is less than this value
+
+                shadow: 1, //0 = no Shadow, 1,2,3 = 3 Different Art of Shadows  (No Shadow in Fullwidth Version !)
+                fullWidth: "off"							// Turns On or Off the Fullwidth Image Centering in FullWidth Modus
+
+
+            });
+
+    // Home page Slider 5
+
+    $('.fullscreenbanner').revolution(
+            {
+                delay: 9000,
+                startheight: 550,
+                startwidth: 1200,
+                hideThumbs: 200,
+                thumbWidth: 100, // Thumb With and Height and Amount (only if navigation Tyope set to thumb !)
+                thumbHeight: 50,
+                thumbAmount: 5,
+                navigationType: "both", //bullet, thumb, none, both		(No Thumbs In FullWidth Version !)
+                navigationArrows: "verticalcentered", //nexttobullets, verticalcentered, none
+                navigationStyle: "square", //round,square,navbar
+
+                touchenabled: "on", // Enable Swipe Function : on/off
+                onHoverStop: "on", // Stop Banner Timet at Hover on Slide on/off
+
+                navOffsetHorizontal: 0,
+                navOffsetVertical: 20,
+                stopAtSlide: -1,
+                stopAfterLoops: -1,
+                shadow: 0, //0 = no Shadow, 1,2,3 = 3 Different Art of Shadows  (No Shadow in Fullwidth Version !)
+                fullWidth: "on", // Turns On or Off the Fullwidth Image Centering in FullWidth Modus
+                fullScreen: "on",
+                fullScreenOffsetContainer: ".header"
+            });
+
+// Home page Slider 7	
+    $('.home7').revolution(
+            {
+                delay: 9000,
+                startheight: 550,
+                startwidth: 1200,
+                hideThumbs: 200,
+                thumbWidth: 100, // Thumb With and Height and Amount (only if navigation Tyope set to thumb !)
+                thumbHeight: 50,
+                thumbAmount: 3,
+                navigationType: "thumb", // bullet, thumb, none
+                navigationArrows: "nexttobullets", // nexttobullets, solo (old name verticalcentered), none
+
+                navigationStyle: "round", // round,square,navbar,round-old,square-old,navbar-old, or any from the list in the docu (choose between 50+ different item), custom
+
+
+                navigationHAlign: "right", // Vertical Align top,center,bottom
+                navigationVAlign: "bottom", // Horizontal Align left,center,right
+                navigationHOffset: 20,
+                navigationVOffset: 20,
+                soloArrowLeftHalign: "left",
+                soloArrowLeftValign: "center",
+                soloArrowLeftHOffset: 20,
+                soloArrowLeftVOffset: 0,
+                soloArrowRightHalign: "right",
+                soloArrowRightValign: "center",
+                soloArrowRightHOffset: 20,
+                soloArrowRightVOffset: 0,
+                touchenabled: "on", // Enable Swipe Function : on/off
+                onHoverStop: "on", // Stop Banner Timet at Hover on Slide on/off
+
+                stopAtSlide: -1, // Stop Timer if Slide "x" has been Reached. If stopAfterLoops set to 0, then it stops already in the first Loop at slide X which defined. -1 means do not stop at any slide. stopAfterLoops has no sinn in this case.
+                stopAfterLoops: -1, // Stop Timer if All slides has been played "x" times. IT will stop at THe slide which is defined via stopAtSlide:x, if set to -1 slide never stop automatic
+
+                hideCaptionAtLimit: 0, // It Defines if a caption should be shown under a Screen Resolution ( Basod on The Width of Browser)
+                hideAllCaptionAtLilmit: 0, // Hide all The Captions if Width of Browser is less then this value
+                hideSliderAtLimit: 0, // Hide the whole slider, and stop also functions if Width of Browser is less than this value
+
+                shadow: 1, //0 = no Shadow, 1,2,3 = 3 Different Art of Shadows  (No Shadow in Fullwidth Version !)
+                fullWidth: "off"							// Turns On or Off the Fullwidth Image Centering in FullWidth Modus
+
+
+            });
+
+
+// Home page Slider 7	
+    $('.home8').revolution(
+            {
+                delay: 9000,
+                startheight: 550,
+                startwidth: 1200,
+                onHoverStop: "on", // Stop Banner Timet at Hover on Slide on/off
+
+                thumbWidth: 100, // Thumb With and Height and Amount (only if navigation Tyope set to thumb !)
+                thumbHeight: 50,
+                thumbAmount: 3,
+                hideThumbs: 0,
+                navigationType: "thumb", // bullet, thumb, none
+                navigationArrows: "nexttobullets", // nexttobullets, solo (old name verticalcentered), none
+
+                navigationStyle: "square", // round,square,navbar,round-old,square-old,navbar-old, or any from the list in the docu (choose between 50+ different item), custom
+
+
+                navigationHAlign: "center", // Vertical Align top,center,bottom
+                navigationVAlign: "bottom", // Horizontal Align left,center,right
+                navigationHOffset: 0,
+                navigationVOffset: 20,
+                soloArrowLeftHalign: "left",
+                soloArrowLeftValign: "center",
+                soloArrowLeftHOffset: 20,
+                soloArrowLeftVOffset: 0,
+                soloArrowRightHalign: "right",
+                soloArrowRightValign: "center",
+                soloArrowRightHOffset: 20,
+                soloArrowRightVOffset: 0,
+                touchenabled: "on", // Enable Swipe Function : on/off
 
 
 
-	$('.flexslider').flexslider({
-		animation: "slide",
-		controlNav: "thumbnails"
-	});
+                stopAtSlide: -1, // Stop Timer if Slide "x" has been Reached. If stopAfterLoops set to 0, then it stops already in the first Loop at slide X which defined. -1 means do not stop at any slide. stopAfterLoops has no sinn in this case.
+                stopAfterLoops: -1, // Stop Timer if All slides has been played "x" times. IT will stop at THe slide which is defined via stopAtSlide:x, if set to -1 slide never stop automatic
 
-    var generalsPositionTop = $('.menu-generals').offset().top;
-	generalsPositionBottom = generalsPositionTop + $('.menu-generals').height()-45;
-
-	fichaPositionTop = $('#details').offset().top-90;
-	caracteristicasPositionTop = $('#caracteristicas-generales').offset().top-90;
-	enviosPositionTop = $('#envios').offset().top-90;
-	garantiaPositionTop = $('#garantias').offset().top-90;
-});
-
-$(window).scroll(function() {
-
-    if ($(this).scrollTop() > 99){  
-
-    	$('#search').removeClass("sticky");
-    	$('header #header-scroll').addClass("sticky");
-
-    	if ($(this).scrollTop() > generalsPositionBottom) {
-    		$('.generals-space2').addClass("sticky");
-    	}else{
-    		$('.generals-space2').removeClass("sticky");
-    	}
-
-    	if ($(this).scrollTop() > fichaPositionTop) {
-    		$('.pestana').removeClass("active");
-    		$('.pestana.pestana-2').addClass("active");
-    	}
-
-    	if ($(this).scrollTop() > caracteristicasPositionTop) {
-    		$('.pestana').removeClass("active");
-    		$('.pestana.pestana-1').addClass("active");
-    	} 
-
-    	if ($(this).scrollTop() > enviosPositionTop) {
-    		$('.pestana').removeClass("active");
-    		$('.pestana.pestana-3').addClass("active");
-    	} 
-
-    	if ($(this).scrollTop() > garantiaPositionTop) {
-    		$('.pestana').removeClass("active");
-    		$('.pestana.pestana-4').addClass("active");
-    	} 
+                hideCaptionAtLimit: 0, // It Defines if a caption should be shown under a Screen Resolution ( Basod on The Width of Browser)
+                hideAllCaptionAtLilmit: 0, // Hide all The Captions if Width of Browser is less then this value
+                hideSliderAtLimit: 0, // Hide the whole slider, and stop also functions if Width of Browser is less than this value
 
 
-    }else{
-    	if ($(this).scrollTop() < 100){
-    		$('header #header-scroll').removeClass("sticky");
-    	}
-    };
+                fullWidth: "on",
+                shadow: 0								//0 = no Shadow, 1,2,3 = 3 Different Art of Shadows -  (No Shadow in Fullwidth Version !)
 
-});
 
-$(function() {
-    $('a[href*="#"]:not([href="#"])').click(function() {
-      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-        var target = $(this.hash);
-        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-        if (target.length) {
-          $('html, body').animate({
-            scrollTop: target.offset().top - 80
-          }, 1000);
-          return false;
-        }
-      }
+            });
+
+
+
+// Navigation Menu
+    $('ul.mainmenucontain li').hover(
+            function() {
+                $(this).children('div').css('display', 'table')
+            },
+            function() {
+                $(this).children('div').css('display', 'none')
+            }
+    );
+    
+    $('ul.submenu li').hover(
+            function() {
+            	$(this).addClass('active')
+                $(this).children('div').css('display', 'table')
+            },
+            function() {
+            	$(this).removeClass('active')
+                $(this).children('div').css('display', 'none')
+            }
+    );
+    $('ul.submenu li').children('div').css('display', 'none')
+
+/*
+// Main Menu mobile
+    $("<select />").appendTo(".menurelative");
+
+    // Create default option "Go to..."
+    $("<option />", {
+        "selected": "selected",
+        "value": "",
+        "text": "Menu Principal"
+    }).appendTo("nav.subnav select");
+
+    // Populate dropdown with menu items
+    $("nav.subnav a[href]").each(function() {
+        var el = $(this);
+        $("<option />", {
+            "value": el.attr("href"),
+            "text": el.text()
+        }).appendTo("nav.subnav select");
     });
-});	
 
-$('.bxslider').bxSlider({
-	responsive:true,
-	pager:false,
-	infiniteLoop:true,
-	auto:false,
-	pause:50000
-});
+    // To make dropdown actually work
+    $("nav.subnav select").change(function() {
+        window.location = $(this).find("option:selected").val();
+    });
+*/
 
-$("#top-header .opt-left > button").click(function(){ //boton top menu telefonos
-	$('#direcciones').removeClass("sticky");
-	$('#catalogos').removeClass("sticky");
-	if ($('#telefonos').hasClass('sticky')){
-		$('#telefonos').removeClass("sticky");
-	}else{
-		$('#telefonos').addClass("sticky");
-	}
-});
-
-$(".col-mapaTiendas a").click(function(){
-	$('#telefonos').removeClass("sticky");
-	$('#catalogos').removeClass("sticky");
-	if ($('#direcciones').hasClass('sticky')){
-		$('#direcciones').removeClass("sticky");
-	}else{
-		$('#direcciones').addClass("sticky");
-	}
-});
-
-$(".col-mapaTiendas button").click(function(){ //boton main menu tiendas
-	$('#direcciones').removeClass("sticky");
-	$('#catalogos').removeClass("sticky");
-	if ($('#telefonos').hasClass('sticky')){
-		$('#telefonos').removeClass("sticky");
-	}else{
-		$('#telefonos').addClass("sticky");
-	}
-/*	$('#telefonos').removeClass("sticky");
-	$('#catalogos').removeClass("sticky");
-	if ($('#direcciones').hasClass('sticky')){
-		$('#direcciones').removeClass("sticky");
-	}else{
-		$('#direcciones').addClass("sticky");
-	}*/
-});
-
-$(".col-telefonos a").click(function(){
-	$('#direcciones').removeClass("sticky");
-	$('#catalogos').removeClass("sticky");
-	if ($('#telefonos').hasClass('sticky')){
-		$('#telefonos').removeClass("sticky");
-	}else{
-		$('#telefonos').addClass("sticky");
-	}
-});
-
-$(".col-catalogos button").click(function(){
-	$('#direcciones').removeClass("sticky");
-	$('#telefonos').removeClass("sticky");
-	if ($('#catalogos').hasClass('sticky')){
-		$('#catalogos').removeClass("sticky");
-	}else{
-		$('#catalogos').addClass("sticky");
-	}
-});
+// Fancybox 
+    $('a.prettyphotpopup').prettyPhoto({animation_speed: 'normal', theme: 'light_square', slideshow: 3000, autoplay_slideshow: false, allow_expand: false});
 
 
-$( "a.closeTel" ).click(function() {
-	$('#telefonos').removeClass("sticky");
-	$('#direcciones').removeClass("sticky");	
-	$('#catalogos').removeClass("sticky");	
-});
+//  Accrodian	
+    $("#accrodian").collapse({toggle: false})
 
-$("#ciudades").change(function(){
-	$('#direcciones .col-mapaTiendas .temporal').removeClass("sticky");
-	$('#tiendas .ciudad').removeClass("sticky");
-	$('.sede').removeClass("activo");
-	switch($('select[id=ciudades]').val()) {
-	    case "0":
-	        $('#tiendas .ciudad.inicial').addClass("sticky");
-	        $('#direcciones .col-mapaTiendas .temporal').addClass("sticky");
-	        $('#mapasede').attr("src",'');
-	        break;
-	    case "1":
-	        $('#tiendas .ciudad.Cartagena').addClass("sticky");
-	        $('#mapasede').attr("src",'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3924.3482711851934!2d-75.49035348458425!3d10.393888892581788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x7928102698b335d9!2scompulago!5e0!3m2!1ses!2s!4v1480784240307');
-	        $('#tiendas .ciudad.Cartagena .sede.edificio').addClass("activo");
-	        break;
-	    case "2":
-	        $('#tiendas .ciudad.Monteria').addClass("sticky");
-	        $('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=monteria%20Cl%2032%204-06&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-	        $('#tiendas .ciudad.Monteria .sede.paseo-central').addClass("activo");
-	        break;
-	    case "3":
-	        $('#tiendas .ciudad.SantaMarta').addClass("sticky");
-	        $('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=santa%20marta%20compulago&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-	        $('#tiendas .ciudad.SantaMarta .sede.plazuela-23').addClass("activo");
-	        break;
-	    case "4":
-	        $('#tiendas .ciudad.Riohacha').addClass("sticky");
-	        $('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=riohacha%20Cl.%2015%20%238-56&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-	        $('#tiendas .ciudad.Riohacha .sede.suchiimma').addClass("activo");
-	        break;
-	    case "5":
-	        $('#tiendas .ciudad.Valledupar').addClass("sticky");
-	        $('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=valledupar%20cra%2011%20%2316a-52&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-	        $('#tiendas .ciudad.Valledupar .sede.centroV').addClass("activo");
-	        break;
-	}	
-});
+//  Accrodian	
+    var $acdata = $('.accrodian-data'),
+            $acclick = $('.accrodian-trigger');
 
-$('#tiendas .ciudad.Cartagena .sede.edificio').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.Cartagena .sede').removeClass("activo");
-	$('#tiendas .ciudad.Cartagena .sede.edificio').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3924.3482711851934!2d-75.49035348458425!3d10.393888892581788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x7928102698b335d9!2scompulago!5e0!3m2!1ses!2s!4v1480784240307');
-});
-$('#tiendas .ciudad.Cartagena .sede.centro-uno').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.Cartagena .sede').removeClass("activo");
-	$('#tiendas .ciudad.Cartagena .sede.centro-uno').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=cartagena%20centro%20uno%20compulago&key=AIzaSyBki67ZKBd9nodrnm0YCCkSW3mbrptnXnM');
-});
-$('#tiendas .ciudad.Cartagena .sede.plazuela').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.Cartagena .sede').removeClass("activo");
-	$('#tiendas .ciudad.Cartagena .sede.plazuela').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3924.3901566281693!2d-75.48123508458431!3d10.390554392584114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef624336dce3bf7%3A0xeedd35ffff3e85ee!2sCOMPULAGO+iN!5e0!3m2!1ses!2s!4v1480784009762');
-});
-$('#tiendas .ciudad.Cartagena .sede.castellana').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.Cartagena .sede').removeClass("activo");
-	$('#tiendas .ciudad.Cartagena .sede.castellana').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=centro%20comercial%20paseo%20de%20la%20castellana&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-});
-$('#tiendas .ciudad.Cartagena .sede.av-venezuela').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.Cartagena .sede').removeClass("activo");
-	$('#tiendas .ciudad.Cartagena .sede.av-venezuela').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d245.2469405099416!2d-75.54619679280374!3d10.425459382258294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x4c4c3e36940419f2!2sCalzado+Spring+Step!5e0!3m2!1ses-419!2s!4v1481142731756');
-});
+    $acdata.hide();
+    $acclick.first().addClass('active').next().show();
 
-$('#tiendas .ciudad.Monteria .sede.paseo-central').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.Monteria .sede').removeClass("activo");
-	$('#tiendas .ciudad.Monteria .sede.paseo-central').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=monteria%20Cl%2032%204-06&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-});
-
-$('#tiendas .ciudad.Monteria .sede.alamedas').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.Monteria .sede').removeClass("activo");
-	$('#tiendas .ciudad.Monteria .sede.alamedas').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=monteria%20alamedas%202&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-});
-
-$('#tiendas .ciudad.Monteria .sede.centroM').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.Monteria .sede').removeClass("activo");
-	$('#tiendas .ciudad.Monteria .sede.centroM').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=monteria%20Cl%2033%20%232-69&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-});
-
-$('#tiendas .ciudad.SantaMarta .sede.plazuela-23').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.SantaMarta .sede').removeClass("activo");
-	$('#tiendas .ciudad.SantaMarta .sede.plazuela-23').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=santa%20marta%20compulago&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-});
-
-$('#tiendas .ciudad.SantaMarta .sede.ocean-mall').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.SantaMarta .sede').removeClass("activo");
-	$('#tiendas .ciudad.SantaMarta .sede.ocena-mall').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=santa%20marta%20compulago%20ocean%20mall&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-});
-
-$('#tiendas .ciudad.SantaMarta .sede.buenavista').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.SantaMarta .sede').removeClass("activo");
-	$('#tiendas .ciudad.SantaMarta .sede.buenavista').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=santa%20marta%20buena%20vista&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-});
-
-$('#tiendas .ciudad.Riohacha .sede.suchiimma').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.Riohacha .sede').removeClass("activo");
-	$('#tiendas .ciudad.Riohacha .sede.suchiimma').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=riohacha%20Cl.%2015%20%238-56&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-});
-
-$('#tiendas .ciudad.Valledupar .sede.mayales').click(function(){
-	$('#direcciones').addClass("sticky");
-	$('#tiendas .ciudad.Valledupar .sede').removeClass("activo");
-	$('#tiendas .ciudad.Valledupar .sede.mayales').addClass("activo");
-	$('#mapasede').attr("src",'https://www.google.com/maps/embed/v1/place?q=Centro%20Comercial%20Mayales%20Plaza%20-%20Calle%2037%2C%20Valledupar%20-%20Cesar%2C%20Colombia&key=AIzaSyDhyO_CjqAlhzuLsrZ3DI6lcX0gQxNez9I');
-});
-
-function ampliarpdf(archivo){
-	var parent = $('embed#espacio-pdf').parent();
-	var newPdf;
-	var newElement;
-	switch(archivo) {
-	    case 1:
-	    	$(".visualizador .recuadro .titulo").text('Computadores');
-	    	$("#fondo-full").addClass("sticky");
-	    	$("#box-catalogos").addClass("sticky");
-	    	$("embed#espacio-pdf").remove();
-	    	newPdf = '<embed src="/resources/firmadecorreo/pdf/pcescritorio.pdf" id="espacio-pdf" height="500px" type="application/pdf" class="col-md-12 nopadding archivo-pdf">';
-	    	newElement = $(newPdf);
-	    	parent.append(newElement);
-	    	break;
-	    case 2:
-	    	$(".visualizador .recuadro .titulo").text('Portatiles');
-	    	$("#fondo-full").addClass("sticky");
-	    	$("#box-catalogos").addClass("sticky");
-	    	$("embed#espacio-pdf").remove();
-	    	newPdf = '<embed src="/resources/firmadecorreo/pdf/portatiles.pdf" id="espacio-pdf" height="500px" type="application/pdf" class="col-md-12 nopadding archivo-pdf">';
-	    	newElement = $(newPdf);
-	    	parent.append(newElement);
-	    	break;	    
-	    case 3:
-	    	$(".visualizador .recuadro .titulo").text('Tablets');
-	    	$("#fondo-full").addClass("sticky");
-	    	$("#box-catalogos").addClass("sticky");
-	    	$("embed#espacio-pdf").remove();
-	    	newPdf = '<embed src="/resources/firmadecorreo/pdf/tablets.pdf" id="espacio-pdf" height="500px" type="application/pdf" class="col-md-12 nopadding archivo-pdf">';
-	    	newElement = $(newPdf);
-	    	parent.append(newElement);
-	    	break;	    
-	    case 4:
-	    	$(".visualizador .recuadro .titulo").text('Impresoras');
-	    	$("#fondo-full").addClass("sticky");
-	    	$("#box-catalogos").addClass("sticky");
-	    	$("embed#espacio-pdf").remove();
-	    	newPdf = '<embed src="/resources/firmadecorreo/pdf/impresoras.pdf" id="espacio-pdf" height="500px" type="application/pdf" class="col-md-12 nopadding archivo-pdf">';
-	    	newElement = $(newPdf);
-	    	parent.append(newElement);
-	    	break;	    
-	    case 5:
-	    	$(".visualizador .recuadro .titulo").text('Partes');
-	    	$("#fondo-full").addClass("sticky");
-	    	$("#box-catalogos").addClass("sticky");
-	    	$("embed#espacio-pdf").remove();
-	    	newPdf = '<embed src="/resources/firmadecorreo/pdf/partes.pdf" id="espacio-pdf" height="500px" type="application/pdf" class="col-md-12 nopadding archivo-pdf">';
-	    	newElement = $(newPdf);
-	    	parent.append(newElement);
-	    	break;	    
-
-	}
-}
-$('#middle-header .toggled').click(function(){
-	if($('#middle-header .toggled').hasClass('sticky')){
-		$('#middle-header .toggled').removeClass('sticky');
-		$('#middle-header .toggled i').addClass('fa-bars').removeClass('fa-times');
-		$('#middle-header .menu-movil').removeClass('sticky');
-	}else{
-		$('#middle-header .toggled').addClass('sticky');
-		$('#middle-header .toggled i').removeClass('fa-bars').addClass('fa-times');
-		$('#middle-header .menu-movil').addClass('sticky');
-	}
-});
-
-$('#box-catalogos a i').click(function(){
-	$("#fondo-full").removeClass("sticky");
-	$("#box-catalogos").removeClass("sticky");
-	$("#espacio-pdf").attr("src",'');
-});
-
-$('#box-videos a i').click(function(){
-	$("#fondo-full").removeClass("sticky");
-	$("#box-videos").removeClass("sticky");
-	$("#espacio-video").attr("src",'');
-});
-
-$('#main-content .content-area .left-space2 .submenu div.titulo > h4').click(function(){
-	if ($(this).hasClass("menu")){
-		$("#main-content .content-area .left-space2 .submenu.filtros").removeClass("sticky");
-		if ($("#main-content .content-area .left-space2 .submenu.menu").hasClass("sticky")){
-			$("#main-content .content-area .left-space2 .submenu.menu").removeClass("sticky");
-		}else{
-			$("#main-content .content-area .left-space2 .submenu.menu").addClass("sticky");
-		}
-	}
-	if ($(this).hasClass("filtros")){
-		$("#main-content .content-area .left-space2 .submenu.menu").removeClass("sticky");			
-		if ($("#main-content .content-area .left-space2 .submenu.filtros").hasClass("sticky")){
-			$("#main-content .content-area .left-space2 .submenu.filtros").removeClass("sticky");
-		}else{
-			$("#main-content .content-area .left-space2 .submenu.filtros").addClass("sticky");
-		}
-	}
-});
-
-$('#main-content .content-area .left-space2 .submenu div.titulo > span').click(function(){
-	if ($(this).hasClass("menu")){
-		$("#main-content .content-area .left-space2 .submenu.filtros").removeClass("sticky");		
-		if ($("#main-content .content-area .left-space2 .submenu.menu").hasClass("sticky")){
-			$("#main-content .content-area .left-space2 .submenu.menu").removeClass("sticky");
-		}else{
-			$("#main-content .content-area .left-space2 .submenu.menu").addClass("sticky");
-		}
-	}
-	if ($(this).hasClass("filtros")){
-		$("#main-content .content-area .left-space2 .submenu.menu").removeClass("sticky");				
-		if ($("#main-content .content-area .left-space2 .submenu.filtros").hasClass("sticky")){
-			$("#main-content .content-area .left-space2 .submenu.filtros").removeClass("sticky");
-		}else{
-			$("#main-content .content-area .left-space2 .submenu.filtros").addClass("sticky");
-		}
-	}
-});
-
-function pasoCompra(paso){
-	$("#espacio-video").attr("src",'');
-	switch(paso) {
-	    case 1:
-	    	$("#fondo-full").addClass("sticky");
-	    	$("#box-videos").addClass("sticky");
-	    	$("#espacio-video").attr("src",'https://www.youtube.com/embed/NsZZDq14AzA?autoplay=1');
-	    	break;
-	    case 2:
-	    	$("#fondo-full").addClass("sticky");
-	    	$("#box-videos").addClass("sticky");
-	    	$("#espacio-video").attr("src",'https://www.youtube.com/embed/oao8MpoD4KQ?autoplay=1');
-	    	break;
-	    case 3:
-	    	$("#fondo-full").addClass("sticky");
-	    	$("#box-videos").addClass("sticky");
-	    	$("#espacio-video").attr("src",'https://www.youtube.com/embed/hkdx9V6B-nE?autoplay=1');
-	    	break;
-	    case 4:
-	    	$("#fondo-full").addClass("sticky");
-	    	$("#box-videos").addClass("sticky");
-	    	$("#espacio-video").attr("src",'https://www.youtube.com/embed/Wesmi8Cmh-c?autoplay=1');
-	    	break;
-	}
-}
-
-$(".videos .video.show a").click(function(){
-	var lineaVideo = $('#videoURLpromocional').val() + "?autoplay=1";
-	$("#fondo-full").addClass("sticky");
-	$("#box-videos").addClass("sticky");
-	$("#espacio-video").attr("src",lineaVideo);
-});
-
-$(".videos .video.unboxing a").click(function(){
-	var lineaVideo = $('#videoURLunboxing').val() + "?autoplay=1";
-	$("#fondo-full").addClass("sticky");
-	$("#box-videos").addClass("sticky");
-	$("#espacio-video").attr("src",lineaVideo);
-});
-
-function verDisponibilidad(){
-	if ($("#fondo-full").hasClass("sticky")){
-		$("#fondo-full").removeClass("sticky");
-		$("#disponibilidad").removeClass("sticky");
-	}else{
-		$("#fondo-full").addClass("sticky");
-		$("#disponibilidad").addClass("sticky");
-	}
-}
-
-function mostrarDireccion(ciudad){
-	$(ciudad).removeClass("active");
-	if(ciudad != ""){
-		$('#disponibilidad .sedes-disponible div.sede').removeClass("active");
-		$(ciudad).addClass("active");
-	}else{
-		$('#disponibilidad .sedes-disponible div.sede').removeClass("active");
-	}
-}
-
-$("#header-scroll .all-trigger").hover(function(){
-    $('#header-scroll .header-box').addClass('menu-opened');
-    $('#fondo').addClass('sticky');
-},function(){
-	$('#header-scroll .header-box').removeClass('menu-opened');
-	$('#fondo').removeClass('sticky');
-	$("#header-scroll ul.cat-nav").hover(function(){
-		$('#header-scroll .header-box').addClass('menu-opened');
-		$('#fondo').addClass('sticky');
-	},function(){
-		$('#header-scroll .header-box').removeClass('menu-opened');
-		$('#fondo').removeClass('sticky');
-	});
-});
-
-$("#mainmenu-header .all-trigger").hover(function(){
-	$('#mainmenu-header .header-box').addClass('menu-opened');
-    $('#fondo').addClass('sticky');
-},function(){
-	$('#mainmenu-header .header-box').removeClass('menu-opened');
-	$('#fondo').removeClass('sticky');
-	$("#mainmenu-header ul.cat-nav").hover(function(){
-		$('#mainmenu-header .header-box').addClass('menu-opened');
-		$('#fondo').addClass('sticky');
-	},function(){
-		$('#mainmenu-header .header-box').removeClass('menu-opened');
-		$('#fondo').removeClass('sticky');
-	});
-});
-
-
-
-function gridchange() {
-	$('li#list').removeClass("selected");
-	$('li#grid').addClass("selected");
-	$('.box-item').removeClass("col-sm-12").removeClass("col-md-12").removeClass("col-lg-12").removeClass("lista");
-	$('.box-item').addClass("col-sm-6").addClass("col-md-3").addClass("col-lg-3");
-	$('.image-product').removeClass("col-xs-4").removeClass("col-sm-4").removeClass("col-md-4").removeClass("col-lg-4").removeClass("pull-left");
-	$('.image-product').addClass("col-xs-12").addClass("col-sm-12").addClass("col-md-12").addClass("col-lg-12");
-	$('.brand-product').removeClass("col-xs-8").removeClass("col-sm-8").removeClass("col-md-8").removeClass("col-lg-8").removeClass("pull-right");
-	$('.brand-product').addClass("col-xs-12").addClass("col-sm-12").addClass("col-md-12").addClass("col-lg-12");
-	$('.name-product').removeClass("col-xs-8").removeClass("col-sm-8").removeClass("col-md-8").removeClass("col-lg-8").removeClass("pull-right");
-	$('.name-product').addClass("col-xs-12").addClass("col-sm-12").addClass("col-md-12").addClass("col-lg-12");
-}
-
-function listchange() {
-	$('li#grid').removeClass("selected");
-	$('li#list').addClass("selected");
-	$('.box-item').removeClass("col-sm-6").removeClass("col-md-3").removeClass("col-lg-3");
-	$('.box-item').addClass("col-sm-12").addClass("col-md-12").addClass("col-lg-12").addClass("lista");
-	$('.image-product').removeClass("col-xs-12").removeClass("col-sm-12").removeClass("col-md-12").removeClass("col-lg-12");
-	$('.image-product').addClass("col-xs-4").addClass("col-sm-4").addClass("col-md-4").addClass("col-lg-4").addClass("pull-left");
-	$('.brand-product').removeClass("col-xs-12").removeClass("col-sm-12").removeClass("col-md-12").removeClass("col-lg-12");
-	$('.brand-product').addClass("col-xs-8").addClass("col-sm-8").addClass("col-md-8").addClass("col-lg-8").addClass("pull-right");
-	$('.name-product').removeClass("col-xs-12").removeClass("col-sm-12").removeClass("col-md-12").removeClass("col-lg-12");
-	$('.name-product').addClass("col-xs-8").addClass("col-sm-8").addClass("col-md-8").addClass("col-lg-8").addClass("pull-right");
-}
-
-$("#newuser").click(function(){
-	$('#fondo-full').addClass("sticky");
-	$('#formnewuser').addClass("sticky");
-});
-
-$("#formnewuser .cerrar a").click(function(){
-	$('#fondo-full').removeClass("sticky");
-	$('#formnewuser').removeClass("sticky");
-});
-
-// formulario Suscripcion Mail List
-function CheckField771891(fldName, frm){ if ( frm[fldName].length ) { for ( var i = 0, l = frm[fldName].length; i < l; i++ ) {  if ( frm[fldName].type =='select-one' ) { if( frm[fldName][i].selected && i==0 && frm[fldName][i].value == '' ) { return false; }  if ( frm[fldName][i].selected ) { return true; } }  else { if ( frm[fldName][i].checked ) { return true; } }; } return false; } else { if ( frm[fldName].type == "checkbox" ) { return ( frm[fldName].checked ); } else if ( frm[fldName].type == "radio" ) { return ( frm[fldName].checked ); } else { frm[fldName].focus(); return (frm[fldName].value.length > 0); }} }
-function rmspaces(x) {var leftx = 0;var rightx = x.length -1;while ( x.charAt(leftx) == ' ') { leftx++; }while ( x.charAt(rightx) == ' ') { --rightx; }var q = x.substr(leftx,rightx-leftx + 1);if ( (leftx == x.length) && (rightx == -1) ) { q =''; } return(q); }
-function checkfield(data) {if (rmspaces(data) == ""){return false;}else {return true;}}
-function isemail(data) {var flag = false;if (  data.indexOf("@",0)  == -1 || data.indexOf("\\",0)  != -1 ||data.indexOf("/",0)  != -1 ||!checkfield(data) ||  data.indexOf(".",0)  == -1  ||  data.indexOf("@")  == 0 ||data.lastIndexOf(".") < data.lastIndexOf("@") ||data.lastIndexOf(".") == (data.length - 1)   ||data.lastIndexOf("@") !=   data.indexOf("@") ||data.indexOf(",",0)  != -1 ||data.indexOf(":",0)  != -1 ||data.indexOf(";",0)  != -1  ) {return flag;} else {var temp = rmspaces(data);if (temp.indexOf(' ',0) != -1) { flag = true; }var d3 = temp.lastIndexOf('.') + 4;var d4 = temp.substring(0,d3);var e2 = temp.length  -  temp.lastIndexOf('.')  - 1;var i1 = temp.indexOf('@');if (  (temp.charAt(i1+1) == '.') || ( e2 < 1 ) ) { flag = true; }return !flag;}}
-function _checkSubmit771891(frm){
-if ( !CheckField771891("fldfirstname", frm) ) { 
-   alert("Por favor introduzca el Nombre");
-   return false;
-}
-if ( !isemail(frm["fldEmail"].value) ) { 
-   alert("Por favor introduzca el Email");
-   return false;
-}
- return true; }
- // Fin formulario Suscripcion Mail List
-
- //wishlist
- function producto (referencia)
- {
-    this.referencia = referencia;
- }
-
- function leerfavoritos(){
- 	if(localStorage.favoritos){
- 		var prodObjecto = JSON.parse(localStorage.favoritos);
- 		var cantidad = prodObjecto.length;
-	    $('#numFavoritos').text(cantidad);
-	    $('#numFavoritos-flotante').text(cantidad);
- 	}
- }
-
- function guardarfavorito(sku){
-    var codRecordar = sku;
-    var productObject = new producto(codRecordar.valueOf());
-    if(!localStorage.favoritos){
-        localStorage.favoritos = "[" + JSON.stringify( productObject ) + "]";
-        console.log("Añadido correctamente");
-        mensaje("Operacion Exitosa","Se ha guardado correctamente el articulo en tu lista de favoritos.",1);
-    }else{
-        var prodObjecto = JSON.parse(localStorage.favoritos);
-        if (!existeRecordatorio(prodObjecto,codRecordar)){
-            prodObjecto.push(productObject);
-            localStorage.favoritos = JSON.stringify(prodObjecto);
-            console.log("Añadido:" + JSON.stringify(prodObjecto));
-            mensaje("Operacion Exitosa","Se ha guardado correctamente el articulo en tu lista de favoritos.",1);
-        }else{
-        	mensaje("Error","El articulo que desea adicionar a favoritos ya existe.",2);
+    $acclick.on('click', function(e) {
+        if ($(this).next().is(':hidden')) {
+            $acclick.removeClass('active').next().slideUp(300);
+            $(this).toggleClass('active').next().slideDown(300);
         }
-    }
-    leerfavoritos();
- }
+        e.preventDefault();
+    });
 
- function existeRecordatorio(productosFavoritos,codRecordado){
- 	var cantidad = productosFavoritos.length;
-    var existe = false;
-    for (i = 0;i<=cantidad-1;i++){
-        if (productosFavoritos[i].referencia == codRecordado){
-            existe = true;
-            break;
+//  Accrodian	
+    var $acdata1 = $('.accrodian-data-faq'),
+            $acclick1 = $('.accrodian-trigger-faq');
+
+    $acdata1.hide();
+    $acclick1.first().addClass('active').next().show();
+
+    $acclick1.on('click', function(e) {
+        if ($(this).next().is(':hidden')) {
+            $acclick1.removeClass('active').next().slideUp(300);
+            $(this).toggleClass('active').next().slideDown(300);
         }
+        e.preventDefault();
+    });
+
+// Toggle			
+    $('.togglehandle').click(function()
+    {
+        $(this).toggleClass('active')
+        $(this).next('.toggledata').slideToggle()
+    });
+
+// Dropdowns
+    $('.dropdown').hover(
+            function() {
+                $(this).addClass('open')
+            },
+            function() {
+                $(this).removeClass('open')
+            }
+    );
+
+//Tab Why Us
+    $('#myTab a').click(function(e) {
+        e.preventDefault()
+        $(this).tab('show');
+    })
+    $('#myTab a:first').tab('show') // Select first tab
+    //Tab Why Us
+    $('.myTabclass a').click(function(e) {
+        e.preventDefault()
+        $(this).tab('show');
+    })
+    $('.myTabclass a:first').tab('show') // Select first tab
+
+//Messages
+    $('.alert .icon-remove').click(function(e) {
+        $(this).parent('.alert').fadeOut();
+    })
+
+// Product thumbnails
+    $('.thumbnail').each(function() {
+        $(this).hover(
+                function() {
+                    $(this).children('.shortlinks').fadeIn()
+                },
+                function() {
+                    $(this).children('.shortlinks').fadeOut()
+                });
+    });
+    $('.thumbnail').each(function()
+    {
+        $(this).hover(
+                function() {
+                    $(this).children('.shortlinksourteam').fadeIn()
+                },
+                function() {
+                    $(this).children('.shortlinksourteam').fadeOut()
+                }
+        );
+    });
+
+// Product Thumb Zoom
+    $('.my-foto-container').imagezoomsl({
+        zoomrange: [1, 6],
+        zoomstart: 2,
+        innerzoom: true,
+        magnifierborder: "none",
+        magnifiersize: [500, 300],
+        scrollspeedanimate: 10,
+        loopspeedanimate: 5,
+        // magnifiereffectanimate: "slideIn"	
+    });
+    $(".zoom").click(function() {
+        var That = this;
+        $(".my-foto-container").fadeOut(100, function() {
+            $(this).attr("src", $(That).attr("src"))
+                    .attr("data-large", $(That).attr("data-large")).fadeIn(200)
+                    .attr("data-title", $(That).attr("data-title"))
+                    .attr("data-help", $(That).attr("data-help"))
+
+        });
+    });
+
+
+// List & Grid View
+    $('#productlist .featureprojectwrap:first').show()
+    $('#list').click(function()
+    {
+        $(this).addClass('btn-orange').children('i').addClass('icon-white')
+        $('.grid').fadeOut()
+        $('.list').fadeIn()
+        $('#grid').removeClass('btn-orange').children('i').removeClass('icon-white')
+    });
+    $('#grid').click(function()
+    {
+        $(this).addClass('btn-orange').children('i').addClass('icon-white')
+        $('.list').fadeOut()
+        $('.grid').fadeIn()
+        $('#list').removeClass('btn-orange').children('i').removeClass('icon-white')
+    });
+
+// Tooltip	
+    $('.tooltip-test').tooltip();
+
+// Scroll top
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 50) {
+            $('#gotop').fadeIn(500);
+
+        } else {
+            $('#gotop').fadeOut(500);
+        }
+    });
+    $('#gotop').click(function()
+    {
+
+        $("html, body").animate({scrollTop: 0}, 600);
+    })
+
+// Checkout steps
+    $('.checkoutsteptitle').addClass('down').next('.checkoutstep').fadeIn()
+    $('.checkoutsteptitle').on('click', function()
+    {
+
+        $("select, input:checkbox, input:radio, input:file").css('display', 'blcok');
+        $(this).toggleClass('down').next('.checkoutstep').slideToggle()
+    });
+
+// Coming Soon
+    //cowntdown function. Set the date by modifying the date in next line (January 01, 2013 00:00:00):
+    var austDay = new Date("December 31, 2013 00:00:00");
+
+    $('#comingsoon').countdown({until: austDay, layout: '<div class="box"><div>{dn}</div> <span> {dl} </span></div> <div class="box"><div>{hn}</div> <span> {hl} </span></div> <div class="box"><div>{mn}</div> <span> {ml} </span></div> <div class="box"><div>{sn}</div> <span> {sl} </span></div>'});
+    $('#year').text(austDay.getFullYear());
+
+
+
+// Social Steams 
+    $('.flickr-feed').socialstream({
+        socialnetwork: 'flickr',
+        limit: 12,
+        username: 'flickr', })
+    $('.pinterest-feed').socialstream({
+        socialnetwork: 'pinterest',
+        limit: 12,
+        username: 'pinterest'
+    })
+    $('.dribbble-feed').socialstream({
+        socialnetwork: 'dribbble',
+        limit: 12,
+        username: 'dribbble'
+    })
+    $('.youtube-feed').socialstream({
+        socialnetwork: 'youtube',
+        limit: 12,
+        username: 'youtube'
+    })
+    $('.instagram-feed').socialstream({
+        socialnetwork: 'instagram',
+        limit: 12,
+        username: 'instagram',
+        overlay: true
+    })
+
+
+
+});
+
+
+// Window load Funcitons 
+
+$(window).load(function() {
+// Home page Slider 2
+    $("#mainslider2").carouFredSel({
+        responsive: true,
+        items: 1,
+        scroll: {
+            fx: "crossfade"
+        },
+        auto: false,
+        //mousewheel: true,	
+        swipe: {
+            onMouse: true,
+            onTouch: true
+        },
+        pagination: {
+            container: "#mainslider2_pag",
+            anchorBuilder: function(nr) {
+                var src = $("img", this).attr("src");
+                //src = src.replace( "/large/", "/small/");
+                return '<img src="' + src + '" style="width:100px" />';
+            }
+        }
+    });
+
+// Home page Slider 3	
+    // The slider being synced must be initialized first
+    $('#carouseindex3').flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        itemWidth: 230,
+        //itemMargin: 15,
+        asNavFor: '#sliderindex3'
+    });
+
+    $('#sliderindex3').flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        sync: "#carouseindex3"
+    });
+
+// Home page Slider 4 
+    $('#mainslider4').flexslider({
+        animation: "slide",
+        start: function(slider) {
+            $('body').removeClass('loading');
+        }
+    });
+
+// Home page Slider 6				
+    $('#mainslider6').carouFredSel({
+        //width: 900,
+        //height: '100%',
+        direction: 'up',
+        auto: false,
+        items: 1,
+        prev: '#prevmainslider6',
+        next: '#nextmainslider6',
+        pagination: "#pagermainslider6",
+        //mousewheel: true,
+        swipe: {
+            onMouse: true,
+            onTouch: true
+        }
+    });
+
+// Home page Slider 10	
+    function prevTimers() {
+        return allTimers().slice(0, $('.sliderindex10pager a.selected').index());
     }
-    return existe;
- }
+    function allTimers() {
+        return $('.sliderindex10pager a span');
+    }
 
- 
- //Fin wishlist
+    $(function() {
+        $('#sliderindex10').carouFredSel({
+            items: 1,
+            responsive: true,
+            auto: {
+                pauseOnHover: 'resume',
+                progress: {
+                    bar: '.sliderindex10pager a:first span'
+                }
+            },
+            scroll: {
+                fx: 'crossfade',
+                duration: 300,
+                timeoutDuration: 2000,
+                onAfter: function() {
+                    allTimers().stop().width(0);
+                    //	prevTimers().width(  );
+                    $(this).trigger('configuration', ['auto.progress.bar', '.sliderindex10pager a.selected span']);
+                }
+            },
+            pagination: {
+                container: '.sliderindex10pager',
+                anchorBuilder: false
+            }
+        });
+    });
 
- //mensaje
- function mensaje(titulo,contenido,tipo){
- 	$('#nota2').addClass("sticky");
- 	$('#nota2').removeClass("ok").removeClass("fault");
- 	if(tipo == 1){
-		$('#nota2').addClass("ok");
- 	}else{
-		$('#nota2').addClass("fault");
- 	}
- 	$('#nota2 .texto .titulo').text(titulo);
- 	$('#nota2 .texto .contenido').text(contenido);
- 	setTimeout(ocultarNota2,5000);
- }
- function ocultarNota(){
- 	$('#nota').removeClass("sticky");
- }
+//OurClient Carousal
+    $('#ourclientcarousal').carouFredSel({
+        width: '100%',
+        scroll: 1,
+        auto: false,
+        prev: '#prevclient',
+        next: '#nextclient',
+        // mousewheel: true,
 
-function ocultarNota2(){
- 	$('#nota2').removeClass("sticky");
-}
- //fin mensaje
+        swipe: {
+            onMouse: true,
+            onTouch: true
+        }
+    });
 
- 
+// Flexslider  Musthave    
+    $('#bannerslider').flexslider({
+        animation: "fade",
+        start: function(slider) {
+            $('body').removeClass('loading');
+        }
+    });
+
+// Flexslider  Testimonial   	  
+    $('#testimonialsidebar').flexslider({
+        animation: "slide",
+        auto: false,
+        start: function(slider) {
+            $('body').removeClass('loading');
+        }
+    });
+
+// Flexslider  Portfolio   	  
+    $('#portfolioslider').flexslider({
+        animation: "slide",
+        start: function(slider) {
+            $('body').removeClass('loading');
+        }
+    });
+
+// Flexslider  Latest Blog	  
+    $('#latesetblogsidebar').flexslider({
+        animation: "fade",
+        start: function(slider) {
+            $('body').removeClass('loading');
+        }
+    });
+
+
+//OurClient Carousal
+    $('#ourclientcarousal').carouFredSel({
+        width: '100%',
+        scroll: 1,
+        auto: false,
+        prev: '#prevclient',
+        next: '#nextclient',
+        // mousewheel: true,
+
+        swipe: {
+            onMouse: true,
+            onTouch: true
+        }
+    });
+});
+
+
+//All Carousals	 - Flex plugin
+(function() {
+// store the slider in a local variable
+    var $window = $(window),
+            flexslider;
+
+// 5 COLUMN carousal
+    function getGridSizecolumn5() {
+        return  (window.innerWidth < 480) ? 1 :
+                (window.innerWidth < 600) ? 2 :
+                (window.innerWidth < 900) ? 3 : 5;
+    }
+    $window.load(function() {
+        $('.column5').flexslider({
+            animation: "slide",
+            animationSpeed: 400,
+            animationLoop: false,
+            slideshow: false,
+            itemWidth: 210,
+            itemMargin: 30,
+            minItems: getGridSizecolumn5(), // use function to pull in initial value
+            maxItems: getGridSizecolumn5(), // use function to pull in initial value
+            start: function(slider) {
+                $('body').removeClass('loading');
+                flexslider = slider;
+            }
+        });
+    })
+
+
+// 4 COLOUMN carosal
+
+// tiny helper function to add breakpoints
+    function getGridSizecolumn4() {
+        return  (window.innerWidth < 480) ? 1 :
+                (window.innerWidth < 600) ? 2 :
+                (window.innerWidth < 900) ? 3 : 4;
+    }
+    $window.load(function() {
+        $('.column4').flexslider({
+            animation: "slide",
+            animationSpeed: 400,
+            animationLoop: false,
+            slideshow: false,
+            itemWidth: 270,
+            itemMargin: 33,
+            minItems: getGridSizecolumn4(), // use function to pull in initial value
+            maxItems: getGridSizecolumn4(), // use function to pull in initial value
+            start: function(slider) {
+                $('body').removeClass('loading');
+                flexslider = slider;
+            }
+        });
+    })
+
+
+
+// 3 COLOUMN carosal
+    // tiny helper function to add breakpoints
+    function getGridSizecolumn3() {
+        return  (window.innerWidth < 480) ? 1 :
+                (window.innerWidth < 600) ? 2 :
+                (window.innerWidth < 900) ? 3 : 3;
+    }
+    $window.load(function() {
+        $('.column3').flexslider({
+            animation: "slide",
+            animationSpeed: 400,
+            animationLoop: false,
+            slideshow: false,
+            itemWidth: 270,
+            itemMargin: 34,
+            minItems: getGridSizecolumn3(), // use function to pull in initial value
+            maxItems: getGridSizecolumn3(), // use function to pull in initial value
+            start: function(slider) {
+                $('body').removeClass('loading');
+                flexslider = slider;
+            }
+        });
+    })
+
+
+// 2 COLOUMN carosal
+    function getGridSizecolumn2() {
+        return   (window.innerWidth < 480) ? 1 :
+                (window.innerWidth < 600) ? 2 :
+                (window.innerWidth < 900) ? 2 : 2;
+    }
+
+    $window.load(function() {
+        $('.column2').flexslider({
+            animation: "slide",
+            animationSpeed: 400,
+            animationLoop: false,
+            slideshow: false,
+            itemWidth: 260,
+            itemMargin: 30,
+            minItems: getGridSizecolumn2(), // use function to pull in initial value
+            maxItems: getGridSizecolumn2(), // use function to pull in initial value
+            start: function(slider) {
+                $('body').removeClass('loading');
+                flexslider = slider;
+            }
+        });
+    });
+
+}());
+// Animation
+
+
+$(document).ready(function() {
+    $('.seodetails').bind('inview', function(event, visible) {
+        if (visible == true) {
+            $('.headingcenter, .metadetails').addClass("animated pulse time3");
+        } else {
+            $('.headingcenter, .metadetails').removeClass("animated pulse time3");
+        }
+    });
+    $('.ourprocess').bind('inview', function(event, visible) {
+        if (visible == true) {
+            $('.ourprocess').addClass("animated pulse time3");
+        } else {
+            $('.ourprocess').removeClass("animated pulse time3");
+        }
+    });
+    $('.features, .features-home2, .features-home4, .features-home5').bind('inview', function(event, visible) {
+        if (visible == true) {
+            $('.features, .features-home2, .features-home4, .features-home5').addClass("animated fadeInUp time3");
+        } else {
+            $('.features, .features-home2, .features-home4, .features-home5').removeClass("animated fadeInUp time3");
+        }
+    });
+
+    $('#footer').bind('inview', function(event, visible) {
+        if (visible == true) {
+            $('#footer .footersocial .container').addClass("animated fadeInUp time3");
+        } else {
+            $('#footer .footersocial .container').removeClass("animated fadeInUp time3");
+        }
+    });
+    $('.heading1').bind('inview', function(event, visible) {
+        if (visible == true) {
+            $(this).addClass("animated fadeInUp time3");
+        } else {
+            $(this).removeClass("animated fadeInUp time3");
+        }
+    });
+    $('.heading2').bind('inview', function(event, visible) {
+        if (visible == true) {
+            $(this).addClass("animated fadeInUp time3");
+        } else {
+            $(this).removeClass("animated fadeInUp time3");
+        }
+    });
+    $('.titles').bind('inview', function(event, visible) {
+        if (visible == true) {
+            $(this).addClass("animated fadeInUp time3");
+            $('.titles i').addClass("animated flip time3");
+        } else {
+            $(this).removeClass("animated fadeInUp time3");
+            $('.titles i').removeClass("animated flip time3");
+        }
+    });
+
+});
+
+
+
+
+
+	

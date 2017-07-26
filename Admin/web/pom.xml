@@ -99,17 +99,6 @@
 			<version>${site.cms.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.site.payment.payulatam</artifactId>
-			<version>${site.cms.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.site.payment.paypal</artifactId>
-			<version>${site.cms.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>tools.dynamia.cms</groupId>

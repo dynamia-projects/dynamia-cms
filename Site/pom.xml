@@ -77,6 +77,7 @@
 	<modules>
 		<module>web</module>
 		<module>core</module>
+		<module>core-api</module>
 		<module>users</module>
 		<module>templates</module>
 		<module>pages</module>
@@ -90,9 +91,7 @@
 		<module>users-api</module>
 		<module>shopping-cart-api</module>
 		<module>payment-api</module>
-		<module>payment</module>
-		<module>payment-payulatam</module>
-		<module>payment-paypal</module>
+		<module>payment</module>		
 	</modules>
 
 </project>

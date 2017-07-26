@@ -36,10 +36,14 @@ import tools.dynamia.cms.site.mail.MailMessage;
 import tools.dynamia.cms.site.mail.services.MailService;
 import tools.dynamia.cms.site.products.ProductSearchForm;
 import tools.dynamia.cms.site.products.ProductShareForm;
+import tools.dynamia.cms.site.products.api.ProductReviewsConnector;
 import tools.dynamia.cms.site.products.domain.*;
+import tools.dynamia.cms.site.products.dto.ProductDTO;
+import tools.dynamia.cms.site.products.dto.ProductsReviewResponse;
 import tools.dynamia.cms.site.products.services.ProductsService;
 import tools.dynamia.cms.site.users.UserHolder;
 import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.cms.site.users.services.UserService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,6 +60,7 @@ import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.domain.util.QueryBuilder;
 import tools.dynamia.integration.Containers;
+import tools.dynamia.web.util.HttpRemotingServiceClient;
 
 /**
  * @author Mario Serrano Leones
@@ -73,6 +78,9 @@ public class ProductsServiceImpl implements ProductsService {
 
 	@Autowired
 	private MailService mailService;
+
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public void generateToken(ProductsSiteConfig config) {
@@ -715,6 +723,63 @@ public class ProductsServiceImpl implements ProductsService {
 		}
 
 		return result;
+	}
+
+	@Override
+	public ProductsReviewResponse requestExternalReviews(ProductsSiteConfig config, String requestUuid) {
+		if (config != null && config.getReviewsConnectorURL() != null && !config.getReviewsConnectorURL().isEmpty()) {
+			ProductReviewsConnector connector = HttpRemotingServiceClient.build(ProductReviewsConnector.class)
+					.setServiceURL(config.getReviewsConnectorURL()).getProxy();
+
+			if (connector != null) {
+				return connector.requestReviews(requestUuid);
+			}
+		}
+
+		return new ProductsReviewResponse();
+	}
+
+	@Override
+	public User findUserForReview(Site site, ProductsReviewResponse response) {
+		User user = userService.getUser(site, response.getEmail());
+		if (user == null) {
+			user = new User();
+			user.setSite(site);
+			user.setUsername(response.getEmail());
+			user.setFirstName(response.getName());
+			user.setLastName(response.getLastName());
+			user.setEnabled(true);
+			user.getContactInfo().setAddress(response.getAddress());
+			user.getContactInfo().setCity(response.getCity());
+			user.getContactInfo().setEmail(response.getEmail());
+			user.getContactInfo().setCountry(response.getCountry());
+			user.getContactInfo().setMobileNumber(response.getMobileNumber());
+			user.getContactInfo().setPhoneNumber(response.getPhoneNumber());
+			user.setIdentification(response.getIdentification());
+			user.setExternalRef(response.getExternalRef());
+			userService.setupPassword(user, StringUtils.randomString());
+			user = crudService.create(user);
+		}
+		return user;
+	}
+
+	@Override
+	public Product getProduct(Site site, ProductDTO dto) {
+		Product product = null;
+
+		if (dto != null) {
+			if (dto.getExternalRef() != null) {
+				product = crudService.findSingle(Product.class, QueryParameters.with("site", site).add("active", true)
+						.add("externalRef", dto.getExternalRef()));
+			}
+
+			if (product == null && dto.getSku() != null && !dto.getSku().isEmpty()) {
+				product = crudService.findSingle(Product.class, QueryParameters.with("site", site).add("active", true)
+						.add("sku", dto.getSku()).setAutocreateSearcheableStrings(false));
+			}
+		}
+
+		return product;
 	}
 
 }

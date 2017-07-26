@@ -24,6 +24,8 @@ import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.products.ProductSearchForm;
 import tools.dynamia.cms.site.products.ProductShareForm;
 import tools.dynamia.cms.site.products.domain.*;
+import tools.dynamia.cms.site.products.dto.ProductDTO;
+import tools.dynamia.cms.site.products.dto.ProductsReviewResponse;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.domain.query.BooleanOp;
 import tools.dynamia.domain.query.QueryConditions;
@@ -124,4 +126,10 @@ public interface ProductsService {
     void computeProductStars(Product product);
 
     List<ProductReview> getTopReviews(Product product, int max);
+
+	ProductsReviewResponse requestExternalReviews(ProductsSiteConfig config, String requestUuid);
+
+	public User findUserForReview(Site site,ProductsReviewResponse response);
+
+	public Product getProduct(Site site, ProductDTO dto);
 }

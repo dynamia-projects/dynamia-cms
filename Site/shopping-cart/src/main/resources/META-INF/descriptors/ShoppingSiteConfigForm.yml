@@ -37,6 +37,8 @@ fields:
   orderShippedMailTemplate:
   notificationMailTemplate:
   mailAccount:
+  minQuantityByProducts:
+  minQuantityByCart:
   
   parameters:
         component: crudview
@@ -47,6 +49,8 @@ groups:
        - maxPaymentAmount
        - shipmentPercent
        - minShipmentAmount
+       - minQuantityByProducts
+       - minQuantityByCart
     remote:
        - orderSenderURL
        - orderStatusURL

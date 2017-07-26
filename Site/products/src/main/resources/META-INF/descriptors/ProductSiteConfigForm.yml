@@ -49,6 +49,8 @@ fields:
       label: Price 2
     costUserGroup:
       label: Cost
+      
+    reviewsConnectorURL:
 groups:
     
     general:
@@ -60,7 +62,7 @@ groups:
     
     datasource:
         label: Datasource Settings
-        fields: [datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceStoreContactImagesURL,datasourceUsername,datasourcePassword]
+        fields: [datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceStoreContactImagesURL,datasourceUsername,datasourcePassword,reviewsConnectorURL]
     
     synchronization:
         fields: [synchronizationEnabled, syncProductImages,syncProductDetails, syncStockDetails, syncProductCreditPrices, syncStoreContacts]

@@ -62,6 +62,8 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 	private String orderStatusURL;
 	private String paymentsSenderURL;
 	private boolean autoSendPayments;
+	private int minQuantityByProducts;
+	private int minQuantityByCart;
 
 	@OneToOne
 	private MailTemplate orderCompletedMailTemplate;
@@ -77,6 +79,22 @@ public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 
 	@Column(length = 3000)
 	private String paymentTypes;
+
+	public int getMinQuantityByProducts() {
+		return minQuantityByProducts;
+	}
+
+	public void setMinQuantityByProducts(int minQuantityByProducts) {
+		this.minQuantityByProducts = minQuantityByProducts;
+	}
+
+	public int getMinQuantityByCart() {
+		return minQuantityByCart;
+	}
+
+	public void setMinQuantityByCart(int minQuantityByCart) {
+		this.minQuantityByCart = minQuantityByCart;
+	}
 
 	public String getPaymentsSenderURL() {
 		return paymentsSenderURL;

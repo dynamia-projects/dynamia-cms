@@ -17,6 +17,7 @@ package tools.dynamia.cms.site.mail.services;
 
 import org.springframework.scheduling.annotation.Async;
 
+import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.mail.MailMessage;
 import tools.dynamia.cms.site.mail.domain.MailAccount;
 import tools.dynamia.cms.site.mail.domain.MailingContact;
@@ -33,7 +34,7 @@ public interface MailService {
 
 	public void setPreferredEmailAccount(MailAccount account);
 
-	public MailAccount getPreferredEmailAccount();
+	public MailAccount getPreferredEmailAccount(Site site);
 
 	public boolean existsMailingContact(MailingContact contact);
 

@@ -33,7 +33,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import tools.dynamia.cms.site.core.SiteContext;
 import tools.dynamia.cms.site.core.StringParser;
+import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.mail.MailMessage;
 import tools.dynamia.cms.site.mail.MailServiceException;
 import tools.dynamia.cms.site.mail.MailServiceListener;
@@ -82,7 +84,7 @@ public class MailServiceImpl implements MailService {
 
 		MailAccount account = mailMessage.getMailAccount();
 		if (account == null) {
-			account = getPreferredEmailAccount();
+			account = getPreferredEmailAccount(mailMessage.getSite());
 		}
 
 		if (account == null) {
@@ -153,8 +155,24 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public MailAccount getPreferredEmailAccount() {
-		MailAccount account = crudService.findSingle(MailAccount.class, "preferred", true);
+	public MailAccount getPreferredEmailAccount(Site site) {
+
+		Site currentSite = site;
+
+		try {
+			if (currentSite == null) {
+				currentSite = SiteContext.get().getCurrent();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		QueryParameters params = QueryParameters.with("preferred", true);
+		if (currentSite != null) {
+			params.add("site", currentSite);
+		}
+
+		MailAccount account = crudService.findSingle(MailAccount.class, params);
 		if (account == null) {
 			logger.warn("There is not a preferred email account ");
 		}

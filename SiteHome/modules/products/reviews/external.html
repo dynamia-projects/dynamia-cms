@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Products Filter Form-->
+
+<body th:fragment="content">
+
+	<div class="container">
+
+		<th:block th:if="${response.accepted}">
+			<h2>Write a review</h2>
+
+			<form id="reviewForm" class="form-vertical" th:action="@{'/store/products/reviews/create'}" th:method="post">
+
+				<h1 th:text="${response.description}"></h1>
+				<h2 th:text="${user.fullName}"></h2>
+
+				<div class=" card card-block" th:each="rev : ${reviews}">
+					<div class="row">
+						<h1 th:text="${rev.product.name}"></h1>
+						<div class="col-md-12">
+							<input type="radio" name="star" value="1">1</input>
+							<input type="radio" name="star" value="2">2</input>
+							<input type="radio" name="star" value="3">3</input>
+							<input type="radio" name="star" value="4">4</input>
+							<input type="radio" name="star" value="5">5</input>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<textarea name="comment" id="comment" class="form-input"></textarea>
+						</div>
+						<div class="col-md-12">
+							<input type="submit" class="btn btn-success" value="Post Review"></input>
+						</div>
+					</div>
+				</div>
+
+			</form>
+
+
+		</th:block>
+
+	</div>
+
+</body>
+
+</html>
