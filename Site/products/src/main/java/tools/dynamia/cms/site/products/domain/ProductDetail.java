@@ -22,6 +22,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.dynamia.cms.site.core.Orderable;
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
@@ -39,9 +41,11 @@ public class ProductDetail extends SimpleEntity implements SiteAware, Orderable 
 
 	@OneToOne
 	@NotNull
+	@JsonIgnore
 	private Site site;
 
 	@ManyToOne
+	@JsonIgnore
 	private Product product;
 	private String name;
 	@Column(name = "detvalue")

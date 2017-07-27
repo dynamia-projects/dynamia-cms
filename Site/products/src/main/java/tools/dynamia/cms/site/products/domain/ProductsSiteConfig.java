@@ -126,6 +126,7 @@ public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 	@Column(length = 4000)
 	private String costUserGroup;
 
+	@JsonIgnore
 	private String reviewsConnectorURL;
 
 	public String getReviewsConnectorURL() {

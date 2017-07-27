@@ -7,6 +7,7 @@ import tools.dynamia.domain.contraints.NotEmpty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
@@ -24,7 +25,7 @@ public class ProductReview extends SiteBaseEntity {
 	@NotNull
 	private User user;
 
-	@OneToOne
+	@ManyToOne
 	@NotNull
 	@JsonIgnore
 	private Product product;

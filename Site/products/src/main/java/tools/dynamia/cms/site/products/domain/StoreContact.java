@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import tools.dynamia.cms.site.core.domain.SiteSimpleEntity;
 import tools.dynamia.cms.site.products.dto.StoreContactDTO;
 import tools.dynamia.commons.BeanUtils;
@@ -19,6 +21,7 @@ public class StoreContact extends SiteSimpleEntity {
 	private static final long serialVersionUID = 858677057279005993L;
 
 	@ManyToOne
+	@JsonIgnore
 	private Store store;
 	private String name;
 	private String lastName;

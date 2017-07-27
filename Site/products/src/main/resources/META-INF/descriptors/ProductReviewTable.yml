@@ -1,0 +1,22 @@
+view: table
+beanClass: tools.dynamia.cms.site.products.domain.ProductReview
+autofields: false
+
+fields:
+  creationDate:
+    params:
+       converter: converters.Date
+  creationTime:
+    params:
+       converter: converters.Time
+  user.fullName:
+    label: User
+  user:
+    label: Username
+  stars:
+  verified:
+  document:
+  comment:
+    params:
+     header: 
+       width: 400px;

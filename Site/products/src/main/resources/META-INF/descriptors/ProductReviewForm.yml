@@ -1,0 +1,13 @@
+view: form
+beanClass: tools.dynamia.cms.site.products.domain.ProductReview
+autofields: false
+
+fields:
+  user:
+  stars:
+  comment:
+    params:
+      span: 2
+
+layout:
+  columns: 2
