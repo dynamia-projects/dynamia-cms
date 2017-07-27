@@ -10,6 +10,7 @@ import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.services.SiteService;
 import tools.dynamia.cms.site.pages.PageNotFoundException;
+import tools.dynamia.cms.site.products.ProductsReviewForm;
 import tools.dynamia.cms.site.products.domain.Product;
 import tools.dynamia.cms.site.products.domain.ProductReview;
 import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
@@ -21,6 +22,7 @@ import tools.dynamia.domain.ValidationError;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.integration.sterotypes.Controller;
 
+import javax.enterprise.inject.New;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
@@ -95,11 +97,16 @@ public class ProductReviewsController {
 	}
 
 	@GetMapping("/reviews/{requestUuid}")
-	public ModelAndView checkExternalReviews(String requestUuid, HttpServletRequest requet) {
+	public ModelAndView checkExternalReviews(@PathVariable String requestUuid, HttpServletRequest requet) {
 
 		ModelAndView mv = new ModelAndView("products/reviews/external");
 
-		Site site = siteService.getSite(requestUuid);
+		Site site = siteService.getSite(requet);
+
+		if (site == null) {
+			CMSUtil.redirectHome(mv);
+			return mv;
+		}
 		ProductsSiteConfig config = service.getSiteConfig(site);
 
 		ProductsReviewResponse response = service.requestExternalReviews(config, requestUuid);
@@ -119,8 +126,7 @@ public class ProductReviewsController {
 							review = new ProductReview();
 							review.setUser(user);
 							review.setProduct(product);
-							review.setSite(site);
-							review.setVerified(true);
+							review.setDocument(response.getDocument());
 							reviews.add(review);
 						}
 					}
@@ -128,14 +134,17 @@ public class ProductReviewsController {
 				}
 			}
 
-			mv.addObject("reviews", reviews);
+			mv.addObject("reviewsForm", new ProductsReviewForm(reviews));
+			mv.addObject("title", response.getDescription());
 
 			if (reviews.isEmpty()) {
-				CMSUtil.addErrorMessage("No hay reseñas pendientes", mv);
+				mv.addObject("message", "No hay reseñas pendientes");
+				response = ProductsReviewResponse.rejected();
 			}
 
 		} else {
-			CMSUtil.addErrorMessage("No se encontraron reseñas de productos pendientes", mv);
+			mv.addObject("message", "No se encontraron reseñas de productos pendientes");
+			response = ProductsReviewResponse.rejected();
 		}
 
 		mv.addObject("response", response);
@@ -144,15 +153,30 @@ public class ProductReviewsController {
 	}
 
 	@PostMapping("/reviews/create")
-	public ModelAndView saveMultipleReviews(@ModelAttribute("reviews") List<ProductReview> reviews,
-			BindingResult result, RedirectAttributes attributes) {
-		ModelAndView mv = new ModelAndView("products/reviews/complete");
+	public ModelAndView saveMultipleReviews(@ModelAttribute("reviewsForm") ProductsReviewForm form,
+			BindingResult result, HttpServletRequest request) {
 
-		if (reviews != null) {
-			for (ProductReview review : reviews) {
-				System.out.println("REV: " + review);
+		Site site = siteService.getSite(request);
+
+		ModelAndView mv = new ModelAndView("products/reviews/external");
+
+		if (form != null && form.getReviews() != null) {
+			for (ProductReview review : form.getReviews()) {
+				try {
+					System.out.println("Saving review Product ID: " + review.getProduct().getId());
+					review.setSite(site);
+					review.setVerified(true);
+					crudService.create(review);
+					service.computeProductStars(review.getProduct());
+					System.out.println("OK");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
+		mv.addObject("response", ProductsReviewResponse.rejected());
+		mv.addObject("message", "Gracias por enviar sus reseñas");
 
 		return mv;
 	}

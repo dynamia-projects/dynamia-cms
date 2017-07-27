@@ -2,6 +2,7 @@ package tools.dynamia.cms.site.products.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProductsReviewResponse implements Serializable {
@@ -25,6 +26,8 @@ public class ProductsReviewResponse implements Serializable {
 	private String region;
 	private String country;
 	private String description;
+	private Date date;
+	private String document;
 
 	public ProductsReviewResponse() {
 
@@ -36,6 +39,22 @@ public class ProductsReviewResponse implements Serializable {
 		this.email = email;
 		this.name = name;
 		this.accepted = true;
+	}
+
+	public String getDocument() {
+		return document;
+	}
+
+	public void setDocument(String document) {
+		this.document = document;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public String getDescription() {
@@ -134,4 +153,11 @@ public class ProductsReviewResponse implements Serializable {
 		this.country = country;
 	}
 
+	public static ProductsReviewResponse rejected() {
+		return new ProductsReviewResponse();
+	}
+
+	public static ProductsReviewResponse rejected(String description) {
+		return new ProductsReviewResponse();
+	}
 }

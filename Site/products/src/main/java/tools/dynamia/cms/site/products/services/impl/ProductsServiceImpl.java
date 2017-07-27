@@ -26,6 +26,7 @@ import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.remoting.RemoteConnectFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -684,8 +685,10 @@ public class ProductsServiceImpl implements ProductsService {
 	@Override
 	@Transactional
 	public void computeProductStars(Product product) {
+		product = crudService.find(Product.class, product.getId());
+
 		Double stars = crudService.executeProjection(Double.class,
-				"select sum(r.stars)/count(r) from ProductReview r where r.product = :product",
+				"select avg(r.stars) from ProductReview r where r.product = :product",
 				QueryParameters.with("product", product));
 
 		if (stars == null) {
@@ -732,11 +735,15 @@ public class ProductsServiceImpl implements ProductsService {
 					.setServiceURL(config.getReviewsConnectorURL()).getProxy();
 
 			if (connector != null) {
-				return connector.requestReviews(requestUuid);
+				try {
+					return connector.requestReviews(requestUuid);
+				} catch (RemoteConnectFailureException e) {
+					return ProductsReviewResponse.rejected("No hay conexion con servicio");
+				}
 			}
 		}
 
-		return new ProductsReviewResponse();
+		return ProductsReviewResponse.rejected();
 	}
 
 	@Override

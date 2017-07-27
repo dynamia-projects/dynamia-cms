@@ -37,6 +37,15 @@ public class ProductReview extends SiteBaseEntity {
 	private int stars = 5;
 
 	private boolean verified;
+	private String document;
+
+	public String getDocument() {
+		return document;
+	}
+
+	public void setDocument(String document) {
+		this.document = document;
+	}
 
 	public boolean isVerified() {
 		return verified;
@@ -77,9 +86,9 @@ public class ProductReview extends SiteBaseEntity {
 	public void setStars(int rate) {
 		this.stars = rate;
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("%s review %s with %s stars and say %s", user,product,stars,comment);
+		return String.format("%s review %s with %s stars and say %s", user, product, stars, comment);
 	}
 }
