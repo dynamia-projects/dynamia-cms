@@ -88,6 +88,16 @@ public class Site extends SimpleEntity implements Parameterizable {
 	private String meetup;
 	private boolean searchEnabled;
 
+	private String externalConnectorURL;
+
+	public String getExternalConnectorURL() {
+		return externalConnectorURL;
+	}
+
+	public void setExternalConnectorURL(String externalConnectorURL) {
+		this.externalConnectorURL = externalConnectorURL;
+	}
+
 	public boolean isSearchEnabled() {
 		return searchEnabled;
 	}

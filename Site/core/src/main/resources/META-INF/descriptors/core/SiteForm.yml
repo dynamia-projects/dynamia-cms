@@ -1,7 +1,7 @@
 view: form
 beanClass: tools.dynamia.cms.site.core.domain.Site
 hidden: [id]
-sortFields: [name,parent,key,template,mainDomain,corporateSite,description,offline,offlineIcon,offlineMessage,offlineRedirect,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
+sortFields: [name,parent,key,template,mainDomain,corporateSite,externalConnectorURL,description,offline,offlineIcon,offlineMessage,offlineRedirect,googleAnalyticsID,googleAnalyticsDomain,googleSiteVerification,metadataKeywords,metadataAuthor,metadataDescription,metadataRights]
 
 fields:
 
@@ -87,7 +87,7 @@ groups:
     
     general:
         label: Basic Settings
-        fields: [name,parent,key,template,mainDomain,logoURL, offline,offlineMessage,offlineRedirect,offlineIcon,corporateSite,searchEnabled,description]
+        fields: [name,parent,key,template,mainDomain,logoURL, offline,offlineMessage,offlineRedirect,offlineIcon,externalConnectorURL,corporateSite,searchEnabled,description]
             
     
     googleAnalytics:
