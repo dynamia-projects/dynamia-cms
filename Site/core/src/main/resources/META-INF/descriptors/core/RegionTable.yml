@@ -1,0 +1,10 @@
+view: table
+beanClass: tools.dynamia.cms.site.core.domain.Region
+autofields: false
+
+fields:
+  country:
+  name:
+  code:
+  taxName:
+  taxPercent:

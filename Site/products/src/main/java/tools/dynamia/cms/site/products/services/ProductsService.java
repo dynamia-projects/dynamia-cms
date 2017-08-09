@@ -132,4 +132,6 @@ public interface ProductsService {
 	public User findUserForReview(Site site,ProductsReviewResponse response);
 
 	public Product getProduct(Site site, ProductDTO dto);
+
+	List<ProductReview> getIncompleteProductReviews(User user);
 }

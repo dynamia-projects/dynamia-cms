@@ -24,7 +24,9 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Borderlayout;
 import org.zkoss.zul.Center;
 import org.zkoss.zul.Div;
+import org.zkoss.zul.East;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.North;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Vlayout;
@@ -44,8 +46,10 @@ import tools.dynamia.viewers.ViewDescriptor;
 import tools.dynamia.viewers.ViewDescriptorNotFoundException;
 import tools.dynamia.viewers.util.Viewers;
 import tools.dynamia.zk.actions.ActionToolbar;
+import tools.dynamia.zk.crud.cfg.ConfigView;
 import tools.dynamia.zk.crud.cfg.ConfigViewRender;
 import tools.dynamia.zk.crud.ui.EntityPickerBox;
+import tools.dynamia.zk.util.ZKUtil;
 import tools.dynamia.zk.viewers.form.FormView;
 import tools.dynamia.zk.viewers.ui.Viewer;
 
@@ -61,6 +65,7 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 	private Component configurationUI;
 	private Borderlayout layout;
 	private FormView<ModuleInstance> formView;
+	private Listbox variables;
 
 	public ModuleInstanceUI(ModuleInstance moduleInstance) {
 		super();
@@ -79,19 +84,32 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 		layout.setParent(this);
 		layout.appendChild(new North());
 		layout.appendChild(new Center());
+		layout.appendChild(new East());
 
 		Vlayout top = new Vlayout();
 		layout.getNorth().appendChild(top);
+
 		top.appendChild(toolbar);
 
 		layout.getCenter().setTitle("Configuration");
 		layout.getCenter().setAutoscroll(true);
 
 		formView = (FormView<ModuleInstance>) Viewers.getView(ModuleInstance.class, "form", moduleInstance);
+		formView.setStyle("margin:0; padding:0;");
 		TypeSelector typeSelector = (TypeSelector) formView.getFieldComponent("moduleId").getInputComponent();
 		typeSelector.addEventListener(Events.ON_SELECT, evt -> initConfigurationUI());
 
 		top.appendChild(formView);
+
+		variables = new Listbox();
+		variables.setVflex("1");
+		variables.setHflex("1");
+		variables.setEmptyMessage("No variables");
+		layout.getEast().setTitle("Module's View Variables");
+		layout.getEast().setWidth("20%");
+		layout.getEast().setSplittable(true);
+		layout.getEast().setCollapsible(true);
+		layout.getEast().appendChild(variables);
 
 	}
 
@@ -107,8 +125,10 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 				configureEntityConverter(configDescriptor);
 				configurationUI = createCustomConfig(configDescriptor, moduleInstance, module);
 			} catch (ViewDescriptorNotFoundException e) {
-				configurationUI = new Label();
+				configurationUI = new Label("No configuration found");
 			}
+
+			ZKUtil.fillListbox(variables, module.getVariablesNames(), false);
 		}
 
 		if (configurationUI != null) {
@@ -119,6 +139,7 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 			Textbox customView = (Textbox) formView.getFieldComponent("customView").getInputComponent();
 			customView.setPlaceholder(module.getTemplateViewName());
 		}
+
 	}
 
 	private void configureEntityConverter(ViewDescriptor configDescriptor) {
@@ -151,6 +172,9 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 
 		List<Parameter> configParameters = createConfigParameters(configDescriptor, module, moduleInstance);
 		final Viewer viewer = new Viewer(configDescriptor, configParameters);
+		viewer.setStyle("margin:0; padding: 0");
+		ConfigView configView = (ConfigView) viewer.getView();
+		configView.setStyle("margin:0; padding: 0");
 
 		return viewer;
 
@@ -159,6 +183,9 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 	private List<Parameter> createConfigParameters(ViewDescriptor configDescriptor, Module module,
 			ModuleInstance moduleInstance) {
 		List<Parameter> cfgParameters = new ArrayList<>();
+		if (moduleInstance.getId() != null) {
+			moduleInstance.reloadParameters();
+		}
 
 		for (Field field : configDescriptor.getFields()) {
 			ModuleInstanceParameter parameter = moduleInstance.getParameter(field.getName());
@@ -184,8 +211,7 @@ public class ModuleInstanceUI extends Div implements ActionEventBuilder {
 					}
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
 			}
 			cfgParameters.add(new Parameter(parameter.getName(), value));
 		}

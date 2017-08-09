@@ -15,8 +15,15 @@
  */
 package tools.dynamia.cms.site.products.services.impl;
 
+import static tools.dynamia.domain.query.QueryConditions.between;
+import static tools.dynamia.domain.query.QueryConditions.geqt;
+import static tools.dynamia.domain.query.QueryConditions.gt;
+import static tools.dynamia.domain.query.QueryConditions.leqt;
+
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -38,22 +45,24 @@ import tools.dynamia.cms.site.mail.services.MailService;
 import tools.dynamia.cms.site.products.ProductSearchForm;
 import tools.dynamia.cms.site.products.ProductShareForm;
 import tools.dynamia.cms.site.products.api.ProductReviewsConnector;
-import tools.dynamia.cms.site.products.domain.*;
+import tools.dynamia.cms.site.products.domain.Product;
+import tools.dynamia.cms.site.products.domain.ProductBrand;
+import tools.dynamia.cms.site.products.domain.ProductCategory;
+import tools.dynamia.cms.site.products.domain.ProductCategoryDetail;
+import tools.dynamia.cms.site.products.domain.ProductDetail;
+import tools.dynamia.cms.site.products.domain.ProductReview;
+import tools.dynamia.cms.site.products.domain.ProductUserStory;
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import tools.dynamia.cms.site.products.domain.RelatedProduct;
+import tools.dynamia.cms.site.products.domain.Store;
 import tools.dynamia.cms.site.products.dto.ProductDTO;
 import tools.dynamia.cms.site.products.dto.ProductsReviewResponse;
 import tools.dynamia.cms.site.products.services.ProductsService;
 import tools.dynamia.cms.site.users.UserHolder;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.services.UserService;
-
-import java.util.ArrayList;
-import java.util.Collections;
-
 import tools.dynamia.commons.StringUtils;
 import tools.dynamia.commons.collect.PagedList;
-
-import static tools.dynamia.domain.query.QueryConditions.*;
-
 import tools.dynamia.domain.ValidationError;
 import tools.dynamia.domain.query.BooleanOp;
 import tools.dynamia.domain.query.QueryConditions;
@@ -527,6 +536,7 @@ public class ProductsServiceImpl implements ProductsService {
 		}
 	}
 
+	@Override
 	public ProductUserStory getProductStory(Product product, User user) {
 		if (user == null) {
 			return null;
@@ -664,16 +674,21 @@ public class ProductsServiceImpl implements ProductsService {
 	public void saveReview(Product product, String comment, int rate) {
 
 		User user = UserHolder.get().getCurrent();
-		if (getUserReview(product, user) != null) {
+
+		ProductReview rev = getUserReview(product, user);
+
+		if (rev != null && !rev.isIncomplete()) {
 			throw new ValidationError("Ya has enviado una reseña sobre este producto");
+		} else if (rev == null) {
+			rev = new ProductReview();
 		}
 
-		ProductReview rev = new ProductReview();
 		rev.setUser(user);
 		rev.setProduct(product);
 		rev.setSite(product.getSite());
 		rev.setComment(comment);
 		rev.setStars(rate);
+		rev.setIncomplete(false);
 		crudService.save(rev);
 	}
 
@@ -683,12 +698,17 @@ public class ProductsServiceImpl implements ProductsService {
 	}
 
 	@Override
+	public List<ProductReview> getIncompleteProductReviews(User user) {
+		return crudService.find(ProductReview.class, QueryParameters.with("user", user).add("incomplete", true));
+	}
+
+	@Override
 	@Transactional
 	public void computeProductStars(Product product) {
 		product = crudService.find(Product.class, product.getId());
 
 		Double stars = crudService.executeProjection(Double.class,
-				"select avg(r.stars) from ProductReview r where r.product = :product",
+				"select avg(r.stars) from ProductReview r where r.product = :product and r.incomplete=false",
 				QueryParameters.with("product", product));
 
 		if (stars == null) {
@@ -696,16 +716,16 @@ public class ProductsServiceImpl implements ProductsService {
 		}
 
 		product.setReviews(crudService.count(ProductReview.class, QueryParameters.with("product", product)));
-		product.setStars1Count(
-				crudService.count(ProductReview.class, QueryParameters.with("product", product).add("stars", 1)));
-		product.setStars2Count(
-				crudService.count(ProductReview.class, QueryParameters.with("product", product).add("stars", 2)));
-		product.setStars3Count(
-				crudService.count(ProductReview.class, QueryParameters.with("product", product).add("stars", 3)));
-		product.setStars4Count(
-				crudService.count(ProductReview.class, QueryParameters.with("product", product).add("stars", 4)));
-		product.setStars5Count(
-				crudService.count(ProductReview.class, QueryParameters.with("product", product).add("stars", 5)));
+		product.setStars1Count(crudService.count(ProductReview.class,
+				QueryParameters.with("product", product).add("incomplete", false).add("stars", 1)));
+		product.setStars2Count(crudService.count(ProductReview.class,
+				QueryParameters.with("product", product).add("incomplete", false).add("stars", 2)));
+		product.setStars3Count(crudService.count(ProductReview.class,
+				QueryParameters.with("product", product).add("incomplete", false).add("stars", 3)));
+		product.setStars4Count(crudService.count(ProductReview.class,
+				QueryParameters.with("product", product).add("incomplete", false).add("stars", 4)));
+		product.setStars5Count(crudService.count(ProductReview.class,
+				QueryParameters.with("product", product).add("incomplete", false).add("stars", 5)));
 
 		if (stars != null && stars > 0) {
 			product.setStars(stars);
@@ -718,8 +738,8 @@ public class ProductsServiceImpl implements ProductsService {
 
 	@Override
 	public List<ProductReview> getTopReviews(Product product, int max) {
-		List<ProductReview> result = crudService.find(ProductReview.class,
-				QueryParameters.with("product", product).orderBy("id", false).paginate(max));
+		List<ProductReview> result = crudService.find(ProductReview.class, QueryParameters.with("product", product)
+				.add("incomplete", false).orderBy("creationDate", false).paginate(max));
 
 		if (result instanceof PagedList) {
 			result = ((PagedList) result).getDataSource().getPageData();

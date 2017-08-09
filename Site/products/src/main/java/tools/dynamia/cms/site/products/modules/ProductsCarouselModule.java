@@ -26,7 +26,6 @@ import tools.dynamia.cms.site.core.api.ModuleContext;
 import tools.dynamia.cms.site.core.domain.ModuleInstance;
 import tools.dynamia.cms.site.products.domain.Product;
 import tools.dynamia.cms.site.products.services.ProductsService;
-
 import tools.dynamia.commons.collect.PagedList;
 import tools.dynamia.domain.query.BooleanOp;
 import tools.dynamia.domain.query.QueryConditions;
@@ -66,7 +65,7 @@ public class ProductsCarouselModule extends AbstractModule {
 		putMetadata(PARAM_COLUMNS, "4");
 		putMetadata(PARAM_TYPE, "featured");
 		putMetadata(PARAM_PAGE_SIZE, "16");
-
+		setVariablesNames("products,", PARAM_COLUMNS);
 	}
 
 	@Override
@@ -83,7 +82,8 @@ public class ProductsCarouselModule extends AbstractModule {
 		String status = getParameter(context, PARAM_STATUS);
 		String orderBy = null;
 		try {
-			ProductOrderField orderField = ProductOrderField.valueOf(getParameter(context, PARAM_ORDER_BY).toUpperCase());
+			ProductOrderField orderField = ProductOrderField
+					.valueOf(getParameter(context, PARAM_ORDER_BY).toUpperCase());
 			orderBy = orderField.getField();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -92,8 +92,7 @@ public class ProductsCarouselModule extends AbstractModule {
 		String pageSizeParam = getParameter(context, PARAM_PAGE_SIZE);
 
 		List<Product> products = new ArrayList<>();
-		QueryParameters params = QueryParameters.with("site", context.getSite())
-				.add("active", true)
+		QueryParameters params = QueryParameters.with("site", context.getSite()).add("active", true)
 				.paginate(columns * 4);
 
 		if (pageSizeParam != null) {
@@ -133,7 +132,8 @@ public class ProductsCarouselModule extends AbstractModule {
 		if (category != null && !category.isEmpty()) {
 			try {
 				Long categoryId = new Long(category);
-				QueryParameters catParams = QueryParameters.with("category.id", QueryConditions.eq(categoryId, BooleanOp.OR))
+				QueryParameters catParams = QueryParameters
+						.with("category.id", QueryConditions.eq(categoryId, BooleanOp.OR))
 						.add("category.parent.id", QueryConditions.eq(categoryId, BooleanOp.OR));
 				params.addGroup(catParams, BooleanOp.AND);
 			} catch (NumberFormatException nf) {

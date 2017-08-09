@@ -43,9 +43,9 @@ public class BannerGalleryModule extends AbstractModule {
 	public BannerGalleryModule() {
 		super("banners_gallery", "Gallery", "banners/modules/bannersgallery");
 		setDescription("Create a photo gallery using banners images or folder");
-		addResource(
-				new JavaScriptResource("jquery.blueimp-gallery", "banners/js/jquery.blueimp-gallery.min.js"));
+		addResource(new JavaScriptResource("jquery.blueimp-gallery", "banners/js/jquery.blueimp-gallery.min.js"));
 		addResource(new StyleSheetResource("blueimp-gallery", "banners/css/blueimp-gallery.min.css"));
+		setVariablesNames("banners", "width", "height");
 	}
 
 	@Override

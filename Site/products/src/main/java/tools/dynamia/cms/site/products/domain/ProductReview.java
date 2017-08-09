@@ -1,10 +1,5 @@
 package tools.dynamia.cms.site.products.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import tools.dynamia.cms.site.core.domain.SiteBaseEntity;
-import tools.dynamia.cms.site.users.domain.User;
-import tools.dynamia.domain.contraints.NotEmpty;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -13,6 +8,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import tools.dynamia.cms.site.core.domain.SiteBaseEntity;
+import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  * Created by mario on 12/07/2017.
@@ -39,6 +40,15 @@ public class ProductReview extends SiteBaseEntity {
 
 	private boolean verified;
 	private String document;
+	private boolean incomplete;
+
+	public boolean isIncomplete() {
+		return incomplete;
+	}
+
+	public void setIncomplete(boolean incomplete) {
+		this.incomplete = incomplete;
+	}
 
 	public String getDocument() {
 		return document;

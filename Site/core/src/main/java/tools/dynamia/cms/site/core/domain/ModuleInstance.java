@@ -15,222 +15,234 @@
  */
 package tools.dynamia.cms.site.core.domain;
 
+import org.hibernate.annotations.BatchSize;
+import tools.dynamia.cms.site.core.CMSUtil;
+import tools.dynamia.cms.site.core.Orderable;
+import tools.dynamia.domain.contraints.NotEmpty;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.integration.Containers;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.BatchSize;
-
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.Orderable;
-
-import tools.dynamia.domain.contraints.NotEmpty;
 
 /**
  * @author Mario Serrano Leones
  */
 @Entity
 @Table(name = "cr_modules_instances")
-@BatchSize(size=20)
+@BatchSize(size = 20)
 public class ModuleInstance extends Content implements Orderable {
 
-	@NotEmpty(message = "Module ID is required")
-	@NotNull
-	private String moduleId;
-	@NotEmpty(message = "Select module position")
-	private String position;
-	@Column(name = "moduleAlias")
-	private String alias;
-	@NotEmpty(message = "Enter module title")
-	private String title;
-	private boolean enabled = true;
-	private boolean titleVisible = true;
+    @NotEmpty(message = "Module ID is required")
+    @NotNull
+    private String moduleId;
+    @NotEmpty(message = "Select module position")
+    private String position;
+    @Column(name = "moduleAlias")
+    private String alias;
+    @NotEmpty(message = "Enter module title")
+    private String title;
+    private boolean enabled = true;
+    private boolean titleVisible = true;
 
-	private String styleClass;
-	@OneToMany(mappedBy = "moduleInstance", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	private List<ModuleInstanceParameter> parameters = new ArrayList<>();
+    private String styleClass;
+    @OneToMany(mappedBy = "moduleInstance", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ModuleInstanceParameter> parameters = new ArrayList<>();
 
-	@Column(name = "instanceOrder")
-	private int order;
+    @Column(name = "instanceOrder")
+    private int order;
 
-	@Column(length = 3000)
-	private String includePaths;
-	private String customView;
-	
-	
-	@Transient
-	private Map<String, Object> model = new HashMap<String, Object>();
+    @Column(length = 3000)
+    private String includePaths;
+    private String customView;
 
+    @Transient
+    private Map<String, Object> model = new HashMap<String, Object>();
 
-	public String getIncludePaths() {
-		return includePaths;
-	}
+    @Transient
+    private Object temporalForm;
 
-	public void setIncludePaths(String includePaths) {
-		this.includePaths = includePaths;
-	}
+    public String getIncludePaths() {
+        return includePaths;
+    }
 
-	public String getCustomView() {
-		return customView;
-	}
+    public void setIncludePaths(String includePaths) {
+        this.includePaths = includePaths;
+    }
 
-	public void setCustomView(String customView) {
-		this.customView = customView;
-	}
+    public String getCustomView() {
+        return customView;
+    }
 
-	@Override
-	public int getOrder() {
-		return order;
-	}
+    public void setCustomView(String customView) {
+        this.customView = customView;
+    }
 
-	@Override
-	public void setOrder(int order) {
-		this.order = order;
-	}
+    @Override
+    public int getOrder() {
+        return order;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    @Override
+    public void setOrder(int order) {
+        this.order = order;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getModuleId() {
-		return moduleId;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setModuleId(String moduleId) {
-		this.moduleId = moduleId;
-	}
+    public String getModuleId() {
+        return moduleId;
+    }
 
-	public String getPosition() {
-		return position;
-	}
+    public void setModuleId(String moduleId) {
+        this.moduleId = moduleId;
+    }
 
-	public void setPosition(String position) {
-		this.position = position;
-	}
+    public String getPosition() {
+        return position;
+    }
 
-	public String getAlias() {
-		return alias;
-	}
+    public void setPosition(String position) {
+        this.position = position;
+    }
 
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
+    public String getAlias() {
+        return alias;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	public String getStyleClass() {
-		return styleClass;
-	}
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-	public void setStyleClass(String styleClass) {
-		this.styleClass = styleClass;
-	}
+    public String getStyleClass() {
+        return styleClass;
+    }
 
-	public List<ModuleInstanceParameter> getParameters() {
-		return parameters;
-	}
+    public void setStyleClass(String styleClass) {
+        this.styleClass = styleClass;
+    }
 
-	public void setParameters(List<ModuleInstanceParameter> parameters) {
-		this.parameters = parameters;
-	}
+    public List<ModuleInstanceParameter> getParameters() {
+        return parameters;
+    }
 
-	public boolean isTitleVisible() {
-		return titleVisible;
-	}
+    public void setParameters(List<ModuleInstanceParameter> parameters) {
+        this.parameters = parameters;
+    }
 
-	public void setTitleVisible(boolean titleVisible) {
-		this.titleVisible = titleVisible;
-	}
+    public boolean isTitleVisible() {
+        return titleVisible;
+    }
 
-	@Override
-	public String toString() {
-		return getModuleId();
-	}
+    public void setTitleVisible(boolean titleVisible) {
+        this.titleVisible = titleVisible;
+    }
 
-	public String getParameterValue(String name) {
-		ModuleInstanceParameter parameter = getParameter(name);
-		if (parameter != null && parameter.isEnabled()) {
-			return parameter.getValue();
-		}
+    @Override
+    public String toString() {
+        return getModuleId();
+    }
 
-		return null;
-	}
+    public String getParameterValue(String name) {
+        ModuleInstanceParameter parameter = getParameter(name);
+        if (parameter != null && parameter.isEnabled()) {
+            return parameter.getValue();
+        }
 
-	public ModuleInstanceParameter getParameter(String name) {
-		for (ModuleInstanceParameter parameter : parameters) {
-			if (parameter.getName().equalsIgnoreCase(name)) {
-				return parameter;
-			}
-		}
-		return null;
-	}
+        return null;
+    }
 
-	public Map<String, Object> getModel() {
-		return model;
-	}
+    public ModuleInstanceParameter getParameter(String name) {
 
-	public void addObject(String name, Object object) {
-		model.put(name, object);
-	}
+        if (getId() != null && (parameters == null || parameters.isEmpty())) {
+            reloadParameters();
+        }
 
-	public ModuleInstance clone() {
-		ModuleInstance clone = new ModuleInstance();
-		clone.alias = "";
-		clone.enabled = false;
-		clone.moduleId = moduleId;
-		clone.order = order + 1;
-		clone.position = position;
-		clone.styleClass = styleClass;
-		clone.title = title + "- copy";
-		clone.titleVisible = titleVisible;
-		clone.customView = customView;
+        for (ModuleInstanceParameter parameter : parameters) {
+            if (parameter.getName().equalsIgnoreCase(name)) {
+                return parameter;
+            }
+        }
+        return null;
+    }
 
-		for (ModuleInstanceParameter parameter : getParameters()) {
-			ModuleInstanceParameter cloneParam = parameter.clone();
-			clone.getParameters().add(cloneParam);
-			cloneParam.setModuleInstance(clone);
-		}
+    public Map<String, Object> getModel() {
+        return model;
+    }
 
-		return clone;
-	}
+    public void addObject(String name, Object object) {
+        model.put(name, object);
+    }
 
-	public boolean isPathIncluded(String currentPath) {
-		if (includePaths == null || includePaths.isEmpty()) {
-			return true;
-		}
+    @Override
+    public ModuleInstance clone() {
+        ModuleInstance clone = new ModuleInstance();
+        clone.alias = "";
+        clone.enabled = false;
+        clone.moduleId = moduleId;
+        clone.order = order + 1;
+        clone.position = position;
+        clone.styleClass = styleClass;
+        clone.title = title + "- copy";
+        clone.titleVisible = titleVisible;
+        clone.customView = customView;
 
-		if (!includePaths.contains(",")) {
-			return CMSUtil.matchAntPattern(includePaths, currentPath);
-		} else {
-			String[] paths = includePaths.split(",");
-			for (String path : paths) {
-				if (CMSUtil.matchAntPattern(path, currentPath)) {
-					return true;
-				}
-			}
-		}
+        for (ModuleInstanceParameter parameter : getParameters()) {
+            ModuleInstanceParameter cloneParam = parameter.clone();
+            clone.getParameters().add(cloneParam);
+            cloneParam.setModuleInstance(clone);
+        }
 
-		return false;
-	}
+        return clone;
+    }
 
+    public boolean isPathIncluded(String currentPath) {
+        if (includePaths == null || includePaths.isEmpty()) {
+            return true;
+        }
+
+        if (!includePaths.contains(",")) {
+            return CMSUtil.matchAntPattern(includePaths, currentPath);
+        } else {
+            String[] paths = includePaths.split(",");
+            for (String path : paths) {
+                if (CMSUtil.matchAntPattern(path, currentPath)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void reloadParameters() {
+        CrudService crudService = Containers.get().findObject(CrudService.class);
+        parameters = crudService.find(ModuleInstanceParameter.class, "moduleInstance", this);
+    }
+
+    public Object getTemporalForm() {
+        return temporalForm;
+    }
+
+    public void setTemporalForm(Object temporalForm) {
+        this.temporalForm = temporalForm;
+    }
 }

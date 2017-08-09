@@ -1,5 +1,8 @@
 package tools.dynamia.cms.site.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import tools.dynamia.cms.site.core.dto.CityDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -12,9 +15,12 @@ import javax.persistence.Table;
 public class City extends SiteSimpleEntity {
 
     @ManyToOne
+    @JsonIgnore
     private Region region;
     private String name;
     private String code;
+    @JsonIgnore
+    private String externalRef;
 
     public String getName() {
         return name;
@@ -43,5 +49,19 @@ public class City extends SiteSimpleEntity {
     @Override
     public String toString() {
         return String.format("%s, %s", name, region);
+    }
+
+    public void sync(CityDTO dto) {
+        name = dto.getName();
+        code = dto.getCode();
+        externalRef = dto.getExternalRef();
+    }
+
+    public String getExternalRef() {
+        return externalRef;
+    }
+
+    public void setExternalRef(String externalRef) {
+        this.externalRef = externalRef;
     }
 }

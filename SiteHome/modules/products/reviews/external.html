@@ -50,6 +50,7 @@
 						<div class="col-md-12">
 							<textarea th:field="*{reviews[__${it.index}__].comment}" required class="form-input" placeholder="Por favor ingrese sus comentarios acerca del producto"></textarea>
 						</div>						
+						<input type="hidden" th:field="*{reviews[__${it.index}__].id}" />
 						<input type="hidden" th:field="*{reviews[__${it.index}__].product.id}" />
 						<input type="hidden" th:field="*{reviews[__${it.index}__].user.id}" />
 						<input type="hidden" th:field="*{reviews[__${it.index}__].document}" />

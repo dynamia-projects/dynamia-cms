@@ -41,6 +41,7 @@ public class MenuModule extends AbstractModule {
 		setDescription("Basic module for creation menubars width its items");
 		putMetadata("author", "Mario Serrano Leones");
 		putMetadata("Created at", "03-09-2014");
+		setVariablesNames(PARAM_MENU, "menuitems");
 	}
 
 	@Override

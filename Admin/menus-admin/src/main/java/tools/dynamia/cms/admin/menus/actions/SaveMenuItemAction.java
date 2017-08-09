@@ -2,13 +2,12 @@ package tools.dynamia.cms.admin.menus.actions;
 
 import java.util.List;
 
-import tools.dynamia.cms.admin.menus.ui.MenuItemsUI;
-import tools.dynamia.cms.site.menus.domain.MenuItem;
-import tools.dynamia.cms.site.menus.domain.MenuItemParameter;
-
 import tools.dynamia.actions.AbstractAction;
 import tools.dynamia.actions.ActionEvent;
 import tools.dynamia.actions.ActionRenderer;
+import tools.dynamia.cms.admin.menus.ui.MenuItemsUI;
+import tools.dynamia.cms.site.menus.domain.MenuItem;
+import tools.dynamia.cms.site.menus.domain.MenuItemParameter;
 import tools.dynamia.crud.CrudActionEvent;
 import tools.dynamia.domain.query.Parameter;
 import tools.dynamia.domain.services.CrudService;
@@ -21,8 +20,10 @@ public class SaveMenuItemAction extends AbstractAction {
 	private CrudActionEvent sourceEvent;
 
 	public SaveMenuItemAction(CrudService crudService, CrudActionEvent evt) {
-		setName("Save");
+		setName("Save Menu Item");
 		setImage("save");
+		setAttribute("background", "#ff5722");
+		setAttribute("color", "white");
 		this.crudService = crudService;
 		this.sourceEvent = evt;
 	}
@@ -30,7 +31,6 @@ public class SaveMenuItemAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		List<Parameter> parameters = (List<Parameter>) evt.getData();
-
 
 		MenuItemsUI ui = (MenuItemsUI) evt.getSource();
 		MenuItem menuItem = ui.getMenuItem();

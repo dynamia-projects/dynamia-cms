@@ -30,10 +30,12 @@ public interface Module extends TypeExtension {
 	String getTemplateViewName();
 
 	Map<String, Object> getMetadata();
-	
+
 	public List<StyleSheetResource> getStyleSheetResources();
-	
+
 	public List<JavaScriptResource> getJavaScriptResources();
+
+	public String[] getVariablesNames();
 
 	void init(ModuleContext context);
 

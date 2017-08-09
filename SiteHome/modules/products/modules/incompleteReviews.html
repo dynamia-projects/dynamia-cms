@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<body th:fragment="module(instance)">
+
+
+<form id="reviewForm" class="form-vertical" th:action="@{'/store/products/reviews/create'}"
+      th:object="${instance.model.reviewsForm}" th:method="post">
+
+
+    <div th:each="rev,it : *{reviews}">
+        <div class="row">
+
+            <div class="col-md-2">
+                <img th:src="@{'/resources/products/images/thumbnails/'+${rev.product.image}(w=180,h=180)}"
+                     th:if="${rev.product.image!=null}"
+                />
+            </div>
+
+            <div class="col-md-10">
+                <div class="col-md-12">
+                    <h4 class="text-primary" th:text="${rev.product.category}"></h4>
+                    <h4 th:text="${rev.product.brand+' '+rev.product.name}"></h4>
+                </div>
+
+                <div class="col-md-12">
+                    <strong>Calificacion</strong>
+                    <input type="radio" th:field="*{reviews[__${it.index}__].stars}" value="1">1</input>
+                    <input type="radio" th:field="*{reviews[__${it.index}__].stars}" value="2">2</input>
+                    <input type="radio" th:field="*{reviews[__${it.index}__].stars}" value="3">3</input>
+                    <input type="radio" th:field="*{reviews[__${it.index}__].stars}" value="4">4</input>
+                    <input type="radio" th:field="*{reviews[__${it.index}__].stars}" value="5">5</input>
+                </div>
+
+                <div class="col-md-12">
+                        <textarea th:field="*{reviews[__${it.index}__].comment}" required class="form-input"
+                                  placeholder="Por favor ingrese sus comentarios acerca del producto"></textarea>
+                </div>
+                <input type="hidden" th:field="*{reviews[__${it.index}__].id}"/>
+                <input type="hidden" th:field="*{reviews[__${it.index}__].product.id}"/>
+                <input type="hidden" th:field="*{reviews[__${it.index}__].user.id}"/>
+                <input type="hidden" th:field="*{reviews[__${it.index}__].document}"/>
+            </div>
+        </div>
+        <hr/>
+    </div>
+
+    <div class="col-md-12">
+        <input type="submit" class="btn btn-success" value="Enviar Reseñas"></input>
+    </div>
+
+</form>
+
+
+</body>
+
+</html>

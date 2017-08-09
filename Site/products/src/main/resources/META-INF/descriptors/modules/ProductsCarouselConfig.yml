@@ -5,9 +5,11 @@ fields:
 
   type:        
     component: enumbox
+    required: true
     params:
       enumClass: tools.dynamia.cms.site.products.modules.ProductCarouselType
       valuesAsString: true
+      
     
   category:
     component: entitypicker

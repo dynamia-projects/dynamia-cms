@@ -1,5 +1,8 @@
 package tools.dynamia.cms.site.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import tools.dynamia.cms.site.core.dto.CountryDTO;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -17,7 +20,11 @@ public class Country extends SiteSimpleEntity {
     private String name;
     private String code;
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Region> regions = new ArrayList<>();
+    @JsonIgnore
+    private String externalRef;
+
 
     public String getName() {
         return name;
@@ -46,5 +53,19 @@ public class Country extends SiteSimpleEntity {
     @Override
     public String toString() {
         return name;
+    }
+
+    public void sync(CountryDTO dto) {
+        name = dto.getName();
+        code = dto.getCode();
+        externalRef = dto.getExternalRef();
+    }
+
+    public String getExternalRef() {
+        return externalRef;
+    }
+
+    public void setExternalRef(String externalRef) {
+        this.externalRef = externalRef;
     }
 }

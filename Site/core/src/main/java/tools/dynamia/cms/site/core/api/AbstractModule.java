@@ -33,12 +33,22 @@ public abstract class AbstractModule implements Module {
 	private Map<String, Object> metadata = new HashMap<>();
 	private List<JavaScriptResource> javaScriptResources = new ArrayList<>();
 	private List<StyleSheetResource> styleSheetResources = new ArrayList<>();
+	private String[] variablesNames = {};
 
 	public AbstractModule(String id, String name, String templateViewName) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.templateViewName = templateViewName;
+	}
+
+	public void setVariablesNames(String... variablesNames) {
+		this.variablesNames = variablesNames;
+	}
+
+	@Override
+	public String[] getVariablesNames() {
+		return variablesNames;
 	}
 
 	public void putMetadata(String key, Object value) {
@@ -50,6 +60,7 @@ public abstract class AbstractModule implements Module {
 		return metadata;
 	}
 
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -58,6 +69,7 @@ public abstract class AbstractModule implements Module {
 		this.id = id;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -66,6 +78,7 @@ public abstract class AbstractModule implements Module {
 		this.name = name;
 	}
 
+	@Override
 	public String getDescription() {
 		return description;
 	}
@@ -74,6 +87,7 @@ public abstract class AbstractModule implements Module {
 		this.description = description;
 	}
 
+	@Override
 	public String getTemplateViewName() {
 		return templateViewName;
 	}

@@ -1,0 +1,12 @@
+view: form
+beanClass: tools.dynamia.cms.site.core.domain.City
+autofields: false
+
+fields:
+  region:
+  region.country:
+    label: Country
+    params:
+      readonly: true
+  name:
+  code:

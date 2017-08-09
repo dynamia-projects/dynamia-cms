@@ -28,6 +28,7 @@ public class ProductCategoriesModule extends AbstractModule {
 		putMetadata("author", "Mario Serrano Leones");
 		putMetadata("version", "1.0");
 		putMetadata("created at", "25-07-2016");
+		setVariablesNames("categories");
 
 	}
 
@@ -49,7 +50,7 @@ public class ProductCategoriesModule extends AbstractModule {
 				ProductCategory parentCategory = crudService.find(ProductCategory.class, parentCategoryId);
 				categories = service.getSubcategories(parentCategory);
 			}
-		} catch (Exception e) {			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

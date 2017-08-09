@@ -21,7 +21,7 @@ fields:
     
     description:
         params:            
-            span: 3
+            span: 2
             
     template:
         component: templateSelector
@@ -81,13 +81,22 @@ fields:
     flickr:
     vine:
     meetup:
+
+    externalConnectorURL:
+      label: External Connector URL
+      params:
+        span: 2
+
+    offlineMessage:
+      params:
+        span: 2
     
     
 groups:
     
     general:
         label: Basic Settings
-        fields: [name,parent,key,template,mainDomain,logoURL, offline,offlineMessage,offlineRedirect,offlineIcon,externalConnectorURL,corporateSite,searchEnabled,description]
+        fields: [name,parent,key,template,mainDomain,logoURL, offlineMessage,offlineRedirect,offlineIcon,offline,corporateSite,searchEnabled,externalConnectorURL,description]
             
     
     googleAnalytics:

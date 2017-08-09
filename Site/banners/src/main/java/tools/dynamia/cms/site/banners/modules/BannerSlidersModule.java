@@ -41,6 +41,7 @@ public class BannerSlidersModule extends AbstractModule {
 		addResource(new JavaScriptResource("jquery.flexslider", "banners/js/jquery.flexslider.js"));
 		addResource(new JavaScriptResource("banner_sliders", "banners/js/banners.sliders.js"));
 		addResource(new StyleSheetResource("flexslider", "banners/css/flexslider.css"));
+		setVariablesNames("banners");
 	}
 
 	@Override

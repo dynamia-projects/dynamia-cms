@@ -26,6 +26,7 @@ public class ProductBrandsModule extends AbstractModule {
 		putMetadata("author", "Mario Serrano Leones");
 		putMetadata("version", "1.0");
 		putMetadata("created at", "20-04-2017");
+		setVariablesNames("brands");
 
 	}
 
