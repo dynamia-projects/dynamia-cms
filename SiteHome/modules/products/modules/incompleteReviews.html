@@ -6,7 +6,7 @@
 
 
 <form id="reviewForm" class="form-vertical" th:action="@{'/store/products/reviews/create'}"
-      th:object="${instance.model.reviewsForm}" th:method="post">
+      th:object="${instance.temporalForm}" th:method="post">
 
 
     <div th:each="rev,it : *{reviews}">

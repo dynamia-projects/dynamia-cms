@@ -15,48 +15,46 @@
  */
 package tools.dynamia.cms.site.users.services;
 
-import java.util.List;
-
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.users.UserForm;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
 import tools.dynamia.cms.site.users.domain.UserSiteConfig;
 
+import java.util.List;
+
 /**
- *
  * @author Mario Serrano Leones
  */
 public interface UserService {
 
-	public void saveUser(UserForm user);
+    User getUser(Site site, String name, String identification);
 
-	public User getUser(Site site, String name);
+    public void saveUser(UserForm user);
 
-	public void changePassword(UserForm form);
+    public User getUser(Site site, String name);
 
-	void checkAdminUser(Site site);
+    public void changePassword(UserForm form);
 
-	public List<UserContactInfo> getContactInfos(User current);
+    void checkAdminUser(Site site);
 
-	public void resetPassword(Site site, String username);
+    public List<UserContactInfo> getContactInfos(User current);
 
-	public void resetPassword(User user, String newpassword, String newpassword2);
+    public void resetPassword(Site site, String username);
 
-	UserSiteConfig getSiteConfig(Site site);
+    public void resetPassword(User user, String newpassword, String newpassword2);
 
-	void setupPassword(User user, String newPassword);
+    UserSiteConfig getSiteConfig(Site site);
 
-	public List<User> getUserCustomers(User current);
+    void setupPassword(User user, String newPassword);
 
-	public User getByExternalRef(Site site, String customer);
+    public List<User> getUserCustomers(User current);
 
-	void enableUser(User user);
+    public User getByExternalRef(Site site, String customer);
 
-	void disableUser(User user);
+    void enableUser(User user);
+
+    void disableUser(User user);
 
     User getUserByValidationKey(Site site, String key);
 }
