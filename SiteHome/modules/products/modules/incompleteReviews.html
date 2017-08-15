@@ -47,7 +47,8 @@
     </div>
 
     <div class="col-md-12">
-        <input type="submit" class="btn btn-success" value="Enviar Reseñas"></input>
+        <input type="submit" th:unless="${#lists.isEmpty(instance.temporalForm.reviews)}" class="btn btn-success"
+               value="Enviar Reseñas"></input>
     </div>
 
 </form>

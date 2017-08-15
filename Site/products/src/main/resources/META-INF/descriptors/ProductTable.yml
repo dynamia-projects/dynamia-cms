@@ -73,4 +73,3 @@ fields:
        label: End Date
        params:
            converter: converters.Date
-   

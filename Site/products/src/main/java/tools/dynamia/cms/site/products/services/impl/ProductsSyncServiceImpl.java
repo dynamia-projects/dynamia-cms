@@ -15,6 +15,24 @@
  */
 package tools.dynamia.cms.site.products.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import tools.dynamia.cms.site.core.DynamiaCMS;
+import tools.dynamia.cms.site.products.api.ProductsDatasource;
+import tools.dynamia.cms.site.products.domain.*;
+import tools.dynamia.cms.site.products.dto.*;
+import tools.dynamia.cms.site.products.services.ProductsSyncService;
+import tools.dynamia.commons.logger.LoggingService;
+import tools.dynamia.commons.logger.SLF4JLoggingService;
+import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.domain.services.CrudService;
+import tools.dynamia.web.util.HttpRemotingServiceClient;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,46 +45,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import tools.dynamia.cms.site.core.DynamiaCMS;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.products.api.ProductsDatasource;
-import tools.dynamia.cms.site.products.domain.Product;
-import tools.dynamia.cms.site.products.domain.ProductBrand;
-import tools.dynamia.cms.site.products.domain.ProductCategory;
-import tools.dynamia.cms.site.products.domain.ProductCategoryDetail;
-import tools.dynamia.cms.site.products.domain.ProductCreditPrice;
-import tools.dynamia.cms.site.products.domain.ProductDetail;
-import tools.dynamia.cms.site.products.domain.ProductStock;
-import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import tools.dynamia.cms.site.products.domain.RelatedProduct;
-import tools.dynamia.cms.site.products.domain.Store;
-import tools.dynamia.cms.site.products.domain.StoreContact;
-import tools.dynamia.cms.site.products.dto.ProductBrandDTO;
-import tools.dynamia.cms.site.products.dto.ProductCategoryDTO;
-import tools.dynamia.cms.site.products.dto.ProductCategoryDetailDTO;
-import tools.dynamia.cms.site.products.dto.ProductCreditPriceDTO;
-import tools.dynamia.cms.site.products.dto.ProductDTO;
-import tools.dynamia.cms.site.products.dto.ProductDetailDTO;
-import tools.dynamia.cms.site.products.dto.ProductStockDTO;
-import tools.dynamia.cms.site.products.dto.RelatedProductDTO;
-import tools.dynamia.cms.site.products.dto.StoreContactDTO;
-import tools.dynamia.cms.site.products.dto.StoreDTO;
-import tools.dynamia.cms.site.products.services.ProductsSyncService;
-import tools.dynamia.commons.logger.LoggingService;
-import tools.dynamia.commons.logger.SLF4JLoggingService;
-import tools.dynamia.domain.query.QueryParameters;
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.web.util.HttpRemotingServiceClient;
 
 /**
  * @author Mario Serrano Leones
@@ -139,7 +117,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
         }
     }
 
-    @Override	    
+    @Override
     public List<ProductDTO> synchronizeProducts(ProductsSiteConfig siteCfg) {
         logger.debug(">>>> STARTING PRODUCTS SYNCHRONIZATION FOR SITE " + siteCfg.getSite().getName() + " <<<<");
         ProductsDatasource ds = getDatasource(siteCfg);
@@ -149,9 +127,10 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
             logger.debug("Synchronizing product. Site:  " + siteCfg.getSite().getName() + " Name:"
                     + remoteProduct.getName());
             try {
-            	crudService.executeWithinTransaction(()->synchronizeProduct(siteCfg, remoteProduct));
+                crudService.executeWithinTransaction(() -> synchronizeProduct(siteCfg, remoteProduct));
             } catch (Exception e) {
                 logger.error("Error Synchronizing Product: " + remoteProduct.getName(), e);
+                e.printStackTrace();
             }
         }
         return products;
@@ -181,8 +160,8 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
                     .setBrand(getLocalEntity(ProductBrand.class, remoteProduct.getBrand().getExternalRef(), siteCfg));
         }
 
-        if (localProduct.getCategory() != null) {	
-        	logger.info("Saving product "+localProduct.getName());
+        if (localProduct.getCategory() != null) {
+            logger.info("Saving product " + localProduct.getName());
             crudService.save(localProduct);
         } else {
             logger.warn("Cannot save product " + localProduct.getName() + ". Category is null");
