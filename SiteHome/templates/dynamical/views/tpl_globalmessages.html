@@ -6,32 +6,31 @@
 <body th:fragment="content">
 
 
-    <div class="alert alert-danger alert-dismissible fade show mt40 animated shake" th:if="${errormessage!=null}">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-            </button>
-        <strong>Error!</strong> <span th:text="${errormessage}">message</span>
-    </div>
-
-
-
-
-    <div class="alert alert-success alert-dismissible fade show mt40 animated fadeInUp" role="alert" th:if="${successmessage!=null}">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-            </button>
-        <strong>Ok!</strong> <span th:text="${successmessage}">message</span>
+<div class="alert alert-danger alert-dismissible fade show mt40 animated fadeInUp" role="alert"
+     th:if="${errormessage!=null}">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Error!</strong> <span th:text="${errormessage}">message</span>
 </div>
 
 
+<div class="alert alert-success alert-dismissible fade show mt40 animated fadeInUp" role="alert"
+     th:if="${successmessage!=null}">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Ok!</strong> <span th:text="${successmessage}">message</span>
+</div>
 
-    <div lass="alert alert-warning alert-dismissible fade show mt40 animated fadeInUp" th:if="${warningmessage!=null}">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-            </button>
-        <strong>Advertencia!</strong> <span th:text="${warningmessage}">message</span>
-    </div>
 
+<div class="alert alert-warning alert-dismissible fade show mt40 animated fadeInUp" role="alert"
+     th:if="${warningmessage!=null}">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Warning!</strong> <span th:text="${warningmessage}">message</span>
+</div>
 
 
 </body>

@@ -94,13 +94,14 @@ public class ExceptionsController {
 
     private void getCauses(List<String> causes, Throwable throwable) {
 
+        if (throwable != null) {
+            if (causes.size() <= 10) {
+                causes.add(throwable.getMessage());
+            }
 
-        if (causes.size() <= 10) {
-            causes.add(throwable.getMessage());
-        }
-
-        if (throwable.getCause() != null) {
-            getCauses(causes, throwable.getCause());
+            if (throwable.getCause() != null) {
+                getCauses(causes, throwable.getCause());
+            }
         }
 
     }

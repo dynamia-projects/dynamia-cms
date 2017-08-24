@@ -15,21 +15,12 @@
  */
 package tools.dynamia.cms.site.shoppingcart.services.impl;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import tools.dynamia.cms.site.core.CMSUtil;
 import tools.dynamia.cms.site.core.HtmlTableBuilder;
-import tools.dynamia.cms.site.core.domain.City;
-import tools.dynamia.cms.site.core.domain.Region;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.domain.SiteParameter;
 import tools.dynamia.cms.site.core.services.SiteService;
@@ -71,6 +62,12 @@ import toosl.dynamia.cms.site.shoppingcart.api.Response;
 import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSender;
 import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSenderException;
 import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderDTO;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Mario Serrano Leones
@@ -135,6 +132,18 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
         if (shoppingCart.getTotalPrice().longValue() > config.getMaxPaymentAmount().longValue()) {
             throw new ValidationError("El valor maximo de ventas en linea es $" + config.getMaxPaymentAmount());
+        }
+
+        if (config.getMinQuantityByCart() > 0 && shoppingCart.getQuantity() < config.getMinQuantityByCart()) {
+            throw new ValidationError("You should buy at least " + config.getMinQuantityByCart() + " products");
+        }
+
+        if (config.getMinQuantityByProducts() > 0) {
+            for (ShoppingCartItem item : shoppingCart.getItems()) {
+                if (item.getQuantity() < config.getMinQuantityByProducts()) {
+                    throw new ValidationError("You should buy at least " + config.getMinQuantityByProducts() + " " + item.getName());
+                }
+            }
         }
 
         User user = UserHolder.get().getCurrent();
@@ -269,7 +278,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
         ShoppingCart newsc = ShoppingCartHolder.get().getCart("shop");
         for (ShoppingCartItem oldItem : shoppingCart.getItems()) {
             ShoppingCartItem newItem = oldItem.clone();
-            newsc.addItem(newItem);
+            newsc.addItem(newItem, newItem.getQuantity());
         }
 
         newsc.compute();

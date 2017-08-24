@@ -1,79 +1,103 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
 
 <body th:fragment="content">
 
-	<!-- Cart-->
-	<div class="cart-info">
+<!-- Cart-->
+<div class="cart-info">
 
-		<table class="table table-striped table-bordered">
-			<tr>
-				<th>No.</th>
-				<th>Image</th>
-				<th>Name</th>
-				<th>Qty</th>
-				<th width="100px">Unit Price</th>
-				<th>Total</th>
-			</tr>
-			<tr th:each="item,row : ${shoppingOrder.shoppingCart.items}">
-				<td class="name">
-					<span th:text="${row.index+1}"></span>
-				</td>
-				<td style="width: 50px">
-					<img th:src="@{${item.imageURL}+'thumbnails/'+${item.imageName}(w=90,h=90)}" alt="product"></img>
-				</td>
-				<td class="name">
-					<strong class="orange" th:text="${item.name}">MacBook</strong><br />
-					<span th:text="${item.description}"></span>
-				</td>
-				<td class="quantity" style="text-align: center">
-					<span th:text="${item.quantity}"></span>
-				</td>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>No.</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Qty</th>
+            <th width="130px">Unit Price</th>
+            <th>Total</th>
+        </tr>
+        <tr th:each="item,row : ${shoppingOrder.shoppingCart.items}">
+            <td class="name">
+                <span th:text="${row.index+1}"></span>
+            </td>
+            <td style="width: 50px">
+                <img th:src="@{${item.imageURL}+'thumbnails/'+${item.imageName}(w=90,h=90)}" alt="product"></img>
+            </td>
+            <td class="name">
+                <strong class="orange" th:text="${item.name}">MacBook</strong><br/>
+                <span th:text="${item.description}"></span>
+            </td>
+            <td class="quantity" style="text-align: center">
+                <span th:text="${item.quantity}"></span>
+            </td>
 
-				<td class="price" style="text-align: right"
-					th:text="${cmsUtil.formatNumber(item.unitPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$120.68</td>
-				<td class="total" style="text-align: right"
-					th:text="${cmsUtil.formatNumber(item.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
+            <td class="price" style="text-align: right"
+                th:text="${cmsUtil.formatNumber(item.unitPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">
+                $120.68
+            </td>
+            <td class="total" style="text-align: right"
+                th:text="${cmsUtil.formatNumber(item.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">
+                $589.50
+            </td>
 
-			</tr>
-			<tr>
-				<td style="text-align: right" colspan="3">
-					<b>Items</b>
-				</td>
-				<td style="text-align: center" th:text="${shoppingOrder.shoppingCart.quantity}"></td>
-				<td style="text-align: right" colspan="1">
-					<b>Subtotal</b>
-				</td>
-				<td style="text-align: right"
-					th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
-			</tr>
-			<tr>
-				<td style="text-align: right" colspan="4">
-					<span th:if="${shoppingOrder.payAtDelivery}">Pagar el valor del envio contraentrega</span>
-					<span th:if="${shoppingOrder.pickupAtStore}">Recoger en Tienda</span>
-				</td>
+        </tr>
+        <tr>
+            <td style="text-align: right" colspan="3">
+                <b>Items</b>
+            </td>
+            <td style="text-align: center" th:text="${shoppingOrder.shoppingCart.quantity}"></td>
+            <td style="text-align: right" colspan="1">
+                <b>Subtotal</b>
+            </td>
+            <td style="text-align: right"
+                th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">
+                $589.50
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right" colspan="4">
+                <span th:if="${shoppingOrder.payAtDelivery}">Pagar el valor del envio contraentrega</span>
+                <span th:if="${shoppingOrder.pickupAtStore}">Recoger en Tienda</span>
+            </td>
 
-				<td style="text-align: right" colspan="1">
-					<b>Shipping</b>
-				</td>
-				<td style="text-align: right"
-					th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalShipmentPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
-			</tr>
-			<tr>
-				<td style="text-align: right" colspan="4"></td>
+            <td style="text-align: right" colspan="1">
+                <b>Shipping</b>
+            </td>
+            <td style="text-align: right"
+                th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalShipmentPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">
+                $589.50
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right" colspan="4"></td>
 
-				<td style="text-align: right" colspan="1">
-					<b>TOTAL</b>
-				</td>
-				<td style="text-align: right; font-weight: bold"
-					th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$589.50</td>
-			</tr>
+            <td style="text-align: right" colspan="1">
+                <b>Taxes
+                    <small th:text="${shoppingOrder.shoppingCart.taxPercent}">X</small>
+                    <small>%</small>
+                </b>
+            </td>
+            <td style="text-align: right; font-weight: bold"
+                th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalTaxes,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">
+                $589.50
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right" colspan="4"></td>
 
-		</table>
+            <td style="text-align: right" colspan="1">
+                <b>TOTAL</b>
+            </td>
+            <td style="text-align: right; font-weight: bold"
+                th:text="${cmsUtil.formatNumber(shoppingOrder.shoppingCart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">
+                $589.50
+            </td>
+        </tr>
+
+    </table>
 
 
-	</div>
+</div>
 
 </body>
 </html>

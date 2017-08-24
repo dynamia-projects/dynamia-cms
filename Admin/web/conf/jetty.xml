@@ -2,7 +2,6 @@
 <!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
 
 
-
 <Configure id="Server" class="org.eclipse.jetty.server.Server">
 
     <Array id="plusConfig" type="java.lang.String">
@@ -21,8 +20,8 @@
         <Arg></Arg>
         <Arg>jdbc/dynamiacms</Arg>
         <Arg>
-           <New class="org.mariadb.jdbc.MariaDbDataSource">
-                <Set name="Url">jdbc:mariadb://localhost:3306/compulagoweb</Set>
+            <New class="org.mariadb.jdbc.MariaDbDataSource">
+                <Set name="Url">jdbc:mariadb://localhost:3306/dynamiacms</Set>
                 <Set name="User">root</Set>
                 <Set name="Password">123</Set>
             </New>
@@ -51,10 +50,8 @@
     </New>
 
 
-	
-	
     <!-- JMS Resource -->
     <!-- <New id="cf" class="org.eclipse.jetty.plus.naming.Resource"> <Arg> <Ref id='wac' /> </Arg> <Arg>jms/connectionFactory</Arg> <Arg> <New class="org.apache.activemq.ActiveMQConnectionFactory"> <Arg>vm://localhost?broker.persistent=false</Arg> 
     </New> </Arg> </New> -->
-	
+
 </Configure>

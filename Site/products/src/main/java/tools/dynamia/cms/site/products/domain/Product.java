@@ -79,13 +79,13 @@ public class Product extends SimpleEntity implements SiteAware {
     private String videoURL;
     private String videoURL2;
 
-    private Double stars;
-    private Long stars1Count;
-    private Long stars2Count;
-    private Long stars3Count;
-    private Long stars4Count;
-    private Long stars5Count;
-    private Long reviews;
+    private Double stars = 0d;
+    private Long stars1Count = 0L;
+    private Long stars2Count = 0L;
+    private Long stars3Count = 0L;
+    private Long stars4Count = 0L;
+    private Long stars5Count = 0L;
+    private Long reviews = 0L;
     private Long views = 1L;
     private String currency;
 
@@ -699,7 +699,7 @@ public class Product extends SimpleEntity implements SiteAware {
         promoValueType = dto.getPromoValueType();
         quality = dto.getQuality();
         currency = dto.getCurrency();
-
+        taxable = dto.isTaxable();
         checkPromo();
     }
 

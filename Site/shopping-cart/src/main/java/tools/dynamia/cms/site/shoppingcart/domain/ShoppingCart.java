@@ -15,290 +15,297 @@
  */
 package tools.dynamia.cms.site.shoppingcart.domain;
 
+import tools.dynamia.cms.site.core.api.SiteAware;
+import tools.dynamia.cms.site.core.domain.Site;
+import tools.dynamia.cms.site.shoppingcart.domain.enums.ShoppingCartStatus;
+import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.domain.SimpleEntity;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-
-import tools.dynamia.cms.site.core.api.SiteAware;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.shoppingcart.domain.enums.ShoppingCartStatus;
-import tools.dynamia.cms.site.users.domain.User;
-
-import tools.dynamia.domain.SimpleEntity;
-
 /**
- *
  * @author Mario Serrano Leones
  */
 @Entity
 @Table(name = "sc_shopping_carts")
 public class ShoppingCart extends SimpleEntity implements SiteAware {
 
-	private String name;
-	private String title;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date timeStamp = new Date();
-	@OneToOne
-	private User user;
-	@OneToOne
-	private User customer;
-	@OneToOne
-	@NotNull
-	private Site site;
-	private int quantity;
-	private BigDecimal subtotal;
-	private BigDecimal totalShipmentPrice;
-	private BigDecimal totalTaxes;
-	private BigDecimal totalPrice;
-	private BigDecimal totalUnit;
-	private float shipmentPercent;
+    private String name;
+    private String title;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeStamp = new Date();
+    @OneToOne
+    private User user;
+    @OneToOne
+    private User customer;
+    @OneToOne
+    @NotNull
+    private Site site;
+    private int quantity;
+    private BigDecimal subtotal;
+    private BigDecimal totalShipmentPrice;
+    private BigDecimal totalTaxes;
+    private BigDecimal totalPrice;
+    private BigDecimal totalUnit;
+    private float shipmentPercent;
+    private String taxName;
+    private Double taxPercent;
 
-	@OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
-	private List<ShoppingCartItem> items = new ArrayList<>();
+    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
+    private List<ShoppingCartItem> items = new ArrayList<>();
 
-	@Enumerated(EnumType.ORDINAL)
-	private ShoppingCartStatus status = ShoppingCartStatus.NEW;
+    @Enumerated(EnumType.ORDINAL)
+    private ShoppingCartStatus status = ShoppingCartStatus.NEW;
 
-	private BigDecimal totalDiscount;
+    private BigDecimal totalDiscount;
 
-	public BigDecimal getTotalUnit() {
-		return totalUnit;
-	}
+    public String getTaxName() {
+        return taxName;
+    }
 
-	public void setTotalUnit(BigDecimal totalUnit) {
-		this.totalUnit = totalUnit;
-	}
+    public void setTaxName(String taxName) {
+        this.taxName = taxName;
+    }
 
-	public BigDecimal getTotalDiscount() {
-		return totalDiscount;
-	}
+    public Double getTaxPercent() {
+        return taxPercent;
+    }
 
-	public void setTotalDiscount(BigDecimal totalDiscount) {
-		this.totalDiscount = totalDiscount;
-	}
+    public void setTaxPercent(Double taxPercent) {
+        this.taxPercent = taxPercent;
+    }
 
-	public float getShipmentPercent() {
-		return shipmentPercent;
-	}
+    public BigDecimal getTotalUnit() {
+        return totalUnit;
+    }
 
-	public void setShipmentPercent(float shipmentPercent) {
-		this.shipmentPercent = shipmentPercent;
-	}
+    public void setTotalUnit(BigDecimal totalUnit) {
+        this.totalUnit = totalUnit;
+    }
 
-	public ShoppingCart() {
-		// TODO Auto-generated constructor stub
-	}
+    public BigDecimal getTotalDiscount() {
+        return totalDiscount;
+    }
 
-	public ShoppingCart(String name) {
-		super();
-		this.name = name;
-	}
+    public void setTotalDiscount(BigDecimal totalDiscount) {
+        this.totalDiscount = totalDiscount;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public float getShipmentPercent() {
+        return shipmentPercent;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setShipmentPercent(float shipmentPercent) {
+        this.shipmentPercent = shipmentPercent;
+    }
 
-	public ShoppingCartStatus getStatus() {
-		return status;
-	}
+    public ShoppingCart() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public void setStatus(ShoppingCartStatus status) {
-		this.status = status;
-	}
+    public ShoppingCart(String name) {
+        super();
+        this.name = name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public Date getTimeStamp() {
-		return timeStamp;
-	}
+    public ShoppingCartStatus getStatus() {
+        return status;
+    }
 
-	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
-	}
+    public void setStatus(ShoppingCartStatus status) {
+        this.status = status;
+    }
 
-	public int getQuantity() {
-		return quantity;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public BigDecimal getTotalShipmentPrice() {
-		return totalShipmentPrice;
-	}
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
 
-	public void setTotalShipmentPrice(BigDecimal totalShipmentPrice) {
-		this.totalShipmentPrice = totalShipmentPrice;
-	}
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 
-	public BigDecimal getTotalTaxes() {
-		return totalTaxes;
-	}
+    public int getQuantity() {
+        return quantity;
+    }
 
-	public void setTotalTaxes(BigDecimal totalTaxes) {
-		this.totalTaxes = totalTaxes;
-	}
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-	public BigDecimal getSubtotal() {
-		return subtotal;
-	}
+    public BigDecimal getTotalShipmentPrice() {
+        return totalShipmentPrice;
+    }
 
-	public void setSubtotal(BigDecimal subtotal) {
-		this.subtotal = subtotal;
-	}
+    public void setTotalShipmentPrice(BigDecimal totalShipmentPrice) {
+        this.totalShipmentPrice = totalShipmentPrice;
+    }
 
-	public BigDecimal getTotalPrice() {
-		return totalPrice;
-	}
+    public BigDecimal getTotalTaxes() {
+        return totalTaxes;
+    }
 
-	public void setTotalPrice(BigDecimal totalPrice) {
-		this.totalPrice = totalPrice;
-	}
+    public void setTotalTaxes(BigDecimal totalTaxes) {
+        this.totalTaxes = totalTaxes;
+    }
 
-	public List<ShoppingCartItem> getItems() {
-		return items;
-	}
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
 
-	public void setItems(List<ShoppingCartItem> items) {
-		this.items = items;
-	}
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
-	public User getCustomer() {
-		return customer;
-	}
+    public List<ShoppingCartItem> getItems() {
+        return items;
+    }
 
-	public void setCustomer(User customer) {
-		this.customer = customer;
-	}
+    public void setItems(List<ShoppingCartItem> items) {
+        this.items = items;
+    }
 
-	@Override
-	public Site getSite() {
-		return site;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	@Override
-	public void setSite(Site site) {
-		this.site = site;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public void addItem(ShoppingCartItem item, int qty) {
-		ShoppingCartItem addedItem = getItemByCode(item.getCode());
-		if (addedItem != null) {
-			addedItem.setQuantity(addedItem.getQuantity() + qty);
-		} else {
-			item.setQuantity(qty);
-			items.add(item);
-			item.setShoppingCart(this);
-		}
-		compute();
-	}
+    public User getCustomer() {
+        return customer;
+    }
 
-	public void addItem(ShoppingCartItem item) {
-		addItem(item, 1);
-	}
+    public void setCustomer(User customer) {
+        this.customer = customer;
+    }
 
-	public boolean removeItem(ShoppingCartItem item) {
-		ShoppingCartItem addedItem = getItemByCode(item.getCode());
-		if (addedItem != null) {
-			addedItem.setShoppingCart(null);
-			items.remove(addedItem);
-			compute();
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public Site getSite() {
+        return site;
+    }
 
-	public boolean removeItem(String code) {
-		ShoppingCartItem addedItem = getItemByCode(code);
-		if (addedItem != null) {
-			addedItem.setShoppingCart(null);
-			items.remove(addedItem);
-			if (addedItem.getChildren() != null && !addedItem.getChildren().isEmpty()) {
-				addedItem.getChildren().forEach(c -> items.remove(c));
-			}
-			compute();
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public void setSite(Site site) {
+        this.site = site;
+    }
 
-	public void compute() {
-		totalPrice = BigDecimal.ZERO;
-		totalTaxes = BigDecimal.ZERO;
-		totalShipmentPrice = BigDecimal.ZERO;
-		totalDiscount = BigDecimal.ZERO;
-		totalUnit = BigDecimal.ZERO;
-		subtotal = BigDecimal.ZERO;
-		quantity = 0;
+    public void addItem(ShoppingCartItem item, int qty) {
+        ShoppingCartItem addedItem = getItemByCode(item.getCode());
+        if (addedItem != null) {
+            addedItem.setQuantity(addedItem.getQuantity() + qty);
+        } else {
+            item.setQuantity(qty);
+            items.add(item);
+            item.setShoppingCart(this);
+        }
+        compute();
+    }
 
-		for (ShoppingCartItem item : items) {
-			item.compute();
-			quantity += item.getQuantity();
-			totalTaxes = totalTaxes.add(item.getTaxes());
-			totalShipmentPrice = totalShipmentPrice.add(item.getShipmentPrice());
-			totalDiscount = totalDiscount.add(item.getDiscount());
-			totalUnit = totalUnit.add(item.getUnitPrice());
-			subtotal = subtotal.add(item.getSubtotal());
-		}
+    public void addItem(ShoppingCartItem item) {
+        addItem(item, 1);
+    }
+
+    public boolean removeItem(ShoppingCartItem item) {
+        ShoppingCartItem addedItem = getItemByCode(item.getCode());
+        if (addedItem != null) {
+            addedItem.setShoppingCart(null);
+            items.remove(addedItem);
+            compute();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeItem(String code) {
+        ShoppingCartItem addedItem = getItemByCode(code);
+        if (addedItem != null) {
+            addedItem.setShoppingCart(null);
+            items.remove(addedItem);
+            if (addedItem.getChildren() != null && !addedItem.getChildren().isEmpty()) {
+                addedItem.getChildren().forEach(c -> items.remove(c));
+            }
+            compute();
+            return true;
+        }
+        return false;
+    }
+
+    public void compute() {
+        totalPrice = BigDecimal.ZERO;
+        totalTaxes = BigDecimal.ZERO;
+        totalShipmentPrice = BigDecimal.ZERO;
+        totalDiscount = BigDecimal.ZERO;
+        totalUnit = BigDecimal.ZERO;
+        subtotal = BigDecimal.ZERO;
+        quantity = 0;
+
+        for (ShoppingCartItem item : items) {
+            item.compute();
+            quantity += item.getQuantity();
+            totalTaxes = totalTaxes.add(item.getTaxes());
+            totalShipmentPrice = totalShipmentPrice.add(item.getShipmentPrice());
+            totalDiscount = totalDiscount.add(item.getDiscount());
+            totalUnit = totalUnit.add(item.getUnitPrice());
+            subtotal = subtotal.add(item.getSubtotal());
+        }
 
 
-		computeTotalOnly();
-	}
+        computeTotalOnly();
+    }
 
-	public void computeTotalOnly() {
-		totalPrice = subtotal.add(totalTaxes).add(totalShipmentPrice);
-	}
+    public void computeTotalOnly() {
+        totalPrice = subtotal.add(totalTaxes).add(totalShipmentPrice);
+    }
 
-	public ShoppingCartItem getItemByCode(String code) {
-		for (ShoppingCartItem item : items) {
-			if (item.getCode().equals(code) && item.isEditable()) {
-				return item;
-			}
-		}
-		return null;
-	}
+    public ShoppingCartItem getItemByCode(String code) {
+        for (ShoppingCartItem item : items) {
+            if (item.getCode().equals(code) && item.isEditable()) {
+                return item;
+            }
+        }
+        return null;
+    }
 
-	public boolean isEmpty() {
-		return items.isEmpty();
-	}
+    public boolean isEmpty() {
+        return items.isEmpty();
+    }
 
-	public User getTargetUser() {
-		if (customer != null) {
-			return customer;
-		} else {
-			return user;
-		}
-	}
+    public User getTargetUser() {
+        if (customer != null) {
+            return customer;
+        } else {
+            return user;
+        }
+    }
 
 }

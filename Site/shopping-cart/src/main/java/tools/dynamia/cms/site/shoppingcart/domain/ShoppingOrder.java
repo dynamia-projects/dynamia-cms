@@ -40,345 +40,348 @@ import tools.dynamia.domain.util.ContactInfo;
 import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderDTO;
 
 @Entity
-@Table(name = "sc_orders", uniqueConstraints = { @UniqueConstraint(columnNames = { "site_id", "number" }) })
+@Table(name = "sc_orders", uniqueConstraints = {@UniqueConstraint(columnNames = {"site_id", "number"})})
 public class ShoppingOrder extends BaseEntity implements SiteAware {
 
-	@OneToOne
-	@NotNull
-	private Site site;
-
-	@NotNull
-	@NotEmpty
-	private String number;
-
-	private String invoiceNumber;
-	private String invoiceId;
-	private String trackingNumber;
-	private ShippingCompany shippingCompany;
-	@Temporal(TemporalType.DATE)
-	private Date estimatedArrivalDate;
-	private String shippingComments;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date shippingDate;
-	private boolean shipped;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@NotNull
-	private ShoppingCart shoppingCart;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@NotNull
-	private PaymentTransaction transaction;
-
-	@OneToOne
-	private UserContactInfo shippingAddress;
-
-	@OneToOne
-	private UserContactInfo billingAddress;
-
-	private boolean pickupAtStore;
-	private boolean payAtDelivery;
-	private boolean payLater;
-
-	@Column(length = 5000)
-	private String userComments;
-	private String externalRef;
-	private boolean sended;
-	@Column(length = 5000)
-	private String errorMessage;
-	private String errorCode;
-
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-
-	public String getErrorCode() {
-		return errorCode;
-	}
-
-	public void setErrorCode(String errorCode) {
-		this.errorCode = errorCode;
-	}
-
-	public boolean isSended() {
-		return sended;
-	}
-
-	public void setSended(boolean sended) {
-		this.sended = sended;
-	}
-
-	public boolean isPayLater() {
-		return payLater;
-	}
-
-	public void setPayLater(boolean payLater) {
-		this.payLater = payLater;
-	}
-
-	public String getExternalRef() {
-		return externalRef;
-	}
-
-	public void setExternalRef(String externalRef) {
-		this.externalRef = externalRef;
-	}
-
-	public boolean isPickupAtStore() {
-
-		return pickupAtStore;
-	}
-
-	public void setPickupAtStore(boolean pickupAtStore) {
-		this.pickupAtStore = pickupAtStore;
-	}
-
-	public boolean isPayAtDelivery() {
-		return payAtDelivery;
-	}
-
-	public void setPayAtDelivery(boolean payAtDelivery) {
-		this.payAtDelivery = payAtDelivery;
-	}
-
-	public Date getShippingDate() {
-		return shippingDate;
-	}
-
-	public void setShippingDate(Date shippingDate) {
-		this.shippingDate = shippingDate;
-	}
-
-	public String getShippingComments() {
-		return shippingComments;
-	}
-
-	public void setShippingComments(String shippingComments) {
-		this.shippingComments = shippingComments;
-	}
-
-	public String getTrackingNumber() {
-		return trackingNumber;
-	}
-
-	public void setTrackingNumber(String trackingNumber) {
-		this.trackingNumber = trackingNumber;
-	}
-
-	public ShippingCompany getShippingCompany() {
-		return shippingCompany;
-	}
-
-	public void setShippingCompany(ShippingCompany shippingCompany) {
-		this.shippingCompany = shippingCompany;
-	}
-
-	public Date getEstimatedArrivalDate() {
-		return estimatedArrivalDate;
-	}
-
-	public void setEstimatedArrivalDate(Date estimatedArrivalDate) {
-		this.estimatedArrivalDate = estimatedArrivalDate;
-	}
-
-	public boolean isShipped() {
-		return shipped;
-	}
-
-	public void setShipped(boolean shipped) {
-		this.shipped = shipped;
-	}
-
-	public Site getSite() {
-		return site;
-	}
-
-	public void setSite(Site site) {
-		this.site = site;
-	}
-
-	public String getInvoiceNumber() {
-		return invoiceNumber;
-	}
-
-	public void setInvoiceNumber(String invoiceNumber) {
-		this.invoiceNumber = invoiceNumber;
-	}
-
-	public String getInvoiceId() {
-		return invoiceId;
-	}
-
-	public void setInvoiceId(String invoiceId) {
-		this.invoiceId = invoiceId;
-	}
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
-	public ShoppingCart getShoppingCart() {
-		return shoppingCart;
-	}
-
-	public void setShoppingCart(ShoppingCart shoppingCart) {
-		this.shoppingCart = shoppingCart;
-	}
-
-	public PaymentTransaction getTransaction() {
-		return transaction;
-	}
-
-	public void setTransaction(PaymentTransaction transaction) {
-		this.transaction = transaction;
-	}
-
-	public UserContactInfo getShippingAddress() {
-		return shippingAddress;
-	}
-
-	public void setShippingAddress(UserContactInfo shippingAddress) {
-		this.shippingAddress = shippingAddress;
-	}
-
-	public UserContactInfo getBillingAddress() {
-		return billingAddress;
-	}
-
-	public void setBillingAddress(UserContactInfo billingAddress) {
-		this.billingAddress = billingAddress;
-	}
-
-	public String getUserComments() {
-		return userComments;
-	}
-
-	public void setUserComments(String userComments) {
-		this.userComments = userComments;
-	}
-
-	public boolean isCompleted() {
-		return transaction != null && transaction.getStatus() == PaymentTransactionStatus.COMPLETED;
-	}
-
-	public void sync() {
-		if (shoppingCart != null && transaction != null) {
-			shoppingCart.compute();
-			syncTransaction();
-		}
-
-	}
-
-	public void syncTransaction() {
-		if (shoppingCart != null && transaction != null) {
-			transaction.setDocument(getNumber());
-			transaction.setAmount(shoppingCart.getTotalPrice());
-			transaction.setTaxes(shoppingCart.getTotalTaxes());
-			if (transaction.getTaxes() != null && transaction.getTaxes().longValue() > 0) {
-				transaction.setTaxesBase(shoppingCart.getSubtotal());
-			}
-
-			if (getShippingAddress() != null) {
-				transaction.setShippingAddress(getShippingAddress().getInfo().getAddress());
-				transaction.setShippingCity(getShippingAddress().getInfo().getCity());
-			
-			}
-		}
-	}
-
-	public ShoppingOrderDTO toDTO() {
-		ShoppingOrderDTO dto = new ShoppingOrderDTO();
-		dto.setNumber(number);
-		dto.setShippingComments(shippingComments);
-		dto.setPayAtDelivery(payAtDelivery);
-		dto.setPickupAtStore(pickupAtStore);
-		dto.setPayLater(payLater);
-		dto.setSite(site.getKey());
-		dto.setUserComments(userComments);
-		dto.setExternalRef(externalRef);
-
-		if (shoppingCart != null) {
-			if (shoppingCart.getCustomer() != null) {
-				User customer = shoppingCart.getCustomer();
-				dto.setCustomer(customer.getFullName());
-				dto.setCustomerExternalRef(customer.getExternalRef());
-				dto.setCustomerIdentification(customer.getIdentification());
-			}
-
-			if (shoppingCart.getUser() != null) {
-				User user = shoppingCart.getUser();
-				dto.setUser(user.getFullName());
-				dto.setUserExternalRef(user.getExternalRef());
-				dto.setUserIdentification(user.getIdentification());
-			}
-
-			dto.setTimeStamp(shoppingCart.getTimeStamp());
-			dto.setQuantity(shoppingCart.getQuantity());
-			dto.setSubtotal(shoppingCart.getSubtotal());
-			dto.setTotalShipmentPrice(shoppingCart.getTotalShipmentPrice());
-			dto.setTotalTaxes(shoppingCart.getTotalTaxes());
-			dto.setTotalPrice(shoppingCart.getTotalPrice());
-			dto.setTotalUnit(shoppingCart.getTotalUnit());
-			dto.setShipmentPercent(shoppingCart.getShipmentPercent());
-			dto.setTotalDiscount(shoppingCart.getTotalDiscount());
-
-			for (ShoppingCartItem item : shoppingCart.getItems()) {
-				dto.addItem(item.toDTO());
-			}
-		}
-
-		if (transaction != null) {
-			dto.setPaymentAmount(transaction.getAmount());
-			dto.setPaymentMethod(transaction.getPaymentMethod());
-			dto.setPaymentResponseCode(transaction.getResponseCode());
-			dto.setPaymentStatus(transaction.getStatusText());
-			dto.setPaymentTaxes(transaction.getTaxes());
-			dto.setPaymentTaxesBase(transaction.getTaxesBase());
-			dto.setPaymentUuid(transaction.getUuid());
-		}
-
-		if (billingAddress != null) {
-			ContactInfo ba = billingAddress.getInfo();
-			dto.setBillingAddress(ba.getAddress());
-			dto.setBillingCity(ba.getCity());
-			dto.setBillingCountry(ba.getCountry());
-			dto.setBillingEmail(ba.getEmail());
-			dto.setBillingPhone(ba.getPhoneNumber());
-		}
-
-		if (shippingAddress != null) {
-			ContactInfo sa = shippingAddress.getInfo();
-			dto.setShippingAddress(sa.getAddress());
-			dto.setShippingCity(sa.getCity());
-			dto.setShippingCountry(sa.getCountry());
-			dto.setShippingEmail(sa.getEmail());
-			dto.setShippingPhone(sa.getPhoneNumber());
-		}
-
-		return dto;
-	}
-
-	public void addItem(ShoppingCartItem item, int qty) {
-	}
-
-	public void checkRegionTaxes(){
-		if(shippingAddress!=null && shippingAddress.getCity()!=null && shippingAddress.getCity().getRegion()!=null){
-			Region region = shippingAddress.getCity().getRegion();
-			if(region.getTaxPercent()>0){
-				for (ShoppingCartItem item: shoppingCart.getItems()){
-					item.setTaxName(region.getTaxName());
-					item.setTaxPercent(region.getTaxPercent());
-				}
-				shoppingCart.compute();
-			}
-		}
-	}
+    @OneToOne
+    @NotNull
+    private Site site;
+
+    @NotNull
+    @NotEmpty
+    private String number;
+
+    private String invoiceNumber;
+    private String invoiceId;
+    private String trackingNumber;
+    @OneToOne
+    private ShippingCompany shippingCompany;
+    @Temporal(TemporalType.DATE)
+    private Date estimatedArrivalDate;
+    private String shippingComments;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date shippingDate;
+    private boolean shipped;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
+    private ShoppingCart shoppingCart;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
+    private PaymentTransaction transaction;
+
+    @OneToOne
+    private UserContactInfo shippingAddress;
+
+    @OneToOne
+    private UserContactInfo billingAddress;
+
+    private boolean pickupAtStore;
+    private boolean payAtDelivery;
+    private boolean payLater;
+
+    @Column(length = 5000)
+    private String userComments;
+    private String externalRef;
+    private boolean sended;
+    @Column(length = 5000)
+    private String errorMessage;
+    private String errorCode;
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public boolean isSended() {
+        return sended;
+    }
+
+    public void setSended(boolean sended) {
+        this.sended = sended;
+    }
+
+    public boolean isPayLater() {
+        return payLater;
+    }
+
+    public void setPayLater(boolean payLater) {
+        this.payLater = payLater;
+    }
+
+    public String getExternalRef() {
+        return externalRef;
+    }
+
+    public void setExternalRef(String externalRef) {
+        this.externalRef = externalRef;
+    }
+
+    public boolean isPickupAtStore() {
+
+        return pickupAtStore;
+    }
+
+    public void setPickupAtStore(boolean pickupAtStore) {
+        this.pickupAtStore = pickupAtStore;
+    }
+
+    public boolean isPayAtDelivery() {
+        return payAtDelivery;
+    }
+
+    public void setPayAtDelivery(boolean payAtDelivery) {
+        this.payAtDelivery = payAtDelivery;
+    }
+
+    public Date getShippingDate() {
+        return shippingDate;
+    }
+
+    public void setShippingDate(Date shippingDate) {
+        this.shippingDate = shippingDate;
+    }
+
+    public String getShippingComments() {
+        return shippingComments;
+    }
+
+    public void setShippingComments(String shippingComments) {
+        this.shippingComments = shippingComments;
+    }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
+    }
+
+    public ShippingCompany getShippingCompany() {
+        return shippingCompany;
+    }
+
+    public void setShippingCompany(ShippingCompany shippingCompany) {
+        this.shippingCompany = shippingCompany;
+    }
+
+    public Date getEstimatedArrivalDate() {
+        return estimatedArrivalDate;
+    }
+
+    public void setEstimatedArrivalDate(Date estimatedArrivalDate) {
+        this.estimatedArrivalDate = estimatedArrivalDate;
+    }
+
+    public boolean isShipped() {
+        return shipped;
+    }
+
+    public void setShipped(boolean shipped) {
+        this.shipped = shipped;
+    }
+
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
+    }
+
+    public String getInvoiceNumber() {
+        return invoiceNumber;
+    }
+
+    public void setInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
+    }
+
+    public String getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(String invoiceId) {
+        this.invoiceId = invoiceId;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    public PaymentTransaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(PaymentTransaction transaction) {
+        this.transaction = transaction;
+    }
+
+    public UserContactInfo getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(UserContactInfo shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public UserContactInfo getBillingAddress() {
+        return billingAddress;
+    }
+
+    public void setBillingAddress(UserContactInfo billingAddress) {
+        this.billingAddress = billingAddress;
+    }
+
+    public String getUserComments() {
+        return userComments;
+    }
+
+    public void setUserComments(String userComments) {
+        this.userComments = userComments;
+    }
+
+    public boolean isCompleted() {
+        return transaction != null && transaction.getStatus() == PaymentTransactionStatus.COMPLETED;
+    }
+
+    public void sync() {
+        if (shoppingCart != null && transaction != null) {
+            shoppingCart.compute();
+            syncTransaction();
+        }
+
+    }
+
+    public void syncTransaction() {
+        if (shoppingCart != null && transaction != null) {
+            transaction.setDocument(getNumber());
+            transaction.setAmount(shoppingCart.getTotalPrice());
+            transaction.setTaxes(shoppingCart.getTotalTaxes());
+            if (transaction.getTaxes() != null && transaction.getTaxes().longValue() > 0) {
+                transaction.setTaxesBase(shoppingCart.getSubtotal());
+            }
+
+            if (getShippingAddress() != null) {
+                transaction.setShippingAddress(getShippingAddress().getInfo().getAddress());
+                transaction.setShippingCity(getShippingAddress().getInfo().getCity());
+
+            }
+        }
+    }
+
+    public ShoppingOrderDTO toDTO() {
+        ShoppingOrderDTO dto = new ShoppingOrderDTO();
+        dto.setNumber(number);
+        dto.setShippingComments(shippingComments);
+        dto.setPayAtDelivery(payAtDelivery);
+        dto.setPickupAtStore(pickupAtStore);
+        dto.setPayLater(payLater);
+        dto.setSite(site.getKey());
+        dto.setUserComments(userComments);
+        dto.setExternalRef(externalRef);
+
+        if (shoppingCart != null) {
+            if (shoppingCart.getCustomer() != null) {
+                User customer = shoppingCart.getCustomer();
+                dto.setCustomer(customer.getFullName());
+                dto.setCustomerExternalRef(customer.getExternalRef());
+                dto.setCustomerIdentification(customer.getIdentification());
+            }
+
+            if (shoppingCart.getUser() != null) {
+                User user = shoppingCart.getUser();
+                dto.setUser(user.getFullName());
+                dto.setUserExternalRef(user.getExternalRef());
+                dto.setUserIdentification(user.getIdentification());
+            }
+
+            dto.setTimeStamp(shoppingCart.getTimeStamp());
+            dto.setQuantity(shoppingCart.getQuantity());
+            dto.setSubtotal(shoppingCart.getSubtotal());
+            dto.setTotalShipmentPrice(shoppingCart.getTotalShipmentPrice());
+            dto.setTotalTaxes(shoppingCart.getTotalTaxes());
+            dto.setTotalPrice(shoppingCart.getTotalPrice());
+            dto.setTotalUnit(shoppingCart.getTotalUnit());
+            dto.setShipmentPercent(shoppingCart.getShipmentPercent());
+            dto.setTotalDiscount(shoppingCart.getTotalDiscount());
+
+            for (ShoppingCartItem item : shoppingCart.getItems()) {
+                dto.addItem(item.toDTO());
+            }
+        }
+
+        if (transaction != null) {
+            dto.setPaymentAmount(transaction.getAmount());
+            dto.setPaymentMethod(transaction.getPaymentMethod());
+            dto.setPaymentResponseCode(transaction.getResponseCode());
+            dto.setPaymentStatus(transaction.getStatusText());
+            dto.setPaymentTaxes(transaction.getTaxes());
+            dto.setPaymentTaxesBase(transaction.getTaxesBase());
+            dto.setPaymentUuid(transaction.getUuid());
+        }
+
+        if (billingAddress != null) {
+            ContactInfo ba = billingAddress.getInfo();
+            dto.setBillingAddress(ba.getAddress());
+            dto.setBillingCity(ba.getCity());
+            dto.setBillingCountry(ba.getCountry());
+            dto.setBillingEmail(ba.getEmail());
+            dto.setBillingPhone(ba.getPhoneNumber());
+        }
+
+        if (shippingAddress != null) {
+            ContactInfo sa = shippingAddress.getInfo();
+            dto.setShippingAddress(sa.getAddress());
+            dto.setShippingCity(sa.getCity());
+            dto.setShippingCountry(sa.getCountry());
+            dto.setShippingEmail(sa.getEmail());
+            dto.setShippingPhone(sa.getPhoneNumber());
+        }
+
+        return dto;
+    }
+
+    public void addItem(ShoppingCartItem item, int qty) {
+    }
+
+    public void checkRegionTaxes() {
+        if (shippingAddress != null && shippingAddress.getCity() != null && shippingAddress.getCity().getRegion() != null) {
+            Region region = shippingAddress.getCity().getRegion();
+            if (region.getTaxPercent() > 0) {
+                shoppingCart.setTaxName(region.getTaxName());
+                shoppingCart.setTaxPercent(region.getTaxPercent());
+                for (ShoppingCartItem item : shoppingCart.getItems()) {
+                    item.setTaxName(region.getTaxName());
+                    item.setTaxPercent(region.getTaxPercent());
+                }
+                shoppingCart.compute();
+            }
+        }
+    }
 }

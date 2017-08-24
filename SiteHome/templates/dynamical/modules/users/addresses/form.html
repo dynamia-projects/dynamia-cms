@@ -1,88 +1,114 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
- layout:decorator="template">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
 
 
 <div class="maincontainer page" layout:fragment="content">
 
-	<div class="container">
+    <div class="container">
 
-		<!-- Main Title-->
-		<h1 class="doc-title">Contact Address <i class="fa fa-map-marker"></i> </h1>
-
-
-		<div class="row mt40">
-			<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 card card-block">
-				<form id="userForm" class="form-horizontal" action="#" th:action="@{/users/addresses}" th:object="${userContactInfo}" method="post">
-
-					<div class="md-form">
+        <!-- Main Title-->
+        <h1 class="doc-title">Contact Address <i class="fa fa-map-marker"></i></h1>
 
 
-						<input type="text" class="form-control" th:field="*{name}"  />
+        <div class="row mt40">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 card card-block">
+                <form id="userForm" class="form-horizontal" action="#" th:action="@{/users/addresses}"
+                      th:object="${userContactInfo}" method="post">
 
-						<label>Name <span class="red">*</span></label>
-					</div>
-
-
-					<div class="md-form">
-
-
-						<select th:field="*{info.country}" class="form-control">
-							<option th:each="op : ${uciCountries}" th:value="${op.value}" th:text="${op.name}">COUNTRY</option>
-						</select>
-						<label class="fix-label">Country <span class="red">*</span></label>
-
-					</div>
-
-					<div class="md-form">
+                    <div class="md-form">
 
 
-						<select th:field="*{info.region}" class="form-control">
-							<option th:each="op : ${uciRegions}" th:value="${op.value}" th:text="${op.name}">COUNTRY</option>
-						</select>
-						<label class="fix-label">Region <span class="red">*</span></label>
-					</div>
+                        <input type="text" class="form-control" th:field="*{name}"/>
 
-					<div class="md-form">
+                        <label>Name <span class="red">*</span></label>
+                    </div>
 
 
-						<select th:field="*{info.city}" class="form-control">
-							<option th:each="op : ${uciCities}" th:value="${op.value}" th:text="${op.name}">COUNTRY</option>
-						</select>
-						<label class="fix-label">City <span class="red">*</span></label>
+                    <div class="md-form">
 
-					</div>
 
-					<div class="md-form">
+                        <select th:field="*{city.region.country.id}" class="form-control">
+                        </select>
+                        <label class="fix-label">Country <span class="red">*</span></label>
 
-						<input type="text" class="form-control" th:field="*{info.address}" />
-						<label>Address <span class="red">*</span></label>
+                    </div>
 
-					</div>
+                    <div class="md-form">
 
-					<div class="md-form">
 
-						<input type="tel" class="form-control" th:field="*{info.phoneNumber}" />
-						<label>Phone Number <span class="red">*</span></label>
-					</div>
+                        <select th:field="*{city.region.id}" class="form-control">
+                        </select>
+                        <label class="fix-label">State / Region <span class="red">*</span></label>
+                    </div>
 
-					<div class="md-form">
+                    <div class="md-form">
 
-						<input type="tel" class="form-control" th:field="*{info.mobileNumber}" />
-						<label>Mobile Number</label>
-					</div>
 
-					<input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}" /> <input type="hidden" name="redirect"
-					 id="redirect" th:value="${redirect}" /> <br />
-					<input type="hidden" th:field="*{id}" />
-					<button type="submit" class="btn btn-success">Save</button>
+                        <select th:field="*{city.id}" class="form-control">
+                        </select>
+                        <label class="fix-label">City <span class="red">*</span></label>
 
-				</form>
-			</div>
+                    </div>
 
-		</div>
-	</div>
+                    <div class="md-form">
+
+                        <input type="text" class="form-control" th:field="*{info.address}"/>
+                        <label>Address <span class="red">*</span></label>
+
+                    </div>
+
+                    <div class="md-form">
+
+                        <input type="tel" class="form-control" th:field="*{info.phoneNumber}"/>
+                        <label>Phone Number <span class="red">*</span></label>
+                    </div>
+
+                    <div class="md-form">
+
+                        <input type="tel" class="form-control" th:field="*{info.mobileNumber}"/>
+                        <label>Mobile Number</label>
+                    </div>
+
+                    <input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}"/> <input
+                        type="hidden" name="redirect"
+                        id="redirect" th:value="${redirect}"/> <br/>
+                    <input type="hidden" th:field="*{id}"/>
+                    <button type="submit" class="btn btn-success">Save</button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
 </div>
+
+<th:block layout:fragment="javascripts">
+
+    <th:block th:if="${userContactInfo.city==null}">
+        <script>
+            $(function () {
+                initCitySelector("#city\\.region\\.country\\.id", "#city\\.region\\.id", "#city\\.id");
+            });
+
+        </script>
+    </th:block>
+
+    <th:block th:if="${userContactInfo.city!=null}">
+        <script th:inline="javascript">
+            $(function () {
+                initCitySelector("#city\\.region\\.country\\.id", "#city\\.region\\.id", "#city\\.id", function () {
+                    setSelectedCountry("#city\\.region\\.country\\.id", [[${userContactInfo.city.region.country.id}]]);
+                    setSelectedRegion("#city\\.region\\.country\\.id", "#city\\.region\\.id", [[${userContactInfo.city.region.id}]], function () {
+                        setSelectedCity("#city\\.region\\.country\\.id", "#city\\.region\\.id", "#city\\.id", [[${userContactInfo.city.id}]]);
+                    });
+                });
+            });
+
+        </script>
+    </th:block>
+</th:block>
 
 
 </html>

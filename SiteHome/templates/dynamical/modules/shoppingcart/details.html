@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorator="template">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
 
 <div class="maincontainer page" layout:fragment="content">
 
@@ -9,7 +10,7 @@
 
         <div class="row" th:if="${cmsModules.isUsed(cartName+'CartTop')}">
             <div class="col-md-12">
-                <th:block th:include="module::position(cartName+'CartTop')" />
+                <th:block th:include="module::position(cartName+'CartTop')"/>
             </div>
         </div>
 
@@ -17,7 +18,7 @@
 
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt40column">
 
-                <th th:include="shoppingcart/components/table::content" />
+                <th th:include="shoppingcart/components/table::content"/>
 
 
             </div>
@@ -30,16 +31,25 @@
 
                     <div class="card-block">
                         <ul class="list-simple">
-                            <li><strong>Price: </strong> <span th:text="${cmsUtil.formatNumber(cart.totalUnit,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$80</span>                                </li>
-                            <li><strong>Qty: </strong> <span th:text="${cart.quantity}">10</span> </li>
-                            <li><strong>Shipping Cost: </strong> <span>$0</span> </li>
+                            <li><strong>Price: </strong> <span
+                                    th:text="${cmsUtil.formatNumber(cart.totalUnit,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$80</span>
+                            </li>
+                            <li><strong>Qty: </strong> <span th:text="${cart.quantity}">10</span></li>
+                            <li><strong>Shipping Cost: </strong> <span>$0</span></li>
                         </ul>
-                        <h2>Total: <span class="price" th:text="${cmsUtil.formatNumber(cart.totalPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$80</span>                            </h2>
+                        <div style="text-align: right">
+                            <h3>Subtotal: <span class="price"
+                                                th:text="${cmsUtil.formatNumber(cart.subtotal,prd_config.pricePattern+' '+prd_config.defaultCurrency)}">$80</span>
+                            </h3>
+
+                        </div>
                     </div>
                     <div class="card-footer">
                         <form role="form">
-                            <a th:href="@{/shoppingcart/shop/checkout}" th:if="${paymentEnabled and cartName == 'shop'}" class="btn btn-success btn-block">Purchase</a>
-                            <a target="_blank" class="btn btn-primary btn-block" th:href="@{'/shoppingcart/'+${cartName}+'/print'}">
+                            <a th:href="@{/shoppingcart/shop/checkout}" th:if="${paymentEnabled and cartName == 'shop'}"
+                               class="btn btn-success btn-block">Purchase</a>
+                            <a target="_blank" class="btn btn-primary btn-block"
+                               th:href="@{'/shoppingcart/'+${cartName}+'/print'}">
                                 <i class="fa fa-print"></i> Print
                             </a>
                         </form>
@@ -52,7 +62,7 @@
 
         <div class="row" th:if="${cmsModules.isUsed(cartName+'CartBottom')}">
             <div class="col-md-12">
-                <th:block th:include="module::position(cartName+'CartBottom')" />
+                <th:block th:include="module::position(cartName+'CartBottom')"/>
             </div>
         </div>
 

@@ -52,6 +52,7 @@ fields:
           header:
              align: center
    active:
+   taxable:
    featured:
    sale:
    newproduct:

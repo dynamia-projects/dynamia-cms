@@ -32,73 +32,73 @@ import tools.dynamia.domain.SimpleEntity;
 import tools.dynamia.domain.util.ContactInfo;
 
 @Entity
-@Table(name = "usr_users_contacts", uniqueConstraints = { @UniqueConstraint(columnNames = { "site_id", "user_id" }) })
+@Table(name = "usr_users_contacts", uniqueConstraints = {@UniqueConstraint(columnNames = {"site_id", "user_id"})})
 public class UserContactInfo extends SimpleEntity implements SiteAware {
 
-	@OneToOne
-	private Site site;
+    @OneToOne
+    private Site site;
 
-	@OneToOne
-	@NotNull
-	@JsonIgnore
-	private User user;
-	@OneToOne
-	private City city;
-	private ContactInfo info = new ContactInfo();
-	private String name;
-	@Column(length = 3000)
-	private String description;
+    @OneToOne
+    @NotNull
+    @JsonIgnore
+    private User user;
+    @OneToOne
+    private City city;
+    private ContactInfo info = new ContactInfo();
+    private String name;
+    @Column(length = 3000)
+    private String description;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Site getSite() {
-		return site;
-	}
+    public Site getSite() {
+        return site;
+    }
 
-	public void setSite(Site site) {
-		this.site = site;
-	}
+    public void setSite(Site site) {
+        this.site = site;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public ContactInfo getInfo() {
-		return info;
-	}
+    public ContactInfo getInfo() {
+        return info;
+    }
 
-	public void setInfo(ContactInfo info) {
-		this.info = info;
-	}
+    public void setInfo(ContactInfo info) {
+        this.info = info;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	@Override
-	public String toString() {
-		return String.format("%s (%s, %s)", name, info.getCity(), info.getAddress());
-	}
+    @Override
+    public String toString() {
+        return String.format("%s (%s, %s %s) ", name, info.getCity(), info.getRegion(), info.getAddress());
+    }
 
-	public City getCity() {
-		return city;
-	}
+    public City getCity() {
+        return city;
+    }
 
-	public void setCity(City city) {
-		this.city = city;
-	}
+    public void setCity(City city) {
+        this.city = city;
+    }
 }
