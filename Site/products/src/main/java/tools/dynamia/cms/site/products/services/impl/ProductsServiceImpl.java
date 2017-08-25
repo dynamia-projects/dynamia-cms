@@ -754,16 +754,27 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     public User findUserForReview(Site site, ProductsReviewResponse response) {
-        User user = userService.getUser(site, response.getEmail(), response.getIdentification());
+        String email = response.getEmail();
+
+        if (email.contains(",")) {
+            try {
+                email = email.split(",")[0];
+                email = email.trim();
+            } catch (Exception e) {
+
+            }
+        }
+
+        User user = userService.getUser(site, email, response.getIdentification());
         if (user == null) {
-            user = userService.getUser(site, response.getEmail());
+            user = userService.getUser(site, email);
         }
 
 
         if (user == null) {
             user = new User();
             user.setSite(site);
-            user.setUsername(response.getEmail());
+            user.setUsername(email);
             user.setFirstName(response.getName());
             user.setLastName(response.getLastName());
             user.setEnabled(true);

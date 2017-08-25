@@ -23,6 +23,7 @@ import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.integration.sterotypes.Controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -96,11 +97,11 @@ public class ProductReviewsController {
     }
 
     @GetMapping("/reviews/{requestUuid}")
-    public ModelAndView checkExternalReviews(@PathVariable String requestUuid, HttpServletRequest requet) {
+    public ModelAndView checkExternalReviews(@PathVariable String requestUuid, HttpServletRequest request, HttpServletResponse httpResponse) {
 
         ModelAndView mv = new ModelAndView("products/reviews/external");
 
-        Site site = siteService.getSite(requet);
+        Site site = siteService.getSite(request);
 
         if (site == null) {
             CMSUtil.redirectHome(mv);
@@ -128,7 +129,7 @@ public class ProductReviewsController {
                             review.setUser(user);
                             review.setProduct(product);
                             review.setDocument(response.getDocument());
-                            review.setComment(".");
+
                             review.setIncomplete(true);
                             review = crudService.create(review);
                         }
@@ -156,12 +157,14 @@ public class ProductReviewsController {
 
         mv.addObject("response", response);
 
+        httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        httpResponse.setDateHeader("Expires", 0);
         return mv;
     }
 
     @PostMapping("/reviews/create")
     public ModelAndView saveMultipleReviews(@ModelAttribute("reviewsForm") ProductsReviewForm form,
-                                            BindingResult result, HttpServletRequest request) {
+                                            BindingResult result, HttpServletRequest request, HttpServletResponse httpResponse) {
 
         Site site = siteService.getSite(request);
 
@@ -172,17 +175,15 @@ public class ProductReviewsController {
                 try {
                     System.out.println("Saving review Product ID: " + review.getProduct().getId());
                     review.setSite(site);
-                    if (review.getComment() == null || review.getComment().isEmpty()
-                            || review.getComment().equals(".")) {
+                    if (review.getComment() == null || review.getComment().isEmpty()) {
                         review.setIncomplete(true);
-                        review.setComment(".");
                         review.setVerified(false);
                     } else {
                         review.setVerified(true);
                         review.setIncomplete(false);
                         review.setCreationDate(new Date());
                     }
-                    crudService.save(review);
+                    crudService.executeWithinTransaction(() -> crudService.save(review));
                     service.computeProductStars(review.getProduct());
                     System.out.println("OK");
                 } catch (Exception e) {
@@ -193,7 +194,8 @@ public class ProductReviewsController {
         }
         mv.addObject("response", ProductsReviewResponse.rejected());
         mv.addObject("message", "Gracias por enviar sus reseñas");
-
+        httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        httpResponse.setDateHeader("Expires", 0);
         return mv;
     }
 }
