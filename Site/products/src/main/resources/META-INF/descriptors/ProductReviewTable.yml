@@ -13,9 +13,11 @@ fields:
     label: User
   user:
     label: Username
+  product:
   stars:
   verified:
   document:
+  incomplete:
   comment:
     params:
      header: 

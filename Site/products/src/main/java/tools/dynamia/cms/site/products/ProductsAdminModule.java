@@ -18,15 +18,9 @@ package tools.dynamia.cms.site.products;
 import tools.dynamia.cms.site.core.api.AdminModule;
 import tools.dynamia.cms.site.core.api.AdminModuleOption;
 import tools.dynamia.cms.site.core.api.CMSModule;
-import tools.dynamia.cms.site.products.domain.Product;
-import tools.dynamia.cms.site.products.domain.ProductBrand;
-import tools.dynamia.cms.site.products.domain.ProductCategory;
-import tools.dynamia.cms.site.products.domain.ProductTemplate;
-import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import tools.dynamia.cms.site.products.domain.Store;
+import tools.dynamia.cms.site.products.domain.*;
 
 /**
- *
  * @author Mario Serrano Leones
  */
 @CMSModule
@@ -41,21 +35,22 @@ public class ProductsAdminModule implements AdminModule {
     public String getName() {
         return "Store";
     }
-    
+
     @Override
     public String getImage() {
-    	return "fa-home";
+        return "fa-home";
     }
 
     @Override
     public AdminModuleOption[] getOptions() {
         return new AdminModuleOption[]{
-            new AdminModuleOption("config", "Configuration", ProductsSiteConfig.class, false, true),
-            new AdminModuleOption("products", "Products", Product.class, true, true, "th", true),
-            new AdminModuleOption("categories", "Categories", ProductCategory.class),
-            new AdminModuleOption("brands", "Brands", ProductBrand.class),
-            new AdminModuleOption("stores", "Branches", Store.class),
-            new AdminModuleOption("templates", "Templates", ProductTemplate.class)};
+                new AdminModuleOption("config", "Configuration", ProductsSiteConfig.class, false, true),
+                new AdminModuleOption("products", "Products", Product.class, true, true, "th", true),
+                new AdminModuleOption("categories", "Categories", ProductCategory.class),
+                new AdminModuleOption("brands", "Brands", ProductBrand.class),
+                new AdminModuleOption("stores", "Branches", Store.class),
+                new AdminModuleOption("templates", "Templates", ProductTemplate.class),
+                new AdminModuleOption("reviews", "Reviews", ProductReview.class)};
 
     }
 
