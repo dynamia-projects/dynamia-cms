@@ -15,28 +15,29 @@
  */
 package tools.dynamia.cms.site.core.api;
 
-import java.util.List;
-import java.util.Map;
-
 import tools.dynamia.cms.site.core.JavaScriptResource;
 import tools.dynamia.cms.site.core.StyleSheetResource;
 
+import java.util.List;
+import java.util.Map;
+
 /**
- *
  * @author Mario Serrano Leones
  */
 public interface Module extends TypeExtension {
 
-	String getTemplateViewName();
+    String getTemplateViewName();
 
-	Map<String, Object> getMetadata();
+    Map<String, Object> getMetadata();
 
-	public List<StyleSheetResource> getStyleSheetResources();
+    List<StyleSheetResource> getStyleSheetResources();
 
-	public List<JavaScriptResource> getJavaScriptResources();
+    List<JavaScriptResource> getJavaScriptResources();
 
-	public String[] getVariablesNames();
+    String[] getVariablesNames();
 
-	void init(ModuleContext context);
+    boolean isCacheable();
+
+    void init(ModuleContext context);
 
 }

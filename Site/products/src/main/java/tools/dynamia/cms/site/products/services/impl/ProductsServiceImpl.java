@@ -357,10 +357,11 @@ public class ProductsServiceImpl implements ProductsService {
             return Collections.EMPTY_LIST;
         }
 
-        QueryBuilder query = QueryBuilder.select(Product.class, "p").where("p.active = true").and("p.site = :site")
-                .and("(p.name like :param " + "or p.category.name like :param or p.brand.name like :param "
+        QueryBuilder query = QueryBuilder.select(Product.class, "p")
+                .leftJoin("p.brand brd").where("p.active = true").and("p.site = :site")
+                .and("(p.name like :param or p.category.name like :param or brd.name like :param "
                         + "or p.description like :param or p.sku like :param )")
-                .orderBy("brand.name, p.price");
+                .orderBy("p.price");
 
         QueryParameters qp = new QueryParameters();
         qp.add("param", param);
@@ -685,7 +686,9 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     public List<ProductReview> getIncompleteProductReviews(User user) {
-        return crudService.find(ProductReview.class, QueryParameters.with("user", user).add("incomplete", true));
+        List<ProductReview> reviews = crudService.find(ProductReview.class, QueryParameters.with("user", user).add("incomplete", true));
+
+        return reviews;
     }
 
     @Override
@@ -809,6 +812,37 @@ public class ProductsServiceImpl implements ProductsService {
         }
 
         return product;
+    }
+
+    @Override
+    public List<ProductReview> getExternalProductReviews(Site site, ProductsReviewResponse response, User user) {
+        List<ProductReview> reviews = new ArrayList<>();
+
+        if (response.getProducts() != null) {
+            for (ProductDTO dto : response.getProducts()) {
+                Product product = getProduct(site, dto);
+                if (product != null) {
+                    ProductReview review = getUserReview(product, user);
+
+                    if (review == null) {
+                        review = new ProductReview();
+                        review.setSite(site);
+                        review.setUser(user);
+                        review.setProduct(product);
+                        review.setDocument(response.getDocument());
+
+                        review.setIncomplete(true);
+                        review = crudService.create(review);
+                    }
+
+                    if (review.isIncomplete()) {
+                        reviews.add(review);
+                    }
+                }
+
+            }
+        }
+        return reviews;
     }
 
 }

@@ -17,6 +17,7 @@ package tools.dynamia.cms.site.users.services;
 
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.users.UserForm;
+import tools.dynamia.cms.site.users.api.UserDTO;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
 import tools.dynamia.cms.site.users.domain.UserSiteConfig;
@@ -57,4 +58,6 @@ public interface UserService {
     void disableUser(User user);
 
     User getUserByValidationKey(Site site, String key);
+
+    UserDTO loadExternalUser(Site site, String identification);
 }

@@ -5,5 +5,7 @@ import java.util.Map;
 
 public interface UsersDatasource {
 
-	public List<UserDTO> getUsers(Map<String, String> params);
+    List<UserDTO> getUsers(Map<String, String> params);
+
+    UserDTO getUser(String identification);
 }

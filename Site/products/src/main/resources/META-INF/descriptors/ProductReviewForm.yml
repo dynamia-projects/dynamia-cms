@@ -5,9 +5,10 @@ autofields: false
 fields:
   user:
   stars:
+  incomplete:
   comment:
     params:
-      span: 2
+      span: 3
 
 layout:
-  columns: 2
+  columns: 3

@@ -20,8 +20,9 @@ import tools.dynamia.cms.site.core.api.AbstractModule;
 import tools.dynamia.cms.site.core.api.CMSModule;
 import tools.dynamia.cms.site.core.api.ModuleContext;
 import tools.dynamia.cms.site.core.domain.ModuleInstance;
-import tools.dynamia.cms.site.products.ProductsReviewForm;
 import tools.dynamia.cms.site.products.domain.ProductReview;
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
+import tools.dynamia.cms.site.products.dto.ProductsReviewResponse;
 import tools.dynamia.cms.site.products.services.ProductsService;
 import tools.dynamia.cms.site.users.UserHolder;
 
@@ -39,29 +40,42 @@ public class ProductsReviewIncompletedModule extends AbstractModule {
 
     public ProductsReviewIncompletedModule() {
         super("products_incomplete_reviews", "Products Reviews Incompleted", "products/modules/incompleteReviews");
-        setDescription("Show all user incomplete Product Reviews");
+        setDescription("Show a list of incomplete Product Reviews");
         putMetadata("author", "Mario Serrano Leones");
         putMetadata("version", "1.0");
         putMetadata("created at", "09-08-2017");
-        setVariablesNames("reviewsForm", "reviewsForm.reviews");
+        setVariablesNames("reviews", "hasReviews", "count");
+        setCacheable(false);
 
     }
 
     @Override
     public void init(ModuleContext context) {
-
+        System.out.println("Loading Products Reviews");
         ModuleInstance mod = context.getModuleInstance();
 
         List<ProductReview> reviews;
         if (UserHolder.get().isAuthenticated()) {
             reviews = service.getIncompleteProductReviews(UserHolder.get().getCurrent());
+
+            if ((reviews == null || reviews.isEmpty()) && UserHolder.get().getCurrent().getIdentification() != null) {
+                try {
+                    ProductsSiteConfig config = service.getSiteConfig(context.getSite());
+                    ProductsReviewResponse response = service.requestExternalReviews(config, "ID" + UserHolder.get().getCurrent().getIdentification());
+                    reviews = service.getExternalProductReviews(context.getSite(), response, UserHolder.get().getCurrent());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
         } else {
             reviews = Collections.EMPTY_LIST;
         }
 
-        ProductsReviewForm form = new ProductsReviewForm(reviews);
-
-        mod.setTemporalForm(form);
+        mod.addObject("reviews", reviews);
+        mod.addObject("count", reviews.size());
+        mod.addObject("hasReviews", !reviews.isEmpty());
 
     }
 

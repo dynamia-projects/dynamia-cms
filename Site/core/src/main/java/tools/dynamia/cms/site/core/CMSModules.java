@@ -15,92 +15,96 @@
  */
 package tools.dynamia.cms.site.core;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import tools.dynamia.cms.site.core.api.Module;
 import tools.dynamia.cms.site.core.domain.ModuleInstance;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.core.services.impl.ModulesService;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class CMSModules {
 
-	private Site site;
-	private ModulesService service;
-	private Set<ModuleInstance> activeInstances = new HashSet<>();
-	private Set<Module> activeModules = new HashSet<>();
+    private Site site;
+    private ModulesService service;
+    private Set<ModuleInstance> activeInstances = new HashSet<>();
+    private Set<Module> activeModules = new HashSet<>();
 
-	public CMSModules(Site site, ModulesService service) {
-		super();
-		this.site = site;
-		this.service = service;
-	}
+    public CMSModules(Site site, ModulesService service) {
+        super();
+        this.site = site;
+        this.service = service;
+    }
 
-	public List<ModuleInstance> getInstances(String position) {
-		List<ModuleInstance> instances = filter(service.getModules(site, position));
+    public List<ModuleInstance> getInstances(String position) {
+        List<ModuleInstance> instances = filter(service.getModules(site, position));
 
-		activeInstances.addAll(instances);
-		for (ModuleInstance moduleInstance : instances) {
-			activeModules.add(service.getModule(moduleInstance));
-		}
-		return instances;
-	}
+        activeInstances.addAll(instances);
+        for (ModuleInstance moduleInstance : instances) {
+            Module module = service.getModule(moduleInstance);
+            if (!module.isCacheable()) {
+                service.initModuleInstance(moduleInstance);
+            }
+            activeModules.add(module);
+        }
+        return instances;
+    }
 
-	private List<ModuleInstance> filter(List<ModuleInstance> modules) {
-		try {
+    private List<ModuleInstance> filter(List<ModuleInstance> modules) {
+        try {
 
-			String currentPath = CMSUtil.getCurrentRequest().getPathInfo();
-			return modules.stream()
-					.filter(m -> m.isPathIncluded(currentPath))
-					.collect(Collectors.toList());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return modules;
-	}
+            String currentPath = CMSUtil.getCurrentRequest().getPathInfo();
+            return modules.stream()
+                    .filter(m -> m.isPathIncluded(currentPath))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return modules;
+    }
 
-	public List<String> getUsedPositions() {
-		return service.getUsedPositions(site);
-	}
+    public List<String> getUsedPositions() {
+        return service.getUsedPositions(site);
+    }
 
-	public boolean isUsed(String position) {
-		if (position != null) {
-			for (String usedPosition : getUsedPositions()) {
-				if (position.equals(usedPosition)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    public boolean isUsed(String position) {
+        if (position != null) {
+            for (String usedPosition : getUsedPositions()) {
+                if (position.equals(usedPosition)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-	public String getTemplateViewName(ModuleInstance instance) {
-		String view = "error/modulenotfound";
+    public String getTemplateViewName(ModuleInstance instance) {
+        String view = "error/modulenotfound";
 
-		if (instance.getCustomView() != null && !instance.getCustomView().isEmpty()) {
-			view = instance.getCustomView();
-		} else {
-			Module module = service.getModule(instance);
-			if (module != null) {
-				view = module.getTemplateViewName();
-			}
-		}
+        if (instance.getCustomView() != null && !instance.getCustomView().isEmpty()) {
+            view = instance.getCustomView();
+        } else {
+            Module module = service.getModule(instance);
+            if (module != null) {
+                view = module.getTemplateViewName();
+            }
+        }
 
-		return view;
-	}
+        return view;
+    }
 
-	public void init(ModuleInstance instance) {
-		service.initModuleInstance(instance);
-		activeInstances.add(instance);
-	}
+    public void init(ModuleInstance instance) {
+        service.initModuleInstance(instance);
+        activeInstances.add(instance);
+    }
 
-	public Set<ModuleInstance> getActiveInstances() {
-		return activeInstances;
-	}
+    public Set<ModuleInstance> getActiveInstances() {
+        return activeInstances;
+    }
 
-	public Set<Module> getActiveModules() {
-		return activeModules;
-	}
+    public Set<Module> getActiveModules() {
+        return activeModules;
+    }
 }

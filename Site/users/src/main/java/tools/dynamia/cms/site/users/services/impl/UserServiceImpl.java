@@ -28,7 +28,9 @@ import tools.dynamia.cms.site.mail.domain.MailTemplate;
 import tools.dynamia.cms.site.mail.services.MailService;
 import tools.dynamia.cms.site.users.PasswordsNotMatchException;
 import tools.dynamia.cms.site.users.UserForm;
+import tools.dynamia.cms.site.users.api.UserDTO;
 import tools.dynamia.cms.site.users.api.UserProfile;
+import tools.dynamia.cms.site.users.api.UsersDatasource;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.cms.site.users.domain.UserContactInfo;
 import tools.dynamia.cms.site.users.domain.UserSiteConfig;
@@ -40,6 +42,7 @@ import tools.dynamia.domain.query.QueryConditions;
 import tools.dynamia.domain.query.QueryParameters;
 import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.domain.services.ValidatorService;
+import tools.dynamia.web.util.HttpRemotingServiceClient;
 
 import java.util.Collections;
 import java.util.List;
@@ -339,6 +342,23 @@ public class UserServiceImpl implements UserService {
 
         }
 
+    }
+
+    @Override
+    public UserDTO loadExternalUser(Site site, String identification) {
+        UserDTO user = null;
+        UserSiteConfig config = getSiteConfig(site);
+        if (config != null && config.getDatasourceURL() != null && !config.getDatasourceURL().isEmpty()) {
+            UsersDatasource datasource = HttpRemotingServiceClient.build(UsersDatasource.class)
+                    .setServiceURL(config.getDatasourceURL())
+                    .getProxy();
+
+            if (datasource != null) {
+                user = datasource.getUser(identification);
+            }
+        }
+
+        return user;
     }
 
 }

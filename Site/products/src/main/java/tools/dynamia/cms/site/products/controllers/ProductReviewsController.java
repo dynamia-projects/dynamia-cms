@@ -14,9 +14,9 @@ import tools.dynamia.cms.site.products.ProductsReviewForm;
 import tools.dynamia.cms.site.products.domain.Product;
 import tools.dynamia.cms.site.products.domain.ProductReview;
 import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import tools.dynamia.cms.site.products.dto.ProductDTO;
 import tools.dynamia.cms.site.products.dto.ProductsReviewResponse;
 import tools.dynamia.cms.site.products.services.ProductsService;
+import tools.dynamia.cms.site.users.UserHolder;
 import tools.dynamia.cms.site.users.domain.User;
 import tools.dynamia.domain.ValidationError;
 import tools.dynamia.domain.services.CrudService;
@@ -24,7 +24,7 @@ import tools.dynamia.integration.sterotypes.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -115,32 +115,7 @@ public class ProductReviewsController {
             User user = service.findUserForReview(site, response);
             mv.addObject("user", user);
 
-            List<ProductReview> reviews = new ArrayList<>();
-
-            if (response.getProducts() != null) {
-                for (ProductDTO dto : response.getProducts()) {
-                    Product product = service.getProduct(site, dto);
-                    if (product != null) {
-                        ProductReview review = service.getUserReview(product, user);
-
-                        if (review == null) {
-                            review = new ProductReview();
-                            review.setSite(site);
-                            review.setUser(user);
-                            review.setProduct(product);
-                            review.setDocument(response.getDocument());
-
-                            review.setIncomplete(true);
-                            review = crudService.create(review);
-                        }
-
-                        if (review.isIncomplete()) {
-                            reviews.add(review);
-                        }
-                    }
-
-                }
-            }
+            List<ProductReview> reviews = service.getExternalProductReviews(site, response, user);
 
             mv.addObject("reviewsForm", new ProductsReviewForm(reviews));
             mv.addObject("title", response.getDescription());
@@ -161,6 +136,7 @@ public class ProductReviewsController {
         httpResponse.setDateHeader("Expires", 0);
         return mv;
     }
+
 
     @PostMapping("/reviews/create")
     public ModelAndView saveMultipleReviews(@ModelAttribute("reviewsForm") ProductsReviewForm form,
@@ -198,4 +174,37 @@ public class ProductReviewsController {
         httpResponse.setDateHeader("Expires", 0);
         return mv;
     }
+
+    @GetMapping("/reviews")
+    public ModelAndView reviews(HttpServletRequest request, HttpServletResponse httpResponse) {
+
+        ModelAndView mv = new ModelAndView("products/reviews/external");
+
+        Site site = siteService.getSite(request);
+
+        if (site == null) {
+            CMSUtil.redirectHome(mv);
+            return mv;
+        }
+
+        if (UserHolder.get().isAuthenticated()) {
+
+
+            User user = UserHolder.get().getCurrent();
+            List<ProductReview> reviews = service.getIncompleteProductReviews(user);
+            mv.addObject("user", user);
+            mv.addObject("reviewsForm", new ProductsReviewForm(reviews));
+            mv.addObject("title", reviews.isEmpty() ? "No tiene reseñas pendientes" : reviews.size() + " reseñas pendientes");
+
+            mv.addObject("response", new ProductsReviewResponse(Collections.emptyList(), user.getUsername(), user.getFullName()));
+
+            httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            httpResponse.setDateHeader("Expires", 0);
+        } else {
+            mv.addObject("response", ProductsReviewResponse.rejected());
+            mv.addObject("message", "Inicio sesion para cargar reseñas");
+        }
+        return mv;
+    }
+
 }
