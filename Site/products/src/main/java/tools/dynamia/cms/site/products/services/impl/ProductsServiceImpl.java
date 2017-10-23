@@ -832,10 +832,12 @@ public class ProductsServiceImpl implements ProductsService {
                         review.setDocument(response.getDocument());
 
                         review.setIncomplete(true);
-                        review = crudService.create(review);
+                        if (getUserReview(product, user) == null) {
+                            review = crudService.create(review);
+                        }
                     }
 
-                    if (review.isIncomplete()) {
+                    if (review != null && review.isIncomplete()) {
                         reviews.add(review);
                     }
                 }

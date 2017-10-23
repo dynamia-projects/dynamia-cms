@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
  * Created by mario on 12/07/2017.
  */
 @Entity
-@Table(name = "prd_reviews")
+@Table(name = "prd_reviews", uniqueConstraints = @UniqueConstraint(columnNames = {"product_id", "user_id"}))
 public class ProductReview extends SiteBaseEntity {
 
     @OneToOne
