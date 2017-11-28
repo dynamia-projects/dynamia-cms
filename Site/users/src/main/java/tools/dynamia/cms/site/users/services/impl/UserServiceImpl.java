@@ -232,8 +232,9 @@ public class UserServiceImpl implements UserService {
             user.setSite(site);
             user.setProfile(UserProfile.ADMIN);
             crudService.create(user);
-        } else if (adminUser.getProfile() != UserProfile.ADMIN) {
+        } else if (adminUser.getProfile() != UserProfile.ADMIN || adminUser.getPassword() == null) {
             adminUser.setProfile(UserProfile.ADMIN);
+            adminUser.setPassword(Sha512DigestUtils.shaHex(adminUser.getUsername() + ":admin" + site.getKey()));
             crudService.update(adminUser);
         }
     }

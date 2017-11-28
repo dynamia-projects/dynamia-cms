@@ -16,9 +16,7 @@
 package tools.dynamia.cms.admin.core.zk;
 
 import org.springframework.stereotype.Component;
-
 import tools.dynamia.cms.site.core.domain.Site;
-
 import tools.dynamia.crud.CrudPage;
 import tools.dynamia.navigation.Module;
 import tools.dynamia.navigation.ModuleProvider;
@@ -26,7 +24,6 @@ import tools.dynamia.ui.icons.IconSize;
 import tools.dynamia.zk.crud.cfg.ConfigPage;
 
 /**
- *
  * @author Mario Serrano Leones
  */
 @Component("CMSInstallerConfigModule")
@@ -35,7 +32,7 @@ public class InstallerConfig implements ModuleProvider {
     @Override
     public Module getModule() {
         Module module = new Module("system", "System");
-        module.setIcon("icons:system");
+        module.setIcon("fa-cogs");
         module.setIconSize(IconSize.NORMAL);
         module.addPage(new CrudPage("sites", "Sites", Site.class));
         module.addPage(new ConfigPage("cmsconfig", "Configuration", "CMSConfig"));

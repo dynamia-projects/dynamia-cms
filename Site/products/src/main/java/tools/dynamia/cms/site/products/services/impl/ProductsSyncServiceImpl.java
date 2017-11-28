@@ -77,6 +77,15 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
             synchronizeCategory(siteCfg, remoteCategory);
         }
 
+        //subcategories
+        for (ProductCategoryDTO remoteCategory : categories) {
+            if (remoteCategory.getSubcategories() != null && !remoteCategory.getSubcategories().isEmpty()) {
+                for (ProductCategoryDTO subcategory : remoteCategory.getSubcategories()) {
+                    synchronizeCategory(siteCfg, subcategory);
+                }
+            }
+        }
+
         return categories;
 
     }
@@ -110,11 +119,7 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
 
         syncCategoryDetails(siteCfg, localCategory, remoteCategory);
 
-        if (remoteCategory.getSubcategories() != null && !remoteCategory.getSubcategories().isEmpty()) {
-            for (ProductCategoryDTO subcategory : remoteCategory.getSubcategories()) {
-                synchronizeCategory(siteCfg, subcategory);
-            }
-        }
+
     }
 
     @Override
@@ -528,6 +533,11 @@ public class ProductsSyncServiceImpl implements ProductsSyncService {
             List<Long> ids = new ArrayList<>();
             for (ProductCategoryDTO dto : categories) {
                 ids.add(dto.getExternalRef());
+                if (dto.getSubcategories() != null) {
+                    for (ProductCategoryDTO subdto : dto.getSubcategories()) {
+                        ids.add(subdto.getExternalRef());
+                    }
+                }
             }
 
             String sql = "update " + ProductCategory.class.getSimpleName()

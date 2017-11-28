@@ -15,11 +15,11 @@
 	<parent>
 		<groupId>tools.dynamia.cms</groupId>
 		<artifactId>tools.dynamia.cms.site.parent</artifactId>
-		<version>2.0.0.Beta</version>
+		<version>2.0.0.RC</version>
 	</parent>
 	<groupId>tools.dynamia.cms</groupId>
 	<artifactId>tools.dynamia.cms.site.payment</artifactId>
-	<version>2.0.0.Beta</version>
+	<version>2.0.0.RC</version>
 	<name>DynamiaCMS Site - Payment (${project.version})</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -91,7 +91,7 @@
 		<dependency>
 			<groupId>tools.dynamia.cms</groupId>
 			<artifactId>tools.dynamia.cms.site.payment.api</artifactId>
-			<version>2.0.0.Beta</version>
+			<version>2.0.0.RC</version>
 		</dependency>
 	</dependencies>
 </project>
