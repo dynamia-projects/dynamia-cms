@@ -1,236 +1,235 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<artifactId>tools.dynamia.cms.admin.parent</artifactId>
-		<groupId>tools.dynamia.cms</groupId>
-		<version>2.0.0.RC</version>
-	</parent>
-	<groupId>tools.dynamia.cms</groupId>
-	<artifactId>tools.dynamia.cms.admin.web</artifactId>
-	<packaging>war</packaging>
-	<version>2.0.0.RC</version>
-	<name>DynamiaCMS Admin - Web (${project.version})</name>
-	<url>http://www.dynamiasoluciones.com</url>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>tools.dynamia.cms.admin.parent</artifactId>
+        <groupId>tools.dynamia.cms</groupId>
+        <version>2.0.0.RC</version>
+    </parent>
+    <groupId>tools.dynamia.cms</groupId>
+    <artifactId>tools.dynamia.cms.admin.web</artifactId>
+    <packaging>war</packaging>
+    <version>2.0.0.RC</version>
+    <name>DynamiaCMS Admin - Web (${project.version})</name>
+    <url>http://www.dynamiasoluciones.com</url>
 
-	<properties>
-		<name>DynamiaCMS</name>
-		<author>Dynamia Soluciones IT</author>
-		<timestamp>${maven.build.timestamp}</timestamp>
-		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
-	</properties>
+    <properties>
+        <name>DynamiaCMS</name>
+        <author>Dynamia Soluciones IT</author>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+    </properties>
 
-	<dependencies>
-
-
-		<!-- Modules -->
-
-		<!-- ADMIN MODULES -->
-
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.admin.core</artifactId>
-			<version>2.0.0.RC</version>
-		</dependency>
-
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.admin.core.zk</artifactId>
-			<version>2.0.0.RC</version>
-		</dependency>
-
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.admin.products</artifactId>
-			<version>2.0.0.RC</version>
-		</dependency>
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.admin.users</artifactId>
-			<version>2.0.0.RC</version>
-		</dependency>
-
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.admin.mail</artifactId>
-			<version>2.0.0.RC</version>
-		</dependency>
-
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.admin.shopping</artifactId>
-			<version>2.0.0.RC</version>
-		</dependency>
-
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.admin.menus</artifactId>
-			<version>2.0.0.RC</version>
-		</dependency>
-
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.admin.pages</artifactId>
-			<version>2.0.0.RC</version>
-		</dependency>
-
-		<!-- SITE MODULES -->
-
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>tools.dynamia.cms.site.core</artifactId>
-			<version>${site.cms.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>tools.dynamia.cms.site.pages</artifactId>
-			<version>${site.cms.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>tools.dynamia.cms.site.menus</artifactId>
-			<version>${site.cms.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>tools.dynamia.cms.site.products</artifactId>
-			<version>${site.cms.version}</version>
-		</dependency>
+    <dependencies>
 
 
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.site.banners</artifactId>
-			<version>${site.cms.version}</version>
-		</dependency>
+        <!-- Modules -->
 
-		<dependency>
-			<groupId>tools.dynamia.cms</groupId>
-			<artifactId>tools.dynamia.cms.site.contacts</artifactId>
-			<version>${site.cms.version}</version>
-		</dependency>
+        <!-- ADMIN MODULES -->
 
-		<!-- OTHERS -->
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.core</artifactId>
+            <version>2.0.0.RC</version>
+        </dependency>
 
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.2</version>
-		</dependency>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.core.zk</artifactId>
+            <version>2.0.0.RC</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.7</version>
-		</dependency>
-		<dependency>
-			<groupId>tools.dynamia.themes</groupId>
-			<artifactId>tools.dynamia.themes.dynamical</artifactId>
-			<version>3.1.0.Beta</version>
-		</dependency>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.products</artifactId>
+            <version>2.0.0.RC</version>
+        </dependency>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.users</artifactId>
+            <version>2.0.0.RC</version>
+        </dependency>
 
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.mail</artifactId>
+            <version>2.0.0.RC</version>
+        </dependency>
 
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.shopping</artifactId>
+            <version>2.0.0.RC</version>
+        </dependency>
 
-		<dependency>
-			<groupId>tools.dynamia</groupId>
-			<artifactId>tools.dynamia.zk.reports</artifactId>
-			<version>${dynatools.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-jdk14</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.menus</artifactId>
+            <version>2.0.0.RC</version>
+        </dependency>
 
-	<build>
-		<finalName>cms-admin</finalName>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.pages</artifactId>
+            <version>2.0.0.RC</version>
+        </dependency>
 
-			<!-- Jetty Configuration -->
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.7.v20160115</version>
+        <!-- SITE MODULES -->
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>tools.dynamia.cms.site.core</artifactId>
+            <version>${site.cms.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>tools.dynamia.cms.site.pages</artifactId>
+            <version>${site.cms.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>tools.dynamia.cms.site.menus</artifactId>
+            <version>${site.cms.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>tools.dynamia.cms.site.products</artifactId>
+            <version>${site.cms.version}</version>
+        </dependency>
 
 
-				<configuration>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.site.banners</artifactId>
+            <version>${site.cms.version}</version>
+        </dependency>
 
-					<jettyConfig>conf/jetty.xml</jettyConfig>
-					<!--Disable auto scen -->
-					<scanIntervalSeconds>0</scanIntervalSeconds>
-					<webApp>
-						<contextPath>/admin</contextPath>
-					</webApp>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.site.contacts</artifactId>
+            <version>${site.cms.version}</version>
+        </dependency>
 
-					<stopPort>9002</stopPort>
-					<stopKey>jetty-stop</stopKey>
+        <!-- OTHERS -->
 
-					<httpConnector>
-						<port>4848</port>
-					</httpConnector>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.7</version>
+        </dependency>
+        <dependency>
+            <groupId>tools.dynamia.themes</groupId>
+            <artifactId>tools.dynamia.themes.dynamical</artifactId>
+            <version>3.1.0.RC</version>
+        </dependency>
 
 
-				</configuration>
+        <dependency>
+            <groupId>tools.dynamia</groupId>
+            <artifactId>tools.dynamia.zk.reports</artifactId>
+            <version>${dynatools.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
 
-				<dependencies>
-					<!-- JDBC Drivers -->
-					<dependency>
-						<groupId>org.mariadb.jdbc</groupId>
-						<artifactId>mariadb-java-client</artifactId>
-						<version>1.5.4</version>
-					</dependency>
+    <build>
+        <finalName>cms-admin</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
 
-					<dependency>
-						<groupId>hsqldb</groupId>
-						<artifactId>hsqldb</artifactId>
-						<version>1.8.0.10</version>
-					</dependency>
+            <!-- Jetty Configuration -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.3.7.v20160115</version>
 
-					<!-- JavaMail -->
-					<dependency>
-						<groupId>javax.mail</groupId>
-						<artifactId>mail</artifactId>
-						<version>1.4.2</version>
-					</dependency>
-				</dependencies>
-			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.4.3</version>
-				<configuration>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
-		</plugins>
+                <configuration>
 
-	</build>
+                    <jettyConfig>conf/jetty.xml</jettyConfig>
+                    <!--Disable auto scen -->
+                    <scanIntervalSeconds>0</scanIntervalSeconds>
+                    <webApp>
+                        <contextPath>/admin</contextPath>
+                    </webApp>
+
+                    <stopPort>9002</stopPort>
+                    <stopKey>jetty-stop</stopKey>
+
+                    <httpConnector>
+                        <port>4848</port>
+                    </httpConnector>
+
+
+                </configuration>
+
+                <dependencies>
+                    <!-- JDBC Drivers -->
+                    <dependency>
+                        <groupId>org.mariadb.jdbc</groupId>
+                        <artifactId>mariadb-java-client</artifactId>
+                        <version>1.5.4</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>hsqldb</groupId>
+                        <artifactId>hsqldb</artifactId>
+                        <version>1.8.0.10</version>
+                    </dependency>
+
+                    <!-- JavaMail -->
+                    <dependency>
+                        <groupId>javax.mail</groupId>
+                        <artifactId>mail</artifactId>
+                        <version>1.4.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
 
 </project>

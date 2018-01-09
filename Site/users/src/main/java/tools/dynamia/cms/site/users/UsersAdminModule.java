@@ -19,6 +19,7 @@ import tools.dynamia.cms.site.core.api.AdminModule;
 import tools.dynamia.cms.site.core.api.AdminModuleOption;
 import tools.dynamia.cms.site.core.api.CMSModule;
 import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.cms.site.users.domain.UserLog;
 import tools.dynamia.cms.site.users.domain.UserSiteConfig;
 
 /**
@@ -47,7 +48,8 @@ public class UsersAdminModule implements AdminModule {
 	public AdminModuleOption[] getOptions() {
 		return new AdminModuleOption[] {
 				new AdminModuleOption("users", "List", User.class, false, true, "users", true),
-				new AdminModuleOption("userConfig", "Configuration", UserSiteConfig.class, false, true)
+				new AdminModuleOption("userConfig", "Configuration", UserSiteConfig.class, false, true),
+				new AdminModuleOption("log", "Log", UserLog.class, false, true)
 		};
 	}
 

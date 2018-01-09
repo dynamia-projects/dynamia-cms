@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Dynamia Soluciones IT SAS and the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,15 +15,15 @@
  */
 package tools.dynamia.cms.site.users;
 
-import java.util.Collection;
-
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
-
 import tools.dynamia.cms.site.users.domain.User;
-
+import tools.dynamia.cms.site.users.domain.UserLog;
+import tools.dynamia.domain.services.CrudService;
 import tools.dynamia.integration.Containers;
+
+import java.util.Collection;
 
 
 class SpringSecurtyApplicationListener implements ApplicationListener {
@@ -39,11 +39,17 @@ class SpringSecurtyApplicationListener implements ApplicationListener {
     private void fireOnUserLogin(AuthenticationSuccessEvent evt) {
         Collection<LoginListener> listeners = Containers.get().findObjects(LoginListener.class);
         if (listeners != null) {
-            User usuario = (User) evt.getAuthentication().getPrincipal();
-            UserHolder.get().init(usuario);
+            User user = (User) evt.getAuthentication().getPrincipal();
+            UserHolder.get().init(user);
+            CrudService crudService = Containers.get().findObject(CrudService.class);
+            if (crudService != null) {
+                crudService.executeWithinTransaction(() -> {
+                    crudService.create(new UserLog(user, "Login"));
+                });
+            }
 
             for (LoginListener listener : listeners) {
-                listener.onLoginSuccess(usuario);
+                listener.onLoginSuccess(user);
             }
         }
     }

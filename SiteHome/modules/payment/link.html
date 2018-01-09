@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+<div class="maincontainer" layout:fragment="content">
+
+
+    <div class="container">
+        <!-- Main Title-->
+        <div class="titles animated fadeInUp time3">
+            <div class="pull-left">
+                <h1 class="headinglefttitle">Link de Pago</h1>
+                <div th:text="${subtitle}" class="headingsubtitle"></div>
+            </div>
+            <i class="icon-check"></i>
+        </div>
+
+        <div class="row mt40">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">
+                <table class="table">
+
+
+                    <tr>
+                        <td><label class="orange">Identificacion</label></td>
+                        <td><span th:text="${transaction.payerDocument}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="orange">Cliente</label></td>
+                        <td><span th:text="${transaction.payerFullname}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="orange">Telefono</label></td>
+                        <td><span th:text="${transaction.payerPhoneNumber}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="orange">Celular</label></td>
+                        <td><span th:text="${transaction.payerMobileNumber}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="orange">Email</label></td>
+                        <td><span th:text="${transaction.email}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="orange">Documento</label></td>
+                        <td><span th:text="${transaction.document}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="orange">Descripcion</label></td>
+                        <td><span th:text="${transaction.description}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="orange">Valor</label></td>
+                        <td><span th:text="${#numbers.formatDecimal(transaction.amount, 0, 'COMMA', 2, 'POINT')}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="orange">Moneda</label></td>
+                        <td><span th:text="${transaction.currency}"></span></td>
+                    </tr>
+                </table>
+
+                <div>
+                    <a th:href="@{/payment/start}" class="btn btn-success btn-lg">Pagar</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+</html>
