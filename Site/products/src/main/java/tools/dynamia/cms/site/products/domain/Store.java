@@ -21,6 +21,8 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import tools.dynamia.cms.site.core.api.SiteAware;
 import tools.dynamia.cms.site.core.domain.Site;
 import tools.dynamia.cms.site.pages.domain.Page;
@@ -57,7 +59,8 @@ public class Store extends SimpleEntity implements SiteAware {
     @Basic(fetch = FetchType.LAZY)
     private String info;
 
-    @OneToMany(mappedBy = "store", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "store", orphanRemoval = true, cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<StoreContact> contacts = new ArrayList<>();
 
 

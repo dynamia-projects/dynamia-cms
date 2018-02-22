@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Dynamia Soluciones IT SAS and the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -51,10 +51,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.io.File;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static tools.dynamia.domain.query.QueryConditions.*;
 
@@ -235,17 +233,15 @@ public class ProductsServiceImpl implements ProductsService {
             params.add("category", form.getCategoryId());
         }
 
-        if (form.getDetail() != null) {
-            try {
-                String detail[] = form.getDetail().split("=");
-                builder.and(
-                        "p.id in (select det.product.id from ProductDetail det where det.name = :detname and det.value = :detvalue)");
-                params.add("detname", QueryConditions.eq(detail[0].trim()));
-                params.add("detvalue", QueryConditions.eq(detail[1].trim()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        Map<String, String> map = new HashMap<>();
+        filterByDetail(form.getDetail(), "1", params, builder, map);
+        filterByDetail(form.getDetail2(), "2", params, builder, map);
+        filterByDetail(form.getDetail3(), "3", params, builder, map);
+        filterByDetail(form.getDetail4(), "4", params, builder, map);
+
+        form.setAttribute("filteredDetails", map);
+
+
         if (params.size() > 0) {
             params.paginate(getDefaultPageSize(site));
             return crudService.executeQuery(builder, params);
@@ -253,6 +249,25 @@ public class ProductsServiceImpl implements ProductsService {
             return null;
         }
 
+    }
+
+    private String filterByDetail(String det, String suffix, QueryParameters params, QueryBuilder builder, Map<String, String> map) {
+        try {
+            if (det != null && !det.isEmpty() && det.contains(";")) {
+                String detail[] = det.split(";");
+                String name = "detname" + suffix;
+                String value = "detvalue" + suffix;
+                builder.and(
+                        "p.id in (select det.product.id from ProductDetail det where det.name = :" + name + " and det.value = :" + value + ")");
+                params.add(name, QueryConditions.eq(detail[0].trim()));
+                params.add(value, QueryConditions.eq(detail[1].trim()));
+                map.put(detail[0], detail[1]);
+                return detail[0].trim();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -624,6 +639,7 @@ public class ProductsServiceImpl implements ProductsService {
         query.setParameter("category", category);
 
         List<ProductCategoryDetail> details = query.getResultList();
+
 
         String sqlValues = "select det.name, det.value from ProductDetail det inner join det.product p inner join p.category c"
                 + " where (c = :category or c.parent = :category)  and p.active=true group by det.value order by det.value";

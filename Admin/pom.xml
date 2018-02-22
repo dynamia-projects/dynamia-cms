@@ -14,9 +14,11 @@
         <dynatools.version>3.1.0.RC</dynatools.version>
         <dynamia.icons.version>3.0.0</dynamia.icons.version>
         <hsql.version>1.8.0.10</hsql.version>
-        <spring.version>4.3.7.RELEASE</spring.version>
-        <hibernate.version>4.3.11.Final</hibernate.version>
-        <hibernatevalidator.version>5.1.3.Final</hibernatevalidator.version>
+        <spring.version>4.3.13.RELEASE</spring.version>
+        <spring.security.version>4.2.2.RELEASE</spring.security.version>
+
+        <hibernate.version>5.2.13.Final</hibernate.version>
+        <hibernatevalidator.version>5.4.2.Final</hibernatevalidator.version>
 
         <site.cms.version>2.0.0.RC</site.cms.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

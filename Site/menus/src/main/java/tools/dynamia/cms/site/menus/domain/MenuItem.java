@@ -30,6 +30,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.BatchSize;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import tools.dynamia.cms.site.core.Orderable;
 import tools.dynamia.cms.site.pages.domain.Page;
 
@@ -62,12 +64,19 @@ public class MenuItem extends SimpleEntity implements Serializable, Orderable {
 	private int order;
 	@Column(name = "itemType")
 	private String type = "default";
-	@OneToMany(mappedBy = "menuItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+
+	@OneToMany(mappedBy = "menuItem", cascade = CascadeType.ALL, orphanRemoval = true)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<MenuItemParameter> parameters = new ArrayList<>();
-	@OneToMany(mappedBy = "parentItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+
+	@OneToMany(mappedBy = "parentItem", cascade = CascadeType.ALL, orphanRemoval = true)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<MenuItem> subitems = new ArrayList<>();
-	@OneToMany(mappedBy = "parentItem", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+
+	@OneToMany(mappedBy = "parentItem", cascade = CascadeType.ALL, orphanRemoval = true)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<MenuItemGroup> itemsGroups = new ArrayList<>();
+
 	private String styleClass = "";
 	private String href;
 	private String title = "";

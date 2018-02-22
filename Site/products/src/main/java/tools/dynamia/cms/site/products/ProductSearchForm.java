@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Dynamia Soluciones IT SAS and the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,92 +17,129 @@ package tools.dynamia.cms.site.products;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- *
  * @author Mario Serrano Leones
  */
 public class ProductSearchForm implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 9079552167006719550L;
-	private String name;
-	private BigDecimal minPrice;
-	private BigDecimal maxPrice;
-	private Long categoryId;
-	private Long brandId;
-	private boolean stock;
-	private ProductSearchOrder order = ProductSearchOrder.NAME;
-	private String detail;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 9079552167006719550L;
+    private String name;
+    private BigDecimal minPrice;
+    private BigDecimal maxPrice;
+    private Long categoryId;
+    private Long brandId;
+    private boolean stock;
+    private ProductSearchOrder order = ProductSearchOrder.NAME;
+    private String detail;
+    private String detail2;
+    private String detail3;
+    private String detail4;
 
-	public String getDetail() {
-		return detail;
-	}
+    private Map<String, Object> attributes = new HashMap<>();
 
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
+    public String getDetail() {
+        return detail;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public BigDecimal getMinPrice() {
-		return minPrice;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setMinPrice(BigDecimal minPrice) {
-		this.minPrice = minPrice;
-	}
+    public BigDecimal getMinPrice() {
+        return minPrice;
+    }
 
-	public BigDecimal getMaxPrice() {
-		return maxPrice;
-	}
+    public void setMinPrice(BigDecimal minPrice) {
+        this.minPrice = minPrice;
+    }
 
-	public void setMaxPrice(BigDecimal maxPrice) {
-		this.maxPrice = maxPrice;
-	}
+    public BigDecimal getMaxPrice() {
+        return maxPrice;
+    }
 
-	public Long getCategoryId() {
-		return categoryId;
-	}
+    public void setMaxPrice(BigDecimal maxPrice) {
+        this.maxPrice = maxPrice;
+    }
 
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
-	}
+    public Long getCategoryId() {
+        return categoryId;
+    }
 
-	public Long getBrandId() {
-		return brandId;
-	}
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
 
-	public void setBrandId(Long brandId) {
-		this.brandId = brandId;
-	}
+    public Long getBrandId() {
+        return brandId;
+    }
 
-	public boolean isStock() {
-		return stock;
-	}
+    public void setBrandId(Long brandId) {
+        this.brandId = brandId;
+    }
 
-	public void setStock(boolean stock) {
-		this.stock = stock;
-	}
+    public boolean isStock() {
+        return stock;
+    }
 
-	public ProductSearchOrder getOrder() {
-		return order;
-	}
+    public void setStock(boolean stock) {
+        this.stock = stock;
+    }
 
-	public void setOrder(ProductSearchOrder order) {
-		this.order = order;
-	}
+    public ProductSearchOrder getOrder() {
+        return order;
+    }
 
+    public void setOrder(ProductSearchOrder order) {
+        this.order = order;
+    }
+
+    public String getDetail2() {
+        return detail2;
+    }
+
+    public void setDetail2(String detail2) {
+        this.detail2 = detail2;
+    }
+
+    public String getDetail3() {
+        return detail3;
+    }
+
+    public void setDetail3(String detail3) {
+        this.detail3 = detail3;
+    }
+
+    public String getDetail4() {
+        return detail4;
+    }
+
+    public void setDetail4(String detail4) {
+        this.detail4 = detail4;
+    }
+
+    public void setAttribute(String name, Object value) {
+        attributes.put(name, value);
+    }
+
+    public Object getAttribute(String name) {
+        return attributes.get(name);
+    }
 }

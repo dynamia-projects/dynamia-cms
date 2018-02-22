@@ -14,7 +14,6 @@ import tools.dynamia.app.ApplicationInfo;
 import tools.dynamia.app.JPAConfigurationAdapter;
 
 /**
- *
  * @author mario
  */
 @Configuration
@@ -32,7 +31,7 @@ public class DatabaseConfiguration extends JPAConfigurationAdapter {
     @Override
     protected void configureJpaVendorAdapter(HibernateJpaVendorAdapter va) {
         super.configureJpaVendorAdapter(va);
-
+        va.getJpaPropertyMap().put("hibernate.id.new_generator_mappings", false);
         va.setShowSql(false);
     }
 
