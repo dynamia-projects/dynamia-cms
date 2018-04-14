@@ -13,13 +13,13 @@
 	<parent>
 		<artifactId>tools.dynamia.cms.admin.parent</artifactId>
 		<groupId>tools.dynamia.cms</groupId>
-		<version>2.0.0.Final</version>
+		<version>3.0.0.Beta</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<name>DynamiaCMS Admin - Core ZK (${project.version})</name>
 	<groupId>tools.dynamia.cms</groupId>
 	<artifactId>tools.dynamia.cms.admin.core.zk</artifactId>
-	<version>2.0.0.Final</version>
+	<version>3.0.0.Beta</version>
 	<url>http://www.dynamiasoluciones.com</url>
 
 	<dependencies>

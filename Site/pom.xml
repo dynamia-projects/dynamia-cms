@@ -14,7 +14,7 @@
     <artifactId>tools.dynamia.cms.site.parent</artifactId>
     <name>DynamiaCMS Site (${project.version})</name>
     <packaging>pom</packaging>
-    <version>2.0.0.Final</version>
+    <version>3.0.0.Beta</version>
     <url>http://www.dynamiasoluciones.com</url>
 
     <properties>
@@ -24,10 +24,10 @@
         <dynamia.icons.version>1.0</dynamia.icons.version>
         <hsql.version>1.8.0.10</hsql.version>
 
-        <spring.version>4.3.13.RELEASE</spring.version>
-        <spring.security.version>4.2.2.RELEASE</spring.security.version>
+        <spring.version>4.3.15.RELEASE</spring.version>
+        <spring.security.version>4.2.5.RELEASE</spring.security.version>
 
-        <hibernate.version>5.2.13.Final</hibernate.version>
+        <hibernate.version>5.2.16.Final</hibernate.version>
         <hibernatevalidator.version>5.4.2.Final</hibernatevalidator.version>
 
         <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
@@ -41,6 +41,8 @@
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <groovy.version>2.4.15</groovy.version>
     </properties>
 
     <build>
@@ -70,12 +72,43 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>addSources</goal>
+                            <goal>addTestSources</goal>
+                            <goal>generateStubs</goal>
+                            <goal>compile</goal>
+                            <goal>generateTestStubs</goal>
+                            <goal>compileTests</goal>
+                            <goal>removeStubs</goal>
+                            <goal>removeTestStubs</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <invokeDynamic>true</invokeDynamic>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>${groovy.version}</version>
+            <classifier>indy</classifier>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
 
     <modules>
-        <module>web</module>
         <module>core</module>
         <module>core-api</module>
         <module>users</module>
@@ -92,6 +125,7 @@
         <module>shopping-cart-api</module>
         <module>payment-api</module>
         <module>payment</module>
+        <module>web</module>
     </modules>
 
 </project>

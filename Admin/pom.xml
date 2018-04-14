@@ -6,7 +6,7 @@
     <artifactId>tools.dynamia.cms.admin.parent</artifactId>
     <name>DynamiaCMS Admin (${project.version})</name>
     <packaging>pom</packaging>
-    <version>2.0.0.Final</version>
+    <version>3.0.0.Beta</version>
     <url>http://www.dynamiasoluciones.com</url>
 
 
@@ -14,16 +14,17 @@
         <dynatools.version>3.1.0.RC</dynatools.version>
         <dynamia.icons.version>3.0.0</dynamia.icons.version>
         <hsql.version>1.8.0.10</hsql.version>
-        <spring.version>4.3.13.RELEASE</spring.version>
-        <spring.security.version>4.2.2.RELEASE</spring.security.version>
+        <spring.version>4.3.15.RELEASE</spring.version>
+        <spring.security.version>4.2.5.RELEASE</spring.security.version>
 
-        <hibernate.version>5.2.13.Final</hibernate.version>
+        <hibernate.version>5.2.16.Final</hibernate.version>
         <hibernatevalidator.version>5.4.2.Final</hibernatevalidator.version>
 
-        <site.cms.version>2.0.0.Final</site.cms.version>
+        <site.cms.version>3.0.0.Beta</site.cms.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
+        <groovy.version>2.4.15</groovy.version>
+    </properties>
 
     <build>
         <plugins>
@@ -45,10 +46,41 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>addSources</goal>
+                            <goal>addTestSources</goal>
+                            <goal>generateStubs</goal>
+                            <goal>compile</goal>
+                            <goal>generateTestStubs</goal>
+                            <goal>compileTests</goal>
+                            <goal>removeStubs</goal>
+                            <goal>removeTestStubs</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <invokeDynamic>true</invokeDynamic>
+                </configuration>
+
+            </plugin>
         </plugins>
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>${groovy.version}</version>
+            <classifier>indy</classifier>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>tools.dynamia</groupId>
             <artifactId>tools.dynamia.zk.app</artifactId>
@@ -96,12 +128,12 @@
 
 
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>6.0</version>
-            <type>jar</type>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
+
         <!-- TEST DEPENDIENCIES -->
         <dependency>
             <groupId>hsqldb</groupId>

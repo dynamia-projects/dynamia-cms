@@ -6,12 +6,12 @@
     <parent>
         <groupId>tools.dynamia.cms</groupId>
         <artifactId>tools.dynamia.cms.admin.parent</artifactId>
-        <version>2.0.0.Final</version>
+        <version>3.0.0.Beta</version>
     </parent>
     <name>DynamiaCMS Admin - Notifications (${project.version})</name>
     <groupId>tools.dynamia.cms</groupId>
     <artifactId>tools.dynamia.cms.admin.mail</artifactId>
-    <version>2.0.0.Final</version>
+    <version>3.0.0.Beta</version>
 
     <url>http://maven.apache.org</url>
     <properties>

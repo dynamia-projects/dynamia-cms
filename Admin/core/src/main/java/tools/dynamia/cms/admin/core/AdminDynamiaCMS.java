@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2016 Dynamia Soluciones IT SAS and the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,46 +33,42 @@ import tools.dynamia.commons.logger.LoggingService;
 import tools.dynamia.commons.logger.SLF4JLoggingService;
 
 /**
- *
  * @author Mario Serrano Leones
  */
 @Configuration
 @EnableScheduling
 @EnableAsync
 @ComponentScan(basePackages = "tools.dynamia", excludeFilters = {
-		@ComponentScan.Filter(classes = Configuration.class, type = FilterType.ANNOTATION),
-		@ComponentScan.Filter(value = Controller.class, type = FilterType.ANNOTATION) })
-
-@ComponentScan(basePackages = {"tools.dynamia.app","tools.dynamia.zk"})
-
-@ComponentScan(basePackages = { "com.dynamia.icons", "com.dynamia.modules" })
+        @ComponentScan.Filter(classes = Configuration.class, type = FilterType.ANNOTATION),
+        @ComponentScan.Filter(value = Controller.class, type = FilterType.ANNOTATION)})
+@ComponentScan(basePackages = {"tools.dynamia.app", "tools.dynamia.zk", "com.dynamia.icons"})
 public class AdminDynamiaCMS extends MvcConfiguration {
 
-	public AdminDynamiaCMS() {
-		System.err.println("Starting DynamiaCMS application config");
-	}
+    public AdminDynamiaCMS() {
+        System.err.println("Starting DynamiaCMS application config");
+    }
 
-	@Bean
-	public LoggingService cmsLoggingService() {
-		return new SLF4JLoggingService(AdminDynamiaCMS.class);
-	}
+    @Bean
+    public LoggingService cmsLoggingService() {
+        return new SLF4JLoggingService(AdminDynamiaCMS.class);
+    }
 
-	@Bean
-	public VelocityEngine velocityEngine() {
-		VelocityEngine engine = new VelocityEngine();
+    @Bean
+    public VelocityEngine velocityEngine() {
+        VelocityEngine engine = new VelocityEngine();
 
-		return engine;
-	}
+        return engine;
+    }
 
-	@Bean
-	public MustacheFactory mustacheFactory() {
-		MustacheFactory mf = new DefaultMustacheFactory();
-		return mf;
-	}
+    @Bean
+    public MustacheFactory mustacheFactory() {
+        MustacheFactory mf = new DefaultMustacheFactory();
+        return mf;
+    }
 
-	@Bean
-	public CacheManager cacheManager() {
-		return new NoOpCacheManager();
-	}
+    @Bean
+    public CacheManager cacheManager() {
+        return new NoOpCacheManager();
+    }
 
 }
