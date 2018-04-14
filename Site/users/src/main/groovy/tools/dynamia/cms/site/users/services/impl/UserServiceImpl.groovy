@@ -347,8 +347,10 @@ class UserServiceImpl implements UserService {
         UserDTO user = null
         UserSiteConfig config = getSiteConfig(site)
         if (config != null && config.datasourceURL != null && !config.datasourceURL.empty) {
-            UsersDatasource datasource = HttpRemotingServiceClient.build(UsersDatasource.class).serviceURL = config.datasourceURL
-                    .proxy
+            UsersDatasource datasource = HttpRemotingServiceClient.build(UsersDatasource.class)
+                    .setServiceURL(config.datasourceURL)
+                    .getProxy()
+
 
             if (datasource != null) {
                 user = datasource.getUser(identification)

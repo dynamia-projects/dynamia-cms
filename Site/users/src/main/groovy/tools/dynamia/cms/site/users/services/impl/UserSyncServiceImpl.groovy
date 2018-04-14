@@ -17,11 +17,11 @@ import tools.dynamia.web.util.HttpRemotingServiceClient
 @Service
 class UserSyncServiceImpl implements UserSyncService {
 
-	@Autowired
-	private CrudService crudService
+    @Autowired
+    private CrudService crudService
 
     @Autowired
-	private UserService service
+    private UserService service
 
     /*
      * (non-Javadoc)
@@ -30,55 +30,59 @@ class UserSyncServiceImpl implements UserSyncService {
      * tools.dynamia.cms.site.users.services.impl.UserSyncService#syncUsers(
      * tools.dynamia.cms.site.core.domain.Site, java.util.Map)
      */
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     void syncUsers(UserSiteConfig cfg, Map<String, String> params) {
 
-		if (cfg.synchronizationEnabled && cfg.datasourceURL != null) {
+        if (cfg.synchronizationEnabled && cfg.datasourceURL != null) {
 
-			UsersDatasource datasource = HttpRemotingServiceClient.build(UsersDatasource.class).serviceURL = cfg.datasourceURL.username = cfg.datasourceUsername.password = cfg.datasourceURL
-                    .proxy
+            UsersDatasource datasource = HttpRemotingServiceClient.build(UsersDatasource.class)
+                    .setServiceURL(cfg.datasourceURL)
+                    .setUsername(cfg.datasourceUsername)
+                    .setPassword(cfg.datasourcePassword)
+                    .getProxy()
 
             List<UserDTO> remoteUsers = datasource.getUsers(params)
             if (remoteUsers != null && !remoteUsers.empty) {
-				sync(cfg, remoteUsers, params)
+                sync(cfg, remoteUsers, params)
             }
-		}
-	}
+        }
+    }
 
-	private void sync(UserSiteConfig cfg, List<UserDTO> remoteUsers, Map<String, String> params) {
-		for (UserDTO remoteUser : remoteUsers) {
-			try {
-				User localUser = getLocalUser(remoteUser)
+    private void sync(UserSiteConfig cfg, List<UserDTO> remoteUsers, Map<String, String> params) {
+        for (UserDTO remoteUser : remoteUsers) {
+            try {
+                User localUser = getLocalUser(remoteUser)
                 if (localUser == null) {
-					localUser = new User()
+                    localUser = new User()
                     localUser.site = cfg.site
                 }
-				localUser.sync(remoteUser)
+                localUser.sync(remoteUser)
 
                 if (localUser.password == null || localUser.password.empty) {
-					String password = remoteUser.externalRef
+                    String password = remoteUser.externalRef
                     if (password == null || password.empty) {
-						password = StringUtils.randomString()
+                        password = StringUtils.randomString()
                     }
-					service.setupPassword(localUser, password)
+                    service.setupPassword(localUser, password)
                 }
 
-				if (remoteUser.relatedUser != null && !remoteUser.relatedUser.empty) {
-					User relatedUser = crudService.findSingle(User.class, "externalRef", remoteUser.relatedUser)
+                if (remoteUser.relatedUser != null && !remoteUser.relatedUser.empty) {
+                    User relatedUser = crudService.findSingle(User.class, "externalRef", remoteUser.relatedUser)
                     localUser.relatedUser = relatedUser
                 }
 
-				crudService.save(localUser)
+                crudService.save(localUser)
             } catch (Exception e) {
-				System.out.println("Error Sync: " + remoteUser.email + "  - " + e.message)
+                System.out.println("Error Sync: " + remoteUser.email + "  - " + e.message)
             }
-		}
-	}
+        }
+    }
 
-	private User getLocalUser(UserDTO dto) {
+    private User getLocalUser(UserDTO dto) {
 
-		return crudService.findSingle(User.class, "username", dto.email)
+        return crudService.findSingle(User.class, "username", dto.email)
 
     }
 }

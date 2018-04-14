@@ -28,10 +28,10 @@ import tools.dynamia.zk.ComponentAliasIndex
  */
 class TypeSelector extends Combobox {
 
-	private Class<? extends TypeExtension> typeExtensionClass = TypeExtension.class
+    private Class<? extends TypeExtension> typeExtensionClass = TypeExtension.class
 
     static {
-		ComponentAliasIndex.instance.add(TypeSelector.class)
+        ComponentAliasIndex.instance.add(TypeSelector.class)
     }
 
     TypeSelector() {
@@ -39,43 +39,42 @@ class TypeSelector extends Combobox {
     }
 
     Class<? extends TypeExtension> getTypeExtensionClass() {
-		return typeExtensionClass
+        return typeExtensionClass
     }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     void setTypeExtensionClass(String className) throws ClassNotFoundException {
-		typeExtensionClass = (Class<? extends TypeExtension>) Class.forName(className)
+        typeExtensionClass = (Class<? extends TypeExtension>) Class.forName(className)
     }
 
     void setTypeExtensionClass(Class<? extends TypeExtension> typeExtensionClass) {
-		this.typeExtensionClass = typeExtensionClass
+        this.typeExtensionClass = typeExtensionClass
     }
 
     void init() {
-		children.clear()
+        children.clear()
         readonly = true
 
         Collection<? extends TypeExtension> types = Containers.get().findObjects(typeExtensionClass)
         if (types != null && !types.empty) {
-			int i = 0
+            int i = 0
             for (TypeExtension typeExtension : types) {
-				Comboitem item = new Comboitem()
+                Comboitem item = new Comboitem()
                 item.parent = this
                 try {
-					itemRenderer.render(item, typeExtension, i)
+                    itemRenderer.render(item, typeExtension, i)
                 } catch (Exception ex) {
-					ex.printStackTrace()
+                    ex.printStackTrace()
                 }
-				i++
+                i++
             }
-		}
-	}
+        }
+    }
 
-	@Override
+    @Override
     void setParent(Component parent) {
-        super.parent = parent // To change body of generated methods, choose
-									// Tools | Templates.
-		init()
+        super.setParent(parent)
+        init()
     }
 
 }

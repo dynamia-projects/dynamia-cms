@@ -98,7 +98,7 @@ class ResourceSelector extends Bandbox {
     @Override
     void setValue(String value) throws WrongValueException {
         if (!StringUtils.equals(getValue(), value)) {
-            super.value = value
+            super.setValue(value)
             Events.postEvent(new Event(Events.ON_CHANGE, this, value))
         }
     }

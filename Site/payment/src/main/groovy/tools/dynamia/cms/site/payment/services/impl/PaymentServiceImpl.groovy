@@ -211,8 +211,9 @@ class PaymentServiceImpl implements PaymentService {
             logger.info("Sending all manual Payments")
 
             if (serviceUrl != null && !serviceUrl.empty) {
-                PaymentSender sender = HttpRemotingServiceClient.build(PaymentSender.class).serviceURL = serviceUrl
-                        .proxy
+                PaymentSender sender = HttpRemotingServiceClient.build(PaymentSender.class)
+                        .setServiceURL(serviceUrl)
+                        .getProxy()
 
                 crudService.executeWithinTransaction {
 
@@ -236,8 +237,9 @@ class PaymentServiceImpl implements PaymentService {
             logger.info("Sending all auto Payments")
 
             if (serviceUrl != null && !serviceUrl.empty) {
-                PaymentSender sender = HttpRemotingServiceClient.build(PaymentSender.class).serviceURL = serviceUrl
-                        .proxy
+                PaymentSender sender = HttpRemotingServiceClient.build(PaymentSender.class)
+                        .setServiceURL(serviceUrl)
+                        .getProxy()
 
                 crudService.executeWithinTransaction {
 

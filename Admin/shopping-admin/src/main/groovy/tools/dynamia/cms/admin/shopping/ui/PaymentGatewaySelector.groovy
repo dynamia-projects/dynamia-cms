@@ -20,18 +20,18 @@ import tools.dynamia.zk.util.ZKUtil
  */
 class PaymentGatewaySelector extends Combobox {
 
-	static {
-		ComponentAliasIndex.instance.add(PaymentGatewaySelector.class)
+    static {
+        ComponentAliasIndex.instance.add(PaymentGatewaySelector.class)
     }
 
     PaymentGatewaySelector() {
         itemRenderer = new ComboitemRenderer<PaymentGateway>() {
 
             @Override
-void render(Comboitem item, PaymentGateway data, int index) throws Exception {
+            void render(Comboitem item, PaymentGateway data, int index) throws Exception {
                 item.value = data
                 item.label = data.name
-}
+            }
         }
         init()
     }
@@ -43,15 +43,14 @@ void render(Comboitem item, PaymentGateway data, int index) throws Exception {
         List<PaymentGateway> gateways = new ArrayList<>(Containers.get().findObjects(PaymentGateway.class))
         if (gateways != null && !gateways.isEmpty()) {
 
-			ZKUtil.fillCombobox(this, gateways)
+            ZKUtil.fillCombobox(this, gateways)
         }
-	}
+    }
 
-	@Override
+    @Override
     void setParent(Component parent) {
-        super.parent = parent // To change body of generated methods, choose
-									// Tools | Templates.
-		init()
+        super.setParent(parent)
+        init()
     }
 
 }

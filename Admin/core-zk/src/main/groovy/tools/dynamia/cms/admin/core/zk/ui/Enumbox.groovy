@@ -70,8 +70,7 @@ class Enumbox extends Combobox {
 
 	@Override
     void setParent(Component parent) {
-        super.parent = parent // To change body of generated methods, choose
-									// Tools | Templates.
+        super.setParent(parent)
 		init()
     }
 

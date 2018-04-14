@@ -70,12 +70,7 @@ limitations under the License.
             <artifactId>tools.dynamia.cms.site.core</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>tools.dynamia.cms.site.pages</artifactId>

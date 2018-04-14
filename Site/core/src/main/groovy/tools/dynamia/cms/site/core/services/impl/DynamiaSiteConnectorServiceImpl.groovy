@@ -28,8 +28,9 @@ class DynamiaSiteConnectorServiceImpl implements tools.dynamia.cms.site.core.ser
 
         if (site != null && site.externalConnectorURL != null && !site.externalConnectorURL.empty) {
 
-            DynamiaSiteConnector connector = HttpRemotingServiceClient.build(DynamiaSiteConnector.class).serviceURL = site.externalConnectorURL
-                    .proxy
+            DynamiaSiteConnector connector = HttpRemotingServiceClient.build(DynamiaSiteConnector.class)
+                    .setServiceURL(site.externalConnectorURL)
+                    .getProxy()
 
             if (connector != null) {
                 crudService.executeWithinTransaction {

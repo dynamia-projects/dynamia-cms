@@ -226,7 +226,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
             order.shoppingCart.status = ShoppingCartStatus.COMPLETED
 
             order.transaction.description = "Orden No. " + order.number + ". Compra de "
-                    + order.shoppingCart.quantity + " producto(s)"
+            +order.shoppingCart.quantity + " producto(s)"
 
             if (order.billingAddress != null) {
                 order.transaction.payerPhoneNumber = order.billingAddress.info.phoneNumber
@@ -502,7 +502,9 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
             throw new ValidationError("Cannot send order " + order.number + " because no sender is configured")
         }
 
-        ShoppingOrderSender sender = HttpRemotingServiceClient.build(ShoppingOrderSender.class).serviceURL = cfg.orderSenderURL.proxy
+        ShoppingOrderSender sender = HttpRemotingServiceClient.build(ShoppingOrderSender.class)
+                .setServiceURL(cfg.orderSenderURL)
+                .getProxy()
 
         ShoppingOrderDTO dto = order.toDTO()
         Response response = sender.sendOrder(dto, cfg.parametersAsMap)
@@ -540,7 +542,10 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
                 ShoppingSiteConfig cfg = getConfiguration(site)
                 if (cfg != null && cfg.autoSendOrders && cfg.orderSenderURL != null
                         && !cfg.orderSenderURL.empty) {
-                    ShoppingOrderSender sender = HttpRemotingServiceClient.build(ShoppingOrderSender.class).serviceURL = cfg.orderSenderURL.proxy
+                    ShoppingOrderSender sender = HttpRemotingServiceClient.build(ShoppingOrderSender.class)
+                            .setServiceURL(cfg.orderSenderURL)
+                            .getProxy()
+
 
                     crudService.executeWithinTransaction {
 

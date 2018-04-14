@@ -372,7 +372,7 @@ class ProductsServiceImpl implements ProductsService {
         QueryBuilder query = QueryBuilder.select(Product.class, "p")
                 .leftJoin("p.brand brd").where("p.active = true").and("p.site = :site")
                 .and("(p.name like :param or p.category.name like :param or brd.name like :param "
-                        + "or p.description like :param or p.sku like :param )")
+                + "or p.description like :param or p.sku like :param )")
                 .orderBy("p.price")
 
         QueryParameters qp = new QueryParameters()
@@ -639,7 +639,7 @@ class ProductsServiceImpl implements ProductsService {
 
 
         String sqlValues = "select det.name, det.value from ProductDetail det inner join det.product p inner join p.category c"
-                + " where (c = :category or c.parent = :category)  and p.active=true group by det.value order by det.value"
+        +" where (c = :category or c.parent = :category)  and p.active=true group by det.value order by det.value"
         List values = entityManager.createQuery(sqlValues).setParameter("category", category).resultList
 
         for (ProductCategoryDetail det : details) {
@@ -753,7 +753,9 @@ class ProductsServiceImpl implements ProductsService {
     @Override
     ProductsReviewResponse requestExternalReviews(ProductsSiteConfig config, String requestUuid) {
         if (config != null && config.reviewsConnectorURL != null && !config.reviewsConnectorURL.empty) {
-            ProductReviewsConnector connector = HttpRemotingServiceClient.build(ProductReviewsConnector.class).serviceURL = config.reviewsConnectorURL.proxy
+            ProductReviewsConnector connector = HttpRemotingServiceClient.build(ProductReviewsConnector.class)
+                    .setServiceURL(config.reviewsConnectorURL)
+                    .getProxy()
 
             if (connector != null) {
                 try {

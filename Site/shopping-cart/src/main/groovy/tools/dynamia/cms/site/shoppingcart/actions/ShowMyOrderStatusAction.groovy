@@ -39,20 +39,20 @@ import toosl.dynamia.cms.site.shoppingcart.dto.OrderStatusDTO
 @CMSAction
 class ShowMyOrderStatusAction implements SiteAction {
 
-	@Autowired
-	private ShoppingCartService service
+    @Autowired
+    private ShoppingCartService service
 
     @Autowired
-	private UserService userService
+    private UserService userService
 
     @Override
     String getName() {
-		return "showMyOrdersStatus"
+        return "showMyOrdersStatus"
     }
 
-	@Override
+    @Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.modelAndView
+        ModelAndView mv = evt.modelAndView
         mv.viewName = "shoppingcart/myorderstatus"
 
         mv.addObject("title", "Estado de Cuenta")
@@ -61,41 +61,43 @@ class ShowMyOrderStatusAction implements SiteAction {
         String customer = (String) evt.data
 
         if (customer == null) {
-			if (UserHolder.get().customer != null) {
-				customer = UserHolder.get().customer.externalRef
+            if (UserHolder.get().customer != null) {
+                customer = UserHolder.get().customer.externalRef
             } else if (UserHolder.get().current.profile == UserProfile.USER) {
-				customer = UserHolder.get().current.externalRef
+                customer = UserHolder.get().current.externalRef
             }
-		}
+        }
 
-		List<OrderStatusDTO> orders = new ArrayList<>()
+        List<OrderStatusDTO> orders = new ArrayList<>()
         User userCustomer = userService.getByExternalRef(evt.site, customer)
         mv.addObject("customer", userCustomer)
         try {
-			if (cfg.orderStatusURL != null && !cfg.orderStatusURL.empty && customer != null) {
-				OrderStatusService service = HttpRemotingServiceClient.build(OrderStatusService.class).serviceURL = cfg.orderStatusURL.proxy
+            if (cfg.orderStatusURL != null && !cfg.orderStatusURL.empty && customer != null) {
+                OrderStatusService service = HttpRemotingServiceClient.build(OrderStatusService.class)
+                        .setServiceURL(cfg.orderStatusURL)
+                        .getProxy()
 
 
                 orders = service.getOrdersStatus(customer)
 
 
             } else {
-				CMSUtil.addErrorMessage("No se ha configurado estado de cuenta", mv)
+                CMSUtil.addErrorMessage("No se ha configurado estado de cuenta", mv)
 
             }
-		} catch (Exception e) {
-			e.printStackTrace()
+        } catch (Exception e) {
+            e.printStackTrace()
             CMSUtil.addWarningMessage("No se puede consultar estado de cuenta en este momento, intente mas tarde", mv)
         }
 
-		if (customer == null) {
-			CMSUtil.addErrorMessage("No se ha seleccionado cliente", mv)
+        if (customer == null) {
+            CMSUtil.addErrorMessage("No se ha seleccionado cliente", mv)
         }
 
-		mv.addObject("orders", orders)
-        mv.addObject("sumTotal",BigDecimalUtils.sum("total", orders))
-        mv.addObject("sumPaid",BigDecimalUtils.sum("paid", orders))
-        mv.addObject("sumBalance",BigDecimalUtils.sum("balance", orders))
+        mv.addObject("orders", orders)
+        mv.addObject("sumTotal", BigDecimalUtils.sum("total", orders))
+        mv.addObject("sumPaid", BigDecimalUtils.sum("paid", orders))
+        mv.addObject("sumBalance", BigDecimalUtils.sum("balance", orders))
 
     }
 

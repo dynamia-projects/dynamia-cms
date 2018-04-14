@@ -473,7 +473,12 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
 
     @Override
     ProductsDatasource getDatasource(ProductsSiteConfig cfg) {
-        return HttpRemotingServiceClient.build(ProductsDatasource.class).serviceURL = cfg.datasourceURL.username = cfg.datasourceUsername.password = cfg.datasourcePassword.proxy
+        def client = HttpRemotingServiceClient.build(ProductsDatasource.class)
+        client.serviceURL = cfg.datasourceURL
+        client.username = cfg.datasourceUsername
+        client.password = cfg.datasourcePassword
+
+        return client.proxy
     }
 
     private void deleteProductsDetails(Product product) {
