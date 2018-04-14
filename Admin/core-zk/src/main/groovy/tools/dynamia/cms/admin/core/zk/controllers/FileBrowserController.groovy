@@ -35,7 +35,7 @@ class FileBrowserController {
 		ModelAndView mv = new ModelAndView("browse")
 
         try {
-			Site site = SiteContext.get().getCurrent()
+			Site site = SiteContext.get().current
             String url = CMSUtil.getSiteURL(site, "resources")
             Path sitePath = DynamiaCMS.getSitesResourceLocation(site)
 

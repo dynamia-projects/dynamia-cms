@@ -37,7 +37,7 @@ class ParamsCrudListener extends CrudServiceListenerAdapter<Parameter> {
     }
 
 	private void checkHomeVar(Parameter entity) {
-		if (DynamiaCMS.CFG_HOMEVAR.equals(entity.getName())) {
+		if (DynamiaCMS.CFG_HOMEVAR.equals(entity.name)) {
 			DynamiaCMS.reloadHomePath()
         }
 	}

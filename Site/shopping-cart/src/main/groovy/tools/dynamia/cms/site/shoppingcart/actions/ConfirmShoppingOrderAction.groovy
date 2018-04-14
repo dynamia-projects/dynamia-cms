@@ -60,69 +60,69 @@ class ConfirmShoppingOrderAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("shoppingcart/confirm")
+		ModelAndView mv = evt.modelAndView
+        mv.viewName = "shoppingcart/confirm"
 
         mv.addObject("title", "Resumen de Pedido")
 
-        ShoppingSiteConfig config = service.getConfiguration(evt.getSite())
-        ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder()
+        ShoppingSiteConfig config = service.getConfiguration(evt.site)
+        ShoppingOrder order = ShoppingCartHolder.get().currentOrder
 
-        if (order.getId() != null) {
-			order = crudService.find(ShoppingOrder.class, order.getId())
-            ShoppingCartHolder.get().setCurrentOrder(order)
+        if (order.id != null) {
+			order = crudService.find(ShoppingOrder.class, order.id)
+            ShoppingCartHolder.get().currentOrder = order
         }
 		order.sync()
-        order.setUserComments(evt.getRequest().getParameter("userComments"))
-        order.setBillingAddress(loadContactInfo("billingAddress", evt))
-        order.setShippingAddress(loadContactInfo("shippingAddress", evt))
+        order.userComments = evt.request.getParameter("userComments")
+        order.billingAddress = loadContactInfo("billingAddress", evt)
+        order.shippingAddress = loadContactInfo("shippingAddress", evt)
 
-        String customer = evt.getRequest().getParameter("customer")
+        String customer = evt.request.getParameter("customer")
         if (customer != null && !customer.equals("0")) {
 			Long customerId = Long.parseLong(customer)
             User userCustomer = crudService.find(User.class, customerId)
-            order.getShoppingCart().setCustomer(userCustomer)
+            order.shoppingCart.customer = userCustomer
         }
 
-		String deliveryType = evt.getRequest().getParameter("deliveryType")
+		String deliveryType = evt.request.getParameter("deliveryType")
         if (deliveryType == null) {
 			deliveryType = ""
         }
 		if (deliveryType.equals("pickupAtStore")) {
-			order.setPickupAtStore(true)
-            order.setPayAtDelivery(false)
+            order.pickupAtStore = true
+            order.payAtDelivery = false
         } else if (deliveryType.equals("payAtDelivery")) {
-			order.setPickupAtStore(false)
-            order.setPayAtDelivery(true)
+            order.pickupAtStore = false
+            order.payAtDelivery = true
         }
 
-		String paymentType = evt.getRequest().getParameter("paymentType")
+		String paymentType = evt.request.getParameter("paymentType")
 
         if (paymentType == null) {
 			paymentType = ""
         }
 
 		if (paymentType.equals("later")) {
-			order.setPayLater(true)
+            order.payLater = true
         }
 
 		try {
 
 			validate(order, config)
-            String name = order.getShoppingCart().getName()
+            String name = order.shoppingCart.name
             service.saveOrder(order)
-            ShoppingCartHolder.get().setCurrentOrder(order)
+            ShoppingCartHolder.get().currentOrder = order
 
             ShoppingCartHolder.get().removeCart(name)
 
             PaymentForm form = new PaymentForm()
-            if (!order.isPayLater()) {
+            if (!order.payLater) {
 				try {
-					PaymentGateway gateway = paymentService.findGateway(order.getTransaction().getGatewayId())
-                    form = gateway.createForm(order.getTransaction())
-                    PaymentHolder.get().setCurrentPaymentForm(form)
+					PaymentGateway gateway = paymentService.findGateway(order.transaction.gatewayId)
+                    form = gateway.createForm(order.transaction)
+                    PaymentHolder.get().currentPaymentForm = form
                 } catch (PaymentException e) {
-					System.err.println("GATEWAY EXCEPTION:: " + e.getMessage())
+					System.err.println("GATEWAY EXCEPTION:: " + e.message)
                     e.printStackTrace()
                 }
 
@@ -132,32 +132,32 @@ class ConfirmShoppingOrderAction implements SiteAction {
             mv.addObject("shoppingOrder", order)
 
         } catch (ValidationError e) {
-			SiteActionManager.performAction("checkoutShoppingCart", mv, evt.getRequest(), evt.getRedirectAttributes())
-            CMSUtil.addErrorMessage(e.getMessage(), mv)
+			SiteActionManager.performAction("checkoutShoppingCart", mv, evt.request, evt.redirectAttributes)
+            CMSUtil.addErrorMessage(e.message, mv)
         }
 	}
 
 	private void validate(ShoppingOrder order, ShoppingSiteConfig config) {
-		if (order.getBillingAddress() == null && config.isBillingAddressRequired()) {
+		if (order.billingAddress == null && config.billingAddressRequired) {
 			throw new ValidationError("Seleccione direccion de facturacion")
         }
 
-		if (!order.isPickupAtStore() && order.getShippingAddress() == null && config.isShippingAddressRequired()) {
+		if (!order.pickupAtStore && order.shippingAddress == null && config.shippingAddressRequired) {
 			throw new ValidationError("Seleccione direccion de envio o marque la opcion recoger en tienda")
-        } else if (order.isPickupAtStore()) {
-			order.setShippingAddress(null)
+        } else if (order.pickupAtStore) {
+            order.shippingAddress = null
         }
 
-		if (order.getShoppingCart() == null) {
+		if (order.shoppingCart == null) {
 			throw new ValidationError("La orden de pedido no tiene carrito de compra asociado")
         }
 
-		if (order.getShoppingCart().getUser() == null) {
+		if (order.shoppingCart.user == null) {
 			throw new ValidationError("La orden de pedido no tiene usuario asociado")
         }
 
-		if (order.getShoppingCart().getUser().getProfile() == UserProfile.SELLER
-				&& order.getShoppingCart().getCustomer() == null) {
+		if (order.shoppingCart.user.profile == UserProfile.SELLER
+				&& order.shoppingCart.customer == null) {
 			throw new ValidationError("Seleccione cliente")
         }
 
@@ -167,7 +167,7 @@ class ConfirmShoppingOrderAction implements SiteAction {
 		UserContactInfo userContactInfo = null
 
         try {
-			Long id = Long.parseLong(evt.getRequest().getParameter(string))
+			Long id = Long.parseLong(evt.request.getParameter(string))
             userContactInfo = crudService.find(UserContactInfo.class, id)
         } catch (Exception e) {
 			// TODO: handle exception

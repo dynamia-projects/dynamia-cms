@@ -18,9 +18,9 @@ class SyncUsersAction extends AbstractCrudAction {
 	private UserSyncService service
 
     SyncUsersAction() {
-		setName("Sync User")
-        setImage("sync")
-        setMenuSupported(true)
+        name = "Sync User"
+        image = "sync"
+        menuSupported = true
     }
 
 	@Override
@@ -35,15 +35,15 @@ class SyncUsersAction extends AbstractCrudAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		UserSiteConfig cfg = (UserSiteConfig) evt.getData()
+		UserSiteConfig cfg = (UserSiteConfig) evt.data
         if (cfg != null) {
 			UIMessages.showQuestion("Are you sure to sync all users? This may take serveral minutes", {
 				try {
 					service.syncUsers(cfg, new HashMap<>())
                     UIMessages.showMessage("Sync Successfull")
-                    evt.getController().doQuery()
+                    evt.controller.doQuery()
                 } catch (Exception e) {
-					UIMessages.showMessage("Error sync users: " + e.getMessage(), MessageType.ERROR)
+					UIMessages.showMessage("Error sync users: " + e.message, MessageType.ERROR)
                     e.printStackTrace()
                 }
 			})

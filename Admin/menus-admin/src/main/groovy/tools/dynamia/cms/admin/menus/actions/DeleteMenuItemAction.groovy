@@ -19,22 +19,22 @@ class DeleteMenuItemAction extends DeleteAction {
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
-        MenuItem submenu = (MenuItem) evt.getData()
+        MenuItem submenu = (MenuItem) evt.data
         if (submenu != null) {
             UIMessages.showQuestion("Are you sure?", {
                 crudService.executeWithinTransaction {
 
                     try {
                         crudService.execute("DELETE FROM MenuItem mi where mi.parentItem.id = :id",
-                                QueryParameters.with("id", submenu.getId()))
+                                QueryParameters.with("id", submenu.id))
 
                         crudService.execute("DELETE FROM MenuItem mi where mi.id = :id",
-                                QueryParameters.with("id", submenu.getId()))
+                                QueryParameters.with("id", submenu.id))
                         UIMessages.showMessage("Menu item deleted succesfull")
-                        evt.getController().doQuery()
+                        evt.controller.doQuery()
                     } catch (Exception e) {
                         UIMessages
-                                .showMessage("Error deleting item. Try deleting subitems first: " + e.getMessage())
+                                .showMessage("Error deleting item. Try deleting subitems first: " + e.message)
                         e.printStackTrace()
                     }
                 }

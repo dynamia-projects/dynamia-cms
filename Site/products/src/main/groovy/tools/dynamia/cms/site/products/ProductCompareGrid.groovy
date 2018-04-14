@@ -41,7 +41,7 @@ class ProductCompareGrid implements Serializable {
     void loadData() {
         List<ProductDetail> allDetails = service.getProductsDetails(products)
         for (ProductDetail productDetail : allDetails) {
-            features.add(cleanFeature(productDetail.getName()))
+            features.add(cleanFeature(productDetail.name))
         }
 
         for (Product product : products) {
@@ -69,7 +69,7 @@ class ProductCompareGrid implements Serializable {
     private List<ProductDetail> getDetails(Product product, List<ProductDetail> allDetails) {
         List<ProductDetail> details = new ArrayList<>()
         for (ProductDetail det : allDetails) {
-            if (det.getProduct().equals(product)) {
+            if (det.product.equals(product)) {
                 details.add(det)
             }
         }
@@ -78,7 +78,7 @@ class ProductCompareGrid implements Serializable {
 
     private ProductDetail getDetail(String name, List<ProductDetail> productDetails) {
         for (ProductDetail productDetail : productDetails) {
-            if (cleanFeature(productDetail.getName()).equals(name)) {
+            if (cleanFeature(productDetail.name).equals(name)) {
                 return productDetail
             }
         }

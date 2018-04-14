@@ -45,10 +45,10 @@ class ShareProductAction implements SiteAction {
     @Override
     void actionPerformed(ActionEvent evt) {
 
-        ProductShareForm form = (ProductShareForm) evt.getData()
+        ProductShareForm form = (ProductShareForm) evt.data
         service.shareProduct(form)
 
-        CMSUtil.addSuccessMessage("Producto compartido exitosamente", evt.getRedirectAttributes())
+        CMSUtil.addSuccessMessage("Producto compartido exitosamente", evt.redirectAttributes)
 
     }
 

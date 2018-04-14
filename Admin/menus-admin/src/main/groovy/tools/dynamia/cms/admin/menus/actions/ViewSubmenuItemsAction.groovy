@@ -24,9 +24,9 @@ class ViewSubmenuItemsAction extends AbstractCrudAction {
 	private CrudService crudService
 
     ViewSubmenuItemsAction() {
-		setName("Items")
-        setImage("menu")
-        setMenuSupported(true)
+        name = "Items"
+        image = "menu"
+        menuSupported = true
     }
 
 	@Override
@@ -41,15 +41,14 @@ class ViewSubmenuItemsAction extends AbstractCrudAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		Menu menu = (Menu) evt.getData()
+		Menu menu = (Menu) evt.data
         if (menu != null) {
 			menu = crudService.reload(menu)
             CrudView<MenuItem> ui = (CrudView<MenuItem>) Viewers.getView(MenuItem.class, "crud", null)
-            MenuItemTreeCrudController controller = (MenuItemTreeCrudController) ui.getController()
-            controller.setMenu(menu)
+            MenuItemTreeCrudController controller = (MenuItemTreeCrudController) ui.controller
+            controller.menu = menu
             controller.doQuery()
-            ZKNavigationManager.getInstance().setCurrentPage(
-					new ComponentPage("viewSubmenus" + menu.getId(),  menu.getName()+" Items", ui))
+            ZKNavigationManager.instance.currentPage = new ComponentPage("viewSubmenus" + menu.id,  menu.name +" Items", ui)
         } else {
 			UIMessages.showMessage("Select menu to view submenus", MessageType.ERROR)
         }

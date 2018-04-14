@@ -88,9 +88,9 @@ class ProductCreditPrice extends SimpleEntity implements SiteAware {
     }
 
     void sync(ProductCreditPriceDTO dto) {
-		price = dto.getPrice()
-        number = dto.getNumber()
-        description = dto.getDescription()
+		price = dto.price
+        number = dto.number
+        description = dto.description
     }
 
 }

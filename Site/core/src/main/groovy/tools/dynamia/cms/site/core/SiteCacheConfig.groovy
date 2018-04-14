@@ -15,14 +15,14 @@ class SiteCacheConfig {
 	
 	@Bean
     CacheManager cacheManager() {
-		return new EhCacheCacheManager(ehCacheCacheManager().getObject())
+		return new EhCacheCacheManager(ehCacheCacheManager().object)
     }
 
 	@Bean
     EhCacheManagerFactoryBean ehCacheCacheManager() {
 		EhCacheManagerFactoryBean cmfb = new EhCacheManagerFactoryBean()
-        cmfb.setConfigLocation(new ClassPathResource("ehcache.xml"))
-        cmfb.setShared(true)
+        cmfb.configLocation = new ClassPathResource("ehcache.xml")
+        cmfb.shared = true
         return cmfb
     }
 	

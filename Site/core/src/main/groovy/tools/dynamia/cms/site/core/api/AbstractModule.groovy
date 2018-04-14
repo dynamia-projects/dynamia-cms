@@ -112,7 +112,7 @@ abstract class AbstractModule implements Module {
 
     @Override
     String toString() {
-        return getName() + "(" + getTemplateViewName() + ")"
+        return name + "(" + templateViewName + ")"
     }
 
     @Override

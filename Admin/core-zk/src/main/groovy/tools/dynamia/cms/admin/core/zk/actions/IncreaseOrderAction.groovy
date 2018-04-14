@@ -37,24 +37,24 @@ class IncreaseOrderAction extends AbstractCrudAction {
 	private CrudService crudService
 
     IncreaseOrderAction() {
-		setName("Move up")
-        setImage("up")
-        setMenuSupported(true)
+        name = "Move up"
+        image = "up"
+        menuSupported = true
     }
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		Orderable orderable = (Orderable) evt.getData()
+		Orderable orderable = (Orderable) evt.data
         if (orderable != null) {
-			orderable.setOrder(orderable.getOrder() - 1)
+            orderable.order = orderable.order - 1
 
             crudService.update(orderable)
-            if (evt.getController() != null) {
-				evt.getController().doQuery()
-                evt.getController().setSelected((AbstractEntity) orderable)
+            if (evt.controller != null) {
+				evt.controller.doQuery()
+                evt.controller.selected = (AbstractEntity) orderable
             }
 
-			if (orderable.getOrder() <= 0) {
+			if (orderable.order <= 0) {
 				UIMessages.showMessage("Done")
             }
 		} else {

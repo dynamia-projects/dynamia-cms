@@ -47,14 +47,14 @@ class EditModuleInstanceAction extends EditAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		ModuleInstance moduleInstance = (ModuleInstance) evt.getData()
+		ModuleInstance moduleInstance = (ModuleInstance) evt.data
         if (moduleInstance != null) {
 			moduleInstance = crudService.reload(moduleInstance)
-            moduleInstance.getParameters().size()
+            moduleInstance.parameters.size()
             ModuleInstanceUI ui = new ModuleInstanceUI(moduleInstance)
             ui.addAction(new SaveModuleInstanceAction(crudService, evt))
-            ZKNavigationManager.getInstance().setCurrentPage(new ComponentPage("editModule" + moduleInstance.getId(),
-					"Edit Module Instance - " + moduleInstance.getAlias(), ui))
+            ZKNavigationManager.instance.currentPage = new ComponentPage("editModule" + moduleInstance.id,
+					"Edit Module Instance - " + moduleInstance.alias, ui)
 
         } else {
 			UIMessages.showMessage("Select module instance", MessageType.ERROR)

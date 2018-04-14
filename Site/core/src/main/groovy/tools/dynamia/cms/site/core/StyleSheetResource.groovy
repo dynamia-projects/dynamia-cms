@@ -64,7 +64,7 @@ class StyleSheetResource implements Serializable {
 			return true
         if (obj == null)
 			return false
-        if (getClass() != obj.getClass())
+        if (getClass() != obj.class)
 			return false
         StyleSheetResource other = (StyleSheetResource) obj
         if (name == null) {

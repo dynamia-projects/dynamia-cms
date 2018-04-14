@@ -54,33 +54,33 @@ class ExceptionsController {
         }
 
         if (exception instanceof CMSException) {
-            statusCode = ((CMSException) exception).getStatus().value()
+            statusCode = ((CMSException) exception).status.value()
         }
 
         String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri")
 
         if (requestUri == null) {
-            requestUri = request.getRequestURI() + ""
+            requestUri = request.requestURI + ""
         }
 
         if (statusCode != 404) {
-            logger.error("ERROR " + statusCode + ": " + requestUri + " on  " + request.getServerName(), throwable)
+            logger.error("ERROR " + statusCode + ": " + requestUri + " on  " + request.serverName, throwable)
         } else {
-            logger.warn(String.format("Error 404 - Resource [%s] not found in site [%s]", requestUri, request.getServerName()))
+            logger.warn(String.format("Error 404 - Resource [%s] not found in site [%s]", requestUri, request.serverName))
         }
         ModelAndView mv = new ModelAndView("error/exception")
         if (statusCode != null && statusCode == 404) {
-            mv.setViewName("error/404")
+            mv.viewName = "error/404"
             mv.addObject("pageAlias", requestUri)
         }
         mv.addObject("title", "Error")
         mv.addObject("statusCode", statusCode)
         mv.addObject("uri", requestUri)
         mv.addObject("exception", throwable)
-        mv.addObject("contextPath", request.getContextPath())
+        mv.addObject("contextPath", request.contextPath)
 
         List<String> causes = new ArrayList<>()
-        getCauses(causes, throwable.getCause())
+        getCauses(causes, throwable.cause)
         mv.addObject("causes", causes)
 
         Site site = siteService.getSite(request)
@@ -94,11 +94,11 @@ class ExceptionsController {
 
         if (throwable != null) {
             if (causes.size() <= 10) {
-                causes.add(throwable.getMessage())
+                causes.add(throwable.message)
             }
 
-            if (throwable.getCause() != null) {
-                getCauses(causes, throwable.getCause())
+            if (throwable.cause != null) {
+                getCauses(causes, throwable.cause)
             }
         }
 

@@ -18,8 +18,8 @@ class LocationInstaller implements ModuleProvider {
         m.addPage(new CrudPage("countries", "Countries", Country.class))
         m.addPage(new CrudPage("regions", "Regions", Region.class))
         m.addPage(new CrudPage("cities", "Countries", City.class))
-        m.setIcon("fa-map-marker")
-        m.setPosition(3)
+        m.icon = "fa-map-marker"
+        m.position = 3
         return m
     }
 }

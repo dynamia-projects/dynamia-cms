@@ -38,7 +38,7 @@ class MenuInterceptor extends SiteRequestInterceptorAdapter {
 	protected void afterRequest(Site site, ModelAndView mv) {
 		Menu menu = service.getMainMenu(site)
         if (menu != null) {
-			List<MenuItem> items = new ArrayList<>(menu.getItems())
+			List<MenuItem> items = new ArrayList<>(menu.items)
             for (MenuItem menuItem : items) {
 				service.setupMenuItem(menuItem)
             }

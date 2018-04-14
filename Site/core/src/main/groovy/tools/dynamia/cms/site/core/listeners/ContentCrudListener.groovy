@@ -29,7 +29,7 @@ class ContentCrudListener extends CrudServiceListenerAdapter<Content> {
     @Override
     void beforeCreate(Content entity) {
 
-        entity.setUuid(UUID.randomUUID().toString().toUpperCase())
+        entity.uuid = UUID.randomUUID().toString().toUpperCase()
 
     }
 }

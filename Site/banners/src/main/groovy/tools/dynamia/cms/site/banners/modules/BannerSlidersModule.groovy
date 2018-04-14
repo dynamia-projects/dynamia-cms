@@ -38,7 +38,7 @@ class BannerSlidersModule extends AbstractModule {
         addResource(new JavaScriptResource("jquery.flexslider", "banners/js/jquery.flexslider.js"))
         addResource(new JavaScriptResource("banner_sliders", "banners/js/banners.sliders.js"))
         addResource(new StyleSheetResource("flexslider", "banners/css/flexslider.css"))
-        setVariablesNames("banners")
+        variablesNames = "banners"
     }
 
 	@Override
@@ -48,8 +48,8 @@ class BannerSlidersModule extends AbstractModule {
         if (categoryId != null) {
 			try {
 
-				List<Banner> banners = service.getBannersByCategory(new Long(categoryId.getValue()))
-                context.getModuleInstance().addObject("banners", banners)
+				List<Banner> banners = service.getBannersByCategory(new Long(categoryId.value))
+                context.moduleInstance.addObject("banners", banners)
 
             } catch (NumberFormatException e) {
 				// ignore

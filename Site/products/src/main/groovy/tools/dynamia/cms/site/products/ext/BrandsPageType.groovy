@@ -50,10 +50,10 @@ class BrandsPageType implements PageTypeExtension {
 
     @Override
     void setupPage(PageContext context) {
-        ModelAndView mv = context.getModelAndView()
-        mv.addObject("subtitle", context.getPage().getSubtitle())
+        ModelAndView mv = context.modelAndView
+        mv.addObject("subtitle", context.page.subtitle)
 
-        SiteActionManager.performAction("showBrands", mv, context.getRequest())
+        SiteActionManager.performAction("showBrands", mv, context.request)
 
     }
 

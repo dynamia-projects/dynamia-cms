@@ -96,7 +96,7 @@ class ModuleInstanceParameter extends SimpleEntity implements Parameter {
 
 	@Override
     String toString() {
-		return getName()
+		return name
     }
 
     ModuleInstanceParameter clone() {

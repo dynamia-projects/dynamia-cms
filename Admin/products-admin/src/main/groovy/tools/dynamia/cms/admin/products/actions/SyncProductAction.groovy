@@ -26,26 +26,26 @@ class SyncProductAction extends AbstractCrudAction {
     private ProductsSyncService syncService
 
     SyncProductAction() {
-        setName("Sync")
-        setImage("refresh")
+        name = "Sync"
+        image = "refresh"
     }
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
 
-        Product product = (Product) evt.getData()
+        Product product = (Product) evt.data
         if (product != null) {
 
-            if (product.getExternalRef() == null) {
+            if (product.externalRef == null) {
                 UIMessages.showMessage("Cannot sync product, external reference not found", MessageType.ERROR)
                 return
             }
 
-            ProductsSiteConfig cfg = service.getSiteConfig(SiteContext.get().getCurrent())
+            ProductsSiteConfig cfg = service.getSiteConfig(SiteContext.get().current)
             if (cfg != null) {
                 ProductsDatasource datasource = syncService.getDatasource(cfg)
                 if (datasource != null) {
-                    ProductDTO remoteProduct = datasource.getProduct(product.getExternalRef(), cfg.getParametersAsMap())
+                    ProductDTO remoteProduct = datasource.getProduct(product.externalRef, cfg.parametersAsMap)
                     if (remoteProduct != null) {
                         String stage = ""
                         try {
@@ -60,7 +60,7 @@ class SyncProductAction extends AbstractCrudAction {
                             UIMessages.showMessage(product + " sync successfully")
 
                         } catch (Exception e) {
-                            UIMessages.showMessage("Error syncing product: " + stage + ": " + e.getMessage(), MessageType.ERROR)
+                            UIMessages.showMessage("Error syncing product: " + stage + ": " + e.message, MessageType.ERROR)
                             e.printStackTrace()
                         }
                     } else {

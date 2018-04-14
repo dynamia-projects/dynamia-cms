@@ -32,7 +32,7 @@ class VelocityStringParser implements StringParser {
 
         if (templateModel != null) {
             for (Map.Entry<String, Object> entry : templateModel.entrySet()) {
-                context.put(entry.getKey(), entry.getValue())
+                context.put(entry.key, entry.value)
             }
         }
 

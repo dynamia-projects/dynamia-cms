@@ -48,48 +48,48 @@ class MenuItemsUI extends Window implements ActionEventBuilder {
 
     private void initUI() {
         System.err.println("RENDERING MENUS ITEMS UI")
-        getChildren().clear()
-        setHflex("1")
-        setVflex("1")
+        children.clear()
+        hflex = "1"
+        vflex = "1"
 
         // Menu Item
 
         layoutMenu = new Borderlayout()
-        layoutMenu.setParent(this)
-        layoutMenu.setVflex("1")
+        layoutMenu.parent = this
+        layoutMenu.vflex = "1"
 
         North north = new North()
-        north.setParent(layoutMenu)
+        north.parent = layoutMenu
 
         Center center = new Center()
-        center.setParent(layoutMenu)
-        center.setTitle("Configuration")
-        center.setAutoscroll(true)
+        center.parent = layoutMenu
+        center.title = "Configuration"
+        center.autoscroll = true
 
         Vlayout top = new Vlayout()
-        top.setParent(north)
+        top.parent = north
 
 
         toolbar = new ActionToolbar(this)
-        toolbar.setParent(top)
+        toolbar.parent = top
 
         viewer = new Viewer("topMenuItem", menuItem)
-        FormView formView = (FormView) viewer.getView()
-        TypeSelector typeSelector = (TypeSelector) formView.getFieldComponent("type").getInputComponent()
+        FormView formView = (FormView) viewer.view
+        TypeSelector typeSelector = (TypeSelector) formView.getFieldComponent("type").inputComponent
         typeSelector.addEventListener(Events.ON_SELECT, { initConfigurationUI() })
 
-        viewer.setParent(top)
+        viewer.parent = top
     }
 
     private void initConfigurationUI() {
         configurationUI = null
-        layoutMenu.getCenter().getChildren().clear()
+        layoutMenu.center.children.clear()
 
         MenuService service = Containers.get().findObject(MenuService.class)
         MenuItemType menuItemType = service.getMenuItemType(menuItem)
         if (menuItemType != null) {
             try {
-                ViewDescriptor configDescriptor = Viewers.findViewDescriptor(CONFIG_ID_PREFIX + menuItemType.getId())
+                ViewDescriptor configDescriptor = Viewers.findViewDescriptor(CONFIG_ID_PREFIX + menuItemType.id)
                 configureEntityConverter(configDescriptor)
                 configurationUI = createCustomConfig(configDescriptor, menuItem, menuItemType)
             } catch (ViewDescriptorNotFoundException e) {
@@ -98,16 +98,16 @@ class MenuItemsUI extends Window implements ActionEventBuilder {
         }
 
         if (configurationUI != null) {
-            layoutMenu.getCenter().appendChild(configurationUI)
+            layoutMenu.center.appendChild(configurationUI)
         }
     }
 
     private void configureEntityConverter(ViewDescriptor configDescriptor) {
-        for (Field field : configDescriptor.getFields()) {
-            field.addParam("parameterName", field.getName())
+        for (Field field : (configDescriptor.fields)) {
+            field.addParam("parameterName", field.name)
 
-            if (field.getComponentClass() == EntityPickerBox.class) {
-                field.addParam("converter", converters.Entity.class.getName())
+            if (field.componentClass == EntityPickerBox.class) {
+                field.addParam("converter", converters.Entity.class.name)
             }
         }
     }
@@ -120,7 +120,7 @@ class MenuItemsUI extends Window implements ActionEventBuilder {
         Object data = null
         params = MapBuilder.put("type", menuItemType, "menuItem", menuItem)
         if (configurationUI instanceof ConfigView) {
-            data = ((ConfigView) configurationUI).getValue()
+            data = ((ConfigView) configurationUI).value
         }
 
         return new ActionEvent(data, this, params)
@@ -131,7 +131,7 @@ class MenuItemsUI extends Window implements ActionEventBuilder {
 
         List<Parameter> configParameters = createConfigParameters(configDescriptor, type, menuItem)
         final ConfigView view = (ConfigView) Viewers.getView(configDescriptor)
-        view.setValue(configParameters)
+        view.value = configParameters
         return view
 
     }
@@ -139,18 +139,18 @@ class MenuItemsUI extends Window implements ActionEventBuilder {
     private List<Parameter> createConfigParameters(ViewDescriptor configDescriptor, MenuItemType type, MenuItem menuItem) {
         List<Parameter> cfgParameters = new ArrayList<>()
 
-        for (Field field : configDescriptor.getFields()) {
-            MenuItemParameter parameter = menuItem.getParameter(field.getName())
+        for (Field field : (configDescriptor.fields)) {
+            MenuItemParameter parameter = menuItem.getParameter(field.name)
 
             if (parameter == null) {
-                parameter = new MenuItemParameter(field.getName(), "")
+                parameter = new MenuItemParameter(field.name, "")
             }
 
-            String value = parameter.getValue()
-            if (parameter.getExtra() != null && !parameter.getExtra().isEmpty()) {
-                value = parameter.getExtra()
+            String value = parameter.value
+            if (parameter.extra != null && !parameter.extra.empty) {
+                value = parameter.extra
             }
-            cfgParameters.add(new Parameter(parameter.getName(), value))
+            cfgParameters.add(new Parameter(parameter.name, value))
         }
         return cfgParameters
     }
@@ -161,8 +161,8 @@ class MenuItemsUI extends Window implements ActionEventBuilder {
 
     void sync(MenuItem item) {
         this.menuItem = item
-        viewer.setValue(null)
-        viewer.setValue(item)
+        viewer.value = null
+        viewer.value = item
         initConfigurationUI()
 
 

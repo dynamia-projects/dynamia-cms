@@ -31,11 +31,11 @@ class TypeSelector extends Combobox {
 	private Class<? extends TypeExtension> typeExtensionClass = TypeExtension.class
 
     static {
-		ComponentAliasIndex.getInstance().add(TypeSelector.class)
+		ComponentAliasIndex.instance.add(TypeSelector.class)
     }
 
     TypeSelector() {
-		setItemRenderer(new TypeSelectorRenderer())
+        itemRenderer = new TypeSelectorRenderer()
     }
 
     Class<? extends TypeExtension> getTypeExtensionClass() {
@@ -52,17 +52,17 @@ class TypeSelector extends Combobox {
     }
 
     void init() {
-		getChildren().clear()
-        setReadonly(true)
+		children.clear()
+        readonly = true
 
-        Collection<? extends TypeExtension> types = Containers.get().findObjects(getTypeExtensionClass())
-        if (types != null && !types.isEmpty()) {
+        Collection<? extends TypeExtension> types = Containers.get().findObjects(typeExtensionClass)
+        if (types != null && !types.empty) {
 			int i = 0
             for (TypeExtension typeExtension : types) {
 				Comboitem item = new Comboitem()
-                item.setParent(this)
+                item.parent = this
                 try {
-					getItemRenderer().render(item, typeExtension, i)
+					itemRenderer.render(item, typeExtension, i)
                 } catch (Exception ex) {
 					ex.printStackTrace()
                 }
@@ -73,7 +73,7 @@ class TypeSelector extends Combobox {
 
 	@Override
     void setParent(Component parent) {
-		super.setParent(parent) // To change body of generated methods, choose
+        super.parent = parent // To change body of generated methods, choose
 									// Tools | Templates.
 		init()
     }

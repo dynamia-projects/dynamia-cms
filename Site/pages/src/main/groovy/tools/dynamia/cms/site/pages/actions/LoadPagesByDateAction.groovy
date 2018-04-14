@@ -44,19 +44,19 @@ class LoadPagesByDateAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        DateInfo dateInfo = (DateInfo) evt.getData()
+        DateInfo dateInfo = (DateInfo) evt.data
         DateRange dateRange = dateInfo.toRange()
 
-        ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("site/pagelist")
+        ModelAndView mv = evt.modelAndView
+        mv.viewName = "site/pagelist"
 
-        List<Page> pages = service.findPagesByDate(evt.getSite(), dateRange.getStartDate(), dateRange.getEndDate())
+        List<Page> pages = service.findPagesByDate(evt.site, dateRange.startDate, dateRange.endDate)
         mv.addObject("pages", pages)
 
-        if (pages.isEmpty()) {
-            mv.setView(new RedirectView("/", true, true, false))
+        if (pages.empty) {
+            mv.view = new RedirectView("/", true, true, false)
         } else {
-            mv.addObject("title", CollectionsUtils.findFirst(pages).getTitle())
+            mv.addObject("title", CollectionsUtils.findFirst(pages).title)
         }
 
     }

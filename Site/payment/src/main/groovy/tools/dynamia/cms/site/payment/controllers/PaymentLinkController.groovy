@@ -42,26 +42,26 @@ class PaymentLinkController {
         PaymentSource source = paymentService.findPaymentSource(request)
         if (source != null) {
             PaymentGateway gateway = paymentService.findGateway(gatewayId)
-            PaymentTransaction tx = gateway.newTransaction(source.getName(), source.getBaseURL())
-            tx.setStatus(PaymentTransactionStatus.NEW)
-            tx.setGatewayId(gatewayId)
-            tx.setAmount(value)
-            tx.setDescription(document + " - " + description)
-            tx.setEmail(email)
-            tx.setPayerDocument(identification)
-            tx.setPayerFullname(name)
-            tx.setDocument(document)
-            tx.setPayerMobileNumber(mobile)
-            tx.setPayerPhoneNumber(phone)
-            if (currency == null || currency.isEmpty()) {
-                currency = source.getCurrency()
+            PaymentTransaction tx = gateway.newTransaction(source.name, source.baseURL)
+            tx.status = PaymentTransactionStatus.NEW
+            tx.gatewayId = gatewayId
+            tx.amount = value
+            tx.description = document + " - " + description
+            tx.email = email
+            tx.payerDocument = identification
+            tx.payerFullname = name
+            tx.document = document
+            tx.payerMobileNumber = mobile
+            tx.payerPhoneNumber = phone
+            if (currency == null || currency.empty) {
+                currency = source.currency
             }
 
-            if (currency == null || currency.isEmpty()) {
+            if (currency == null || currency.empty) {
                 throw new PaymentException("No currency for payment link provided")
             }
 
-            tx.setCurrency(currency)
+            tx.currency = currency
             mv.addObject("transaction", tx)
             mv.addObject("title", "Payment")
 
@@ -69,8 +69,8 @@ class PaymentLinkController {
             PaymentForm form = gateway.createForm(tx)
             mv.addObject("paymentForm", form)
 
-            PaymentHolder.get().setCurrentPaymentForm(form)
-            PaymentHolder.get().setCurrentPaymentTransaction(tx)
+            PaymentHolder.get().currentPaymentForm = form
+            PaymentHolder.get().currentPaymentTransaction = tx
         } else {
             throw new PaymentException("No payment gateway found: " + gatewayId)
         }

@@ -20,9 +20,9 @@ class ResetAdminPassword extends AbstractCrudAction {
     private UserService service
 
     ResetAdminPassword() {
-        setName("Reset Admin Password")
-        setImage("user")
-        setMenuSupported(true)
+        name = "Reset Admin Password"
+        image = "user"
+        menuSupported = true
     }
 
     @Override
@@ -37,14 +37,14 @@ class ResetAdminPassword extends AbstractCrudAction {
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
-        Site site = (Site) evt.getData()
+        Site site = (Site) evt.data
         if (site != null) {
-            String admin = "admin@" + site.getKey() + ".login"
+            String admin = "admin@" + site.key + ".login"
             User user = service.getUser(site, admin)
             if (user != null) {
                 ZKUtil.showInputDialog("Enter new Password for " + admin, String.class, {
                     String password = (String) e.getData()
-                    if (password != null && !password.isEmpty()) {
+                    if (password != null && !password.empty) {
                         service.resetPassword(user, password, password)
                         UIMessages.showMessage("Password reset succesfully")
                     }

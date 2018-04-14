@@ -30,31 +30,31 @@ class CustomHtmlModule extends AbstractModule {
 
     CustomHtmlModule() {
 		super("custom_html", "Custom Html", "core/modules/customhtml")
-        setDescription("Allow you add custom html code")
+        description = "Allow you add custom html code"
         setVariablesNames(PARAM_TEMPLATE_ENGINE, PARAM_CONTENT)
     }
 
 	@Override
     void init(ModuleContext context) {
 
-		ModuleInstance instance = context.getModuleInstance()
+		ModuleInstance instance = context.moduleInstance
         String contentText = "<b>CUSTOM MODULE NO CONTENT</b>"
 
         ModuleInstanceParameter content = instance.getParameter(PARAM_CONTENT)
-        if (content != null && content.isEnabled()) {
-			if (content.getExtra() != null && !content.getExtra().isEmpty()) {
-				contentText = content.getExtra()
+        if (content != null && content.enabled) {
+			if (content.extra != null && !content.extra.empty) {
+				contentText = content.extra
             } else {
-				contentText = content.getValue()
+				contentText = content.value
             }
 		}
 
 		ModuleInstanceParameter contentPlain = instance.getParameter(PARAM_CONTENT_PLAIN)
-        if (contentPlain != null && contentPlain.isEnabled()) {
-			if (contentPlain.getExtra() != null && !contentPlain.getExtra().isEmpty()) {
-				contentText = contentPlain.getExtra()
+        if (contentPlain != null && contentPlain.enabled) {
+			if (contentPlain.extra != null && !contentPlain.extra.empty) {
+				contentText = contentPlain.extra
             } else {
-				contentText = contentPlain.getValue()
+				contentText = contentPlain.value
             }
 		}
 

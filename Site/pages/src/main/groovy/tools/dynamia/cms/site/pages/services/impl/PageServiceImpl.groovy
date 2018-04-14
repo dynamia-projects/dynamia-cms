@@ -79,7 +79,7 @@ class PageServiceImpl implements PageService {
 	List<Page> getPages(Site site, PageCategory category) {
 		return crudService.find(Page.class,
 				QueryParameters.with("site", site).add("category", category).add("category.hidden", false)
-						.add("published", true).orderBy("creationDate").paginate(category.getPaginationSize()))
+						.add("published", true).orderBy("creationDate").paginate(category.paginationSize))
 
 	}
 
@@ -117,18 +117,18 @@ class PageServiceImpl implements PageService {
 
 	@Override
 	void generateSummary(Page entity) {
-		String summary = Jsoup.parse(entity.getContent()).text()
+		String summary = Jsoup.parse(entity.content).text()
 		if (summary.length() > 2000) {
 			summary = summary.substring(0, 1996) + "..."
 		}
-		entity.setSummary(summary)
-	}
+        entity.summary = summary
+    }
 
 	@Override
 	void generateImageURL(Page entity) {
-		String imageURL = Jsoup.parse(entity.getContent()).select("img[src]").attr("src")
-		entity.setImageURL(imageURL)
-	}
+		String imageURL = Jsoup.parse(entity.content).select("img[src]").attr("src")
+        entity.imageURL = imageURL
+    }
 
 	/**
 	 *
@@ -151,12 +151,12 @@ class PageServiceImpl implements PageService {
 	String parsePageContent(Page page, Map<String, Object> model) {
 		String content = null
 		if (page != null) {
-			if (page.getTemplateEngine() != null) {
-				StringParser parser = StringParsers.get(page.getTemplateEngine())
+			if (page.templateEngine != null) {
+				StringParser parser = StringParsers.get(page.templateEngine)
 				if (parser != null) {
-					content = parser.parse(page.getContent(), model)
+					content = parser.parse(page.content, model)
 				} else {
-					content = page.getContent()
+					content = page.content
 				}
 			}
 		}

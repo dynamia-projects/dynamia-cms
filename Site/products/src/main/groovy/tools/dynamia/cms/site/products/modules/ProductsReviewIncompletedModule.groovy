@@ -37,29 +37,29 @@ class ProductsReviewIncompletedModule extends AbstractModule {
 
     ProductsReviewIncompletedModule() {
         super("products_incomplete_reviews", "Products Reviews Incompleted", "products/modules/incompleteReviews")
-        setDescription("Show a list of incomplete Product Reviews")
+        description = "Show a list of incomplete Product Reviews"
         putMetadata("author", "Mario Serrano Leones")
         putMetadata("version", "1.0")
         putMetadata("created at", "09-08-2017")
         setVariablesNames("reviews", "hasReviews", "count")
-        setCacheable(false)
+        cacheable = false
 
     }
 
     @Override
     void init(ModuleContext context) {
         System.out.println("Loading Products Reviews")
-        ModuleInstance mod = context.getModuleInstance()
+        ModuleInstance mod = context.moduleInstance
 
         List<ProductReview> reviews
-        if (UserHolder.get().isAuthenticated()) {
-            reviews = service.getIncompleteProductReviews(UserHolder.get().getCurrent())
+        if (UserHolder.get().authenticated) {
+            reviews = service.getIncompleteProductReviews(UserHolder.get().current)
 
-            if ((reviews == null || reviews.isEmpty()) && UserHolder.get().getCurrent().getIdentification() != null) {
+            if ((reviews == null || reviews.empty) && UserHolder.get().current.identification != null) {
                 try {
-                    ProductsSiteConfig config = service.getSiteConfig(context.getSite())
-                    ProductsReviewResponse response = service.requestExternalReviews(config, "ID" + UserHolder.get().getCurrent().getIdentification())
-                    reviews = service.getExternalProductReviews(context.getSite(), response, UserHolder.get().getCurrent())
+                    ProductsSiteConfig config = service.getSiteConfig(context.site)
+                    ProductsReviewResponse response = service.requestExternalReviews(config, "ID" + UserHolder.get().current.identification)
+                    reviews = service.getExternalProductReviews(context.site, response, UserHolder.get().current)
                 } catch (Exception e) {
                     e.printStackTrace()
                 }
@@ -72,7 +72,7 @@ class ProductsReviewIncompletedModule extends AbstractModule {
 
         mod.addObject("reviews", reviews)
         mod.addObject("count", reviews.size())
-        mod.addObject("hasReviews", !reviews.isEmpty())
+        mod.addObject("hasReviews", !reviews.empty)
 
     }
 

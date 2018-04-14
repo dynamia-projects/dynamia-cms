@@ -52,29 +52,28 @@ class ShowMyOrderStatusAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("shoppingcart/myorderstatus")
+		ModelAndView mv = evt.modelAndView
+        mv.viewName = "shoppingcart/myorderstatus"
 
         mv.addObject("title", "Estado de Cuenta")
 
-        ShoppingSiteConfig cfg = service.getConfiguration(evt.getSite())
-        String customer = (String) evt.getData()
+        ShoppingSiteConfig cfg = service.getConfiguration(evt.site)
+        String customer = (String) evt.data
 
         if (customer == null) {
-			if (UserHolder.get().getCustomer() != null) {
-				customer = UserHolder.get().getCustomer().getExternalRef()
-            } else if (UserHolder.get().getCurrent().getProfile() == UserProfile.USER) {
-				customer = UserHolder.get().getCurrent().getExternalRef()
+			if (UserHolder.get().customer != null) {
+				customer = UserHolder.get().customer.externalRef
+            } else if (UserHolder.get().current.profile == UserProfile.USER) {
+				customer = UserHolder.get().current.externalRef
             }
 		}
 
 		List<OrderStatusDTO> orders = new ArrayList<>()
-        User userCustomer = userService.getByExternalRef(evt.getSite(), customer)
+        User userCustomer = userService.getByExternalRef(evt.site, customer)
         mv.addObject("customer", userCustomer)
         try {
-			if (cfg.getOrderStatusURL() != null && !cfg.getOrderStatusURL().isEmpty() && customer != null) {
-				OrderStatusService service = HttpRemotingServiceClient.build(OrderStatusService.class)
-						.setServiceURL(cfg.getOrderStatusURL()).getProxy()
+			if (cfg.orderStatusURL != null && !cfg.orderStatusURL.empty && customer != null) {
+				OrderStatusService service = HttpRemotingServiceClient.build(OrderStatusService.class).serviceURL = cfg.orderStatusURL.proxy
 
 
                 orders = service.getOrdersStatus(customer)

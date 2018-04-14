@@ -51,14 +51,14 @@ class ProductsShoppingCartItemProvider implements ShoppingCartItemProvider {
 
             List<RelatedProduct> related = service.getRelatedProducts(product, true)
             for (RelatedProduct relatedProduct : related) {
-				ShoppingCartItem childItem = createItem(relatedProduct.getProduct(), cfg)
-                childItem.setUnitPrice(relatedProduct.getPrice())
-                if (relatedProduct.isGift()) {
-					childItem.setUnitPrice(BigDecimal.ZERO)
+				ShoppingCartItem childItem = createItem(relatedProduct.product, cfg)
+                childItem.unitPrice = relatedProduct.price
+                if (relatedProduct.gift) {
+                    childItem.unitPrice = BigDecimal.ZERO
                 }
-				childItem.setEditable(false)
-                childItem.setParent(item)
-                item.getChildren().add(childItem)
+                childItem.editable = false
+                childItem.parent = item
+                item.children.add(childItem)
             }
 
 			return item
@@ -72,27 +72,27 @@ class ProductsShoppingCartItemProvider implements ShoppingCartItemProvider {
 	private ShoppingCartItem createItem(Product product, ProductsSiteConfig cfg) {
 		ShoppingCartItem item = new ShoppingCartItem()
         BeanUtils.setupBean(item, product)
-        item.setId(null)
-        item.setCode(product.getId().toString())
-        item.setImageURL("/resources/products/images/")
-        item.setImageName(product.getImage())
-        item.setURL("/store/products/" + product.getId())
-        item.setName(product.getName())
-        item.setSku(product.getSku())
-        item.setReference(product.getReference())
-        item.setUnitPrice(ProductsUtil.get().getUserPrice(product, cfg))
-        item.setRefId(product.getId())
-        item.setRefClass(Product.class.getName())
-        item.setDescription(product.getDescription())
-        if (product.getCategory() != null) {
-			item.setCategoryName(product.getCategory().getName())
+        item.id = null
+        item.code = product.id.toString()
+        item.imageURL = "/resources/products/images/"
+        item.imageName = product.image
+        item.URL = "/store/products/" + product.id
+        item.name = product.name
+        item.sku = product.sku
+        item.reference = product.reference
+        item.unitPrice = ProductsUtil.get().getUserPrice(product, cfg)
+        item.refId = product.id
+        item.refClass = Product.class.name
+        item.description = product.description
+        if (product.category != null) {
+            item.categoryName = product.category.name
         }
-		if (product.getBrand() != null) {
-			item.setBrandName(product.getBrand().getName())
+		if (product.brand != null) {
+            item.brandName = product.brand.name
         }
-		if (product.isPromoEnabled() && product.getPromoValue() != null) {
-			item.setDiscount(product.getRealPromoValue())
-            item.setDiscountName(product.getPromoName())
+		if (product.promoEnabled && product.promoValue != null) {
+            item.discount = product.realPromoValue
+            item.discountName = product.promoName
         }
 
 		return item

@@ -36,34 +36,34 @@ class ShowManualPaymentsAction implements SiteAction {
 	@Override
     void actionPerformed(ActionEvent evt) {
 
-		ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("payment/manuallist")
+		ModelAndView mv = evt.modelAndView
+        mv.viewName = "payment/manuallist"
 
         mv.addObject("title", "Pagos Registrados")
 
-        ShoppingSiteConfig cfg = service.getConfiguration(evt.getSite())
-        String customer = (String) evt.getData()
+        ShoppingSiteConfig cfg = service.getConfiguration(evt.site)
+        String customer = (String) evt.data
 
         if (customer == null) {
-			if (UserHolder.get().getCustomer() != null) {
-				customer = UserHolder.get().getCustomer().getExternalRef()
-            } else if (UserHolder.get().getCurrent().getProfile() == UserProfile.USER) {
-				customer = UserHolder.get().getCurrent().getExternalRef()
+			if (UserHolder.get().customer != null) {
+				customer = UserHolder.get().customer.externalRef
+            } else if (UserHolder.get().current.profile == UserProfile.USER) {
+				customer = UserHolder.get().current.externalRef
             }
 		}
 
-		User user = userService.getByExternalRef(evt.getSite(), customer)
+		User user = userService.getByExternalRef(evt.site, customer)
         if (user != null) {
-			mv.addObject("title", "Pagos Registrados - " + user.getFullName())
-            List<ManualPayment> payments = paymentService.findManualPaymentsByPayerId(evt.getSite().getKey(),
-					user.getId().toString())
+			mv.addObject("title", "Pagos Registrados - " + user.fullName)
+            List<ManualPayment> payments = paymentService.findManualPaymentsByPayerId(evt.site.key,
+					user.id.toString())
             BigDecimal total = BigDecimalUtils.sum("amount", payments)
 
             mv.addObject("payments", payments)
             mv.addObject("total", total)
             mv.addObject("customer", user)
 
-            if (payments.isEmpty()) {
+            if (payments.empty) {
 				CMSUtil.addSuccessMessage("No se encontraron pagos manuales registrados", mv)
             }
 		}

@@ -20,25 +20,25 @@ class PaymentGatewayConfigController extends CrudController<PaymentGatewayConfig
     @Override
 	protected void beforeQuery() {
 		ShoppingCartService cartService = Containers.get().findObject(ShoppingCartService.class)
-        ShoppingSiteConfig shopConfig = cartService.getConfiguration(SiteContext.get().getCurrent())
+        ShoppingSiteConfig shopConfig = cartService.getConfiguration(SiteContext.get().current)
 
         PaymentService service = Containers.get().findObject(PaymentService.class)
 
         PaymentGateway gateway = null
 
-        if (shopConfig != null && shopConfig.getPaymentGatewayId() != null) {
-			String gatewayId = shopConfig.getPaymentGatewayId()
+        if (shopConfig != null && shopConfig.paymentGatewayId != null) {
+			String gatewayId = shopConfig.paymentGatewayId
             gateway = service.findGateway(gatewayId)
         }
 
 		if (gateway == null) {
-			gateway = service.getDefaultGateway()
+			gateway = service.defaultGateway
         }
 
-		String source = SiteContext.get().getCurrent().getKey()
+		String source = SiteContext.get().current.key
         if (gateway != null) {
 
-			for (String param : gateway.getRequiredParams()) {
+			for (String param : (gateway.requiredParams)) {
 				PaymentGatewayConfig config = service.getConfig(gateway, param, source)
                 if (config == null) {
 					String label = StringUtils.capitalize(param)

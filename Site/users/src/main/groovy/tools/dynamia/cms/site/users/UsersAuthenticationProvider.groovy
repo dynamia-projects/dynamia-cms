@@ -44,11 +44,11 @@ class UsersAuthenticationProvider implements AuthenticationProvider {
     @Override
     Authentication authenticate(Authentication a) throws AuthenticationException {
 
-		String username = a.getName()
-        String password = (String) a.getCredentials()
+		String username = a.name
+        String password = (String) a.credentials
         Site site = null
-        if (a.getDetails() instanceof AuthenticationDetails) {
-			site = ((AuthenticationDetails) a.getDetails()).getSite()
+        if (a.details instanceof AuthenticationDetails) {
+			site = ((AuthenticationDetails) a.details).site
         }
 
 		if (site == null) {
@@ -57,11 +57,11 @@ class UsersAuthenticationProvider implements AuthenticationProvider {
 
 		site = crudService.reload(site)
 
-        if (site.getParent() != null) {
-			site = site.getParent()
+        if (site.parent != null) {
+			site = site.parent
         }
 
-		if (username.isEmpty() || password.isEmpty()) {
+		if (username.empty || password.empty) {
 			throw new BadCredentialsException("Ingrese email y password para acceder")
         }
 
@@ -74,18 +74,18 @@ class UsersAuthenticationProvider implements AuthenticationProvider {
 
         User user = userService.getUser(site, username)
         if (user == null) {
-			throw new UserNotFoundException("Usuario [" + username + "] no encontrado en [" + site.getName() + "]")
+			throw new UserNotFoundException("Usuario [" + username + "] no encontrado en [" + site.name + "]")
         }
 
-		if (!user.isEnabled()) {
+		if (!user.enabled) {
 			throw new UserNotFoundException("El usuario [" + username + "] esta desactivado")
         }
 
-		if (!password.equals(user.getPassword())) {
+		if (!password.equals(user.password)) {
 			throw new InvalidPasswordException("Password invalido")
         }
 
-		Collection<? extends GrantedAuthority> authorities = user.getAuthorities()
+		Collection<? extends GrantedAuthority> authorities = user.authorities
 
         Authentication auth = new SiteUsernamePasswordAuthenticationToken(site, user, password, authorities)
 

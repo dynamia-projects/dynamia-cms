@@ -57,9 +57,9 @@ class ShoppingCartHolder implements Serializable {
 		ShoppingCart cart = carts.get(name)
         if (cart == null) {
 			cart = new ShoppingCart(name)
-            cart.setTitle(title)
-            cart.setSite(SiteContext.get().getCurrent())
-            cart.setUser(UserHolder.get().getCurrent())
+            cart.title = title
+            cart.site = SiteContext.get().current
+            cart.user = UserHolder.get().current
             carts.put(name, cart)
         }
 		return cart
@@ -76,10 +76,10 @@ class ShoppingCartHolder implements Serializable {
     void setCurrentOrder(ShoppingOrder currentOrder) {
 		this.currentOrder = currentOrder
         if (currentOrder == null) {
-			PaymentHolder.get().setCurrentPaymentForm(null)
-            PaymentHolder.get().setCurrentPaymentTransaction(null)
+            PaymentHolder.get().currentPaymentForm = null
+            PaymentHolder.get().currentPaymentTransaction = null
         } else {
-			PaymentHolder.get().setCurrentPaymentTransaction(currentOrder.getTransaction())
+            PaymentHolder.get().currentPaymentTransaction = currentOrder.transaction
         }
 	}
 

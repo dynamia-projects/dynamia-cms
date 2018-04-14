@@ -58,14 +58,14 @@ class DynamiaCMS {
 	}
 
 	static Path getSitesResourceLocation(Site site) {
-		Path path = Paths.get(homePath(), SITES, site.getKey())
+		Path path = Paths.get(homePath(), SITES, site.key)
 
 		createDirectoryIfNotExists(path)
 		return path
 	}
 
 	static Path getSitesStaticResourceLocation(Site site) {
-		Path path = Paths.get(homePath(), SITES, site.getKey(), STATIC)
+		Path path = Paths.get(homePath(), SITES, site.key, STATIC)
 
 		createDirectoryIfNotExists(path)
 		return path
@@ -120,11 +120,11 @@ class DynamiaCMS {
 	}
 
 	static void initDefaultLocations() {
-		getHomePath()
-		getModulesLocation()
-		getSitesResourceLocation()
-		getTemplatesLocation()
-		getViewLocation()
+        homePath
+        modulesLocation
+        sitesResourceLocation
+        templatesLocation
+        viewLocation
 	}
 
 }

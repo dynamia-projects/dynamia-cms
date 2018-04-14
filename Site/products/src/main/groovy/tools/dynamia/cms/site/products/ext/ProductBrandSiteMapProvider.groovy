@@ -20,7 +20,7 @@ class ProductBrandSiteMapProvider implements SiteMapProvider {
         List<SiteMapURL> urls = new ArrayList<>()
 
         SiteMapURL url = new SiteMapURL(CMSUtil.getSiteURL(site, "store/brands"))
-        url.setName("Brands")
+        url.name = "Brands"
 
         urls.add(url)
         service.getBrands(site).stream().map { c -> createURL(site, c) }.forEach { urls << it }
@@ -30,9 +30,9 @@ class ProductBrandSiteMapProvider implements SiteMapProvider {
     }
 
     private SiteMapURL createURL(Site site, ProductBrand b) {
-        SiteMapURL url = new SiteMapURL(CMSUtil.getSiteURL(site, String.format("store/brands/%s", b.getAlias())))
-        url.setName(b.getName())
-        url.setDescription(b.getDescription())
+        SiteMapURL url = new SiteMapURL(CMSUtil.getSiteURL(site, String.format("store/brands/%s", b.alias)))
+        url.name = b.name
+        url.description = b.description
 
         return url
     }

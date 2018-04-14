@@ -48,12 +48,12 @@ class PageErrorController {
                                  PageNotFoundException exception) {
         ModelAndView mv = new ModelAndView("error/404")
         mv.addObject("exception", exception)
-        if (exception.getPageAlias() != null) {
-            mv.addObject("pageAlias", exception.getPageAlias())
-            mv.addObject("siteKey", exception.getSiteKey())
+        if (exception.pageAlias != null) {
+            mv.addObject("pageAlias", exception.pageAlias)
+            mv.addObject("siteKey", exception.siteKey)
         } else {
-            mv.addObject("pageAlias", request.getPathInfo())
-            mv.addObject("siteKey", request.getServerName())
+            mv.addObject("pageAlias", request.pathInfo)
+            mv.addObject("siteKey", request.serverName)
         }
 
         Site site = siteService.getSite(request)

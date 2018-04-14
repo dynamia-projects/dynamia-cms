@@ -26,18 +26,17 @@ class DynamiaSiteConnectorServiceImpl implements tools.dynamia.cms.site.core.ser
     @Override
     void sync(Site site) {
 
-        if (site != null && site.getExternalConnectorURL() != null && !site.getExternalConnectorURL().isEmpty()) {
+        if (site != null && site.externalConnectorURL != null && !site.externalConnectorURL.empty) {
 
-            DynamiaSiteConnector connector = HttpRemotingServiceClient.build(DynamiaSiteConnector.class)
-                    .setServiceURL(site.getExternalConnectorURL())
-                    .getProxy()
+            DynamiaSiteConnector connector = HttpRemotingServiceClient.build(DynamiaSiteConnector.class).serviceURL = site.externalConnectorURL
+                    .proxy
 
             if (connector != null) {
                 crudService.executeWithinTransaction {
                     syncLocations(site, connector)
                 }
             } else {
-                throw new ValidationError("Cannot connect to external site sync service: " + site.getExternalConnectorURL())
+                throw new ValidationError("Cannot connect to external site sync service: " + site.externalConnectorURL)
             }
 
         } else {
@@ -49,7 +48,7 @@ class DynamiaSiteConnectorServiceImpl implements tools.dynamia.cms.site.core.ser
 
     private void syncLocations(Site site, DynamiaSiteConnector connector) {
 
-        List<CountryDTO> countries = connector.getCountries()
+        List<CountryDTO> countries = connector.countries
         if (countries != null) {
 
             countries.forEach { countryDTO ->
@@ -62,7 +61,7 @@ class DynamiaSiteConnectorServiceImpl implements tools.dynamia.cms.site.core.ser
                     System.out.println("---: " + region)
                     List<CityDTO> cities = connector.getCities(countryDTO, regionDTO)
                     cities.forEach { cityDTO ->
-                        System.out.println("---------: " + cityDTO.getName())
+                        System.out.println("---------: " + cityDTO.name)
                         createOrUpdateCity(site, cityDTO, region)
                     }
                 }
@@ -75,12 +74,12 @@ class DynamiaSiteConnectorServiceImpl implements tools.dynamia.cms.site.core.ser
     private void createOrUpdateCity(Site site, CityDTO dto, Region region) {
         City city = crudService.findSingle(City.class, QueryParameters.with("site", site)
                 .add("region", region)
-                .add("externalRef", dto.getExternalRef()))
+                .add("externalRef", dto.externalRef))
 
         if (city == null) {
             city = new City()
-            city.setSite(site)
-            city.setRegion(region)
+            city.site = site
+            city.region = region
         }
 
         city.sync(dto)
@@ -92,12 +91,12 @@ class DynamiaSiteConnectorServiceImpl implements tools.dynamia.cms.site.core.ser
 
         Region region = crudService.findSingle(Region.class, QueryParameters.with("site", site)
                 .add("country", country)
-                .add("externalRef", QueryConditions.eq(dto.getExternalRef())))
+                .add("externalRef", QueryConditions.eq(dto.externalRef)))
 
         if (region == null) {
             region = new Region()
-            region.setCountry(country)
-            region.setSite(site)
+            region.country = country
+            region.site = site
         }
 
         region.sync(dto)
@@ -112,11 +111,11 @@ class DynamiaSiteConnectorServiceImpl implements tools.dynamia.cms.site.core.ser
 
 
         Country country = crudService.findSingle(Country.class, QueryParameters.with("site", site)
-                .add("externalRef", QueryConditions.eq(dto.getExternalRef())))
+                .add("externalRef", QueryConditions.eq(dto.externalRef)))
 
         if (country == null) {
             country = new Country()
-            country.setSite(site)
+            country.site = site
         }
 
         country.sync(dto)

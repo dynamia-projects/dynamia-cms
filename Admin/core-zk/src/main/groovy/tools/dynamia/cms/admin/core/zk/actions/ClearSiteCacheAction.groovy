@@ -37,14 +37,14 @@ class ClearSiteCacheAction extends AbstractCrudAction {
 	private SiteService service
 
     ClearSiteCacheAction() {
-		setName("Clear Cache")
-        setImage("refresh")
-        setMenuSupported(true)
+        name = "Clear Cache"
+        image = "refresh"
+        menuSupported = true
     }
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		Site site = (Site) evt.getData()
+		Site site = (Site) evt.data
         if (site != null) {
 			service.clearCache(site)
             UIMessages.showMessage("Site Cache cleared successfull")

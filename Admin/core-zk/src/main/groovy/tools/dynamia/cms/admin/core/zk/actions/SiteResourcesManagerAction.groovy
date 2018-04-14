@@ -37,24 +37,24 @@ import tools.dynamia.zk.navigation.ZKNavigationManager
 class SiteResourcesManagerAction extends AbstractCrudAction {
 
     SiteResourcesManagerAction() {
-        setName("Manage Resources")
-        setImage("package")
-        setMenuSupported(true)
+        name = "Manage Resources"
+        image = "package"
+        menuSupported = true
     }
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
-        Site site = (Site) evt.getData()
+        Site site = (Site) evt.data
         if (site != null) {
             FileManager mgr = new FileManager(DynamiaCMS.getSitesResourceLocation(site))
-            ComponentPage page = new ComponentPage("resourcesMrg" + site.getKey(), "Resources " + site.getName(), mgr)
+            ComponentPage page = new ComponentPage("resourcesMrg" + site.key, "Resources " + site.name, mgr)
 
-            ZKNavigationManager.getInstance().setCurrentPage(page)
+            ZKNavigationManager.instance.currentPage = page
         }
     }
 
     void show(){
-    	CrudActionEvent evt = new CrudActionEvent(SiteContext.get().getCurrent(), null, null, null)
+    	CrudActionEvent evt = new CrudActionEvent(SiteContext.get().current, null, null, null)
         actionPerformed(evt)
     }
 

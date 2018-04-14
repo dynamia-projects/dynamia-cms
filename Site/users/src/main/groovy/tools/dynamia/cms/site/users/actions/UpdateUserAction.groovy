@@ -48,16 +48,16 @@ class UpdateUserAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
+        ModelAndView mv = evt.modelAndView
 
-        User user = crudService.reload(UserHolder.get().getCurrent())
+        User user = crudService.reload(UserHolder.get().current)
 
         UserForm form = new UserForm()
-        form.setData(user)
-        form.setSite(evt.getSite())
+        form.data = user
+        form.site = evt.site
         UsersUtil.setupUserFormVar(mv, form)
 
-        List<UserContactInfo> userContactInfos = service.getContactInfos(UserHolder.get().getCurrent())
+        List<UserContactInfo> userContactInfos = service.getContactInfos(UserHolder.get().current)
         mv.addObject("userContactInfos", userContactInfos)
 
     }

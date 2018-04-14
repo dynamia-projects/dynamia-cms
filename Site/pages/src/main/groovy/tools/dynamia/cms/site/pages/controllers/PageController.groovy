@@ -106,7 +106,7 @@ class PageController {
 
         Site site = siteService.getSite(request)
 
-        if (site != null && site.isOffline()) {
+        if (site != null && site.offline) {
             SiteHandleInterceptor.shutdown(site, mv)
         } else {
             Page page = loadPage(site, pageAlias, mv)
@@ -122,29 +122,29 @@ class PageController {
 
             if (page == null) {
                 logger.debug("Page not found [" + pageAlias + "] in site " + site)
-                throw new PageNotFoundException(pageAlias, site.getKey())
+                throw new PageNotFoundException(pageAlias, site.key)
             }
 
             mv.addObject("page", page)
-            mv.addObject("pageContent", page.getContent())
-            mv.addObject("pageImage", page.getImageURL())
-            mv.addObject("title", page.getTitle())
-            mv.addObject("subtitle", page.getSubtitle())
-            mv.addObject("icon", page.getIcon())
+            mv.addObject("pageContent", page.content)
+            mv.addObject("pageImage", page.imageURL)
+            mv.addObject("title", page.title)
+            mv.addObject("subtitle", page.subtitle)
+            mv.addObject("icon", page.icon)
 
-            if (page.getSummary() != null && !page.getSummary().isEmpty()) {
-                mv.addObject("metaDescription", page.getSummary())
+            if (page.summary != null && !page.summary.empty) {
+                mv.addObject("metaDescription", page.summary)
             }
 
-            if (page.getTags() != null && !page.getTags().isEmpty()) {
-                mv.addObject("metaKeywords", page.getTags())
+            if (page.tags != null && !page.tags.empty) {
+                mv.addObject("metaKeywords", page.tags)
             }
 
-            if (page.getParameters() != null) {
+            if (page.parameters != null) {
                 Map<String, Object> pageParams = new HashMap<String, Object>()
-                for (PageParameter param : page.getParameters()) {
-                    if (param.isEnabled()) {
-                        pageParams.put(param.getName(), param.getValue())
+                for (PageParameter param : (page.parameters)) {
+                    if (param.enabled) {
+                        pageParams.put(param.name, param.value)
                     }
                 }
                 mv.addObject("pageParams", pageParams)
@@ -156,7 +156,7 @@ class PageController {
 
     private PageTypeExtension getExtension(final String type) {
         Collection<PageTypeExtension> types = Containers.get().findObjects(PageTypeExtension.class,
-                { object -> (object.getId() == type) })
+                { object -> (object.id == type) })
 
         for (PageTypeExtension pageTypeExtension : types) {
             return pageTypeExtension
@@ -167,7 +167,7 @@ class PageController {
 
     private void configurePageType(Page page, Site site, ModelAndView mv, HttpServletRequest request) {
         if (page != null) {
-            String type = page.getType()
+            String type = page.type
             PageTypeExtension pageTypeExt = getExtension(type)
             if (pageTypeExt != null) {
                 PageContext context = new PageContext(page, site, mv, request)

@@ -29,9 +29,9 @@ class ShipOrderAction extends AbstractCrudAction {
 	private CrudService crudService
 
     ShipOrderAction() {
-		setName("Ship Order")
-        setMenuSupported(true)
-        setImage("truck")
+        name = "Ship Order"
+        menuSupported = true
+        image = "truck"
     }
 
 	@Override
@@ -46,16 +46,16 @@ class ShipOrderAction extends AbstractCrudAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		ShoppingOrder shoppingOrder = (ShoppingOrder) evt.getData()
+		ShoppingOrder shoppingOrder = (ShoppingOrder) evt.data
         if (shoppingOrder != null) {
 			try {
 				shoppingOrder = crudService.reload(shoppingOrder)
                 basicValidation(shoppingOrder)
                 ShoppingOrderShipmentUI ui = new ShoppingOrderShipmentUI(shoppingOrder)
                 ui.addAction(new ConfirmShipOrderAction())
-                ZKUtil.showDialog("Ship Shopping Order No. " + shoppingOrder.getNumber(), ui, "90%", "90%")
+                ZKUtil.showDialog("Ship Shopping Order No. " + shoppingOrder.number, ui, "90%", "90%")
             } catch (ValidationError e) {
-				UIMessages.showMessage(e.getMessage(), MessageType.ERROR)
+				UIMessages.showMessage(e.message, MessageType.ERROR)
             }
 
 		}
@@ -63,12 +63,12 @@ class ShipOrderAction extends AbstractCrudAction {
 
 	private void basicValidation(ShoppingOrder shoppingOrder) {
 
-		if (!shoppingOrder.isCompleted() || !shoppingOrder.getTransaction().isConfirmed()) {
-			throw new ValidationError(Messages.get(ShoppingCartService.class, "OrderNotConfirmed", shoppingOrder.getNumber()))
+		if (!shoppingOrder.completed || !shoppingOrder.transaction.confirmed) {
+			throw new ValidationError(Messages.get(ShoppingCartService.class, "OrderNotConfirmed", shoppingOrder.number))
         }
 
-		if (shoppingOrder.isShipped()) {
-			throw new ValidationError(Messages.get(ShoppingCartService.class, "OrderAlreadyShipped", shoppingOrder.getNumber()))
+		if (shoppingOrder.shipped) {
+			throw new ValidationError(Messages.get(ShoppingCartService.class, "OrderAlreadyShipped", shoppingOrder.number))
         }
 
 	}
@@ -76,21 +76,21 @@ class ShipOrderAction extends AbstractCrudAction {
 	class ConfirmShipOrderAction extends AbstractAction {
 
 		ConfirmShipOrderAction() {
-			setName("Confirm Shopping Order")
+            name = "Confirm Shopping Order"
         }
 
 		@Override
         void actionPerformed(ActionEvent evt) {
 			try {
-				ShoppingOrder shoppingOrder = (ShoppingOrder) evt.getData()
+				ShoppingOrder shoppingOrder = (ShoppingOrder) evt.data
                 service.shipOrder(shoppingOrder)
-                ShoppingOrderShipmentUI ui = (ShoppingOrderShipmentUI) evt.getSource()
-                if (ui.getParent() instanceof Window) {
-					ui.getParent().detach()
+                ShoppingOrderShipmentUI ui = (ShoppingOrderShipmentUI) evt.source
+                if (ui.parent instanceof Window) {
+					ui.parent.detach()
                 }
-				UIMessages.showMessage(Messages.get(ShoppingCartService.class, "OrderShipedSuccesfull", shoppingOrder.getNumber()))
+				UIMessages.showMessage(Messages.get(ShoppingCartService.class, "OrderShipedSuccesfull", shoppingOrder.number))
             } catch (ValidationError e) {
-				UIMessages.showMessage(e.getMessage(), MessageType.ERROR)
+				UIMessages.showMessage(e.message, MessageType.ERROR)
             } catch (Exception e) {
 				e.printStackTrace()
             }

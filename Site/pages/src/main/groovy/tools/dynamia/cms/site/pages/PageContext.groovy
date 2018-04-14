@@ -40,7 +40,7 @@ class PageContext implements Serializable {
         this.modelAndView = modelAndView
         this.request = request
         if (page != null) {
-            this.parameters = page.getParameters()
+            this.parameters = page.parameters
         }
     }
 
@@ -63,7 +63,7 @@ class PageContext implements Serializable {
     PageParameter getParameter(String name) {
         if (parameters != null) {
             for (PageParameter param : parameters) {
-                if (param.getName().equals(name)) {
+                if (param.name.equals(name)) {
                     return param
                 }
             }

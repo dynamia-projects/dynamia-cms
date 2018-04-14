@@ -46,81 +46,81 @@ class SaveUserContactInfoAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("/users/addresses/form")
-        UserContactInfo userContactInfo = (UserContactInfo) evt.getData()
+        ModelAndView mv = evt.modelAndView
+        mv.viewName = "/users/addresses/form"
+        UserContactInfo userContactInfo = (UserContactInfo) evt.data
 
-        if (userContactInfo.getId() != null) {
-            UserContactInfo contactInfo = crudService.find(UserContactInfo.class, userContactInfo.getId())
-            contactInfo.setName(userContactInfo.getName())
-            contactInfo.setDescription(userContactInfo.getDescription())
-            contactInfo.setInfo(userContactInfo.getInfo())
+        if (userContactInfo.id != null) {
+            UserContactInfo contactInfo = crudService.find(UserContactInfo.class, userContactInfo.id)
+            contactInfo.name = userContactInfo.name
+            contactInfo.description = userContactInfo.description
+            contactInfo.info = userContactInfo.info
             userContactInfo = contactInfo
         }
 
         try {
 
-            String cityId = evt.getRequest().getParameter("city.id")
+            String cityId = evt.request.getParameter("city.id")
             if (cityId != null) {
-                userContactInfo.setCity(crudService.find(City.class, new Long(cityId)))
+                userContactInfo.city = crudService.find(City.class, new Long(cityId))
             }
 
             validate(userContactInfo)
-            userContactInfo.setUser(UserHolder.get().getCurrent())
+            userContactInfo.user = UserHolder.get().current
             crudService.save(userContactInfo)
 
             CMSUtil.addSuccessMessage("Direccion de usuario guardada exitosamente", mv)
 
-            String redirect = (String) mv.getModel().get("redirect")
-            if (redirect == null || redirect.isEmpty()) {
+            String redirect = (String) mv.model.get("redirect")
+            if (redirect == null || redirect.empty) {
                 redirect = "/users/addresses"
             }
 
-            mv.setView(new RedirectView(redirect, true, true, false))
+            mv.view = new RedirectView(redirect, true, true, false)
         } catch (ValidationError e) {
-            SiteActionManager.performAction("addUserContactInfo", mv, evt.getRequest())
+            SiteActionManager.performAction("addUserContactInfo", mv, evt.request)
             mv.addObject("userContactInfo", userContactInfo)
-            CMSUtil.addErrorMessage(e.getMessage(), mv)
+            CMSUtil.addErrorMessage(e.message, mv)
 
         }
     }
 
     private void validate(UserContactInfo userContactInfo) {
         NotEmptyValidator validator = new NotEmptyValidator()
-        if (!validator.isValid(userContactInfo.getName(), null)) {
+        if (!validator.isValid(userContactInfo.name, null)) {
             throw new ValidationError("Ingrese nombre de direccion de contacto")
         }
 
 
-        if (!validator.isValid(userContactInfo.getInfo().getAddress(), null)) {
+        if (!validator.isValid(userContactInfo.info.address, null)) {
             throw new ValidationError("Ingrese direccion de contacto")
         }
 
 
-        if (userContactInfo.getCity() != null && userContactInfo.getCity().getId() != null) {
-            City city = userContactInfo.getCity()
-            userContactInfo.setCity(city)
-            userContactInfo.getInfo().setCity(city.getName())
-            userContactInfo.getInfo().setRegion(city.getRegion().getName())
-            userContactInfo.getInfo().setCountry(city.getRegion().getCountry().getName())
+        if (userContactInfo.city != null && userContactInfo.city.id != null) {
+            City city = userContactInfo.city
+            userContactInfo.city = city
+            userContactInfo.info.city = city.name
+            userContactInfo.info.region = city.region.name
+            userContactInfo.info.country = city.region.country.name
 
         }
 
 
-        if (userContactInfo.getCity() == null) {
-            if (!validator.isValid(userContactInfo.getInfo().getCountry(), null)) {
+        if (userContactInfo.city == null) {
+            if (!validator.isValid(userContactInfo.info.country, null)) {
                 throw new ValidationError("Seleccione pais")
             }
 
-            if (!validator.isValid(userContactInfo.getInfo().getCity(), null)) {
+            if (!validator.isValid(userContactInfo.info.city, null)) {
                 throw new ValidationError("Seleccione ciudad")
             }
 
-            if (!validator.isValid(userContactInfo.getInfo().getRegion(), null)) {
+            if (!validator.isValid(userContactInfo.info.region, null)) {
                 throw new ValidationError("Seleccione departamento")
             }
 
-            if (!validator.isValid(userContactInfo.getInfo().getPhoneNumber(), null)) {
+            if (!validator.isValid(userContactInfo.info.phoneNumber, null)) {
                 throw new ValidationError("Ingrese telefono de contacto")
             }
         }

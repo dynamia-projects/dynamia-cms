@@ -44,20 +44,20 @@ class PagesSiteInterceptor implements SiteRequestInterceptor {
 	@Override
     void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response,
                       ModelAndView modelAndView) {
-		Page page = (Page) modelAndView.getModel().get("page")
+		Page page = (Page) modelAndView.model.get("page")
         if (page == null) {
 			page = new Page()
-            page.setSite(site)
-            page.setAlias(SiteContext.get().getCurrentURI())
-            page.setTitle((String) modelAndView.getModel().get("title"))
-            page.setSubtitle((String) modelAndView.getModel().get("subtitle"))
-            page.setIcon((String) modelAndView.getModel().get("icon"))
-            page.setType("auto")
+            page.site = site
+            page.alias = SiteContext.get().currentURI
+            page.title = (String) modelAndView.model.get("title")
+            page.subtitle = (String) modelAndView.model.get("subtitle")
+            page.icon = (String) modelAndView.model.get("icon")
+            page.type = "auto"
 
             modelAndView.addObject("page", page)
-            modelAndView.addObject("pageContent", page.getContent())
-        } else if (page.getTemplateEngine() != null && modelAndView.getModel().containsKey("pageContent")) {
-			modelAndView.addObject("pageContent", service.parsePageContent(page, modelAndView.getModel()))
+            modelAndView.addObject("pageContent", page.content)
+        } else if (page.templateEngine != null && modelAndView.model.containsKey("pageContent")) {
+			modelAndView.addObject("pageContent", service.parsePageContent(page, modelAndView.model))
         }
 
 	}

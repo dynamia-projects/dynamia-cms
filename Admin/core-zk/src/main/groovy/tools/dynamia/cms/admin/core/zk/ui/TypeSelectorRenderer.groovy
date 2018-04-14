@@ -27,9 +27,9 @@ class TypeSelectorRenderer implements ComboitemRenderer<TypeExtension> {
 
 	@Override
     void render(Comboitem cmbtm, TypeExtension t, int i) throws Exception {
-		cmbtm.setValue(t.getId())
-        cmbtm.setLabel(t.getName())
-        cmbtm.setDescription(t.getDescription())
+        cmbtm.value = t.id
+        cmbtm.label = t.name
+        cmbtm.description = t.description
     }
 
 }

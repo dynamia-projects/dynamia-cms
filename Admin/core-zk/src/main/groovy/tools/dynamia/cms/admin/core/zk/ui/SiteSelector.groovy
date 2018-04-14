@@ -29,7 +29,7 @@ import tools.dynamia.zk.util.ZKUtil
 class SiteSelector extends Combobox {
 
     static {
-        ComponentAliasIndex.getInstance().add(SiteSelector.class)
+        ComponentAliasIndex.instance.add(SiteSelector.class)
     }
 
     SiteSelector() {
@@ -37,8 +37,8 @@ class SiteSelector extends Combobox {
     }
 
     void init() {
-        getChildren().clear()
-        setReadonly(true)
+        children.clear()
+        readonly = true
         CrudService crudService = Containers.get().findObject(CrudService.class)
         Collection<Site> sites = crudService.findAll(Site.class, "name")
         ZKUtil.fillCombobox(this, sites, true)

@@ -22,7 +22,7 @@ class GlobalResourcesPage extends ComponentPage {
 
     @Override
     Component renderPage() {
-        FileManager fileManager = new FileManager(DynamiaCMS.getHomePath())
+        FileManager fileManager = new FileManager(DynamiaCMS.homePath)
         return fileManager
     }
 

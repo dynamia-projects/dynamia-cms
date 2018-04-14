@@ -57,39 +57,39 @@ class CompleteShoppingOrderAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("shoppingcart/complete")
+		ModelAndView mv = evt.modelAndView
+        mv.viewName = "shoppingcart/complete"
 
         mv.addObject("title", "Pedido Confirmado Exitosamente!")
 
-        ShoppingSiteConfig config = service.getConfiguration(evt.getSite())
-        ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder()
+        ShoppingSiteConfig config = service.getConfiguration(evt.site)
+        ShoppingOrder order = ShoppingCartHolder.get().currentOrder
 
         try {
 
 			validate(order, config)
-            String name = order.getShoppingCart().getName()
-            if (order.getTransaction().getStatus() != PaymentTransactionStatus.COMPLETED) {
-				order.getShoppingCart().setStatus(ShoppingCartStatus.COMPLETED)
-                order.getTransaction().setStatus(PaymentTransactionStatus.COMPLETED)
+            String name = order.shoppingCart.name
+            if (order.transaction.status != PaymentTransactionStatus.COMPLETED) {
+                order.shoppingCart.status = ShoppingCartStatus.COMPLETED
+                order.transaction.status = PaymentTransactionStatus.COMPLETED
                 service.saveOrder(order)
                 service.notifyOrderCompleted(order)
             }
 
 			mv.addObject("shoppingOrder", order)
 
-            UserHolder.get().setCustomer(null)
+            UserHolder.get().customer = null
 
         } catch (ValidationError e) {
-			SiteActionManager.performAction("confirmShoppingCart", mv, evt.getRequest(), evt.getRedirectAttributes())
-            CMSUtil.addErrorMessage(e.getMessage(), mv)
+			SiteActionManager.performAction("confirmShoppingCart", mv, evt.request, evt.redirectAttributes)
+            CMSUtil.addErrorMessage(e.message, mv)
         } catch (Exception e) {
 			e.printStackTrace()
         }
 	}
 
 	private void validate(ShoppingOrder order, ShoppingSiteConfig config) {
-		if (!order.isPayLater() || !config.isAllowEmptyPayment()) {
+		if (!order.payLater || !config.allowEmptyPayment) {
 			throw new ValidationError("El sitio web no permite este tipo de pedidos")
         }
 
@@ -99,7 +99,7 @@ class CompleteShoppingOrderAction implements SiteAction {
 		UserContactInfo userContactInfo = null
 
         try {
-			Long id = Long.parseLong(evt.getRequest().getParameter(string))
+			Long id = Long.parseLong(evt.request.getParameter(string))
             userContactInfo = crudService.find(UserContactInfo.class, id)
         } catch (Exception e) {
 			// TODO: handle exception

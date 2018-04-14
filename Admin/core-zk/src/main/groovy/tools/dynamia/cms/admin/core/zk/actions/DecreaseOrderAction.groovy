@@ -37,20 +37,20 @@ class DecreaseOrderAction extends AbstractCrudAction {
 	private CrudService crudService
 
     DecreaseOrderAction() {
-		setName("Move Down")
-        setImage("down")
-        setMenuSupported(true)
+        name = "Move Down"
+        image = "down"
+        menuSupported = true
     }
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		Orderable orderable = (Orderable) evt.getData()
+		Orderable orderable = (Orderable) evt.data
         if (orderable != null) {
-			orderable.setOrder(orderable.getOrder() + 1)
+            orderable.order = orderable.order + 1
             crudService.update(orderable)
-            if (evt.getController() != null) {
-				evt.getController().doQuery()
-                evt.getController().setSelected((AbstractEntity) orderable)
+            if (evt.controller != null) {
+				evt.controller.doQuery()
+                evt.controller.selected = (AbstractEntity) orderable
             }
 		} else {
 			UIMessages.showMessage("Select row", MessageType.WARNING)

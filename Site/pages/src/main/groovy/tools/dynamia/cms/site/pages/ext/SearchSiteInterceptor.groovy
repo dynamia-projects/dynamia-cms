@@ -30,7 +30,7 @@ class SearchSiteInterceptor extends SiteRequestInterceptorAdapter {
 
 	@Override
 	protected void afterRequest(Site site, ModelAndView mv) {
-		if (mv != null && mv.getModel().get("searchForm") == null) {
+		if (mv != null && mv.model.get("searchForm") == null) {
 			mv.addObject("searchForm", new SearchForm())
         }
 	}

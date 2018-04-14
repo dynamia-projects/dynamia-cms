@@ -42,13 +42,13 @@ class RemoveItemFromCartAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
-        String code = (String) evt.getData()
+        ModelAndView mv = evt.modelAndView
+        String code = (String) evt.data
         ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv)
         if (shoppingCart != null) {
             boolean r = shoppingCart.removeItem(code)
             if (r) {
-                CMSUtil.addSuccessMessage("Item quitado exitosamente del carrito", evt.getRedirectAttributes())
+                CMSUtil.addSuccessMessage("Item quitado exitosamente del carrito", evt.redirectAttributes)
             }
         }
 

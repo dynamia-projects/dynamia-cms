@@ -46,8 +46,8 @@ class ResourceSelector extends Bandbox {
     private static final long serialVersionUID = 1L
 
     static {
-        ComponentAliasIndex.getInstance().add(ResourceSelector.class)
-        BindingComponentIndex.getInstance().put("value", ResourceSelector.class)
+        ComponentAliasIndex.instance.add(ResourceSelector.class)
+        BindingComponentIndex.instance.put("value", ResourceSelector.class)
     }
 
     private boolean useRelativePath
@@ -58,9 +58,9 @@ class ResourceSelector extends Bandbox {
     }
 
     private void initUI() {
-        setButtonVisible(true)
-        setAutodrop(false)
-        setOpen(false)
+        buttonVisible = true
+        autodrop = false
+        open = false
     }
 
     private void initEvents() {
@@ -69,23 +69,23 @@ class ResourceSelector extends Bandbox {
     }
 
     private void showResourceSelector() {
-        Site site = SiteContext.get().getCurrent()
+        Site site = SiteContext.get().current
 
         PageService service = Containers.get().findObject(PageService.class)
         Viewer viewer = new Viewer(new DefaultViewDescriptor(ResourceSelector.class, "fileManager", false))
 
-        FileManager view = (FileManager) viewer.getView()
-        view.setRootDirectory(DynamiaCMS.getSitesResourceLocation(site).toFile())
+        FileManager view = (FileManager) viewer.view
+        view.rootDirectory = DynamiaCMS.getSitesResourceLocation(site).toFile()
 
         viewer.addAction(new FastAction("Select Resource", {
-            FileInfo fileInfo = view.getValue()
+            FileInfo fileInfo = view.value
             if (fileInfo != null) {
                 if (useRelativePath) {
-                    setValue(CMSUtil.getResourceRelativePath(SiteContext.get().getCurrent(), fileInfo.getFile()))
+                    value = CMSUtil.getResourceRelativePath(SiteContext.get().current, fileInfo.file)
                 } else {
-                    setValue(CMSUtil.getResourceURL(SiteContext.get().getCurrent(), fileInfo.getFile()))
+                    value = CMSUtil.getResourceURL(SiteContext.get().current, fileInfo.file)
                 }
-                viewer.getParent().detach()
+                viewer.parent.detach()
                 UIMessages.showMessage("Resource selected")
             } else {
                 UIMessages.showMessage("No resource selected", MessageType.WARNING)
@@ -98,7 +98,7 @@ class ResourceSelector extends Bandbox {
     @Override
     void setValue(String value) throws WrongValueException {
         if (!StringUtils.equals(getValue(), value)) {
-            super.setValue(value)
+            super.value = value
             Events.postEvent(new Event(Events.ON_CHANGE, this, value))
         }
     }

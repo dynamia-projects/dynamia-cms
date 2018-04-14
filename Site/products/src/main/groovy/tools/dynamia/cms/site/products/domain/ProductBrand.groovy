@@ -107,18 +107,18 @@ class ProductBrand extends SimpleEntity implements SiteAware {
     }
 
     void sync(ProductBrandDTO r) {
-		description = r.getDescription()
-        externalRef = r.getExternalRef()
-        if (r.getImage() != null && !r.getImage().isEmpty()) {
-			image = r.getImage()
+		description = r.description
+        externalRef = r.externalRef
+        if (r.image != null && !r.image.empty) {
+			image = r.image
         }
-		name = r.getName()
-        website = r.getWebsite()
+		name = r.name
+        website = r.website
     }
 
 	@Override
     String toString() {
-		return getName()
+		return name
     }
 
 }

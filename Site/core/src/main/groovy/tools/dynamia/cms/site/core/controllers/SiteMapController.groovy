@@ -15,7 +15,7 @@ class SiteMapController {
     @RequestMapping("/sitemap.xml")
     @ResponseBody
     SiteMap getSiteMapXML() {
-        Site site = SiteContext.get().getCurrent()
+        Site site = SiteContext.get().current
 
         SiteMap map = new SiteMap()
         Containers.get().findObjects(SiteMapProvider.class).forEach { pv ->

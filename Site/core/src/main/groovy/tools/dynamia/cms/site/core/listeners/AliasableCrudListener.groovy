@@ -39,15 +39,15 @@ class AliasableCrudListener extends CrudServiceListenerAdapter<Aliasable> {
     }
 
     private void createAlias(Aliasable entity) {
-        if (entity.getAlias() == null || entity.getAlias().isEmpty()) {
-            if (entity.getAlias() == null || entity.getAlias().isEmpty()) {
-                entity.setAlias(entity.aliasSource())
-                if (entity.getAlias() != null && entity.getAlias().length() > 255) {
-                    String alias = entity.getAlias().substring(0, 254)
-                    entity.setAlias(alias)
+        if (entity.alias == null || entity.alias.empty) {
+            if (entity.alias == null || entity.alias.empty) {
+                entity.alias = entity.aliasSource()
+                if (entity.alias != null && entity.alias.length() > 255) {
+                    String alias = entity.alias.substring(0, 254)
+                    entity.alias = alias
                 }
             }
-            entity.setAlias(StringUtils.simplifiedString(entity.getAlias()))
+            entity.alias = StringUtils.simplifiedString(entity.alias)
         }
     }
 

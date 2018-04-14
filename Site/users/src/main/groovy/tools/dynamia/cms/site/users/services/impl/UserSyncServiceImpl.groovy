@@ -34,16 +34,13 @@ class UserSyncServiceImpl implements UserSyncService {
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
     void syncUsers(UserSiteConfig cfg, Map<String, String> params) {
 
-		if (cfg.isSynchronizationEnabled() && cfg.getDatasourceURL() != null) {
+		if (cfg.synchronizationEnabled && cfg.datasourceURL != null) {
 
-			UsersDatasource datasource = HttpRemotingServiceClient.build(UsersDatasource.class)
-					.setServiceURL(cfg.getDatasourceURL())
-					.setUsername(cfg.getDatasourceUsername())
-					.setPassword(cfg.getDatasourceURL())
-					.getProxy()
+			UsersDatasource datasource = HttpRemotingServiceClient.build(UsersDatasource.class).serviceURL = cfg.datasourceURL.username = cfg.datasourceUsername.password = cfg.datasourceURL
+                    .proxy
 
             List<UserDTO> remoteUsers = datasource.getUsers(params)
-            if (remoteUsers != null && !remoteUsers.isEmpty()) {
+            if (remoteUsers != null && !remoteUsers.empty) {
 				sync(cfg, remoteUsers, params)
             }
 		}
@@ -55,33 +52,33 @@ class UserSyncServiceImpl implements UserSyncService {
 				User localUser = getLocalUser(remoteUser)
                 if (localUser == null) {
 					localUser = new User()
-                    localUser.setSite(cfg.getSite())
+                    localUser.site = cfg.site
                 }
 				localUser.sync(remoteUser)
 
-                if (localUser.getPassword() == null || localUser.getPassword().isEmpty()) {
-					String password = remoteUser.getExternalRef()
-                    if (password == null || password.isEmpty()) {
+                if (localUser.password == null || localUser.password.empty) {
+					String password = remoteUser.externalRef
+                    if (password == null || password.empty) {
 						password = StringUtils.randomString()
                     }
 					service.setupPassword(localUser, password)
                 }
 
-				if (remoteUser.getRelatedUser() != null && !remoteUser.getRelatedUser().isEmpty()) {
-					User relatedUser = crudService.findSingle(User.class, "externalRef", remoteUser.getRelatedUser())
-                    localUser.setRelatedUser(relatedUser)
+				if (remoteUser.relatedUser != null && !remoteUser.relatedUser.empty) {
+					User relatedUser = crudService.findSingle(User.class, "externalRef", remoteUser.relatedUser)
+                    localUser.relatedUser = relatedUser
                 }
 
 				crudService.save(localUser)
             } catch (Exception e) {
-				System.out.println("Error Sync: " + remoteUser.getEmail() + "  - " + e.getMessage())
+				System.out.println("Error Sync: " + remoteUser.email + "  - " + e.message)
             }
 		}
 	}
 
 	private User getLocalUser(UserDTO dto) {
 
-		return crudService.findSingle(User.class, "username", dto.getEmail())
+		return crudService.findSingle(User.class, "username", dto.email)
 
     }
 }

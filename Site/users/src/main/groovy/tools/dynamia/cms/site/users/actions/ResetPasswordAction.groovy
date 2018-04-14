@@ -47,19 +47,19 @@ class ResetPasswordAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("users/resetpassword")
-        UserForm form = (UserForm) evt.getData()
+		ModelAndView mv = evt.modelAndView
+        mv.viewName = "users/resetpassword"
+        UserForm form = (UserForm) evt.data
 
-        String username = form.getData().getUsername()
-        Site site = evt.getSite()
+        String username = form.data.username
+        Site site = evt.site
 
         try {
 			service.resetPassword(site, username)
-            form.setData(new User())
+            form.data = new User()
             mv.addObject("successmessage", "Se ha enviado un correo a [" + username + "] con un nuevo password generado")
         } catch (ValidationError e) {
-			mv.addObject("errormessage", e.getMessage())
+			mv.addObject("errormessage", e.message)
         }
 
 	}

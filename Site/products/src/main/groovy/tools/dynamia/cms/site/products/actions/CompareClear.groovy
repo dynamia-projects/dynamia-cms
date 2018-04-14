@@ -50,10 +50,10 @@ class CompareClear implements SiteAction {
         ProductCompareList list = Containers.get().findObject(ProductCompareList.class)
         list.clear()
 
-        ModelAndView mv = evt.getModelAndView()
-        CMSUtil.addSuccessMessage("Se ha limpiado la lista de comparacion.", evt.getRedirectAttributes())
+        ModelAndView mv = evt.modelAndView
+        CMSUtil.addSuccessMessage("Se ha limpiado la lista de comparacion.", evt.redirectAttributes)
         String redirect = "/"
-        mv.setView(new RedirectView(redirect, true, true, false))
+        mv.view = new RedirectView(redirect, true, true, false)
     }
 
 }

@@ -34,8 +34,8 @@ class SaveModuleInstanceAction extends AbstractAction {
     private CrudActionEvent sourceEvent
 
     SaveModuleInstanceAction(CrudService crudService, CrudActionEvent evt) {
-        setName("Save Module")
-        setImage("check")
+        name = "Save Module"
+        image = "check"
         setAttribute("background", "#ff5722")
         setAttribute("color", "white")
         this.crudService = crudService
@@ -50,22 +50,22 @@ class SaveModuleInstanceAction extends AbstractAction {
 
             crudService.save(moduleInstance)
 
-            if (evt.getData() instanceof List) {
-                List<Parameter> parameters = (List<Parameter>) evt.getData()
+            if (evt.data instanceof List) {
+                List<Parameter> parameters = (List<Parameter>) evt.data
 
                 for (Parameter parameter : parameters) {
 
-                    ModuleInstanceParameter instanceParameter = moduleInstance.getParameter(parameter.getName())
+                    ModuleInstanceParameter instanceParameter = moduleInstance.getParameter(parameter.name)
                     if (instanceParameter == null) {
-                        String value = parameter.getValue()
-                        if (value != null && !value.isEmpty()) {
-                            instanceParameter = new ModuleInstanceParameter(parameter.getName(), parameter.getValue())
-                            instanceParameter.setEnabled(true)
-                            instanceParameter.setModuleInstance(moduleInstance)
+                        String value = parameter.value
+                        if (value != null && !value.empty) {
+                            instanceParameter = new ModuleInstanceParameter(parameter.name, parameter.value)
+                            instanceParameter.enabled = true
+                            instanceParameter.moduleInstance = moduleInstance
                             crudService.save(instanceParameter)
                         }
                     } else {
-                        instanceParameter.setValue(parameter.getValue())
+                        instanceParameter.value = parameter.value
                         crudService.save(instanceParameter)
                     }
                 }
@@ -74,12 +74,12 @@ class SaveModuleInstanceAction extends AbstractAction {
 
         UIMessages.showMessage("Module instance saved")
 
-        sourceEvent.getController().doQuery()
+        sourceEvent.controller.doQuery()
 
-        ZKNavigationManager.getInstance().closeCurrentPage()
+        ZKNavigationManager.instance.closeCurrentPage()
         EditModuleInstanceAction edit = Containers.get().findObject(EditModuleInstanceAction.class)
-        edit.actionPerformed(new CrudActionEvent(moduleInstance, sourceEvent.getSource(), sourceEvent.getView(),
-                sourceEvent.getController()))
+        edit.actionPerformed(new CrudActionEvent(moduleInstance, sourceEvent.source, sourceEvent.view,
+                sourceEvent.controller))
 
     }
 

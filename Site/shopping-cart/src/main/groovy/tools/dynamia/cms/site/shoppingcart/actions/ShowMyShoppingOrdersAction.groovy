@@ -41,12 +41,12 @@ class ShowMyShoppingOrdersAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("shoppingcart/myorders")
+		ModelAndView mv = evt.modelAndView
+        mv.viewName = "shoppingcart/myorders"
 
         mv.addObject("title", "Mis Pedidos")
 
-        List<ShoppingOrder> orders = service.getOrders(UserHolder.get().getCurrent())
+        List<ShoppingOrder> orders = service.getOrders(UserHolder.get().current)
 
         mv.addObject("orders", orders)
 

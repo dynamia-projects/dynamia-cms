@@ -86,8 +86,8 @@ class Site extends SimpleEntity implements Parameterizable {
 
     String getParameterValue(String name) {
         for (SiteParameter siteParameter : parameters) {
-            if (siteParameter.getName().equals(name)) {
-                return siteParameter.getValue()
+            if (siteParameter.name.equals(name)) {
+                return siteParameter.value
             }
         }
         return null

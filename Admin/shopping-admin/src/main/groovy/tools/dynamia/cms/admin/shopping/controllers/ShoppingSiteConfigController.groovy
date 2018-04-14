@@ -11,7 +11,7 @@ class ShoppingSiteConfigController extends CrudController<ShoppingSiteConfig> {
 	@Override
 	protected void beforeQuery() {
 		ShoppingCartService service = Containers.get().findObject(ShoppingCartService.class)
-        service.getConfiguration(SiteContext.get().getCurrent())
+        service.getConfiguration(SiteContext.get().current)
     }
 
 }

@@ -32,32 +32,32 @@ import tools.dynamia.ui.UIMessages
 class ViewResourceLinkAction extends FileManagerAction {
 
 	ViewResourceLinkAction() {
-		setImage("link")
-        setName("View Link")
-        setPosition(Double.MAX_VALUE)
-        setMenuSupported(true)
+        image = "link"
+        name = "View Link"
+        position = Double.MAX_VALUE
+        menuSupported = true
     }
 
 	@Override
     void actionPerformed(ActionEvent evt) {
 		List<FileInfo> files = new ArrayList<>()
 
-        if (evt.getData() instanceof FileInfo) {
-			files.add((FileInfo) evt.getData())
-        } else if (evt.getData() instanceof List) {
-			files.addAll((Collection<? extends FileInfo>) evt.getData())
+        if (evt.data instanceof FileInfo) {
+			files.add((FileInfo) evt.data)
+        } else if (evt.data instanceof List) {
+			files.addAll((Collection<? extends FileInfo>) evt.data)
         }
 
 		if (!files.isEmpty()) {
 			try {
 
 				CrudService crudService = Containers.get().findObject(CrudService.class)
-                Site site = SiteContext.get().getCurrent()
+                Site site = SiteContext.get().current
                 site = crudService.reload(site)
 
                 String url = ""
                 for (FileInfo file : files) {
-					url = url + CMSUtil.getResourceURL(site, file.getFile()) + "\n"
+					url = url + CMSUtil.getResourceURL(site, file.file) + "\n"
                 }
 
 				Messagebox.show(url, "Link", Messagebox.OK, null)

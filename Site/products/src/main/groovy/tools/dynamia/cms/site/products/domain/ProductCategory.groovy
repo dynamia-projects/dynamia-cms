@@ -202,18 +202,18 @@ class ProductCategory extends SimpleEntity implements SiteAware, Orderable {
     }
 
     void sync(ProductCategoryDTO dto) {
-		name = dto.getName()
-        order = dto.getOrder()
-        alternateName = dto.getAlternateName()
-        active = dto.isActive()
-        description = dto.getDescription()
-        externalRef = dto.getExternalRef()
+		name = dto.name
+        order = dto.order
+        alternateName = dto.alternateName
+        active = dto.active
+        description = dto.description
+        externalRef = dto.externalRef
 
     }
 
 	@Override
     String toString() {
-		return getName()
+		return name
     }
 
 }

@@ -21,24 +21,24 @@ import tools.dynamia.zk.util.ZKUtil
 class PaymentGatewaySelector extends Combobox {
 
 	static {
-		ComponentAliasIndex.getInstance().add(PaymentGatewaySelector.class)
+		ComponentAliasIndex.instance.add(PaymentGatewaySelector.class)
     }
 
     PaymentGatewaySelector() {
-		setItemRenderer(new ComboitemRenderer<PaymentGateway>() {
+        itemRenderer = new ComboitemRenderer<PaymentGateway>() {
 
-			@Override
-            void render(Comboitem item, PaymentGateway data, int index) throws Exception {
-				item.setValue(data)
-                item.setLabel(data.getName())
-            }
-		})
+            @Override
+void render(Comboitem item, PaymentGateway data, int index) throws Exception {
+                item.value = data
+                item.label = data.name
+}
+        }
         init()
     }
 
     void init() {
 
-		setReadonly(true)
+        readonly = true
 
         List<PaymentGateway> gateways = new ArrayList<>(Containers.get().findObjects(PaymentGateway.class))
         if (gateways != null && !gateways.isEmpty()) {
@@ -49,7 +49,7 @@ class PaymentGatewaySelector extends Combobox {
 
 	@Override
     void setParent(Component parent) {
-		super.setParent(parent) // To change body of generated methods, choose
+        super.parent = parent // To change body of generated methods, choose
 									// Tools | Templates.
 		init()
     }

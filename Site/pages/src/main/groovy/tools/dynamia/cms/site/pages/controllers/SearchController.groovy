@@ -46,14 +46,14 @@ class SearchController {
 
         ModelAndView mv = new ModelAndView("site/page")
         mv.addObject("searchForm", form)
-        form.setRequest(request)
+        form.request = request
         Collection<SearchProvider> providers = Containers.get().findObjects(SearchProvider.class)
         for (SearchProvider searchProvider : providers) {
             SearchResult result = searchProvider.search(site, form)
             if (result != null) {
-                mv.addAllObjects(result.getEntries())
-                mv.setViewName(result.getViewName())
-                if (!result.isKeepSearching()) {
+                mv.addAllObjects(result.entries)
+                mv.viewName = result.viewName
+                if (!result.keepSearching) {
                     break
                 }
             }

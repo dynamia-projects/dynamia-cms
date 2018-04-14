@@ -39,7 +39,7 @@ class CMSModules {
         activeInstances.addAll(instances)
         for (ModuleInstance moduleInstance : instances) {
             Module module = service.getModule(moduleInstance)
-            if (!module.isCacheable()) {
+            if (!module.cacheable) {
                 service.initModuleInstance(moduleInstance)
             }
             activeModules.add(module)
@@ -50,7 +50,7 @@ class CMSModules {
     private List<ModuleInstance> filter(List<ModuleInstance> modules) {
         try {
 
-            String currentPath = CMSUtil.getCurrentRequest().getPathInfo()
+            String currentPath = CMSUtil.currentRequest.pathInfo
             return modules.findAll { m -> m.isPathIncluded(currentPath) }
         } catch (Exception e) {
             e.printStackTrace()
@@ -64,7 +64,7 @@ class CMSModules {
 
     boolean isUsed(String position) {
         if (position != null) {
-            for (String usedPosition : getUsedPositions()) {
+            for (String usedPosition : (usedPositions)) {
                 if (position.equals(usedPosition)) {
                     return true
                 }
@@ -76,12 +76,12 @@ class CMSModules {
     String getTemplateViewName(ModuleInstance instance) {
         String view = "error/modulenotfound"
 
-        if (instance.getCustomView() != null && !instance.getCustomView().isEmpty()) {
-            view = instance.getCustomView()
+        if (instance.customView != null && !instance.customView.empty) {
+            view = instance.customView
         } else {
             Module module = service.getModule(instance)
             if (module != null) {
-                view = module.getTemplateViewName()
+                view = module.templateViewName
             }
         }
 

@@ -19,22 +19,22 @@ class SyncSiteAction extends AbstractCrudAction {
     private DynamiaSiteConnectorService service
 
     SyncSiteAction() {
-        setName("Sync Site")
+        name = "Sync Site"
     }
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
 
-        Site site = (Site) evt.getData()
+        Site site = (Site) evt.data
         if (site != null) {
             UIMessages.showQuestion("Are you sure? This may take a while to finish.", {
                 try {
                     service.sync(site)
                     UIMessages.showMessage(site + " sync completed")
                 } catch (ValidationError e) {
-                    UIMessages.showMessage(e.getMessage(), MessageType.WARNING)
+                    UIMessages.showMessage(e.message, MessageType.WARNING)
                 } catch (Exception e) {
-                    UIMessages.showMessage("Error syncing site: " + e.getMessage(), MessageType.ERROR)
+                    UIMessages.showMessage("Error syncing site: " + e.message, MessageType.ERROR)
                     e.printStackTrace()
                 }
             })

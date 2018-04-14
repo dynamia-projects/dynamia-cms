@@ -31,7 +31,7 @@ class ModuleContext {
     ModuleContext(ModuleInstance moduleInstance) {
 		super()
         this.moduleInstance = moduleInstance
-        this.site = moduleInstance.getSite()
+        this.site = moduleInstance.site
     }
 
     ModuleInstance getModuleInstance() {
@@ -45,7 +45,7 @@ class ModuleContext {
     String getParameterValue(String name, String defaultValue) {
 		ModuleInstanceParameter param = getParameter(name)
         if (param != null) {
-			return param.getValue()
+			return param.value
         } else {
 			return defaultValue
         }

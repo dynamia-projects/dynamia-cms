@@ -76,7 +76,7 @@ class ShippingCompany extends SimpleEntity implements SiteAware {
 
 	@Override
     String toString() {
-		return getName()
+		return name
     }
 
     void addItem(ShoppingCartItem item, int qty) {

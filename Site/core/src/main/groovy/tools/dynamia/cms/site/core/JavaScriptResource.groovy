@@ -65,7 +65,7 @@ class JavaScriptResource implements Serializable {
 			return true
         if (obj == null)
 			return false
-        if (getClass() != obj.getClass())
+        if (getClass() != obj.class)
 			return false
         JavaScriptResource other = (JavaScriptResource) obj
         if (name == null) {

@@ -35,10 +35,10 @@ class ProductSearchProvider implements SearchProvider {
 
         ModelAndView mv = new ModelAndView("products/productquery")
 
-        SiteActionManager.performAction("searchProducts", mv, form.getRequest(), form.getQuery())
+        SiteActionManager.performAction("searchProducts", mv, form.request, form.query)
 
-        SearchResult rs = new SearchResult(mv.getViewName(), false)
-        rs.getEntries().putAll(mv.getModel())
+        SearchResult rs = new SearchResult(mv.viewName, false)
+        rs.entries.putAll(mv.model)
         return rs
     }
 

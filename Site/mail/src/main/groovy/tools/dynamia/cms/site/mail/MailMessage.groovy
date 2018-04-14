@@ -143,7 +143,7 @@ class MailMessage implements Serializable {
     }
 
     String[] getTosAsArray() {
-		return getTos().toArray(new String[tos.size()])
+		return tos.toArray(new String[tos.size()])
     }
 
     Set<String> getCcs() {
@@ -151,7 +151,7 @@ class MailMessage implements Serializable {
     }
 
     String[] getCcsAsArray() {
-		return getCcs().toArray(new String[ccs.size()])
+		return ccs.toArray(new String[ccs.size()])
     }
 
     Set<String> getBccs() {
@@ -159,7 +159,7 @@ class MailMessage implements Serializable {
     }
 
     String[] getBccsAsArray() {
-		return getBccs().toArray(new String[bccs.size()])
+		return bccs.toArray(new String[bccs.size()])
     }
 
     List<File> getAttachtments() {
@@ -168,7 +168,7 @@ class MailMessage implements Serializable {
 
 	@Override
     String toString() {
-		if (!tos.isEmpty()) {
+		if (!tos.empty) {
 			return tos.toString() + " Subject: " + subject
         } else {
 			return to + " Subject: " + subject

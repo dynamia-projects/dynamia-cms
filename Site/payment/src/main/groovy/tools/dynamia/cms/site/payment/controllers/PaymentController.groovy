@@ -56,13 +56,13 @@ class PaymentController {
 
         try {
             PaymentTransaction tx = commitTransaction(gatewayId, request, ResponseType.RESPONSE)
-            mv.addObject("title", tx.getStatusText())
-            mv.addObject("subtitle", tx.getReference())
+            mv.addObject("title", tx.statusText)
+            mv.addObject("subtitle", tx.reference)
             mv.addObject("transaction", tx)
             mv.addObject("gateway", service.findGateway(gatewayId))
         } catch (Exception e) {
             e.printStackTrace()
-            mv.setView(new RedirectView("/", true, true, false))
+            mv.view = new RedirectView("/", true, true, false)
 
         }
         return mv
@@ -72,14 +72,14 @@ class PaymentController {
     @Transactional
     ResponseEntity<String> gatewayConfirmation(@PathVariable String gatewayId, HttpServletRequest request) {
         try {
-            logger.info("Confirmation for gateway " + gatewayId + "  REQUEST: " + request.getParameterMap())
+            logger.info("Confirmation for gateway " + gatewayId + "  REQUEST: " + request.parameterMap)
             PaymentTransaction tx = commitTransaction(gatewayId, request, ResponseType.CONFIRMATION)
             logger.info("Payment Transaction Confirmation Status " + tx)
-            return ResponseEntity.ok("TX " + tx.getUuid() + " STATUS: " + tx.getStatus().toString())
+            return ResponseEntity.ok("TX " + tx.uuid + " STATUS: " + tx.status.toString())
         } catch (Exception e) {
-            logger.error("Error processing tx confirmation. GatewayID: " + gatewayId + ". Error: " + e.getMessage(), e)
+            logger.error("Error processing tx confirmation. GatewayID: " + gatewayId + ". Error: " + e.message, e)
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Gateway " + gatewayId + " -->" + e.getMessage())
+                    .body("Gateway " + gatewayId + " -->" + e.message)
         }
 
     }
@@ -87,19 +87,19 @@ class PaymentController {
     @RequestMapping(value = "/start", method = RequestMethod.GET)
     ModelAndView startTransaction() {
         logger.info("Starting payment transaction..")
-        PaymentTransaction tx = PaymentHolder.get().getCurrentPaymentTransaction()
-        PaymentForm form = PaymentHolder.get().getCurrentPaymentForm()
+        PaymentTransaction tx = PaymentHolder.get().currentPaymentTransaction
+        PaymentForm form = PaymentHolder.get().currentPaymentForm
         ModelAndView mv = new ModelAndView("payment/start")
-        if (tx != null && tx.getStatus() == PaymentTransactionStatus.NEW && form != null) {
-            logger.info("Processing transaction " + tx.getUuid() + " from " + tx.getSource())
-            tx.setStatus(PaymentTransactionStatus.PROCESSING)
+        if (tx != null && tx.status == PaymentTransactionStatus.NEW && form != null) {
+            logger.info("Processing transaction " + tx.uuid + " from " + tx.source)
+            tx.status = PaymentTransactionStatus.PROCESSING
             crudService.save(tx)
             mv.addObject("paymentForm", form)
             mv.addObject("paymentTransaction", tx)
             logger.info("Redirecting to payment gateway site. TX: " + tx)
         } else {
             logger.warn("Payment Transaction Not Valid")
-            mv.setView(new RedirectView("/", true, true, false))
+            mv.view = new RedirectView("/", true, true, false)
         }
         return mv
     }
@@ -107,40 +107,40 @@ class PaymentController {
     private PaymentTransaction commitTransaction(String gatewayId, HttpServletRequest request, ResponseType type) {
 
         PaymentGateway gateway = service.findGateway(gatewayId)
-        Map<String, String> response = parseRequest(gateway.getResponseParams(), request)
-        System.out.println(request.getParameterMap())
+        Map<String, String> response = parseRequest(gateway.responseParams, request)
+        System.out.println(request.parameterMap)
         PaymentTransaction tx = service.findTransaction(gateway, response)
 
-        System.out.println(request.getParameterNames())
+        System.out.println(request.parameterNames)
 
         logger.info("========================================================")
-        logger.info("Commiting payment Transaction " + tx.getUuid() + " from " + tx.getSource())
-        if (!tx.isConfirmed()) {
-            tx.setResponseTries(tx.getResponseTries() + 1)
+        logger.info("Commiting payment Transaction " + tx.uuid + " from " + tx.source)
+        if (!tx.confirmed) {
+            tx.responseTries = tx.responseTries + 1
 
             logger.info("Transaction " + tx + " is not confirmed, processing response..")
-            PaymentTransactionStatus oldStatus = tx.getStatus()
+            PaymentTransactionStatus oldStatus = tx.status
             gateway.processResponse(tx, response, type)
 
-            if (oldStatus != tx.getStatus()) {
-                logger.info("Firing status listener for transaction " + tx + "  new status: " + tx.getStatus() + " - "
-                        + tx.getStatusText())
+            if (oldStatus != tx.status) {
+                logger.info("Firing status listener for transaction " + tx + "  new status: " + tx.status + " - "
+                        + tx.statusText)
                 fireNewStatusListeners(tx, oldStatus)
             }
         }
 
-        logger.info("TX SOURCE: " + tx.getSource())
+        logger.info("TX SOURCE: " + tx.source)
         logger.info("========================================================")
         return tx
     }
 
     private void fireNewStatusListeners(PaymentTransaction tx, PaymentTransactionStatus oldStatus) {
-        logger.info("Firing payment transactions listeners for " + tx.getUuid())
+        logger.info("Firing payment transactions listeners for " + tx.uuid)
         for (PaymentTransactionListener listener : Containers.get().findObjects(PaymentTransactionListener.class)) {
             try {
                 listener.onStatusChanged(new PaymentTransactionEvent(tx, oldStatus))
             } catch (Exception e) {
-                logger.error("Error firing " + PaymentTransactionListener.class.getSimpleName() + " " + listener, e)
+                logger.error("Error firing " + PaymentTransactionListener.class.simpleName + " " + listener, e)
             }
         }
         logger.info("==>Listeners Completed.")

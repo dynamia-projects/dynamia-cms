@@ -40,7 +40,7 @@ class SiteTemplateResource implements ITemplateResource, Serializable {
 		super()
         this.templateName = templateName
         this.enconding = enconding
-        this.templatePath = findTemplate(getSiteKey(), templateName)
+        this.templatePath = findTemplate(siteKey, templateName)
     }
 
     SiteTemplateResource(String templateName, String enconding, Path templatePath) {
@@ -55,7 +55,7 @@ class SiteTemplateResource implements ITemplateResource, Serializable {
 		String siteKey = null
         if (siteKey == null) {
 			try {
-				siteKey = SiteContext.get().getCurrent().getKey()
+				siteKey = SiteContext.get().current.key
             } catch (Exception e) {
 
 				e.printStackTrace()
@@ -79,7 +79,7 @@ class SiteTemplateResource implements ITemplateResource, Serializable {
 
         // find view in site folders
 		Path siteHome = DynamiaCMS.getSitesResourceLocation(site)
-        for (String loc : DynamiaCMS.getRelativeLocations()) {
+        for (String loc : (DynamiaCMS.relativeLocations)) {
 			file = siteHome.resolve(loc + File.separator + name)
             if (Files.exists(file)) {
 				break
@@ -97,7 +97,7 @@ class SiteTemplateResource implements ITemplateResource, Serializable {
 
 		// find view in templates sub folders
 		if (Files.notExists(file)) {
-			for (String loc : DynamiaCMS.getRelativeLocations()) {
+			for (String loc : (DynamiaCMS.relativeLocations)) {
 				file = TemplateResources.find(site, loc + File.separator + name)
                 if (Files.exists(file)) {
 					break
@@ -107,8 +107,8 @@ class SiteTemplateResource implements ITemplateResource, Serializable {
 
 		// find in home default folders
 		if (Files.notExists(file)) {
-			Path home = DynamiaCMS.getHomePath()
-            for (String loc : DynamiaCMS.getRelativeLocations()) {
+			Path home = DynamiaCMS.homePath
+            for (String loc : (DynamiaCMS.relativeLocations)) {
 				file = home.resolve(loc + File.separator + name)
                 if (Files.exists(file)) {
 					break
@@ -132,7 +132,7 @@ class SiteTemplateResource implements ITemplateResource, Serializable {
 
 	@Override
     String getBaseName() {
-		return StringUtils.removeFilenameExtension(templatePath.getFileName().toString())
+		return StringUtils.removeFilenameExtension(templatePath.fileName.toString())
     }
 
 	@Override
@@ -154,7 +154,7 @@ class SiteTemplateResource implements ITemplateResource, Serializable {
     ITemplateResource relative(String relativeLocation) {
 		Path path = templatePath
         if (!Files.isDirectory(path)) {
-			path = path.getParent()
+			path = path.parent
         }
 
 		return new SiteTemplateResource(templateName, enconding, path.resolve(relativeLocation))

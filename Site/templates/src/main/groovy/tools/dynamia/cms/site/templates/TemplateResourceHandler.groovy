@@ -37,7 +37,7 @@ class TemplateResourceHandler extends ResourceHttpRequestHandler {
 
         Site site = service.getSite(request)
 
-        Path templateResource = TemplateResources.find(site, request.getPathInfo())
+        Path templateResource = TemplateResources.find(site, request.pathInfo)
         return new FileSystemResource(templateResource.toFile())
     }
 

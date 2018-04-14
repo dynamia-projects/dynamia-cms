@@ -86,7 +86,7 @@ class SiteServiceImpl implements SiteService {
         Site site = crudService.findSingle(Site.class, "mainDomain", QueryConditions.eq(domainName))
         if (site == null) {
             SiteDomain domain = crudService.findSingle(SiteDomain.class, "name", QueryConditions.eq(domainName))
-            site = domain != null ? domain.getSite() : getMainSite()
+            site = domain != null ? domain.site : mainSite
         }
 
         return site
@@ -97,7 +97,7 @@ class SiteServiceImpl implements SiteService {
         Site site = null
         if (request != null) {
             SiteService thisServ = Containers.get().findObject(SiteService.class)
-            site = thisServ.getSiteByDomain(request.getServerName())
+            site = thisServ.getSiteByDomain(request.serverName)
         }
 
         return site
@@ -107,7 +107,7 @@ class SiteServiceImpl implements SiteService {
     @Override
     List<SiteParameter> getSiteParameters(Site site) {
         site = crudService.reload(site)
-        return site.getParameters()
+        return site.parameters
     }
 
     @Override
@@ -116,9 +116,9 @@ class SiteServiceImpl implements SiteService {
                 QueryParameters.with("site", site).add("name", name))
         if (siteParameter == null) {
             siteParameter = new SiteParameter()
-            siteParameter.setSite(site)
-            siteParameter.setName(name)
-            siteParameter.setValue(defaultValue)
+            siteParameter.site = site
+            siteParameter.name = name
+            siteParameter.value = defaultValue
         }
         return siteParameter
     }
@@ -126,7 +126,7 @@ class SiteServiceImpl implements SiteService {
     @Override
     String[] getSiteParameterAsArray(Site site, String name) {
         SiteParameter siteParameter = getSiteParameter(site, name, "")
-        String[] values = siteParameter.getValue().split(",")
+        String[] values = siteParameter.value.split(",")
         if (values != null && values.length > 0) {
             for (int i = 0; i < values.length; i++) {
                 String value = values[i]
@@ -179,7 +179,7 @@ class SiteServiceImpl implements SiteService {
         StringBuilder sb = new StringBuilder()
         URL request = new URL(url)
         URLConnection yc = request.openConnection()
-        BufferedReader reader = new BufferedReader(new InputStreamReader(yc.getInputStream()))
+        BufferedReader reader = new BufferedReader(new InputStreamReader(yc.inputStream))
         String inputLine
 
         while ((inputLine = reader.readLine()) != null) {
@@ -191,13 +191,13 @@ class SiteServiceImpl implements SiteService {
     }
 
     private void fixOrderableNulls() {
-        List<String> entityClasses = entityManagerFactoryInfo.getPersistenceUnitInfo().getManagedClassNames()
+        List<String> entityClasses = entityManagerFactoryInfo.persistenceUnitInfo.managedClassNames
         for (String className : entityClasses) {
             try {
                 Object entity = BeanUtils.newInstance(className)
                 if (entity instanceof Orderable) {
                     crudService.executeWithinTransaction {
-                        crudService.batchUpdate(entity.getClass(), "order", 0,
+                        crudService.batchUpdate(entity.class, "order", 0,
                                 QueryParameters.with("order", QueryConditions.isNull()))
                     }
                 }
@@ -211,12 +211,12 @@ class SiteServiceImpl implements SiteService {
         if (crudService.count(Site.class) == 0) {
 
             Site site = new Site()
-            site.setKey("main")
+            site.key = "main"
 
-            site.setDescription("Main Site")
-            site.setName("DynamiaCMS Main Site")
-            site.setOffline(true)
-            site.setOfflineMessage("Welcome to DynamiaCMS - This site is not configured yet")
+            site.description = "Main Site"
+            site.name = "DynamiaCMS Main Site"
+            site.offline = true
+            site.offlineMessage = "Welcome to DynamiaCMS - This site is not configured yet"
             crudService.executeWithinTransaction { crudService.create(site) }
         }
     }

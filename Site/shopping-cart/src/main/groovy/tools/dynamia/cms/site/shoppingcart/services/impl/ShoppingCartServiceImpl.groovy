@@ -107,7 +107,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
         ShoppingSiteConfig config = crudService.findSingle(ShoppingSiteConfig.class, "site", site)
         if (config == null) {
             config = new ShoppingSiteConfig()
-            config.setSite(site)
+            config.site = site
             crudService.create(config)
         }
 
@@ -117,120 +117,120 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
     @Override
     ShoppingOrder createOrder(ShoppingCart shoppingCart, ShoppingSiteConfig config) {
-        shoppingCart.setShipmentPercent(config.getShipmentPercent())
+        shoppingCart.shipmentPercent = config.shipmentPercent
         shoppingCart.compute()
 
-        if (shoppingCart.getTotalPrice().longValue() < config.getMinPaymentAmount().longValue()) {
-            throw new ValidationError("Minimo valor de venta es " + config.getMinPaymentAmount())
+        if (shoppingCart.totalPrice.longValue() < config.minPaymentAmount.longValue()) {
+            throw new ValidationError("Minimo valor de venta es " + config.minPaymentAmount)
         }
 
-        if (shoppingCart.getTotalPrice().longValue() > config.getMaxPaymentAmount().longValue()) {
-            throw new ValidationError("El valor maximo de ventas en linea es " + config.getMaxPaymentAmount())
+        if (shoppingCart.totalPrice.longValue() > config.maxPaymentAmount.longValue()) {
+            throw new ValidationError("El valor maximo de ventas en linea es " + config.maxPaymentAmount)
         }
 
-        if (config.getMinQuantityByCart() > 0 && shoppingCart.getQuantity() < config.getMinQuantityByCart()) {
-            throw new ValidationError("You should buy at least " + config.getMinQuantityByCart() + " products")
+        if (config.minQuantityByCart > 0 && shoppingCart.quantity < config.minQuantityByCart) {
+            throw new ValidationError("You should buy at least " + config.minQuantityByCart + " products")
         }
 
-        if (config.getMinQuantityByProducts() > 0) {
-            for (ShoppingCartItem item : shoppingCart.getItems()) {
-                if (item.getQuantity() < config.getMinQuantityByProducts()) {
-                    throw new ValidationError("You should buy at least " + config.getMinQuantityByProducts() + " " + item.getName())
+        if (config.minQuantityByProducts > 0) {
+            for (ShoppingCartItem item : (shoppingCart.items)) {
+                if (item.quantity < config.minQuantityByProducts) {
+                    throw new ValidationError("You should buy at least " + config.minQuantityByProducts + " " + item.name)
                 }
             }
         }
 
-        User user = UserHolder.get().getCurrent()
-        shoppingCart.setUser(user)
-        shoppingCart.setCustomer(UserHolder.get().getCustomer())
+        User user = UserHolder.get().current
+        shoppingCart.user = user
+        shoppingCart.customer = UserHolder.get().customer
 
-        if (user != null && user.getProfile() == UserProfile.SELLER && shoppingCart.getCustomer() == null) {
+        if (user != null && user.profile == UserProfile.SELLER && shoppingCart.customer == null) {
             throw new ValidationError("Seleccione cliente para crear orden de pedido")
         }
 
         PaymentTransaction tx = null
 
-        if (config.getPaymentGatewayId() != null) {
-            PaymentGateway gateway = paymentService.findGateway(config.getPaymentGatewayId())
-            tx = gateway.newTransaction(config.getSite().getKey(), CMSUtil.getSiteURL(config.getSite(), "/"))
-            tx.setGatewayId(gateway.getId())
+        if (config.paymentGatewayId != null) {
+            PaymentGateway gateway = paymentService.findGateway(config.paymentGatewayId)
+            tx = gateway.newTransaction(config.site.key, CMSUtil.getSiteURL(config.site, "/"))
+            tx.gatewayId = gateway.id
         } else {
             tx = newLocalPaymentTransaction()
         }
 
-        tx.setCurrency(config.getDefaultCurrency())
-        tx.setEmail(user.getUsername())
-        if (shoppingCart.getCustomer() != null) {
-            User customer = shoppingCart.getCustomer()
-            tx.setPayerFullname(customer.getFullName())
-            tx.setPayerDocument(customer.getIdentification())
-            tx.setPayerCode(customer.getCode())
+        tx.currency = config.defaultCurrency
+        tx.email = user.username
+        if (shoppingCart.customer != null) {
+            User customer = shoppingCart.customer
+            tx.payerFullname = customer.fullName
+            tx.payerDocument = customer.identification
+            tx.payerCode = customer.code
         } else {
-            tx.setPayerFullname(user.getFullName())
-            tx.setPayerDocument(user.getIdentification())
-            tx.setPayerCode(user.getCode())
+            tx.payerFullname = user.fullName
+            tx.payerDocument = user.identification
+            tx.payerCode = user.code
         }
 
         ShoppingOrder order = new ShoppingOrder()
-        order.setShoppingCart(shoppingCart)
-        order.setTransaction(tx)
+        order.shoppingCart = shoppingCart
+        order.transaction = tx
         order.sync()
-        order.setSite(config.getSite())
+        order.site = config.site
 
         return order
     }
 
     private PaymentTransaction newLocalPaymentTransaction() {
         PaymentTransaction tx = new PaymentTransaction()
-        tx.setGatewayId("local")
-        tx.setStartDate(new Date())
-        tx.setStatus(PaymentTransactionStatus.COMPLETED)
-        tx.setStatusText("")
+        tx.gatewayId = "local"
+        tx.startDate = new Date()
+        tx.status = PaymentTransactionStatus.COMPLETED
+        tx.statusText = ""
         return tx
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void saveOrder(ShoppingOrder order) {
-        if (order.getId() == null) {
-            SiteParameter param = siteService.getSiteParameter(order.getSite(), LAST_SHOPPING_ORDER_NUMBER, "0")
-            ShoppingSiteConfig config = getConfiguration(order.getSite())
+        if (order.id == null) {
+            SiteParameter param = siteService.getSiteParameter(order.site, LAST_SHOPPING_ORDER_NUMBER, "0")
+            ShoppingSiteConfig config = getConfiguration(order.site)
 
-            long lastNumber = Long.parseLong(param.getValue())
+            long lastNumber = Long.parseLong(param.value)
             lastNumber++
 
-            param.setValue(String.valueOf(lastNumber))
+            param.value = String.valueOf(lastNumber)
             crudService.save(param)
 
             String number = DomainUtils.formatNumberWithZeroes(lastNumber, 10000)
-            order.setNumber(number)
-            order.getShoppingCart().setName(number)
+            order.number = number
+            order.shoppingCart.name = number
 
             order.checkRegionTaxes()
 
-            if (order.isPickupAtStore() || order.isPayAtDelivery()) {
-                order.getShoppingCart().setShipmentPercent(0)
-                order.getShoppingCart().compute()
-            } else if (order.getShoppingCart().getTotalShipmentPrice().longValue() < config.getMinShipmentAmount()
+            if (order.pickupAtStore || order.payAtDelivery) {
+                order.shoppingCart.shipmentPercent = 0
+                order.shoppingCart.compute()
+            } else if (order.shoppingCart.totalShipmentPrice.longValue() < config.minShipmentAmount
                     .longValue()) {
-                order.getShoppingCart().setTotalShipmentPrice(config.getMinShipmentAmount())
-                order.getShoppingCart().computeTotalOnly()
+                order.shoppingCart.totalShipmentPrice = config.minShipmentAmount
+                order.shoppingCart.computeTotalOnly()
             }
 
-            if (order.isPayLater()) {
-                order.setTransaction(newLocalPaymentTransaction())
-                order.getTransaction().setConfirmed(true)
+            if (order.payLater) {
+                order.transaction = newLocalPaymentTransaction()
+                order.transaction.confirmed = true
             }
 
             order.syncTransaction()
-            order.getShoppingCart().setStatus(ShoppingCartStatus.COMPLETED)
+            order.shoppingCart.status = ShoppingCartStatus.COMPLETED
 
-            order.getTransaction().setDescription("Orden No. " + order.getNumber() + ". Compra de "
-                    + order.getShoppingCart().getQuantity() + " producto(s)")
+            order.transaction.description = "Orden No. " + order.number + ". Compra de "
+                    + order.shoppingCart.quantity + " producto(s)"
 
-            if (order.getBillingAddress() != null) {
-                order.getTransaction().setPayerPhoneNumber(order.getBillingAddress().getInfo().getPhoneNumber())
-                order.getTransaction().setPayerMobileNumber(order.getBillingAddress().getInfo().getMobileNumber())
+            if (order.billingAddress != null) {
+                order.transaction.payerPhoneNumber = order.billingAddress.info.phoneNumber
+                order.transaction.payerMobileNumber = order.billingAddress.info.mobileNumber
             }
 
             crudService.save(order)
@@ -243,36 +243,36 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void cancelOrder(ShoppingOrder order) {
-        if (order.getId() != null) {
+        if (order.id != null) {
 
-            if (order.getTransaction().getStatus() == PaymentTransactionStatus.COMPLETED) {
+            if (order.transaction.status == PaymentTransactionStatus.COMPLETED) {
                 throw new ShoppingException(
-                        "No se puede cancelar order No. " + order.getNumber() + " porque ya fue COMPLETADA y PAGADA")
+                        "No se puede cancelar order No. " + order.number + " porque ya fue COMPLETADA y PAGADA")
             }
 
-            if (order.getTransaction().getStatus() == PaymentTransactionStatus.PROCESSING) {
+            if (order.transaction.status == PaymentTransactionStatus.PROCESSING) {
                 throw new ShoppingException(
-                        "No se puede cancelar order No. " + order.getNumber() + " porque ya esta siendo PROCESADA")
+                        "No se puede cancelar order No. " + order.number + " porque ya esta siendo PROCESADA")
             }
 
-            if (order.getTransaction().getStatus() == PaymentTransactionStatus.REJECTED) {
+            if (order.transaction.status == PaymentTransactionStatus.REJECTED) {
                 throw new ShoppingException(
-                        "No se puede cancelar order No. " + order.getNumber() + " porque ya fue RECHAZADA")
+                        "No se puede cancelar order No. " + order.number + " porque ya fue RECHAZADA")
             }
 
-            order.getTransaction().setStatus(PaymentTransactionStatus.CANCELLED)
-            order.getShoppingCart().setStatus(ShoppingCartStatus.CANCELLED)
+            order.transaction.status = PaymentTransactionStatus.CANCELLED
+            order.shoppingCart.status = ShoppingCartStatus.CANCELLED
             crudService.update(order)
 
-            recreateShoppingCart(order.getShoppingCart())
+            recreateShoppingCart(order.shoppingCart)
         }
     }
 
     private void recreateShoppingCart(ShoppingCart shoppingCart) {
         ShoppingCart newsc = ShoppingCartHolder.get().getCart("shop")
-        for (ShoppingCartItem oldItem : shoppingCart.getItems()) {
+        for (ShoppingCartItem oldItem : (shoppingCart.items)) {
             ShoppingCartItem newItem = oldItem.clone()
-            newsc.addItem(newItem, newItem.getQuantity())
+            newsc.addItem(newItem, newItem.quantity)
         }
 
         newsc.compute()
@@ -281,19 +281,19 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
     private Map<String, Object> getDescriptionsVars(ShoppingCart shoppingCart) {
         Map<String, Object> vars = new HashMap<String, Object>()
-        vars.put("QUANTITY", shoppingCart.getQuantity())
+        vars.put("QUANTITY", shoppingCart.quantity)
         return vars
     }
 
     @Override
     void onStatusChanged(PaymentTransactionEvent evt) {
-        PaymentTransaction tx = evt.getTransaction()
-        if (tx.getStatus() == PaymentTransactionStatus.COMPLETED) {
+        PaymentTransaction tx = evt.transaction
+        if (tx.status == PaymentTransactionStatus.COMPLETED) {
             ShoppingOrder order = crudService.findSingle(ShoppingOrder.class, "transaction", tx)
             if (order != null) {
                 notifyOrderCompleted(order)
             } else {
-                logger.error("No shopping order found for transaction " + tx.getUuid())
+                logger.error("No shopping order found for transaction " + tx.uuid)
             }
         }
 
@@ -302,8 +302,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     @Override
     void notifyOrderCompleted(ShoppingOrder order) {
 
-        ShoppingSiteConfig config = getConfiguration(order.getSite())
-        logger.info("Order Completed " + order.getNumber())
+        ShoppingSiteConfig config = getConfiguration(order.site)
+        logger.info("Order Completed " + order.number)
 
         notifyOrderCustomer(config, order)
         notifyOrderInternal(config, order)
@@ -312,43 +312,43 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
     private void notifyOrderInternal(ShoppingSiteConfig config, ShoppingOrder order) {
         try {
-            if (config.getNotificationMailTemplate() != null) {
-                logger.info("Sending notification email " + config.getNotificationEmails())
-                MailMessage notificationMessage = createMailMessage(config.getNotificationMailTemplate(),
-                        config.getMailAccount(), order)
+            if (config.notificationMailTemplate != null) {
+                logger.info("Sending notification email " + config.notificationEmails)
+                MailMessage notificationMessage = createMailMessage(config.notificationMailTemplate,
+                        config.mailAccount, order)
 
-                if (config.getNotificationEmails().contains(",")) {
-                    String[] emails = config.getNotificationEmails().split(",")
+                if (config.notificationEmails.contains(",")) {
+                    String[] emails = config.notificationEmails.split(",")
                     for (int i = 0; i < emails.length; i++) {
                         String otherEmail = emails[i]
                         notificationMessage.addTo(otherEmail.trim())
                     }
                 } else {
-                    notificationMessage.setTo(config.getNotificationEmails())
+                    notificationMessage.to = config.notificationEmails
                 }
 
                 mailService.sendAsync(notificationMessage)
                 logger.info("Notification email queued")
             }
         } catch (Exception e) {
-            logger.error("Error sending notification email for order " + order.getNumber(), e)
+            logger.error("Error sending notification email for order " + order.number, e)
             e.printStackTrace()
         }
     }
 
     private void notifyOrderCustomer(ShoppingSiteConfig config, ShoppingOrder order) {
         try {
-            if (config.getOrderCompletedMailTemplate() != null) {
-                logger.info("Sending customer email " + order.getShoppingCart().getUser().getUsername())
-                MailMessage customerMessage = createMailMessage(config.getOrderCompletedMailTemplate(),
-                        config.getMailAccount(), order)
-                User user = order.getShoppingCart().getUser()
-                customerMessage.setTo(user.getUsername())
-                if (user.getContactInfo() != null && user.getContactInfo().getEmail() != null
-                        && !user.getContactInfo().getEmail().isEmpty()
-                        && !user.getContactInfo().getEmail().equals(user.getUsername())) {
-                    customerMessage.addTo(user.getUsername())
-                    customerMessage.addTo(user.getContactInfo().getEmail())
+            if (config.orderCompletedMailTemplate != null) {
+                logger.info("Sending customer email " + order.shoppingCart.user.username)
+                MailMessage customerMessage = createMailMessage(config.orderCompletedMailTemplate,
+                        config.mailAccount, order)
+                User user = order.shoppingCart.user
+                customerMessage.to = user.username
+                if (user.contactInfo != null && user.contactInfo.email != null
+                        && !user.contactInfo.email.empty
+                        && !user.contactInfo.email.equals(user.username)) {
+                    customerMessage.addTo(user.username)
+                    customerMessage.addTo(user.contactInfo.email)
                 }
 
                 mailService.sendAsync(customerMessage)
@@ -357,7 +357,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
                 logger.error("No email template found for customer Orden Completed notification")
             }
         } catch (Exception e) {
-            logger.error("Error sending customer email for order " + order.getNumber(), e)
+            logger.error("Error sending customer email for order " + order.number, e)
             e.printStackTrace()
 
         }
@@ -367,32 +367,32 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void shipOrder(ShoppingOrder shoppingOrder) {
 
-        if (!shoppingOrder.isCompleted() || !shoppingOrder.getTransaction().isConfirmed()) {
-            throw new ValidationError(msg("OrderNotConfirmed", shoppingOrder.getNumber()))
+        if (!shoppingOrder.completed || !shoppingOrder.transaction.confirmed) {
+            throw new ValidationError(msg("OrderNotConfirmed", shoppingOrder.number))
         }
 
-        if (shoppingOrder.isShipped()) {
-            throw new ValidationError(msg("OrderAlreadyShipped", shoppingOrder.getNumber()))
+        if (shoppingOrder.shipped) {
+            throw new ValidationError(msg("OrderAlreadyShipped", shoppingOrder.number))
         }
 
-        if (shoppingOrder.getShippingCompany() == null) {
+        if (shoppingOrder.shippingCompany == null) {
             throw new ValidationError(msg("SelectShippingCompany"))
         }
 
-        if (shoppingOrder.getTrackingNumber() == null || shoppingOrder.getTrackingNumber().isEmpty()) {
+        if (shoppingOrder.trackingNumber == null || shoppingOrder.trackingNumber.empty) {
             throw new ValidationError(msg("EnterTrackingNumber"))
         }
 
-        if (shoppingOrder.getEstimatedArrivalDate() == null) {
+        if (shoppingOrder.estimatedArrivalDate == null) {
             throw new ValidationError(msg("SelectEstimatedArrivalDate"))
         }
 
-        if (shoppingOrder.getInvoiceNumber() == null || shoppingOrder.getInvoiceNumber().isEmpty()) {
+        if (shoppingOrder.invoiceNumber == null || shoppingOrder.invoiceNumber.empty) {
             throw new ValidationError(msg("EnterInvoiceNumber"))
         }
 
-        shoppingOrder.setShipped(true)
-        shoppingOrder.setShippingDate(new Date())
+        shoppingOrder.shipped = true
+        shoppingOrder.shippingDate = new Date()
         crudService.save(shoppingOrder)
         notifyOrderShipped(shoppingOrder)
 
@@ -400,64 +400,64 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
     @Override
     void notifyOrderShipped(ShoppingOrder order) {
-        if (!order.isShipped()) {
-            throw new ValidationError("Order " + order.getNumber() + " is not shipped cannot be notify it")
+        if (!order.shipped) {
+            throw new ValidationError("Order " + order.number + " is not shipped cannot be notify it")
         }
 
-        ShoppingSiteConfig config = getConfiguration(order.getSite())
-        logger.info("Order Shipped " + order.getNumber())
+        ShoppingSiteConfig config = getConfiguration(order.site)
+        logger.info("Order Shipped " + order.number)
         try {
-            if (config.getOrderShippedMailTemplate() != null) {
-                logger.info("Sending customer email " + order.getShoppingCart().getUser().getUsername())
-                MailMessage customerMessage = createMailMessage(config.getOrderShippedMailTemplate(),
-                        config.getMailAccount(), order)
-                User user = order.getShoppingCart().getUser()
-                customerMessage.setTo(user.getUsername())
-                if (user.getContactInfo().getEmail() != null && !user.getContactInfo().getEmail().isEmpty()
-                        && !user.getContactInfo().getEmail().equals(user.getUsername())) {
-                    customerMessage.addTo(user.getContactInfo().getEmail())
+            if (config.orderShippedMailTemplate != null) {
+                logger.info("Sending customer email " + order.shoppingCart.user.username)
+                MailMessage customerMessage = createMailMessage(config.orderShippedMailTemplate,
+                        config.mailAccount, order)
+                User user = order.shoppingCart.user
+                customerMessage.to = user.username
+                if (user.contactInfo.email != null && !user.contactInfo.email.empty
+                        && !user.contactInfo.email.equals(user.username)) {
+                    customerMessage.addTo(user.contactInfo.email)
                 }
 
                 mailService.send(customerMessage)
                 logger.info("Customer email Sended")
             }
         } catch (Exception e) {
-            logger.error("Error sending customer email for order " + order.getNumber(), e)
+            logger.error("Error sending customer email for order " + order.number, e)
             e.printStackTrace()
         }
     }
 
     private MailMessage createMailMessage(MailTemplate template, MailAccount mailAccount, ShoppingOrder order) {
         MailMessage message = new MailMessage()
-        message.setMailAccount(mailAccount)
-        message.setTemplate(template)
-        message.getTemplateModel().put("order", order)
+        message.mailAccount = mailAccount
+        message.template = template
+        message.templateModel.put("order", order)
 
-        ShoppingCart cart = crudService.reload(order.getShoppingCart())
+        ShoppingCart cart = crudService.reload(order.shoppingCart)
 
-        message.getTemplateModel().put("cart", cart)
-        message.getTemplateModel().put("itemsTable", buildShoppingCartTable(cart))
-        message.getTemplateModel().put("items", cart.getItems())
-        message.getTemplateModel().put("shippingAddress", getShippingAddress(order))
-        message.getTemplateModel().put("billingAddress", order.getBillingAddress())
-        message.getTemplateModel().put("tx", order.getTransaction())
-        message.getTemplateModel().put("user", order.getShoppingCart().getUser())
-        message.getTemplateModel().put("identification", order.getShoppingCart().getUser().getIdentification())
-        message.getTemplateModel().put("deliveryType", order.isPayAtDelivery() ? "Pago Envio Contraentrega" : "")
+        message.templateModel.put("cart", cart)
+        message.templateModel.put("itemsTable", buildShoppingCartTable(cart))
+        message.templateModel.put("items", cart.items)
+        message.templateModel.put("shippingAddress", getShippingAddress(order))
+        message.templateModel.put("billingAddress", order.billingAddress)
+        message.templateModel.put("tx", order.transaction)
+        message.templateModel.put("user", order.shoppingCart.user)
+        message.templateModel.put("identification", order.shoppingCart.user.identification)
+        message.templateModel.put("deliveryType", order.payAtDelivery ? "Pago Envio Contraentrega" : "")
         return message
     }
 
     private Object getShippingAddress(ShoppingOrder order) {
-        UserContactInfo address = order.getShippingAddress()
-        if (order.isPickupAtStore()) {
+        UserContactInfo address = order.shippingAddress
+        if (order.pickupAtStore) {
             address = new UserContactInfo()
-            address.setName("Recoger en tienda")
-            address.getInfo().setAddress("Se le informara via email la tienda donde recoger su mercancia")
-            address.getInfo().setCountry("")
-            address.getInfo().setCity("")
-            address.getInfo().setRegion("")
-            address.getInfo().setPhoneNumber("")
-            address.getInfo().setMobileNumber("")
+            address.name = "Recoger en tienda"
+            address.info.address = "Se le informara via email la tienda donde recoger su mercancia"
+            address.info.country = ""
+            address.info.city = ""
+            address.info.region = ""
+            address.info.phoneNumber = ""
+            address.info.mobileNumber = ""
         }
 
         return address
@@ -470,17 +470,17 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
         htb.addColumnHeader(msg("ItemSKU"), msg("ItemName"), msg("ItemUnitPrice"), msg("ItemQuantity"),
                 msg("ItemPrice"))
-        for (ShoppingCartItem item : shoppingCart.getItems()) {
+        for (ShoppingCartItem item : (shoppingCart.items)) {
             htb.addRow()
-            htb.addData(htb.getRowCount(), item.getSku(), item.getName(), item.getUnitPrice(), item.getQuantity(),
-                    item.getTotalPrice())
+            htb.addData(htb.rowCount, item.sku, item.name, item.unitPrice, item.quantity,
+                    item.totalPrice)
         }
         htb.addRow()
-        htb.addData("", "", "<b>SUBTOTAL</b>", "", shoppingCart.getQuantity(), shoppingCart.getSubtotal())
+        htb.addData("", "", "<b>SUBTOTAL</b>", "", shoppingCart.quantity, shoppingCart.subtotal)
         htb.addRow()
-        htb.addData("", "", "<b>ENVIO</b>", "", "", shoppingCart.getTotalShipmentPrice())
+        htb.addData("", "", "<b>ENVIO</b>", "", "", shoppingCart.totalShipmentPrice)
         htb.addRow()
-        htb.addData("", "", "<b>TOTAL</b>", "", "", shoppingCart.getTotalPrice())
+        htb.addData("", "", "<b>TOTAL</b>", "", "", shoppingCart.totalPrice)
         return htb.render()
     }
 
@@ -496,27 +496,26 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     void sendOrder(ShoppingOrder order) {
 
         order = crudService.reload(order)
-        ShoppingSiteConfig cfg = getConfiguration(order.getSite())
+        ShoppingSiteConfig cfg = getConfiguration(order.site)
 
-        if (cfg.getOrderSenderURL() == null || cfg.getOrderSenderURL().isEmpty()) {
-            throw new ValidationError("Cannot send order " + order.getNumber() + " because no sender is configured")
+        if (cfg.orderSenderURL == null || cfg.orderSenderURL.empty) {
+            throw new ValidationError("Cannot send order " + order.number + " because no sender is configured")
         }
 
-        ShoppingOrderSender sender = HttpRemotingServiceClient.build(ShoppingOrderSender.class)
-                .setServiceURL(cfg.getOrderSenderURL()).getProxy()
+        ShoppingOrderSender sender = HttpRemotingServiceClient.build(ShoppingOrderSender.class).serviceURL = cfg.orderSenderURL.proxy
 
         ShoppingOrderDTO dto = order.toDTO()
-        Response response = sender.sendOrder(dto, cfg.getParametersAsMap())
+        Response response = sender.sendOrder(dto, cfg.parametersAsMap)
 
         if (response != null) {
-            if (response.isError()) {
-                order.setErrorCode(response.getErrorCode())
-                order.setErrorMessage(response.getErrorMessage())
+            if (response.error) {
+                order.errorCode = response.errorCode
+                order.errorMessage = response.errorMessage
             } else {
-                order.setErrorCode(null)
-                order.setErrorMessage(null)
-                order.setExternalRef(response.getContent())
-                order.setSended(true)
+                order.errorCode = null
+                order.errorMessage = null
+                order.externalRef = response.content
+                order.sended = true
             }
         }
 
@@ -539,10 +538,9 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
             List<Site> sites = crudService.find(Site.class, "offline", false)
             for (Site site : sites) {
                 ShoppingSiteConfig cfg = getConfiguration(site)
-                if (cfg != null && cfg.isAutoSendOrders() && cfg.getOrderSenderURL() != null
-                        && !cfg.getOrderSenderURL().isEmpty()) {
-                    ShoppingOrderSender sender = HttpRemotingServiceClient.build(ShoppingOrderSender.class)
-                            .setServiceURL(cfg.getOrderSenderURL()).getProxy()
+                if (cfg != null && cfg.autoSendOrders && cfg.orderSenderURL != null
+                        && !cfg.orderSenderURL.empty) {
+                    ShoppingOrderSender sender = HttpRemotingServiceClient.build(ShoppingOrderSender.class).serviceURL = cfg.orderSenderURL.proxy
 
                     crudService.executeWithinTransaction {
 
@@ -550,7 +548,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
                                 QueryParameters.with("sended", false)
                                         .add("transaction.status", PaymentTransactionStatus.COMPLETED)
                                         .add("site", site))
-                        logger.info("Sending " + orders.size() + " orders for site " + site.getName())
+                        logger.info("Sending " + orders.size() + " orders for site " + site.name)
 
                         sendOrders(sender, orders, cfg)
                     }
@@ -567,28 +565,28 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     private void sendOrders(ShoppingOrderSender sender, List<ShoppingOrder> orders, ShoppingSiteConfig cfg) {
         List<ShoppingOrderDTO> dtos = orders.collect { it.toDTO() }
 
-        if (!dtos.isEmpty()) {
+        if (!dtos.empty) {
             logger.info("Calling Sender " + sender)
             try {
-                List<Response> response = sender.sendOrders(dtos, cfg.getParametersAsMap())
+                List<Response> response = sender.sendOrders(dtos, cfg.parametersAsMap)
 
                 if (response != null) {
                     logger.info("Sending response recieved. " + response.size())
                     for (ShoppingOrder order : orders) {
-                        Response resp = Response.find(response, order.getNumber())
+                        Response resp = Response.find(response, order.number)
                         if (resp != null) {
-                            if (resp.isError()) {
-                                order.setErrorCode(resp.getErrorCode())
-                                order.setErrorMessage(resp.getErrorMessage())
+                            if (resp.error) {
+                                order.errorCode = resp.errorCode
+                                order.errorMessage = resp.errorMessage
                             } else {
-                                order.setErrorCode(null)
-                                order.setErrorMessage(null)
-                                order.setExternalRef(resp.getContent())
-                                order.setSended(true)
+                                order.errorCode = null
+                                order.errorMessage = null
+                                order.externalRef = resp.content
+                                order.sended = true
                             }
                         }
                         crudService.update(order)
-                        logger.info("==> Updating order " + order.getNumber() + " ==> " + resp)
+                        logger.info("==> Updating order " + order.number + " ==> " + resp)
                     }
                 }
             } catch (ShoppingOrderSenderException e) {

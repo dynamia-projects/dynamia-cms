@@ -34,11 +34,11 @@ class Enumbox extends Combobox {
     private boolean valuesAsString
 
     static {
-		ComponentAliasIndex.getInstance().add(Enumbox.class)
+		ComponentAliasIndex.instance.add(Enumbox.class)
     }
 
     Enumbox() {
-		setReadonly(true)
+        readonly = true
     }
 
     Class<? extends Enum> getEnumClass() {
@@ -55,7 +55,7 @@ class Enumbox extends Combobox {
     }
 
     void init() {
-		Enum[] constants = enumClass.getEnumConstants()
+		Enum[] constants = enumClass.enumConstants
         if (valuesAsString) {
 			List<String> names = new ArrayList<>()
             for (Enum c : constants) {
@@ -70,7 +70,7 @@ class Enumbox extends Combobox {
 
 	@Override
     void setParent(Component parent) {
-		super.setParent(parent) // To change body of generated methods, choose
+        super.parent = parent // To change body of generated methods, choose
 									// Tools | Templates.
 		init()
     }

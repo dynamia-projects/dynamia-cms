@@ -23,36 +23,36 @@ class ShoppingOrderShipmentUI extends Borderlayout implements ActionEventBuilder
     }
 
 	private void createUI() {
-		setHflex("1")
-        setVflex("1")
+        hflex = "1"
+        vflex = "1"
 
-        new Center().setParent(this)
-        getCenter().setAutoscroll(true)
+        new Center().parent = this
+        center.autoscroll = true
         Div content = new Div()
-        content.setParent(getCenter())
+        content.parent = center
 
-        new South().setParent(this)
-        toolbar.setParent(getSouth())
+        new South().parent = this
+        toolbar.parent = south
 
         FormView<ShoppingOrder> orderFormView = (FormView<ShoppingOrder>) Viewers.getView(Viewers
 				.findViewDescriptor("ShoppingOrderShipment"))
-        orderFormView.setReadOnly(true)
+        orderFormView.readOnly = true
 
         TableView<ShoppingCartItem> itemTableView = (TableView<ShoppingCartItem>) Viewers.getView(ShoppingCartItem.class, "table",
-				shoppingOrder.getShoppingCart().getItems())
-        itemTableView.setHeight("400px")
-        itemTableView.setVflex(false)
+                shoppingOrder.shoppingCart.items)
+        itemTableView.height = "400px"
+        itemTableView.vflex = false
 
-        orderFormView.setParent(content)
+        orderFormView.parent = content
 
         Groupbox title = new Groupbox()
-        title.setMold("3d")
-        title.setOpen(false)
-        title.setClosable(false)
+        title.mold = "3d"
+        title.open = false
+        title.closable = false
         title.appendChild(new Caption("Order Details"))
-        title.setParent(content)
+        title.parent = content
 
-        itemTableView.setParent(content)
+        itemTableView.parent = content
     }
 
 	@Override

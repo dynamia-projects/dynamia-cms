@@ -18,7 +18,7 @@ class ProductCategoriesFiltersModule extends AbstractModule {
 
     ProductCategoriesFiltersModule() {
 		super("products_categories_filters", "Products Categories Filters", "products/modules/categoryfilters")
-        setDescription("Show a products categories filters")
+        description = "Show a products categories filters"
         putMetadata("author", "Mario Serrano Leones")
         putMetadata("version", "1.0")
         putMetadata("created at", "13-03-2017")

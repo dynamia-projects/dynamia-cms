@@ -58,7 +58,7 @@ class LoadProductCategoryAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
+        ModelAndView mv = evt.modelAndView
 
         loadProductsFromCategory(evt, mv)
 
@@ -66,27 +66,27 @@ class LoadProductCategoryAction implements SiteAction {
     }
 
     private void loadProductsFromCategory(ActionEvent evt, ModelAndView mv) {
-        String orderfield = evt.getRequest().getParameter("order")
-        boolean asc = "1".equals(evt.getRequest().getParameter("asc"))
+        String orderfield = evt.request.getParameter("order")
+        boolean asc = "1".equals(evt.request.getParameter("asc"))
 
         if (orderfield == null || !ORDER_FIELDS.contains(orderfield)) {
             orderfield = "price"
         }
 
-        ProductsSiteConfig config = service.getSiteConfig(evt.getSite())
+        ProductsSiteConfig config = service.getSiteConfig(evt.site)
         ProductCategory category = null
-        if (evt.getData() instanceof String) {
-            String alias = (String) evt.getData()
-            category = service.getCategoryByAlias(evt.getSite(), alias)
+        if (evt.data instanceof String) {
+            String alias = (String) evt.data
+            category = service.getCategoryByAlias(evt.site, alias)
         } else {
-            Long id = (Long) evt.getData()
+            Long id = (Long) evt.data
             category = crudService.find(ProductCategory.class, id)
         }
 
         List<Product> products = null
-        QueryParameters qp = QueryParameters.with("active", true).add("site", evt.getSite())
+        QueryParameters qp = QueryParameters.with("active", true).add("site", evt.site)
 
-        if (category.getParent() == null) {
+        if (category.parent == null) {
             qp.addGroup(QueryParameters.with("category.parent", QueryConditions.eq(category, BooleanOp.OR))
                     .add("category", QueryConditions.eq(category, BooleanOp.OR)), BooleanOp.AND)
         } else {
@@ -96,43 +96,43 @@ class LoadProductCategoryAction implements SiteAction {
         qp.orderBy(orderfield, asc)
 
         if (config != null) {
-            qp.paginate(config.getProductsPerPage())
+            qp.paginate(config.productsPerPage)
         }
 
-        String title = category.getName()
+        String title = category.name
         Map<String, String> filteredDetails = null
-        if (evt.getRequest().getParameterMap().containsKey("featured")) {
+        if (evt.request.parameterMap.containsKey("featured")) {
             qp.add("featured", true)
             products = crudService.find(Product.class, qp)
-        } else if (evt.getRequest().getParameterMap().containsKey("sale")) {
+        } else if (evt.request.parameterMap.containsKey("sale")) {
             qp.add("sale", true)
             products = crudService.find(Product.class, qp)
-        } else if (evt.getRequest().getParameterMap().containsKey("new")) {
+        } else if (evt.request.parameterMap.containsKey("new")) {
             qp.add("newproduct", true)
             products = crudService.find(Product.class, qp)
-        } else if (evt.getRequest().getParameterMap().containsKey("views")) {
+        } else if (evt.request.parameterMap.containsKey("views")) {
             qp.orderBy("views", false)
             products = crudService.find(Product.class, qp)
-        } else if (evt.getRequest().getParameter("q") != null) {
+        } else if (evt.request.getParameter("q") != null) {
             ProductSearchForm form = new ProductSearchForm()
-            form.setCategoryId(category.getId())
-            form.setDetail(evt.getRequest().getParameter("q"))
-            form.setDetail2(evt.getRequest().getParameter("q2"))
-            form.setDetail3(evt.getRequest().getParameter("q3"))
-            form.setDetail4(evt.getRequest().getParameter("q4"))
-            form.setMaxPrice(CMSUtil.toBigDecimal(evt.getRequest().getParameter("max")))
-            form.setMinPrice(CMSUtil.toBigDecimal(evt.getRequest().getParameter("min")))
+            form.categoryId = category.id
+            form.detail = evt.request.getParameter("q")
+            form.detail2 = evt.request.getParameter("q2")
+            form.detail3 = evt.request.getParameter("q3")
+            form.detail4 = evt.request.getParameter("q4")
+            form.maxPrice = CMSUtil.toBigDecimal(evt.request.getParameter("max"))
+            form.minPrice = CMSUtil.toBigDecimal(evt.request.getParameter("min"))
             try {
-                ProductBrand brand = service.getBrandByAlias(evt.getSite(), evt.getRequest().getParameter("brand"))
-                form.setBrandId(brand.getId())
-                title = title + " " + brand.getName()
+                ProductBrand brand = service.getBrandByAlias(evt.site, evt.request.getParameter("brand"))
+                form.brandId = brand.id
+                title = title + " " + brand.name
             } catch (Exception e) {
             }
-            form.setOrder(null)
-            if (form.getDetail() != null) {
-                title = title + " " + form.getDetail().replaceAll("=", " ")
+            form.order = null
+            if (form.detail != null) {
+                title = title + " " + form.detail.replaceAll("=", " ")
             }
-            products = service.filterProducts(evt.getSite(), form)
+            products = service.filterProducts(evt.site, form)
             filteredDetails = (Map<String, String>) form.getAttribute("filteredDetails")
 
         } else {
@@ -150,10 +150,10 @@ class LoadProductCategoryAction implements SiteAction {
         if (filteredDetails != null) {
 
             filteredDetails.forEach { k, v ->
-                ProductCategoryDetail det = finalDetails.stream().filter { d -> d.getName().equalsIgnoreCase(k) }.findFirst().orElse(null)
+                ProductCategoryDetail det = finalDetails.stream().filter { d -> d.name.equalsIgnoreCase(k) }.findFirst().orElse(null)
                 if (det != null) {
-                    det.setSelected(true)
-                    det.setSelectedValue(v)
+                    det.selected = true
+                    det.selectedValue = v
                 }
             }
         }
@@ -164,15 +164,15 @@ class LoadProductCategoryAction implements SiteAction {
         mv.addObject("prd_category_details", finalDetails)
         mv.addObject("prd_subcategories", subcategories)
         mv.addObject("prd_categoryBrands", categoryBrands)
-        mv.addObject("prd_parentCategory", category.getParent())
+        mv.addObject("prd_parentCategory", category.parent)
         mv.addObject("orderfield", orderfield)
         mv.addObject("asc", asc)
         // mv.addObject("prd_specialProducts", specialProducts);
 
-        if (mv.getModel().get("filteredDetails") == null) {
+        if (mv.model.get("filteredDetails") == null) {
             mv.addObject("filteredDetails", Collections.EMPTY_LIST)
         }
-        products = CMSUtil.setupPagination(products, evt.getRequest(), mv)
+        products = CMSUtil.setupPagination(products, evt.request, mv)
         ProductsUtil.setupProductsVar(products, mv)
     }
 

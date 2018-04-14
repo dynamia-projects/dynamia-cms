@@ -50,13 +50,13 @@ class ProductsSynchronizer {
     void synchronize(ProductsSiteConfig siteConfig) {
 		siteConfig = crudService.reload(siteConfig)
 
-        if (!siteConfig.isSynchronizationEnabled()) {
-			logger.warn("Product Synchronization is NOT enabled for  " + siteConfig.getSite())
+        if (!siteConfig.synchronizationEnabled) {
+			logger.warn("Product Synchronization is NOT enabled for  " + siteConfig.site)
             return
         }
 		final ProductsSiteConfig siteCfg = siteConfig
 
-        logger.info("Starting Products Sync for " + siteCfg.getSite())
+        logger.info("Starting Products Sync for " + siteCfg.site)
 
         logger.info("Brands")
         List<ProductBrandDTO> brands = service.synchronizeBrands(siteCfg)
@@ -78,18 +78,18 @@ class ProductsSynchronizer {
         logger.info("Products")
         List<ProductDTO> products = service.synchronizeProducts(siteCfg)
         for (ProductDTO productDTO : products) {
-			if (siteCfg.isSyncProductDetails()) {
-				logger.info("-Product Details for " + productDTO.getName())
+			if (siteCfg.syncProductDetails) {
+				logger.info("-Product Details for " + productDTO.name)
                 service.syncProductDetails(siteCfg, productDTO)
             }
 
-			if (siteCfg.isSyncStockDetails()) {
-				logger.info("-Product Stock for " + productDTO.getName())
+			if (siteCfg.syncStockDetails) {
+				logger.info("-Product Stock for " + productDTO.name)
                 service.syncProductStockDetails(siteCfg, productDTO)
             }
 
-			if (siteCfg.isSyncProductCreditPrices()) {
-				logger.info("-Product Prices for " + productDTO.getName())
+			if (siteCfg.syncProductCreditPrices) {
+				logger.info("-Product Prices for " + productDTO.name)
                 service.syncProductCreditPrices(siteCfg, productDTO)
             }
 		}
@@ -101,25 +101,25 @@ class ProductsSynchronizer {
         service.disableRelatedProductsNoInList(siteCfg, relatedProducts)
 
         logger.info("Compute product count by category")
-        productsService.computeProductCountByCategory(siteCfg.getSite())
+        productsService.computeProductCountByCategory(siteCfg.site)
 
-        if (siteCfg.isSyncProductImages()) {
+        if (siteCfg.syncProductImages) {
 			SchedulerUtil.run(new Task("Images Downloader") {
 				@Override
                 void doWork() {
 
 					for (ProductBrandDTO brandDTO : brands) {
-						logger.info("Downloading Brand Images for " + brandDTO.getName())
+						logger.info("Downloading Brand Images for " + brandDTO.name)
                         service.downloadBrandImages(siteCfg, brandDTO)
                     }
 
 					for (StoreDTO storeDTO : stores) {
-						logger.info("Downloading Store Images for " + storeDTO.getName())
+						logger.info("Downloading Store Images for " + storeDTO.name)
                         service.downloadStoreImages(siteCfg, storeDTO)
                     }
 
 					for (ProductDTO productDTO : products) {
-						logger.info("Downloading Product Images for " + productDTO.getName())
+						logger.info("Downloading Product Images for " + productDTO.name)
                         service.downloadProductImages(siteCfg, productDTO)
                     }
 					logger.info("Images downloading completed.")
@@ -128,9 +128,9 @@ class ProductsSynchronizer {
         }
 
 		service.update(siteCfg)
-        logger.info("Sync Completed for " + siteCfg.getSite())
+        logger.info("Sync Completed for " + siteCfg.site)
 
-        siteService.clearCache(siteCfg.getSite())
+        siteService.clearCache(siteCfg.site)
     }
 
     void synchronize(ProductsSiteConfig siteCfg, ProductDTO dto) {
@@ -141,9 +141,9 @@ class ProductsSynchronizer {
             service.syncProductStockDetails(siteCfg, dto)
             service.syncProductCreditPrices(siteCfg, dto)
             service.downloadProductImages(siteCfg, dto)
-            siteService.clearCache(siteCfg.getSite())
+            siteService.clearCache(siteCfg.site)
         } catch (Exception e) {
-			logger.error("Error Syncronizing product " + dto.getName() + " for SITE: " + siteCfg.getSite(), e)
+			logger.error("Error Syncronizing product " + dto.name + " for SITE: " + siteCfg.site, e)
         }
 	}
 }

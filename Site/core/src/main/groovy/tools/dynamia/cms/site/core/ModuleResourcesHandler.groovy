@@ -23,7 +23,7 @@ class ModuleResourcesHandler extends SiteResourceHandler {
 
 	@Override
 	protected Path resolveResourceDirectory(Site site) {
-		return DynamiaCMS.getModulesLocation()
+		return DynamiaCMS.modulesLocation
     }
 
 }

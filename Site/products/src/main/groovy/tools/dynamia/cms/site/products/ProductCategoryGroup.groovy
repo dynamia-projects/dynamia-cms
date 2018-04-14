@@ -30,13 +30,13 @@ class ProductCategoryGroup implements Serializable {
         List<ProductCategoryGroup> groups = new ArrayList<>()
         if (products != null) {
             MultiMap<ProductCategory, Product> maps = new HashSetMultiMap<>()
-            products.forEach { p -> maps.put(p.getCategory(), p) }
+            products.forEach { p -> maps.put(p.category, p) }
 
 
             maps.forEach { k, v ->
                 ProductCategoryGroup grp = new ProductCategoryGroup()
-                grp.setCategory(k)
-                grp.setProducts(new ArrayList<>(v))
+                grp.category = k
+                grp.products = new ArrayList<>(v)
                 groups.add(grp)
             }
 

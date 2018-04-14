@@ -27,7 +27,7 @@ import tools.dynamia.integration.Containers
 class ShoppingCartUtils {
 
 	static ShoppingCart getShoppingCart(ModelAndView mv) {
-		String cartName = (String) mv.getModel().get("cartName")
+		String cartName = (String) mv.model.get("cartName")
         ShoppingCart cart = ShoppingCartHolder.get().getCart(cartName)
         mv.addObject("cart", cart)
         return cart
@@ -41,7 +41,7 @@ class ShoppingCartUtils {
         mv.addObject("shoppingConfig", config)
         boolean paymentEnabled = false
         if (config != null) {
-			paymentEnabled = config.isPaymentEnabled() || UserHolder.get().isAdmin()
+			paymentEnabled = config.paymentEnabled || UserHolder.get().admin
         }
 		mv.addObject("paymentEnabled", paymentEnabled)
 

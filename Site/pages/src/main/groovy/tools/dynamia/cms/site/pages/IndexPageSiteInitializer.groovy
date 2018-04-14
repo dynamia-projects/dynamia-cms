@@ -30,11 +30,11 @@ class IndexPageSiteInitializer implements SiteInitializer {
     @Override
     void postInit(Site site) {
         Page index = new Page()
-        index.setAlias("index")
-        index.setTitle(site.getName())
-        index.setSite(site)
+        index.alias = "index"
+        index.title = site.name
+        index.site = site
         ContentAuthor author = getAuthor(site)
-        index.setAuthor(author)
+        index.author = author
 
         crudService.create(index)
 
@@ -44,9 +44,9 @@ class IndexPageSiteInitializer implements SiteInitializer {
         ContentAuthor author = crudService.findSingle(ContentAuthor.class, "site", site)
         if (author == null) {
             author = new ContentAuthor()
-            author.setFirstName("Default")
-            author.setLastName("Author")
-            author.setEmail("admin@" + site.getKey() + ".login")
+            author.firstName = "Default"
+            author.lastName = "Author"
+            author.email = "admin@" + site.key + ".login"
             crudService.save(author)
         }
         return author

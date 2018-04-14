@@ -18,9 +18,9 @@ class ModuleStatusFilterAction extends AbstractCrudAction {
     private static final String DISABLED = "Disabled"
 
     ModuleStatusFilterAction() {
-		setName("Status")
-        setGroup(ActionGroup.get("CRUD"))
-        setPosition(11)
+        name = "Status"
+        group = ActionGroup.get("CRUD")
+        position = 11
     }
 
 	@Override
@@ -35,9 +35,9 @@ class ModuleStatusFilterAction extends AbstractCrudAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		String status = (String) evt.getData()
-        evt.getController().setParemeter("enabled", ENABLED.equalsIgnoreCase(status))
-        evt.getController().doQuery()
+		String status = (String) evt.data
+        evt.controller.setParemeter("enabled", ENABLED.equalsIgnoreCase(status))
+        evt.controller.doQuery()
 
     }
 

@@ -95,7 +95,7 @@ class ShoppingCartItem extends SimpleEntity {
 
     void compute() {
         if (quantity > 0 && unitPrice != null && unitPrice.doubleValue() > 0) {
-            subtotal = unitPrice.add(getDiscount()).multiply(new BigDecimal(quantity))
+            subtotal = unitPrice.add(discount).multiply(new BigDecimal(quantity))
         }
 
         if (taxable && taxPercent > 0) {
@@ -103,8 +103,8 @@ class ShoppingCartItem extends SimpleEntity {
                     .multiply(new BigDecimal(quantity))
         }
 
-        if (shoppingCart.getShipmentPercent() > 0) {
-            shipmentPrice = BigDecimalUtils.computePercent(subtotal, shoppingCart.getShipmentPercent(), false)
+        if (shoppingCart.shipmentPercent > 0) {
+            shipmentPrice = BigDecimalUtils.computePercent(subtotal, shoppingCart.shipmentPercent, false)
         } else {
             shipmentPrice = BigDecimal.ZERO
         }
@@ -122,7 +122,7 @@ class ShoppingCartItem extends SimpleEntity {
 
     ShoppingCartItem clone() {
         ShoppingCartItem clone = BeanUtils.clone(this, "id")
-        clone.setId(null)
+        clone.id = null
         clone.code = code
         clone.description = description
         clone.imageName = imageName
@@ -147,20 +147,20 @@ class ShoppingCartItem extends SimpleEntity {
     ShoppingOrderItemDTO toDTO() {
         ShoppingOrderItemDTO dto = new ShoppingOrderItemDTO()
         BeanUtils.setupBean(dto, this)
-        dto.setCode(code)
-        dto.setDescription(description)
-        dto.setImageName(imageName)
-        dto.setImageURL(imageURL)
-        dto.setName(name)
-        dto.setQuantity(quantity)
-        dto.setRefClass(refClass)
-        dto.setRefId(refId)
-        dto.setShipmentPrice(shipmentPrice)
-        dto.setTaxes(taxes)
-        dto.setTotalPrice(totalPrice)
-        dto.setUnitPrice(unitPrice)
+        dto.code = code
+        dto.description = description
+        dto.imageName = imageName
+        dto.imageURL = imageURL
+        dto.name = name
+        dto.quantity = quantity
+        dto.refClass = refClass
+        dto.refId = refId
+        dto.shipmentPrice = shipmentPrice
+        dto.taxes = taxes
+        dto.totalPrice = totalPrice
+        dto.unitPrice = unitPrice
         dto.setURL(URL)
-        dto.setSku(sku)
+        dto.sku = sku
         return dto
     }
 

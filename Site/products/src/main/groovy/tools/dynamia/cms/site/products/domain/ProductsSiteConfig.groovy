@@ -380,8 +380,8 @@ class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 	@JsonIgnore
     Map<String, String> getParametersAsMap() {
 		Map<String, String> params = new HashMap<>()
-        for (ProductsSiteConfigParameter param : getParameters()) {
-			params.put(param.getName(), param.getValue())
+        for (ProductsSiteConfigParameter param : (parameters)) {
+			params.put(param.name, param.value)
         }
 		return params
     }

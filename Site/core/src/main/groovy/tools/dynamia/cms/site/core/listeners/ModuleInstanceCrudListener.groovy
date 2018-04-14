@@ -34,8 +34,8 @@ class ModuleInstanceCrudListener extends CrudServiceListenerAdapter<ModuleInstan
     }
 
 	private void checkAlias(ModuleInstance entity) {
-		if (entity.getAlias() == null || entity.getAlias().isEmpty()) {
-			entity.setAlias(StringUtils.simplifiedString(entity.getTitle()))
+		if (entity.alias == null || entity.alias.empty) {
+            entity.alias = StringUtils.simplifiedString(entity.title)
         }
 
 	}

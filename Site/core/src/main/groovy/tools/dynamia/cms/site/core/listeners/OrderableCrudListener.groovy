@@ -38,8 +38,8 @@ class OrderableCrudListener extends CrudServiceListenerAdapter<Orderable> {
     }
 
     private void fixOrder(Orderable entity) {
-        if (entity.getOrder() < 0) {
-            entity.setOrder(0)
+        if (entity.order < 0) {
+            entity.order = 0
         }
     }
 

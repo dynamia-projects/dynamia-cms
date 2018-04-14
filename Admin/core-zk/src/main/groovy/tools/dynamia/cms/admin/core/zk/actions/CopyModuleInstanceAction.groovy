@@ -40,9 +40,9 @@ class CopyModuleInstanceAction extends AbstractCrudAction {
 	private CrudService crudService
 
     CopyModuleInstanceAction() {
-		setGroup(ActionGroup.get("CRUD"))
-        setName("Copy")
-        setImage("copy")
+        group = ActionGroup.get("CRUD")
+        name = "Copy"
+        image = "copy"
     }
 
 	@Override
@@ -57,13 +57,13 @@ class CopyModuleInstanceAction extends AbstractCrudAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		ModuleInstance moduleInstance = (ModuleInstance) evt.getData()
+		ModuleInstance moduleInstance = (ModuleInstance) evt.data
         if (moduleInstance != null) {
 			moduleInstance = crudService.reload(moduleInstance)
             moduleInstance = moduleInstance.clone()
             ModuleInstanceUI ui = new ModuleInstanceUI(moduleInstance)
             ui.addAction(new SaveModuleInstanceAction(crudService, evt))
-            ZKUtil.showDialog(moduleInstance.getTitle(), ui, "90%", "90%")
+            ZKUtil.showDialog(moduleInstance.title, ui, "90%", "90%")
         } else {
 			UIMessages.showMessage("Select module instance", MessageType.ERROR)
         }

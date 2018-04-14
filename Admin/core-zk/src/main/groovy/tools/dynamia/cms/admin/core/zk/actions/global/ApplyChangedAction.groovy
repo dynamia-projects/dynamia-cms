@@ -13,9 +13,9 @@ class ApplyChangedAction extends ApplicationGlobalAction {
 	private SiteManager siteManager
 
     ApplyChangedAction() {
-		setName("Apply")
-        setDescription("All changes are visible in site")
-        setImage("refresh")
+        name = "Apply"
+        description = "All changes are visible in site"
+        image = "refresh"
         setAttribute("background", "btn btn-primary btn-flat bg-light-blue-active")
 
 

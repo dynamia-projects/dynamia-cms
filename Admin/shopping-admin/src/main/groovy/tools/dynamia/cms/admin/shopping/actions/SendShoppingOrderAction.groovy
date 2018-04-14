@@ -26,8 +26,8 @@ class SendShoppingOrderAction extends AbstractCrudAction {
 	private CrudService crudService
 
     SendShoppingOrderAction() {
-		setName("Send Order")
-        setDescription("Send selected order to external system")
+        name = "Send Order"
+        description = "Send selected order to external system"
     }
 
 	@Override
@@ -42,29 +42,29 @@ class SendShoppingOrderAction extends AbstractCrudAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		ShoppingOrder order = (ShoppingOrder) evt.getData()
+		ShoppingOrder order = (ShoppingOrder) evt.data
         if (order != null) {
 
-			if (order.isSended()) {
-				throw new ValidationError("Order " + order.getNumber() + " already was sended")
+			if (order.sended) {
+				throw new ValidationError("Order " + order.number + " already was sended")
             }
 
-			if (order.getTransaction().getStatus() != PaymentTransactionStatus.COMPLETED) {
+			if (order.transaction.status != PaymentTransactionStatus.COMPLETED) {
 				throw new ValidationError("Order is NOT completed")
             }
 
-			UIMessages.showQuestion("Are you sure send order " + order.getNumber() + "?",  {
+			UIMessages.showQuestion("Are you sure send order " + order.number + "?",  {
 				try {
 					service.sendOrder(order)
-                    UIMessages.showMessage("Order " + order.getNumber() + " sended successfully")
-                    evt.getController().doQuery()
+                    UIMessages.showMessage("Order " + order.number + " sended successfully")
+                    evt.controller.doQuery()
                 } catch (ShoppingOrderSenderException e) {
-					Messagebox.show(e.getMessage())
+					Messagebox.show(e.message)
                 } catch (ValidationError e) {
-					UIMessages.showMessage(e.getMessage(), MessageType.WARNING)
+					UIMessages.showMessage(e.message, MessageType.WARNING)
 
                 } catch (Exception e) {
-					UIMessages.showMessage("Error sending order: " + e.getMessage(), MessageType.ERROR)
+					UIMessages.showMessage("Error sending order: " + e.message, MessageType.ERROR)
                     e.printStackTrace()
                 }
 			})

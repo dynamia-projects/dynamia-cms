@@ -22,38 +22,38 @@ class ShoppingOrderDetailsUI extends Div {
 	private void createUI() {
 
 		FormView<ShoppingOrder> orderFormView = (FormView<ShoppingOrder>) Viewers.getView(ShoppingOrder.class, "form", shoppingOrder)
-        orderFormView.setReadOnly(true)
+        orderFormView.readOnly = true
 
         FormView<PaymentTransaction> txFormView = (FormView<PaymentTransaction>) Viewers.getView(PaymentTransaction.class, "form",
-				shoppingOrder.getTransaction())
-        txFormView.setReadOnly(true)
-        txFormView.setVflex("min")
+                shoppingOrder.transaction)
+        txFormView.readOnly = true
+        txFormView.vflex = "min"
 
         TableView<ShoppingCartItem> itemTableView = (TableView<ShoppingCartItem>) Viewers.getView(ShoppingCartItem.class, "table",
-				shoppingOrder.getShoppingCart().getItems())
+                shoppingOrder.shoppingCart.items)
 
-        itemTableView.setVflex(null)
-        itemTableView.setHeight("400px")
+        itemTableView.vflex = null
+        itemTableView.height = "400px"
 
-        orderFormView.setParent(this)
+        orderFormView.parent = this
 
         Groupbox title = new Groupbox()
-        title.setMold("3d")
-        title.setOpen(false)
-        title.setClosable(false)
+        title.mold = "3d"
+        title.open = false
+        title.closable = false
         title.appendChild(new Caption("Transaction Details"))
-        title.setParent(this)
+        title.parent = this
 
-        txFormView.setParent(this)
+        txFormView.parent = this
 
         title = new Groupbox()
-        title.setMold("3d")
-        title.setOpen(false)
-        title.setClosable(false)
+        title.mold = "3d"
+        title.open = false
+        title.closable = false
         title.appendChild(new Caption("Order Details"))
-        title.setParent(this)
+        title.parent = this
 
-        itemTableView.setParent(this)
+        itemTableView.parent = this
     }
 
 }

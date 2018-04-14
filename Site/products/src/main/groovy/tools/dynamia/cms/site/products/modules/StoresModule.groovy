@@ -19,24 +19,24 @@ class StoresModule extends AbstractModule {
 
     StoresModule() {
         super("stores", "Stores List", "products/modules/stores")
-        setDescription("Show a stores list")
+        description = "Show a stores list"
         putMetadata("author", "Mario Serrano Leones")
         putMetadata("version", "1.0")
         putMetadata("created at", "10-04-2017")
-        setVariablesNames("stores")
+        variablesNames = "stores"
 
     }
 
     @Override
     void init(ModuleContext context) {
-        List<Store> stores = service.getStores(context.getSite())
+        List<Store> stores = service.getStores(context.site)
         try {
-            stores.forEach { s -> s.getContacts().size() }
+            stores.forEach { s -> s.contacts.size() }
         } catch (Exception e) {
         }
 
 
-        context.getModuleInstance().addObject("stores", stores)
+        context.moduleInstance.addObject("stores", stores)
 
     }
 

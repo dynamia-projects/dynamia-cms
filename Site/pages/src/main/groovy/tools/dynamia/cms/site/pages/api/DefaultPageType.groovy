@@ -47,7 +47,7 @@ class DefaultPageType implements PageTypeExtension {
 
     @Override
     void setupPage(PageContext context) {
-        context.getModelAndView().setViewName("site/page")
+        context.modelAndView.viewName = "site/page"
     }
 
 }

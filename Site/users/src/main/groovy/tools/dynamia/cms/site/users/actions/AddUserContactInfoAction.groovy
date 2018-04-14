@@ -45,13 +45,13 @@ class AddUserContactInfoAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
+		ModelAndView mv = evt.modelAndView
 
         UserContactInfo userContactInfo = new UserContactInfo()
         mv.addObject("title", "Nueva direccion de contacto")
         mv.addObject("userContactInfo", userContactInfo)
 
-        CMSUtil.buildContactInfoOptions(evt.getSite(), mv, "uci", userContactInfo.getInfo())
+        CMSUtil.buildContactInfoOptions(evt.site, mv, "uci", userContactInfo.info)
     }
 
 }

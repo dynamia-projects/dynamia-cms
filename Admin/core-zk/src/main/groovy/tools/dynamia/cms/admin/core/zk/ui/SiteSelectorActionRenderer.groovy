@@ -35,7 +35,7 @@ class SiteSelectorActionRenderer implements ActionRenderer<SiteSelector> {
 
             @Override
             void onEvent(Event event) throws Exception {
-                action.actionPerformed(evtBuilder.buildActionEvent(selector.getSelectedItem().getValue(), null))
+                action.actionPerformed(evtBuilder.buildActionEvent(selector.selectedItem.value, null))
             }
         })
 

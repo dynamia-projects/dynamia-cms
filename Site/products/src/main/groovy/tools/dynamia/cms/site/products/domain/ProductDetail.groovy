@@ -169,18 +169,18 @@ class ProductDetail extends SimpleEntity implements SiteAware, Orderable {
     }
 
     void sync(ProductDetailDTO dto) {
-		description = dto.getDescription()
-        externalRef = dto.getExternalRef()
-        name = dto.getName()
-        value = dto.getValue()
-        order = dto.getOrder()
-        imageURL = dto.getImageURL()
-        featured = dto.isFeatured()
-        filterale = dto.isFilterable()
-        value2 = dto.getValue2()
-        url = dto.getUrl()
-        url2 = dto.getUrl2()
-        color = dto.getColor()
+		description = dto.description
+        externalRef = dto.externalRef
+        name = dto.name
+        value = dto.value
+        order = dto.order
+        imageURL = dto.imageURL
+        featured = dto.featured
+        filterale = dto.filterable
+        value2 = dto.value2
+        url = dto.url
+        url2 = dto.url2
+        color = dto.color
     }
 
 }

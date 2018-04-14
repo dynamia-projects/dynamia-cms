@@ -39,22 +39,22 @@ class AdminUsersController {
         initializer.init(request)
 
         Site site = service.getSite(request)
-        SiteContext.get().setCurrent(site)
+        SiteContext.get().current = site
 
         ModelAndView mv = new ModelAndView("login")
-        mv.addObject("contextPath", request.getContextPath())
+        mv.addObject("contextPath", request.contextPath)
 
         return mv
     }
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
     ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication()
+		Authentication auth = SecurityContextHolder.context.authentication
         if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth)
         }
 		ModelAndView mv = new ModelAndView()
-        mv.setView(new RedirectView("/", false, true, false))
+        mv.view = new RedirectView("/", false, true, false)
         return mv
     }
 

@@ -141,11 +141,11 @@ class ProductCategoryDetail extends SimpleEntity implements SiteAware, Orderable
     }
 
     void sync(ProductCategoryDetailDTO dto) {
-        this.name = dto.getName()
-        this.values = dto.getValues()
-        this.externalRef = dto.getExternalRef()
-        this.order = dto.getOrder()
-        this.filterable = dto.isFilterable()
+        this.name = dto.name
+        this.values = dto.values
+        this.externalRef = dto.externalRef
+        this.order = dto.order
+        this.filterable = dto.filterable
 
     }
 

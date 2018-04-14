@@ -20,11 +20,11 @@ class ImportUtils {
 		String value = null
 		Cell cell = row.getCell(cellIndex)
 		if (cell != null) {
-			if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+			if (cell.cellType == Cell.CELL_TYPE_NUMERIC) {
 				DataFormatter df = new DataFormatter()
 				value = df.formatCellValue(cell)
 			} else {
-				value = cell.getStringCellValue()
+				value = cell.stringCellValue
 			}
 		}
 		if (value != null) {
@@ -36,17 +36,17 @@ class ImportUtils {
 	static Object getCellValueObject(Row row, int cellIndex) {
 		Cell cell = row.getCell(cellIndex)
 		if (cell != null) {
-			switch (cell.getCellTypeEnum()) {
+			switch (cell.cellTypeEnum) {
 			case CellType.BLANK:
 				return null
 				case CellType.BOOLEAN:
-				return cell.getBooleanCellValue()
+				return cell.booleanCellValue
 				case CellType.STRING:
-				return cell.getStringCellValue()
+				return cell.stringCellValue
 				case CellType.NUMERIC:
-				return cell.getNumericCellValue()
+				return cell.numericCellValue
 				default:
-				return cell.getStringCellValue()
+				return cell.stringCellValue
 			}
 		}
 		return null
@@ -60,13 +60,13 @@ class ImportUtils {
 
 		Workbook workbook = WorkbookFactory.create(excelFile)
 		Sheet sheet = workbook.getSheetAt(0)
-		monitor.setMax(sheet.getLastRowNum())
+        monitor.max = sheet.lastRowNum
 		List<T> lineas = new ArrayList<>()
 		int filasOK = 0
 		for (Row row : sheet) {
-			if (row.getRowNum() == 0) {
-				monitor.setMessage("Procesando Encabezados")
-			} else {
+			if (row.rowNum == 0) {
+                monitor.message = "Procesando Encabezados"
+            } else {
 				try {
 					T bean = parser.parse(row)
 					if (bean != null) {
@@ -74,14 +74,13 @@ class ImportUtils {
 							lineas.add(bean)
 						}
 						filasOK++
-						monitor.setMessage("Fila " + row.getRowNum() + " importada Ok")
-					}
+                        monitor.message = "Fila " + row.rowNum + " importada Ok"
+                    }
 				} catch (ValidationError validationError) {
-					monitor.setMessage(
-							"Error importando fila " + row.getRowNum() + ". " + validationError.getMessage())
-				}
+                    monitor.message = "Error importando fila " + row.rowNum + ". " + validationError.message
+                }
 			}
-			monitor.setCurrent(row.getRowNum())
+            monitor.current = row.rowNum
 		}
 
 		return lineas
@@ -92,7 +91,7 @@ class ImportUtils {
 			for (int i = 0; i < fields.length; i++) {
 				try {
 					String fieldName = fields[i]
-					if (fieldName != null && !fieldName.isEmpty()) {
+					if (fieldName != null && !fieldName.empty) {
 						Object value = getCellValueObject(row, i)
 						if (value != null) {
 							BeanUtils.setFieldValue(fieldName, bean, value)

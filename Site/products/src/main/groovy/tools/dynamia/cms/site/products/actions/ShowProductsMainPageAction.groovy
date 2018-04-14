@@ -55,15 +55,15 @@ class ShowProductsMainPageAction implements SiteAction {
 	@Override
     void actionPerformed(ActionEvent evt) {
 
-		ModelAndView mv = evt.getModelAndView()
+		ModelAndView mv = evt.modelAndView
 
-        List<Product> mostViewed = service.getMostViewedProducts(evt.getSite())
-        List<Product> priceVariations = service.getPriceVariationsProducts(evt.getSite())
+        List<Product> mostViewed = service.getMostViewedProducts(evt.site)
+        List<Product> priceVariations = service.getPriceVariationsProducts(evt.site)
 
         mv.addObject("prd_mostViewedProducts", mostViewed)
         mv.addObject("prd_priceVariations", priceVariations)
 
-        if (UserHolder.get().isAuthenticated()) {
+        if (UserHolder.get().authenticated) {
 			loadRecentProductsFromUser(evt, mv)
         } else {
 			// loadRecentProductsFromCookies(evt, mv);
@@ -74,31 +74,31 @@ class ShowProductsMainPageAction implements SiteAction {
     }
 
 	private void applyParams(ModelAndView mv) {
-		Map<String, Object> pageParams = (Map<String, Object>) mv.getModel().get("pageParams")
+		Map<String, Object> pageParams = (Map<String, Object>) mv.model.get("pageParams")
 
     }
 
 	private void loadRecentProductsFromUser(ActionEvent evt, ModelAndView mv) {
 		try {
 
-			List<Product> recentViewed = service.getRecentProducts(UserHolder.get().getCurrent())
+			List<Product> recentViewed = service.getRecentProducts(UserHolder.get().current)
             Product firstProduct = recentViewed.get(0)
             List<Product> relatedProducts = service.getRelatedCategoryProducts(firstProduct)
             mv.addObject("prd_recentViewedProducts", recentViewed)
             mv.addObject("prd_relatedProducts", relatedProducts)
         } catch (Exception e) {
-			System.out.println("ERROR loadRecentProductsFromUser " + e.getMessage())
+			System.out.println("ERROR loadRecentProductsFromUser " + e.message)
         }
 
 	}
 
 	private void loadRecentProductsFromCookies(ActionEvent evt, ModelAndView mv) throws NumberFormatException {
 		try {
-			Cookie cookie = CMSUtil.getCookie(evt.getRequest(),
-					StoreController.RECENT_PRODUCTS_COOKIE_NAME + evt.getSite().getKey())
+			Cookie cookie = CMSUtil.getCookie(evt.request,
+					StoreController.RECENT_PRODUCTS_COOKIE_NAME + evt.site.key)
             if (cookie != null) {
 				List<Long> ids = new ArrayList<>()
-                String values[] = StringUtils.commaDelimitedListToStringArray(cookie.getValue())
+                String[] values = StringUtils.commaDelimitedListToStringArray(cookie.value)
                 for (String idText : values) {
 					ids.add(new Long(idText))
                 }
@@ -123,7 +123,7 @@ class ShowProductsMainPageAction implements SiteAction {
 		List<Product> resultList = new ArrayList<>()
         for (Long id : ids) {
 			for (Product product : list) {
-				if (product.getId().equals(id)) {
+				if (product.id == id) {
 					resultList.add(product)
                     break
                 }

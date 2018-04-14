@@ -14,8 +14,8 @@ import tools.dynamia.zk.crud.actions.ViewDataAction
 class OrderPaymentDetailAction extends ViewDataAction {
 
 	OrderPaymentDetailAction() {
-		setName("Payment")
-        setMenuSupported(true)
+        name = "Payment"
+        menuSupported = true
 
     }
 
@@ -31,10 +31,10 @@ class OrderPaymentDetailAction extends ViewDataAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		ShoppingOrder order = (ShoppingOrder) evt.getData()
+		ShoppingOrder order = (ShoppingOrder) evt.data
         if (order != null) {
 			super.actionPerformed(
-					new CrudActionEvent(order.getTransaction(), evt.getSource(), evt.getView(), evt.getController()))
+					new CrudActionEvent(order.transaction, evt.source, evt.view, evt.controller))
         } else {
 			UIMessages.showMessage("Select order", MessageType.WARNING)
         }

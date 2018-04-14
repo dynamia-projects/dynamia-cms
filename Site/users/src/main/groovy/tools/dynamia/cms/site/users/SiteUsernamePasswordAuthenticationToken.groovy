@@ -28,7 +28,7 @@ class SiteUsernamePasswordAuthenticationToken extends UsernamePasswordAuthentica
     private Site site
 
     SiteUsernamePasswordAuthenticationToken(Site site, UsernamePasswordAuthenticationToken originalToken) {
-        super(originalToken.getPrincipal(), originalToken.getCredentials(), originalToken.getAuthorities())
+        super(originalToken.principal, originalToken.credentials, originalToken.authorities)
         this.site = site
     }
 

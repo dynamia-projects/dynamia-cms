@@ -36,12 +36,12 @@ class ViewShoppingCartAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("shoppingcart/details")
+		ModelAndView mv = evt.modelAndView
+        mv.viewName = "shoppingcart/details"
 
         ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv)
         if (shoppingCart != null) {
-			mv.addObject("title", shoppingCart.getTitle())
+			mv.addObject("title", shoppingCart.title)
         }
 	}
 

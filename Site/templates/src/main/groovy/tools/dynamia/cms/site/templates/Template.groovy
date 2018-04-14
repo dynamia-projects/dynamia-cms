@@ -69,10 +69,10 @@ class Template implements Serializable {
         t.date = prop.getProperty("date")
         t.version = prop.getProperty("version")
         t.description = prop.getProperty("description")
-        t.directoryName = directory.getFileName().toString()
+        t.directoryName = directory.fileName.toString()
 
         String pos = prop.getProperty("positions")
-        if (pos != null && !pos.isEmpty()) {
+        if (pos != null && !pos.empty) {
 			String[] positions = pos.split(",")
             if (positions != null) {
 				Arrays.sort(positions)

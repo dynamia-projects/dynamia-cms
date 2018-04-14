@@ -12,7 +12,7 @@ class JsonViewResolver implements ViewResolver, Ordered {
     @Override
     View resolveViewName(String viewName, Locale locale) throws Exception {
 		MappingJackson2JsonView view = new MappingJackson2JsonView()
-        view.setPrettyPrint(true)
+        view.prettyPrint = true
 
         return view
     }

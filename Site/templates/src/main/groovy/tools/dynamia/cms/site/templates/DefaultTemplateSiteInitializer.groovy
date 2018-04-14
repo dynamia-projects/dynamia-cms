@@ -23,8 +23,8 @@ class DefaultTemplateSiteInitializer implements SiteInitializer {
 
     @Override
     void init(Site site) {
-        if (site.getTemplate() == null) {
-            site.setTemplate(service.getDefaultTemplate().getName())
+        if (site.template == null) {
+            site.template = service.defaultTemplate.name
         }
     }
 

@@ -41,13 +41,13 @@ class ShowUserContactInfosAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
+		ModelAndView mv = evt.modelAndView
 
-        List<UserContactInfo> userContactInfos = userService.getContactInfos(UserHolder.get().getCurrent())
+        List<UserContactInfo> userContactInfos = userService.getContactInfos(UserHolder.get().current)
         mv.addObject("userContactInfos", userContactInfos)
 
         mv.addObject("title", "Direcciones de Contacto")
-        if (userContactInfos == null || userContactInfos.isEmpty()) {
+        if (userContactInfos == null || userContactInfos.empty) {
 			mv.addObject("subtitle", "No tiene direcciones registradas")
         } else {
 			mv.addObject("subtitle", userContactInfos.size() + " direcciones de contactos registradas")

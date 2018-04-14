@@ -67,7 +67,7 @@ class ShoppingCartController {
         mv.addObject("cartName", name)
         String redirect = request.getParameter("currentURI")
         redirect = safeRedirect(redirect)
-        mv.setView(new RedirectView(redirect, true, true, false))
+        mv.view = new RedirectView(redirect, true, true, false)
         SiteActionManager.performAction("addItemToCart", mv, request, redirectAttributes, itemCode)
         SiteActionManager.performAction("syncShoppingOrder", mv, request, redirectAttributes, itemCode)
 
@@ -83,7 +83,7 @@ class ShoppingCartController {
         mv.addObject("cartName", name)
         String redirect = request.getParameter("currentURI")
         redirect = safeRedirect(redirect)
-        mv.setView(new RedirectView(redirect, true, true, false))
+        mv.view = new RedirectView(redirect, true, true, false)
         SiteActionManager.performAction("removeItemFromCart", mv, request, redirectAttributes, itemCode)
         SiteActionManager.performAction("syncShoppingOrder", mv, request, redirectAttributes, itemCode)
 
@@ -97,7 +97,7 @@ class ShoppingCartController {
         mv.addObject("cartName", name)
         String redirect = request.getParameter("currentURI")
         redirect = safeRedirect(redirect)
-        mv.setView(new RedirectView(redirect, true, true, false))
+        mv.view = new RedirectView(redirect, true, true, false)
         SiteActionManager.performAction("clearShoppingCart", mv, request, redirectAttributes, null)
 
         return mv
@@ -141,7 +141,7 @@ class ShoppingCartController {
     ModelAndView confirm(@PathVariable String name) {
 
         ModelAndView mv = new ModelAndView()
-        mv.setView(new RedirectView("/", true, true, false))
+        mv.view = new RedirectView("/", true, true, false)
         return mv
     }
 
@@ -241,7 +241,7 @@ class ShoppingCartController {
 
     private String safeRedirect(String redirect) {
         if (redirect == null) {
-            redirect = SiteContext.get().getPreviousURI()
+            redirect = SiteContext.get().previousURI
         }
 
         if (redirect == null) {

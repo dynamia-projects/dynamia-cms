@@ -21,8 +21,8 @@ class NotifyOrderCompletedAction extends AbstractCrudAction {
     private CrudService crudService
 
     NotifyOrderCompletedAction() {
-        setName("Notify Order")
-        setMenuSupported(true)
+        name = "Notify Order"
+        menuSupported = true
 
     }
 
@@ -38,7 +38,7 @@ class NotifyOrderCompletedAction extends AbstractCrudAction {
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
-        final ShoppingOrder shoppingOrder = (ShoppingOrder) evt.getData()
+        final ShoppingOrder shoppingOrder = (ShoppingOrder) evt.data
         if (shoppingOrder != null) {
 
             UIMessages.showQuestion("Are you sure?",  {

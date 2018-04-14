@@ -36,8 +36,8 @@ class ImportProductsAction extends AbstractCrudAction {
     private CrudService crudService
 
     ImportProductsAction() {
-        setName("Import from Excel")
-        setImage("export-xlsx")
+        name = "Import from Excel"
+        image = "export-xlsx"
     }
 
     @Override
@@ -86,7 +86,7 @@ class ImportProductsAction extends AbstractCrudAction {
 
         @Override
         List<Product> importFromExcel(InputStream excelFile, ProgressMonitor monitor) throws Exception {
-            Site site = SiteContext.get().getCurrent()
+            Site site = SiteContext.get().current
             return ImportUtils.importExcel(Product.class, excelFile, monitor, {
                 System.out.println("Importing product - Row " + row.getRowNum())
                 String sku = ImportUtils.getCellValue(row, 0)
@@ -106,22 +106,22 @@ class ImportProductsAction extends AbstractCrudAction {
                     sku = System.currentTimeMillis() + ""
                 }
 
-                p.setSku(sku)
-                p.setReference(ref)
+                p.sku = sku
+                p.reference = ref
 
-                if (p.getDescription() != null && p.getDescription().length() > 1000) {
-                    p.setLongDescription(p.getDescription())
-                    p.setDescription(p.getDescription().substring(0, 999))
+                if (p.description != null && p.description.length() > 1000) {
+                    p.longDescription = p.description
+                    p.description = p.description.substring(0, 999)
                 }
 
                 try {
-                    p.setCost(new BigDecimal(ImportUtils.getCellValueObject(row, 7).toString()))
+                    p.cost = new BigDecimal(ImportUtils.getCellValueObject(row, 7).toString())
                 } catch (Exception e) {
                 }
                 try {
                     Object priceValue = ImportUtils.getCellValueObject(row, 8)
                     if (priceValue != null) {
-                        p.setPrice(new BigDecimal(priceValue.toString()))
+                        p.price = new BigDecimal(priceValue.toString())
                     }
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
@@ -131,7 +131,7 @@ class ImportProductsAction extends AbstractCrudAction {
                 try {
                     Object stock = ImportUtils.getCellValueObject(row, 12)
                     if (isValid(stock) && stock instanceof Number) {
-                        p.setStock(((Number) stock).longValue())
+                        p.stock = ((Number) stock).longValue()
                     }
                 } catch (Exception e) {
                     // TODO: handle exception
@@ -142,11 +142,11 @@ class ImportProductsAction extends AbstractCrudAction {
                 String subcategoryName = ImportUtils.getCellValue(row, 5)
                 try {
 
-                    p.setBrand(getBrand(site, brandName))
+                    p.brand = getBrand(site, brandName)
                 } catch (Exception e1) {
                     System.err.println("Error loading brand")
                 }
-                p.setCategory(getCategory(site, categoryName, subcategoryName))
+                p.category = getCategory(site, categoryName, subcategoryName)
 
                 int[] imagesCols = [14, 15, 16, 17]
                 for (int i = 0; i < imagesCols.length; i++) {
@@ -156,27 +156,27 @@ class ImportProductsAction extends AbstractCrudAction {
                         String imageName = downloadImage(site, imageURL)
                         switch (i) {
                             case 0:
-                                p.setImage(imageName)
+                                p.image = imageName
                                 break
                             case 1:
-                                p.setImage2(imageName)
+                                p.image2 = imageName
                                 break
                             case 2:
-                                p.setImage3(imageName)
+                                p.image3 = imageName
                                 break
                             case 3:
-                                p.setImage4(imageName)
+                                p.image4 = imageName
                                 break
 
                             default:
                                 break
                         }
                     } catch (Exception e) {
-                        System.err.println("Cannot download image " + i + e.getMessage())
+                        System.err.println("Cannot download image " + i + e.message)
                     }
                 }
 
-                if (p.getCategory() == null) {
+                if (p.category == null) {
                     p = null
                 }
 
@@ -201,11 +201,11 @@ class ImportProductsAction extends AbstractCrudAction {
                 if (category == null) {
                     if (isValid(categoryName) && isValid(subcategoryName)) {
                         category = new ProductCategory()
-                        category.setName(subcategoryName)
-                        category.setSite(site)
+                        category.name = subcategoryName
+                        category.site = site
 
                         ProductCategory parent = findCategory(site, categoryName)
-                        category.setParent(parent)
+                        category.parent = parent
 
                         crudService.create(category)
                     } else if (isValid(categoryName)) {
@@ -223,8 +223,8 @@ class ImportProductsAction extends AbstractCrudAction {
             ProductCategory cat = crudService.findSingle(ProductCategory.class, "name", categoryName)
             if (cat == null) {
                 cat = new ProductCategory()
-                cat.setName(categoryName)
-                cat.setSite(site)
+                cat.name = categoryName
+                cat.site = site
                 crudService.create(cat)
             }
             return cat
@@ -237,8 +237,8 @@ class ImportProductsAction extends AbstractCrudAction {
 
                 if (brand == null) {
                     brand = new ProductBrand()
-                    brand.setName(brandName)
-                    brand.setSite(site)
+                    brand.name = brandName
+                    brand.site = site
                     crudService.create(brand)
                 }
                 return brand
@@ -275,7 +275,7 @@ class ImportProductsAction extends AbstractCrudAction {
         }
 
         private boolean isValid(Object value) {
-            return value != null && !value.toString().trim().isEmpty()
+            return value != null && !value.toString().trim().empty
         }
 
         private Long getExternalRef(Row row) {
@@ -291,7 +291,7 @@ class ImportProductsAction extends AbstractCrudAction {
             String localFolder = DynamiaCMS.getSitesResourceLocation(site)
                     .resolve("products" + File.separator + "images").toString()
 
-            if (imageURL == null || imageURL.isEmpty()) {
+            if (imageURL == null || imageURL.empty) {
                 throw new IllegalArgumentException("No image URL to download")
             }
 

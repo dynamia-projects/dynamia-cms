@@ -38,15 +38,15 @@ class SyncProductsAction extends AbstractCrudAction {
     private ProductsSynchronizer synchronizer
 
     SyncProductsAction() {
-        setName("Sync All Products")
-        setGroup(ActionGroup.get("products"))
-        setImage("sync")
-        setMenuSupported(true)
+        name = "Sync All Products"
+        group = ActionGroup.get("products")
+        image = "sync"
+        menuSupported = true
     }
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
-        final ProductsSiteConfig cfg = (ProductsSiteConfig) evt.getData()
+        final ProductsSiteConfig cfg = (ProductsSiteConfig) evt.data
         if (cfg != null) {
             UIMessages.showQuestion("This action make take several minutes", {
                 long s = System.currentTimeMillis()

@@ -30,7 +30,7 @@ class SiteMap implements Serializable {
     }
 
     void addUrl(SiteMapURL url) {
-		getUrls().add(url)
+		urls.add(url)
     }
 
 }

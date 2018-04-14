@@ -45,30 +45,30 @@ class UpdateItemFromCartAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
-        String code = (String) evt.getData()
+        ModelAndView mv = evt.modelAndView
+        String code = (String) evt.data
         ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv)
         if (shoppingCart != null) {
             ShoppingCartItem item = shoppingCart.getItemByCode(code)
-            if (item != null && item.isEditable()) {
+            if (item != null && item.editable) {
                 try {
-                    int quantity = Integer.parseInt(evt.getRequest().getParameter("quantity"))
-                    item.setQuantity(quantity)
+                    int quantity = Integer.parseInt(evt.request.getParameter("quantity"))
+                    item.quantity = quantity
                     updateChildren(item)
                     shoppingCart.compute()
-                    CMSUtil.addSuccessMessage(item.getName().toUpperCase() + " actualizado", evt.getRedirectAttributes())
+                    CMSUtil.addSuccessMessage(item.name.toUpperCase() + " actualizado", evt.redirectAttributes)
                 } catch (Exception e) {
-                    CMSUtil.addErrorMessage("Ingrese cantidad valida para " + item.getName().toUpperCase(), evt.getRedirectAttributes())
+                    CMSUtil.addErrorMessage("Ingrese cantidad valida para " + item.name.toUpperCase(), evt.redirectAttributes)
                 }
             }
-            mv.setView(new RedirectView("/shoppingcart/" + shoppingCart.getName(), true, true, false))
-            mv.addObject("title", StringUtils.capitalizeAllWords(shoppingCart.getName()))
+            mv.view = new RedirectView("/shoppingcart/" + shoppingCart.name, true, true, false)
+            mv.addObject("title", StringUtils.capitalizeAllWords(shoppingCart.name))
         }
     }
 
     private void updateChildren(ShoppingCartItem item) {
-        if (item.getChildren() != null && !item.getChildren().isEmpty()) {
-            item.getChildren().forEach { c -> c.setQuantity(item.getQuantity()) }
+        if (item.children != null && !item.children.empty) {
+            item.children.forEach { c -> c.quantity = item.quantity }
         }
     }
 

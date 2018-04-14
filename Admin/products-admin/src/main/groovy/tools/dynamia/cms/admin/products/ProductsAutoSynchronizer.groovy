@@ -46,7 +46,7 @@ class ProductsAutoSynchronizer {
             try {
                 synchronizer.synchronize(config)
             } catch (Throwable e) {
-                logger.error("Error autosyncrhozing Products Site: " + config.getSite(), e)
+                logger.error("Error autosyncrhozing Products Site: " + config.site, e)
                 e.printStackTrace()
             }
         }

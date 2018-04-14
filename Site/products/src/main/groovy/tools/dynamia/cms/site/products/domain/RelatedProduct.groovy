@@ -109,11 +109,11 @@ class RelatedProduct extends SiteSimpleEntity {
     }
 
     void sync(RelatedProductDTO dto) {
-        this.externalRef = dto.getExternalRef()
-        this.gift = dto.isGift()
-        this.active = dto.isActive()
-        this.price = dto.getPrice()
-        this.required = dto.isRequired()
+        this.externalRef = dto.externalRef
+        this.gift = dto.gift
+        this.active = dto.active
+        this.price = dto.price
+        this.required = dto.required
     }
 
 }

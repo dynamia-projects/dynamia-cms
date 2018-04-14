@@ -23,7 +23,7 @@ class TestGatewayAction extends AbstractCrudAction {
 	private PaymentService service
 
     TestGatewayAction() {
-		setName("Test")
+        name = "Test"
     }
 
 	@Override
@@ -38,21 +38,21 @@ class TestGatewayAction extends AbstractCrudAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		PaymentGateway gateway = service.getDefaultGateway()
-        PaymentTransaction tx = gateway.newTransaction("main", CMSUtil.getSiteURL(SiteContext.get().getCurrent(), "/"))
-        tx.setCurrency("COP")
-        tx.setEmail("user@emails.com")
-        tx.setAmount(new BigDecimal(1000))
-        tx.setTaxes(BigDecimal.ZERO)
-        tx.setTaxesBase(BigDecimal.ZERO)
-        tx.setTest(true)
+		PaymentGateway gateway = service.defaultGateway
+        PaymentTransaction tx = gateway.newTransaction("main", CMSUtil.getSiteURL(SiteContext.get().current, "/"))
+        tx.currency = "COP"
+        tx.email = "user@emails.com"
+        tx.amount = new BigDecimal(1000)
+        tx.taxes = BigDecimal.ZERO
+        tx.taxesBase = BigDecimal.ZERO
+        tx.test = true
 
         PaymentForm form = gateway.createForm(tx)
 
         StringBuilder sb = new StringBuilder()
-        sb.append("TX: " + tx.getUuid() + "\n")
-        sb.append("FORM: " + form.getUrl() + "  " + form.getHttpMethod() + "\n")
-        sb.append(PaymentUtils.mapToString(form.getParameters()))
+        sb.append("TX: " + tx.uuid + "\n")
+        sb.append("FORM: " + form.url + "  " + form.httpMethod + "\n")
+        sb.append(PaymentUtils.mapToString(form.parameters))
 
         Messagebox.show(sb.toString())
 

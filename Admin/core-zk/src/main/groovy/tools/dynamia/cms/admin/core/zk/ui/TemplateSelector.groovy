@@ -30,25 +30,25 @@ import tools.dynamia.zk.ComponentAliasIndex
 class TemplateSelector extends Combobox {
 
     static {
-        ComponentAliasIndex.getInstance().add(TemplateSelector.class)
+        ComponentAliasIndex.instance.add(TemplateSelector.class)
     }
 
     TemplateSelector() {
-        setItemRenderer(new TemplateSelectorRenderer())
+        itemRenderer = new TemplateSelectorRenderer()
     }
 
     void init() {
-        getChildren().clear()
-        setReadonly(true)
+        children.clear()
+        readonly = true
         TemplateService service = Containers.get().findObject(TemplateService.class)
-        List<Template> templates = service.getInstalledTemplates()
-        if (templates != null && !templates.isEmpty()) {
+        List<Template> templates = service.installedTemplates
+        if (templates != null && !templates.empty) {
             int i = 0
             for (Template template : templates) {
                 Comboitem item = new Comboitem()
-                item.setParent(this)
+                item.parent = this
                 try {
-                    getItemRenderer().render(item, template, i)
+                    itemRenderer.render(item, template, i)
                 } catch (Exception ex) {
                     ex.printStackTrace()
                 }
@@ -59,7 +59,7 @@ class TemplateSelector extends Combobox {
 
     @Override
     void setParent(Component parent) {
-        super.setParent(parent) //To change body of generated methods, choose Tools | Templates.
+        super.parent = parent //To change body of generated methods, choose Tools | Templates.
         init()
     }
 

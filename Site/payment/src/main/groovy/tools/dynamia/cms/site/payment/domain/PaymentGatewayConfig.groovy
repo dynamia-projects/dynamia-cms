@@ -38,13 +38,13 @@ class PaymentGatewayConfig extends SimpleEntity {
 	}
 
 	PaymentGatewayConfig(PaymentGateway gateway, String name, String value) {
-		this.gatewayId = gateway.getId()
+		this.gatewayId = gateway.id
 		this.name = name
 		this.value = value
 	}
 
 	PaymentGatewayConfig(PaymentGateway gateway, String name, String value, String source) {
-		this.gatewayId = gateway.getId()
+		this.gatewayId = gateway.id
 		this.name = name
 		this.value = value
 		this.source = source
@@ -52,7 +52,7 @@ class PaymentGatewayConfig extends SimpleEntity {
 
 	PaymentGatewayConfig(PaymentGateway gateway, String name, String value, String source, String label) {
 		super()
-		this.gatewayId = gateway.getId()
+		this.gatewayId = gateway.id
 		this.name = name
 		this.value = value
 		this.source = source

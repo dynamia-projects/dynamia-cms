@@ -37,13 +37,13 @@ class TemplateResources {
         TemplateService tpltService = Containers.get().findObject(TemplateService.class)
 
         if (site == null) {
-			site = service.getMainSite()
+			site = service.mainSite
         }
 
 		String currentTemplate = getTemplateName(site)
 
-        if (currentTemplate == null || currentTemplate.isEmpty()) {
-			currentTemplate = tpltService.getDefaultTemplate().getDirectoryName()
+        if (currentTemplate == null || currentTemplate.empty) {
+			currentTemplate = tpltService.defaultTemplate.directoryName
         }
 
 		// find first in local site template resources
@@ -52,7 +52,7 @@ class TemplateResources {
 
         //if not found find in global template resources
 		if (!Files.exists(templateResource)) {
-			templateResource = DynamiaCMS.getTemplatesLocation()
+			templateResource = DynamiaCMS.templatesLocation
 					.resolve(currentTemplate + File.separator + resourceName)
         }
 
@@ -60,15 +60,15 @@ class TemplateResources {
     }
 
     static String getTemplateName(Site site) {
-		String name = site.getTemplate()
+		String name = site.template
 
-        HttpServletRequest request = CMSUtil.getCurrentRequest()
+        HttpServletRequest request = CMSUtil.currentRequest
         if (request != null) {
 			String sessionTemplate = request.getParameter("setSessionTemplate")
-            if (sessionTemplate != null && !sessionTemplate.isEmpty()) {
-				request.getSession().setAttribute("SessionTemplate", sessionTemplate)
+            if (sessionTemplate != null && !sessionTemplate.empty) {
+				request.session.setAttribute("SessionTemplate", sessionTemplate)
             }
-			sessionTemplate = (String) request.getSession().getAttribute("SessionTemplate")
+			sessionTemplate = (String) request.session.getAttribute("SessionTemplate")
             if (sessionTemplate != null) {
 				name = sessionTemplate
             }

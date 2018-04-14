@@ -38,10 +38,10 @@ class BrandCrudServiceListener extends CrudServiceListenerAdapter<ProductBrand> 
     }
 
     private void generateAlias(ProductBrand entity) {
-        String name = entity.getName()
+        String name = entity.name
 
         name = StringUtils.simplifiedString(name)
-        entity.setAlias(name)
+        entity.alias = name
     }
 
 }

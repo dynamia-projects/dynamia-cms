@@ -23,13 +23,13 @@ class ProductCategorySiteMapProvider implements SiteMapProvider {
 
     private SiteMapURL createURL(Site site, ProductCategory c) {
         SiteMapURL url = new SiteMapURL(
-                CMSUtil.getSiteURL(site, String.format("store/categories/%s/%s", c.getId(), c.getAlias())))
-        url.setChangeFrequency(SiteMapFrecuency.daily)
-        url.setPriority(SiteMapURL.HIGH)
-        url.setName(c.getName())
-        url.setDescription(c.getDescription())
-        if (c.getParent() != null) {
-            url.setCategory(c.getParent().getName())
+                CMSUtil.getSiteURL(site, String.format("store/categories/%s/%s", c.id, c.alias)))
+        url.changeFrequency = SiteMapFrecuency.daily
+        url.priority = SiteMapURL.HIGH
+        url.name = c.name
+        url.description = c.description
+        if (c.parent != null) {
+            url.category = c.parent.name
         }
         return url
     }

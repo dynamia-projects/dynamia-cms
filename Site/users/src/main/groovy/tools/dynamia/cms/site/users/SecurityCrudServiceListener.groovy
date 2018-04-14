@@ -24,8 +24,8 @@ class SecurityCrudServiceListener extends CrudServiceListenerAdapter<Object> {
     void beforeCreate(Object entity) {
         if (entity instanceof BaseEntity) {
             BaseEntity ent = (BaseEntity) entity
-            if (ent.getCreator() == null || ent.getCreator().isEmpty()) {
-                ent.setCreator(UserHolder.get().getFullName())
+            if (ent.creator == null || ent.creator.empty) {
+                ent.creator = UserHolder.get().fullName
             }
         }
     }
@@ -34,7 +34,7 @@ class SecurityCrudServiceListener extends CrudServiceListenerAdapter<Object> {
     void beforeUpdate(Object entity) {
         if (entity instanceof BaseEntity) {
             BaseEntity ent = (BaseEntity) entity
-            ent.setLastUpdater(UserHolder.get().getFullName())
+            ent.lastUpdater = UserHolder.get().fullName
         }
     }
 

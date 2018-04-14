@@ -52,12 +52,11 @@ class NewModuleInstanceAction extends NewAction {
 	@Override
     void actionPerformed(CrudActionEvent evt) {
 		ModuleInstance moduleInstance = new ModuleInstance()
-        moduleInstance.setSite(SiteContext.get().getCurrent())
+        moduleInstance.site = SiteContext.get().current
 
         ModuleInstanceUI ui = new ModuleInstanceUI(moduleInstance)
         ui.addAction(new SaveModuleInstanceAction(crudService, evt))
-        ZKNavigationManager.getInstance()
-				.setCurrentPage(new ComponentPage("newModule" + System.currentTimeMillis(), "New Module Instance", ui))
+        ZKNavigationManager.instance.currentPage = new ComponentPage("newModule" + System.currentTimeMillis(), "New Module Instance", ui)
 
     }
 }

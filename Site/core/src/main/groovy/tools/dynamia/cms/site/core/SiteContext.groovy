@@ -105,12 +105,12 @@ class SiteContext implements Serializable {
 
     boolean isSuperAdmin() {
 		String superAdminSite = appParams.getValue(DynamiaCMS.CFG_SUPER_ADMIN_SITE, "main")
-        return superAdminSite.equals(SiteContext.get().getCurrent().getKey())
+        return superAdminSite.equals(SiteContext.get().current.key)
     }
 
     void reload() {
 		if (current != null) {
-			Site reloaded = service.getSite(current.getKey())
+			Site reloaded = service.getSite(current.key)
             if (reloaded != null) {
 				current = reloaded
             }

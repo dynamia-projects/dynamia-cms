@@ -395,6 +395,6 @@ class ShoppingOrderDTO implements Serializable {
 
 	@Override
     String toString() {
-		return getNumber()
+		return number
     }
 }

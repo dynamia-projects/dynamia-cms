@@ -8,7 +8,7 @@ import tools.dynamia.cms.site.core.domain.Site
 class AccountContext {
 	
 	Site getAccount(){
-		return SiteContext.get().getCurrent()
+		return SiteContext.get().current
     }
 
 }

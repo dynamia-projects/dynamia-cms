@@ -17,15 +17,15 @@ class PaymentGatewayConfigListener extends CrudServiceListenerAdapter<PaymentGat
 
     @Override
     void beforeCreate(PaymentGatewayConfig entity) {
-		if (entity.getSource() == null || entity.getSource().isEmpty()) {
-			String siteKey = SiteContext.get().getCurrent().getKey()
-            entity.setSource(siteKey)
+		if (entity.source == null || entity.source.empty) {
+			String siteKey = SiteContext.get().current.key
+            entity.source = siteKey
         }
 
-		if (entity.getGatewayId() == null || entity.getGatewayId().isEmpty()) {
-			PaymentGateway gateway = service.getDefaultGateway()
+		if (entity.gatewayId == null || entity.gatewayId.empty) {
+			PaymentGateway gateway = service.defaultGateway
             if (gateway != null) {
-				entity.setGatewayId(gateway.getId())
+                entity.gatewayId = gateway.id
             }
 		}
 	}
@@ -33,7 +33,7 @@ class PaymentGatewayConfigListener extends CrudServiceListenerAdapter<PaymentGat
 	@Override
     void beforeQuery(QueryParameters params) {
 		if (params.getType() == PaymentGatewayConfig.class) {
-			String siteKey = SiteContext.get().getCurrent().getKey()
+			String siteKey = SiteContext.get().current.key
             params.add("source", siteKey)
         }
 	}

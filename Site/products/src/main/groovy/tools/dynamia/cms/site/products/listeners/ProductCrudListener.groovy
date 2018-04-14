@@ -25,7 +25,7 @@ class ProductCrudListener extends CrudServiceListenerAdapter<Product> {
 
 	private void updateProductsCounts() {
 		try {
-			service.computeProductCountByCategory(SiteContext.get().getCurrent())
+			service.computeProductCountByCategory(SiteContext.get().current)
         } catch (Exception e) {
 			e.printStackTrace()
         }

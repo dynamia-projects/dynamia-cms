@@ -23,10 +23,10 @@ abstract class ImportAction extends AbstractAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        Importer win = (Importer) evt.getSource()
+        Importer win = (Importer) evt.source
         actionPerformed(win)
-        if (isProcesable()) {
-            win.setCurrentAction(this)
+        if (procesable) {
+            win.currentAction = this
         }
     }
 

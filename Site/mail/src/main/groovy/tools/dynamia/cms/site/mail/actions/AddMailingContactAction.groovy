@@ -42,20 +42,20 @@ class AddMailingContactAction implements SiteAction {
     void actionPerformed(ActionEvent evt) {
 		
 		
-		MailingContact contact = (MailingContact) evt.getData()
+		MailingContact contact = (MailingContact) evt.data
 
         if(contact!=null){
 			if(!service.existsMailingContact(contact)){
 				try {
-					contact.setSite(evt.getSite())
+                    contact.site = evt.site
                     crudService.save(contact)
-                    CMSUtil.addSuccessMessage(contact.getEmailAddress()+" Inscrito exitosamente, recibira nuestras ofertas, productos nuevos y demas en su correo.", evt.getRedirectAttributes())
+                    CMSUtil.addSuccessMessage(contact.emailAddress +" Inscrito exitosamente, recibira nuestras ofertas, productos nuevos y demas en su correo.", evt.redirectAttributes)
                 } catch (Exception e) {
-					CMSUtil.addErrorMessage("Error al inscribir contacto", evt.getRedirectAttributes())
+					CMSUtil.addErrorMessage("Error al inscribir contacto", evt.redirectAttributes)
                     e.printStackTrace()
                 }
 			}else{
-				CMSUtil.addWarningMessage("La direccion de email ingresada ya se encuentrada inscrita", evt.getRedirectAttributes())
+				CMSUtil.addWarningMessage("La direccion de email ingresada ya se encuentrada inscrita", evt.redirectAttributes)
             }
 		
 		}

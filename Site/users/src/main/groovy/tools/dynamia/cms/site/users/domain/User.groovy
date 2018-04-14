@@ -175,8 +175,8 @@ class User extends BaseEntity implements UserDetails, SiteAware {
     }
 
     String getCode() {
-        if (code == null || code.isEmpty()) {
-            code = getExternalRef()
+        if (code == null || code.empty) {
+            code = externalRef
         }
         return code
     }
@@ -253,7 +253,7 @@ class User extends BaseEntity implements UserDetails, SiteAware {
 
     void setFirstName(String firstName) {
         this.firstName = firstName
-        getFullName()
+        fullName
     }
 
     String getLastName() {
@@ -265,7 +265,7 @@ class User extends BaseEntity implements UserDetails, SiteAware {
 
     void setLastName(String lastName) {
         this.lastName = lastName
-        getFullName()
+        fullName
     }
 
     String getUserphoto() {
@@ -307,7 +307,7 @@ class User extends BaseEntity implements UserDetails, SiteAware {
 
     String getFullName() {
 
-        fullName = getFirstName() + " " + getLastName()
+        fullName = firstName + " " + lastName
         if (fullName != null) {
             fullName = StringUtils.toUpperCase(fullName)
         }
@@ -403,8 +403,8 @@ class User extends BaseEntity implements UserDetails, SiteAware {
         List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>()
 
         auths.add(new SimpleGrantedAuthority("ROLE_" + UserProfile.USER.name()))
-        if (getProfile() != UserProfile.USER) {
-            auths.add(new SimpleGrantedAuthority("ROLE_" + getProfile().name()))
+        if (profile != UserProfile.USER) {
+            auths.add(new SimpleGrantedAuthority("ROLE_" + profile.name()))
         }
 
         return auths
@@ -412,38 +412,38 @@ class User extends BaseEntity implements UserDetails, SiteAware {
 
     static User createMock() {
         User user = new User()
-        user.setUsername("Anonymous")
-        user.setFullName("Anonymous")
+        user.username = "Anonymous"
+        user.fullName = "Anonymous"
         return user
     }
 
     void sync(UserDTO dto) {
-        if (dto.getProfile() != null) {
-            profile = dto.getProfile()
+        if (dto.profile != null) {
+            profile = dto.profile
         }
 
-        username = dto.getEmail()
-        externalRef = dto.getExternalRef()
-        enabled = dto.isEnabled()
-        firstName = dto.getFirstName()
-        lastName = dto.getLastName()
-        fullName = dto.getFullName()
+        username = dto.email
+        externalRef = dto.externalRef
+        enabled = dto.enabled
+        firstName = dto.firstName
+        lastName = dto.lastName
+        fullName = dto.fullName
 
         if (firstName == null) {
             firstName = fullName
             lastName = ""
         }
-        identification = dto.getIdentification()
-        groupName = dto.getGroupName()
+        identification = dto.identification
+        groupName = dto.groupName
         if (contactInfo == null) {
             contactInfo = new ContactInfo()
         }
-        contactInfo.setAddress(dto.getAddress())
-        contactInfo.setEmail(dto.getEmail())
-        contactInfo.setPhoneNumber(dto.getPhoneNumber())
-        contactInfo.setMobileNumber(dto.getMobileNumber())
-        contactInfo.setCity(dto.getCity())
-        contactInfo.setCountry(dto.getCountry())
+        contactInfo.address = dto.address
+        contactInfo.email = dto.email
+        contactInfo.phoneNumber = dto.phoneNumber
+        contactInfo.mobileNumber = dto.mobileNumber
+        contactInfo.city = dto.city
+        contactInfo.country = dto.country
     }
 
     String getAuxField1() {

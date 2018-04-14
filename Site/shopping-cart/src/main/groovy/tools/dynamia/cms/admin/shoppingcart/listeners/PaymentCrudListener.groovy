@@ -13,9 +13,9 @@ class PaymentCrudListener extends CrudServiceListenerAdapter<Payment> {
 
 	@Override
     void beforeCreate(Payment entity) {
-		if (entity.getSource() == null) {
+		if (entity.source == null) {
 			try {
-				entity.setSource(SiteContext.get().getCurrent().getKey())
+                entity.source = SiteContext.get().current.key
             } catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace()
@@ -33,7 +33,7 @@ class PaymentCrudListener extends CrudServiceListenerAdapter<Payment> {
 			if (!params.containsKey("source")) {
 				String source = null
                 try {
-					source = SiteContext.get().getCurrent().getKey()
+					source = SiteContext.get().current.key
                 } catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace()

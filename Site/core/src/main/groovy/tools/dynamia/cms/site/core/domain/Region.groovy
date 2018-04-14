@@ -83,11 +83,11 @@ class Region extends SiteSimpleEntity {
     }
 
     void sync(RegionDTO dto) {
-        name = dto.getName()
-        code = dto.getCode()
-        taxName = dto.getTaxName()
-        taxPercent = dto.getTaxPercent()
-        externalRef = dto.getExternalRef()
+        name = dto.name
+        code = dto.code
+        taxName = dto.taxName
+        taxPercent = dto.taxPercent
+        externalRef = dto.externalRef
 
     }
 

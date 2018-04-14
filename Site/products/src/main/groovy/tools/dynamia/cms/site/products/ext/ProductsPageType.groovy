@@ -61,19 +61,19 @@ class ProductsPageType implements PageTypeExtension {
 
     @Override
     void setupPage(PageContext context) {
-        ModelAndView mv = context.getModelAndView()
-        mv.addObject("subtitle", context.getPage().getSubtitle())
+        ModelAndView mv = context.modelAndView
+        mv.addObject("subtitle", context.page.subtitle)
 
         PageParameter categoryParam = context.getParameter("category")
 
         if (categoryParam != null) {
-            Long id = new Long(categoryParam.getValue())
-            SiteActionManager.performAction("loadProductCategory", mv, context.getRequest(), id)
-            mv.setViewName("products/products")
+            Long id = new Long(categoryParam.value)
+            SiteActionManager.performAction("loadProductCategory", mv, context.request, id)
+            mv.viewName = "products/products"
         } else {
-            ProductsUtil.setupProductsVar(service.getFeaturedProducts(context.getSite()), context.getModelAndView())
-            mv.setViewName("products/main")
-            SiteActionManager.performAction("showMainProductPage", mv, context.getRequest())
+            ProductsUtil.setupProductsVar(service.getFeaturedProducts(context.site), context.modelAndView)
+            mv.viewName = "products/main"
+            SiteActionManager.performAction("showMainProductPage", mv, context.request)
 
         }
 

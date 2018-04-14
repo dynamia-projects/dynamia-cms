@@ -48,7 +48,7 @@ class ProductCompareList implements Serializable {
     String toString() {
         List<Long> ids = new ArrayList<>()
         for (Product product : products) {
-            ids.add(product.getId())
+            ids.add(product.id)
         }
         return StringUtils.arrayToCommaDelimitedString(ids.toArray())
     }

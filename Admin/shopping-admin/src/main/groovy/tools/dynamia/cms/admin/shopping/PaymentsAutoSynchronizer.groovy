@@ -24,20 +24,20 @@ class PaymentsAutoSynchronizer {
     //each 10 minutes
     @Scheduled(fixedRate = 600000L)
     void sync() {
-        List<Site> sites = siteService.getOnlineSites()
+        List<Site> sites = siteService.onlineSites
 
         for (Site site : sites) {
 
             ShoppingSiteConfig cfg = shoppingCartService.getConfiguration(site)
-            if (cfg != null && cfg.isAutoSendPayments()) {
-                String url = cfg.getPaymentsSenderURL()
-                Map<String, String> params = cfg.getParametersAsMap()
+            if (cfg != null && cfg.autoSendPayments) {
+                String url = cfg.paymentsSenderURL
+                Map<String, String> params = cfg.parametersAsMap
 
                 // send manual payments
-                service.sendManualPayments(site.getKey(), url, params)
+                service.sendManualPayments(site.key, url, params)
 
                 // send auto payments
-                service.sendPayments(site.getKey(), url, params)
+                service.sendPayments(site.key, url, params)
             }
 
         }

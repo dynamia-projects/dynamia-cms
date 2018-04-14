@@ -54,9 +54,9 @@ class Country extends SiteSimpleEntity {
     }
 
     void sync(CountryDTO dto) {
-        name = dto.getName()
-        code = dto.getCode()
-        externalRef = dto.getExternalRef()
+        name = dto.name
+        code = dto.code
+        externalRef = dto.externalRef
     }
 
     String getExternalRef() {

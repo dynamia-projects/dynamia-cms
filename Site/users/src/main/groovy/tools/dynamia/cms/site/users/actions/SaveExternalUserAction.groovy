@@ -28,7 +28,7 @@ class SaveExternalUserAction implements SiteAction {
         CMSUtil.redirectHome(mv)
 
 
-        UserDTO dto = (UserDTO) evt.getRequest().getSession().getAttribute("externalUser")
+        UserDTO dto = (UserDTO) evt.request.session.getAttribute("externalUser")
         if (dto != null) {
 
         }

@@ -39,10 +39,10 @@ class UserMenuInterceptor extends SiteRequestInterceptorAdapter {
 	protected void afterRequest(Site site, ModelAndView modelAndView) {
 		List<UserMenuAction> orderedActions = new ArrayList<>()
 
-        if (UserHolder.get().isAuthenticated()) {
+        if (UserHolder.get().authenticated) {
 			for (UserMenuAction action : allActions) {
 				if (action instanceof UserMenuActionEnableable) {
-					User currentUser = UserHolder.get().getCurrent()
+					User currentUser = UserHolder.get().current
                     if (((UserMenuActionEnableable) action).isEnabled(currentUser)) {
 						orderedActions.add(action)
                     }
@@ -56,13 +56,13 @@ class UserMenuInterceptor extends SiteRequestInterceptorAdapter {
 
 				@Override
                 int compare(UserMenuAction t, UserMenuAction t1) {
-					Integer ua = t.getOrder()
-                    Integer ub = t1.getOrder()
+					Integer ua = t.order
+                    Integer ub = t1.order
                     return ua.compareTo(ub)
                 }
 			})
 
-            modelAndView.addObject("site", UserHolder.get().getCurrent().getSite())
+            modelAndView.addObject("site", UserHolder.get().current.site)
         }
 
 		modelAndView.addObject("userMenuActions", orderedActions)

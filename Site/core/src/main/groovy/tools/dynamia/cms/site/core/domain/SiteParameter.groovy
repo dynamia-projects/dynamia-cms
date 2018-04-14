@@ -76,7 +76,7 @@ class SiteParameter extends SimpleEntity implements Parameter {
 
 	@Override
 	String toString() {
-		return getName()
+		return name
 	}
 
 }

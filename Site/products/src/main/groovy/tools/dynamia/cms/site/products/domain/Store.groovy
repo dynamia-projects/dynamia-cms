@@ -149,27 +149,27 @@ class Store extends SimpleEntity implements SiteAware {
     }
 
     void sync(StoreDTO dto) {
-        setName(dto.getName())
-        getContactInfo().setAddress(dto.getAddress())
-        getContactInfo().setCity(dto.getCity())
-        getContactInfo().setCountry(dto.getCountry())
-        getContactInfo().setEmail(dto.getEmail())
-        getContactInfo().setMobileNumber(dto.getMobileNumber())
-        getContactInfo().setPhoneNumber(dto.getPhoneNumber())
-        setExternalRef(dto.getExternalRef())
-        if (dto.getImage() != null && !dto.getImage().isEmpty()) {
-            setImage(dto.getImage())
+        name = dto.name
+        contactInfo.address = dto.address
+        contactInfo.city = dto.city
+        contactInfo.country = dto.country
+        contactInfo.email = dto.email
+        contactInfo.mobileNumber = dto.mobileNumber
+        contactInfo.phoneNumber = dto.phoneNumber
+        externalRef = dto.externalRef
+        if (dto.image != null && !dto.image.empty) {
+            image = dto.image
         }
-        if (dto.getImage2() != null && !dto.getImage2().isEmpty()) {
-            setImage2(dto.getImage2())
+        if (dto.image2 != null && !dto.image2.empty) {
+            image2 = dto.image2
         }
-        if (dto.getImage3() != null && !dto.getImage3().isEmpty()) {
-            setImage3(dto.getImage3())
+        if (dto.image3 != null && !dto.image3.empty) {
+            image3 = dto.image3
         }
-        if (dto.getImage4() != null && !dto.getImage4().isEmpty()) {
-            setImage4(dto.getImage4())
+        if (dto.image4 != null && !dto.image4.empty) {
+            image4 = dto.image4
         }
-        setInfo(dto.getInfo())
+        info = dto.info
 
     }
 

@@ -26,16 +26,16 @@ import tools.dynamia.zk.navigation.ZKNavigationManager
 class ApplySystemConfigAction extends SaveConfigAction {
 
     ApplySystemConfigAction() {
-        setName("Apply")
-        setImage("refresh")
-        setPosition(1)
+        name = "Apply"
+        image = "refresh"
+        position = 1
     }
 
     @Override
     void actionPerformed(ActionEvent evt) {
         super.actionPerformed(evt)
         DynamiaCMS.reloadHomePath()
-        ZKNavigationManager.getInstance().refresh()
+        ZKNavigationManager.instance.refresh()
         UIMessages.showMessage("Done")
 
     }

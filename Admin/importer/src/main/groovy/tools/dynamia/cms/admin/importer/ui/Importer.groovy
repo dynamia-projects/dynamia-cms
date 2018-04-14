@@ -61,25 +61,25 @@ class Importer extends Window implements ActionEventBuilder {
     }
 
     private void resetProgress() {
-        progress.setVisible(false)
-        progress.setValue(0)
-        progressLabel.setValue("")
-        Clients.clearBusy(layout.getCenter().getFirstChild())
+        progress.visible = false
+        progress.value = 0
+        progressLabel.value = ""
+        Clients.clearBusy(layout.center.firstChild)
     }
 
     void updateProgress(ProgressMonitor monitor) {
 
-        if (monitor.getCurrent() > 0) {
+        if (monitor.current > 0) {
             try {
 
-                int value = (int) (monitor.getCurrent() * 100 / monitor.getMax())
-                if (!progress.isVisible()) {
-                    progress.setVisible(true)
+                int value = (int) (monitor.current * 100 / monitor.max)
+                if (!progress.visible) {
+                    progress.visible = true
                 }
-                progress.setValue(value)
-                progressLabel.setValue(monitor.getMessage())
+                progress.value = value
+                progressLabel.value = monitor.message
 
-                Clients.showBusy(layout.getCenter().getFirstChild(), monitor.getMessage())
+                Clients.showBusy(layout.center.firstChild, monitor.message)
             } catch (Exception e) {
                 // TODO: handle exception
             }
@@ -88,44 +88,44 @@ class Importer extends Window implements ActionEventBuilder {
     }
 
     private void buildLayout() {
-        setHflex("1")
+        hflex = "1"
 
-        setVflex("1")
+        vflex = "1"
         appendChild(layout)
-        layout.setHflex("1")
-        layout.setVflex("1")
+        layout.hflex = "1"
+        layout.vflex = "1"
 
         layout.appendChild(new Center())
         layout.appendChild(new North())
         layout.appendChild(new South())
         layout.appendChild(new East())
 
-        layout.getNorth().appendChild(toolbar)
+        layout.north.appendChild(toolbar)
         Hlayout controls = new Hlayout()
-        layout.getSouth().appendChild(controls)
+        layout.south.appendChild(controls)
 
         this.btnProcesar = new Button("Procesar datos importados")
-        btnProcesar.setStyle("margin:4px")
+        btnProcesar.style = "margin:4px"
         btnProcesar.addEventListener(Events.ON_CLICK, { processImportedData() })
 
         this.btnCancelar = new Button("Cancelar")
-        btnCancelar.setStyle("margin:4px")
+        btnCancelar.style = "margin:4px"
         btnCancelar.addEventListener(Events.ON_CLICK, {
             if (currentOperation == null) {
                 return
             }
 
-            UIMessages.showQuestion("Esta seguro que desea cancelar: " + currentOperation.getName() + "?", {
+            UIMessages.showQuestion("Esta seguro que desea cancelar: " + currentOperation.name + "?", {
                 cancel()
             })
 
         })
 
-        progress.setHflex("1")
+        progress.hflex = "1"
         controls.appendChild(btnProcesar)
         controls.appendChild(btnCancelar)
 
-        setOperationStatus(false)
+        operationStatus = false
     }
 
     private void processImportedData() {
@@ -176,7 +176,7 @@ class Importer extends Window implements ActionEventBuilder {
     void setOperationStatus(boolean running) {
         this.operationRunning = running
         checkRunning()
-        progress.setVisible(running)
+        progress.visible = running
     }
 
     @Override
@@ -185,18 +185,18 @@ class Importer extends Window implements ActionEventBuilder {
     }
 
     private void checkRunning() {
-        btnCancelar.setDisabled(!operationRunning)
-        btnProcesar.setDisabled(operationRunning)
-        setClosable(!operationRunning)
+        btnCancelar.disabled = !operationRunning
+        btnProcesar.disabled = operationRunning
+        closable = !operationRunning
 
-        for (Component child : toolbar.getChildren()) {
+        for (Component child : (toolbar.children)) {
             if (child instanceof Button) {
                 Button button = (Button) child
-                button.setDisabled(operationRunning)
+                button.disabled = operationRunning
             }
         }
 
-        if (!isOperationRunning()) {
+        if (!operationRunning) {
             resetProgress()
         }
     }
@@ -214,14 +214,14 @@ class Importer extends Window implements ActionEventBuilder {
 
     void addColumn(String name, String path) {
         Field field = new Field(path)
-        field.setLabel(name)
+        field.label = name
         tableDescriptor.addField(field)
     }
 
     void addColumn(String name, String path, String reference) {
         Field field = new Field(path)
-        field.setLabel(name)
-        field.setComponent("entityrefpicker")
+        field.label = name
+        field.component = "entityrefpicker"
         field.addParam("entityAlias", reference)
         tableDescriptor.addField(field)
 
@@ -230,14 +230,14 @@ class Importer extends Window implements ActionEventBuilder {
     void initTable(List data) {
         this.table = (TableView) Viewers.getView(tableDescriptor)
 
-        table.setSizedByContent(true)
+        table.sizedByContent = true
 
-        if (data != null && !data.isEmpty()) {
-            table.setValue(data)
+        if (data != null && !data.empty) {
+            table.value = data
         }
 
-        layout.getCenter().getChildren().clear()
-        layout.getCenter().appendChild(table)
+        layout.center.children.clear()
+        layout.center.appendChild(table)
     }
 
     void clearTable() {
@@ -252,7 +252,7 @@ class Importer extends Window implements ActionEventBuilder {
 
     Object getSelected() {
         if (table != null) {
-            return table.getSelected()
+            return table.selected
         } else {
             return null
         }

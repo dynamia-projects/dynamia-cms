@@ -129,64 +129,64 @@ class PayULatamGateway implements PaymentGateway {
     PaymentTransaction newTransaction(String source, String baseURL) {
         PaymentTransaction tx = new PaymentTransaction(source)
 
-        tx.setResponseURL(baseURL + "payment/" + getId() + "/response")
-        tx.setConfirmationURL(baseURL + "payment/" + getId() + "/confirmation")
+        tx.responseURL = baseURL + "payment/" + id + "/response"
+        tx.confirmationURL = baseURL + "payment/" + id + "/confirmation"
         return tx
     }
 
     @Override
     PaymentForm createForm(PaymentTransaction tx) {
-        Map<String, String> params = service.getGatewayConfigMap(this, tx.getSource())
+        Map<String, String> params = service.getGatewayConfigMap(this, tx.source)
         PaymentForm form = new PaymentForm()
-        form.setHttpMethod("post")
+        form.httpMethod = "post"
 
         boolean test = false
         if (!"1".equals(params.get(TEST))) {
-            test = tx.isTest()
+            test = tx.test
         } else {
             test = true
         }
         if (test) {
-            form.setUrl(params.get(TEST_URL))
+            form.url = params.get(TEST_URL)
         } else {
-            form.setUrl(params.get(PRODUCTION_URL))
+            form.url = params.get(PRODUCTION_URL)
         }
 
         DecimalFormat formatter = new DecimalFormat("######")
 
         if (!"1".equals(params.get(TEST))) {
-            form.addParam(TEST, tx.isTest() ? "1" : "0")
+            form.addParam(TEST, tx.test ? "1" : "0")
         } else {
             form.addParam(TEST, "1")
         }
 
         form.addParam(MERCHANT_ID, params.get(MERCHANT_ID))
         form.addParam(ACCOUNT_ID, params.get(ACCOUNT_ID))
-        form.addParam(REFERENCE_CODE, tx.getUuid())
-        form.addParam(AMOUNT, formatter.format(tx.getAmount()))
-        form.addParam(TAX, formatter.format(tx.getTaxes()))
-        form.addParam(TAX_RETURN_BASE, formatter.format(tx.getTaxesBase()))
+        form.addParam(REFERENCE_CODE, tx.uuid)
+        form.addParam(AMOUNT, formatter.format(tx.amount))
+        form.addParam(TAX, formatter.format(tx.taxes))
+        form.addParam(TAX_RETURN_BASE, formatter.format(tx.taxesBase))
 
-        if (tx.getCurrency() == null || tx.getCurrency().isEmpty()) {
+        if (tx.currency == null || tx.currency.empty) {
             throw new PaymentException("No Currency supplied for PayU")
         }
-        form.addParam(CURRENCY, tx.getCurrency())
+        form.addParam(CURRENCY, tx.currency)
 
-        form.addParam(BUYER_EMAIL, tx.getEmail())
-        form.addParam(BUYER_FULL_NAME, tx.getPayerFullname())
-        form.addParam(PAYER_EMAIL, tx.getEmail())
-        form.addParam(PAYER_PHONE, tx.getPayerPhoneNumber())
-        form.addParam(PAYER_MOBILE_PHONE, tx.getPayerMobileNumber())
-        form.addParam(PAYER_DOCUMENT, tx.getPayerDocument())
-        form.addParam(PAYER_FULL_NAME, tx.getPayerFullname())
+        form.addParam(BUYER_EMAIL, tx.email)
+        form.addParam(BUYER_FULL_NAME, tx.payerFullname)
+        form.addParam(PAYER_EMAIL, tx.email)
+        form.addParam(PAYER_PHONE, tx.payerPhoneNumber)
+        form.addParam(PAYER_MOBILE_PHONE, tx.payerMobileNumber)
+        form.addParam(PAYER_DOCUMENT, tx.payerDocument)
+        form.addParam(PAYER_FULL_NAME, tx.payerFullname)
 
-        form.addParam(RESPONSE_URL, tx.getResponseURL())
-        form.addParam(CONFIRMATION_URL, tx.getConfirmationURL())
-        form.addParam(DESCRIPTION, tx.getDescription())
-        form.addParam(SHIPPING_ADDRESS, tx.getShippingAddress())
-        form.addParam(SHIPPING_CITY, tx.getShippingCity())
-        tx.setSignature(generateSignature(params.get(API_KEY), form.getParameters()))
-        form.addParam(SIGNATURE, tx.getSignature())
+        form.addParam(RESPONSE_URL, tx.responseURL)
+        form.addParam(CONFIRMATION_URL, tx.confirmationURL)
+        form.addParam(DESCRIPTION, tx.description)
+        form.addParam(SHIPPING_ADDRESS, tx.shippingAddress)
+        form.addParam(SHIPPING_CITY, tx.shippingCity)
+        tx.signature = generateSignature(params.get(API_KEY), form.parameters)
+        form.addParam(SIGNATURE, tx.signature)
 
         return form
     }
@@ -194,15 +194,15 @@ class PayULatamGateway implements PaymentGateway {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     boolean processResponse(PaymentTransaction tx, Map<String, String> response, ResponseType type) {
-        Map<String, String> params = service.getGatewayConfigMap(this, tx.getSource())
+        Map<String, String> params = service.getGatewayConfigMap(this, tx.source)
 
-        if (tx.getEndDate() == null) {
-            tx.setEndDate(new Date())
+        if (tx.endDate == null) {
+            tx.endDate = new Date()
         }
 
         if (!isValidSignature(params.get(API_KEY), response, type)) {
-            tx.setStatus(PaymentTransactionStatus.ERROR)
-            tx.setStatusText("Firma digital invalida")
+            tx.status = PaymentTransactionStatus.ERROR
+            tx.statusText = "Firma digital invalida"
             service.saveTransaction(tx)
             logger.error("Signature is invalid")
             return false
@@ -210,13 +210,13 @@ class PayULatamGateway implements PaymentGateway {
 
         String txState = getResponseState(response, type)
 
-        if (txState == null || txState.isEmpty()) {
-            logger.info("NO Transaction State found in response aborting TX: " + tx.getUuid())
+        if (txState == null || txState.empty) {
+            logger.info("NO Transaction State found in response aborting TX: " + tx.uuid)
             return false
         }
 
         String statusText = ""
-        PaymentTransactionStatus status = tx.getStatus()
+        PaymentTransactionStatus status = tx.status
         if (status == null || status != PaymentTransactionStatus.COMPLETED) {
 
             if (txState.equals("4")) {
@@ -231,7 +231,7 @@ class PayULatamGateway implements PaymentGateway {
             } else if (txState.equals("7")) {
                 statusText = "Transaccion Pendiente"
                 status = PaymentTransactionStatus.PROCESSING
-                tx.setEndDate(null)
+                tx.endDate = null
             } else if (txState.equals("5")) {
                 statusText = "Transaccion Expirada"
                 status = PaymentTransactionStatus.EXPIRED
@@ -239,29 +239,29 @@ class PayULatamGateway implements PaymentGateway {
                 status = PaymentTransactionStatus.UNKNOWN
                 statusText = response.get("mensaje")
 
-                if (statusText == null || statusText.isEmpty()) {
+                if (statusText == null || statusText.empty) {
                     statusText = response.get("message")
                 }
 
-                if (statusText == null || statusText.isEmpty()) {
+                if (statusText == null || statusText.empty) {
                     statusText = "Desconocido"
                 }
             }
 
             if (status == PaymentTransactionStatus.COMPLETED) {
-                tx.setConfirmed(true)
+                tx.confirmed = true
             }
 
-            tx.setStatus(status)
-            tx.setStatusText(statusText)
-            tx.setBank(response.get(RES_PSE_BANK))
-            tx.setResponseCode(txState + "  -  " + response.get(RES_POL_RESPONSE_CODE))
-            tx.setPaymentMethod(response.get(RES_LAP_PAYMENT_METHOD))
-            tx.setReference(response.get(RES_REFERENCE_POL))
-            tx.setReference2(response.get(RES_CUS))
-            tx.setReference3(response.get(RES_PSE_REFERENCE1) + " " + response.get(RES_PSE_REFERENCE2) + " "
-                    + response.get(RES_PSE_REFERENCE3))
-            tx.setGatewayResponse(mapToString(response))
+            tx.status = status
+            tx.statusText = statusText
+            tx.bank = response.get(RES_PSE_BANK)
+            tx.responseCode = txState + "  -  " + response.get(RES_POL_RESPONSE_CODE)
+            tx.paymentMethod = response.get(RES_LAP_PAYMENT_METHOD)
+            tx.reference = response.get(RES_REFERENCE_POL)
+            tx.reference2 = response.get(RES_CUS)
+            tx.reference3 = response.get(RES_PSE_REFERENCE1) + " " + response.get(RES_PSE_REFERENCE2) + " "
+                    + response.get(RES_PSE_REFERENCE3)
+            tx.gatewayResponse = mapToString(response)
             service.saveTransaction(tx)
             return true
         } else {
@@ -276,7 +276,7 @@ class PayULatamGateway implements PaymentGateway {
         } else if (type == ResponseType.CONFIRMATION) {
             txState = response.get(RES_STATE_POL)
 
-            if (txState == null || txState.isEmpty()) {
+            if (txState == null || txState.empty) {
                 txState = response.get(RES_TRANSACTION_STATE)
             }
         }

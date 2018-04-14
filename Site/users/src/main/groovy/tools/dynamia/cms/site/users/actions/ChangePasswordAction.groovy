@@ -46,17 +46,17 @@ class ChangePasswordAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("users/account")
-        UserForm form = (UserForm) evt.getData()
-        form.setSite(evt.getSite())
+        ModelAndView mv = evt.modelAndView
+        mv.viewName = "users/account"
+        UserForm form = (UserForm) evt.data
+        form.site = evt.site
 
         try {
             service.changePassword(form)
             mv.addObject("successmessage", "Password modificado correctamente!")
         } catch (ValidationError e) {
-            mv.setViewName("users/changepassword")
-            mv.addObject("errormessage", e.getMessage())
+            mv.viewName = "users/changepassword"
+            mv.addObject("errormessage", e.message)
             SiteActionManager.performAction("updateUser", evt)
         }
 

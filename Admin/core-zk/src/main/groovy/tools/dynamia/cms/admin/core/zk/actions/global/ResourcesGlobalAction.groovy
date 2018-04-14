@@ -10,9 +10,9 @@ import tools.dynamia.integration.Containers
 class ResourcesGlobalAction extends ApplicationGlobalAction {
 
 	ResourcesGlobalAction() {
-		setName("Resources")
-        setImage("cloud")
-        setPosition(3)
+        name = "Resources"
+        image = "cloud"
+        position = 3
         setAttribute("background", "btn btn-success btn-flat bg-green")
     }
 

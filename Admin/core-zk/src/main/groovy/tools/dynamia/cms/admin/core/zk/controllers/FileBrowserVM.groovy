@@ -61,11 +61,11 @@ class FileBrowserVM {
 
 	@Command
     void select() {
-		FileInfo resource = fileMgr.getValue()
+		FileInfo resource = fileMgr.value
         if (resource != null) {
-			String path = CMSUtil.getResourceURL(SiteContext.get().getCurrent(), resource.getFile())
+			String path = CMSUtil.getResourceURL(SiteContext.get().current, resource.file)
             String script = "window.opener.CKEDITOR.tools.callFunction(" +
-					ckEditorFuncNum + ", '" + Executions.getCurrent().encodeURL(path) + "'); window.close(); "
+					ckEditorFuncNum + ", '" + Executions.current.encodeURL(path) + "'); window.close(); "
 
             Clients.evalJavaScript(script)
         } else {

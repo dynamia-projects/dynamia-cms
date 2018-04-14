@@ -154,13 +154,13 @@ class ModuleInstance extends Content implements Orderable {
 
     @Override
     String toString() {
-        return getModuleId()
+        return moduleId
     }
 
     String getParameterValue(String name) {
         ModuleInstanceParameter parameter = getParameter(name)
-        if (parameter != null && parameter.isEnabled()) {
-            return parameter.getValue()
+        if (parameter != null && parameter.enabled) {
+            return parameter.value
         }
 
         return null
@@ -168,12 +168,12 @@ class ModuleInstance extends Content implements Orderable {
 
     ModuleInstanceParameter getParameter(String name) {
 
-        if (getId() != null && (parameters == null || parameters.isEmpty())) {
+        if (id != null && (parameters == null || parameters.empty)) {
             reloadParameters()
         }
 
         for (ModuleInstanceParameter parameter : parameters) {
-            if (parameter.getName().equalsIgnoreCase(name)) {
+            if (parameter.name.equalsIgnoreCase(name)) {
                 return parameter
             }
         }
@@ -201,17 +201,17 @@ class ModuleInstance extends Content implements Orderable {
         clone.titleVisible = titleVisible
         clone.customView = customView
 
-        for (ModuleInstanceParameter parameter : getParameters()) {
+        for (ModuleInstanceParameter parameter : (parameters)) {
             ModuleInstanceParameter cloneParam = parameter.clone()
-            clone.getParameters().add(cloneParam)
-            cloneParam.setModuleInstance(clone)
+            clone.parameters.add(cloneParam)
+            cloneParam.moduleInstance = clone
         }
 
         return clone
     }
 
     boolean isPathIncluded(String currentPath) {
-        if (includePaths == null || includePaths.isEmpty()) {
+        if (includePaths == null || includePaths.empty) {
             return true
         }
 

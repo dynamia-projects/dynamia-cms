@@ -81,13 +81,13 @@ class CMSUtil {
         }
 
         String context = ""
-        if (domain.getContext() != null && !domain.getContext().isEmpty()) {
-            context = domain.getContext() + "/"
+        if (domain.context != null && !domain.context.empty) {
+            context = domain.context + "/"
         }
 
-        String urltext = String.format("http://%s/%s", domain.getName(), context + uri)
-        if (domain.getPort() > 0 && domain.getPort() != 80) {
-            urltext = String.format("http://%s:%s/%s", domain.getName(), domain.getPort(), context + uri)
+        String urltext = String.format("http://%s/%s", domain.name, context + uri)
+        if (domain.port > 0 && domain.port != 80) {
+            urltext = String.format("http://%s:%s/%s", domain.name, domain.port, context + uri)
         }
 
         return urltext
@@ -132,11 +132,11 @@ class CMSUtil {
     static void buildContactInfoOptions(Site site, ModelAndView mv, String prefix, ContactInfo selected) {
         SiteService service = Containers.get().findObject(SiteService.class)
         mv.addObject(prefix + "Countries",
-                Option.buildFromArray(service.getSiteParameterAsArray(site, "countries"), selected.getCountry()))
+                Option.buildFromArray(service.getSiteParameterAsArray(site, "countries"), selected.country))
         mv.addObject(prefix + "Regions",
-                Option.buildFromArray(service.getSiteParameterAsArray(site, "regions"), selected.getRegion()))
+                Option.buildFromArray(service.getSiteParameterAsArray(site, "regions"), selected.region))
         mv.addObject(prefix + "Cities",
-                Option.buildFromArray(service.getSiteParameterAsArray(site, "cities"), selected.getCity()))
+                Option.buildFromArray(service.getSiteParameterAsArray(site, "cities"), selected.city))
     }
 
     String formatNumber(Number number) {
@@ -144,7 +144,7 @@ class CMSUtil {
             return ""
         }
 
-        return NumberFormat.getIntegerInstance().format(number)
+        return NumberFormat.integerInstance.format(number)
     }
 
     String formatNumber(Number number, String pattern) {
@@ -168,7 +168,7 @@ class CMSUtil {
     }
 
     String absoluteURL(String url) {
-        if (url == null || url.isEmpty()) {
+        if (url == null || url.empty) {
             return "#"
         }
 
@@ -196,10 +196,10 @@ class CMSUtil {
     }
 
     static Cookie getCookie(HttpServletRequest request, String cookieName) {
-        Cookie[] cookies = request.getCookies()
+        Cookie[] cookies = request.cookies
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName() == cookieName) {
+                if (cookie.name == cookieName) {
                     return cookie
                 }
             }
@@ -210,13 +210,13 @@ class CMSUtil {
     static HttpServletRequest getCurrentRequest() {
         ServletRequestAttributes requestAttrb = (ServletRequestAttributes) RequestContextHolder
                 .currentRequestAttributes()
-        return requestAttrb.getRequest()
+        return requestAttrb.request
     }
 
     String[] listFilesNames(String directory, final String extension) {
 
         Path path = DynamiaCMS.getSitesResourceLocation(site).resolve(directory)
-        if (extension == null || extension.isEmpty()) {
+        if (extension == null || extension.empty) {
             return path.toFile().list()
         } else {
             String[] extSplit = [extension]
@@ -293,14 +293,14 @@ class CMSUtil {
 
         String url = null
         if (file instanceof URLProvider) {
-            url = ((URLProvider) file).getURL()
+            url = ((URLProvider) file).URL
         } else {
 
             String baseUrl = getSiteURL(site, "resources")
             File resources = DynamiaCMS.getSitesResourceLocation(site).toFile()
-            String filePath = file.getPath()
+            String filePath = file.path
             if (file.exists()) {
-                filePath = filePath.substring(filePath.indexOf(resources.getName()) + resources.getName().length() + 1)
+                filePath = filePath.substring(filePath.indexOf(resources.name) + resources.name.length() + 1)
             }
             filePath = filePath.replace("\\", "/")
 
@@ -327,11 +327,11 @@ class CMSUtil {
         }
 
         File resources = DynamiaCMS.getSitesResourceLocation(site).toFile()
-        String filePath = file.getPath()
+        String filePath = file.path
         if (file instanceof VirtualFile) {
-            filePath = file.getPath()
+            filePath = file.path
         } else {
-            filePath = filePath.substring(filePath.indexOf(resources.getName()) + resources.getName().length() + 1)
+            filePath = filePath.substring(filePath.indexOf(resources.name) + resources.name.length() + 1)
             filePath = filePath.replace("\\", "/")
         }
         filePath = "/resources/" + filePath
@@ -346,11 +346,11 @@ class CMSUtil {
     }
 
     static List setupPagination(List paginableList, HttpServletRequest request, ModelAndView mv) {
-        PagedListDataSource datasource = (PagedListDataSource) request.getSession().getAttribute(PAGINATION_DATASOURCE)
+        PagedListDataSource datasource = (PagedListDataSource) request.session.getAttribute(PAGINATION_DATASOURCE)
 
         if (paginableList instanceof PagedList) {
-            datasource = ((PagedList) paginableList).getDataSource()
-            request.getSession().setAttribute(PAGINATION_DATASOURCE, datasource)
+            datasource = ((PagedList) paginableList).dataSource
+            request.session.setAttribute(PAGINATION_DATASOURCE, datasource)
         }
 
         if (datasource != null) {
@@ -358,7 +358,7 @@ class CMSUtil {
             if (request.getParameter("page") != null) {
                 try {
                     int page = Integer.parseInt(request.getParameter("page"))
-                    datasource.setActivePage(page)
+                    datasource.activePage = page
                 } catch (NumberFormatException numberFormatException) {
                     // not a number, ignore it
                 }
@@ -366,11 +366,11 @@ class CMSUtil {
             if (!isJson(request)) {
                 mv.addObject(PAGINATION_DATASOURCE, datasource)
             } else {
-                mv.addObject(_PAGINATION, new DataPaginator(datasource.getTotalSize(), datasource.getPageSize(),
-                        datasource.getActivePage()))
+                mv.addObject(_PAGINATION, new DataPaginator(datasource.totalSize, datasource.pageSize,
+                        datasource.activePage))
             }
 
-            paginableList = datasource.getPageData()
+            paginableList = datasource.pageData
         }
         return paginableList
     }
@@ -396,10 +396,10 @@ class CMSUtil {
         }
         Document document = Jsoup.parse(htmlText)
 
-        Elements tags = document.getAllElements().not("script")
+        Elements tags = document.allElements.not("script")
         for (Element tag : tags) {
             for (Node child : tag.childNodes()) {
-                if (child instanceof TextNode && !((TextNode) child).isBlank()) {
+                if (child instanceof TextNode && !((TextNode) child).blank) {
                     TextNode textNode = (TextNode) child
                     textNode.text(escapeHtml(textNode.text()))
                 }
@@ -412,7 +412,7 @@ class CMSUtil {
     }
 
     static boolean isJson(HttpServletRequest request) {
-        return request.getRequestURI().endsWith(".json")
+        return request.requestURI.endsWith(".json")
     }
 
     static String getChecksum(Serializable object) throws IOException, NoSuchAlgorithmException {
@@ -458,7 +458,7 @@ class CMSUtil {
             return null
         }
         try {
-            String filename = Paths.get(new URI(url).getPath()).getFileName().toString()
+            String filename = Paths.get(new URI(url).path).fileName.toString()
             filename = encodeWhiteSpaces(filename)
             String thumbnail = url.replace(filename, "thumbnails/" + filename + "?w=" + width + "&h=" + height)
             return thumbnail
@@ -471,7 +471,7 @@ class CMSUtil {
     }
 
     String parseTemplate(String template, String engine, Map<String, Object> model) {
-        if (engine != null && !engine.isEmpty() && model != null) {
+        if (engine != null && !engine.empty && model != null) {
             StringParser parser = StringParsers.get(engine)
             if (parser != null) {
                 template = parser.parse(template, model)
@@ -482,7 +482,7 @@ class CMSUtil {
 
     static void redirectHome(ModelAndView mv) {
         if (mv != null) {
-            mv.setView(new RedirectView("/", true, true, false))
+            mv.view = new RedirectView("/", true, true, false)
         }
     }
 

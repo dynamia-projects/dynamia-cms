@@ -82,7 +82,7 @@ class ShoppingOrder extends BaseEntity implements SiteAware {
 
     
     boolean isCompleted() {
-        return transaction != null && transaction.getStatus() == PaymentTransactionStatus.COMPLETED
+        return transaction != null && transaction.status == PaymentTransactionStatus.COMPLETED
     }
 
     void sync() {
@@ -95,16 +95,16 @@ class ShoppingOrder extends BaseEntity implements SiteAware {
 
     void syncTransaction() {
         if (shoppingCart != null && transaction != null) {
-            transaction.setDocument(getNumber())
-            transaction.setAmount(shoppingCart.getTotalPrice())
-            transaction.setTaxes(shoppingCart.getTotalTaxes())
-            if (transaction.getTaxes() != null && transaction.getTaxes().longValue() > 0) {
-                transaction.setTaxesBase(shoppingCart.getSubtotal())
+            transaction.document = number
+            transaction.amount = shoppingCart.totalPrice
+            transaction.taxes = shoppingCart.totalTaxes
+            if (transaction.taxes != null && transaction.taxes.longValue() > 0) {
+                transaction.taxesBase = shoppingCart.subtotal
             }
 
-            if (getShippingAddress() != null) {
-                transaction.setShippingAddress(getShippingAddress().getInfo().getAddress())
-                transaction.setShippingCity(getShippingAddress().getInfo().getCity())
+            if (shippingAddress != null) {
+                transaction.shippingAddress = shippingAddress.info.address
+                transaction.shippingCity = shippingAddress.info.city
 
             }
         }
@@ -112,71 +112,71 @@ class ShoppingOrder extends BaseEntity implements SiteAware {
 
     ShoppingOrderDTO toDTO() {
         ShoppingOrderDTO dto = new ShoppingOrderDTO()
-        dto.setNumber(number)
-        dto.setShippingComments(shippingComments)
-        dto.setPayAtDelivery(payAtDelivery)
-        dto.setPickupAtStore(pickupAtStore)
-        dto.setPayLater(payLater)
-        dto.setSite(site.getKey())
-        dto.setUserComments(userComments)
-        dto.setExternalRef(externalRef)
+        dto.number = number
+        dto.shippingComments = shippingComments
+        dto.payAtDelivery = payAtDelivery
+        dto.pickupAtStore = pickupAtStore
+        dto.payLater = payLater
+        dto.site = site.key
+        dto.userComments = userComments
+        dto.externalRef = externalRef
 
         if (shoppingCart != null) {
-            if (shoppingCart.getCustomer() != null) {
-                User customer = shoppingCart.getCustomer()
-                dto.setCustomer(customer.getFullName())
-                dto.setCustomerExternalRef(customer.getExternalRef())
-                dto.setCustomerIdentification(customer.getIdentification())
+            if (shoppingCart.customer != null) {
+                User customer = shoppingCart.customer
+                dto.customer = customer.fullName
+                dto.customerExternalRef = customer.externalRef
+                dto.customerIdentification = customer.identification
             }
 
-            if (shoppingCart.getUser() != null) {
-                User user = shoppingCart.getUser()
-                dto.setUser(user.getFullName())
-                dto.setUserExternalRef(user.getExternalRef())
-                dto.setUserIdentification(user.getIdentification())
+            if (shoppingCart.user != null) {
+                User user = shoppingCart.user
+                dto.user = user.fullName
+                dto.userExternalRef = user.externalRef
+                dto.userIdentification = user.identification
             }
 
-            dto.setTimeStamp(shoppingCart.getTimeStamp())
-            dto.setQuantity(shoppingCart.getQuantity())
-            dto.setSubtotal(shoppingCart.getSubtotal())
-            dto.setTotalShipmentPrice(shoppingCart.getTotalShipmentPrice())
-            dto.setTotalTaxes(shoppingCart.getTotalTaxes())
-            dto.setTotalPrice(shoppingCart.getTotalPrice())
-            dto.setTotalUnit(shoppingCart.getTotalUnit())
-            dto.setShipmentPercent(shoppingCart.getShipmentPercent())
-            dto.setTotalDiscount(shoppingCart.getTotalDiscount())
+            dto.timeStamp = shoppingCart.timeStamp
+            dto.quantity = shoppingCart.quantity
+            dto.subtotal = shoppingCart.subtotal
+            dto.totalShipmentPrice = shoppingCart.totalShipmentPrice
+            dto.totalTaxes = shoppingCart.totalTaxes
+            dto.totalPrice = shoppingCart.totalPrice
+            dto.totalUnit = shoppingCart.totalUnit
+            dto.shipmentPercent = shoppingCart.shipmentPercent
+            dto.totalDiscount = shoppingCart.totalDiscount
 
-            for (ShoppingCartItem item : shoppingCart.getItems()) {
+            for (ShoppingCartItem item : (shoppingCart.items)) {
                 dto.addItem(item.toDTO())
             }
         }
 
         if (transaction != null) {
-            dto.setPaymentAmount(transaction.getAmount())
-            dto.setPaymentMethod(transaction.getPaymentMethod())
-            dto.setPaymentResponseCode(transaction.getResponseCode())
-            dto.setPaymentStatus(transaction.getStatusText())
-            dto.setPaymentTaxes(transaction.getTaxes())
-            dto.setPaymentTaxesBase(transaction.getTaxesBase())
-            dto.setPaymentUuid(transaction.getUuid())
+            dto.paymentAmount = transaction.amount
+            dto.paymentMethod = transaction.paymentMethod
+            dto.paymentResponseCode = transaction.responseCode
+            dto.paymentStatus = transaction.statusText
+            dto.paymentTaxes = transaction.taxes
+            dto.paymentTaxesBase = transaction.taxesBase
+            dto.paymentUuid = transaction.uuid
         }
 
         if (billingAddress != null) {
-            ContactInfo ba = billingAddress.getInfo()
-            dto.setBillingAddress(ba.getAddress())
-            dto.setBillingCity(ba.getCity())
-            dto.setBillingCountry(ba.getCountry())
-            dto.setBillingEmail(ba.getEmail())
-            dto.setBillingPhone(ba.getPhoneNumber())
+            ContactInfo ba = billingAddress.info
+            dto.billingAddress = ba.address
+            dto.billingCity = ba.city
+            dto.billingCountry = ba.country
+            dto.billingEmail = ba.email
+            dto.billingPhone = ba.phoneNumber
         }
 
         if (shippingAddress != null) {
-            ContactInfo sa = shippingAddress.getInfo()
-            dto.setShippingAddress(sa.getAddress())
-            dto.setShippingCity(sa.getCity())
-            dto.setShippingCountry(sa.getCountry())
-            dto.setShippingEmail(sa.getEmail())
-            dto.setShippingPhone(sa.getPhoneNumber())
+            ContactInfo sa = shippingAddress.info
+            dto.shippingAddress = sa.address
+            dto.shippingCity = sa.city
+            dto.shippingCountry = sa.country
+            dto.shippingEmail = sa.email
+            dto.shippingPhone = sa.phoneNumber
         }
 
         return dto
@@ -186,14 +186,14 @@ class ShoppingOrder extends BaseEntity implements SiteAware {
     }
 
     void checkRegionTaxes() {
-        if (shippingAddress != null && shippingAddress.getCity() != null && shippingAddress.getCity().getRegion() != null) {
-            Region region = shippingAddress.getCity().getRegion()
-            if (region.getTaxPercent() > 0) {
-                shoppingCart.setTaxName(region.getTaxName())
-                shoppingCart.setTaxPercent(region.getTaxPercent())
-                for (ShoppingCartItem item : shoppingCart.getItems()) {
-                    item.setTaxName(region.getTaxName())
-                    item.setTaxPercent(region.getTaxPercent())
+        if (shippingAddress != null && shippingAddress.city != null && shippingAddress.city.region != null) {
+            Region region = shippingAddress.city.region
+            if (region.taxPercent > 0) {
+                shoppingCart.taxName = region.taxName
+                shoppingCart.taxPercent = region.taxPercent
+                for (ShoppingCartItem item : (shoppingCart.items)) {
+                    item.taxName = region.taxName
+                    item.taxPercent = region.taxPercent
                 }
                 shoppingCart.compute()
             }

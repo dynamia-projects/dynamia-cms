@@ -20,8 +20,8 @@ class EnableUserAction extends AbstractCrudAction {
     private UserService service
 
     EnableUserAction() {
-        setName("Enable User")
-        setGroup(ActionGroup.get("user"))
+        name = "Enable User"
+        group = ActionGroup.get("user")
     }
 
     @Override
@@ -37,17 +37,17 @@ class EnableUserAction extends AbstractCrudAction {
     @Override
     void actionPerformed(CrudActionEvent evt) {
 
-        User user = (User) evt.getData()
+        User user = (User) evt.data
 
-        if (user != null && !user.isEnabled()) {
+        if (user != null && !user.enabled) {
 
             UIMessages.showQuestion("Confirm you want enable user: " + user + "?", {
                 try {
                     service.enableUser(user)
                     UIMessages.showMessage("User enabled successfull")
-                    evt.getController().doQuery()
+                    evt.controller.doQuery()
                 } catch (ValidationError e) {
-                    UIMessages.showMessage(e.getMessage(), MessageType.ERROR)
+                    UIMessages.showMessage(e.message, MessageType.ERROR)
                 }
             })
         } else {

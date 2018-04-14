@@ -26,7 +26,7 @@ import org.thymeleaf.templateresource.ITemplateResource
 class SiteTemplateResolver extends AbstractConfigurableTemplateResolver {
 
 	SiteTemplateResolver() {
-		System.out.println("Initializing DynamiaCMS " + getClass().getSimpleName())
+		System.out.println("Initializing DynamiaCMS " + getClass().simpleName)
 
     }
 

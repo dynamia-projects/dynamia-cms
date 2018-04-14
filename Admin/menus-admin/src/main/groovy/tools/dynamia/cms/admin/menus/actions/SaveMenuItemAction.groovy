@@ -18,8 +18,8 @@ class SaveMenuItemAction extends AbstractAction {
     private CrudActionEvent sourceEvent
 
     SaveMenuItemAction(CrudService crudService, CrudActionEvent evt) {
-		setName("Save Menu Item")
-        setImage("save")
+        name = "Save Menu Item"
+        image = "save"
         setAttribute("background", "#ff5722")
         setAttribute("color", "white")
         this.crudService = crudService
@@ -28,10 +28,10 @@ class SaveMenuItemAction extends AbstractAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		List<Parameter> parameters = (List<Parameter>) evt.getData()
+		List<Parameter> parameters = (List<Parameter>) evt.data
 
-        MenuItemsUI ui = (MenuItemsUI) evt.getSource()
-        MenuItem menuItem = ui.getMenuItem()
+        MenuItemsUI ui = (MenuItemsUI) evt.source
+        MenuItem menuItem = ui.menuItem
 
         if (needSave(menuItem)) {
 			crudService.save(menuItem)
@@ -39,19 +39,19 @@ class SaveMenuItemAction extends AbstractAction {
 
 		if (parameters != null) {
 			for (Parameter parameter : parameters) {
-				MenuItemParameter itemParameter = menuItem.getParameter(parameter.getName())
+				MenuItemParameter itemParameter = menuItem.getParameter(parameter.name)
                 if (itemParameter == null) {
-					String value = parameter.getValue()
-                    if (value != null && !value.isEmpty()) {
-						itemParameter = new MenuItemParameter(parameter.getName(), parameter.getValue())
-                        itemParameter.setEnabled(true)
-                        itemParameter.setMenuItem(menuItem)
+					String value = parameter.value
+                    if (value != null && !value.empty) {
+						itemParameter = new MenuItemParameter(parameter.name, parameter.value)
+                        itemParameter.enabled = true
+                        itemParameter.menuItem = menuItem
                         if (needSave(menuItem)) {
 							crudService.save(itemParameter)
                         }
 					}
 				} else {
-					itemParameter.setValue(parameter.getValue())
+                    itemParameter.value = parameter.value
                     if (needSave(menuItem)) {
 						crudService.save(itemParameter)
                     }
@@ -62,10 +62,10 @@ class SaveMenuItemAction extends AbstractAction {
 		UIMessages.showMessage("Menu item saved")
 
         if (sourceEvent != null) {
-			sourceEvent.getController().doQuery()
+			sourceEvent.controller.doQuery()
         }
 
-		ui.getParent().detach()
+        ui.parent.detach()
 
     }
 

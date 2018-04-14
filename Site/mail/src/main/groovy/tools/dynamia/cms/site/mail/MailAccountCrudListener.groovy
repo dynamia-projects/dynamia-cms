@@ -18,7 +18,7 @@ class MailAccountCrudListener extends CrudServiceListenerAdapter<MailAccount> {
 
     @Override
     void beforeCreate(MailAccount entity) {
-        entity.setTimestamp(System.currentTimeMillis())
+        entity.timestamp = System.currentTimeMillis()
     }
 
     @Override

@@ -148,7 +148,7 @@ class Product extends SimpleEntity implements SiteAware {
         if (promoValue != null) {
             switch (promoValueType) {
                 case CURRENCY:
-                    return "-" + NumberFormat.getCurrencyInstance().format(promoValue)
+                    return "-" + NumberFormat.currencyInstance.format(promoValue)
                 case PERCENT:
                     return "-" + promoValue.intValue() + "%"
             }
@@ -186,15 +186,15 @@ class Product extends SimpleEntity implements SiteAware {
 
 
     BigDecimal getRealPrice() {
-        if (!isPromoEnabled()) {
-            return getPrice()
+        if (!promoEnabled) {
+            return price
         } else {
-            return getPrice().subtract(getRealPromoValue())
+            return price.subtract(realPromoValue)
         }
     }
 
     BigDecimal getRealLastPrice() {
-        if (!isPromoEnabled()) {
+        if (!promoEnabled) {
             return lastPrice
         } else {
             return price
@@ -210,66 +210,66 @@ class Product extends SimpleEntity implements SiteAware {
     void sync(ProductDTO dto) {
         BeanUtils.setupBean(this, dto)
 
-        active = dto.isActive()
-        description = dto.getDescription()
-        externalRef = dto.getExternalRef()
-        featured = dto.isFeatured()
-        if (dto.getImage() != null && !dto.getImage().isEmpty()) {
-            image = dto.getImage()
+        active = dto.active
+        description = dto.description
+        externalRef = dto.externalRef
+        featured = dto.featured
+        if (dto.image != null && !dto.image.empty) {
+            image = dto.image
         }
-        if (dto.getImage2() != null && !dto.getImage2().isEmpty()) {
-            image2 = dto.getImage2()
+        if (dto.image2 != null && !dto.image2.empty) {
+            image2 = dto.image2
         }
-        if (dto.getImage3() != null && !dto.getImage3().isEmpty()) {
-            image3 = dto.getImage3()
+        if (dto.image3 != null && !dto.image3.empty) {
+            image3 = dto.image3
         }
-        if (dto.getImage4() != null && !dto.getImage4().isEmpty()) {
-            image4 = dto.getImage4()
+        if (dto.image4 != null && !dto.image4.empty) {
+            image4 = dto.image4
         }
-        lastPrice = dto.getLastPrice()
-        longDescription = dto.getLongDescription()
-        name = dto.getName()
-        price = dto.getPrice()
-        price2 = dto.getPrice2()
-        cost = dto.getCost()
-        sale = dto.isSale()
-        sku = dto.getSku()
-        stock = dto.getStock()
-        tags = dto.getTags()
-        status = dto.getStatus()
-        externalLink = dto.getExternalLink()
-        newproduct = dto.isNewproduct()
-        showCreditPrices = dto.isShowCreditPrices()
-        priceDescription = dto.getPriceDescription()
-        reference = dto.getReference()
-        sellInStore = dto.isSellInStore()
-        sellInWeb = dto.isSellInWeb()
-        showLastPrice = dto.isShowLastPrice()
-        videoURL = dto.getVideoURL()
-        videoURL2 = dto.getVideoURL2()
-        storePrice = dto.getStorePrice()
-        promoEnabled = dto.isPromoEnabled()
-        promoEndDate = dto.getPromoEndDate()
-        promoName = dto.getPromoName()
-        promoStartDate = dto.getPromoStartDate()
-        promoValue = dto.getPromoValue()
-        promoValueType = dto.getPromoValueType()
-        quality = dto.getQuality()
-        currency = dto.getCurrency()
-        taxable = dto.isTaxable()
+        lastPrice = dto.lastPrice
+        longDescription = dto.longDescription
+        name = dto.name
+        price = dto.price
+        price2 = dto.price2
+        cost = dto.cost
+        sale = dto.sale
+        sku = dto.sku
+        stock = dto.stock
+        tags = dto.tags
+        status = dto.status
+        externalLink = dto.externalLink
+        newproduct = dto.newproduct
+        showCreditPrices = dto.showCreditPrices
+        priceDescription = dto.priceDescription
+        reference = dto.reference
+        sellInStore = dto.sellInStore
+        sellInWeb = dto.sellInWeb
+        showLastPrice = dto.showLastPrice
+        videoURL = dto.videoURL
+        videoURL2 = dto.videoURL2
+        storePrice = dto.storePrice
+        promoEnabled = dto.promoEnabled
+        promoEndDate = dto.promoEndDate
+        promoName = dto.promoName
+        promoStartDate = dto.promoStartDate
+        promoValue = dto.promoValue
+        promoValueType = dto.promoValueType
+        quality = dto.quality
+        currency = dto.currency
+        taxable = dto.taxable
         checkPromo()
     }
 
     void checkPromo() {
         if (promoStartDate != null && promoEndDate != null) {
             Date today = new Date()
-            Calendar cal = Calendar.getInstance()
-            cal.setTime(today)
+            Calendar cal = Calendar.instance
+            cal.time = today
             cal.set(Calendar.HOUR_OF_DAY, 0)
             cal.set(Calendar.MINUTE, 0)
             cal.set(Calendar.SECOND, 0)
             cal.set(Calendar.MILLISECOND, 0)
-            today = cal.getTime()
+            today = cal.time
 
             promoEnabled = today.after(promoStartDate) && today.before(promoEndDate) || today == promoStartDate || today == promoEndDate
         }
@@ -277,24 +277,24 @@ class Product extends SimpleEntity implements SiteAware {
 
     BigDecimal getRealPromoValue() {
         BigDecimal realValue = promoValue
-        if (getPromoValueType() == ValueType.PERCENT) {
+        if (promoValueType == ValueType.PERCENT) {
             BigDecimal percent = realValue.divide(new BigDecimal(100), MathContext.DECIMAL32)
-            realValue = getPrice() * percent
+            realValue = price * percent
         }
 
         return realValue
     }
 
     ProductCategory getParentCategory() {
-        if (category != null && category.getParent() != null) {
-            return category.getParent()
+        if (category != null && category.parent != null) {
+            return category.parent
         } else {
             return category
         }
     }
 
     ProductCategory getSubcategory() {
-        if (category != null && category.getParent() != null) {
+        if (category != null && category.parent != null) {
             return category
         } else {
             return null

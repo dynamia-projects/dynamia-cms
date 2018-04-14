@@ -21,9 +21,9 @@ class CopyMenuItemAction extends AbstractCrudAction {
     private CrudService crudService
 
     CopyMenuItemAction() {
-        setGroup(ActionGroup.get("CRUD"))
-        setName("Copy")
-        setImage("copy")
+        group = ActionGroup.get("CRUD")
+        name = "Copy"
+        image = "copy"
     }
 
     @Override
@@ -38,13 +38,13 @@ class CopyMenuItemAction extends AbstractCrudAction {
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
-        MenuItem menuItem = (MenuItem) evt.getData()
+        MenuItem menuItem = (MenuItem) evt.data
         if (menuItem != null) {
             menuItem = crudService.reload(menuItem)
             menuItem = menuItem.clone()
             MenuItemsUI ui = new MenuItemsUI(menuItem)
             ui.addAction(new SaveMenuItemAction(crudService, evt))
-            ZKUtil.showDialog(menuItem.getTitle(), ui, "90%", "90%")
+            ZKUtil.showDialog(menuItem.title, ui, "90%", "90%")
         } else {
             UIMessages.showMessage("Select menu item", MessageType.ERROR)
         }

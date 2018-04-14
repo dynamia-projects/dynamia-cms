@@ -33,15 +33,15 @@ class PageCrudListener extends CrudServiceListenerAdapter<Page> {
 
     @Override
     void beforeCreate(Page page) {
-		if (page.getId() == null) {
-			page.setCreationDate(new Date())
+		if (page.id == null) {
+            page.creationDate = new Date()
         }
 
-		if (page.getSummary() == null || page.getSummary().isEmpty()) {
+		if (page.summary == null || page.summary.empty) {
 			service.generateSummary(page)
         }
 
-		if (page.getImageURL() == null || page.getImageURL().isEmpty()) {
+		if (page.imageURL == null || page.imageURL.empty) {
 			service.generateImageURL(page)
         }
 
@@ -50,7 +50,7 @@ class PageCrudListener extends CrudServiceListenerAdapter<Page> {
 	@Override
     void beforeUpdate(Page page) {
 		beforeCreate(page)
-        page.setLastUpdate(new Date())
+        page.lastUpdate = new Date()
 
     }
 

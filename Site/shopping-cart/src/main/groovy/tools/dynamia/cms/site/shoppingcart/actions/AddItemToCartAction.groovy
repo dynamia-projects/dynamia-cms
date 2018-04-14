@@ -43,25 +43,25 @@ class AddItemToCartAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
-        String code = (String) evt.getData()
+        ModelAndView mv = evt.modelAndView
+        String code = evt.data as String
         int qty = 1
         try {
-            qty = Integer.parseInt(evt.getRequest().getParameter("qty"))
+            qty = Integer.parseInt(evt.request.getParameter("qty"))
         } catch (Exception e) {
             // TODO: handle exception
         }
 
-        ShoppingCartItem item = service.getItem(evt.getSite(), code)
+        ShoppingCartItem item = service.getItem(evt.site, code)
         if (item != null) {
             ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv)
             if (shoppingCart != null) {
                 shoppingCart.addItem(item, qty)
-                if (item.getChildren() != null && !item.getChildren().isEmpty()) {
-                    item.getChildren().forEach { c -> shoppingCart.addItem(c) }
+                if (item.children != null && !item.children.empty) {
+                    item.children.forEach { c -> shoppingCart.addItem(c) }
                 }
-                CMSUtil.addSuccessMessage(item.getName().toUpperCase() + " agregado exitosamente al carrito",
-                        evt.getRedirectAttributes())
+                CMSUtil.addSuccessMessage(item.name.toUpperCase() + " agregado exitosamente al carrito",
+                        evt.redirectAttributes)
             }
         }
 

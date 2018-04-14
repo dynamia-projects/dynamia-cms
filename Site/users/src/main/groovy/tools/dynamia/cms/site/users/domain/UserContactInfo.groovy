@@ -85,7 +85,7 @@ class UserContactInfo extends SimpleEntity implements SiteAware {
 
     @Override
     String toString() {
-        return String.format("%s (%s, %s %s) ", name, info.getCity(), info.getRegion(), info.getAddress())
+        return String.format("%s (%s, %s %s) ", name, info.city, info.region, info.address)
     }
 
     City getCity() {

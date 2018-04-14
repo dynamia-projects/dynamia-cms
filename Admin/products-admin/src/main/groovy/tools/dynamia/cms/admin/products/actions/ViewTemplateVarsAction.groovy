@@ -33,33 +33,33 @@ class ViewTemplateVarsAction extends AbstractCrudAction {
     private CrudService crudService
 
     ViewTemplateVarsAction() {
-        setName("View Vars")
-        setMenuSupported(true)
-        setImage("table")
+        name = "View Vars"
+        menuSupported = true
+        image = "table"
     }
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
-        Product product = (Product) evt.getData()
+        Product product = (Product) evt.data
         if (product != null) {
             product = crudService.reload(product)
             Map<String, Object> vars = new TreeMap<>()
             service.loadDefaultTemplateModel(product, vars)
 
             Listbox table = new Listbox()
-            table.setVflex("1")
-            table.setHflex("1")
-            table.setSizedByContent(true)
+            table.vflex = "1"
+            table.hflex = "1"
+            table.sizedByContent = true
             table.appendChild(new Listhead())
-            table.getListhead().appendChild(new Listheader("Name"))
-            table.getListhead().appendChild(new Listheader("Value"))
+            table.listhead.appendChild(new Listheader("Name"))
+            table.listhead.appendChild(new Listheader("Value"))
             vars.forEach{n, v ->
                 Listitem item = new Listitem()
                 item.appendChild(new Listcell(n))
                 item.appendChild(new Listcell(String.valueOf(v)))
                 table.appendChild(item)
             }
-            ZKUtil.showDialog(product.getName(), table, "600px", "500px")
+            ZKUtil.showDialog(product.name, table, "600px", "500px")
         } else {
             UIMessages.showMessage("Select product", MessageType.WARNING)
         }

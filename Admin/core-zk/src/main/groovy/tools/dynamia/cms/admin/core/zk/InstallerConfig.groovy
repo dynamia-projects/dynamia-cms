@@ -32,8 +32,8 @@ class InstallerConfig implements ModuleProvider {
     @Override
     Module getModule() {
         Module module = new Module("system", "System")
-        module.setIcon("fa-cogs")
-        module.setIconSize(IconSize.NORMAL)
+        module.icon = "fa-cogs"
+        module.iconSize = IconSize.NORMAL
         module.addPage(new CrudPage("sites", "Sites", Site.class))
         module.addPage(new ConfigPage("cmsconfig", "Configuration", "CMSConfig"))
         module.addPage(new GlobalResourcesPage("globalResources", "Global Resources"))

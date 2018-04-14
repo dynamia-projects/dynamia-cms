@@ -64,7 +64,7 @@ class MenuServiceImpl implements MenuService {
 	MenuContext setupMenuItem(MenuItem menuItem) {
 
 		MenuItemType typeExtension = getMenuItemType(menuItem)
-		MenuContext context = new MenuContext(menuItem, menuItem.getMenu())
+		MenuContext context = new MenuContext(menuItem, menuItem.menu)
 		if (typeExtension != null) {
 			typeExtension.setupMenuItem(context)
 		}
@@ -74,10 +74,10 @@ class MenuServiceImpl implements MenuService {
 
 	@Override
 	MenuItemType getMenuItemType(MenuItem menuItem) {
-		String type = menuItem.getType()
-		if (type != null && !type.isEmpty()) {
+		String type = menuItem.type
+		if (type != null && !type.empty) {
 			for (MenuItemType typeExtension : Containers.get().findObjects(MenuItemType.class)) {
-				if (type.equals(typeExtension.getId())) {
+				if (type.equals(typeExtension.id)) {
 					return typeExtension
 				}
 			}

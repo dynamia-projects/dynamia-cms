@@ -58,7 +58,7 @@ class ModulesServiceImpl implements ModulesService {
 				QueryConditions.eq(position))
 		List<ModuleInstance> instances = crudService.find(ModuleInstance.class, params)
 		for (ModuleInstance moduleInstance : instances) {
-			moduleInstance.getParameters().size()
+			moduleInstance.parameters.size()
 			initModuleInstance(moduleInstance)
 		}
 		return instances
@@ -84,9 +84,9 @@ class ModulesServiceImpl implements ModulesService {
 
 	@Override
 	Module getModule(ModuleInstance instance) {
-		if (instance != null && instance.getModuleId() != null) {
+		if (instance != null && instance.moduleId != null) {
 			for (Module module : Containers.get().findObjects(Module.class)) {
-				if (instance.getModuleId().equals(module.getId())) {
+				if (instance.moduleId.equals(module.id)) {
 					return module
 				}
 			}

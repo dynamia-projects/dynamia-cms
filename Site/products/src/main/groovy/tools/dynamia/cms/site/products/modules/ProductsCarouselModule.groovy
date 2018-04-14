@@ -54,7 +54,7 @@ class ProductsCarouselModule extends AbstractModule {
 
     ProductsCarouselModule() {
 		super("products_carousel", "Products Carousel", "products/modules/carousel")
-        setDescription("Show a products list carousel")
+        description = "Show a products list carousel"
         putMetadata("author", "Mario Serrano Leones")
         putMetadata("version", "1.0")
         putMetadata("created at", "18-11-2014")
@@ -71,7 +71,7 @@ class ProductsCarouselModule extends AbstractModule {
         try {
 			columns = Integer.parseInt(getParameter(context, PARAM_COLUMNS))
         } catch (NumberFormatException e1) {
-			columns = Integer.parseInt((String) getMetadata().get(PARAM_COLUMNS))
+			columns = Integer.parseInt((String) metadata.get(PARAM_COLUMNS))
         }
 
 		String category = getParameter(context, PARAM_CATEGORY)
@@ -80,7 +80,7 @@ class ProductsCarouselModule extends AbstractModule {
         try {
 			ProductOrderField orderField = ProductOrderField
 					.valueOf(getParameter(context, PARAM_ORDER_BY).toUpperCase())
-            orderBy = orderField.getField()
+            orderBy = orderField.field
         } catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -88,7 +88,7 @@ class ProductsCarouselModule extends AbstractModule {
 		String pageSizeParam = getParameter(context, PARAM_PAGE_SIZE)
 
         List<Product> products = new ArrayList<>()
-        QueryParameters params = QueryParameters.with("site", context.getSite()).add("active", true)
+        QueryParameters params = QueryParameters.with("site", context.site).add("active", true)
 				.paginate(columns * 4)
 
         if (pageSizeParam != null) {
@@ -102,7 +102,7 @@ class ProductsCarouselModule extends AbstractModule {
 
 		switch (type) {
 		case ALL:
-			products = service.getSpecialProducts(context.getSite())
+			products = service.getSpecialProducts(context.site)
             break
             case FEATURED:
 			params.add("featured", true)
@@ -125,7 +125,7 @@ class ProductsCarouselModule extends AbstractModule {
 			params.orderBy(orderBy, true)
         }
 
-		if (category != null && !category.isEmpty()) {
+		if (category != null && !category.empty) {
 			try {
 				Long categoryId = new Long(category)
                 QueryParameters catParams = QueryParameters
@@ -137,24 +137,24 @@ class ProductsCarouselModule extends AbstractModule {
 			}
 		}
 
-		if (products.isEmpty()) {
+		if (products.empty) {
 			products = crudService.find(Product.class, params)
         }
 
 		if (products instanceof PagedList) {
 			PagedList<Product> pagedList = (PagedList<Product>) products
-            products = pagedList.getDataSource().getPageData()
+            products = pagedList.dataSource.pageData
         }
 
-		ModuleInstance mod = context.getModuleInstance()
+		ModuleInstance mod = context.moduleInstance
         mod.addObject("products", products)
         mod.addObject(PARAM_COLUMNS, columns)
     }
 
 	private String getParameter(ModuleContext context, String name) {
-		String param = context.getModuleInstance().getParameterValue(name)
-        if (param == null || param.trim().isEmpty()) {
-			Object metadata = getMetadata().get(name)
+		String param = context.moduleInstance.getParameterValue(name)
+        if (param == null || param.trim().empty) {
+			Object metadata = metadata.get(name)
             if (metadata != null) {
 				param = metadata.toString()
             }

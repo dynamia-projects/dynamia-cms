@@ -72,8 +72,8 @@ class MenuItemGroup extends SimpleEntity {
 	}
 
 	void addMenuItem(MenuItem menuItem) {
-		menuItem.setParentGroup(this)
-		subitems.add(menuItem)
+        menuItem.parentGroup = this
+        subitems.add(menuItem)
 	}
 
 }

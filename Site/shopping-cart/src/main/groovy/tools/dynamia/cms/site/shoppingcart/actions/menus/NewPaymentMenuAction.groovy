@@ -37,7 +37,7 @@ class NewPaymentMenuAction implements UserMenuActionEnableable {
     @Override
     boolean isEnabled(User currentUser) {
 
-        return currentUser.getSite().isCorporateSite() && currentUser.getSite().isParameter("manualPayments") && currentUser.getProfile() == UserProfile.SELLER
+        return currentUser.site.corporateSite && currentUser.site.isParameter("manualPayments") && currentUser.profile == UserProfile.SELLER
     }
 
 }

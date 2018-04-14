@@ -48,21 +48,21 @@ class RemoveProductFromCompareList implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        Long id = (Long) evt.getData()
+        Long id = (Long) evt.data
 
         Product product = crudService.find(Product.class, id)
         ProductCompareList list = Containers.get().findObject(ProductCompareList.class)
         list.remove(product)
 
-        ModelAndView mv = evt.getModelAndView()
+        ModelAndView mv = evt.modelAndView
         String action = "/store/compare/" + list.toString()
-        ProductsUtil.setupDefaultVars(evt.getSite(), mv)
-        if (list.getProducts().size() == 1) {
-            CMSUtil.addSuccessMessage("Agregue otros productos de la misma categoria o similares para comparar", evt.getRedirectAttributes())
-        } else if (list.getProducts().isEmpty()) {
+        ProductsUtil.setupDefaultVars(evt.site, mv)
+        if (list.products.size() == 1) {
+            CMSUtil.addSuccessMessage("Agregue otros productos de la misma categoria o similares para comparar", evt.redirectAttributes)
+        } else if (list.products.empty) {
             action = "/"
         }
-        mv.setView(new RedirectView(action, true, true, false))
+        mv.view = new RedirectView(action, true, true, false)
 
     }
 

@@ -97,7 +97,7 @@ class StoreContact extends SiteSimpleEntity {
     void sync(StoreContactDTO dto) {
 
 		BeanUtils.setupBean(this, dto)
-        BeanUtils.setupBean(this.getContactInfo(), dto)
+        BeanUtils.setupBean(this.contactInfo, dto)
     }
 
 }

@@ -43,11 +43,11 @@ class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 
 		Site site = getCurrentSite(request)
-        if (site != null && site.isOffline()) {
+        if (site != null && site.offline) {
 
-			if (site.getOfflineRedirect() != null && !site.getOfflineRedirect().isEmpty()) {
-				response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY)
-                response.setHeader("Location", site.getOfflineRedirect())
+			if (site.offlineRedirect != null && !site.offlineRedirect.empty) {
+                response.status = HttpServletResponse.SC_MOVED_PERMANENTLY
+                response.setHeader("Location", site.offlineRedirect)
                 return false
             }
 			return true
@@ -68,7 +68,7 @@ class SiteHandleInterceptor extends HandlerInterceptorAdapter {
     }
 
 	private boolean isInterceptable(HttpServletRequest request) {
-		String uri = request.getRequestURI()
+		String uri = request.requestURI
         for (String ext : excludes) {
 			if (uri.endsWith("exception") || uri.endsWith("." + ext)) {
 				return false
@@ -79,26 +79,26 @@ class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 
 	private Site getCurrentSite(HttpServletRequest request) {
 		SiteService service = Containers.get().findObject(SiteService.class)
-        Site site = SiteContext.get().getCurrent()
+        Site site = SiteContext.get().current
         if (site == null) {
 			site = service.getSite(request)
-            SiteContext.get().setCurrent(site)
+            SiteContext.get().current = site
         }
 		if (site == null) {
-			site = service.getMainSite()
-            SiteContext.get().setCurrent(site)
+			site = service.mainSite
+            SiteContext.get().current = site
         }
-		SiteContext.get().setCurrentURI(request.getRequestURI())
-        SiteContext.get().setCurrentURL(request.getRequestURL().toString())
-        if (SiteContext.get().getSiteURL() == null) {
-			String siteURL = "http://" + request.getServerName()
-            if (request.getServerPort() != 80) {
-				siteURL = siteURL + ":" + request.getServerPort()
+        SiteContext.get().currentURI = request.requestURI
+        SiteContext.get().currentURL = request.requestURL.toString()
+        if (SiteContext.get().siteURL == null) {
+			String siteURL = "http://" + request.serverName
+            if (request.serverPort != 80) {
+				siteURL = siteURL + ":" + request.serverPort
             }
-			SiteContext.get().setSiteURL(siteURL)
+            SiteContext.get().siteURL = siteURL
         }
 		SiteContext.get().reload()
-        site = SiteContext.get().getCurrent()
+        site = SiteContext.get().current
         return site
     }
 
@@ -118,7 +118,7 @@ class SiteHandleInterceptor extends HandlerInterceptorAdapter {
         }
 		loadSiteMetadata(site, modelAndView)
 
-        if (!site.isOffline()) {
+        if (!site.offline) {
 
 			try {
 				if (isInterceptable(request)) {
@@ -134,7 +134,7 @@ class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 			shutdown(site, modelAndView)
         }
 
-		modelAndView.addObject(SPRING_MVC_MODEL, modelAndView.getModel())
+		modelAndView.addObject(SPRING_MVC_MODEL, modelAndView.model)
 
     }
 
@@ -146,27 +146,27 @@ class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 
 	private void loadSiteMetadata(Site site, ModelAndView mv) {
 		if (site != null && mv != null) {
-			mv.addObject("siteKey", site.getKey())
+			mv.addObject("siteKey", site.key)
             mv.addObject("site", site)
-            mv.addObject("metaAuthor", site.getMetadataAuthor())
-            mv.addObject("metaRights", site.getMetadataRights())
-            if (!mv.getModel().containsKey("metaDescription")) {
-				mv.addObject("metaDescription", site.getMetadataDescription())
+            mv.addObject("metaAuthor", site.metadataAuthor)
+            mv.addObject("metaRights", site.metadataRights)
+            if (!mv.model.containsKey("metaDescription")) {
+				mv.addObject("metaDescription", site.metadataDescription)
             }
-			if (!mv.getModel().containsKey("metaKeywords")) {
-				mv.addObject("metaKeywords", site.getMetadataKeywords())
+			if (!mv.model.containsKey("metaKeywords")) {
+				mv.addObject("metaKeywords", site.metadataKeywords)
             }
 
 		}
 	}
 
     static void shutdown(Site site, ModelAndView mv) {
-		mv.setViewName("error/offline")
+        mv.viewName = "error/offline"
         mv.addObject("title", "OFFLINE!")
         mv.addObject("site", site)
-        mv.addObject("siteKey", site.getKey())
-        mv.addObject("offlineIcon", site.getOfflineIcon())
-        mv.addObject("offlineMessage", site.getOfflineMessage())
+        mv.addObject("siteKey", site.key)
+        mv.addObject("offlineIcon", site.offlineIcon)
+        mv.addObject("offlineMessage", site.offlineMessage)
 
     }
 

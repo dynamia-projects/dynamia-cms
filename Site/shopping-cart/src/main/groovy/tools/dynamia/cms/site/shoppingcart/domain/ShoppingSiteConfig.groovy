@@ -298,8 +298,8 @@ class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 
     Map<String, String> getParametersAsMap() {
 		Map<String, String> params = new HashMap<>()
-        for (ShoppingSiteConfigParameter param : getParameters()) {
-			params.put(param.getName(), param.getValue())
+        for (ShoppingSiteConfigParameter param : (parameters)) {
+			params.put(param.name, param.value)
         }
 		return params
     }

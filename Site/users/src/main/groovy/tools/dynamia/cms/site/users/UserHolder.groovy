@@ -56,28 +56,28 @@ class UserHolder implements Serializable {
     }
 
     boolean isAuthenticated() {
-        return user != null && user.getId() != null
+        return user != null && user.id != null
     }
 
     boolean isAdmin() {
-        return isAuthenticated() && user.getProfile() == UserProfile.ADMIN
+        return authenticated && user.profile == UserProfile.ADMIN
     }
 
     boolean isSeller() {
-        return isAuthenticated() && user.getProfile() == UserProfile.SELLER
+        return authenticated && user.profile == UserProfile.SELLER
     }
 
     boolean isEditor() {
-        return isAuthenticated() && user.getProfile() == UserProfile.EDITOR
+        return authenticated && user.profile == UserProfile.EDITOR
     }
 
     String getUserName() {
-        return user.getUsername().toLowerCase()
+        return user.username.toLowerCase()
     }
 
     String getFullName() {
-        if (isAuthenticated()) {
-            return user.getFullName()
+        if (authenticated) {
+            return user.fullName
         } else {
             return ""
         }
@@ -92,8 +92,8 @@ class UserHolder implements Serializable {
     }
 
     UserProfile getProfile() {
-        if (getCurrent() != null) {
-            return getCurrent().getProfile()
+        if (current != null) {
+            return current.profile
         } else {
             return null
         }
@@ -104,15 +104,15 @@ class UserHolder implements Serializable {
             this.user = user
             this.timestamp = new Date()
 
-            ApplicationUserInfo.get().setDate(UserHolder.get().getCurrent().getCreationDate())
-            ApplicationUserInfo.get().setFullName(UserHolder.get().getCurrent().getFullName())
-            String image = UserHolder.get().getCurrent().getUserphoto()
+            ApplicationUserInfo.get().date = UserHolder.get().current.creationDate
+            ApplicationUserInfo.get().fullName = UserHolder.get().current.fullName
+            String image = UserHolder.get().current.userphoto
             if (image == null) {
-                image = HttpUtils.getServerPath() + "/images/user.png"
+                image = HttpUtils.serverPath + "/images/user.png"
 
             }
 
-            ApplicationUserInfo.get().setImage(image)
+            ApplicationUserInfo.get().image = image
         }
     }
 
@@ -134,7 +134,7 @@ class UserHolder implements Serializable {
     }
 
     UserSiteConfig getConfig() {
-        Site site = SiteContext.get().getCurrent()
+        Site site = SiteContext.get().current
         if (site != null) {
             return service.getSiteConfig(site)
         }

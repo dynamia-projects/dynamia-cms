@@ -49,23 +49,23 @@ class SearchProductsAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
-        Site site = evt.getSite()
+        ModelAndView mv = evt.modelAndView
+        Site site = evt.site
 
         List<Product> products = null
-        if (evt.getData() instanceof String) {
-            String query = (String) evt.getData()
+        if (evt.data instanceof String) {
+            String query = (String) evt.data
             products = service.find(site, query)
-        } else if (evt.getData() instanceof ProductSearchForm) {
-            ProductSearchForm form = (ProductSearchForm) evt.getData()
+        } else if (evt.data instanceof ProductSearchForm) {
+            ProductSearchForm form = (ProductSearchForm) evt.data
             products = service.filterProducts(site, form)
             mv.addObject("prd_searchForm", form)
-            if (form.getCategoryId() != null) {
-                ProductCategory category = crudService.find(ProductCategory.class, form.getCategoryId())
+            if (form.categoryId != null) {
+                ProductCategory category = crudService.find(ProductCategory.class, form.categoryId)
                 List<ProductCategory> subcategories = service.getSubcategories(category)
 
                 mv.addObject("prd_category", category)
-                mv.addObject("prd_parentCategory", category.getParent())
+                mv.addObject("prd_parentCategory", category.parent)
                 mv.addObject("prd_subcategories", subcategories)
             }
         }
@@ -73,13 +73,13 @@ class SearchProductsAction implements SiteAction {
         if (products == null) {
             products = service.getFeaturedProducts(site)
             mv.addObject("title", "Ingrese los campos de busqueda")
-        } else if (!products.isEmpty()) {
+        } else if (!products.empty) {
             mv.addObject("title", products.size() + " productos encontrados")
         } else {
             mv.addObject("title", " No se encontraron productos para la busqueda avanzada")
         }
 
-        products = CMSUtil.setupPagination(products, evt.getRequest(), mv)
+        products = CMSUtil.setupPagination(products, evt.request, mv)
         ProductsUtil.setupProductsVar(products, mv)
 
     }

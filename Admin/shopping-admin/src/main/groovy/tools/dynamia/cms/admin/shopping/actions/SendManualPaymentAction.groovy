@@ -25,7 +25,7 @@ class SendManualPaymentAction extends AbstractCrudAction {
 	private ShoppingCartService shoppingCartService
 
     SendManualPaymentAction() {
-		setName("Send Payments")
+        name = "Send Payments"
     }
 
 	@Override
@@ -40,17 +40,17 @@ class SendManualPaymentAction extends AbstractCrudAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		Site site = SiteContext.get().getCurrent()
+		Site site = SiteContext.get().current
         ShoppingSiteConfig cfg = shoppingCartService.getConfiguration(site)
 
-        if (cfg.getPaymentsSenderURL() != null && !cfg.getPaymentsSenderURL().isEmpty()) {
-			service.sendManualPayments(site.getKey(), cfg.getPaymentsSenderURL(), cfg.getParametersAsMap())
-            service.sendPayments(site.getKey(), cfg.getPaymentsSenderURL(), cfg.getParametersAsMap())
+        if (cfg.paymentsSenderURL != null && !cfg.paymentsSenderURL.empty) {
+			service.sendManualPayments(site.key, cfg.paymentsSenderURL, cfg.parametersAsMap)
+            service.sendPayments(site.key, cfg.paymentsSenderURL, cfg.parametersAsMap)
             UIMessages.showMessage("Sending... OK")
         } else {
 			UIMessages.showMessage("Payments URL is not configured", MessageType.ERROR)
         }
-		evt.getController().doQuery()
+        evt.controller.doQuery()
     }
 
 }

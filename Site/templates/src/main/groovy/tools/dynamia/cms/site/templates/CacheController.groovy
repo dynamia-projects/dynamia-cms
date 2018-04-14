@@ -59,7 +59,7 @@ class CacheController {
     @ResponseStatus(HttpStatus.OK)
     void clearAllCache() {
         if (cacheManager != null) {
-            Collection<String> names = cacheManager.getCacheNames()
+            Collection<String> names = cacheManager.cacheNames
             for (String name : names) {
                 cacheManager.getCache(name).clear()
             }

@@ -105,7 +105,7 @@ class MailingContact extends SimpleEntity implements SiteAware {
 
 	@Override
     String toString() {
-		return getEmailAddress()
+		return emailAddress
     }
 
 }

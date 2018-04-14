@@ -49,8 +49,8 @@ class UtilsVarSiteInterceptor extends SiteRequestInterceptorAdapter {
 			return
         }
 
-		String requestURI = request.getRequestURI()
-        String requestURL = request.getRequestURL().toString()
+		String requestURI = request.requestURI
+        String requestURL = request.requestURL.toString()
 
         if (requestURI != null) {
 			modelAndView.addObject("currentURI", requestURI)
@@ -61,7 +61,7 @@ class UtilsVarSiteInterceptor extends SiteRequestInterceptorAdapter {
 		modelAndView.addObject("site", site)
         modelAndView.addObject("siteParams", createParams(site))
         modelAndView.addObject("cmsUtil", new CMSUtil(site))
-        if (modelAndView.getModel().get("cmsModules") == null) {
+        if (modelAndView.model.get("cmsModules") == null) {
 			modelAndView.addObject("cmsModules", new CMSModules(site, modulesService))
         }
 
@@ -71,7 +71,7 @@ class UtilsVarSiteInterceptor extends SiteRequestInterceptorAdapter {
 		Map<String, String> map = new HashMap<>()
         try {
 			for (SiteParameter p : service.getSiteParameters(site)) {
-				map.put(p.getName(), p.getValue())
+				map.put(p.name, p.value)
             }
 		} catch (Exception e) {
 		}

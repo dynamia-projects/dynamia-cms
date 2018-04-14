@@ -51,7 +51,7 @@ class ProductReviewsController {
 
         Product product = crudService.find(Product.class, id)
 
-        if (product == null || !product.getSite().equals(siteService.getSite(request))) {
+        if (product == null || !product.site.equals(siteService.getSite(request))) {
             throw new PageNotFoundException("Producto no encontrado")
         }
 
@@ -59,11 +59,11 @@ class ProductReviewsController {
 
         String redirect = request.getParameter("currentURI")
 
-        if (redirect == null || redirect.isEmpty()) {
+        if (redirect == null || redirect.empty) {
             redirect = "/store/products/" + id
         }
 
-        mv.setView(new RedirectView(redirect, true, true, false))
+        mv.view = new RedirectView(redirect, true, true, false)
 
         try {
             service.saveReview(product, comment, star)
@@ -75,7 +75,7 @@ class ProductReviewsController {
 
             CMSUtil.addSuccessMessage("Gracias por escribir una reseña de este producto", redirectAttributes)
         } catch (ValidationError e) {
-            CMSUtil.addErrorMessage(e.getMessage(), redirectAttributes)
+            CMSUtil.addErrorMessage(e.message, redirectAttributes)
         }
 
         return mv
@@ -86,7 +86,7 @@ class ProductReviewsController {
                                    @RequestParam(required = false, defaultValue = "30") int max, HttpServletRequest request) {
         Product product = crudService.find(Product.class, id)
 
-        if (product == null || !product.getSite().equals(siteService.getSite(request))) {
+        if (product == null || !product.site.equals(siteService.getSite(request))) {
             throw new PageNotFoundException("Producto no encontrado")
         }
 
@@ -109,16 +109,16 @@ class ProductReviewsController {
 
         ProductsReviewResponse response = service.requestExternalReviews(config, requestUuid)
 
-        if (response.isAccepted()) {
+        if (response.accepted) {
             User user = service.findUserForReview(site, response)
             mv.addObject("user", user)
 
             List<ProductReview> reviews = service.getExternalProductReviews(site, response, user)
 
             mv.addObject("reviewsForm", new ProductsReviewForm(reviews))
-            mv.addObject("title", response.getDescription())
+            mv.addObject("title", response.description)
 
-            if (reviews.isEmpty()) {
+            if (reviews.empty) {
                 mv.addObject("message", "No hay reseñas pendientes")
                 response = ProductsReviewResponse.rejected()
             }
@@ -144,21 +144,21 @@ class ProductReviewsController {
 
         ModelAndView mv = new ModelAndView("products/reviews/external")
 
-        if (form != null && form.getReviews() != null) {
-            for (ProductReview review : form.getReviews()) {
+        if (form != null && form.reviews != null) {
+            for (ProductReview review : (form.reviews)) {
                 try {
-                    System.out.println("Saving review Product ID: " + review.getProduct().getId())
-                    review.setSite(site)
-                    if (review.getComment() == null || review.getComment().isEmpty()) {
-                        review.setIncomplete(true)
-                        review.setVerified(false)
+                    System.out.println("Saving review Product ID: " + review.product.id)
+                    review.site = site
+                    if (review.comment == null || review.comment.empty) {
+                        review.incomplete = true
+                        review.verified = false
                     } else {
-                        review.setVerified(true)
-                        review.setIncomplete(false)
-                        review.setCreationDate(new Date())
+                        review.verified = true
+                        review.incomplete = false
+                        review.creationDate = new Date()
                     }
                     crudService.executeWithinTransaction { crudService.save(review) }
-                    service.computeProductStars(review.getProduct())
+                    service.computeProductStars(review.product)
                     System.out.println("OK")
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
@@ -185,16 +185,16 @@ class ProductReviewsController {
             return mv
         }
 
-        if (UserHolder.get().isAuthenticated()) {
+        if (UserHolder.get().authenticated) {
 
 
-            User user = UserHolder.get().getCurrent()
+            User user = UserHolder.get().current
             List<ProductReview> reviews = service.getIncompleteProductReviews(user)
             mv.addObject("user", user)
             mv.addObject("reviewsForm", new ProductsReviewForm(reviews))
-            mv.addObject("title", reviews.isEmpty() ? "No tiene reseñas pendientes" : reviews.size() + " reseñas pendientes")
+            mv.addObject("title", reviews.empty ? "No tiene reseñas pendientes" : reviews.size() + " reseñas pendientes")
 
-            mv.addObject("response", new ProductsReviewResponse(Collections.emptyList(), user.getUsername(), user.getFullName()))
+            mv.addObject("response", new ProductsReviewResponse(Collections.emptyList(), user.username, user.fullName))
 
             httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate")
             httpResponse.setDateHeader("Expires", 0)

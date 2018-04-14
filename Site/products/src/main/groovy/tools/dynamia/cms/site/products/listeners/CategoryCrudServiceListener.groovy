@@ -38,10 +38,10 @@ class CategoryCrudServiceListener extends CrudServiceListenerAdapter<ProductCate
     }
 
     private void generateAlias(ProductCategory entity) {
-        String name = entity.getName()
+        String name = entity.name
 
         name = StringUtils.simplifiedString(name)
-        entity.setAlias(name)
+        entity.alias = name
     }
 
 }

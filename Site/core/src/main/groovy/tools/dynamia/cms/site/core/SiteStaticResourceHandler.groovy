@@ -48,20 +48,20 @@ class SiteStaticResourceHandler extends ResourceHttpRequestHandler {
         SiteService coreService = Containers.get().findObject(SiteService.class)
         Site site = coreService.getSite(request)
         if (site == null) {
-			site = coreService.getMainSite()
+			site = coreService.mainSite
         }
 
 		if (site == null) {
-			throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.getServerName())
+			throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.serverName)
         }
 
-		Path resource = Paths.get(request.getPathInfo().replaceFirst("/static/", ""))
+		Path resource = Paths.get(request.pathInfo.replaceFirst("/static/", ""))
         Path staticDir = DynamiaCMS.getSitesStaticResourceLocation(site)
         Path absoluteResource = staticDir.resolve(resource)
         if (Files.isDirectory(absoluteResource)) {
-			if (!request.getPathInfo().endsWith("/")) {
+			if (!request.pathInfo.endsWith("/")) {
 				try {
-					response.sendRedirect(request.getPathInfo() + "/")
+					response.sendRedirect(request.pathInfo + "/")
                 } catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace()

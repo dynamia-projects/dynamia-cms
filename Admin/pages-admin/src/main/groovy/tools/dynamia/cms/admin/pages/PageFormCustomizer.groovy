@@ -25,10 +25,10 @@ class PageFormCustomizer implements ViewCustomizer<FormView<Page>> {
     @Override
     void customize(final FormView<Page> view) {
 
-        if (UserHolder.get().isAuthenticated()) {
+        if (UserHolder.get().authenticated) {
             view.addEventListener(FormView.ON_VALUE_CHANGED, {
-                if (view.getValue().getAuthor() == null) {
-                    view.getValue().setAuthor(UserHolder.get().getCurrent().getRelatedAuthor())
+                if (view.value.author == null) {
+                    view.value.author = UserHolder.get().current.relatedAuthor
                 }
             })
         }

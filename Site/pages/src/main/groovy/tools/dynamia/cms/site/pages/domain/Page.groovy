@@ -260,7 +260,7 @@ class Page extends Content implements SiteAware, Aliasable {
     PageParameter getParam(String name) {
 		if (parameters != null) {
 			for (PageParameter pageParameter : parameters) {
-				if (pageParameter.getName().equals(name)) {
+				if (pageParameter.name.equals(name)) {
 					return pageParameter
                 }
 			}
@@ -270,7 +270,7 @@ class Page extends Content implements SiteAware, Aliasable {
 
 	@Override
     String toString() {
-		return getTitle()
+		return title
     }
 
     Date getPublishedDate() {
@@ -282,12 +282,12 @@ class Page extends Content implements SiteAware, Aliasable {
 	}
 
     boolean hasImage() {
-		return imageURL != null && !imageURL.isEmpty()
+		return imageURL != null && !imageURL.empty
     }
 
 	@Override
     String aliasSource() {
-		return getTitle()
+		return title
     }
 
 }

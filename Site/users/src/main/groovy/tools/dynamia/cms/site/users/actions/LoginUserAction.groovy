@@ -38,17 +38,17 @@ class LoginUserAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
+        ModelAndView mv = evt.modelAndView
 
-        mv.addObject("loginForm", new LoginForm(evt.getSite()))
-        UsersUtil.setupUserFormVar(mv, new UserForm(evt.getSite()))
+        mv.addObject("loginForm", new LoginForm(evt.site))
+        UsersUtil.setupUserFormVar(mv, new UserForm(evt.site))
 
         try {
 
-            Exception ex = (Exception) evt.getRequest().getSession(false).getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION)
+            Exception ex = (Exception) evt.request.getSession(false).getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION)
 
             if (ex != null) {
-                String message = ex.getLocalizedMessage()
+                String message = ex.localizedMessage
                 mv.addObject("errormessage", message)
             }
         } catch (Exception e) {

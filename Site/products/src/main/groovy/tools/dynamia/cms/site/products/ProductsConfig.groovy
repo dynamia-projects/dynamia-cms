@@ -35,8 +35,8 @@ class ProductsConfig {
     @Bean(name = "/services/ProductsListenerService")
     HttpInvokerServiceExporter productListenerExporter() {
         HttpInvokerServiceExporter exporter = new HttpInvokerServiceExporter()
-        exporter.setService(productListener())
-        exporter.setServiceInterface(ProductsListener.class)
+        exporter.service = productListener()
+        exporter.serviceInterface = ProductsListener.class
         return exporter
     }
 

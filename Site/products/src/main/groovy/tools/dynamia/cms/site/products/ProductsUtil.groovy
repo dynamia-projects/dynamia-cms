@@ -43,23 +43,23 @@ class ProductsUtil {
         mv.addObject("prd_categories", service.getCategories(site))
         mv.addObject("prd_brands", service.getBrands(site))
         mv.addObject("prd_config", service.getSiteConfig(site))
-        if (mv.getModel().get("prd_searchForm") == null) {
+        if (mv.model.get("prd_searchForm") == null) {
 			mv.addObject("prd_searchForm", new ProductSearchForm())
         }
-		if (mv.getModel().get("prd_product") != null) {
+		if (mv.model.get("prd_product") != null) {
 			addShareForm(site, mv)
         }
 
-		if (mv.getModel().get("cart") != null) {
+		if (mv.model.get("cart") != null) {
 			try {
-				Object cart = mv.getModel().get("cart")
+				Object cart = mv.model.get("cart")
                 if(cart instanceof String) {
 					cart = ShoppingCartHolder.get().getCart((String) cart)
                 }
 				
 				ShoppingCart shoppingCart = (ShoppingCart) cart
-                if (shoppingCart != null && shoppingCart.getName() != null) {
-					switch (shoppingCart.getName()) {
+                if (shoppingCart != null && shoppingCart.name != null) {
+					switch (shoppingCart.name) {
 					case "quote":
 						mv.addObject("title", "Cotizacion")
                         mv.addObject("icon", "icon-external-link")
@@ -77,12 +77,12 @@ class ProductsUtil {
 	}
 
 	private static void addShareForm(Site site, ModelAndView mv) {
-		Product product = (Product) mv.getModel().get("prd_product")
+		Product product = (Product) mv.model.get("prd_product")
         ProductShareForm form = new ProductShareForm(site)
-        form.setProductId(product.getId())
+        form.productId = product.id
 
-        if (UserHolder.get().isAuthenticated()) {
-			form.setYourName(UserHolder.get().getFullName())
+        if (UserHolder.get().authenticated) {
+            form.yourName = UserHolder.get().fullName
         }
 
 		mv.addObject("prd_shareForm", form)
@@ -102,29 +102,29 @@ class ProductsUtil {
     }
 
     BigDecimal getUserPrice(Product product, ProductsSiteConfig cfg) {
-		User user = UserHolder.get().getCurrent()
-        User customer = UserHolder.get().getCustomer()
+		User user = UserHolder.get().current
+        User customer = UserHolder.get().customer
 
         String group = null
 
         if (customer != null) {
-			group = customer.getGroupName()
+			group = customer.groupName
         } else if (user != null) {
-			group = user.getGroupName()
+			group = user.groupName
         }
 
-		if (cfg == null || group == null || group.isEmpty()) {
-			return product.getRealPrice()
+		if (cfg == null || group == null || group.empty) {
+			return product.realPrice
         } else {
 
-			if (cfg.getPriceUserGroup() != null && cfg.getPriceUserGroup().contains(group)) {
-				return product.getPrice()
-            } else if (cfg.getPrice2UserGroup() != null && cfg.getPrice2UserGroup().contains(group)) {
-				return product.getPrice2()
-            } else if (cfg.getCostUserGroup() != null && cfg.getCostUserGroup().contains(group)) {
-				return product.getPrice()
+			if (cfg.priceUserGroup != null && cfg.priceUserGroup.contains(group)) {
+				return product.price
+            } else if (cfg.price2UserGroup != null && cfg.price2UserGroup.contains(group)) {
+				return product.price2
+            } else if (cfg.costUserGroup != null && cfg.costUserGroup.contains(group)) {
+				return product.price
             } else {
-				return product.getRealPrice()
+				return product.realPrice
             }
 		}
 

@@ -44,24 +44,24 @@ class SaveUserAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
+        ModelAndView mv = evt.modelAndView
 
-        mv.addObject("loginForm", new LoginForm(evt.getSite()))
-        if (evt.getData() == null) {
-            UsersUtil.setupUserFormVar(mv, new UserForm(evt.getSite()))
-            mv.setViewName("redirect:/user/login")
+        mv.addObject("loginForm", new LoginForm(evt.site))
+        if (evt.data == null) {
+            UsersUtil.setupUserFormVar(mv, new UserForm(evt.site))
+            mv.viewName = "redirect:/user/login"
             return
         }
 
-        UserForm userForm = (UserForm) evt.getData()
-        userForm.setSite(evt.getSite())
+        UserForm userForm = (UserForm) evt.data
+        userForm.site = evt.site
         try {
             userService.saveUser(userForm)
-            User user = userService.getUser(evt.getSite(), userForm.getData().getUsername())
+            User user = userService.getUser(evt.site, userForm.data.username)
             mv.addObject("user", user)
         } catch (ValidationError e) {
-            mv.setViewName("users/login")
-            mv.addObject("errormessage", e.getMessage())
+            mv.viewName = "users/login"
+            mv.addObject("errormessage", e.message)
             UsersUtil.setupUserFormVar(mv, userForm)
         } 
 

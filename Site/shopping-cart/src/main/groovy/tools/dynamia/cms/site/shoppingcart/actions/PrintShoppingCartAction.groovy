@@ -34,8 +34,8 @@ class PrintShoppingCartAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ShoppingCartUtils.getShoppingCart(evt.getModelAndView())
-        evt.getModelAndView().setViewName("shoppingcart/print")
+		ShoppingCartUtils.getShoppingCart(evt.modelAndView)
+        evt.modelAndView.viewName = "shoppingcart/print"
 
     }
 

@@ -38,11 +38,11 @@ class SiteActionManager {
 
             @Override
             boolean match(SiteAction object) {
-                return object.getName().equals(actionName)
+                return object.name.equals(actionName)
             }
         })
 
-        if (actions.isEmpty()) {
+        if (actions.empty) {
             throw new SiteActionNotFoundException(actionName, "SiteAction with name '" + actionName + "' not found")
         } else if (actions.size() > 1) {
             throw new MoreThanOneActionException(actionName, actions.size() + " actions with the same name '" + actionName + "' found")
@@ -57,7 +57,7 @@ class SiteActionManager {
     }
 
     static void performAction(String actionName, ModelAndView mv, Object data) {
-        ActionEvent evt = newEvent(SiteContext.get().getCurrent(), mv, CMSUtil.getCurrentRequest(), null, data)
+        ActionEvent evt = newEvent(SiteContext.get().current, mv, CMSUtil.currentRequest, null, data)
         performAction(actionName, evt)
     }
 
@@ -96,7 +96,7 @@ class SiteActionManager {
         Site site = service.getSite(request)
 
         if (site == null) {
-            site = service.getMainSite()
+            site = service.mainSite
         }
 
         ActionEvent evt = newEvent(site, mv, request, response, redirectAttributes, null, data)

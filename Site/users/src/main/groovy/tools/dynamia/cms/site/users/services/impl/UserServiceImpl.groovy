@@ -79,52 +79,52 @@ class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void saveUser(UserForm form) {
-        User user = form.getData()
+        User user = form.data
 
-        UserSiteConfig config = getSiteConfig(form.getSite())
-        if (!config.isRegistrationEnabled()) {
+        UserSiteConfig config = getSiteConfig(form.site)
+        if (!config.registrationEnabled) {
             throw new ValidationError("User registration is not enabled for this site")
         }
 
-        if (user.getId() == null) {
-            user.setSite(form.getSite())
-            user.getFullName()
+        if (user.id == null) {
+            user.site = form.site
+            user.fullName
             validatorService.validate(user)
 
-            User alreadyUser = getUser(user.getSite(), user.getUsername())
+            User alreadyUser = getUser(user.site, user.username)
             if (alreadyUser != null) {
-                throw new ValidationError("Ya existe un usuario con el mismo email ingresado: " + user.getUsername())
+                throw new ValidationError("Ya existe un usuario con el mismo email ingresado: " + user.username)
             }
 
-            if (!user.getPassword().equals(form.getPasswordConfirm())) {
+            if (!user.password.equals(form.passwordConfirm)) {
                 throw new PasswordsNotMatchException(user)
             }
 
-            user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + user.getPassword()))
+            user.password = Sha512DigestUtils.shaHex(user.username + ":" + user.password)
 
-            if (config.isRegistrationValidated()) {
-                user.setEnabled(false)
+            if (config.registrationValidated) {
+                user.enabled = false
             }
 
-            if (config.isRequireEmailActivation()) {
+            if (config.requireEmailActivation) {
                 user.startEmailValidation()
             }
 
             user = crudService.create(user)
 
-            if (config.isRequireEmailActivation()) {
+            if (config.requireEmailActivation) {
                 notifyValidationRequired(user)
             }
 
             notifyUserRegistration(user)
 
         } else {
-            User actualUser = crudService.find(User.class, user.getId())
-            actualUser.setContactInfo(user.getContactInfo())
-            actualUser.setFirstName(user.getFirstName())
-            actualUser.setLastName(user.getLastName())
-            actualUser.setFullName(user.getFullName())
-            actualUser.setIdentification(user.getIdentification())
+            User actualUser = crudService.find(User.class, user.id)
+            actualUser.contactInfo = user.contactInfo
+            actualUser.firstName = user.firstName
+            actualUser.lastName = user.lastName
+            actualUser.fullName = user.fullName
+            actualUser.identification = user.identification
 
             validatorService.validate(actualUser)
             crudService.update(actualUser)
@@ -137,25 +137,25 @@ class UserServiceImpl implements UserService {
 
         validatorService.validate(form)
 
-        User user = crudService.find(User.class, form.getData().getId())
-        String currentPassword = Sha512DigestUtils.shaHex(user.getUsername() + ":" + form.getCurrentPassword())
+        User user = crudService.find(User.class, form.data.id)
+        String currentPassword = Sha512DigestUtils.shaHex(user.username + ":" + form.currentPassword)
 
-        if (!user.getPassword().equals(currentPassword)) {
+        if (!user.password.equals(currentPassword)) {
             throw new ValidationError("El password actual ingresado es incorrecto.")
         }
 
-        if (!form.getData().getPassword().equals(form.getPasswordConfirm())) {
+        if (!form.data.password.equals(form.passwordConfirm)) {
             throw new PasswordsNotMatchException(user)
         }
 
-        String newPassword = form.getData().getPassword()
+        String newPassword = form.data.password
         setupPassword(user, newPassword)
         crudService.save(user)
     }
 
     @Override
     void setupPassword(User user, String newPassword) {
-        user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":" + newPassword))
+        user.password = Sha512DigestUtils.shaHex(user.username + ":" + newPassword)
     }
 
     @Override
@@ -182,15 +182,15 @@ class UserServiceImpl implements UserService {
         crudService.save(user)
 
         MailMessage message = new MailMessage(mailTemplate)
-        message.setTo(username)
-        message.getTemplateModel().put("user", user)
-        message.getTemplateModel().put("newpassword", newPassword)
-        message.setSite(site)
+        message.to = username
+        message.templateModel.put("user", user)
+        message.templateModel.put("newpassword", newPassword)
+        message.site = site
 
         try {
             mailService.send(message)
         } catch (MailServiceException e) {
-            throw new ValidationError(e.getMessage(), e)
+            throw new ValidationError(e.message, e)
         }
     }
 
@@ -202,7 +202,7 @@ class UserServiceImpl implements UserService {
             throw new ValidationError("El usuario no existe en este sitio web")
         }
 
-        if (newpassword == null || newpassword.isEmpty() || newpassword2 == null || newpassword2.isEmpty()) {
+        if (newpassword == null || newpassword.empty || newpassword2 == null || newpassword2.empty) {
             throw new ValidationError("Ingrese nuevo password")
         }
 
@@ -218,20 +218,20 @@ class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void checkAdminUser(Site site) {
-        String adminUsername = "admin@" + site.getKey() + ".login"
+        String adminUsername = "admin@" + site.key + ".login"
         User adminUser = getUser(site, adminUsername)
         if (adminUser == null) {
             User user = new User()
-            user.setUsername(adminUsername)
-            user.setFirstName("Admin")
-            user.setLastName(site.getName())
-            user.setPassword(Sha512DigestUtils.shaHex(user.getUsername() + ":admin" + site.getKey()))
-            user.setSite(site)
-            user.setProfile(UserProfile.ADMIN)
+            user.username = adminUsername
+            user.firstName = "Admin"
+            user.lastName = site.name
+            user.password = Sha512DigestUtils.shaHex(user.username + ":admin" + site.key)
+            user.site = site
+            user.profile = UserProfile.ADMIN
             crudService.create(user)
-        } else if (adminUser.getProfile() != UserProfile.ADMIN || adminUser.getPassword() == null) {
-            adminUser.setProfile(UserProfile.ADMIN)
-            adminUser.setPassword(Sha512DigestUtils.shaHex(adminUser.getUsername() + ":admin" + site.getKey()))
+        } else if (adminUser.profile != UserProfile.ADMIN || adminUser.password == null) {
+            adminUser.profile = UserProfile.ADMIN
+            adminUser.password = Sha512DigestUtils.shaHex(adminUser.username + ":admin" + site.key)
             crudService.update(adminUser)
         }
     }
@@ -248,7 +248,7 @@ class UserServiceImpl implements UserService {
         UserSiteConfig config = crudService.findSingle(UserSiteConfig.class, "site", site)
         if (config == null) {
             config = new UserSiteConfig()
-            config.setSite(site)
+            config.site = site
             config = crudService.create(config)
         }
         return config
@@ -279,7 +279,7 @@ class UserServiceImpl implements UserService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void enableUser(User user) {
         if (user != null) {
-            user.setEnabled(true)
+            user.enabled = true
             crudService.update(user)
 
             notifyUserRegistration(user)
@@ -290,7 +290,7 @@ class UserServiceImpl implements UserService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void disableUser(User user) {
         if (user != null) {
-            user.setEnabled(false)
+            user.enabled = false
             crudService.update(user)
         }
     }
@@ -302,14 +302,14 @@ class UserServiceImpl implements UserService {
     }
 
     private void notifyValidationRequired(User user) {
-        UserSiteConfig config = getSiteConfig(user.getSite())
+        UserSiteConfig config = getSiteConfig(user.site)
 
-        if (config != null && config.getEmailValidationTemplate() != null) {
+        if (config != null && config.emailValidationTemplate != null) {
             MailMessage msg = new MailMessage()
-            msg.setTemplate(config.getEmailValidationTemplate())
-            msg.setTemplateModel(MapBuilder.put("user", user))
-            msg.setTo(user.getUsername())
-            msg.setMailAccount(config.getMailAccount())
+            msg.template = config.emailValidationTemplate
+            msg.templateModel = MapBuilder.put("user", user)
+            msg.to = user.username
+            msg.mailAccount = config.mailAccount
 
             mailService.send(msg)
 
@@ -317,23 +317,23 @@ class UserServiceImpl implements UserService {
     }
 
     private void notifyUserRegistration(User user) {
-        UserSiteConfig config = getSiteConfig(user.getSite())
+        UserSiteConfig config = getSiteConfig(user.site)
 
-        if (config != null && config.getRegistrationCompletedTemplate() != null
-                && config.getRegistrationPendingTemplate() != null) {
+        if (config != null && config.registrationCompletedTemplate != null
+                && config.registrationPendingTemplate != null) {
             MailMessage msg = new MailMessage()
-            msg.setMailAccount(config.getMailAccount())
-            if (user.isEnabled()) {
-                msg.setTemplate(config.getRegistrationCompletedTemplate())
+            msg.mailAccount = config.mailAccount
+            if (user.enabled) {
+                msg.template = config.registrationCompletedTemplate
             } else {
-                msg.setTemplate(config.getRegistrationPendingTemplate())
+                msg.template = config.registrationPendingTemplate
             }
-            msg.setTemplateModel(MapBuilder.put("user", user))
+            msg.templateModel = MapBuilder.put("user", user)
 
-            if (user.getContactInfo().getEmail() != null) {
-                msg.setTo(user.getContactInfo().getEmail())
+            if (user.contactInfo.email != null) {
+                msg.to = user.contactInfo.email
             } else {
-                msg.setTo(user.getUsername())
+                msg.to = user.username
             }
 
             mailService.send(msg)
@@ -346,10 +346,9 @@ class UserServiceImpl implements UserService {
     UserDTO loadExternalUser(Site site, String identification) {
         UserDTO user = null
         UserSiteConfig config = getSiteConfig(site)
-        if (config != null && config.getDatasourceURL() != null && !config.getDatasourceURL().isEmpty()) {
-            UsersDatasource datasource = HttpRemotingServiceClient.build(UsersDatasource.class)
-                    .setServiceURL(config.getDatasourceURL())
-                    .getProxy()
+        if (config != null && config.datasourceURL != null && !config.datasourceURL.empty) {
+            UsersDatasource datasource = HttpRemotingServiceClient.build(UsersDatasource.class).serviceURL = config.datasourceURL
+                    .proxy
 
             if (datasource != null) {
                 user = datasource.getUser(identification)

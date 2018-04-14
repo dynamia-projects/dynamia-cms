@@ -53,15 +53,15 @@ class BrandsMenuItemType implements MenuItemType {
 	@Override
     void setupMenuItem(MenuContext context) {
 
-		List<ProductBrand> brands = service.getBrands(context.getMenuItem().getMenu().getSite())
+		List<ProductBrand> brands = service.getBrands(context.menuItem.menu.site)
 
-        MenuItem item = context.getMenuItem().clone()
-        item.setName(context.getMenuItem().getName())
-        item.setTitle(context.getMenuItem().getTitle())
-        item.setOrder(context.getMenuItem().getOrder())
+        MenuItem item = context.menuItem.clone()
+        item.name = context.menuItem.name
+        item.title = context.menuItem.title
+        item.order = context.menuItem.order
 
         for (ProductBrand brd : brands) {
-			MenuItem brandItem = new MenuItem(brd.getName(), BRANDS_PATH + brd.getAlias())
+			MenuItem brandItem = new MenuItem(brd.name, BRANDS_PATH + brd.alias)
             item.addMenuItem(brandItem)
 
         }

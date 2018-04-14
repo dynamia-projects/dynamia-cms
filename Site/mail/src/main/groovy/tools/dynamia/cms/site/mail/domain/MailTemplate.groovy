@@ -101,7 +101,7 @@ class MailTemplate extends SimpleEntity implements SiteAware {
 
 	@Override
     String toString() {
-		return getName()
+		return name
     }
 
 }

@@ -23,8 +23,8 @@ import java.util.logging.Logger
 class ResourceUploadLink extends Uploadlink {
 
     static {
-        BindingComponentIndex.getInstance().put("value", ResourceUploadLink.class)
-        ComponentAliasIndex.getInstance().put("resourceUploadlink", ResourceUploadLink.class)
+        BindingComponentIndex.instance.put("value", ResourceUploadLink.class)
+        ComponentAliasIndex.instance.put("resourceUploadlink", ResourceUploadLink.class)
     }
 
     private String value
@@ -59,35 +59,35 @@ class ResourceUploadLink extends Uploadlink {
     void setValue(String value) {
         this.value = value
         if (value != null) {
-            setLabel(value)
+            label = value
         }
     }
 
     @Override
     protected void onFileUpload() {
-        String name = getUploadedFile().getName()
-        if (isGenerateFileName()) {
+        String name = uploadedFile.name
+        if (generateFileName) {
             try {
 
-                name = System.nanoTime() + "." + getUploadedFile().getExtension()
-                File output = new File(getUploadedFile().getFile().getParentFile(), name)
-                IOUtils.copy(getUploadedFile().getFile(), output)
-                getUploadedFile().delete()
+                name = System.nanoTime() + "." + uploadedFile.extension
+                File output = new File(uploadedFile.file.parentFile, name)
+                IOUtils.copy(uploadedFile.file, output)
+                uploadedFile.delete()
             } catch (IOException ex) {
-                Logger.getLogger(ResourceUploadLink.class.getName()).log(Level.SEVERE, null, ex)
+                Logger.getLogger(ResourceUploadLink.class.name).log(Level.SEVERE, null, ex)
             }
         }
-        setValue(name)
+        value = name
     }
 
     private void generateUploadDirectory() {
-        Path base = DynamiaCMS.getSitesResourceLocation(SiteContext.get().getCurrent())
+        Path base = DynamiaCMS.getSitesResourceLocation(SiteContext.get().current)
         if (subfolder != null) {
             Path subfolderPath = base.resolve(subfolder)
             DynamiaCMS.createDirectoryIfNotExists(subfolderPath)
-            setUploadDirectory(subfolderPath.toFile().getAbsolutePath())
+            uploadDirectory = subfolderPath.toFile().absolutePath
         } else {
-            setUploadDirectory(base.toFile().getAbsolutePath())
+            uploadDirectory = base.toFile().absolutePath
         }
 
     }

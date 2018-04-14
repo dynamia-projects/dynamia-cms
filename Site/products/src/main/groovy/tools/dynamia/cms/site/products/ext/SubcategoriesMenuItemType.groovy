@@ -59,11 +59,11 @@ class SubcategoriesMenuItemType implements MenuItemType {
 	@Override
     void setupMenuItem(MenuContext context) {
 
-		String categoryParamValue = tryGetPageCategory(context.getMenuItem().getPage())
+		String categoryParamValue = tryGetPageCategory(context.menuItem.page)
         if (categoryParamValue == null) {
 			MenuItemParameter parameter = context.getParameter(PARAM_CATEGORY)
             if (parameter != null) {
-				categoryParamValue = parameter.getValue()
+				categoryParamValue = parameter.value
             }
 		}
 
@@ -72,41 +72,41 @@ class SubcategoriesMenuItemType implements MenuItemType {
             ProductCategory category = service.getCategoryById(categoryId)
             if (category != null) {
 				List<ProductCategory> subcategories = service.getSubcategories(category)
-                MenuItem item = context.getMenuItem().clone()
-                item.setName(context.getMenuItem().getName())
-                item.setTitle(context.getMenuItem().getTitle())
-                item.setOrder(context.getMenuItem().getOrder())
+                MenuItem item = context.menuItem.clone()
+                item.name = context.menuItem.name
+                item.title = context.menuItem.title
+                item.order = context.menuItem.order
 
-                item.setSubtitle(getCategoryName(category))
-                if (item.getHref() == null) {
-					item.setHref(CATEGORIES_PATH + category.getId() + "/" + category.getAlias())
+                item.subtitle = getCategoryName(category)
+                if (item.href == null) {
+                    item.href = CATEGORIES_PATH + category.id + "/" + category.alias
                 }
 
-				item.getSubitems().clear()
+                item.subitems.clear()
                 if (subcategories != null) {
 					for (ProductCategory subcat : subcategories) {
-						item.addMenuItem(new MenuItem(clean(getCategoryName(subcat)), CATEGORIES_PATH + subcat.getId() + "/"
-								+ subcat.getAlias()))
+						item.addMenuItem(new MenuItem(clean(getCategoryName(subcat)), CATEGORIES_PATH + subcat.id + "/"
+								+ subcat.alias))
                     }
 				}
 
-				item.getItemsGroups().clear()
+                item.itemsGroups.clear()
                 List<ProductCategory> relatedCategories = service.getRelatedCategories(category)
-                if (relatedCategories != null && !relatedCategories.isEmpty()) {
+                if (relatedCategories != null && !relatedCategories.empty) {
 					for (ProductCategory relatedCategory : relatedCategories) {
 						String groupName = getCategoryName(relatedCategory)
 
                         MenuItemGroup group = new MenuItemGroup(groupName)
-                        group.setHref(CATEGORIES_PATH + relatedCategory.getId() + "/" + relatedCategory.getAlias())
+                        group.href = CATEGORIES_PATH + relatedCategory.id + "/" + relatedCategory.alias
 
                         List<ProductCategory> relatedSubcategories = service.getSubcategories(relatedCategory)
                         if (relatedSubcategories != null) {
 							for (ProductCategory relSubcat : relatedSubcategories) {
-								group.addMenuItem(new MenuItem(clean(relSubcat.getName()), CATEGORIES_PATH + relSubcat.getId() + "/"
-										+ relSubcat.getAlias()))
+								group.addMenuItem(new MenuItem(clean(relSubcat.name), CATEGORIES_PATH + relSubcat.id + "/"
+										+ relSubcat.alias))
                             }
 						}
-						if (!group.getSubitems().isEmpty()) {
+						if (!group.subitems.empty) {
 							item.addMenuItemGroup(group)
                         }
 					}
@@ -120,10 +120,10 @@ class SubcategoriesMenuItemType implements MenuItemType {
 	private String tryGetPageCategory(Page page) {
 		String value = null
         ProductsPageType productsPageType = new ProductsPageType()
-        if (page != null && page.getType().equals(productsPageType.getId())) {
+        if (page != null && page.type.equals(productsPageType.id)) {
 			PageParameter param = page.getParam(PARAM_CATEGORY)
             if (param != null) {
-				value = param.getValue()
+				value = param.value
             }
 		}
 
@@ -131,9 +131,9 @@ class SubcategoriesMenuItemType implements MenuItemType {
     }
 
 	private String getCategoryName(ProductCategory category) {
-		String name = category.getName()
-        if (category.getAlternateName() != null && !category.getAlternateName().trim().isEmpty()) {
-			name = category.getAlternateName()
+		String name = category.name
+        if (category.alternateName != null && !category.alternateName.trim().empty) {
+			name = category.alternateName
         }
 		return name
     }

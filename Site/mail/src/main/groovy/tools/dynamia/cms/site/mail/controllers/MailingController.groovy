@@ -41,7 +41,7 @@ class MailingController {
 
         ModelAndView mv = new ModelAndView()
         String redirect = request.getParameter("currentURI")
-        mv.setView(new RedirectView(redirect, true, true, false))
+        mv.view = new RedirectView(redirect, true, true, false)
         SiteActionManager.performAction("addMailingContact", mv, request, redirectAttributes, contact)
 
         return mv

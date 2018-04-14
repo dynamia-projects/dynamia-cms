@@ -34,7 +34,7 @@ class HtmlTableBuilder implements Serializable {
     }
 
     private StringBuilder sb = new StringBuilder()
-    private NumberFormat nf = NumberFormat.getInstance()
+    private NumberFormat nf = NumberFormat.instance
     private DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT)
     private boolean rowCreated
     private int rowCount = 0
@@ -204,7 +204,7 @@ class HtmlTableBuilder implements Serializable {
     }
 
     private String styleClass(String classname) {
-        if (classname != null && !classname.isEmpty()) {
+        if (classname != null && !classname.empty) {
             return String.format(" class='%s'", classname)
         } else {
             return ""
@@ -212,7 +212,7 @@ class HtmlTableBuilder implements Serializable {
     }
 
     private String style(String style) {
-        if (style != null && !style.isEmpty()) {
+        if (style != null && !style.empty) {
             return String.format(" style='%s'", style)
         } else {
             return ""

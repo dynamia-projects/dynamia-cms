@@ -36,7 +36,7 @@ class SpringSecurtyApplicationListener implements ApplicationListener {
     private void fireOnUserLogin(AuthenticationSuccessEvent evt) {
         Collection<LoginListener> listeners = Containers.get().findObjects(LoginListener.class)
         if (listeners != null) {
-            User user = (User) evt.getAuthentication().getPrincipal()
+            User user = (User) evt.authentication.principal
             UserHolder.get().init(user)
             CrudService crudService = Containers.get().findObject(CrudService.class)
             if (crudService != null) {

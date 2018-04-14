@@ -48,20 +48,20 @@ class AddProductToCompareList implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        Long id = (Long) evt.getData()
+        Long id = (Long) evt.data
 
         Product product = crudService.find(Product.class, id)
         ProductCompareList list = Containers.get().findObject(ProductCompareList.class)
         list.add(product)
 
-        ModelAndView mv = evt.getModelAndView()
-        ProductsUtil.setupDefaultVars(evt.getSite(), mv)
+        ModelAndView mv = evt.modelAndView
+        ProductsUtil.setupDefaultVars(evt.site, mv)
 
-        if (list.getProducts().size() == 1) {
-            CMSUtil.addSuccessMessage("Agregue otros productos de la misma categoria o similares para comparar", evt.getRedirectAttributes())
+        if (list.products.size() == 1) {
+            CMSUtil.addSuccessMessage("Agregue otros productos de la misma categoria o similares para comparar", evt.redirectAttributes)
         }
         String redirect = "/store/compare/" + list.toString()
-        mv.setView(new RedirectView(redirect, true, true, false))
+        mv.view = new RedirectView(redirect, true, true, false)
     }
 
 }

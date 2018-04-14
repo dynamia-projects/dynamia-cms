@@ -20,15 +20,15 @@ class PageSiteMapProvider implements SiteMapProvider {
 
         List<SiteMapURL> urls = new ArrayList<>()
 
-        service.getPages(site).stream().filter { p -> p.isPublished() }.map { p -> createURL(site, p) }.forEach {
+        service.getPages(site).stream().filter { p -> p.published }.map { p -> createURL(site, p) }.forEach {
             urls << it
         }
 
         service.getPagesCategories(site).forEach { p ->
-            if (p.getAlias() != null && !p.getAlias().isEmpty()) {
-                SiteMapURL url = new SiteMapURL(CMSUtil.getSiteURL(site, "category/" + p.getAlias()))
-                url.setName(p.getName())
-                url.setDescription(p.getDescription())
+            if (p.alias != null && !p.alias.empty) {
+                SiteMapURL url = new SiteMapURL(CMSUtil.getSiteURL(site, "category/" + p.alias))
+                url.name = p.name
+                url.description = p.description
                 urls.add(url)
             }
         }
@@ -37,12 +37,12 @@ class PageSiteMapProvider implements SiteMapProvider {
     }
 
     private SiteMapURL createURL(Site site, Page p) {
-        SiteMapURL url = new SiteMapURL(CMSUtil.getSiteURL(site, p.getAlias()), p.getLastUpdate())
-        url.setName(p.getTitle())
-        url.setImageURL(p.getImageURL())
-        url.setDescription(p.getSummary())
-        if (p.getCategory() != null) {
-            url.setCategory(p.getCategory().getName())
+        SiteMapURL url = new SiteMapURL(CMSUtil.getSiteURL(site, p.alias), p.lastUpdate)
+        url.name = p.title
+        url.imageURL = p.imageURL
+        url.description = p.summary
+        if (p.category != null) {
+            url.category = p.category.name
         }
         return url
     }

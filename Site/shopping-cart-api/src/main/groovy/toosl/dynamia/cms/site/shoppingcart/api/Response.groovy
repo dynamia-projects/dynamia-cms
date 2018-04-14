@@ -60,8 +60,8 @@ class Response implements Serializable {
     }
 
     static Response find(List<Response> response, String source) {
-        Optional<Response> result = response.stream().filter { r -> r.getSource() == source }.findFirst()
-        if (result.isPresent()) {
+        Optional<Response> result = response.stream().filter { r -> r.source == source }.findFirst()
+        if (result.present) {
             return result.get()
         } else {
             return null

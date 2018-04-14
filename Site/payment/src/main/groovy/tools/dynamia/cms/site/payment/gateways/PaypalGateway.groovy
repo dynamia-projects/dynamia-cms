@@ -103,47 +103,47 @@ class PaypalGateway implements PaymentGateway {
             baseURL += "/"
         }
 
-        tx.setBaseURL(baseURL)
-        tx.setResponseURL(baseURL + "payment/" + getId() + "/response")
-        tx.setConfirmationURL(baseURL + "payment/" + getId() + "/confirmation")
+        tx.baseURL = baseURL
+        tx.responseURL = baseURL + "payment/" + id + "/response"
+        tx.confirmationURL = baseURL + "payment/" + id + "/confirmation"
         return tx
     }
 
     @Override
     PaymentForm createForm(PaymentTransaction tx) {
-        Map<String, String> params = service.getGatewayConfigMap(this, tx.getSource())
+        Map<String, String> params = service.getGatewayConfigMap(this, tx.source)
         PaymentForm form = new PaymentForm()
-        form.setHttpMethod("post")
+        form.httpMethod = "post"
 
         String sanboxMode = params.get(SANBOX_MODE)
 
         if ("true".equals(sanboxMode) || "1".equals(sanboxMode)) {
-            form.setUrl(SANBOX_URL)
+            form.url = SANBOX_URL
         } else {
             form.setUrl(URL)
         }
 
-        if (tx.getCurrency() == null || tx.getCurrency().isEmpty()) {
+        if (tx.currency == null || tx.currency.empty) {
             throw new PaymentException("No Currency supplied for Paypal")
         }
 
         form.addParam("cmd", "_xclick")
         form.addParam(BUSINESS, params.get(ACCOUNT_NAME))
-        form.addParam(CUSTOM, tx.getUuid())
-        form.addParam(INVOICE, tx.getDocument())
+        form.addParam(CUSTOM, tx.uuid)
+        form.addParam(INVOICE, tx.document)
 
         form.addParam("charset", "utf-8")
-        form.addParam("return", tx.getResponseURL())
+        form.addParam("return", tx.responseURL)
         form.addParam("rm", "0")
-        form.addParam("cancel_return", tx.getBaseURL())
-        form.addParam("notify_url", tx.getConfirmationURL())
+        form.addParam("cancel_return", tx.baseURL)
+        form.addParam("notify_url", tx.confirmationURL)
 
-        form.addParam("currency_code", tx.getCurrency())
-        form.addParam("item_name", tx.getDocument() + " - " + tx.getDescription())
-        form.addParam("amount", tx.getAmount().toString())
-        form.addParam("first_name", tx.getPayerFullname())
-        form.addParam("last_name", tx.getPayerDocument())
-        form.addParam("payer_email", tx.getEmail())
+        form.addParam("currency_code", tx.currency)
+        form.addParam("item_name", tx.document + " - " + tx.description)
+        form.addParam("amount", tx.amount.toString())
+        form.addParam("first_name", tx.payerFullname)
+        form.addParam("last_name", tx.payerDocument)
+        form.addParam("payer_email", tx.email)
 
         return form
     }
@@ -152,10 +152,10 @@ class PaypalGateway implements PaymentGateway {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     boolean processResponse(PaymentTransaction tx, Map<String, String> response, ResponseType type) {
 
-        logger.info("Procesing response for " + tx.getUuid())
+        logger.info("Procesing response for " + tx.uuid)
         logger.info("Response Params:" + response)
 
-        Map<String, String> params = service.getGatewayConfigMap(this, tx.getSource())
+        Map<String, String> params = service.getGatewayConfigMap(this, tx.source)
 
         String accountName = params.get(ACCOUNT_NAME)
 
@@ -167,19 +167,19 @@ class PaypalGateway implements PaymentGateway {
         String invoice = response.get(INVOICE)
         String business = response.get(BUSINESS)
 
-        if (business.equals(accountName) && amount.equals(tx.getAmount().toString())
-                && currency.equals(tx.getCurrency())) {
-            tx.setReference(txId)
-            tx.setReference2(invoice)
-            tx.setReference3(uuid)
-            tx.setStatus(PaymentTransactionStatus.COMPLETED)
-            tx.setStatusText("Payment completed successfully")
+        if (business.equals(accountName) && amount.equals(tx.amount.toString())
+                && currency.equals(tx.currency)) {
+            tx.reference = txId
+            tx.reference2 = invoice
+            tx.reference3 = uuid
+            tx.status = PaymentTransactionStatus.COMPLETED
+            tx.statusText = "Payment completed successfully"
         } else {
-            tx.setStatus(PaymentTransactionStatus.ERROR)
-            tx.setStatusText(status)
+            tx.status = PaymentTransactionStatus.ERROR
+            tx.statusText = status
         }
 
-        logger.info("Response proceesed. Status: " + tx.getStatus() + " - " + tx.getStatusText())
+        logger.info("Response proceesed. Status: " + tx.status + " - " + tx.statusText)
 
         return true
 

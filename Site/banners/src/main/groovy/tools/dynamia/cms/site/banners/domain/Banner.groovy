@@ -148,7 +148,7 @@ class Banner extends SimpleEntity implements SiteAware, Orderable {
 
 	@Override
 	String toString() {
-		return getTitle()
+		return title
 	}
 
 

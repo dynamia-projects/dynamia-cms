@@ -39,7 +39,7 @@ class BannerGalleryModule extends AbstractModule {
 
     BannerGalleryModule() {
 		super("banners_gallery", "Gallery", "banners/modules/bannersgallery")
-        setDescription("Create a photo gallery using banners images or folder")
+        description = "Create a photo gallery using banners images or folder"
         addResource(new JavaScriptResource("jquery.blueimp-gallery", "banners/js/jquery.blueimp-gallery.min.js"))
         addResource(new StyleSheetResource("blueimp-gallery", "banners/css/blueimp-gallery.min.css"))
         setVariablesNames("banners", "width", "height")
@@ -54,14 +54,14 @@ class BannerGalleryModule extends AbstractModule {
 			try {
 				List<Banner> banners = null
                 if (context.isTrue(PARAM_USE_IMAGES_FOLDER)) {
-					banners = service.createBannersFromCategory(new Long(categoryId.getValue()))
+					banners = service.createBannersFromCategory(new Long(categoryId.value))
                 } else {
-					banners = service.getBannersByCategory(new Long(categoryId.getValue()))
+					banners = service.getBannersByCategory(new Long(categoryId.value))
                 }
 
-				context.getModuleInstance().addObject("banners", banners)
-                context.getModuleInstance().addObject("width", context.getParameterValue(PARAM_THUMBNAIL_WIDTH, "200"))
-                context.getModuleInstance().addObject("height",
+                context.moduleInstance.addObject("banners", banners)
+                context.moduleInstance.addObject("width", context.getParameterValue(PARAM_THUMBNAIL_WIDTH, "200"))
+                context.moduleInstance.addObject("height",
 						context.getParameterValue(PARAM_THUMBNAIL_HEIGHT, "200"))
 
             } catch (NumberFormatException e) {

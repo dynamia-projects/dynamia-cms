@@ -36,7 +36,7 @@ class SiteManager {
 	private CrudService crudService
 
     void clearCache() {
-		Site site = SiteContext.get().getCurrent()
+		Site site = SiteContext.get().current
         if (site != null) {
 			service.clearCache(site)
             UIMessages.showMessage("Site Cache cleared successfull")
@@ -45,7 +45,7 @@ class SiteManager {
 	}
 
     void edit() {
-		Site site = crudService.reload(SiteContext.get().getCurrent())
+		Site site = crudService.reload(SiteContext.get().current)
         CrudView.showUpdateView("Edit " + site, Site.class, site)
     }
 

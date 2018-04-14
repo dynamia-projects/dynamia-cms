@@ -12,7 +12,7 @@ class PageCrudController extends CrudController<Page> {
 
     @Override
 	protected void beforeQuery() {
-		if (!getParams().containsKey("published")) {
+		if (!params.containsKey("published")) {
 			setParemeter("published", true)
         }
 	}

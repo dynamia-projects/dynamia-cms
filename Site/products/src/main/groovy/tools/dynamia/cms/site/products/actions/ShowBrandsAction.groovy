@@ -40,9 +40,9 @@ class ShowBrandsAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
+        ModelAndView mv = evt.modelAndView
         mv.addObject("title", "Nuestras marcas")
-        mv.addObject("brandlist", service.getBrands(evt.getSite()))
+        mv.addObject("brandlist", service.getBrands(evt.site))
 
         ProductsUtil.setupProductsVar(Collections.EMPTY_LIST, mv)
     }

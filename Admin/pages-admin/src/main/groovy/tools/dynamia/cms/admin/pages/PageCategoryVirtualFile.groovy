@@ -37,16 +37,16 @@ class PageCategoryVirtualFile extends VirtualFile {
     }
 
     PageCategoryVirtualFile(PageService pageService, PageCategory pageCategory) {
-        super(pageCategory.getName())
-        setName(pageCategory.getName())
+        super(pageCategory.name)
+        name = pageCategory.name
         this.pageCategory = pageCategory
         this.pageService = pageService
         init()
     }
 
     private void init() {
-        setDirectory(true)
-        setCanWrite(false)
+        directory = true
+        canWrite = false
     }
 
     /**
@@ -58,7 +58,7 @@ class PageCategoryVirtualFile extends VirtualFile {
     List<File> getChildren() {
         List<Page> pages = Collections.EMPTY_LIST
         if (pageCategory != null) {
-            pages = pageService.getPages(pageCategory.getSite(), pageCategory)
+            pages = pageService.getPages(pageCategory.site, pageCategory)
         } else if (site != null) {
             pages = pageService.getPagesWithoutCategory(site)
         }

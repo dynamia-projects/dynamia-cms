@@ -24,7 +24,7 @@ class PaymentUtils {
 	static String md5(String input) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5")
-            byte[] messageDigest = md.digest(input.getBytes())
+            byte[] messageDigest = md.digest(input.bytes)
             BigInteger number = new BigInteger(1, messageDigest)
             String hashtext = number.toString(16)
             // Now we need to zero pad it if you actually want the full 32
@@ -50,7 +50,7 @@ class PaymentUtils {
     static String mapToString(Map<String, String> response) {
 		StringBuilder sb = new StringBuilder()
         for (Entry<String, String> entry : response.entrySet()) {
-			sb.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n")
+			sb.append(entry.key).append(": ").append(entry.value).append("\n")
         }
 		return sb.toString()
     }

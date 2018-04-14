@@ -18,12 +18,12 @@ class SitePaymentSourceProvider implements PaymentSourceProvider {
 
     @Override
     PaymentSource findSource(Object request) {
-        Site site = SiteContext.get().getCurrent()
+        Site site = SiteContext.get().current
 
         if (site != null) {
             ShoppingSiteConfig confg = service.getConfiguration(site)
-            String currency = confg != null ? confg.getDefaultCurrency() : null
-            return new PaymentSource(site.getKey(), CMSUtil.getSiteURL(site, "/"), site.getDescription(), currency)
+            String currency = confg != null ? confg.defaultCurrency : null
+            return new PaymentSource(site.key, CMSUtil.getSiteURL(site, "/"), site.description, currency)
         } else {
             return null
         }

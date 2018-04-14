@@ -71,13 +71,13 @@ class ShoppingCart extends SimpleEntity implements SiteAware {
     }
 
     void addItem(ShoppingCartItem item, int qty) {
-        ShoppingCartItem addedItem = getItemByCode(item.getCode())
+        ShoppingCartItem addedItem = getItemByCode(item.code)
         if (addedItem != null) {
-            addedItem.setQuantity(addedItem.getQuantity() + qty)
+            addedItem.quantity = addedItem.quantity + qty
         } else {
-            item.setQuantity(qty)
+            item.quantity = qty
             items.add(item)
-            item.setShoppingCart(this)
+            item.shoppingCart = this
         }
         compute()
     }
@@ -87,9 +87,9 @@ class ShoppingCart extends SimpleEntity implements SiteAware {
     }
 
     boolean removeItem(ShoppingCartItem item) {
-        ShoppingCartItem addedItem = getItemByCode(item.getCode())
+        ShoppingCartItem addedItem = getItemByCode(item.code)
         if (addedItem != null) {
-            addedItem.setShoppingCart(null)
+            addedItem.shoppingCart = null
             items.remove(addedItem)
             compute()
             return true
@@ -100,10 +100,10 @@ class ShoppingCart extends SimpleEntity implements SiteAware {
     boolean removeItem(String code) {
         ShoppingCartItem addedItem = getItemByCode(code)
         if (addedItem != null) {
-            addedItem.setShoppingCart(null)
+            addedItem.shoppingCart = null
             items.remove(addedItem)
-            if (addedItem.getChildren() != null && !addedItem.getChildren().isEmpty()) {
-                addedItem.getChildren().forEach { c -> items.remove(c) }
+            if (addedItem.children != null && !addedItem.children.empty) {
+                addedItem.children.forEach { c -> items.remove(c) }
             }
             compute()
             return true
@@ -122,12 +122,12 @@ class ShoppingCart extends SimpleEntity implements SiteAware {
 
         for (ShoppingCartItem item : items) {
             item.compute()
-            quantity += item.getQuantity()
-            totalTaxes = totalTaxes.add(item.getTaxes())
-            totalShipmentPrice = totalShipmentPrice.add(item.getShipmentPrice())
-            totalDiscount = totalDiscount.add(item.getDiscount())
-            totalUnit = totalUnit.add(item.getUnitPrice())
-            subtotal = subtotal.add(item.getSubtotal())
+            quantity += item.quantity
+            totalTaxes = totalTaxes.add(item.taxes)
+            totalShipmentPrice = totalShipmentPrice.add(item.shipmentPrice)
+            totalDiscount = totalDiscount.add(item.discount)
+            totalUnit = totalUnit.add(item.unitPrice)
+            subtotal = subtotal.add(item.subtotal)
         }
 
 
@@ -140,7 +140,7 @@ class ShoppingCart extends SimpleEntity implements SiteAware {
 
     ShoppingCartItem getItemByCode(String code) {
         for (ShoppingCartItem item : items) {
-            if (item.getCode() == code && item.isEditable()) {
+            if (item.code == code && item.editable) {
                 return item
             }
         }

@@ -44,9 +44,9 @@ class ShowMyCustomersAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
+		ModelAndView mv = evt.modelAndView
         mv.addObject("title", "Mis Clientes")
-        mv.addObject("customers", userService.getUserCustomers(UserHolder.get().getCurrent()))
+        mv.addObject("customers", userService.getUserCustomers(UserHolder.get().current))
 
     }
 

@@ -77,16 +77,16 @@ class MailServiceImpl implements MailService {
     @Override
     void send(final MailMessage mailMessage) {
 
-        MailAccount account = mailMessage.getMailAccount()
+        MailAccount account = mailMessage.mailAccount
         if (account == null) {
-            account = getPreferredEmailAccount(mailMessage.getSite())
+            account = getPreferredEmailAccount(mailMessage.site)
         }
 
         if (account == null) {
             return
         }
 
-        if (mailMessage.getTemplate() != null && !mailMessage.getTemplate().isEnabled()) {
+        if (mailMessage.template != null && !mailMessage.template.enabled) {
             return
         }
 
@@ -94,44 +94,44 @@ class MailServiceImpl implements MailService {
 
         try {
 
-            if (mailMessage.getTemplate() != null) {
+            if (mailMessage.template != null) {
                 processTemplate(mailMessage)
             }
 
             JavaMailSenderImpl jmsi = (JavaMailSenderImpl) createMailSender(finalAccount)
             MimeMessage mimeMessage = jmsi.createMimeMessage()
 
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, finalAccount.getEnconding())
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, finalAccount.enconding)
 
-            helper.setTo(mailMessage.getTo())
-            if (!mailMessage.getTos().isEmpty()) {
-                helper.setTo(mailMessage.getTosAsArray())
+            helper.to = mailMessage.to
+            if (!mailMessage.tos.empty) {
+                helper.to = mailMessage.tosAsArray
             }
-            String from = finalAccount.getFromAddress()
-            String personal = finalAccount.getName()
+            String from = finalAccount.fromAddress
+            String personal = finalAccount.name
             if (from != null && personal != null) {
 
                 helper.setFrom(from, personal)
 
             }
 
-            if (!mailMessage.getBccs().isEmpty()) {
-                helper.setBcc(mailMessage.getBccsAsArray())
+            if (!mailMessage.bccs.empty) {
+                helper.bcc = mailMessage.bccsAsArray
             }
 
-            if (!mailMessage.getCcs().isEmpty()) {
-                helper.setCc(mailMessage.getCcsAsArray())
+            if (!mailMessage.ccs.empty) {
+                helper.cc = mailMessage.ccsAsArray
             }
 
-            helper.setSubject(mailMessage.getSubject())
-            if (mailMessage.getPlainText() != null && mailMessage.getContent() != null) {
-                helper.setText(mailMessage.getPlainText(), mailMessage.getContent())
+            helper.subject = mailMessage.subject
+            if (mailMessage.plainText != null && mailMessage.content != null) {
+                helper.setText(mailMessage.plainText, mailMessage.content)
             } else {
-                helper.setText(mailMessage.getContent(), true)
+                helper.setText(mailMessage.content, true)
             }
 
-            for (File archivo : mailMessage.getAttachtments()) {
-                helper.addAttachment(archivo.getName(), archivo)
+            for (File archivo : (mailMessage.attachtments)) {
+                helper.addAttachment(archivo.name, archivo)
             }
 
             fireOnMailSending(mailMessage)
@@ -156,7 +156,7 @@ class MailServiceImpl implements MailService {
 
         try {
             if (currentSite == null) {
-                currentSite = SiteContext.get().getCurrent()
+                currentSite = SiteContext.get().current
             }
         } catch (Exception e) {
             // TODO: handle exception
@@ -177,51 +177,51 @@ class MailServiceImpl implements MailService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void setPreferredEmailAccount(MailAccount account) {
-        crudService.batchUpdate(MailAccount.class, "preferred", false, QueryParameters.with("site", account.getSite()))
+        crudService.batchUpdate(MailAccount.class, "preferred", false, QueryParameters.with("site", account.site))
         crudService.updateField(account, "preferred", true)
     }
 
     private MailSender createMailSender(MailAccount account) {
         JavaMailSenderImpl mailSender = null
 
-        MailSenderHolder holder = senderCache.get(account.getId())
+        MailSenderHolder holder = senderCache.get(account.id)
 
         if (holder != null) {
-            mailSender = (JavaMailSenderImpl) holder.getSender()
-            if (holder.isOld(account.getTimestamp())) {
+            mailSender = (JavaMailSenderImpl) holder.sender
+            if (holder.isOld(account.timestamp)) {
                 mailSender = null
-                senderCache.remove(account.getId())
+                senderCache.remove(account.id)
             }
         }
 
         if (mailSender == null) {
             mailSender = new JavaMailSenderImpl()
-            mailSender.setHost(account.getServerAddress())
-            mailSender.setPort(account.getPort())
-            mailSender.setUsername(account.getUsername())
-            mailSender.setPassword(account.getPassword())
+            mailSender.host = account.serverAddress
+            mailSender.port = account.port
+            mailSender.username = account.username
+            mailSender.password = account.password
 
-            mailSender.setProtocol("smtp")
-            if (account.getEnconding() != null && !account.getEnconding().isEmpty()) {
-                mailSender.setDefaultEncoding(account.getEnconding())
+            mailSender.protocol = "smtp"
+            if (account.enconding != null && !account.enconding.empty) {
+                mailSender.defaultEncoding = account.enconding
             }
 
             Properties jmp = new Properties()
-            jmp.setProperty("mail.smtp.auth", String.valueOf(account.isLoginRequired()))
-            jmp.setProperty("mail.smtp.from", account.getFromAddress())
-            jmp.setProperty("mail.smtp.port", String.valueOf(account.getPort()))
-            jmp.setProperty("mail.smtp.starttls.enable", String.valueOf(account.isUseTTLS()))
-            jmp.setProperty("mail.smtp.host", account.getServerAddress())
-            jmp.setProperty("mail.from", account.getFromAddress())
-            jmp.setProperty("mail.personal", account.getName())
+            jmp.setProperty("mail.smtp.auth", String.valueOf(account.loginRequired))
+            jmp.setProperty("mail.smtp.from", account.fromAddress)
+            jmp.setProperty("mail.smtp.port", String.valueOf(account.port))
+            jmp.setProperty("mail.smtp.starttls.enable", String.valueOf(account.useTTLS))
+            jmp.setProperty("mail.smtp.host", account.serverAddress)
+            jmp.setProperty("mail.from", account.fromAddress)
+            jmp.setProperty("mail.personal", account.name)
 
-            mailSender.setJavaMailProperties(jmp)
+            mailSender.javaMailProperties = jmp
             try {
                 mailSender.testConnection()
-                senderCache.put(account.getId(), new MailSenderHolder(account.getTimestamp(), mailSender))
+                senderCache.put(account.id, new MailSenderHolder(account.timestamp, mailSender))
             } catch (MessagingException e) {
                 throw new MailServiceException(
-                        "Error creating mail sender for account " + account.getName() + " - " + account.getSite(), e)
+                        "Error creating mail sender for account " + account.name + " - " + account.site, e)
             }
         }
 
@@ -231,19 +231,19 @@ class MailServiceImpl implements MailService {
 
     void processTemplate(MailMessage message) {
 
-        if (message.getTemplate() == null) {
+        if (message.template == null) {
             throw new MailServiceException("$message  has no template to process")
         }
 
-        MailTemplate template = message.getTemplate()
-        StringParser stringParser = StringParsers.get(template.getTemplateEngine())
-        message.setSubject(stringParser.parse(template.getSubject(), message.getTemplateModel()))
-        message.setContent(stringParser.parse(template.getContent(), message.getTemplateModel()))
+        MailTemplate template = message.template
+        StringParser stringParser = StringParsers.get(template.templateEngine)
+        message.subject = stringParser.parse(template.subject, message.templateModel)
+        message.content = stringParser.parse(template.content, message.templateModel)
     }
 
     @Override
     boolean existsMailingContact(MailingContact contact) {
-        return crudService.findSingle(MailingContact.class, "emailAddress", contact.getEmailAddress()) != null
+        return crudService.findSingle(MailingContact.class, "emailAddress", contact.emailAddress) != null
     }
 
     private void fireOnMailSending(MailMessage message) {

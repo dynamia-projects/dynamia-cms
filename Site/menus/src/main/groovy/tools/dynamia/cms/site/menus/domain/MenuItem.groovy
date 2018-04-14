@@ -236,20 +236,20 @@ class MenuItem extends SimpleEntity implements Serializable, Orderable {
 
 	private void checkHref() {
 		if (page != null) {
-			href = "/" + page.getAlias()
+			href = "/" + page.alias
 		}
 	}
 
 	void addMenuItem(MenuItem subitem) {
 		if (subitem != this) {
-			subitem.setParentItem(this)
-			subitems.add(subitem)
+            subitem.parentItem = this
+            subitems.add(subitem)
 		}
 	}
 
 	void addMenuItemGroup(MenuItemGroup group) {
-		group.setParentItem(this)
-		itemsGroups.add(group)
+        group.parentItem = this
+        itemsGroups.add(group)
 	}
 
 	String getTarget() {
@@ -261,9 +261,9 @@ class MenuItem extends SimpleEntity implements Serializable, Orderable {
 	}
 
 	MenuItemParameter getParameter(String name) {
-		if (getParameters() != null) {
-			for (MenuItemParameter param : getParameters()) {
-				if (param.getName().equalsIgnoreCase(name)) {
+		if (parameters != null) {
+			for (MenuItemParameter param : (parameters)) {
+				if (param.name.equalsIgnoreCase(name)) {
 					return param
 				}
 			}
@@ -289,8 +289,8 @@ class MenuItem extends SimpleEntity implements Serializable, Orderable {
 		for (MenuItemParameter parameter : parameters) {
 			MenuItemParameter cloneParam = parameter.clone()
 			clone.parameters.add(cloneParam)
-			cloneParam.setMenuItem(clone)
-		}
+            cloneParam.menuItem = clone
+        }
 
 		return clone
 
@@ -298,7 +298,7 @@ class MenuItem extends SimpleEntity implements Serializable, Orderable {
 
 	@Override
 	String toString() {
-		return getName()
+		return name
 	}
 
 }

@@ -62,79 +62,79 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
     }
 
     private void initUI() {
-        setHflex("1")
-        setVflex("1")
+        hflex = "1"
+        vflex = "1"
 
         toolbar = new ActionToolbar(this)
 
         layout = new Borderlayout()
-        layout.setParent(this)
+        layout.parent = this
         layout.appendChild(new North())
         layout.appendChild(new Center())
         layout.appendChild(new East())
 
         Vlayout top = new Vlayout()
-        layout.getNorth().appendChild(top)
+        layout.north.appendChild(top)
 
         top.appendChild(toolbar)
 
-        layout.getCenter().setTitle("Configuration")
-        layout.getCenter().setAutoscroll(true)
+        layout.center.title = "Configuration"
+        layout.center.autoscroll = true
 
         formView = (FormView<ModuleInstance>) Viewers.getView(ModuleInstance.class, "form", moduleInstance)
-        formView.setStyle("margin:0; padding:0;")
-        TypeSelector typeSelector = (TypeSelector) formView.getFieldComponent("moduleId").getInputComponent()
+        formView.style = "margin:0; padding:0;"
+        TypeSelector typeSelector = (TypeSelector) formView.getFieldComponent("moduleId").inputComponent
         typeSelector.addEventListener(Events.ON_SELECT, { evt -> initConfigurationUI() })
 
         top.appendChild(formView)
 
         variables = new Listbox()
-        variables.setVflex("1")
-        variables.setHflex("1")
-        variables.setEmptyMessage("No variables")
-        layout.getEast().setTitle("Module's View Variables")
-        layout.getEast().setWidth("20%")
-        layout.getEast().setSplittable(true)
-        layout.getEast().setCollapsible(true)
-        layout.getEast().appendChild(variables)
+        variables.vflex = "1"
+        variables.hflex = "1"
+        variables.emptyMessage = "No variables"
+        layout.east.title = "Module's View Variables"
+        layout.east.width = "20%"
+        layout.east.splittable = true
+        layout.east.collapsible = true
+        layout.east.appendChild(variables)
 
     }
 
     private void initConfigurationUI() {
         configurationUI = null
-        layout.getCenter().getChildren().clear()
+        layout.center.children.clear()
 
         ModulesService modulesService = Containers.get().findObject(ModulesService.class)
         Module module = modulesService.getModule(moduleInstance)
         if (module != null) {
             try {
-                ViewDescriptor configDescriptor = Viewers.findViewDescriptor(CONFIG_ID_PREFIX + module.getId())
+                ViewDescriptor configDescriptor = Viewers.findViewDescriptor(CONFIG_ID_PREFIX + module.id)
                 configureEntityConverter(configDescriptor)
                 configurationUI = createCustomConfig(configDescriptor, moduleInstance, module)
             } catch (ViewDescriptorNotFoundException e) {
                 configurationUI = new Label("No configuration found")
             }
 
-            ZKUtil.fillListbox(variables, module.getVariablesNames(), false)
+            ZKUtil.fillListbox(variables, module.variablesNames, false)
         }
 
         if (configurationUI != null) {
-            layout.getCenter().appendChild(configurationUI)
+            layout.center.appendChild(configurationUI)
         }
 
         if (formView != null && module != null) {
-            Textbox customView = (Textbox) formView.getFieldComponent("customView").getInputComponent()
-            customView.setPlaceholder(module.getTemplateViewName())
+            Textbox customView = (Textbox) formView.getFieldComponent("customView").inputComponent
+            customView.placeholder = module.templateViewName
         }
 
     }
 
     private void configureEntityConverter(ViewDescriptor configDescriptor) {
-        for (Field field : configDescriptor.getFields()) {
-            field.addParam(ConfigViewRender.PARAM_PARAMETER_NAME, field.getName())
+        for (Field field : (configDescriptor.fields)) {
+            field.addParam(ConfigViewRender.PARAM_PARAMETER_NAME, field.name)
 
-            if (field.getComponentClass() == EntityPickerBox.class) {
-                field.addParam(Viewers.PARAM_CONVERTER, converters.Entity.class.getName())
+            if (field.componentClass == EntityPickerBox.class) {
+                field.addParam(Viewers.PARAM_CONVERTER, converters.Entity.class.name)
             }
         }
     }
@@ -144,11 +144,11 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
         ModulesService modulesService = Containers.get().findObject(ModulesService.class)
         Module module = modulesService.getModule(moduleInstance)
 
-        Object data = formView.getValue()
+        Object data = formView.value
         params = MapBuilder.put("module", module, "moduleInstance", moduleInstance)
         if (configurationUI instanceof Viewer) {
 
-            data = ((Viewer) configurationUI).getValue()
+            data = ((Viewer) configurationUI).value
         }
 
         return new ActionEvent(data, this, params)
@@ -159,9 +159,9 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
 
         List<Parameter> configParameters = createConfigParameters(configDescriptor, module, moduleInstance)
         final Viewer viewer = new Viewer(configDescriptor, configParameters)
-        viewer.setStyle("margin:0; padding: 0")
-        ConfigView configView = (ConfigView) viewer.getView()
-        configView.setStyle("margin:0; padding: 0")
+        viewer.style = "margin:0; padding: 0"
+        ConfigView configView = (ConfigView) viewer.view
+        configView.style = "margin:0; padding: 0"
 
         return viewer
 
@@ -170,37 +170,37 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
     private List<Parameter> createConfigParameters(ViewDescriptor configDescriptor, Module module,
                                                    ModuleInstance moduleInstance) {
         List<Parameter> cfgParameters = new ArrayList<>()
-        if (moduleInstance.getId() != null) {
+        if (moduleInstance.id != null) {
             moduleInstance.reloadParameters()
         }
 
-        for (Field field : configDescriptor.getFields()) {
-            ModuleInstanceParameter parameter = moduleInstance.getParameter(field.getName())
+        for (Field field : (configDescriptor.fields)) {
+            ModuleInstanceParameter parameter = moduleInstance.getParameter(field.name)
 
             if (parameter == null) {
-                parameter = new ModuleInstanceParameter(field.getName(),
-                        (String) module.getMetadata().get(field.getName()))
+                parameter = new ModuleInstanceParameter(field.name,
+                        (String) module.metadata.get(field.name))
             }
 
-            String value = parameter.getValue()
-            if (parameter.getExtra() != null && !parameter.getExtra().isEmpty()) {
-                value = parameter.getExtra()
+            String value = parameter.value
+            if (parameter.extra != null && !parameter.extra.empty) {
+                value = parameter.extra
             }
             try {
-                if (value == null || value.isEmpty() && field.getParams().get("copyFrom") != null) {
+                if (value == null || value.empty && field.params.get("copyFrom") != null) {
                     ModuleInstanceParameter source = moduleInstance
-                            .getParameter(field.getParams().get("copyFrom").toString())
+                            .getParameter(field.params.get("copyFrom").toString())
                     if (source != null) {
-                        value = source.getValue()
-                        if (source.getExtra() != null && !source.getExtra().isEmpty()) {
-                            value = source.getExtra()
+                        value = source.value
+                        if (source.extra != null && !source.extra.empty) {
+                            value = source.extra
                         }
                     }
                 }
             } catch (Exception e) {
 
             }
-            cfgParameters.add(new Parameter(parameter.getName(), value))
+            cfgParameters.add(new Parameter(parameter.name, value))
         }
         return cfgParameters
     }
@@ -211,7 +211,7 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
 
     void sync(ModuleInstance instance) {
         this.moduleInstance = instance
-        formView.setValue(instance)
+        formView.value = instance
         initConfigurationUI()
     }
 }

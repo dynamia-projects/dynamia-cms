@@ -46,12 +46,12 @@ class ViewShoppingOrderAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("shoppingcart/order")
+		ModelAndView mv = evt.modelAndView
+        mv.viewName = "shoppingcart/order"
 
         mv.addObject("title", "Pedido")
 
-        Long id = (Long) evt.getData()
+        Long id = (Long) evt.data
 
         ShoppingOrder order = null
 
@@ -59,8 +59,8 @@ class ViewShoppingOrderAction implements SiteAction {
 			order = crudService.find(ShoppingOrder.class, id)
         }
 		
-		if (order == null || !order.getShoppingCart().getUser().equals(UserHolder.get().getCurrent())) {
-			SiteActionManager.performAction("showMyShoppingOrders", mv, evt.getRequest(), evt.getRedirectAttributes())
+		if (order == null || !order.shoppingCart.user.equals(UserHolder.get().current)) {
+			SiteActionManager.performAction("showMyShoppingOrders", mv, evt.request, evt.redirectAttributes)
             CMSUtil.addErrorMessage("No se encontro pedido", mv)
         } else {
 			mv.addObject("shoppingOrder", order)
@@ -69,7 +69,7 @@ class ViewShoppingOrderAction implements SiteAction {
 	}
 
 	private void validate(ShoppingOrder order, ShoppingSiteConfig config) {
-		if (!order.isPayLater() || !config.isAllowEmptyPayment()) {
+		if (!order.payLater || !config.allowEmptyPayment) {
 			throw new ValidationError("El sitio web no permite este tipo de pedidos")
         }
 
@@ -79,7 +79,7 @@ class ViewShoppingOrderAction implements SiteAction {
 		UserContactInfo userContactInfo = null
 
         try {
-			Long id = Long.parseLong(evt.getRequest().getParameter(string))
+			Long id = Long.parseLong(evt.request.getParameter(string))
             userContactInfo = crudService.find(UserContactInfo.class, id)
         } catch (Exception e) {
 			// TODO: handle exception

@@ -49,7 +49,7 @@ class ProductListenerImpl implements ProductsListener {
         final ProductsSiteConfig config = getConfig(evt)
 
         ProductsDatasource ds = syncService.getDatasource(config)
-        ProductDTO dto = ds.getProduct(evt.getExternalRef(), config.getParametersAsMap())
+        ProductDTO dto = ds.getProduct(evt.externalRef, config.parametersAsMap)
         synchronizer.synchronize(config, dto)
 
     }
@@ -58,7 +58,7 @@ class ProductListenerImpl implements ProductsListener {
     void categoryChanged(final DataChangedEvent evt) {
         final ProductsSiteConfig config = getConfig(evt)
         ProductsDatasource ds = syncService.getDatasource(config)
-        ProductCategoryDTO dto = ds.getCategory(evt.getExternalRef(), config.getParametersAsMap())
+        ProductCategoryDTO dto = ds.getCategory(evt.externalRef, config.parametersAsMap)
         syncService.synchronizeCategory(config, dto)
 
     }
@@ -68,7 +68,7 @@ class ProductListenerImpl implements ProductsListener {
         final ProductsSiteConfig config = getConfig(evt)
 
         ProductsDatasource ds = syncService.getDatasource(config)
-        ProductBrandDTO dto = ds.getBrand(evt.getExternalRef(), config.getParametersAsMap())
+        ProductBrandDTO dto = ds.getBrand(evt.externalRef, config.parametersAsMap)
         syncService.synchronizeBrand(config, dto)
 
     }
@@ -78,13 +78,13 @@ class ProductListenerImpl implements ProductsListener {
         final ProductsSiteConfig config = getConfig(evt)
 
         ProductsDatasource ds = syncService.getDatasource(config)
-        StoreDTO dto = ds.getStore(evt.getExternalRef(), config.getParametersAsMap())
+        StoreDTO dto = ds.getStore(evt.externalRef, config.parametersAsMap)
         syncService.synchronizeStore(config, dto)
 
     }
 
     private ProductsSiteConfig getConfig(DataChangedEvent evt) {
-        final ProductsSiteConfig config = service.getSiteConfig(evt.getToken())
+        final ProductsSiteConfig config = service.getSiteConfig(evt.token)
         if (config == null) {
             throw new InvalidTokenException("Cannot find ProductSiteConfig for supplied token")
         }

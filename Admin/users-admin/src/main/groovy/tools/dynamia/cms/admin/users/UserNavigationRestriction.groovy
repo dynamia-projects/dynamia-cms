@@ -20,7 +20,7 @@ class UserNavigationRestriction implements NavigationRestriction {
     Boolean allowAccess(NavigationElement element) {
         AdminModuleOption option = (AdminModuleOption) element.getAttribute("OPTION")
         if (option != null) {
-            User user = UserHolder.get().getCurrent()
+            User user = UserHolder.get().current
             if (user != null) {
                 return (option.editorAllowed && (user.profile == UserProfile.EDITOR || user.profile == UserProfile.ADMIN)) || (option.adminAllowed && user.profile == UserProfile.ADMIN)
             } else {

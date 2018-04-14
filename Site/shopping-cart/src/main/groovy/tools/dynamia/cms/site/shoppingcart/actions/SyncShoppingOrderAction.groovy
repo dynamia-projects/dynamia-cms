@@ -47,10 +47,10 @@ class SyncShoppingOrderAction implements SiteAction {
 	@Override
     void actionPerformed(ActionEvent evt) {
 
-		ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder()
-        SiteAware cart = ShoppingCartUtils.getShoppingCart(evt.getModelAndView())
+		ShoppingOrder order = ShoppingCartHolder.get().currentOrder
+        SiteAware cart = ShoppingCartUtils.getShoppingCart(evt.modelAndView)
 
-        if (order != null && cart != null && order.getShoppingCart().equals(cart)) {
+        if (order != null && cart != null && order.shoppingCart.equals(cart)) {
 			order.sync()
         }
 

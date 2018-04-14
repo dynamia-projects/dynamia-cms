@@ -25,8 +25,8 @@ class SiteFormCustomizer implements ViewCustomizer<FormView<Site>> {
 
 	@Override
     void customize(FormView<Site> view) {
-		EntityPickerBox parentPicker = (EntityPickerBox) view.getFieldComponent("parent").getInputComponent()
-        parentPicker.setDisabled(!SiteContext.get().isSuperAdmin())
+		EntityPickerBox parentPicker = (EntityPickerBox) view.getFieldComponent("parent").inputComponent
+        parentPicker.disabled = !SiteContext.get().superAdmin
 
     }
 

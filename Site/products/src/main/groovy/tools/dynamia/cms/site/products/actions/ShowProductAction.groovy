@@ -54,11 +54,11 @@ class ShowProductAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
+        ModelAndView mv = evt.modelAndView
 
         boolean simpleMode = false
-        if ("simple".equals(evt.getRequest().getParameter("mode"))) {
-            mv.setViewName("products/productsimple")
+        if ("simple".equals(evt.request.getParameter("mode"))) {
+            mv.viewName = "products/productsimple"
             simpleMode = true
         }
 
@@ -68,13 +68,13 @@ class ShowProductAction implements SiteAction {
 
     private void loadProduct(ActionEvent evt, ModelAndView mv, boolean simpleMode) {
         Product product = null
-        Long id = (Long) evt.getData()
-        QueryParameters qp = QueryParameters.with("active", true).add("site", evt.getSite())
+        Long id = (Long) evt.data
+        QueryParameters qp = QueryParameters.with("active", true).add("site", evt.site)
 
         if (id != null) {
             qp.add("id", id)
-        } else if (evt.getRequest().getParameter("sku") != null) {
-            String sku = evt.getRequest().getParameter("sku")
+        } else if (evt.request.getParameter("sku") != null) {
+            String sku = evt.request.getParameter("sku")
             qp.add("sku", sku)
 
         }
@@ -86,15 +86,15 @@ class ShowProductAction implements SiteAction {
 
         String price = ""
         try {
-            CMSUtil util = new CMSUtil(evt.getSite())
-            ProductsSiteConfig config = service.getSiteConfig(evt.getSite())
-            price = " - " + util.formatNumber(product.getPrice(), config.getPricePattern())
+            CMSUtil util = new CMSUtil(evt.site)
+            ProductsSiteConfig config = service.getSiteConfig(evt.site)
+            price = " - " + util.formatNumber(product.price, config.pricePattern)
         } catch (Exception e) {
         }
 
         service.updateViewsCount(product)
         service.updateProductStoryViews(product)
-        ProductUserStory story = service.getProductStory(product, UserHolder.get().getCurrent())
+        ProductUserStory story = service.getProductStory(product, UserHolder.get().current)
         if (story != null) {
             mv.addObject("prd_story", story)
         }
@@ -105,27 +105,27 @@ class ShowProductAction implements SiteAction {
         loadReviews(product, mv)
 
         mv.addObject("prd_product", product)
-        mv.addObject("prd_config", service.getSiteConfig(evt.getSite()))
-        mv.addObject("title", product.getName().toUpperCase() + price)
-        mv.addObject("subtitle", product.getCategory().getName())
+        mv.addObject("prd_config", service.getSiteConfig(evt.site))
+        mv.addObject("title", product.name.toUpperCase() + price)
+        mv.addObject("subtitle", product.category.name)
         mv.addObject("icon", "info-sign")
 
-        mv.addObject("metaDescription", product.getDescription())
-        if (product.getTags() != null && !product.getTags().isEmpty()) {
-            mv.addObject("metaKeywords", product.getTags())
+        mv.addObject("metaDescription", product.description)
+        if (product.tags != null && !product.tags.empty) {
+            mv.addObject("metaKeywords", product.tags)
         }
 
-        String baseImageUrl = SiteContext.get().getSiteURL() + "/resources/products/images/"
+        String baseImageUrl = SiteContext.get().siteURL + "/resources/products/images/"
         List<String> pageImages = new ArrayList<>()
-        pageImages.add(baseImageUrl + product.getImage())
-        if (product.getImage2() != null) {
-            pageImages.add(baseImageUrl + product.getImage2())
+        pageImages.add(baseImageUrl + product.image)
+        if (product.image2 != null) {
+            pageImages.add(baseImageUrl + product.image2)
         }
-        if (product.getImage3() != null) {
-            pageImages.add(baseImageUrl + product.getImage3())
+        if (product.image3 != null) {
+            pageImages.add(baseImageUrl + product.image3)
         }
-        if (product.getImage4() != null) {
-            pageImages.add(baseImageUrl + product.getImage4())
+        if (product.image4 != null) {
+            pageImages.add(baseImageUrl + product.image4)
         }
         mv.addObject("pageImages", pageImages)
         mv.addObject("baseImageUrl", baseImageUrl)
@@ -134,9 +134,9 @@ class ShowProductAction implements SiteAction {
             mv.addObject("prd_hasTemplate", true)
             if (simpleMode) {
                 mv.addObject("prd_template",
-                        templateService.processAlternateTemplate(product, new HashMap<>(mv.getModel())))
+                        templateService.processAlternateTemplate(product, new HashMap<>(mv.model)))
             } else {
-                mv.addObject("prd_template", templateService.processTemplate(product, new HashMap<>(mv.getModel())))
+                mv.addObject("prd_template", templateService.processTemplate(product, new HashMap<>(mv.model)))
             }
         } else {
             mv.addObject("prd_hasTemplate", false)
@@ -151,7 +151,7 @@ class ShowProductAction implements SiteAction {
     private void loadRelatedProducts(Product product, ModelAndView mv) {
         List<Product> products = null
         List<RelatedProduct> relateds = service.getRelatedProducts(product, false)
-        if (relateds != null && !relateds.isEmpty()) {
+        if (relateds != null && !relateds.empty) {
             products = relateds.collect { it.product }
         } else {
             products = service.getRelatedCategoryProducts(product)
@@ -168,7 +168,7 @@ class ShowProductAction implements SiteAction {
                 "store.contactInfo.city")
         CollectionWrapper firtGroup = CollectionsUtils.findFirst(stockDetailsGroups)
         if (firtGroup != null) {
-            firtGroup.setDescription("active")
+            firtGroup.description = "active"
         }
         mv.addObject("prd_stock_details", stockDetailsGroups)
     }

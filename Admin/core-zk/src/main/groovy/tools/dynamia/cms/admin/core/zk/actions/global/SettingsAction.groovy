@@ -13,9 +13,9 @@ class SettingsAction extends ApplicationGlobalAction {
 	private SiteManager siteManager
 
     SettingsAction() {
-		setName("Settings")
-        setImage("cog")
-        setPosition(2)
+        name = "Settings"
+        image = "cog"
+        position = 2
         setAttribute("background", "btn btn-warning btn-flat bg-yellow ")
     }
 

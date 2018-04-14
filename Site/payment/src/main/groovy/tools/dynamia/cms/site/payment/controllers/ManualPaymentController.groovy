@@ -24,22 +24,22 @@ class ManualPaymentController {
         ModelAndView mv = new ModelAndView("payment/manual")
 
         try {
-            ManualPayment currentPay = PaymentHolder.get().getCurrentManualPayment()
+            ManualPayment currentPay = PaymentHolder.get().currentManualPayment
             if (currentPay != null) {
-                currentPay.setReference(payment.getReference())
-                currentPay.setReference2(payment.getReference2())
-                currentPay.setReference3(payment.getReference3())
-                currentPay.setType(payment.getType())
-                currentPay.setAmount(payment.getAmount())
-                currentPay.setDescription(payment.getDescription())
+                currentPay.reference = payment.reference
+                currentPay.reference2 = payment.reference2
+                currentPay.reference3 = payment.reference3
+                currentPay.type = payment.type
+                currentPay.amount = payment.amount
+                currentPay.description = payment.description
                 service.register(currentPay)
                 mv.addObject("payment", currentPay)
                 mv.addObject("title", "Estado de Pago")
-                PaymentHolder.get().setCurrentManualPayment(null)
+                PaymentHolder.get().currentManualPayment = null
             }
 
         } catch (ValidationError e) {
-            mv.addObject("errormessage", e.getMessage())
+            mv.addObject("errormessage", e.message)
         }
 
         return mv

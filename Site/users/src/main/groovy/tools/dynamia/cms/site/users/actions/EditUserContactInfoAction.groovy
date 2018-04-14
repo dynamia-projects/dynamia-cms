@@ -42,16 +42,16 @@ class EditUserContactInfoAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
-        Long id = (Long) evt.getData()
+		ModelAndView mv = evt.modelAndView
+        Long id = (Long) evt.data
         UserContactInfo userContactInfo = crudService.find(UserContactInfo.class, id)
-        if (userContactInfo.getUser().equals(UserHolder.get().getCurrent())) {
+        if (userContactInfo.user.equals(UserHolder.get().current)) {
 			mv.addObject("title", "Editar Direccion de Contacto")
             mv.addObject("userContactInfo", userContactInfo)
 
-            CMSUtil.buildContactInfoOptions(evt.getSite(), mv, "uci", userContactInfo.getInfo())
+            CMSUtil.buildContactInfoOptions(evt.site, mv, "uci", userContactInfo.info)
         } else {
-			CMSUtil.addErrorMessage("Direccion de contacto NO pertenece a este usuario -.-", evt.getRedirectAttributes())
+			CMSUtil.addErrorMessage("Direccion de contacto NO pertenece a este usuario -.-", evt.redirectAttributes)
 
         }
 	}

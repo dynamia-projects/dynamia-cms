@@ -47,17 +47,17 @@ class CMSeditor extends Div implements ActionEventBuilder {
     private static final long serialVersionUID = -4372806043096340598L
 
     static {
-        ComponentAliasIndex.getInstance().add(CMSeditor.class)
-        BindingComponentIndex.getInstance().put("value", CMSeditor.class)
-        CKeditor.setFileBrowserTemplate("/browse")
-        CKeditor.setFileUploadHandlePage("/browse")
+        ComponentAliasIndex.instance.add(CMSeditor.class)
+        BindingComponentIndex.instance.put("value", CMSeditor.class)
+        CKeditor.fileBrowserTemplate = "/browse"
+        CKeditor.fileUploadHandlePage = "/browse"
 
     }
 
     CMSeditor() {
         contentArea = new Textarea()
-        contentArea.setSclass("cms-editor")
-        contentArea.setStyle("width: 100%; height: 100%")
+        contentArea.sclass = "cms-editor"
+        contentArea.style = "width: 100%; height: 100%"
         contentArea.setDynamicProperty("spellcheck", spellchek)
         contentArea.setDynamicProperty("onkeydown",
                 "if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}")
@@ -69,10 +69,10 @@ class CMSeditor extends Div implements ActionEventBuilder {
         layout.appendChild(new North())
         layout.appendChild(new Center())
 
-        layout.getNorth().appendChild(toolbar)
-        layout.getCenter().appendChild(contentArea)
-        layout.setHflex("1")
-        layout.setVflex("1")
+        layout.north.appendChild(toolbar)
+        layout.center.appendChild(contentArea)
+        layout.hflex = "1"
+        layout.vflex = "1"
         appendChild(layout)
 
         loadActions()
@@ -85,8 +85,8 @@ class CMSeditor extends Div implements ActionEventBuilder {
     }
 
     void setValue(String value) throws WrongValueException {
-        if (!Objects.equals(value, contentArea.getValue())) {
-            contentArea.setValue(value)
+        if (!Objects.equals(value, contentArea.value)) {
+            contentArea.value = value
             contentArea.invalidate()
             Events.postEvent(new Event(Events.ON_CHANGE, this, value))
         }
@@ -94,10 +94,10 @@ class CMSeditor extends Div implements ActionEventBuilder {
     }
 
     String getValue() {
-        if (!isUnescape()) {
-            return CMSUtil.escapeHtmlContent(contentArea.getValue())
+        if (!unescape) {
+            return CMSUtil.escapeHtmlContent(contentArea.value)
         } else {
-            return contentArea.getValue()
+            return contentArea.value
         }
     }
 
@@ -125,7 +125,7 @@ class CMSeditor extends Div implements ActionEventBuilder {
 
     @Override
     ActionEvent buildActionEvent(Object arg0, Map<String, Object> arg1) {
-        return new ActionEvent(getValue(), this)
+        return new ActionEvent(value, this)
     }
 
 }

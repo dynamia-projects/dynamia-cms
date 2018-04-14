@@ -31,22 +31,22 @@ class MenuItemTreeCrudController extends TreeCrudController<MenuItem> {
 
 	@Override
 	protected void afterCreate() {
-		getEntity().setMenu(menu)
+        entity.menu = menu
     }
 
 	@Override
 	protected boolean isLeaf(MenuItem data) {
-		return data.getSubitems().isEmpty()
+		return data.subitems.empty
     }
 	@Override
     String getRootLabel() {
-		return menu.getName()
+		return menu.name
     }
 	
 	@Override
 	protected Collection<MenuItem> loadRoots() {
 		return crudService.find(MenuItem.class, QueryParameters.with("menu", menu)
-				.add(getParentName(), QueryConditions.isNull())
+				.add(parentName, QueryConditions.isNull())
 				.orderBy("order"))
     }
 }

@@ -39,10 +39,10 @@ class ShowStoresAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
+        ModelAndView mv = evt.modelAndView
         mv.addObject("title", "Nuestras Tiendas")
         mv.addObject("icon", "building")
-        mv.addObject("storeslist", service.getStores(evt.getSite()))
+        mv.addObject("storeslist", service.getStores(evt.site))
 
     }
 

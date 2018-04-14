@@ -94,9 +94,9 @@ class StoreController {
         ProductSearchForm form = new ProductSearchForm()
         ProductBrand productBrand = service.getBrandByAlias(site, brand)
         if (productBrand != null) {
-            form.setBrandId(productBrand.getId())
+            form.brandId = productBrand.id
         }
-        form.setCategoryId(id)
+        form.categoryId = id
 
         ModelAndView mv = new ModelAndView("products/brand")
         SiteActionManager.performAction("showProductBrand", mv, request, form)
@@ -106,10 +106,10 @@ class StoreController {
     @RequestMapping("/search")
     ModelAndView search(ProductSearchForm form, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasFieldErrors("maxPrice")) {
-            form.setMaxPrice(null)
+            form.maxPrice = null
         }
         if (bindingResult.hasFieldErrors("minPrice")) {
-            form.setMinPrice(null)
+            form.minPrice = null
         }
 
         ModelAndView mv = new ModelAndView("products/productquery")
@@ -150,8 +150,8 @@ class StoreController {
     ModelAndView productFavorite(@PathVariable Long id, HttpServletRequest request,
                                  HttpServletResponse response) {
         ModelAndView mv = new ModelAndView("products/product")
-        if (UserHolder.get().isAuthenticated()) {
-            System.out.println("USER LOGGED: " + UserHolder.get().getUserName())
+        if (UserHolder.get().authenticated) {
+            System.out.println("USER LOGGED: " + UserHolder.get().userName)
         }
         mv = product(id, request, response)
 
@@ -188,7 +188,7 @@ class StoreController {
         ProductSearchForm form = new ProductSearchForm()
         try {
             if (name != null && !name.equals("#null#")) {
-                form.setBrandId(service.getBrandByAlias(site, name).getId())
+                form.brandId = service.getBrandByAlias(site, name).id
             }
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -243,10 +243,10 @@ class StoreController {
                        RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView()
-        mv.setView(new RedirectView("/store/products/" + form.getProductId(), true, true, false))
+        mv.view = new RedirectView("/store/products/" + form.productId, true, true, false)
         if (!bindingResult.hasErrors()) {
-            form.setSite(SiteContext.get().getCurrent())
-            form.setProductURL(SiteContext.get().getSiteURL() + "/store/products/" + form.getProductId())
+            form.site = SiteContext.get().current
+            form.productURL = SiteContext.get().siteURL + "/store/products/" + form.productId
             SiteActionManager.performAction("shareProduct", mv, request, redirectAttributes, form)
         } else {
             CMSUtil.addErrorMessage("Todos los campos son requeridos para enviar a un amigo", redirectAttributes)
@@ -264,13 +264,13 @@ class StoreController {
         }
 
         String idText = String.valueOf(id)
-        String siteCookieName = RECENT_PRODUCTS_COOKIE_NAME + site.getKey()
+        String siteCookieName = RECENT_PRODUCTS_COOKIE_NAME + site.key
 
         Cookie currentCookie = CMSUtil.getCookie(request, siteCookieName)
 
         List<String> ids = new ArrayList<>()
         if (currentCookie != null) {
-            String[] value = currentCookie.getValue().split(",")
+            String[] value = currentCookie.value.split(",")
             ids.addAll(Arrays.asList(value))
         }
 
@@ -280,13 +280,13 @@ class StoreController {
 
         ids.add(0, idText)
 
-        if (ids.size() > service.getSiteConfig(site).getProductsPerPage()) {
+        if (ids.size() > service.getSiteConfig(site).productsPerPage) {
             ids.remove(ids.size() - 1)
         }
 
         CookieGenerator recentViews = new CookieGenerator()
-        recentViews.setCookieName(siteCookieName)
-        recentViews.setCookieMaxAge(30 * 24 * 60 * 60)
+        recentViews.cookieName = siteCookieName
+        recentViews.cookieMaxAge = 30 * 24 * 60 * 60
         recentViews.addCookie(response, StringUtils.arrayToCommaDelimitedString(ids.toArray()))
     }
 

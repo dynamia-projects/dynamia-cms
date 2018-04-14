@@ -32,7 +32,7 @@ class SiteCache {
 
     Object get(ActionEvent evt, String keysalt) {
 		String key = key(evt, keysalt)
-        return get(evt.getSite(), key)
+        return get(evt.site, key)
     }
 
     Object get(Site site, HttpServletRequest request, String keysalt) {
@@ -54,7 +54,7 @@ class SiteCache {
 	 * @param object
 	 */
 	void put(ActionEvent evt, String keysalt, Object object) {
-		Site site = evt.getSite()
+		Site site = evt.site
         String key = key(evt, keysalt)
         put(site, key, object)
     }
@@ -86,10 +86,10 @@ class SiteCache {
 		StringBuilder keybuilder = new StringBuilder()
 
         keybuilder.append(keysalt)
-        keybuilder.append(request.getRequestURI())
+        keybuilder.append(request.requestURI)
 
-        for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
-			keybuilder.append(entry.getKey()).append(Arrays.toString(entry.getValue()))
+        for (Entry<String, String[]> entry : request.parameterMap.entrySet()) {
+			keybuilder.append(entry.key).append(Arrays.toString(entry.value))
         }
 
 		String key = StringUtils.hash(keybuilder.toString(), "MD5")
@@ -109,27 +109,27 @@ class SiteCache {
 
         keybuilder.append(keysalt)
 
-        if (evt.getModelAndView() != null) {
-			keybuilder.append(evt.getModelAndView().getViewName())
+        if (evt.modelAndView != null) {
+			keybuilder.append(evt.modelAndView.viewName)
         }
 
-		if (evt.getRequest() != null) {
-			keybuilder.append(evt.getRequest().getRequestURI())
+		if (evt.request != null) {
+			keybuilder.append(evt.request.requestURI)
         }
 
-		if (evt.getData() != null) {
-			keybuilder.append(evt.getData().toString())
+		if (evt.data != null) {
+			keybuilder.append(evt.data.toString())
         }
 
-		if (evt.getSource() != null) {
-			keybuilder.append(evt.getSource().toString())
+		if (evt.source != null) {
+			keybuilder.append(evt.source.toString())
         }
 
 		String key = StringUtils.hash(keybuilder.toString(), "MD5")
-        return key(evt.getSite(), key)
+        return key(evt.site, key)
     }
 
     String key(Site site, String key) {
-		return site.getId() + site.getKey() + ":" + key
+		return site.id + site.key + ":" + key
     }
 }

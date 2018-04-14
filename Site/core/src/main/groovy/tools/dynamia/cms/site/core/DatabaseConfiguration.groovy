@@ -25,14 +25,14 @@ class DatabaseConfiguration extends JPAConfigurationAdapter {
 
     @Override
     String jndiName() {
-        return appInfo.getJndiName()
+        return appInfo.jndiName
     }
 
     @Override
     protected void configureJpaVendorAdapter(HibernateJpaVendorAdapter va) {
         super.configureJpaVendorAdapter(va)
-        va.getJpaPropertyMap().put("hibernate.id.new_generator_mappings", false)
-        va.setShowSql(false)
+        va.jpaPropertyMap.put("hibernate.id.new_generator_mappings", false)
+        va.showSql = false
     }
 
 }

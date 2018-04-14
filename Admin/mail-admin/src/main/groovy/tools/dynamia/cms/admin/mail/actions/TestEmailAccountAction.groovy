@@ -38,19 +38,19 @@ import static tools.dynamia.viewers.ViewDescriptorBuilder.viewDescriptor
 class TestEmailAccountAction extends AbstractCrudAction implements MailServiceListener {
 
     TestEmailAccountAction() {
-        setName("Test Account")
-        setDescription("Send a test message using this email account")
-        setImage("mail")
-        setMenuSupported(true)
+        name = "Test Account"
+        description = "Send a test message using this email account"
+        image = "mail"
+        menuSupported = true
 
     }
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
-        MailAccount cuenta = (MailAccount) evt.getData()
+        MailAccount cuenta = (MailAccount) evt.data
         if (cuenta != null) {
             Viewer viewer = createView(cuenta)
-            ZKUtil.showDialog("Test Message: " + cuenta.getName(), viewer, "60%", "")
+            ZKUtil.showDialog("Test Message: " + cuenta.name, viewer, "60%", "")
         } else {
             UIMessages.showMessage("Select account to test", MessageType.WARNING)
         }
@@ -73,12 +73,12 @@ class TestEmailAccountAction extends AbstractCrudAction implements MailServiceLi
 
         final Viewer viewer = new Viewer(descriptor)
         MailMessage msg = new MailMessage()
-        msg.setMailAccount(account)
-        viewer.setValue(msg)
+        msg.mailAccount = account
+        viewer.value = msg
 
-        ActionToolbar toolbar = new ActionToolbar({ Object src, Map<String, Object> parms1 -> new ActionEvent(viewer.getValue(), src) })
+        ActionToolbar toolbar = new ActionToolbar({ Object src, Map<String, Object> parms1 -> new ActionEvent(viewer.value, src) })
         toolbar.addAction(new SendTestEmailAction())
-        viewer.setToolbar(toolbar)
+        viewer.toolbar = toolbar
 
         return viewer
 
@@ -96,27 +96,27 @@ class TestEmailAccountAction extends AbstractCrudAction implements MailServiceLi
 
     @Override
     void onMailSendFail(MailMessage message, Throwable cause) {
-        Messagebox.show("Error performing test: " + cause.getMessage(), "Error", Messagebox.OK, Messagebox.ERROR)
+        Messagebox.show("Error performing test: " + cause.message, "Error", Messagebox.OK, Messagebox.ERROR)
     }
 
     private static class SendTestEmailAction extends AbstractAction {
 
         SendTestEmailAction() {
-            setName("Send Test")
-            setImage("mail")
+            name = "Send Test"
+            image = "mail"
         }
 
         @Override
         void actionPerformed(ActionEvent evt) {
             MailService service = Containers.get().findObject(MailService.class)
-            MailMessage msg = (MailMessage) evt.getData()
+            MailMessage msg = (MailMessage) evt.data
             if (msg != null) {
-                if (msg.getTo() != null && !msg.getTo().isEmpty()) {
+                if (msg.to != null && !msg.to.empty) {
                     try {
                         service.send(msg)
                         UIMessages.showMessage("The email test started...")
                     } catch (Exception e) {
-                        Messagebox.show("Error sending test: " + e.getMessage())
+                        Messagebox.show("Error sending test: " + e.message)
                     }
                 } else {
                     UIMessages.showMessage("Enter [to] address", MessageType.ERROR)

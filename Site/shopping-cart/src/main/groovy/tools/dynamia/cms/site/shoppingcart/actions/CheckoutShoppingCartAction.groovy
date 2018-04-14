@@ -52,36 +52,36 @@ class CheckoutShoppingCartAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
+        ModelAndView mv = evt.modelAndView
 
         ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv)
-        ShoppingSiteConfig config = service.getConfiguration(evt.getSite())
+        ShoppingSiteConfig config = service.getConfiguration(evt.site)
 
-        if (shoppingCart == null || shoppingCart.getQuantity() == 0) {
+        if (shoppingCart == null || shoppingCart.quantity == 0) {
             CMSUtil.addWarningMessage("El carrito de compra esta vacio", mv)
-            mv.setView(new RedirectView("/", false, true, false))
-        } else if (config.isPaymentEnabled() || UserHolder.get().isAdmin()) {
-            mv.setViewName("shoppingcart/checkout")
+            mv.view = new RedirectView("/", false, true, false)
+        } else if (config.paymentEnabled || UserHolder.get().admin) {
+            mv.viewName = "shoppingcart/checkout"
 
-            if (UserHolder.get().isSeller()) {
-                mv.setViewName("shoppingcart/checkoutSeller")
+            if (UserHolder.get().seller) {
+                mv.viewName = "shoppingcart/checkoutSeller"
             }
 
             mv.addObject("title", "Confirmar Pedido")
-            mv.addObject("userContactInfos", userService.getContactInfos(UserHolder.get().getCurrent()))
+            mv.addObject("userContactInfos", userService.getContactInfos(UserHolder.get().current))
 
             try {
                 ShoppingOrder order = service.createOrder(shoppingCart, config)
-                order.getTransaction().setClientIP(evt.getRequest().getRemoteAddr())
-                ShoppingCartHolder.get().setCurrentOrder(order)
+                order.transaction.clientIP = evt.request.remoteAddr
+                ShoppingCartHolder.get().currentOrder = order
 
                 mv.addObject("shoppingOrder", order)
             } catch (ValidationError e) {
-                CMSUtil.addErrorMessage(e.getMessage(), mv)
-                SiteActionManager.performAction("viewShoppingCart", mv, evt.getRequest())
+                CMSUtil.addErrorMessage(e.message, mv)
+                SiteActionManager.performAction("viewShoppingCart", mv, evt.request)
             }
         } else {
-            mv.setView(new RedirectView("/", false, true, false))
+            mv.view = new RedirectView("/", false, true, false)
             CMSUtil.addErrorMessage("Sistema de pagos dehabilitado temporalmente", mv)
         }
 

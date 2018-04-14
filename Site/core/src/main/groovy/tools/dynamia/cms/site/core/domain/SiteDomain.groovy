@@ -85,7 +85,7 @@ class SiteDomain extends SimpleEntity {
 
     @Override
     String toString() {
-        return getName()
+        return name
     }
 
 }

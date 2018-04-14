@@ -27,18 +27,18 @@ class SetPreferredAccountAction extends AbstractCrudAction {
     private MailService service
 
     SetPreferredAccountAction() {
-        setMenuSupported(true)
-        setName("Set as preferred email account")
-        setImage("star")
+        menuSupported = true
+        name = "Set as preferred email account"
+        image = "star"
 
     }
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
-        MailAccount account = (MailAccount) evt.getData()
+        MailAccount account = (MailAccount) evt.data
         if (account != null) {
-            service.setPreferredEmailAccount(account)
-            evt.getController().doQuery()
+            service.preferredEmailAccount = account
+            evt.controller.doQuery()
             UIMessages.showMessage("Account " + account + " set as preferred successfully")
         } else {
             UIMessages.showMessage("Select account", MessageType.WARNING)

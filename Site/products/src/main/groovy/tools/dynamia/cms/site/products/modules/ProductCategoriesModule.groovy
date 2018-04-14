@@ -21,11 +21,11 @@ class ProductCategoriesModule extends AbstractModule {
 
     ProductCategoriesModule() {
 		super("products_categories", "Products Categories", "products/modules/categorylist")
-        setDescription("Show a products categories list")
+        description = "Show a products categories list"
         putMetadata("author", "Mario Serrano Leones")
         putMetadata("version", "1.0")
         putMetadata("created at", "25-07-2016")
-        setVariablesNames("categories")
+        variablesNames = "categories"
 
     }
 
@@ -35,7 +35,7 @@ class ProductCategoriesModule extends AbstractModule {
 
         ModuleInstanceParameter brandId = context.getParameter("brand")
         if (brandId != null) {
-			ProductBrand brand = crudService.find(ProductBrand.class, new Long(brandId.getValue()))
+			ProductBrand brand = crudService.find(ProductBrand.class, new Long(brandId.value))
             if (brand != null) {
 				categories = service.getCategories(brand)
             }
@@ -51,11 +51,11 @@ class ProductCategoriesModule extends AbstractModule {
 			e.printStackTrace()
         }
 
-		if (categories == null || categories.isEmpty()) {
-			categories = service.getCategories(context.getSite())
+		if (categories == null || categories.empty) {
+			categories = service.getCategories(context.site)
         }
 
-		context.getModuleInstance().addObject("categories", categories)
+        context.moduleInstance.addObject("categories", categories)
 
     }
 

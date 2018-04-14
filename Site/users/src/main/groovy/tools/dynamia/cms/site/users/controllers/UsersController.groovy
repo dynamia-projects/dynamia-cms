@@ -74,12 +74,12 @@ class UsersController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication()
+        Authentication auth = SecurityContextHolder.context.authentication
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth)
         }
         ModelAndView mv = new ModelAndView()
-        mv.setView(new RedirectView("/", false, true, false))
+        mv.view = new RedirectView("/", false, true, false)
         return mv
     }
 
@@ -98,7 +98,7 @@ class UsersController {
         ModelAndView mv = new ModelAndView("users/resetpassword")
         mv.addObject("title", "Olvide mi Password")
         UserForm form = new UserForm()
-        form.setData(new User())
+        form.data = new User()
         mv.addObject("userForm", form)
         return mv
     }
@@ -158,7 +158,7 @@ class UsersController {
         SiteActionManager.performAction("saveUserProfile", mv, request, redirectAttributes, user)
 
         if (request.getParameter("redirect") != null) {
-            mv.setView(new RedirectView(request.getParameter("redirect"), true, true, false))
+            mv.view = new RedirectView(request.getParameter("redirect"), true, true, false)
         }
 
         return mv
@@ -214,7 +214,7 @@ class UsersController {
     ModelAndView removeAddress(@PathVariable Long id, HttpServletRequest request,
                                RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView("users/addresses/table")
-        mv.setView(new RedirectView("/users/profile", true, true, false))
+        mv.view = new RedirectView("/users/profile", true, true, false)
         SiteActionManager.performAction("removeUserContactInfo", mv, request, redirectAttributes, id)
         return mv
     }
@@ -229,7 +229,7 @@ class UsersController {
         String code = request.getParameter("code")
         User customer = null
 
-        if (code != null && !code.isEmpty()) {
+        if (code != null && !code.empty) {
             customer = crudService.findSingle(User.class,
                     QueryParameters.with("externalRef", QueryConditions.eq(code)).add("site", site))
 
@@ -244,7 +244,7 @@ class UsersController {
         }
 
         if (customer != null) {
-            UserHolder.get().setCustomer(customer)
+            UserHolder.get().customer = customer
         }
         String redirect = request.getParameter("currentURI")
         if (request.getParameter("redirect") != null) {
@@ -255,7 +255,7 @@ class UsersController {
             redirect = "/"
         }
 
-        mv.setView(new RedirectView(redirect, true, true, false))
+        mv.view = new RedirectView(redirect, true, true, false)
 
         return mv
     }
@@ -275,7 +275,7 @@ class UsersController {
         ModelAndView mv = new ModelAndView("users/validated")
         mv.addObject("valid", false)
 
-        if (key == null || key.isEmpty()) {
+        if (key == null || key.empty) {
             CMSUtil.addErrorMessage("Invalid validation key", redirectAttributes)
         } else {
             String message = ""
@@ -289,14 +289,14 @@ class UsersController {
 
                     UserSiteConfig config = service.getSiteConfig(site)
 
-                    if (user.isEnabled()) {
+                    if (user.enabled) {
                         message = "El usuario " + user + " ya fue activado"
 
                     } else {
-                        user.setValidationDate(DateTimeUtils.now())
-                        user.setValidated(true)
+                        user.validationDate = DateTimeUtils.now()
+                        user.validated = true
 
-                        if (!config.isRegistrationValidated()) {
+                        if (!config.registrationValidated) {
                             service.enableUser(user)
                             mv.addObject("valid", true)
                         }

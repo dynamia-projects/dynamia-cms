@@ -51,24 +51,24 @@ class TemplateJavaConfig {
 				new PathExtensionContentNegotiationStrategy(mediaTypes),
 				new FixedContentNegotiationStrategy(MediaType.TEXT_HTML)
 				)
-        resolver.setContentNegotiationManager(manager)
+        resolver.contentNegotiationManager = manager
 
         // Define all possible view resolvers
 		List<ViewResolver> resolvers = new ArrayList<ViewResolver>()
         resolvers.add(jsonViewResolver())
         resolvers.add(thymeleafViewResolver())
 
-        resolver.setViewResolvers(resolvers)
+        resolver.viewResolvers = resolvers
         return resolver
     }
 
 	@Bean
     SiteTemplateResolver templateResolver() {
 		SiteTemplateResolver resolver = new SiteTemplateResolver()
-        resolver.setSuffix(".html")
-        resolver.setTemplateMode(TemplateMode.HTML)
-        resolver.setCharacterEncoding("UTF-8")
-        resolver.setCacheable(false)
+        resolver.suffix = ".html"
+        resolver.templateMode = TemplateMode.HTML
+        resolver.characterEncoding = "UTF-8"
+        resolver.cacheable = false
         return resolver
     }
 
@@ -85,16 +85,16 @@ class TemplateJavaConfig {
 
     ViewResolver thymeleafViewResolver() {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver()
-        viewResolver.setOrder(1)
-        viewResolver.setTemplateEngine(templateEngine())
-        viewResolver.setCharacterEncoding("UTF-8")
+        viewResolver.order = 1
+        viewResolver.templateEngine = templateEngine()
+        viewResolver.characterEncoding = "UTF-8"
 
         return viewResolver
     }
 
     ViewResolver jsonViewResolver() {
 		JsonViewResolver json = new JsonViewResolver()
-        json.setOrder(2)
+        json.order = 2
         return json
     }
 
@@ -114,7 +114,7 @@ class TemplateJavaConfig {
         map.put("plugins/**", handler)
 
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping()
-        mapping.setUrlMap(map)
+        mapping.urlMap = map
 
         return mapping
     }

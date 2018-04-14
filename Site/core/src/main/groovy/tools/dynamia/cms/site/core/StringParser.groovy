@@ -30,10 +30,10 @@ abstract class StringParsers {
     static StringParser get(String id) {
         if (id != null) {
             Optional<StringParser> parser = Containers.get().findObjects(StringParser.class)
-                    .stream().filter { p -> (p.getId() == id) }
+                    .stream().filter { p -> (p.id == id) }
                     .findFirst()
 
-            if (parser.isPresent()) {
+            if (parser.present) {
                 return parser.get()
             }
         }

@@ -13,32 +13,32 @@ import tools.dynamia.zk.util.ZKUtil
 class ViewVisualCMSEditorAction extends AbstractCMSEditorAction {
 
 	ViewVisualCMSEditorAction() {
-		setName("Visual Editor")
-		setImage("edit")
-	}
+        name = "Visual Editor"
+        image = "edit"
+    }
 
 	@Override
 	void actionPerformed(ActionEvent evt) {
-		CMSeditor editor = (CMSeditor) evt.getSource()
-		String content = (String) evt.getData()
+		CMSeditor editor = (CMSeditor) evt.source
+		String content = (String) evt.data
 
 		CKeditor ckeditor = new CKeditor()
 
-		ckeditor.setValue(content)
-		ckeditor.setHflex("1")
-		ckeditor.setVflex("1")
-		ckeditor.setFilebrowserBrowseUrl("resources")
-		ckeditor.setFilebrowserUploadUrl("resources")
-		ckeditor.addEventListener("onSave",  {
-			editor.setValue(ckeditor.getValue())
+        ckeditor.value = content
+        ckeditor.hflex = "1"
+        ckeditor.vflex = "1"
+        ckeditor.filebrowserBrowseUrl = "resources"
+        ckeditor.filebrowserUploadUrl = "resources"
+        ckeditor.addEventListener("onSave",  {
+			editor.value = ckeditor.value
 
-			ckeditor.getParent().getParent().detach()
+            ckeditor.parent.parent.detach()
 		})
 
 		Form form = new Form()
 		form.appendChild(ckeditor)
-		form.setStyle("height: 100%")
-		ZKUtil.showDialog("WYSIWYG Editor", form, "90%", "90%")
+        form.style = "height: 100%"
+        ZKUtil.showDialog("WYSIWYG Editor", form, "90%", "90%")
 
 	}
 

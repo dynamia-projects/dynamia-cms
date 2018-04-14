@@ -66,12 +66,12 @@ class PaymentServiceImpl implements PaymentService {
     @Override
     Map<String, String> getGatewayConfigMap(PaymentGateway gateway, String source) {
         List<PaymentGatewayConfig> configs = crudService.find(PaymentGatewayConfig.class,
-                QueryParameters.with("gatewayId", gateway.getId()).add("source", source))
+                QueryParameters.with("gatewayId", gateway.id).add("source", source))
 
         Map<String, String> map = new HashMap<String, String>()
 
         for (PaymentGatewayConfig pgc : configs) {
-            map.put(pgc.getName(), pgc.getValue())
+            map.put(pgc.name, pgc.value)
         }
 
         return map
@@ -88,7 +88,7 @@ class PaymentServiceImpl implements PaymentService {
     @Override
     PaymentGatewayConfig getConfig(PaymentGateway gateway, String name, String source) {
         return crudService.findSingle(PaymentGatewayConfig.class,
-                QueryParameters.with("gatewayId", gateway.getId()).add("name", name).add("source", source))
+                QueryParameters.with("gatewayId", gateway.id).add("name", name).add("source", source))
     }
 
     /*
@@ -102,12 +102,12 @@ class PaymentServiceImpl implements PaymentService {
     @Override
     @Transactional
     void addGatewayConfig(PaymentGatewayConfig cfg) {
-        PaymentGateway gateway = findGateway(cfg.getGatewayId())
-        PaymentGatewayConfig config = getConfig(gateway, cfg.getName(), cfg.getSource())
+        PaymentGateway gateway = findGateway(cfg.gatewayId)
+        PaymentGatewayConfig config = getConfig(gateway, cfg.name, cfg.source)
         if (config == null) {
             config = cfg
         } else {
-            config.setValue(cfg.getValue())
+            config.value = cfg.value
         }
         crudService.save(config)
     }
@@ -115,7 +115,7 @@ class PaymentServiceImpl implements PaymentService {
     @Override
     PaymentGateway findGateway(String gatewayId) {
         for (PaymentGateway gateway : Containers.get().findObjects(PaymentGateway.class)) {
-            if (gateway.getId().equals(gatewayId)) {
+            if (gateway.id.equals(gatewayId)) {
                 return gateway
             }
         }
@@ -126,14 +126,14 @@ class PaymentServiceImpl implements PaymentService {
     PaymentTransaction findTransaction(PaymentGateway gateway, Map<String, String> response) {
         String uuid = gateway.locateTransactionId(response)
         if (uuid == null) {
-            throw new PaymentException("No UUID for transaction found " + gateway.getId())
+            throw new PaymentException("No UUID for transaction found " + gateway.id)
         }
 
         PaymentTransaction tx = crudService.findSingle(PaymentTransaction.class, QueryParameters
-                .with("uuid", QueryConditions.eq(uuid)).add("gatewayId", QueryConditions.eq(gateway.getId())))
+                .with("uuid", QueryConditions.eq(uuid)).add("gatewayId", QueryConditions.eq(gateway.id)))
 
         if (tx == null) {
-            throw new PaymentException("No transaction found for gateway " + gateway.getId() + " uuid: " + uuid)
+            throw new PaymentException("No transaction found for gateway " + gateway.id + " uuid: " + uuid)
         }
 
         return tx
@@ -159,15 +159,15 @@ class PaymentServiceImpl implements PaymentService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void register(ManualPayment payment) {
-        if (payment.getNumber() == null && payment.getSource() != null) {
-            String paramName = LAST_MANUAL_PAYMENT_NUMBER + payment.getSource()
+        if (payment.number == null && payment.source != null) {
+            String paramName = LAST_MANUAL_PAYMENT_NUMBER + payment.source
             long lastNumber = Long.parseLong(ApplicationParameters.get().getValue(paramName, "0"))
             lastNumber++
 
             ApplicationParameters.get().setParameter(paramName, lastNumber)
 
             String number = DomainUtils.formatNumberWithZeroes(lastNumber, 10000)
-            payment.setNumber(number)
+            payment.number = number
         }
         crudService.save(payment)
     }
@@ -210,9 +210,9 @@ class PaymentServiceImpl implements PaymentService {
         try {
             logger.info("Sending all manual Payments")
 
-            if (serviceUrl != null && !serviceUrl.isEmpty()) {
-                PaymentSender sender = HttpRemotingServiceClient.build(PaymentSender.class).setServiceURL(serviceUrl)
-                        .getProxy()
+            if (serviceUrl != null && !serviceUrl.empty) {
+                PaymentSender sender = HttpRemotingServiceClient.build(PaymentSender.class).serviceURL = serviceUrl
+                        .proxy
 
                 crudService.executeWithinTransaction {
 
@@ -235,9 +235,9 @@ class PaymentServiceImpl implements PaymentService {
         try {
             logger.info("Sending all auto Payments")
 
-            if (serviceUrl != null && !serviceUrl.isEmpty()) {
-                PaymentSender sender = HttpRemotingServiceClient.build(PaymentSender.class).setServiceURL(serviceUrl)
-                        .getProxy()
+            if (serviceUrl != null && !serviceUrl.empty) {
+                PaymentSender sender = HttpRemotingServiceClient.build(PaymentSender.class).serviceURL = serviceUrl
+                        .proxy
 
                 crudService.executeWithinTransaction {
 
@@ -263,7 +263,7 @@ class PaymentServiceImpl implements PaymentService {
     void sendPayments(PaymentSender sender, List<ManualPayment> payments, Map<String, String> params) {
         List<ManualPaymentDTO> dtos = payments.collect { createDTO(it) }
 
-        if (!dtos.isEmpty()) {
+        if (!dtos.empty) {
             logger.info("Calling Payment Sender " + sender)
             try {
                 List<Response> response = sender.sendManualPayments(dtos, params)
@@ -271,20 +271,20 @@ class PaymentServiceImpl implements PaymentService {
                 if (response != null) {
                     logger.info("Sending response recieved. " + response.size())
                     for (ManualPayment payment : payments) {
-                        Response resp = Response.find(response, payment.getNumber())
+                        Response resp = Response.find(response, payment.number)
                         if (resp != null) {
-                            if (resp.isError()) {
-                                payment.setErrorCode(resp.getErrorCode())
-                                payment.setErrorMessage(resp.getErrorMessage())
+                            if (resp.error) {
+                                payment.errorCode = resp.errorCode
+                                payment.errorMessage = resp.errorMessage
                             } else {
-                                payment.setErrorCode(null)
-                                payment.setErrorMessage(null)
-                                payment.setExternalRef(resp.getContent())
-                                payment.setSended(true)
+                                payment.errorCode = null
+                                payment.errorMessage = null
+                                payment.externalRef = resp.content
+                                payment.sended = true
                             }
                         }
                         crudService.update(payment)
-                        logger.info("==> Updating payment " + payment.getNumber() + " ==> " + resp)
+                        logger.info("==> Updating payment " + payment.number + " ==> " + resp)
                     }
                 }
             } catch (PaymentSenderException e) {
@@ -296,7 +296,7 @@ class PaymentServiceImpl implements PaymentService {
     private void sendPaymentsTransaction(PaymentSender sender, List<PaymentTransaction> payments, Map<String, String> params) {
         List<PaymentDTO> dtos = payments.collect { createDTO(it) }
 
-        if (!dtos.isEmpty()) {
+        if (!dtos.empty) {
             logger.info("Calling Payment Sender " + sender)
             try {
                 List<Response> response = sender.sendPayments(dtos, params)
@@ -304,20 +304,20 @@ class PaymentServiceImpl implements PaymentService {
                 if (response != null) {
                     logger.info("Sending response recieved. " + response.size())
                     for (PaymentTransaction payment : payments) {
-                        Response resp = Response.find(response, payment.getUuid())
+                        Response resp = Response.find(response, payment.uuid)
                         if (resp != null) {
-                            if (resp.isError()) {
-                                payment.setErrorCode(resp.getErrorCode())
-                                payment.setErrorMessage(resp.getErrorMessage())
+                            if (resp.error) {
+                                payment.errorCode = resp.errorCode
+                                payment.errorMessage = resp.errorMessage
                             } else {
-                                payment.setErrorCode(null)
-                                payment.setErrorMessage(null)
-                                payment.setExternalRef(resp.getContent())
-                                payment.setSended(true)
+                                payment.errorCode = null
+                                payment.errorMessage = null
+                                payment.externalRef = resp.content
+                                payment.sended = true
                             }
                         }
                         crudService.update(payment)
-                        logger.info("==> Updating payment " + payment.getUuid() + " ==> " + resp)
+                        logger.info("==> Updating payment " + payment.uuid + " ==> " + resp)
                     }
                 }
             } catch (PaymentSenderException e) {

@@ -24,7 +24,7 @@ class UserLog extends SiteBaseEntity {
     UserLog(User user, String event) {
         this.user = user
         this.event = event
-        setSite(user.getSite())
+        site = user.site
     }
 
     User getUser() {

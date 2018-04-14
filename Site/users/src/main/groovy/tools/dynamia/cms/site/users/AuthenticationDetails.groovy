@@ -35,7 +35,7 @@ class AuthenticationDetails extends WebAuthenticationDetails {
         SiteService service = Containers.get().findObject(SiteService.class)
         this.site = service.getSite(request)
         if (this.site == null) {
-            this.site = service.getMainSite()
+            this.site = service.mainSite
         }
     }
 

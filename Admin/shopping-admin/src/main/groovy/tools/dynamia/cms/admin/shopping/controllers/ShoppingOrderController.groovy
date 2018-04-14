@@ -14,11 +14,11 @@ class ShoppingOrderController extends CrudController<ShoppingOrder> {
 
     @Override
 	protected void beforeQuery() {
-		if (!getParams().containsKey("transaction.status")) {
+		if (!params.containsKey("transaction.status")) {
 			setParemeter("transaction.status", QueryConditions.in(PaymentTransactionStatus.COMPLETED, PaymentTransactionStatus.PROCESSING))
         }
 
-		if (!getParams().containsKey("shipped")) {
+		if (!params.containsKey("shipped")) {
 			setParemeter("shipped", false)
         }
 	}

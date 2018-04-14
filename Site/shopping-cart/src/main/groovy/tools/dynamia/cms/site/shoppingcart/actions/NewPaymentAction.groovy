@@ -28,35 +28,35 @@ class NewPaymentAction implements SiteAction {
 	@Override
     void actionPerformed(ActionEvent evt) {
 
-		ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("payment/new")
+		ModelAndView mv = evt.modelAndView
+        mv.viewName = "payment/new"
         mv.addObject("title", "Nuevo Pago Manual")
-        ShoppingSiteConfig config = service.getConfiguration(evt.getSite())
+        ShoppingSiteConfig config = service.getConfiguration(evt.site)
 
         ManualPayment pay = new ManualPayment()
-        pay.setSource(evt.getSite().getKey())
-        pay.setRegistrator(UserHolder.get().getFullName())
-        pay.setRegistratorId(UserHolder.get().getCurrent().getId().toString())
-        pay.setRegistratorCode(UserHolder.get().getCurrent().getCode())
+        pay.source = evt.site.key
+        pay.registrator = UserHolder.get().fullName
+        pay.registratorId = UserHolder.get().current.id.toString()
+        pay.registratorCode = UserHolder.get().current.code
 
-        User customer = UserHolder.get().getCustomer()
+        User customer = UserHolder.get().customer
         if (customer == null) {
 			CMSUtil.addErrorMessage("Seleccione cliente para registrar pago", mv)
             return
         }
-		pay.setPayer(customer.getFullName())
-        pay.setPayerCode(customer.getCode())
-        pay.setPayerId(customer.getId().toString())
+        pay.payer = customer.fullName
+        pay.payerCode = customer.code
+        pay.payerId = customer.id.toString()
 
         loadPaymentTypes(mv, config)
         mv.addObject("payment", pay)
 
-        PaymentHolder.get().setCurrentManualPayment(pay)
+        PaymentHolder.get().currentManualPayment = pay
 
     }
 
 	private void loadPaymentTypes(ModelAndView mv, ShoppingSiteConfig config) {
-		String types = config.getPaymentTypes()
+		String types = config.paymentTypes
         if (types != null) {
 			mv.addObject("paymentTypes", Option.buildFromArray(types.split(","), null))
         }

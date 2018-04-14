@@ -48,7 +48,7 @@ class CompareProducts implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        String[] idsString = (String[]) evt.getData()
+        String[] idsString = (String[]) evt.data
         List<Long> ids = new ArrayList<>()
         for (String id : idsString) {
             ids.add(new Long(id))
@@ -58,17 +58,17 @@ class CompareProducts implements SiteAction {
         ProductCompareGrid grid = new ProductCompareGrid(service, products)
         grid.loadData()
 
-        ModelAndView mv = evt.getModelAndView()
+        ModelAndView mv = evt.modelAndView
         mv.addObject("comparegrid", grid)
-        mv.addObject("title", buildTitle(products, evt.getSite()))
-        ProductsUtil.setupDefaultVars(evt.getSite(), mv)
+        mv.addObject("title", buildTitle(products, evt.site))
+        ProductsUtil.setupDefaultVars(evt.site, mv)
     }
 
     private String buildTitle(List<Product> products, Site site) {
         CMSUtil utils = new CMSUtil(site)
         List<String> names = new ArrayList<>()
         for (Product product : products) {
-            names.add(utils.cropText(product.getName(), 30).replace(".", "").trim().toUpperCase())
+            names.add(utils.cropText(product.name, 30).replace(".", "").trim().toUpperCase())
         }
         return StringUtils.arrayToDelimitedString(names.toArray(), " vs ")
     }

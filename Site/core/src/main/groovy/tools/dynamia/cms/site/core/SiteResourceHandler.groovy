@@ -43,17 +43,17 @@ class SiteResourceHandler extends ResourceHttpRequestHandler {
 		SiteService coreService = Containers.get().findObject(SiteService.class)
         Site site = coreService.getSite(request)
         if (site == null) {
-			site = coreService.getMainSite()
+			site = coreService.mainSite
         }
 
 		if (site == null) {
-			throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.getServerName())
+			throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.serverName)
         }
 
 		Path dir = resolveResourceDirectory(site)
-        Path resource = Paths.get(request.getPathInfo())
+        Path resource = Paths.get(request.pathInfo)
 
-        resource = resource.subpath(1, resource.getNameCount())
+        resource = resource.subpath(1, resource.nameCount)
         if (isPrivateResource(resource)) {
 			return null
         }
@@ -80,7 +80,7 @@ class SiteResourceHandler extends ResourceHttpRequestHandler {
     }
 
 	private boolean isPrivateResource(Path resource) {
-		for (String folder : DynamiaCMS.getPrivateLocations()) {
+		for (String folder : (DynamiaCMS.privateLocations)) {
 
 			if (resource.toString().startsWith(folder)) {
 				return true
@@ -95,13 +95,13 @@ class SiteResourceHandler extends ResourceHttpRequestHandler {
     }
 
 	private boolean isThumbnail(HttpServletRequest request) {
-		return request.getPathInfo().contains(THUMBNAILS)
+		return request.pathInfo.contains(THUMBNAILS)
     }
 
 	private File createOrLoadThumbnail(File file, String uri, HttpServletRequest request) {
 
-		String fileName = file.getName()
-        String baseUri = file.getParentFile().getParent()
+		String fileName = file.name
+        String baseUri = file.parentFile.parent
 
         String w = getParam(request, "w", "200")
         String h = getParam(request, "h", "200")
@@ -124,7 +124,7 @@ class SiteResourceHandler extends ResourceHttpRequestHandler {
 
     String getParam(HttpServletRequest request, String name, String defaultValue) {
 		String value = request.getParameter(name)
-        if (value == null || value.trim().isEmpty()) {
+        if (value == null || value.trim().empty) {
 			value = defaultValue
         }
 		return value

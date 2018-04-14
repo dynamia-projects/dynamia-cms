@@ -34,17 +34,16 @@ class EditMenuItemAction extends EditAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		CrudView<MenuItem> crudView = (CrudView<MenuItem>) evt.getView()
-        MenuItemTreeCrudController controller = (MenuItemTreeCrudController) evt.getController()
-        Menu menu = controller.getMenu()
+		CrudView<MenuItem> crudView = (CrudView<MenuItem>) evt.view
+        MenuItemTreeCrudController controller = (MenuItemTreeCrudController) evt.controller
+        Menu menu = controller.menu
 
-        MenuItem menuItem = (MenuItem) evt.getData()
+        MenuItem menuItem = (MenuItem) evt.data
         if (menuItem != null) {
 			menuItem = crudService.reload(menuItem)
             MenuItemsUI ui = new MenuItemsUI(menuItem)
             ui.addAction(new SaveMenuItemAction(crudService, evt))
-            ZKUtil.showDialog("Edit Item " + menuItem.getName() + " - " + menu.getName(), ui, "90%", "90%")
-					.setMaximizable(true)
+            ZKUtil.showDialog("Edit Item " + menuItem.name + " - " + menu.name, ui, "90%", "90%").maximizable = true
         } else {
 			UIMessages.showMessage("Select menu item to edit", MessageType.ERROR)
         }

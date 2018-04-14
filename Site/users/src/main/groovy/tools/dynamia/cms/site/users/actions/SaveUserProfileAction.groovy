@@ -48,18 +48,18 @@ class SaveUserProfileAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
+		ModelAndView mv = evt.modelAndView
 
-        UserForm userForm = (UserForm) evt.getData()
-        userForm.setSite(evt.getSite())
+        UserForm userForm = (UserForm) evt.data
+        userForm.site = evt.site
         try {
 			userService.saveUser(userForm)
-            User user = crudService.find(User.class, userForm.getData().getId())
+            User user = crudService.find(User.class, userForm.data.id)
             UserHolder.get().update(user)
             mv.addObject("successmessage", "Informacion Personal actualizada correctamente")
         } catch (ValidationError e) {
-			mv.addObject("errormessage", e.getMessage())
-            mv.setViewName("users/profile")
+			mv.addObject("errormessage", e.message)
+            mv.viewName = "users/profile"
             UsersUtil.setupUserFormVar(mv, userForm)
         }
 

@@ -30,7 +30,7 @@ import tools.dynamia.zk.util.ZKUtil
 class PositionSelector extends Combobox {
 
 	static {
-		ComponentAliasIndex.getInstance().add(PositionSelector.class)
+		ComponentAliasIndex.instance.add(PositionSelector.class)
     }
 
     PositionSelector() {
@@ -38,12 +38,12 @@ class PositionSelector extends Combobox {
     }
 
 	private void init() {
-		getChildren().clear()
-        setReadonly(true)
+		children.clear()
+        readonly = true
         TemplateService service = Containers.get().findObject(TemplateService.class)
-        Template template = service.getTemplate(SiteContext.get().getCurrent())
+        Template template = service.getTemplate(SiteContext.get().current)
         if (template != null) {
-			List<String> positions = new ArrayList(template.getPositions())
+			List<String> positions = new ArrayList(template.positions)
             Collections.sort(positions)
             ZKUtil.fillCombobox(this, positions)
         }

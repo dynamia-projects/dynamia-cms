@@ -39,10 +39,10 @@ class ShowCategoriesAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView()
+        ModelAndView mv = evt.modelAndView
 
         mv.addObject("title", "Categorias")
-        mv.addObject("prd_categories", service.getCategories(evt.getSite()))
+        mv.addObject("prd_categories", service.getCategories(evt.site))
 
     }
 

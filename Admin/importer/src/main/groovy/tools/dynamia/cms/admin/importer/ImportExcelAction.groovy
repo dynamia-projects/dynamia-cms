@@ -16,8 +16,8 @@ abstract class ImportExcelAction<T> extends ImportAction {
     private List<T> data
 
     ImportExcelAction() {
-        setName("Import")
-        setImage("export-xlsx")
+        name = "Import"
+        image = "export-xlsx"
         setAttribute("background", "#5cb85c")
         setAttribute("color", "white")
     }
@@ -30,13 +30,13 @@ abstract class ImportExcelAction<T> extends ImportAction {
     @Override
     void actionPerformed(Importer win) {
         Fileupload.get { event ->
-            final Media media = event.getMedia()
+            final Media media = event.media
             if (media != null) {
-                String format = media.getFormat()
+                String format = media.format
 
                 if (format.endsWith("xls") || format.endsWith("xlsx")) {
                     try {
-                        data = importFromExcel(media.getStreamData(), getMonitor())
+                        data = importFromExcel(media.streamData, monitor)
                         win.initTable(data)
                     } catch (Exception e) {
                         e.printStackTrace()
@@ -58,7 +58,7 @@ abstract class ImportExcelAction<T> extends ImportAction {
         CrudService crudService = Containers.get().findObject(CrudService.class)
 
         crudService.executeWithinTransaction {
-            getData().forEach { d -> crudService.save(d) }
+            data.forEach { d -> crudService.save(d) }
         }
         UIMessages.showMessage("Import OK")
         importer.clearTable()

@@ -22,9 +22,9 @@ class ModulePositionFilterAction extends AbstractCrudAction {
 	private ModulesService service
 
     ModulePositionFilterAction() {
-		setName("Module Position")
-        setGroup(ActionGroup.get("CRUD"))
-        setPosition(10)
+        name = "Module Position"
+        group = ActionGroup.get("CRUD")
+        position = 10
     }
 
 	@Override
@@ -39,20 +39,20 @@ class ModulePositionFilterAction extends AbstractCrudAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		String position = (String) evt.getData()
+		String position = (String) evt.data
         if (position == null || position.equals(ALL)) {
-			evt.getController().getParams().remove("position")
+			evt.controller.params.remove("position")
         } else {
-			evt.getController().setParemeter("position", position)
+			evt.controller.setParemeter("position", position)
         }
-		evt.getController().doQuery()
+        evt.controller.doQuery()
 
     }
 
 	@Override
     ActionRenderer getRenderer() {
 
-		List<String> positions = new ArrayList<>(service.getAllUsedPositions(SiteContext.get().getCurrent()))
+		List<String> positions = new ArrayList<>(service.getAllUsedPositions(SiteContext.get().current))
         positions.add(0, ALL)
         ComboboxActionRenderer renderer = new ComboboxActionRenderer(positions, ALL)
 

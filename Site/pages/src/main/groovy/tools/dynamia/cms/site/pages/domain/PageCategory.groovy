@@ -115,7 +115,7 @@ class PageCategory extends SimpleEntity implements SiteAware, Aliasable {
 
 	@Override
     String aliasSource() {
-		return getName()
+		return name
     }
 
 }

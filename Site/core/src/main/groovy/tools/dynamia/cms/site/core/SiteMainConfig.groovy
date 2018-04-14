@@ -73,7 +73,7 @@ class SiteMainConfig extends WebMvcConfigurerAdapter {
 
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping()
 
-        mapping.setUrlMap(map)
+        mapping.urlMap = map
 
         return mapping
     }

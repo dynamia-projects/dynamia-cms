@@ -13,7 +13,7 @@ class SiteCrudController extends CrudController<Site> {
     @Override
 	protected void beforeQuery() {
 
-		if (!getParams().containsKey("offline")) {
+		if (!params.containsKey("offline")) {
 			setParemeter("offline", false)
         }
 

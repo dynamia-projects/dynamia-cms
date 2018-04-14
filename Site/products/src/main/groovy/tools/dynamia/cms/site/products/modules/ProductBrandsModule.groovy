@@ -19,11 +19,11 @@ class ProductBrandsModule extends AbstractModule {
 
     ProductBrandsModule() {
 		super("products_brands", "Products Brands", "products/modules/brandslist")
-        setDescription("Show a products brands list")
+        description = "Show a products brands list"
         putMetadata("author", "Mario Serrano Leones")
         putMetadata("version", "1.0")
         putMetadata("created at", "20-04-2017")
-        setVariablesNames("brands")
+        variablesNames = "brands"
 
     }
 
@@ -31,11 +31,11 @@ class ProductBrandsModule extends AbstractModule {
     void init(ModuleContext context) {
 		List<ProductBrand> brands = null
 
-        if (brands == null || brands.isEmpty()) {
-			brands = service.getBrands(context.getSite())
+        if (brands == null || brands.empty) {
+			brands = service.getBrands(context.site)
         }
 
-		context.getModuleInstance().addObject("brands", brands)
+        context.moduleInstance.addObject("brands", brands)
 
     }
 

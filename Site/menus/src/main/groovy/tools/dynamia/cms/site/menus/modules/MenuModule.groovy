@@ -34,7 +34,7 @@ class MenuModule extends AbstractModule {
 
     MenuModule() {
 		super("menu_module", "Menus and MenuItems", "menus/modules/menu")
-        setDescription("Basic module for creation menubars width its items")
+        description = "Basic module for creation menubars width its items"
         putMetadata("author", "Mario Serrano Leones")
         putMetadata("Created at", "03-09-2014")
         setVariablesNames(PARAM_MENU, "menuitems")
@@ -42,7 +42,7 @@ class MenuModule extends AbstractModule {
 
 	@Override
     void init(ModuleContext context) {
-		ModuleInstance mod = context.getModuleInstance()
+		ModuleInstance mod = context.moduleInstance
 
         String menuId = mod.getParameterValue(PARAM_MENU)
         if (menuId == null) {
@@ -51,17 +51,17 @@ class MenuModule extends AbstractModule {
 
 		Menu menu = null
         try {
-			menu = service.getMenu(context.getSite(), new Long(menuId))
+			menu = service.getMenu(context.site, new Long(menuId))
         } catch (NumberFormatException e) {
-			menu = service.getMenu(context.getSite(), menuId)
+			menu = service.getMenu(context.site, menuId)
         }
 
 		if (menu != null) {
 			List<MenuItem> itemsToDisplay = new ArrayList<>()
             for (MenuItem menuItem : service.getItems(menu)) {
-				menuItem.getSubitems().size()
+				menuItem.subitems.size()
                 MenuContext menuContext = service.setupMenuItem(menuItem)
-                itemsToDisplay.add(menuContext.getMenuItem())
+                itemsToDisplay.add(menuContext.menuItem)
             }
 
 			mod.addObject(PARAM_MENU, menu)

@@ -87,8 +87,8 @@ class ProductTemplateServiceImpl implements ProductTemplateService {
 		}
 
 		loadDefaultTemplateModel(product, templateModel)
-		StringParser stringParser = StringParsers.get(template.getTemplateEngine())
-		return stringParser.parse(template.getContent(), templateModel)
+		StringParser stringParser = StringParsers.get(template.templateEngine)
+		return stringParser.parse(template.content, templateModel)
 	}
 
 	/**
@@ -115,16 +115,16 @@ class ProductTemplateServiceImpl implements ProductTemplateService {
 	 */
 	@Override
 	ProductTemplate getTemplate(Product product) {
-		ProductTemplate template = product.getTemplate()
-		if (template == null && product.getCategory() != null) {
-			template = product.getCategory().getTemplate()
+		ProductTemplate template = product.template
+		if (template == null && product.category != null) {
+			template = product.category.template
 		}
 
-		if (template == null && product.getCategory().getParent() != null) {
-			template = product.getCategory().getParent().getTemplate()
+		if (template == null && product.category.parent != null) {
+			template = product.category.parent.template
 		}
 
-		if (template != null && !template.isEnabled()) {
+		if (template != null && !template.enabled) {
 			template = null
 		}
 
@@ -132,16 +132,16 @@ class ProductTemplateServiceImpl implements ProductTemplateService {
 	}
 
 	ProductTemplate getAlternateTemplate(Product product) {
-		ProductTemplate template = product.getAlternateTemplate()
-		if (template == null && product.getCategory() != null) {
-			template = product.getCategory().getAlternateTemplate()
+		ProductTemplate template = product.alternateTemplate
+		if (template == null && product.category != null) {
+			template = product.category.alternateTemplate
 		}
 
-		if (template == null && product.getCategory().getParent() != null) {
-			template = product.getCategory().getParent().getAlternateTemplate()
+		if (template == null && product.category.parent != null) {
+			template = product.category.parent.alternateTemplate
 		}
 
-		if (template != null && !template.isEnabled()) {
+		if (template != null && !template.enabled) {
 			template = null
 		}
 
@@ -150,59 +150,59 @@ class ProductTemplateServiceImpl implements ProductTemplateService {
 
 	@Override
 	void loadDefaultTemplateModel(Product product, Map<String, Object> templateModel) {
-		Site site = product.getSite()
+		Site site = product.site
 		CMSUtil util = new CMSUtil(site)
 		templateModel.putAll(BeanUtils.getValuesMaps("", product))
 		ProductsSiteConfig config = productsService.getSiteConfig(site)
 
-		templateModel.put("imageURL", getImageURL(site, product.getImage()))
-		templateModel.put("image2URL", getImageURL(site, product.getImage2()))
-		templateModel.put("image3URL", getImageURL(site, product.getImage3()))
-		templateModel.put("image4URL", getImageURL(site, product.getImage4()))
-		templateModel.put("priceFormatted", util.formatNumber(product.getPrice(), config.getPricePattern()))
-		templateModel.put("lastPriceFormatted", util.formatNumber(product.getLastPrice(), config.getPricePattern()))
-		templateModel.put("storePriceFormatted", util.formatNumber(product.getStorePrice(), config.getPricePattern()))
-		templateModel.put("realPriceFormatted", util.formatNumber(product.getRealPrice(), config.getPricePattern()))
+		templateModel.put("imageURL", getImageURL(site, product.image))
+		templateModel.put("image2URL", getImageURL(site, product.image2))
+		templateModel.put("image3URL", getImageURL(site, product.image3))
+		templateModel.put("image4URL", getImageURL(site, product.image4))
+		templateModel.put("priceFormatted", util.formatNumber(product.price, config.pricePattern))
+		templateModel.put("lastPriceFormatted", util.formatNumber(product.lastPrice, config.pricePattern))
+		templateModel.put("storePriceFormatted", util.formatNumber(product.storePrice, config.pricePattern))
+		templateModel.put("realPriceFormatted", util.formatNumber(product.realPrice, config.pricePattern))
 		templateModel.put("realLastPriceFormatted",
-				util.formatNumber(product.getRealLastPrice(), config.getPricePattern()))
+				util.formatNumber(product.realLastPrice, config.pricePattern))
 
-		templateModel.putAll(BeanUtils.getValuesMaps("brand_", product.getBrand()))
-		templateModel.putAll(BeanUtils.getValuesMaps("category_", product.getCategory()))
+		templateModel.putAll(BeanUtils.getValuesMaps("brand_", product.brand))
+		templateModel.putAll(BeanUtils.getValuesMaps("category_", product.category))
 
-		templateModel.put("brand", product.getBrand().getName())
+		templateModel.put("brand", product.brand.name)
 		templateModel.put("brand_imageURL",
-				CMSUtil.getSiteURL(site, "resources/products/brands/thumbnails/" + product.getBrand().getImage()))
-		templateModel.put("category", product.getCategory().getName())
+				CMSUtil.getSiteURL(site, "resources/products/brands/thumbnails/" + product.brand.image))
+		templateModel.put("category", product.category.name)
 
-		for (ProductDetail detail : product.getDetails()) {
-			String name = detail.getName().toLowerCase().trim().replace(" ", "_").replace(".", "").replace(":", "")
-			String value = detail.getValue() + " " + detail.getDescription()
+		for (ProductDetail detail : (product.details)) {
+			String name = detail.name.toLowerCase().trim().replace(" ", "_").replace(".", "").replace(":", "")
+			String value = detail.value + " " + detail.description
 			value = value.replace("null", "").trim()
 			templateModel.put(name, value)
-			templateModel.put(name + "_imageURL", detail.getImageURL())
-			templateModel.put(name + "_url", detail.getUrl())
-			templateModel.put(name + "_url2", detail.getUrl2())
-			templateModel.put(name + "_color", detail.getColor())
-			templateModel.put(name + "_value2", detail.getValue2())
+			templateModel.put(name + "_imageURL", detail.imageURL)
+			templateModel.put(name + "_url", detail.url)
+			templateModel.put(name + "_url2", detail.url2)
+			templateModel.put(name + "_color", detail.color)
+			templateModel.put(name + "_value2", detail.value2)
 		}
 
 		// Actions
-		String productURL = CMSUtil.getSiteURL(site, "store/products/" + product.getId())
+		String productURL = CMSUtil.getSiteURL(site, "store/products/" + product.id)
 		templateModel.put("productURL", productURL)
 		String actionPath = CMSUtil.getSiteURL(site, "shoppingcart/")
 		templateModel.put("action_addCart",
-				actionPath + "shop/add/" + product.getId() + "?currentURI=/store/products/" + product.getId())
+				actionPath + "shop/add/" + product.id + "?currentURI=/store/products/" + product.id)
 		templateModel.put("action_addQuote",
-				actionPath + "quote/add/" + product.getId() + "?currentURI=/store/products/" + product.getId())
+				actionPath + "quote/add/" + product.id + "?currentURI=/store/products/" + product.id)
 		templateModel.put("action_compare", productURL + "/compare")
 		templateModel.put("action_favorite", productURL + "/favorite")
 		templateModel.put("action_print", productURL + "/print")
-		templateModel.put("action_share", productURL + "#shareProduct" + product.getId())
+		templateModel.put("action_share", productURL + "#shareProduct" + product.id)
 
 	}
 
 	private Object getImageURL(Site site, String image) {
-		if (image != null && !image.isEmpty()) {
+		if (image != null && !image.empty) {
 			return CMSUtil.getSiteURL(site, "resources/products/images/" + image)
 		} else {
 			return ""

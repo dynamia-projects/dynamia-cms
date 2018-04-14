@@ -33,7 +33,7 @@ class PageVirtualFileProvider implements VirtualFileProvider {
     @Override
     List<VirtualFile> getVirtualFiles() {
 		List<VirtualFile> files = new ArrayList<>()
-        Site site = SiteContext.get().getCurrent()
+        Site site = SiteContext.get().current
         if (site != null) {
 
 			PageCategoryVirtualFile pagesVF = new PageCategoryVirtualFile("pages", site, service)

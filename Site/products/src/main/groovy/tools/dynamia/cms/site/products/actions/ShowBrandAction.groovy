@@ -48,28 +48,28 @@ class ShowBrandAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
-        ProductSearchForm form = (ProductSearchForm) evt.getData()
+		ModelAndView mv = evt.modelAndView
+        ProductSearchForm form = (ProductSearchForm) evt.data
 
-        if (form.getBrandId() != null) {
-			ProductBrand brand = crudService.find(ProductBrand.class, form.getBrandId())
+        if (form.brandId != null) {
+			ProductBrand brand = crudService.find(ProductBrand.class, form.brandId)
 
             mv.addObject("prd_brand", brand)
-            form.setOrder(ProductSearchOrder.MINPRICE)
+            form.order = ProductSearchOrder.MINPRICE
 
-            if (!evt.getRequest().getParameterMap().isEmpty()) {
-				form.setDetail(evt.getRequest().getParameter("q"))
+            if (!evt.request.parameterMap.isEmpty()) {
+                form.detail = evt.request.getParameter("q")
             }
 
-			SiteActionManager.performAction("searchProducts", mv, evt.getRequest(), form)
-            ProductCategory category = (ProductCategory) mv.getModel().get("prd_category")
+			SiteActionManager.performAction("searchProducts", mv, evt.request, form)
+            ProductCategory category = (ProductCategory) mv.model.get("prd_category")
 
             if (category != null) {
-				mv.addObject("title", category.getName())
+				mv.addObject("title", category.name)
                 mv.addObject("prd_subcategories", service.getSubcategories(category, brand))
                 mv.addObject("prd_category_details", service.getCategoryDetails(category))
             } else {
-				mv.addObject("title", brand.getName())
+				mv.addObject("title", brand.name)
                 mv.addObject("prd_categories", service.getCategories(brand))
             }
 

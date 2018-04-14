@@ -44,25 +44,25 @@ class LoadPagesByCategoryAction implements SiteAction {
     @Override
     void actionPerformed(ActionEvent evt) {
 
-        ModelAndView mv = evt.getModelAndView()
-        mv.setViewName("site/pagelist")
+        ModelAndView mv = evt.modelAndView
+        mv.viewName = "site/pagelist"
 
-        String categoryAlias = (String) evt.getData()
+        String categoryAlias = (String) evt.data
         if (categoryAlias == null) {
             return
         }
 
-        PageCategory pageCategory = service.getPageCategoryByAlias(evt.getSite(), categoryAlias)
+        PageCategory pageCategory = service.getPageCategoryByAlias(evt.site, categoryAlias)
         if (pageCategory != null) {
-            mv.addObject("title", pageCategory.getName())
+            mv.addObject("title", pageCategory.name)
 
-            List<Page> pages = service.getPages(evt.getSite(), pageCategory)
-            pages = CMSUtil.setupPagination(pages, evt.getRequest(), mv)
+            List<Page> pages = service.getPages(evt.site, pageCategory)
+            pages = CMSUtil.setupPagination(pages, evt.request, mv)
 
             mv.addObject("pages", pages)
 
-            if (pages.isEmpty()) {
-                mv.setView(new RedirectView("/", true, true, false))
+            if (pages.empty) {
+                mv.view = new RedirectView("/", true, true, false)
             }
         }
 

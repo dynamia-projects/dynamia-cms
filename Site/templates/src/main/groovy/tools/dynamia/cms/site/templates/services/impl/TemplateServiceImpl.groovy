@@ -44,7 +44,7 @@ class TemplateServiceImpl implements TemplateService {
 
     private List<Template> loadTemplates() {
 		final List<Template> templates = new ArrayList<>()
-        Path templateDir = DynamiaCMS.getTemplatesLocation()
+        Path templateDir = DynamiaCMS.templatesLocation
         try {
 			DirectoryStream<Path> stream = Files.newDirectoryStream(templateDir)
             for (Path subdir : stream) {
@@ -56,7 +56,7 @@ class TemplateServiceImpl implements TemplateService {
 				}
 			}
 		} catch (IOException ex) {
-			Logger.getLogger(TemplateServiceImpl.class.getName()).log(Level.SEVERE, null, ex)
+			Logger.getLogger(TemplateServiceImpl.class.name).log(Level.SEVERE, null, ex)
         }
 
 		return templates
@@ -71,7 +71,7 @@ class TemplateServiceImpl implements TemplateService {
                 Template template = Template.build(props, templateDir)
                 return template
             } catch (Exception ex) {
-				Logger.getLogger(TemplateServiceImpl.class.getName()).log(Level.SEVERE, null, ex)
+				Logger.getLogger(TemplateServiceImpl.class.name).log(Level.SEVERE, null, ex)
             }
 		}
 		return null
@@ -85,7 +85,7 @@ class TemplateServiceImpl implements TemplateService {
 	@Override
     Template getTemplate(String templateName) {
 		for (Template template : loadTemplates()) {
-			if (template.getDirectoryName().equals(templateName)) {
+			if (template.directoryName.equals(templateName)) {
 				return template
             }
 		}
@@ -94,7 +94,7 @@ class TemplateServiceImpl implements TemplateService {
 
 	@Override
     Template getTemplate(Site site) {
-		String templateName = site.getTemplate()
+		String templateName = site.template
         Path localTemplateDir = DynamiaCMS.getSitesResourceLocation(site)
 				.resolve(DynamiaCMS.TEMPLATES + File.separator + templateName)
         Template template = loadTemplate(localTemplateDir)
@@ -110,17 +110,17 @@ class TemplateServiceImpl implements TemplateService {
 		String paramName = "CMSConfig_DefaultTemplate"
         Parameter defaultTemplate = appParams.getParameter(paramName)
         if (defaultTemplate == null) {
-			List<Template> installedTemplates = getInstalledTemplates()
-            if (installedTemplates.isEmpty()) {
+			List<Template> installedTemplates = installedTemplates
+            if (installedTemplates.empty) {
 				throw new TemplateNotFoundException("Cannot get default template: No templates installed")
             }
-			defaultTemplate = new Parameter(paramName, installedTemplates.get(0).getName(), "Default Template Name")
+			defaultTemplate = new Parameter(paramName, installedTemplates.get(0).name, "Default Template Name")
             appParams.save(defaultTemplate)
         }
 
-		Template t = getTemplate(defaultTemplate.getValue())
+		Template t = getTemplate(defaultTemplate.value)
         if (t == null) {
-			throw new TemplateNotFoundException("Default Template not found. Name: " + defaultTemplate.getName())
+			throw new TemplateNotFoundException("Default Template not found. Name: " + defaultTemplate.name)
         }
 		return t
     }

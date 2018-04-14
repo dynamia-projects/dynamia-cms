@@ -55,8 +55,8 @@ abstract class ImportOperation extends LongOperation implements ProgressMonitorL
             if ((currentTime - lastCheckTime) >= updateProgressRate) {
                 lastCheckTime = currentTime
 
-                double position = monitor.getCurrent()
-                double total = monitor.getMax()
+                double position = monitor.current
+                double total = monitor.max
 
                 if (startTime == 0) {
                     startTime = currentTime
@@ -65,8 +65,8 @@ abstract class ImportOperation extends LongOperation implements ProgressMonitorL
                 long estimatedRemaining = (long) (elapsedTime / position * (total - position))
 
                 activate()
-                monitor.setMessage(monitor.getMessage() + " - Faltan <b>"
-                        + DurationFormatUtils.formatDuration(estimatedRemaining, "HH:mm:ss") + "</b> (h:m:s)")
+                monitor.message = monitor.message + " - Faltan <b>"
+                        + DurationFormatUtils.formatDuration(estimatedRemaining, "HH:mm:ss") + "</b> (h:m:s)"
                 importer.updateProgress(monitor)
                 deactivate()
             }
@@ -81,15 +81,15 @@ abstract class ImportOperation extends LongOperation implements ProgressMonitorL
         try {
             if (checkCurrentOperation()) {
 
-                importer.setCurrentOperation(this)
-                setOperationStatus(true)
+                importer.currentOperation = this
+                operationStatus = true
 
                 execute(monitor)
 
-                importer.setCurrentOperation(null)
-                setOperationStatus(false)
+                importer.currentOperation = null
+                operationStatus = false
             } else {
-                setOperationStatus(false)
+                operationStatus = false
                 cancel()
             }
         } catch (InterruptedException e) {
@@ -97,8 +97,8 @@ abstract class ImportOperation extends LongOperation implements ProgressMonitorL
         } catch (ValidationError e) {
             try {
                 activate()
-                UIMessages.showMessage(e.getMessage(), MessageType.ERROR)
-                importer.setOperationStatus(false)
+                UIMessages.showMessage(e.message, MessageType.ERROR)
+                importer.operationStatus = false
                 deactivate()
             } catch (Exception e2) {
                 // TODO: handle exception
@@ -110,8 +110,8 @@ abstract class ImportOperation extends LongOperation implements ProgressMonitorL
 
     void cancelGracefully() {
         cancelledGracefully = true
-        monitor.setMax(-1)
-        monitor.setCurrent(-1)
+        monitor.max = -1
+        monitor.current = -1
         monitor.stop()
     }
 
@@ -139,7 +139,7 @@ abstract class ImportOperation extends LongOperation implements ProgressMonitorL
             // TODO Auto-generated catch block
             e.printStackTrace()
         }
-        importer.setOperationStatus(b)
+        importer.operationStatus = b
         deactivate()
     }
 
@@ -148,9 +148,9 @@ abstract class ImportOperation extends LongOperation implements ProgressMonitorL
     }
 
     private boolean checkCurrentOperation() {
-        if (importer.getCurrentOperation() != null) {
+        if (importer.currentOperation != null) {
             UIMessages.showMessage("No puede ejecutar este proceso, existe una operacion de importacion activa "
-                    + importer.getCurrentOperation().getName(), null)
+                    + importer.currentOperation.name, null)
             return false
         } else {
             return true

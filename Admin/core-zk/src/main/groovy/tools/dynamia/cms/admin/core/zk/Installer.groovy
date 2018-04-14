@@ -50,25 +50,25 @@ class Installer implements BeanFactoryPostProcessor {
 
         @Override
         Module getModule() {
-            Module module = new Module(am.getGroup(), am.getName())
-            module.setPosition(1)
-            if (am.getImage() != null) {
-                module.setIcon(am.getImage())
+            Module module = new Module(am.group, am.name)
+            module.position = 1
+            if (am.image != null) {
+                module.icon = am.image
             } else {
-                module.setIcon("fa-cube")
+                module.icon = "fa-cube"
             }
-            module.setIconSize(IconSize.NORMAL)
+            module.iconSize = IconSize.NORMAL
 
-            for (AdminModuleOption option : am.getOptions()) {
+            for (AdminModuleOption option : (am.options)) {
                 Page page = null
 
                 if (option instanceof ConfigAdminModuleOption) {
                     ConfigAdminModuleOption cfg = (ConfigAdminModuleOption) option
-                    page = new ConfigPage(cfg.getId(), cfg.getName(), cfg.getDescriptorID())
+                    page = new ConfigPage(cfg.id, cfg.name, cfg.descriptorID)
                 } else {
-                    page = new CrudPage(option.getId(), option.getName(), option.getCoreClass())
+                    page = new CrudPage(option.id, option.name, option.coreClass)
                 }
-                page.setLongName(module.getName() + " " + page.getName())
+                page.longName = module.name + " " + page.name
                 page.addAttribute("OPTION", option)
                 module.addPage(page)
 

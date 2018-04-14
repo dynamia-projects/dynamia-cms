@@ -15,7 +15,7 @@ class ProductReviewCrudListener extends CrudServiceListenerAdapter<ProductReview
     @Override
     void afterCreate(ProductReview entity) {
 		try {
-			service.computeProductStars(entity.getProduct())
+			service.computeProductStars(entity.product)
         } catch (Exception e) {
 			// TODO: handle exception
 		}

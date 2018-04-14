@@ -38,11 +38,11 @@ class SiteAwareCrudListener extends CrudServiceListenerAdapter<SiteAware> {
 
 	private void configureSite(SiteAware entity) {
 		try {
-			if (entity.getSite() == null) {
-				entity.setSite(SiteContext.get().getCurrent())
+			if (entity.site == null) {
+                entity.site = SiteContext.get().current
             }
 		} catch (Exception e) {
-			System.err.println("Error loading SiteHolder: " + e.getMessage())
+			System.err.println("Error loading SiteHolder: " + e.message)
         }
 	}
 
@@ -53,7 +53,7 @@ class SiteAwareCrudListener extends CrudServiceListenerAdapter<SiteAware> {
                 if (paramsType != null) {
 					Object obj = BeanUtils.newInstance(paramsType)
                     if (obj instanceof SiteAware) {
-						Site site = SiteContext.get().getCurrent()
+						Site site = SiteContext.get().current
                         if (site != null) {
 							params.add("site", site)
                         }
@@ -61,7 +61,7 @@ class SiteAwareCrudListener extends CrudServiceListenerAdapter<SiteAware> {
 				}
 			}
 		} catch (Exception e) {
-			System.err.println("Error loading SiteHolder: " + e.getMessage())
+			System.err.println("Error loading SiteHolder: " + e.message)
         }
 	}
 }

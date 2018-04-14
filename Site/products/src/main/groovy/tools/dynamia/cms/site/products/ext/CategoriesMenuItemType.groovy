@@ -53,24 +53,24 @@ class CategoriesMenuItemType implements MenuItemType {
 	@Override
     void setupMenuItem(MenuContext context) {
 
-		List<ProductCategory> categories = service.getCategories(context.getMenuItem().getMenu().getSite())
+		List<ProductCategory> categories = service.getCategories(context.menuItem.menu.site)
 
-        MenuItem item = context.getMenuItem().clone()
-        item.setName(context.getMenuItem().getName())
-        item.setTitle(context.getMenuItem().getTitle())
-        item.setOrder(context.getMenuItem().getOrder())
+        MenuItem item = context.menuItem.clone()
+        item.name = context.menuItem.name
+        item.title = context.menuItem.title
+        item.order = context.menuItem.order
 
 
         for (ProductCategory cat : categories) {
 			MenuItem catMenuItem = new MenuItem(getCategoryName(cat),
-					CATEGORIES_PATH + cat.getId() + "/" + cat.getAlias())
+					CATEGORIES_PATH + cat.id + "/" + cat.alias)
             item.addMenuItem(catMenuItem)
 
             List<ProductCategory> subcategories = service.getSubcategories(cat)
 
             for (ProductCategory subcat : subcategories) {
 				MenuItem subcatMenuItem = new MenuItem(getCategoryName(subcat),
-						CATEGORIES_PATH + subcat.getId() + "/" + subcat.getAlias())
+						CATEGORIES_PATH + subcat.id + "/" + subcat.alias)
                 catMenuItem.addMenuItem(subcatMenuItem)
             }
 
@@ -81,9 +81,9 @@ class CategoriesMenuItemType implements MenuItemType {
     }
 
 	private String getCategoryName(ProductCategory category) {
-		String name = category.getName()
-        if (category.getAlternateName() != null && !category.getAlternateName().trim().isEmpty()) {
-			name = category.getAlternateName()
+		String name = category.name
+        if (category.alternateName != null && !category.alternateName.trim().empty) {
+			name = category.alternateName
         }
 		return name
     }

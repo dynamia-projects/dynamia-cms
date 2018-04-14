@@ -27,9 +27,9 @@ class TemplateSelectorRenderer implements ComboitemRenderer<Template> {
 
     @Override
     void render(Comboitem cmbtm, Template t, int i) throws Exception {
-        cmbtm.setValue(t.getDirectoryName())
-        cmbtm.setLabel(String.format("%s (%s)", t.getName(), t.getVersion()))
-        cmbtm.setDescription(t.getDescription())
+        cmbtm.value = t.directoryName
+        cmbtm.label = String.format("%s (%s)", t.name, t.version)
+        cmbtm.description = t.description
     }
 
 }

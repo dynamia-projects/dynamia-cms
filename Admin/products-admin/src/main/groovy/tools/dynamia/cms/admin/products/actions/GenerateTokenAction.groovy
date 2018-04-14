@@ -42,20 +42,20 @@ class GenerateTokenAction extends AbstractCrudAction {
     private CrudService crudService
 
     GenerateTokenAction() {
-        setName("Generate Token")
-        setImage("token")
-        setGroup(ActionGroup.get("products"))
-        setMenuSupported(true)
+        name = "Generate Token"
+        image = "token"
+        group = ActionGroup.get("products")
+        menuSupported = true
     }
 
     @Override
     void actionPerformed(final CrudActionEvent evt) {
-        final ProductsSiteConfig cfg = (ProductsSiteConfig) evt.getData()
+        final ProductsSiteConfig cfg = (ProductsSiteConfig) evt.data
         if (cfg != null) {
             UIMessages.showQuestion("¿Are you sure want generate a new toke for this site's configuration?", {
                 service.generateToken(cfg)
                 crudService.save(cfg)
-                evt.getController().doQuery()
+                evt.controller.doQuery()
                 UIMessages.showMessage("Token generated succesfully!!")
             })
 

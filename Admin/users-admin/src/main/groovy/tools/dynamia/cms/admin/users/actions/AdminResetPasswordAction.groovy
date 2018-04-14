@@ -20,8 +20,8 @@ class AdminResetPasswordAction extends AbstractCrudAction {
     private UserService userService
 
     AdminResetPasswordAction() {
-        setName("Reset Password")
-        setImage("refresh")
+        name = "Reset Password"
+        image = "refresh"
     }
 
     @Override
@@ -36,19 +36,19 @@ class AdminResetPasswordAction extends AbstractCrudAction {
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
-        User user = (User) evt.getData()
+        User user = (User) evt.data
         if (user != null) {
 
             ZKUtil.showInputDialog("Ingrese nuevo passwrod", String.class, {
                 String newpassword = (String) e.getData()
                 try {
                     userService.resetPassword(user, newpassword, newpassword)
-                    UIMessages.showMessage("Password de usuario " + user.getUsername() + " reiniciado exitosamente")
+                    UIMessages.showMessage("Password de usuario " + user.username + " reiniciado exitosamente")
                 } catch (ValidationError ex) {
-                    UIMessages.showMessage(ex.getMessage(), MessageType.WARNING)
+                    UIMessages.showMessage(ex.message, MessageType.WARNING)
 
                 } catch (Exception ex) {
-                    UIMessages.showMessage("Error al reiniciar password de usuario " + user.getUsername() + ": " + ex.getMessage(),
+                    UIMessages.showMessage("Error al reiniciar password de usuario " + user.username + ": " + ex.message,
                             MessageType.ERROR)
                     ex.printStackTrace()
                 }

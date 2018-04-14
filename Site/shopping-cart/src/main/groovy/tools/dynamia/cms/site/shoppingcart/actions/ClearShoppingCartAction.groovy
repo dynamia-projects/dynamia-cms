@@ -43,18 +43,18 @@ class ClearShoppingCartAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
+		ModelAndView mv = evt.modelAndView
 
         ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv)
         if (shoppingCart != null) {
-			shoppingCart.getItems().clear()
+			shoppingCart.items.clear()
             shoppingCart.compute()
 
-            if (shoppingCart.getName().equals("shop")) {
-				ShoppingCartHolder.get().setCurrentOrder(null)
+            if (shoppingCart.name.equals("shop")) {
+                ShoppingCartHolder.get().currentOrder = null
             }
 
-			CMSUtil.addSuccessMessage("Carrito limpiado exitosamente", evt.getRedirectAttributes())
+			CMSUtil.addSuccessMessage("Carrito limpiado exitosamente", evt.redirectAttributes)
         }
 
 	}

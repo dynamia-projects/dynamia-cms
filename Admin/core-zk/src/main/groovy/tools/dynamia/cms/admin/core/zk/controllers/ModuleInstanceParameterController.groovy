@@ -32,7 +32,7 @@ class ModuleInstanceParameterController extends CrudController<ModuleInstancePar
 		super.newEntity()
 
         try {
-			getEntity().setModuleInstance((ModuleInstance) getParameter("moduleInstance"))
+            entity.moduleInstance = (ModuleInstance) getParameter("moduleInstance")
         } catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace()

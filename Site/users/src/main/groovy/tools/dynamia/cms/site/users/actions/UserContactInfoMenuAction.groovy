@@ -27,7 +27,7 @@ class UserContactInfoMenuAction implements UserMenuAction {
 
 	@Override
     String getDescription() {
-		return getLabel()
+		return label
     }
 
 	@Override

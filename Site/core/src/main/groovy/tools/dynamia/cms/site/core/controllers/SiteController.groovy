@@ -40,11 +40,11 @@ class SiteController {
     String googleSiteVerification(@PathVariable String siteid, HttpServletRequest request) {
         Site site = service.getSite(request)
         if (site == null) {
-            site = service.getMainSite()
+            site = service.mainSite
         }
 
         String fullId = "google" + siteid + ".html"
-        if (!fullId.equals(site.getGoogleSiteVerification())) {
+        if (!fullId.equals(site.googleSiteVerification)) {
             fullId = "unknown"
         }
         return "google-site-verification: " + fullId

@@ -32,23 +32,23 @@ class NewMenuItemAction extends NewAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		CrudView<MenuItem> crudView = (CrudView<MenuItem>) evt.getView()
-        MenuItemTreeCrudController controller = (MenuItemTreeCrudController) evt.getController()
-        MenuItem selectedItem = (MenuItem) evt.getData()
-        Menu menu = controller.getMenu()
+		CrudView<MenuItem> crudView = (CrudView<MenuItem>) evt.view
+        MenuItemTreeCrudController controller = (MenuItemTreeCrudController) evt.controller
+        MenuItem selectedItem = (MenuItem) evt.data
+        Menu menu = controller.menu
 
         controller.doCreate()
 
-        MenuItemsUI ui = new MenuItemsUI(controller.getEntity())
+        MenuItemsUI ui = new MenuItemsUI(controller.entity)
         ui.addAction(new SaveMenuItemAction(crudService, evt))
 
-        String title = "New Item for " + menu.getName()
+        String title = "New Item for " + menu.name
         if (selectedItem != null) {
-			title = "New Subitem for " + menu.getName() + " - " + selectedItem.getName()
+			title = "New Subitem for " + menu.name + " - " + selectedItem.name
 
         }
 
-		ZKUtil.showDialog(title, ui, "90%", "90%").setMaximizable(true)
+        ZKUtil.showDialog(title, ui, "90%", "90%").maximizable = true
 
     }
 }

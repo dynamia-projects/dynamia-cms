@@ -41,7 +41,7 @@ class LoginVM {
         Exception ex = (Exception) session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION)
 
         if (ex != null) {
-            message = ex.getLocalizedMessage()
+            message = ex.localizedMessage
         }
     }
 
@@ -51,23 +51,23 @@ class LoginVM {
             Form form = new Form()
             form.setDynamicProperty("action", "login")
             form.setDynamicProperty("method", "post")
-            form.setPage(page)
+            form.page = page
 
             //Username
 
             Input input = new Input()
-            input.setParent(form)
+            input.parent = form
             input.setDynamicProperty("type", "hidden")
             input.setDynamicProperty("name", "username")
-            input.setValue(username)
+            input.value = username
 
             //Password
 
             input = new Input()
-            input.setParent(form)
+            input.parent = form
             input.setDynamicProperty("type", "hidden")
             input.setDynamicProperty("name", "password")
-            input.setValue(password)
+            input.value = password
 
 
             Clients.submitForm(form)
@@ -80,7 +80,7 @@ class LoginVM {
     @Command
     void logout() {
         try {
-            Executions.getCurrent().sendRedirect("logout")
+            Executions.current.sendRedirect("logout")
         } catch (Exception ex) {
             logger.error(ex)
         }

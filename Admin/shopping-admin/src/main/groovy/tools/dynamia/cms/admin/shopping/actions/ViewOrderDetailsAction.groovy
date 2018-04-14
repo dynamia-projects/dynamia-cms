@@ -20,9 +20,9 @@ class ViewOrderDetailsAction extends ViewDataAction {
 	private CrudService crudService
 
     ViewOrderDetailsAction() {
-		setName("Details")
-        setMenuSupported(true)
-        setImage("table")
+        name = "Details"
+        menuSupported = true
+        image = "table"
     }
 
 	@Override
@@ -37,14 +37,14 @@ class ViewOrderDetailsAction extends ViewDataAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		ShoppingOrder shoppingOrder = (ShoppingOrder) evt.getData()
+		ShoppingOrder shoppingOrder = (ShoppingOrder) evt.data
         if (shoppingOrder != null) {
 			shoppingOrder = crudService.reload(shoppingOrder)
 
             ShoppingOrderDetailsUI ui = new ShoppingOrderDetailsUI(shoppingOrder)
-            ui.setVflex("1")
-            ui.setStyle("overflow: auto")
-            ZKUtil.showDialog("Shopping Order No. " + shoppingOrder.getNumber(), ui, "90%", "90%")
+            ui.vflex = "1"
+            ui.style = "overflow: auto"
+            ZKUtil.showDialog("Shopping Order No. " + shoppingOrder.number, ui, "90%", "90%")
         }
 	}
 	

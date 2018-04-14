@@ -52,7 +52,7 @@ class ProductStock extends SimpleEntity implements SiteAware {
     long stock
 
     void sync(ProductStockDTO dto) {
-        stock = dto.getStock()
+        stock = dto.stock
     }
 
 }

@@ -52,25 +52,25 @@ class CancelShoppingOrderAction implements SiteAction {
 
 	@Override
     void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView()
-        mv.setView(new RedirectView("/", true, true, false))
+		ModelAndView mv = evt.modelAndView
+        mv.view = new RedirectView("/", true, true, false)
 
-        ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder()
+        ShoppingOrder order = ShoppingCartHolder.get().currentOrder
         if (order == null) {
 			return
         }
 
-		if (order.getId() != null) {
-			order = crudService.find(ShoppingOrder.class, order.getId())
-            ShoppingCartHolder.get().setCurrentOrder(order)
+		if (order.id != null) {
+			order = crudService.find(ShoppingOrder.class, order.id)
+            ShoppingCartHolder.get().currentOrder = order
         }
 		order.sync()
 
         try {
 			service.cancelOrder(order)
-            CMSUtil.addSuccessMessage("Pedido No." + order.getNumber() + " cancelado exitosamente", mv)
+            CMSUtil.addSuccessMessage("Pedido No." + order.number + " cancelado exitosamente", mv)
         } catch (ValidationError e) {
-			CMSUtil.addErrorMessage(e.getMessage(), mv)
+			CMSUtil.addErrorMessage(e.message, mv)
         } catch (Exception e) {
 			e.printStackTrace()
         }

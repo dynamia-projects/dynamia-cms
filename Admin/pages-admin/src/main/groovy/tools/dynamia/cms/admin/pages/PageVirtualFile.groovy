@@ -29,17 +29,17 @@ class PageVirtualFile extends VirtualFile implements URLProvider {
     private Page page
 
     PageVirtualFile(Page page) {
-		super(page.getAlias())
+		super(page.alias)
         this.page = page
-        setName(page.getTitle()+".html")
-        setCanWrite(false)
-        setDirectory(false)
+        name = page.title +".html"
+        canWrite = false
+        directory = false
 
     }
 
 	@Override
     String getURL() {
-		return CMSUtil.getSiteURL(page.getSite(), page.getAlias())
+		return CMSUtil.getSiteURL(page.site, page.alias)
     }
 
 	@Override
@@ -49,6 +49,6 @@ class PageVirtualFile extends VirtualFile implements URLProvider {
 	
 	@Override
     long lastModified() {
-		return page.getCreationDate().getTime()
+		return page.creationDate.time
     }
 }

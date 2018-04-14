@@ -75,7 +75,7 @@ class ProductsServiceImpl implements ProductsService {
 
     @Override
     void generateToken(ProductsSiteConfig config) {
-        config.setToken(StringUtils.randomString())
+        config.token = StringUtils.randomString()
     }
 
     @Override
@@ -113,7 +113,7 @@ class ProductsServiceImpl implements ProductsService {
     @Override
     @Cacheable(value = ProductsServiceImpl.CACHE_NAME, key = "'subcatsOf'+#category.id")
     List<ProductCategory> getSubcategories(ProductCategory category) {
-        QueryParameters qp = QueryParameters.with("site", category.getSite())
+        QueryParameters qp = QueryParameters.with("site", category.site)
         qp.add("parent", category)
         qp.add("active", true)
         qp.orderBy("order", true)
@@ -129,10 +129,10 @@ class ProductsServiceImpl implements ProductsService {
                 .orderBy("name").toString()
 
         Query query = entityManager.createQuery(sql)
-        query.setParameter("site", brand.getSite())
+        query.setParameter("site", brand.site)
         query.setParameter("brand", brand)
 
-        return query.getResultList()
+        return query.resultList
     }
 
     @Override
@@ -143,11 +143,11 @@ class ProductsServiceImpl implements ProductsService {
                 .orderBy("name").toString()
 
         Query query = entityManager.createQuery(sql)
-        query.setParameter("site", brand.getSite())
+        query.setParameter("site", brand.site)
         query.setParameter("brand", brand)
         query.setParameter("category", category)
 
-        return query.getResultList()
+        return query.resultList
     }
 
     @Override
@@ -157,16 +157,16 @@ class ProductsServiceImpl implements ProductsService {
 
     @Override
     List<Product> getProducts(ProductCategory category, String orderfield, boolean asc) {
-        QueryParameters qp = QueryParameters.with("active", true).add("site", category.getSite())
+        QueryParameters qp = QueryParameters.with("active", true).add("site", category.site)
 
-        if (category.getParent() == null) {
+        if (category.parent == null) {
             qp.addGroup(QueryParameters.with("category.parent", QueryConditions.eq(category, BooleanOp.OR))
                     .add("category", QueryConditions.eq(category, BooleanOp.OR)), BooleanOp.AND)
         } else {
             qp.add("category", category)
         }
 
-        qp.paginate(getDefaultPageSize(category.getSite()))
+        qp.paginate(getDefaultPageSize(category.site))
         qp.orderBy(orderfield, asc)
 
         return crudService.find(Product.class, qp)
@@ -177,7 +177,7 @@ class ProductsServiceImpl implements ProductsService {
         QueryParameters qp = QueryParameters.with("active", true)
         qp.add("brand", brand)
         qp.orderBy("price", true)
-        qp.paginate(getDefaultPageSize(brand.getSite()))
+        qp.paginate(getDefaultPageSize(brand.site))
         return crudService.find(Product.class, qp)
     }
 
@@ -194,47 +194,47 @@ class ProductsServiceImpl implements ProductsService {
         QueryParameters params = new QueryParameters()
         params.add("active", true)
 
-        if (form.getName() != null && !form.getName().trim().isEmpty()) {
-            params.add("name", form.getName())
+        if (form.name != null && !form.name.trim().empty) {
+            params.add("name", form.name)
         }
 
-        if (form.getMaxPrice() != null && form.getMinPrice() == null) {
-            params.add("price", leqt(form.getMaxPrice()))
+        if (form.maxPrice != null && form.minPrice == null) {
+            params.add("price", leqt(form.maxPrice))
         }
 
-        if (form.getMaxPrice() == null && form.getMinPrice() != null) {
-            params.add("price", geqt(form.getMinPrice()))
+        if (form.maxPrice == null && form.minPrice != null) {
+            params.add("price", geqt(form.minPrice))
         }
 
-        if (form.getMaxPrice() != null && form.getMinPrice() != null) {
-            params.add("price", between(form.getMinPrice(), form.getMaxPrice()))
+        if (form.maxPrice != null && form.minPrice != null) {
+            params.add("price", between(form.minPrice, form.maxPrice))
         }
 
-        if (form.isStock()) {
+        if (form.stock) {
             params.add("stock", gt(0))
         }
 
-        if (form.getOrder() != null) {
-            params.orderBy(form.getOrder().getField(), form.getOrder().isAsc())
+        if (form.order != null) {
+            params.orderBy(form.order.field, form.order.asc)
         } else {
             params.orderBy("price", true)
         }
 
         QueryBuilder builder = QueryBuilder.fromParameters(Product.class, "p", params)
-        if (form.getBrandId() != null) {
+        if (form.brandId != null) {
             builder.and("p.brand.id = :brandId")
-            params.add("brandId", form.getBrandId())
+            params.add("brandId", form.brandId)
         }
-        if (form.getCategoryId() != null) {
+        if (form.categoryId != null) {
             builder.and("(p.category.id = :category or p.category.parent.id = :category)")
-            params.add("category", form.getCategoryId())
+            params.add("category", form.categoryId)
         }
 
         Map<String, String> map = new HashMap<>()
-        filterByDetail(form.getDetail(), "1", params, builder, map)
-        filterByDetail(form.getDetail2(), "2", params, builder, map)
-        filterByDetail(form.getDetail3(), "3", params, builder, map)
-        filterByDetail(form.getDetail4(), "4", params, builder, map)
+        filterByDetail(form.detail, "1", params, builder, map)
+        filterByDetail(form.detail2, "2", params, builder, map)
+        filterByDetail(form.detail3, "3", params, builder, map)
+        filterByDetail(form.detail4, "4", params, builder, map)
 
         form.setAttribute("filteredDetails", map)
 
@@ -250,8 +250,8 @@ class ProductsServiceImpl implements ProductsService {
 
     private String filterByDetail(String det, String suffix, QueryParameters params, QueryBuilder builder, Map<String, String> map) {
         try {
-            if (det != null && !det.isEmpty() && det.contains(";")) {
-                String detail[] = det.split(";")
+            if (det != null && !det.empty && det.contains(";")) {
+                String[] detail = det.split(";")
                 String name = "detname" + suffix
                 String value = "detvalue" + suffix
                 builder.and(
@@ -275,7 +275,7 @@ class ProductsServiceImpl implements ProductsService {
         qp.paginate(getDefaultPageSize(site) + 2)
         qp.orderBy("brand.name, price", true)
         PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp)
-        return list.getDataSource().getPageData()
+        return list.dataSource.pageData
     }
 
     @Override
@@ -286,7 +286,7 @@ class ProductsServiceImpl implements ProductsService {
         qp.paginate(getDefaultPageSize(site) + 2)
         qp.orderBy("brand.name, price", true)
         PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp)
-        return list.getDataSource().getPageData()
+        return list.dataSource.pageData
     }
 
     @Override
@@ -295,7 +295,7 @@ class ProductsServiceImpl implements ProductsService {
         qp.paginate(getDefaultPageSize(site) + 2)
         qp.orderBy("views", false)
         PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp)
-        return list.getDataSource().getPageData()
+        return list.dataSource.pageData
     }
 
     @Override
@@ -331,7 +331,7 @@ class ProductsServiceImpl implements ProductsService {
         Query query = entityManager.createQuery(sql)
         query.setParameter("site", site)
 
-        return query.getResultList()
+        return query.resultList
     }
 
     @Override
@@ -342,10 +342,10 @@ class ProductsServiceImpl implements ProductsService {
                 .orderBy("name").toString()
 
         Query query = entityManager.createQuery(sql)
-        query.setParameter("site", category.getSite())
+        query.setParameter("site", category.site)
         query.setParameter("category", category)
 
-        return query.getResultList()
+        return query.resultList
     }
 
     @Override
@@ -365,7 +365,7 @@ class ProductsServiceImpl implements ProductsService {
 
     @Override
     List<Product> find(Site site, String param) {
-        if (param == null || param.isEmpty()) {
+        if (param == null || param.empty) {
             return Collections.EMPTY_LIST
         }
 
@@ -389,13 +389,13 @@ class ProductsServiceImpl implements ProductsService {
         QueryParameters qp = new QueryParameters()
         QueryBuilder qb = QueryBuilder.select(Product.class, "p").where("p.active = true")
 
-        qp.add("site", product.getSite())
-        qp.add("category", product.getCategory())
+        qp.add("site", product.site)
+        qp.add("category", product.category)
         qb.and("p.site = :site")
 
-        if (product.getCategory().getParent() != null) {
+        if (product.category.parent != null) {
             qb.and("(p.category.parent = :parentCategory or p.category = :category)")
-            qp.add("parentCategory", product.getCategory().getParent())
+            qp.add("parentCategory", product.category.parent)
         } else {
             qb.and("p.category = :category")
         }
@@ -403,9 +403,9 @@ class ProductsServiceImpl implements ProductsService {
         qb.orderBy("price asc")
         String sql = qb.toString()
         Query query = entityManager.createQuery(sql)
-        query.setMaxResults(getDefaultPageSize(product.getSite()))
+        query.maxResults = getDefaultPageSize(product.site)
         qp.applyTo(query)
-        return query.getResultList()
+        return query.resultList
     }
 
     /**
@@ -422,11 +422,11 @@ class ProductsServiceImpl implements ProductsService {
 
         List<ProductCategory> categories = new ArrayList<>()
 
-        if (product.getCategory() != null) {
-            categories.add(product.getCategory())
+        if (product.category != null) {
+            categories.add(product.category)
 
-            if (product.getCategory().getParent() != null) {
-                categories.add(product.getCategory().getParent())
+            if (product.category.parent != null) {
+                categories.add(product.category.parent)
             }
         }
         if (!categories.isEmpty()) {
@@ -441,14 +441,14 @@ class ProductsServiceImpl implements ProductsService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void updateViewsCount(Product product) {
-        crudService.updateField(product, "views", product.getViews() + 1L)
+        crudService.updateField(product, "views", product.views + 1L)
     }
 
     private int getDefaultPageSize(Site site) {
         ProductsService self = Containers.get().findObject(ProductsService.class)
         ProductsSiteConfig config = self.getSiteConfig(site)
         if (config != null) {
-            return config.getProductsPerPage()
+            return config.productsPerPage
         } else {
             return 40
         }
@@ -463,7 +463,7 @@ class ProductsServiceImpl implements ProductsService {
 
         QueryParameters qp = new QueryParameters()
         qp.add("category", category)
-        qp.paginate(getDefaultPageSize(category.getSite()))
+        qp.paginate(getDefaultPageSize(category.site))
 
         return crudService.executeQuery(query, qp)
 
@@ -481,7 +481,7 @@ class ProductsServiceImpl implements ProductsService {
         qp.paginate(getDefaultPageSize(site) * 2)
 
         PagedList list = (PagedList) crudService.executeQuery(query, qp)
-        List<Product> products = list.getDataSource().getPageData()
+        List<Product> products = list.dataSource.pageData
 
         return products
     }
@@ -498,20 +498,20 @@ class ProductsServiceImpl implements ProductsService {
         qp.paginate(getDefaultPageSize(site))
 
         PagedList list = (PagedList) crudService.executeQuery(query, qp)
-        return list.getDataSource().getPageData()
+        return list.dataSource.pageData
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     void updateProductStoryViews(Product product) {
         try {
-            if (UserHolder.get().isAuthenticated()) {
-                ProductUserStory story = getProductStory(product, UserHolder.get().getCurrent())
-                if (story.getId() == null) {
-                    story.setFirstView(new Date())
+            if (UserHolder.get().authenticated) {
+                ProductUserStory story = getProductStory(product, UserHolder.get().current)
+                if (story.id == null) {
+                    story.firstView = new Date()
                 }
-                story.setLastView(new Date())
-                story.setViews(story.getViews() + 1)
+                story.lastView = new Date()
+                story.views = story.views + 1
                 crudService.save(story)
             }
         } catch (Exception e) {
@@ -522,13 +522,13 @@ class ProductsServiceImpl implements ProductsService {
     @Override
     void updateProductStoryShops(Product product) {
         try {
-            if (UserHolder.get().isAuthenticated()) {
-                ProductUserStory story = getProductStory(product, UserHolder.get().getCurrent())
-                if (story.getId() == null) {
-                    story.setFirstShop(new Date())
+            if (UserHolder.get().authenticated) {
+                ProductUserStory story = getProductStory(product, UserHolder.get().current)
+                if (story.id == null) {
+                    story.firstShop = new Date()
                 }
-                story.setLastShop(new Date())
-                story.setShops(story.getShops() + 1)
+                story.lastShop = new Date()
+                story.shops = story.shops + 1
                 crudService.save(story)
             }
         } catch (Exception e) {
@@ -546,8 +546,8 @@ class ProductsServiceImpl implements ProductsService {
         ProductUserStory userStory = crudService.findSingle(ProductUserStory.class, qp)
         if (userStory == null) {
             userStory = new ProductUserStory()
-            userStory.setProduct(product)
-            userStory.setUser(user)
+            userStory.product = product
+            userStory.user = user
         }
 
         return userStory
@@ -557,10 +557,10 @@ class ProductsServiceImpl implements ProductsService {
     List<Product> getRecentProducts(User user) {
         String sql = "select s.product from ProductUserStory s where s.user = :user order by s.lastView desc"
         Query query = entityManager.createQuery(sql)
-        query.setMaxResults(getDefaultPageSize(user.getSite()))
+        query.maxResults = getDefaultPageSize(user.site)
         query.setParameter("user", user)
 
-        return query.getResultList()
+        return query.resultList
 
     }
 
@@ -580,32 +580,32 @@ class ProductsServiceImpl implements ProductsService {
     @Override
     void shareProduct(ProductShareForm form) {
         MailMessage message = new MailMessage()
-        Product product = getProductById(form.getSite(), form.getProductId())
-        ProductsSiteConfig config = getSiteConfig(form.getSite())
-        message.setTemplate(config.getShareProductMailTemplate())
-        message.getTemplateModel().put("product", product)
-        message.getTemplateModel().put("form", form)
-        message.setTo(form.getFriendEmail())
-        message.setMailAccount(config.getMailAccount())
+        Product product = getProductById(form.site, form.productId)
+        ProductsSiteConfig config = getSiteConfig(form.site)
+        message.template = config.shareProductMailTemplate
+        message.templateModel.put("product", product)
+        message.templateModel.put("form", form)
+        message.to = form.friendEmail
+        message.mailAccount = config.mailAccount
 
-        Path resources = DynamiaCMS.getSitesResourceLocation(product.getSite())
-        if (product.getImage() != null && !product.getImage().isEmpty()) {
-            File image = resources.resolve("products/images/" + product.getImage()).toFile()
+        Path resources = DynamiaCMS.getSitesResourceLocation(product.site)
+        if (product.image != null && !product.image.empty) {
+            File image = resources.resolve("products/images/" + product.image).toFile()
             message.addAttachtment(image)
         }
 
-        if (product.getImage2() != null && !product.getImage2().isEmpty()) {
-            File image = resources.resolve("products/images/" + product.getImage2()).toFile()
+        if (product.image2 != null && !product.image2.empty) {
+            File image = resources.resolve("products/images/" + product.image2).toFile()
             message.addAttachtment(image)
         }
 
-        if (product.getImage3() != null && !product.getImage3().isEmpty()) {
-            File image = resources.resolve("products/images/" + product.getImage3()).toFile()
+        if (product.image3 != null && !product.image3.empty) {
+            File image = resources.resolve("products/images/" + product.image3).toFile()
             message.addAttachtment(image)
         }
 
-        if (product.getImage4() != null && !product.getImage4().isEmpty()) {
-            File image = resources.resolve("products/images/" + product.getImage4()).toFile()
+        if (product.image4 != null && !product.image4.empty) {
+            File image = resources.resolve("products/images/" + product.image4).toFile()
             message.addAttachtment(image)
         }
 
@@ -618,7 +618,7 @@ class ProductsServiceImpl implements ProductsService {
     List<ProductCategory> getRelatedCategories(ProductCategory category) {
         QueryParameters qp = QueryParameters.with("relatedCategory", category)
         qp.add("active", true)
-        qp.add("site", category.getSite())
+        qp.add("site", category.site)
         qp.orderBy("order", true)
         return crudService.find(ProductCategory.class, qp)
     }
@@ -632,23 +632,23 @@ class ProductsServiceImpl implements ProductsService {
                 .groupBy("name").orderBy("order").toString()
 
         Query query = entityManager.createQuery(sql)
-        query.setParameter("site", category.getSite())
+        query.setParameter("site", category.site)
         query.setParameter("category", category)
 
-        List<ProductCategoryDetail> details = query.getResultList()
+        List<ProductCategoryDetail> details = query.resultList
 
 
         String sqlValues = "select det.name, det.value from ProductDetail det inner join det.product p inner join p.category c"
                 + " where (c = :category or c.parent = :category)  and p.active=true group by det.value order by det.value"
-        List values = entityManager.createQuery(sqlValues).setParameter("category", category).getResultList()
+        List values = entityManager.createQuery(sqlValues).setParameter("category", category).resultList
 
         for (ProductCategoryDetail det : details) {
             for (Object objet : values) {
                 Object[] catValue = (Object[]) objet
 
-                if (det.getName().trim().equals(catValue[0].toString().trim())) {
-                    if (catValue[1] != null && !catValue[1].toString().isEmpty()) {
-                        det.getCurrentValues().add(catValue[1].toString())
+                if (det.name.trim().equals(catValue[0].toString().trim())) {
+                    if (catValue[1] != null && !catValue[1].toString().empty) {
+                        det.currentValues.add(catValue[1].toString())
                     }
                 }
             }
@@ -673,22 +673,22 @@ class ProductsServiceImpl implements ProductsService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void saveReview(Product product, String comment, int rate) {
 
-        User user = UserHolder.get().getCurrent()
+        User user = UserHolder.get().current
 
         ProductReview rev = getUserReview(product, user)
 
-        if (rev != null && !rev.isIncomplete()) {
+        if (rev != null && !rev.incomplete) {
             throw new ValidationError("Ya has enviado una reseña sobre este producto")
         } else if (rev == null) {
             rev = new ProductReview()
         }
 
-        rev.setUser(user)
-        rev.setProduct(product)
-        rev.setSite(product.getSite())
-        rev.setComment(comment)
-        rev.setStars(rate)
-        rev.setIncomplete(false)
+        rev.user = user
+        rev.product = product
+        rev.site = product.site
+        rev.comment = comment
+        rev.stars = rate
+        rev.incomplete = false
         crudService.save(rev)
     }
 
@@ -707,7 +707,7 @@ class ProductsServiceImpl implements ProductsService {
     @Override
     @Transactional
     void computeProductStars(Product product) {
-        product = crudService.find(Product.class, product.getId())
+        product = crudService.find(Product.class, product.id)
 
         Double stars = crudService.executeProjection(Double.class,
                 "select avg(r.stars) from ProductReview r where r.product = :product and r.incomplete=false",
@@ -717,22 +717,22 @@ class ProductsServiceImpl implements ProductsService {
             stars = 0.0
         }
 
-        product.setReviews(crudService.count(ProductReview.class, QueryParameters.with("product", product)))
-        product.setStars1Count(crudService.count(ProductReview.class,
-                QueryParameters.with("product", product).add("incomplete", false).add("stars", 1)))
-        product.setStars2Count(crudService.count(ProductReview.class,
-                QueryParameters.with("product", product).add("incomplete", false).add("stars", 2)))
-        product.setStars3Count(crudService.count(ProductReview.class,
-                QueryParameters.with("product", product).add("incomplete", false).add("stars", 3)))
-        product.setStars4Count(crudService.count(ProductReview.class,
-                QueryParameters.with("product", product).add("incomplete", false).add("stars", 4)))
-        product.setStars5Count(crudService.count(ProductReview.class,
-                QueryParameters.with("product", product).add("incomplete", false).add("stars", 5)))
+        product.reviews = crudService.count(ProductReview.class, QueryParameters.with("product", product))
+        product.stars1Count = crudService.count(ProductReview.class,
+                QueryParameters.with("product", product).add("incomplete", false).add("stars", 1))
+        product.stars2Count = crudService.count(ProductReview.class,
+                QueryParameters.with("product", product).add("incomplete", false).add("stars", 2))
+        product.stars3Count = crudService.count(ProductReview.class,
+                QueryParameters.with("product", product).add("incomplete", false).add("stars", 3))
+        product.stars4Count = crudService.count(ProductReview.class,
+                QueryParameters.with("product", product).add("incomplete", false).add("stars", 4))
+        product.stars5Count = crudService.count(ProductReview.class,
+                QueryParameters.with("product", product).add("incomplete", false).add("stars", 5))
 
         if (stars != null && stars > 0) {
-            product.setStars(stars)
+            product.stars = stars
         } else {
-            product.setStars(0.0)
+            product.stars = 0.0
         }
 
         crudService.update(product)
@@ -744,7 +744,7 @@ class ProductsServiceImpl implements ProductsService {
                 .add("incomplete", false).orderBy("creationDate", false).paginate(max))
 
         if (result instanceof PagedList) {
-            result = ((PagedList) result).getDataSource().getPageData()
+            result = ((PagedList) result).dataSource.pageData
         }
 
         return result
@@ -752,9 +752,8 @@ class ProductsServiceImpl implements ProductsService {
 
     @Override
     ProductsReviewResponse requestExternalReviews(ProductsSiteConfig config, String requestUuid) {
-        if (config != null && config.getReviewsConnectorURL() != null && !config.getReviewsConnectorURL().isEmpty()) {
-            ProductReviewsConnector connector = HttpRemotingServiceClient.build(ProductReviewsConnector.class)
-                    .setServiceURL(config.getReviewsConnectorURL()).getProxy()
+        if (config != null && config.reviewsConnectorURL != null && !config.reviewsConnectorURL.empty) {
+            ProductReviewsConnector connector = HttpRemotingServiceClient.build(ProductReviewsConnector.class).serviceURL = config.reviewsConnectorURL.proxy
 
             if (connector != null) {
                 try {
@@ -770,7 +769,7 @@ class ProductsServiceImpl implements ProductsService {
 
     @Override
     User findUserForReview(Site site, ProductsReviewResponse response) {
-        String email = response.getEmail()
+        String email = response.email
 
         if (email.contains(",")) {
             try {
@@ -781,7 +780,7 @@ class ProductsServiceImpl implements ProductsService {
             }
         }
 
-        User user = userService.getUser(site, email, response.getIdentification())
+        User user = userService.getUser(site, email, response.identification)
         if (user == null) {
             user = userService.getUser(site, email)
         }
@@ -789,20 +788,20 @@ class ProductsServiceImpl implements ProductsService {
 
         if (user == null) {
             user = new User()
-            user.setSite(site)
-            user.setUsername(email)
-            user.setFirstName(response.getName())
-            user.setLastName(response.getLastName())
-            user.setEnabled(true)
-            user.getContactInfo().setAddress(response.getAddress())
-            user.getContactInfo().setCity(response.getCity())
-            user.getContactInfo().setEmail(response.getEmail())
-            user.getContactInfo().setCountry(response.getCountry())
-            user.getContactInfo().setMobileNumber(response.getMobileNumber())
-            user.getContactInfo().setPhoneNumber(response.getPhoneNumber())
-            user.setIdentification(response.getIdentification())
-            user.setExternalRef(response.getExternalRef())
-            userService.setupPassword(user, response.getIdentification())
+            user.site = site
+            user.username = email
+            user.firstName = response.name
+            user.lastName = response.lastName
+            user.enabled = true
+            user.contactInfo.address = response.address
+            user.contactInfo.city = response.city
+            user.contactInfo.email = response.email
+            user.contactInfo.country = response.country
+            user.contactInfo.mobileNumber = response.mobileNumber
+            user.contactInfo.phoneNumber = response.phoneNumber
+            user.identification = response.identification
+            user.externalRef = response.externalRef
+            userService.setupPassword(user, response.identification)
             user = crudService.create(user)
         }
         return user
@@ -813,14 +812,14 @@ class ProductsServiceImpl implements ProductsService {
         Product product = null
 
         if (dto != null) {
-            if (dto.getExternalRef() != null) {
+            if (dto.externalRef != null) {
                 product = crudService.findSingle(Product.class, QueryParameters.with("site", site).add("active", true)
-                        .add("externalRef", dto.getExternalRef()))
+                        .add("externalRef", dto.externalRef))
             }
 
-            if (product == null && dto.getSku() != null && !dto.getSku().isEmpty()) {
+            if (product == null && dto.sku != null && !dto.sku.empty) {
                 product = crudService.findSingle(Product.class, QueryParameters.with("site", site).add("active", true)
-                        .add("sku", dto.getSku()).setAutocreateSearcheableStrings(false))
+                        .add("sku", dto.sku).setAutocreateSearcheableStrings(false))
             }
         }
 
@@ -831,26 +830,26 @@ class ProductsServiceImpl implements ProductsService {
     List<ProductReview> getExternalProductReviews(Site site, ProductsReviewResponse response, User user) {
         List<ProductReview> reviews = new ArrayList<>()
 
-        if (response.getProducts() != null) {
-            for (ProductDTO dto : response.getProducts()) {
+        if (response.products != null) {
+            for (ProductDTO dto : (response.products)) {
                 Product product = getProduct(site, dto)
                 if (product != null) {
                     ProductReview review = getUserReview(product, user)
 
                     if (review == null) {
                         review = new ProductReview()
-                        review.setSite(site)
-                        review.setUser(user)
-                        review.setProduct(product)
-                        review.setDocument(response.getDocument())
+                        review.site = site
+                        review.user = user
+                        review.product = product
+                        review.document = response.document
 
-                        review.setIncomplete(true)
+                        review.incomplete = true
                         if (getUserReview(product, user) == null) {
                             review = crudService.create(review)
                         }
                     }
 
-                    if (review != null && review.isIncomplete()) {
+                    if (review != null && review.incomplete) {
                         reviews.add(review)
                     }
                 }

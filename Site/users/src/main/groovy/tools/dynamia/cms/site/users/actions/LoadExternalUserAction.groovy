@@ -29,16 +29,16 @@ class LoadExternalUserAction implements SiteAction {
     void actionPerformed(ActionEvent evt) {
 
         ModelAndView mv = new ModelAndView("users/external")
-        String id = evt.getRequest().getParameter("id")
+        String id = evt.request.getParameter("id")
 
 
-        if (id != null && !id.isEmpty()) {
+        if (id != null && !id.empty) {
 
 
-            UserDTO dto = service.loadExternalUser(evt.getSite(), id)
+            UserDTO dto = service.loadExternalUser(evt.site, id)
             if (dto != null) {
                 mv.addObject("externalUser", dto)
-                evt.getRequest().getSession().setAttribute("externalUser", dto)
+                evt.request.session.setAttribute("externalUser", dto)
                 CMSUtil.addSuccessMessage("Por favor verifique los datos antes de continuar", mv)
             } else {
                 CMSUtil.addErrorMessage("No se encontro cliente con identificacion: " + id, mv)

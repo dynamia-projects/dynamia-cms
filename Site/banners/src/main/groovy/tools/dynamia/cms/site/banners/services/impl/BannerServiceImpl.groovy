@@ -53,16 +53,16 @@ class BannerServiceImpl implements BannerService {
 	@Override
 	List<Banner> createBannersFromCategory(Long categoryId) {
 		BannerCategory category = crudService.find(BannerCategory.class, categoryId)
-		if (category != null && category.getFolderImages() != null) {
+		if (category != null && category.folderImages != null) {
 			List<Banner> banners = new ArrayList<>()
-			CMSUtil util = new CMSUtil(category.getSite())
-			String[] files = util.listFilesNames(category.getFolderImages(), "jpg,png,gif")
+			CMSUtil util = new CMSUtil(category.site)
+			String[] files = util.listFilesNames(category.folderImages, "jpg,png,gif")
 			if (files != null) {
 				for (String fileName : files) {
 					Banner banner = new Banner()
-					FileInfo fileInfo = new FileInfo(new File(new File(category.getFolderImages()), fileName))
-					banner.setImageURL(CMSUtil.getResourceURL(category.getSite(), fileInfo.getFile()))
-					banner.setTitle(fileInfo.getDescription())
+					FileInfo fileInfo = new FileInfo(new File(new File(category.folderImages), fileName))
+                    banner.imageURL = CMSUtil.getResourceURL(category.site, fileInfo.file)
+                    banner.title = fileInfo.description
 					banners.add(banner)
 				}
 			}

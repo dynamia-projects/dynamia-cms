@@ -35,7 +35,7 @@ class Initializer {
             if (site != null) {
 				userService.checkAdminUser(site)
 
-                if ("main".equals(site.getKey())) {
+                if ("main".equals(site.key)) {
 					DynamiaCMS.initDefaultLocations()
                 }
 			}

@@ -31,12 +31,12 @@ class AdminModuleShortcutVM {
 		List<AdminModuleOption> shortcuts = new ArrayList<>()
 
         for (AdminModule module : Containers.get().findObjects(AdminModule.class)) {
-			for (AdminModuleOption option : module.getOptions()) {
-				if (option.isShortcut()) {
+			for (AdminModuleOption option : (module.options)) {
+				if (option.shortcut) {
 					Page dummy = new Page("x", "x", "x")
                     dummy.addAttribute("OPTION", option)
                     if (NavigationRestrictions.allowAccess(dummy)) {
-						option.setPath("admin/" + module.getGroup() + "/" + option.getId())
+                        option.path = "admin/" + module.group + "/" + option.id
                         shortcuts.add(option)
                     }
 				}
@@ -49,7 +49,7 @@ class AdminModuleShortcutVM {
 
 	@Command
     void navigateTo(@BindingParam("path") String path) {
-		ZKNavigationManager.getInstance().navigateTo(path)
+		ZKNavigationManager.instance.navigateTo(path)
     }
 
 }
