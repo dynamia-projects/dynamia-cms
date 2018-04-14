@@ -1,20 +1,18 @@
-package tools.dynamia.cms.admin.menus.actions;
+package tools.dynamia.cms.admin.menus.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.admin.menus.ui.MenuItemsUI;
-import tools.dynamia.cms.site.menus.domain.MenuItem;
-
-import tools.dynamia.actions.ActionGroup;
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.commons.ApplicableClass;
-import tools.dynamia.crud.AbstractCrudAction;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.crud.CrudState;
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.ui.MessageType;
-import tools.dynamia.ui.UIMessages;
-import tools.dynamia.zk.util.ZKUtil;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.actions.ActionGroup
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.admin.menus.ui.MenuItemsUI
+import tools.dynamia.cms.site.menus.domain.MenuItem
+import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.crud.AbstractCrudAction
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.CrudState
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.ui.MessageType
+import tools.dynamia.ui.UIMessages
+import tools.dynamia.zk.util.ZKUtil
 
 @InstallAction
 public class CopyMenuItemAction extends AbstractCrudAction {

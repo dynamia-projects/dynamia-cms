@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.ui;
+package tools.dynamia.cms.admin.core.zk.ui
 
-import java.util.Collection;
-
-import org.zkoss.zul.Combobox;
-
-import tools.dynamia.cms.site.core.domain.Site;
-
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.integration.Containers;
-import tools.dynamia.zk.ComponentAliasIndex;
-import tools.dynamia.zk.util.ZKUtil;
+import org.zkoss.zul.Combobox
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.integration.Containers
+import tools.dynamia.zk.ComponentAliasIndex
+import tools.dynamia.zk.util.ZKUtil
 
 /**
  *

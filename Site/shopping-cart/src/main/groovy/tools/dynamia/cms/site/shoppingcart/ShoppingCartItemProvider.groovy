@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.shoppingcart;
+package tools.dynamia.cms.site.shoppingcart
 
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem
 
 /**
  *

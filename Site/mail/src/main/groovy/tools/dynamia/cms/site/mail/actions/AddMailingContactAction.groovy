@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.mail.actions;
+package tools.dynamia.cms.site.mail.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.actions.ActionEvent;
-import tools.dynamia.cms.site.core.actions.SiteAction;
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.mail.domain.MailingContact;
-import tools.dynamia.cms.site.mail.services.MailService;
-
-import tools.dynamia.domain.services.CrudService;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.actions.ActionEvent
+import tools.dynamia.cms.site.core.actions.SiteAction
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.mail.domain.MailingContact
+import tools.dynamia.cms.site.mail.services.MailService
+import tools.dynamia.domain.services.CrudService
 
 @CMSAction
 public class AddMailingContactAction implements SiteAction {

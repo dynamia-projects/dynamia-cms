@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.pages.ext;
+package tools.dynamia.cms.site.pages.ext
 
-import java.util.Date;
-
-import tools.dynamia.cms.site.core.api.CMSListener;
-import tools.dynamia.cms.site.pages.domain.Page;
-import tools.dynamia.cms.site.pages.services.PageService;
-import java.io.UnsupportedEncodingException;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.domain.util.CrudServiceListenerAdapter;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.api.CMSListener
+import tools.dynamia.cms.site.pages.domain.Page
+import tools.dynamia.cms.site.pages.services.PageService
+import tools.dynamia.domain.util.CrudServiceListenerAdapter
 
 /**
  *

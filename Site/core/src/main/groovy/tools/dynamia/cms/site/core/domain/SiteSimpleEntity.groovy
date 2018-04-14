@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.domain;
+package tools.dynamia.cms.site.core.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import tools.dynamia.cms.site.core.api.SiteAware;
-import tools.dynamia.domain.SimpleEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore
+import tools.dynamia.cms.site.core.api.SiteAware
+import tools.dynamia.domain.SimpleEntity
 
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
+import javax.persistence.MappedSuperclass
+import javax.persistence.OneToOne
+import javax.validation.constraints.NotNull
 
 @MappedSuperclass
 public abstract class SiteSimpleEntity extends SimpleEntity implements SiteAware {

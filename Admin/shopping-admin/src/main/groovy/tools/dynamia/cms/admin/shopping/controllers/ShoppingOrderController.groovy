@@ -1,10 +1,9 @@
-package tools.dynamia.cms.admin.shopping.controllers;
+package tools.dynamia.cms.admin.shopping.controllers
 
-import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-
-import tools.dynamia.domain.query.QueryConditions;
-import tools.dynamia.zk.crud.CrudController;
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+import tools.dynamia.domain.query.QueryConditions
+import tools.dynamia.zk.crud.CrudController
 
 public class ShoppingOrderController extends CrudController<ShoppingOrder> {
 

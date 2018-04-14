@@ -1,8 +1,8 @@
-package com.dynamia.cms.admin.menus;
+package com.dynamia.cms.admin.menus
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.Test
+import junit.framework.TestCase
+import junit.framework.TestSuite
 
 /**
  * Unit test for simple App.

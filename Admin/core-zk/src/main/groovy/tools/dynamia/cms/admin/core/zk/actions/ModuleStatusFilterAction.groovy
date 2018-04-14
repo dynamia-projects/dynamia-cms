@@ -1,16 +1,14 @@
-package tools.dynamia.cms.admin.core.zk.actions;
+package tools.dynamia.cms.admin.core.zk.actions
 
-import java.util.Arrays;
-
-import tools.dynamia.actions.ActionGroup;
-import tools.dynamia.actions.ActionRenderer;
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.cms.site.core.domain.ModuleInstance;
-import tools.dynamia.commons.ApplicableClass;
-import tools.dynamia.crud.AbstractCrudAction;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.crud.CrudState;
-import tools.dynamia.zk.actions.ComboboxActionRenderer;
+import tools.dynamia.actions.ActionGroup
+import tools.dynamia.actions.ActionRenderer
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.site.core.domain.ModuleInstance
+import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.crud.AbstractCrudAction
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.CrudState
+import tools.dynamia.zk.actions.ComboboxActionRenderer
 
 @InstallAction
 public class ModuleStatusFilterAction extends AbstractCrudAction {

@@ -15,8 +15,6 @@
  */
 package tools.dynamia.cms.admin.core.zk.actions
 
-import java.util.List
-
 import tools.dynamia.actions.AbstractAction
 import tools.dynamia.actions.ActionEvent
 import tools.dynamia.actions.ActionRenderer

@@ -1,6 +1,4 @@
-package tools.dynamia.cms.site.users.api;
-
-import java.io.Serializable;
+package tools.dynamia.cms.site.users.api
 
 public class UserDTO implements Serializable {
 

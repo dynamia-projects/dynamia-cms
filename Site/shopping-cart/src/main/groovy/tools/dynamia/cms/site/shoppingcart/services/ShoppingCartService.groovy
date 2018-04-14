@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.shoppingcart.services;
+package tools.dynamia.cms.site.shoppingcart.services
 
-import java.util.List;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
-import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig
+import tools.dynamia.cms.site.users.domain.User
 
 /**
  *

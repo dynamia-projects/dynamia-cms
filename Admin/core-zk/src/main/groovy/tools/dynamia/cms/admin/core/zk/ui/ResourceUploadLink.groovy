@@ -3,20 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.dynamia.cms.admin.core.zk.ui;
+package tools.dynamia.cms.admin.core.zk.ui
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import tools.dynamia.cms.site.core.DynamiaCMS;
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.io.IOUtils;
-import tools.dynamia.zk.BindingComponentIndex;
-import tools.dynamia.zk.ComponentAliasIndex;
-import tools.dynamia.zk.ui.Uploadlink;
+import tools.dynamia.cms.site.core.DynamiaCMS
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.io.IOUtils
+import tools.dynamia.zk.BindingComponentIndex
+import tools.dynamia.zk.ComponentAliasIndex
+import tools.dynamia.zk.ui.Uploadlink
+
+import java.nio.file.Path
+import java.util.logging.Level
+import java.util.logging.Logger
 
 /**
  *

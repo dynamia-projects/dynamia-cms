@@ -1,15 +1,14 @@
-package tools.dynamia.cms.site.products.domain;
+package tools.dynamia.cms.site.products.domain
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore
+import tools.dynamia.cms.site.core.domain.SiteSimpleEntity
+import tools.dynamia.cms.site.products.dto.StoreContactDTO
+import tools.dynamia.commons.BeanUtils
+import tools.dynamia.domain.util.ContactInfo
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import tools.dynamia.cms.site.core.domain.SiteSimpleEntity;
-import tools.dynamia.cms.site.products.dto.StoreContactDTO;
-import tools.dynamia.commons.BeanUtils;
-import tools.dynamia.domain.util.ContactInfo;
+import javax.persistence.Entity
+import javax.persistence.ManyToOne
+import javax.persistence.Table
 
 @Entity
 @Table(name = "prd_store_contacts")

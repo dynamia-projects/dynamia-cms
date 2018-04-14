@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.dynamia.cms.site.mail;
+package tools.dynamia.cms.site.mail
 
-import tools.dynamia.cms.site.mail.domain.MailAccount;
-import tools.dynamia.domain.util.CrudServiceListenerAdapter;
-import tools.dynamia.integration.sterotypes.Listener;
+import tools.dynamia.cms.site.mail.domain.MailAccount
+import tools.dynamia.domain.util.CrudServiceListenerAdapter
+import tools.dynamia.integration.sterotypes.Listener
 
 /**
  *

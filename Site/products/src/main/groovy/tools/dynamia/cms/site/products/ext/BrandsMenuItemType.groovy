@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.ext;
+package tools.dynamia.cms.site.products.ext
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.core.api.CMSExtension;
-import tools.dynamia.cms.site.menus.MenuContext;
-import tools.dynamia.cms.site.menus.api.MenuItemType;
-import tools.dynamia.cms.site.menus.domain.MenuItem;
-import tools.dynamia.cms.site.products.domain.ProductBrand;
-import tools.dynamia.cms.site.products.services.ProductsService;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.api.CMSExtension
+import tools.dynamia.cms.site.menus.MenuContext
+import tools.dynamia.cms.site.menus.api.MenuItemType
+import tools.dynamia.cms.site.menus.domain.MenuItem
+import tools.dynamia.cms.site.products.domain.ProductBrand
+import tools.dynamia.cms.site.products.services.ProductsService
 
 /**
  *

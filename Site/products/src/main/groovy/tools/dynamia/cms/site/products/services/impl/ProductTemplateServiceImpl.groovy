@@ -15,6 +15,9 @@
  */
 package tools.dynamia.cms.site.products.services.impl
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.Cacheable
+import org.springframework.stereotype.Service
 import tools.dynamia.cms.site.core.CMSUtil
 import tools.dynamia.cms.site.core.StringParser
 import tools.dynamia.cms.site.core.StringParsers
@@ -25,11 +28,6 @@ import tools.dynamia.cms.site.products.domain.ProductTemplate
 import tools.dynamia.cms.site.products.domain.ProductsSiteConfig
 import tools.dynamia.cms.site.products.services.ProductTemplateService
 import tools.dynamia.cms.site.products.services.ProductsService
-import java.util.HashMap
-import java.util.Map
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.cache.annotation.Cacheable
-import org.springframework.stereotype.Service
 import tools.dynamia.commons.BeanUtils
 import tools.dynamia.domain.services.CrudService
 

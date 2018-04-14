@@ -13,22 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.pages.ext;
+package tools.dynamia.cms.site.pages.ext
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.annotation.Order
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.api.CMSExtension
+import tools.dynamia.cms.site.core.api.SiteRequestInterceptor
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.pages.domain.Page
+import tools.dynamia.cms.site.pages.services.PageService
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.api.CMSExtension;
-import tools.dynamia.cms.site.core.api.SiteRequestInterceptor;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.pages.domain.Page;
-import tools.dynamia.cms.site.pages.services.PageService;
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 @CMSExtension
 @Order(Integer.MAX_VALUE)

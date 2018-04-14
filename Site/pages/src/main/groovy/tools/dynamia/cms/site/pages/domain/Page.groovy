@@ -13,30 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.pages.domain;
+package tools.dynamia.cms.site.pages.domain
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import tools.dynamia.cms.site.core.Aliasable
+import tools.dynamia.cms.site.core.api.SiteAware
+import tools.dynamia.cms.site.core.domain.Content
+import tools.dynamia.cms.site.core.domain.ContentAuthor
+import tools.dynamia.domain.contraints.NotEmpty
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-
-import tools.dynamia.cms.site.core.Aliasable;
-import tools.dynamia.cms.site.core.api.SiteAware;
-import tools.dynamia.cms.site.core.domain.Content;
-import tools.dynamia.cms.site.core.domain.ContentAuthor;
-import tools.dynamia.domain.contraints.NotEmpty;
+import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 /**
  *

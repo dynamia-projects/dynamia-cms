@@ -1,14 +1,9 @@
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import tools.dynamia.app.template.ApplicationTemplate;
-import tools.dynamia.app.template.InstallTemplate;
-import tools.dynamia.app.template.Skin;
-import tools.dynamia.app.template.TemplateContext;
+import tools.dynamia.app.template.ApplicationTemplate
+import tools.dynamia.app.template.InstallTemplate
+import tools.dynamia.app.template.Skin
+import tools.dynamia.app.template.TemplateContext
 
 @InstallTemplate
 public class CMSApplicationTemplate implements ApplicationTemplate {

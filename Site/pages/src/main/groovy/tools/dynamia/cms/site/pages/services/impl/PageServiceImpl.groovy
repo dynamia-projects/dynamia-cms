@@ -15,20 +15,14 @@
  */
 package tools.dynamia.cms.site.pages.services.impl
 
-import tools.dynamia.cms.site.core.StringParsers
-
-import java.util.Date
-import java.util.List
-import java.util.Map
-
 import org.jsoup.Jsoup
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
-
 import tools.dynamia.cms.site.core.StringParser
+import tools.dynamia.cms.site.core.StringParsers
 import tools.dynamia.cms.site.core.domain.Site
 import tools.dynamia.cms.site.pages.domain.Page
 import tools.dynamia.cms.site.pages.domain.PageCategory

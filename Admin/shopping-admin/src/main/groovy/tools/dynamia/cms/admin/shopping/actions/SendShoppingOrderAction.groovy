@@ -1,21 +1,20 @@
-package tools.dynamia.cms.admin.shopping.actions;
+package tools.dynamia.cms.admin.shopping.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.zkoss.zul.Messagebox;
-
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
-import tools.dynamia.commons.ApplicableClass;
-import tools.dynamia.crud.AbstractCrudAction;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.crud.CrudState;
-import tools.dynamia.domain.ValidationError;
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.ui.MessageType;
-import tools.dynamia.ui.UIMessages;
-import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSenderException;
+import org.springframework.beans.factory.annotation.Autowired
+import org.zkoss.zul.Messagebox
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService
+import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.crud.AbstractCrudAction
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.CrudState
+import tools.dynamia.domain.ValidationError
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.ui.MessageType
+import tools.dynamia.ui.UIMessages
+import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSenderException
 
 @InstallAction
 public class SendShoppingOrderAction extends AbstractCrudAction {

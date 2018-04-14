@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.mail.services;
+package tools.dynamia.cms.site.mail.services
 
-import org.springframework.scheduling.annotation.Async;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.mail.MailMessage;
-import tools.dynamia.cms.site.mail.domain.MailAccount;
-import tools.dynamia.cms.site.mail.domain.MailingContact;
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.mail.MailMessage
+import tools.dynamia.cms.site.mail.domain.MailAccount
+import tools.dynamia.cms.site.mail.domain.MailingContact
 
 /**
  *

@@ -5,19 +5,11 @@
  */
 package tools.dynamia.cms.admin.products.actions
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.zkoss.zul.*
+import tools.dynamia.actions.InstallAction
 import tools.dynamia.cms.site.products.domain.Product
 import tools.dynamia.cms.site.products.services.ProductTemplateService
-import java.util.HashMap
-import java.util.Map
-import java.util.TreeMap
-import org.springframework.beans.factory.annotation.Autowired
-import org.zkoss.zul.Label
-import org.zkoss.zul.Listbox
-import org.zkoss.zul.Listcell
-import org.zkoss.zul.Listhead
-import org.zkoss.zul.Listheader
-import org.zkoss.zul.Listitem
-import tools.dynamia.actions.InstallAction
 import tools.dynamia.commons.ApplicableClass
 import tools.dynamia.crud.AbstractCrudAction
 import tools.dynamia.crud.CrudActionEvent

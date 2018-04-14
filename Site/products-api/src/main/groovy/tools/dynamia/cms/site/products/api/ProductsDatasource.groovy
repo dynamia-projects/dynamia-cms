@@ -13,15 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.api;
+package tools.dynamia.cms.site.products.api
 
-import tools.dynamia.cms.site.products.dto.ProductDTO;
-import tools.dynamia.cms.site.products.dto.ProductBrandDTO;
-import tools.dynamia.cms.site.products.dto.ProductCategoryDTO;
-import tools.dynamia.cms.site.products.dto.RelatedProductDTO;
-import tools.dynamia.cms.site.products.dto.StoreDTO;
-import java.util.List;
-import java.util.Map;
+import tools.dynamia.cms.site.products.dto.*
 
 /**
  * This interface represent a product datasource that can be local or remote. It

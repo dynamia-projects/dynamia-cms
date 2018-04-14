@@ -1,8 +1,7 @@
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
-import org.junit.Test;
-
-import junit.framework.Assert;
+import junit.framework.Assert
+import org.junit.Test
 
 public class CMSUtilTest {
 

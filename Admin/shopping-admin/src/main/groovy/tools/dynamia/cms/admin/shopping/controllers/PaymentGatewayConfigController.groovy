@@ -1,14 +1,14 @@
-package tools.dynamia.cms.admin.shopping.controllers;
+package tools.dynamia.cms.admin.shopping.controllers
 
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.payment.PaymentGateway;
-import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
-import tools.dynamia.cms.site.payment.services.PaymentService;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
-import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
-import tools.dynamia.commons.StringUtils;
-import tools.dynamia.integration.Containers;
-import tools.dynamia.zk.crud.CrudController;
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.payment.PaymentGateway
+import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig
+import tools.dynamia.cms.site.payment.services.PaymentService
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig
+import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService
+import tools.dynamia.commons.StringUtils
+import tools.dynamia.integration.Containers
+import tools.dynamia.zk.crud.CrudController
 
 public class PaymentGatewayConfigController extends CrudController<PaymentGatewayConfig> {
 

@@ -13,21 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.menus.modules;
+package tools.dynamia.cms.site.menus.modules
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.core.api.AbstractModule;
-import tools.dynamia.cms.site.core.api.CMSModule;
-import tools.dynamia.cms.site.core.api.ModuleContext;
-import tools.dynamia.cms.site.core.domain.ModuleInstance;
-import tools.dynamia.cms.site.menus.MenuContext;
-import tools.dynamia.cms.site.menus.domain.Menu;
-import tools.dynamia.cms.site.menus.domain.MenuItem;
-import tools.dynamia.cms.site.menus.services.MenuService;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.api.AbstractModule
+import tools.dynamia.cms.site.core.api.CMSModule
+import tools.dynamia.cms.site.core.api.ModuleContext
+import tools.dynamia.cms.site.core.domain.ModuleInstance
+import tools.dynamia.cms.site.menus.MenuContext
+import tools.dynamia.cms.site.menus.domain.Menu
+import tools.dynamia.cms.site.menus.domain.MenuItem
+import tools.dynamia.cms.site.menus.services.MenuService
 
 @CMSModule
 public class MenuModule extends AbstractModule {

@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.actions;
+package tools.dynamia.cms.admin.core.zk.actions
 
-import tools.dynamia.cms.site.core.DynamiaCMS;
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.domain.Site;
-
-import tools.dynamia.actions.ActionRenderer;
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.commons.ApplicableClass;
-import tools.dynamia.crud.AbstractCrudAction;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.crud.CrudState;
-import tools.dynamia.modules.filemanager.FileManager;
-import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer;
-import tools.dynamia.zk.navigation.ComponentPage;
-import tools.dynamia.zk.navigation.ZKNavigationManager;
+import tools.dynamia.actions.ActionRenderer
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.site.core.DynamiaCMS
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.crud.AbstractCrudAction
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.CrudState
+import tools.dynamia.modules.filemanager.FileManager
+import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer
+import tools.dynamia.zk.navigation.ComponentPage
+import tools.dynamia.zk.navigation.ZKNavigationManager
 
 /**
  *

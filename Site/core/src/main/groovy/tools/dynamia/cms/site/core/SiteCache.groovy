@@ -1,19 +1,16 @@
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
-import java.util.Arrays;
-import java.util.Map.Entry;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.Cache
+import org.springframework.cache.Cache.ValueWrapper
+import org.springframework.cache.CacheManager
+import org.springframework.stereotype.Component
+import tools.dynamia.cms.site.core.actions.ActionEvent
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.commons.StringUtils
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
-import org.springframework.cache.Cache.ValueWrapper;
-import org.springframework.cache.CacheManager;
-import org.springframework.stereotype.Component;
-
-import tools.dynamia.cms.site.core.actions.ActionEvent;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.commons.StringUtils;
+import javax.servlet.http.HttpServletRequest
+import java.util.Map.Entry
 
 @Component
 public class SiteCache {

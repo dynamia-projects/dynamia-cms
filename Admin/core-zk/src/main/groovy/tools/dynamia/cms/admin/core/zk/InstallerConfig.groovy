@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk;
+package tools.dynamia.cms.admin.core.zk
 
-import org.springframework.stereotype.Component;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.crud.CrudPage;
-import tools.dynamia.navigation.Module;
-import tools.dynamia.navigation.ModuleProvider;
-import tools.dynamia.ui.icons.IconSize;
-import tools.dynamia.zk.crud.cfg.ConfigPage;
+import org.springframework.stereotype.Component
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.crud.CrudPage
+import tools.dynamia.navigation.Module
+import tools.dynamia.navigation.ModuleProvider
+import tools.dynamia.ui.icons.IconSize
+import tools.dynamia.zk.crud.cfg.ConfigPage
 
 /**
  * @author Mario Serrano Leones

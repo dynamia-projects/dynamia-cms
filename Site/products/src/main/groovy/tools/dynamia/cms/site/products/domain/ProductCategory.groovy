@@ -13,33 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.domain;
+package tools.dynamia.cms.site.products.domain
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore
+import org.hibernate.annotations.BatchSize
+import tools.dynamia.cms.site.core.Orderable
+import tools.dynamia.cms.site.core.api.SiteAware
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.products.dto.ProductCategoryDTO
+import tools.dynamia.domain.SimpleEntity
+import tools.dynamia.domain.contraints.NotEmpty
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.BatchSize;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import tools.dynamia.cms.site.core.Orderable;
-import tools.dynamia.cms.site.core.api.SiteAware;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.products.dto.ProductCategoryDTO;
-import tools.dynamia.domain.SimpleEntity;
-import tools.dynamia.domain.contraints.NotEmpty;
+import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 /**
  *

@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users;
+package tools.dynamia.cms.site.users
 
-import tools.dynamia.domain.BaseEntity;
-import tools.dynamia.domain.util.CrudServiceListenerAdapter;
+import tools.dynamia.domain.BaseEntity
+import tools.dynamia.domain.util.CrudServiceListenerAdapter
 
 public class SecurityCrudServiceListener extends CrudServiceListenerAdapter<Object> {
 

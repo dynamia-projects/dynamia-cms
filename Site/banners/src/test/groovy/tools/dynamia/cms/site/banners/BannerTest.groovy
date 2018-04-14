@@ -2,7 +2,6 @@ package tools.dynamia.cms.site.banners
 
 import org.junit.Assert
 import org.junit.Test
-
 import tools.dynamia.cms.site.banners.domain.Banner
 import tools.dynamia.cms.site.core.CMSUtil
 

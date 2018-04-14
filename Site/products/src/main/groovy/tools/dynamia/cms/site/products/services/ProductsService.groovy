@@ -13,23 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.services;
+package tools.dynamia.cms.site.products.services
 
-import java.util.List;
-
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.products.ProductSearchForm;
-import tools.dynamia.cms.site.products.ProductShareForm;
-import tools.dynamia.cms.site.products.domain.*;
-import tools.dynamia.cms.site.products.dto.ProductDTO;
-import tools.dynamia.cms.site.products.dto.ProductsReviewResponse;
-import tools.dynamia.cms.site.users.domain.User;
-import tools.dynamia.domain.query.BooleanOp;
-import tools.dynamia.domain.query.QueryConditions;
-import tools.dynamia.domain.query.QueryParameters;
+import org.springframework.transaction.annotation.Propagation
+import org.springframework.transaction.annotation.Transactional
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.products.ProductSearchForm
+import tools.dynamia.cms.site.products.ProductShareForm
+import tools.dynamia.cms.site.products.domain.*
+import tools.dynamia.cms.site.products.dto.ProductDTO
+import tools.dynamia.cms.site.products.dto.ProductsReviewResponse
+import tools.dynamia.cms.site.users.domain.User
+import tools.dynamia.domain.query.QueryParameters
 
 /**
  * @author Mario Serrano Leones

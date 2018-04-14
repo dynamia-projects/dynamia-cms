@@ -13,20 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.domain;
+package tools.dynamia.cms.site.products.domain
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnore
+import tools.dynamia.cms.site.users.domain.User
+import tools.dynamia.domain.SimpleEntity
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import tools.dynamia.cms.site.users.domain.User;
-
-import tools.dynamia.domain.SimpleEntity;
+import javax.persistence.Entity
+import javax.persistence.OneToOne
+import javax.persistence.Table
+import javax.persistence.Temporal
 
 /**
  *

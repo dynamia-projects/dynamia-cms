@@ -3,7 +3,6 @@ package tools.dynamia.cms.site.core.controllers
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
-
 import tools.dynamia.cms.site.core.SiteContext
 import tools.dynamia.cms.site.core.domain.Site
 import tools.dynamia.cms.site.core.sitemap.SiteMap

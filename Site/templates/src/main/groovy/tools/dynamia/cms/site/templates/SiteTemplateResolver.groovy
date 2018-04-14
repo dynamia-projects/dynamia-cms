@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.templates;
+package tools.dynamia.cms.site.templates
 
-import java.util.Map;
-
-import org.thymeleaf.IEngineConfiguration;
-import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
-import org.thymeleaf.templateresource.ITemplateResource;
+import org.thymeleaf.IEngineConfiguration
+import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver
+import org.thymeleaf.templateresource.ITemplateResource
 
 /**
  *

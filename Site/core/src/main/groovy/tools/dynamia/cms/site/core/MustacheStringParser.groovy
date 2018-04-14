@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
-import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheFactory;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.github.mustachejava.Mustache
+import com.github.mustachejava.MustacheFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
 /**
  *

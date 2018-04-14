@@ -13,24 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.modules;
+package tools.dynamia.cms.site.products.modules
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.core.api.AbstractModule;
-import tools.dynamia.cms.site.core.api.CMSModule;
-import tools.dynamia.cms.site.core.api.ModuleContext;
-import tools.dynamia.cms.site.core.domain.ModuleInstance;
-import tools.dynamia.cms.site.products.domain.Product;
-import tools.dynamia.cms.site.products.services.ProductsService;
-import tools.dynamia.commons.collect.PagedList;
-import tools.dynamia.domain.query.BooleanOp;
-import tools.dynamia.domain.query.QueryConditions;
-import tools.dynamia.domain.query.QueryParameters;
-import tools.dynamia.domain.services.CrudService;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.api.AbstractModule
+import tools.dynamia.cms.site.core.api.CMSModule
+import tools.dynamia.cms.site.core.api.ModuleContext
+import tools.dynamia.cms.site.core.domain.ModuleInstance
+import tools.dynamia.cms.site.products.domain.Product
+import tools.dynamia.cms.site.products.services.ProductsService
+import tools.dynamia.commons.collect.PagedList
+import tools.dynamia.domain.query.BooleanOp
+import tools.dynamia.domain.query.QueryConditions
+import tools.dynamia.domain.query.QueryParameters
+import tools.dynamia.domain.services.CrudService
 
 /**
  * Created by Mario on 18/11/2014.

@@ -1,7 +1,4 @@
-package toosl.dynamia.cms.site.shoppingcart.dto;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
+package toosl.dynamia.cms.site.shoppingcart.dto
 
 public class ShoppingOrderItemDTO implements Serializable {
 	private String code;

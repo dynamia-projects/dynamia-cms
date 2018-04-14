@@ -3,27 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.dynamia.cms.admin.users.controllers;
+package tools.dynamia.cms.admin.users.controllers
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler
+import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.servlet.view.RedirectView
+import tools.dynamia.cms.admin.users.Initializer
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.core.services.SiteService
+import tools.dynamia.integration.Containers
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-
-import tools.dynamia.cms.admin.users.Initializer;
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.services.SiteService;
-
-import tools.dynamia.integration.Containers;
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 /**
  *

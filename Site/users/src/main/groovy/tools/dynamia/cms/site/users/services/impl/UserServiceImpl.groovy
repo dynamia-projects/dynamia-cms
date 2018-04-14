@@ -44,9 +44,6 @@ import tools.dynamia.domain.services.CrudService
 import tools.dynamia.domain.services.ValidatorService
 import tools.dynamia.web.util.HttpRemotingServiceClient
 
-import java.util.Collections
-import java.util.List
-
 /**
  * @author Mario Serrano Leones
  */

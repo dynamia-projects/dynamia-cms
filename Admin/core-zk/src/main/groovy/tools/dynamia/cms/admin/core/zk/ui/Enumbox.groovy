@@ -13,16 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.ui;
+package tools.dynamia.cms.admin.core.zk.ui
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.zkoss.zk.ui.Component;
-import org.zkoss.zul.Combobox;
-
-import tools.dynamia.zk.ComponentAliasIndex;
-import tools.dynamia.zk.util.ZKUtil;
+import org.zkoss.zk.ui.Component
+import org.zkoss.zul.Combobox
+import tools.dynamia.zk.ComponentAliasIndex
+import tools.dynamia.zk.util.ZKUtil
 
 /**
  *

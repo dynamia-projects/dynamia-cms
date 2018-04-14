@@ -18,9 +18,7 @@ package tools.dynamia.cms.admin.pages
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
-
 import tools.dynamia.cms.site.pages.services.PageService
-
 import tools.dynamia.commons.logger.LoggingService
 import tools.dynamia.commons.logger.SLF4JLoggingService
 

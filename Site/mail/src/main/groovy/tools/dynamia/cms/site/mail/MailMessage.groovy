@@ -13,20 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.mail;
+package tools.dynamia.cms.site.mail
 
-import java.io.File;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.mail.domain.MailAccount;
-import tools.dynamia.cms.site.mail.domain.MailTemplate;
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.mail.domain.MailAccount
+import tools.dynamia.cms.site.mail.domain.MailTemplate
 
 /**
  *

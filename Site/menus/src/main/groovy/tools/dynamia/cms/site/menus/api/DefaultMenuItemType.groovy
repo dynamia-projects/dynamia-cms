@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.menus.api;
+package tools.dynamia.cms.site.menus.api
 
-import tools.dynamia.cms.site.core.api.CMSExtension;
-import tools.dynamia.cms.site.menus.MenuContext;
+import tools.dynamia.cms.site.core.api.CMSExtension
+import tools.dynamia.cms.site.menus.MenuContext
 
 @CMSExtension
 public class DefaultMenuItemType implements MenuItemType {

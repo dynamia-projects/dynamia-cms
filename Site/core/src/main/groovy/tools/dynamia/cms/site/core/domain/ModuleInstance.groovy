@@ -13,21 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.domain;
+package tools.dynamia.cms.site.core.domain
 
-import org.hibernate.annotations.BatchSize;
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.Orderable;
-import tools.dynamia.domain.contraints.NotEmpty;
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.integration.Containers;
+import org.hibernate.annotations.BatchSize
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.Orderable
+import tools.dynamia.domain.contraints.NotEmpty
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.integration.Containers
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 /**
  * @author Mario Serrano Leones

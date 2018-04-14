@@ -16,8 +16,6 @@ import tools.dynamia.domain.services.CrudService
 import tools.dynamia.integration.sterotypes.Service
 import tools.dynamia.web.util.HttpRemotingServiceClient
 
-import java.util.List
-
 @Service
 class DynamiaSiteConnectorServiceImpl implements tools.dynamia.cms.site.core.services.DynamiaSiteConnectorService {
 

@@ -13,15 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.api;
+package tools.dynamia.cms.site.core.api
 
-import tools.dynamia.cms.site.core.JavaScriptResource;
-import tools.dynamia.cms.site.core.StyleSheetResource;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import tools.dynamia.cms.site.core.JavaScriptResource
+import tools.dynamia.cms.site.core.StyleSheetResource
 
 public abstract class AbstractModule implements Module {
 

@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
-import tools.dynamia.cms.site.core.api.CMSListener;
-
-import tools.dynamia.domain.query.Parameter;
-import tools.dynamia.domain.util.CrudServiceListenerAdapter;
+import tools.dynamia.cms.site.core.api.CMSListener
+import tools.dynamia.domain.query.Parameter
+import tools.dynamia.domain.util.CrudServiceListenerAdapter
 
 /**
  *

@@ -1,12 +1,9 @@
-package tools.dynamia.cms.site.core.domain;
+package tools.dynamia.cms.site.core.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import tools.dynamia.cms.site.core.dto.RegionDTO
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import tools.dynamia.cms.site.core.dto.RegionDTO;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*
 
 /**
  * Created by mario on 4/07/2017.

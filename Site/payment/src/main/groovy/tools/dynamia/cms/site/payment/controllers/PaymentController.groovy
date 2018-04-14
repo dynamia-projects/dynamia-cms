@@ -15,11 +15,6 @@
  */
 package tools.dynamia.cms.site.payment.controllers
 
-import java.util.HashMap
-import java.util.Map
-
-import javax.servlet.http.HttpServletRequest
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -31,13 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.web.servlet.view.RedirectView
-
-import tools.dynamia.cms.site.payment.PaymentForm
-import tools.dynamia.cms.site.payment.PaymentGateway
-import tools.dynamia.cms.site.payment.PaymentHolder
-import tools.dynamia.cms.site.payment.PaymentTransactionEvent
-import tools.dynamia.cms.site.payment.PaymentTransactionListener
-import tools.dynamia.cms.site.payment.ResponseType
+import tools.dynamia.cms.site.payment.*
 import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction
 import tools.dynamia.cms.site.payment.services.PaymentService
@@ -45,6 +34,8 @@ import tools.dynamia.commons.logger.LoggingService
 import tools.dynamia.commons.logger.SLF4JLoggingService
 import tools.dynamia.domain.services.CrudService
 import tools.dynamia.integration.Containers
+
+import javax.servlet.http.HttpServletRequest
 
 @Controller
 @RequestMapping("/payment")

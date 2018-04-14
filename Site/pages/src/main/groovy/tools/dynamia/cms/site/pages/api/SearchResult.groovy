@@ -13,12 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.pages.api;
-
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
+package tools.dynamia.cms.site.pages.api
 /**
  *
  * @author Mario Serrano Leones

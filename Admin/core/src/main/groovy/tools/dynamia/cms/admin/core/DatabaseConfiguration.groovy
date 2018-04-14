@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.dynamia.cms.admin.core;
+package tools.dynamia.cms.admin.core
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import tools.dynamia.app.ApplicationInfo;
-import tools.dynamia.app.JPAConfigurationAdapter;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Configuration
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
+import org.springframework.transaction.annotation.EnableTransactionManagement
+import tools.dynamia.app.ApplicationInfo
+import tools.dynamia.app.JPAConfigurationAdapter
 
 /**
  * @author mario

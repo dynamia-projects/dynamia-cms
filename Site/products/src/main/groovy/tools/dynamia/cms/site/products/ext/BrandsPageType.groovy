@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.ext;
+package tools.dynamia.cms.site.products.ext
 
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.actions.SiteActionManager;
-import tools.dynamia.cms.site.core.api.CMSExtension;
-import tools.dynamia.cms.site.pages.PageContext;
-import tools.dynamia.cms.site.pages.api.PageTypeExtension;
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.actions.SiteActionManager
+import tools.dynamia.cms.site.core.api.CMSExtension
+import tools.dynamia.cms.site.pages.PageContext
+import tools.dynamia.cms.site.pages.api.PageTypeExtension
 
 /**
  *

@@ -5,11 +5,6 @@ import tools.dynamia.cms.site.products.domain.ProductCategory
 import tools.dynamia.commons.collect.HashSetMultiMap
 import tools.dynamia.commons.collect.MultiMap
 
-import java.io.Serializable
-import java.util.ArrayList
-import java.util.Comparator
-import java.util.List
-
 class ProductCategoryGroup implements Serializable {
 
     private ProductCategory category

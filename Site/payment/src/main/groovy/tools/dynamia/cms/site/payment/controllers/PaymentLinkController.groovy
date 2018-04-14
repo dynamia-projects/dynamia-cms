@@ -1,23 +1,22 @@
-package tools.dynamia.cms.site.payment.controllers;
+package tools.dynamia.cms.site.payment.controllers
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import tools.dynamia.cms.site.payment.PaymentException;
-import tools.dynamia.cms.site.payment.PaymentForm;
-import tools.dynamia.cms.site.payment.PaymentGateway;
-import tools.dynamia.cms.site.payment.PaymentHolder;
-import tools.dynamia.cms.site.payment.api.PaymentSource;
-import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
-import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
-import tools.dynamia.cms.site.payment.services.PaymentService;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.payment.PaymentException
+import tools.dynamia.cms.site.payment.PaymentForm
+import tools.dynamia.cms.site.payment.PaymentGateway
+import tools.dynamia.cms.site.payment.PaymentHolder
+import tools.dynamia.cms.site.payment.api.PaymentSource
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus
+import tools.dynamia.cms.site.payment.domain.PaymentTransaction
+import tools.dynamia.cms.site.payment.services.PaymentService
 
-import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
+import javax.servlet.http.HttpServletRequest
 
 @Controller
 @RequestMapping("/payment")

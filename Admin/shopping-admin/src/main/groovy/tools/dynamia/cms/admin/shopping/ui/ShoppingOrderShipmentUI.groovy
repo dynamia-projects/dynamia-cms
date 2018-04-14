@@ -1,24 +1,15 @@
-package tools.dynamia.cms.admin.shopping.ui;
+package tools.dynamia.cms.admin.shopping.ui
 
-import java.util.Map;
-
-import org.zkoss.zul.Borderlayout;
-import org.zkoss.zul.Caption;
-import org.zkoss.zul.Center;
-import org.zkoss.zul.Div;
-import org.zkoss.zul.Groupbox;
-import org.zkoss.zul.South;
-
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-
-import tools.dynamia.actions.Action;
-import tools.dynamia.actions.ActionEvent;
-import tools.dynamia.actions.ActionEventBuilder;
-import tools.dynamia.viewers.util.Viewers;
-import tools.dynamia.zk.actions.ActionToolbar;
-import tools.dynamia.zk.viewers.form.FormView;
-import tools.dynamia.zk.viewers.table.TableView;
+import org.zkoss.zul.*
+import tools.dynamia.actions.Action
+import tools.dynamia.actions.ActionEvent
+import tools.dynamia.actions.ActionEventBuilder
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+import tools.dynamia.viewers.util.Viewers
+import tools.dynamia.zk.actions.ActionToolbar
+import tools.dynamia.zk.viewers.form.FormView
+import tools.dynamia.zk.viewers.table.TableView
 
 @SuppressWarnings("unchecked")
 public class ShoppingOrderShipmentUI extends Borderlayout implements ActionEventBuilder {

@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.products.controllers;
+package tools.dynamia.cms.admin.products.controllers
 
-import tools.dynamia.cms.site.products.domain.Product;
-import tools.dynamia.zk.crud.CrudController;
+import tools.dynamia.cms.site.products.domain.Product
+import tools.dynamia.zk.crud.CrudController
 
 /**
  *

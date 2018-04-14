@@ -15,7 +15,6 @@ import org.zkoss.zk.ui.Page
 import org.zkoss.zk.ui.Session
 import org.zkoss.zk.ui.select.annotation.WireVariable
 import org.zkoss.zk.ui.util.Clients
-
 import tools.dynamia.commons.logger.LoggingService
 import tools.dynamia.commons.logger.SLF4JLoggingService
 

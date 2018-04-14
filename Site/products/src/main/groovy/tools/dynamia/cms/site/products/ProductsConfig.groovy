@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products;
+package tools.dynamia.cms.site.products
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
-
-import tools.dynamia.cms.site.products.api.ProductsListener;
-import tools.dynamia.cms.site.products.listeners.ProductListenerImpl;
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter
+import tools.dynamia.cms.site.products.api.ProductsListener
+import tools.dynamia.cms.site.products.listeners.ProductListenerImpl
 
 /**
  *

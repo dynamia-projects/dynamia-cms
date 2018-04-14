@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users.actions;
+package tools.dynamia.cms.site.users.actions
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.actions.ActionEvent;
-import tools.dynamia.cms.site.core.actions.SiteAction;
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.users.UserHolder;
-import tools.dynamia.cms.site.users.domain.UserContactInfo;
-import tools.dynamia.cms.site.users.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.actions.ActionEvent
+import tools.dynamia.cms.site.core.actions.SiteAction
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.users.UserHolder
+import tools.dynamia.cms.site.users.domain.UserContactInfo
+import tools.dynamia.cms.site.users.services.UserService
 
 /**
  *

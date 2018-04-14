@@ -13,27 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.services;
+package tools.dynamia.cms.site.products.services
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import tools.dynamia.cms.site.core.services.SiteService;
-import tools.dynamia.cms.site.products.domain.ProductBrand;
-import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import tools.dynamia.cms.site.products.dto.ProductBrandDTO;
-import tools.dynamia.cms.site.products.dto.ProductCategoryDTO;
-import tools.dynamia.cms.site.products.dto.ProductDTO;
-import tools.dynamia.cms.site.products.dto.RelatedProductDTO;
-import tools.dynamia.cms.site.products.dto.StoreDTO;
-
-import tools.dynamia.commons.logger.LoggingService;
-import tools.dynamia.commons.logger.SLF4JLoggingService;
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.integration.scheduling.SchedulerUtil;
-import tools.dynamia.integration.scheduling.Task;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
+import tools.dynamia.cms.site.core.services.SiteService
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig
+import tools.dynamia.cms.site.products.dto.*
+import tools.dynamia.commons.logger.LoggingService
+import tools.dynamia.commons.logger.SLF4JLoggingService
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.integration.scheduling.SchedulerUtil
+import tools.dynamia.integration.scheduling.Task
 
 /**
  *

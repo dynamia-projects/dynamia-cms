@@ -13,26 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.templates;
+package tools.dynamia.cms.site.templates
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import org.thymeleaf.templateresource.ITemplateResource
+import tools.dynamia.cms.site.core.DynamiaCMS
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.core.services.SiteService
+import tools.dynamia.commons.StringUtils
+import tools.dynamia.integration.Containers
 
-import org.thymeleaf.templateresource.ITemplateResource;
-
-import tools.dynamia.cms.site.core.DynamiaCMS;
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.services.SiteService;
-import tools.dynamia.commons.StringUtils;
-import tools.dynamia.integration.Containers;
+import java.nio.file.Files
+import java.nio.file.Path
 
 /**
  *

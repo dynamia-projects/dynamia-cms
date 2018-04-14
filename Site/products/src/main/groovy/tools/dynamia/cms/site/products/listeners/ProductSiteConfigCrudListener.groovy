@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.listeners;
+package tools.dynamia.cms.site.products.listeners
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.core.api.CMSListener;
-import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import tools.dynamia.cms.site.products.services.ProductsService;
-
-import tools.dynamia.domain.util.CrudServiceListenerAdapter;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.api.CMSListener
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig
+import tools.dynamia.cms.site.products.services.ProductsService
+import tools.dynamia.domain.util.CrudServiceListenerAdapter
 
 /**
  *

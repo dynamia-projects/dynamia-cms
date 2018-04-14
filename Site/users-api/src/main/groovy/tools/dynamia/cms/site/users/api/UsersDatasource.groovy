@@ -1,7 +1,4 @@
-package tools.dynamia.cms.site.users.api;
-
-import java.util.List;
-import java.util.Map;
+package tools.dynamia.cms.site.users.api
 
 public interface UsersDatasource {
 

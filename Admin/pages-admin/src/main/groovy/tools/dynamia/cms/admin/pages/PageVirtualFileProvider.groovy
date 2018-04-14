@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.pages;
+package tools.dynamia.cms.admin.pages
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.pages.domain.PageCategory;
-import tools.dynamia.cms.site.pages.services.PageService;
-
-import tools.dynamia.integration.sterotypes.Provider;
-import tools.dynamia.io.VirtualFile;
-import tools.dynamia.io.VirtualFileProvider;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.pages.domain.PageCategory
+import tools.dynamia.cms.site.pages.services.PageService
+import tools.dynamia.integration.sterotypes.Provider
+import tools.dynamia.io.VirtualFile
+import tools.dynamia.io.VirtualFileProvider
 
 @Provider
 public class PageVirtualFileProvider implements VirtualFileProvider {

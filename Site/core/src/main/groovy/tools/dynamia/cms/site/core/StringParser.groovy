@@ -5,8 +5,6 @@
  */
 package tools.dynamia.cms.site.core
 
-import java.util.Map
-import java.util.Optional
 import tools.dynamia.cms.site.core.api.TypeExtension
 import tools.dynamia.integration.Containers
 

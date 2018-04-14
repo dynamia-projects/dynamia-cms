@@ -1,12 +1,12 @@
-package tools.dynamia.cms.admin.shoppingcart.listeners;
+package tools.dynamia.cms.admin.shoppingcart.listeners
 
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.payment.api.Payment;
-import tools.dynamia.commons.BeanUtils;
-import tools.dynamia.domain.query.QueryConditions;
-import tools.dynamia.domain.query.QueryParameters;
-import tools.dynamia.domain.util.CrudServiceListenerAdapter;
-import tools.dynamia.integration.sterotypes.Listener;
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.payment.api.Payment
+import tools.dynamia.commons.BeanUtils
+import tools.dynamia.domain.query.QueryConditions
+import tools.dynamia.domain.query.QueryParameters
+import tools.dynamia.domain.util.CrudServiceListenerAdapter
+import tools.dynamia.integration.sterotypes.Listener
 
 @Listener
 public class PaymentCrudListener extends CrudServiceListenerAdapter<Payment> {

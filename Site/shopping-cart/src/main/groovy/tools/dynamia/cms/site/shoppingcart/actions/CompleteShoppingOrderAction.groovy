@@ -13,30 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.shoppingcart.actions;
+package tools.dynamia.cms.site.shoppingcart.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.actions.ActionEvent;
-import tools.dynamia.cms.site.core.actions.SiteAction;
-import tools.dynamia.cms.site.core.actions.SiteActionManager;
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.payment.PaymentForm;
-import tools.dynamia.cms.site.payment.PaymentGateway;
-import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
-import tools.dynamia.cms.site.payment.services.PaymentService;
-import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
-import tools.dynamia.cms.site.shoppingcart.domain.enums.ShoppingCartStatus;
-import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
-import tools.dynamia.cms.site.users.UserHolder;
-import tools.dynamia.cms.site.users.domain.UserContactInfo;
-
-import tools.dynamia.domain.ValidationError;
-import tools.dynamia.domain.services.CrudService;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.actions.ActionEvent
+import tools.dynamia.cms.site.core.actions.SiteAction
+import tools.dynamia.cms.site.core.actions.SiteActionManager
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus
+import tools.dynamia.cms.site.payment.services.PaymentService
+import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig
+import tools.dynamia.cms.site.shoppingcart.domain.enums.ShoppingCartStatus
+import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService
+import tools.dynamia.cms.site.users.UserHolder
+import tools.dynamia.cms.site.users.domain.UserContactInfo
+import tools.dynamia.domain.ValidationError
+import tools.dynamia.domain.services.CrudService
 
 /**
  *

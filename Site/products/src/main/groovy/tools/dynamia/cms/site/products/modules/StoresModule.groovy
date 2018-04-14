@@ -8,8 +8,6 @@ import tools.dynamia.cms.site.products.domain.Store
 import tools.dynamia.cms.site.products.services.ProductsService
 import tools.dynamia.domain.services.CrudService
 
-import java.util.List
-
 @CMSModule
 class StoresModule extends AbstractModule {
 

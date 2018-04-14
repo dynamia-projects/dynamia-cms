@@ -1,7 +1,7 @@
-package tools.dynamia.cms.admin.core.zk.controllers;
+package tools.dynamia.cms.admin.core.zk.controllers
 
-import tools.dynamia.cms.site.core.domain.ModuleInstance;
-import tools.dynamia.zk.crud.CrudController;
+import tools.dynamia.cms.site.core.domain.ModuleInstance
+import tools.dynamia.zk.crud.CrudController
 
 public class ModuleInstanceCrudController extends CrudController<ModuleInstance> {
 

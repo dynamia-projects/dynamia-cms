@@ -1,9 +1,6 @@
-package toosl.dynamia.cms.site.shoppingcart.api;
+package toosl.dynamia.cms.site.shoppingcart.api
 
-import java.util.List;
-import java.util.Map;
-
-import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderDTO;
+import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderDTO
 
 public interface ShoppingOrderSender {
 

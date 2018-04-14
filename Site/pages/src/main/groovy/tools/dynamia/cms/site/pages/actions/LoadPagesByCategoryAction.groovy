@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.pages.actions;
+package tools.dynamia.cms.site.pages.actions
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.actions.ActionEvent;
-import tools.dynamia.cms.site.core.actions.SiteAction;
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.pages.domain.Page;
-import tools.dynamia.cms.site.pages.domain.PageCategory;
-import tools.dynamia.cms.site.pages.services.PageService;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.servlet.view.RedirectView
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.actions.ActionEvent
+import tools.dynamia.cms.site.core.actions.SiteAction
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.pages.domain.Page
+import tools.dynamia.cms.site.pages.domain.PageCategory
+import tools.dynamia.cms.site.pages.services.PageService
 
 /**
  *

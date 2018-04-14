@@ -15,13 +15,12 @@
  */
 package tools.dynamia.cms.site.payment.domain
 
+import tools.dynamia.cms.site.payment.PaymentGateway
+import tools.dynamia.domain.SimpleEntity
+
 import javax.persistence.Entity
 import javax.persistence.Table
 import javax.validation.constraints.NotNull
-
-import tools.dynamia.cms.site.payment.PaymentGateway
-
-import tools.dynamia.domain.SimpleEntity
 
 @Entity
 @Table(name = "pay_gateway_config")

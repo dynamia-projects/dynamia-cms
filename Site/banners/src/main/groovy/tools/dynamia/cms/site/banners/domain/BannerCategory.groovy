@@ -15,17 +15,16 @@
  */
 package tools.dynamia.cms.site.banners.domain
 
-import javax.persistence.Entity
-import javax.persistence.OneToOne
-import javax.persistence.Table
-import javax.validation.constraints.NotNull
-
 import org.hibernate.annotations.BatchSize
-
 import tools.dynamia.cms.site.core.api.SiteAware
 import tools.dynamia.cms.site.core.domain.Site
 import tools.dynamia.domain.SimpleEntity
 import tools.dynamia.domain.contraints.NotEmpty
+
+import javax.persistence.Entity
+import javax.persistence.OneToOne
+import javax.persistence.Table
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "ban_categories")

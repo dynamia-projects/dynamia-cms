@@ -1,15 +1,14 @@
-package tools.dynamia.cms.admin.core.zk.ext;
+package tools.dynamia.cms.admin.core.zk.ext
 
-import org.zkoss.zul.A;
-import org.zkoss.zul.Label;
-import org.zkoss.zul.Vlayout;
-
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.integration.sterotypes.Provider;
-import tools.dynamia.io.FileInfo;
-import tools.dynamia.modules.filemanager.FileManagerPreviewExtension;
+import org.zkoss.zul.A
+import org.zkoss.zul.Label
+import org.zkoss.zul.Vlayout
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.integration.sterotypes.Provider
+import tools.dynamia.io.FileInfo
+import tools.dynamia.modules.filemanager.FileManagerPreviewExtension
 
 @Provider
 public class ViewResourceLinkPreviewExtension implements FileManagerPreviewExtension {

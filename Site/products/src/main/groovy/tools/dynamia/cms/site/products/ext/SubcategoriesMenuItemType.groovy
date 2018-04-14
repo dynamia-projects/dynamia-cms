@@ -13,22 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.ext;
+package tools.dynamia.cms.site.products.ext
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.core.api.CMSExtension;
-import tools.dynamia.cms.site.menus.MenuContext;
-import tools.dynamia.cms.site.menus.api.MenuItemType;
-import tools.dynamia.cms.site.menus.domain.MenuItem;
-import tools.dynamia.cms.site.menus.domain.MenuItemGroup;
-import tools.dynamia.cms.site.menus.domain.MenuItemParameter;
-import tools.dynamia.cms.site.pages.domain.Page;
-import tools.dynamia.cms.site.pages.domain.PageParameter;
-import tools.dynamia.cms.site.products.domain.ProductCategory;
-import tools.dynamia.cms.site.products.services.ProductsService;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.api.CMSExtension
+import tools.dynamia.cms.site.menus.MenuContext
+import tools.dynamia.cms.site.menus.api.MenuItemType
+import tools.dynamia.cms.site.menus.domain.MenuItem
+import tools.dynamia.cms.site.menus.domain.MenuItemGroup
+import tools.dynamia.cms.site.menus.domain.MenuItemParameter
+import tools.dynamia.cms.site.pages.domain.Page
+import tools.dynamia.cms.site.pages.domain.PageParameter
+import tools.dynamia.cms.site.products.domain.ProductCategory
+import tools.dynamia.cms.site.products.services.ProductsService
 
 /**
  *

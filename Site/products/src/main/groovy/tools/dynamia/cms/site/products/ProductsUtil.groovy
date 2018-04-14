@@ -13,24 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products;
+package tools.dynamia.cms.site.products
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.products.domain.Product;
-import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import tools.dynamia.cms.site.products.services.ProductsService;
-import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
-import tools.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
-import tools.dynamia.cms.site.users.UserHolder;
-import tools.dynamia.cms.site.users.domain.User;
-import tools.dynamia.integration.Containers;
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.products.domain.Product
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig
+import tools.dynamia.cms.site.products.services.ProductsService
+import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart
+import tools.dynamia.cms.site.users.UserHolder
+import tools.dynamia.cms.site.users.domain.User
+import tools.dynamia.integration.Containers
 
 /**
  *

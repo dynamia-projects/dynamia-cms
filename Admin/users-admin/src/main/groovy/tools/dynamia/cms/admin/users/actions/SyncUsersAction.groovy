@@ -1,18 +1,15 @@
-package tools.dynamia.cms.admin.users.actions;
+package tools.dynamia.cms.admin.users.actions
 
-import java.util.HashMap;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.cms.site.users.domain.UserSiteConfig;
-import tools.dynamia.cms.site.users.services.UserSyncService;
-import tools.dynamia.commons.ApplicableClass;
-import tools.dynamia.crud.AbstractCrudAction;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.crud.CrudState;
-import tools.dynamia.ui.MessageType;
-import tools.dynamia.ui.UIMessages;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.site.users.domain.UserSiteConfig
+import tools.dynamia.cms.site.users.services.UserSyncService
+import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.crud.AbstractCrudAction
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.CrudState
+import tools.dynamia.ui.MessageType
+import tools.dynamia.ui.UIMessages
 
 @InstallAction
 public class SyncUsersAction extends AbstractCrudAction {

@@ -13,16 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.payment.services;
+package tools.dynamia.cms.site.payment.services
 
-import tools.dynamia.cms.site.payment.PaymentGateway;
-import tools.dynamia.cms.site.payment.api.PaymentSource;
-import tools.dynamia.cms.site.payment.domain.ManualPayment;
-import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
-import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
-
-import java.util.List;
-import java.util.Map;
+import tools.dynamia.cms.site.payment.PaymentGateway
+import tools.dynamia.cms.site.payment.api.PaymentSource
+import tools.dynamia.cms.site.payment.domain.ManualPayment
+import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig
+import tools.dynamia.cms.site.payment.domain.PaymentTransaction
 
 public interface PaymentService {
 

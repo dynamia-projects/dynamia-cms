@@ -13,25 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.services;
+package tools.dynamia.cms.site.products.services
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.List;
-
-import tools.dynamia.cms.site.products.api.ProductsDatasource;
-import tools.dynamia.cms.site.products.domain.ProductBrand;
-import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import tools.dynamia.cms.site.products.dto.ProductBrandDTO;
-import tools.dynamia.cms.site.products.dto.ProductCategoryDTO;
-import tools.dynamia.cms.site.products.dto.ProductDTO;
-import tools.dynamia.cms.site.products.dto.RelatedProductDTO;
-import tools.dynamia.cms.site.products.dto.StoreDTO;
+import tools.dynamia.cms.site.products.api.ProductsDatasource
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig
+import tools.dynamia.cms.site.products.dto.*
 
 /**
  *

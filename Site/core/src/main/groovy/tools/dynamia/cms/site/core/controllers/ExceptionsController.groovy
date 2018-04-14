@@ -13,26 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.controllers;
+package tools.dynamia.cms.site.core.controllers
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import tools.dynamia.cms.site.core.CMSException;
-import tools.dynamia.cms.site.core.DynamiaCMS;
-import tools.dynamia.cms.site.core.api.SiteRequestInterceptor;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.services.SiteService;
-import tools.dynamia.commons.logger.LoggingService;
-import tools.dynamia.commons.logger.SLF4JLoggingService;
-import tools.dynamia.integration.Containers;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.CMSException
+import tools.dynamia.cms.site.core.DynamiaCMS
+import tools.dynamia.cms.site.core.api.SiteRequestInterceptor
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.core.services.SiteService
+import tools.dynamia.commons.logger.LoggingService
+import tools.dynamia.commons.logger.SLF4JLoggingService
+import tools.dynamia.integration.Containers
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 /**
  * @author Mario Serrano Leones

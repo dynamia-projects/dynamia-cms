@@ -13,24 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.domain;
+package tools.dynamia.cms.site.products.domain
 
-import java.util.ArrayList;
-import java.util.List;
+import org.hibernate.annotations.LazyCollection
+import org.hibernate.annotations.LazyCollectionOption
+import tools.dynamia.cms.site.core.api.SiteAware
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.pages.domain.Page
+import tools.dynamia.cms.site.products.dto.StoreDTO
+import tools.dynamia.domain.SimpleEntity
+import tools.dynamia.domain.contraints.NotEmpty
+import tools.dynamia.domain.util.ContactInfo
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import tools.dynamia.cms.site.core.api.SiteAware;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.pages.domain.Page;
-import tools.dynamia.cms.site.products.dto.StoreDTO;
-
-import tools.dynamia.domain.SimpleEntity;
-import tools.dynamia.domain.contraints.NotEmpty;
-import tools.dynamia.domain.util.ContactInfo;
+import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 /**
  * @author Mario Serrano Leones

@@ -1,8 +1,6 @@
-package toosl.dynamia.cms.site.shoppingcart.api;
+package toosl.dynamia.cms.site.shoppingcart.api
 
-import java.util.List;
-
-import toosl.dynamia.cms.site.shoppingcart.dto.OrderStatusDTO;
+import toosl.dynamia.cms.site.shoppingcart.dto.OrderStatusDTO
 
 public interface OrderStatusService {
 

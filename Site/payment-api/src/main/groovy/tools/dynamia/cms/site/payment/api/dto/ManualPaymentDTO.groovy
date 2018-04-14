@@ -1,10 +1,4 @@
-package tools.dynamia.cms.site.payment.api.dto;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+package tools.dynamia.cms.site.payment.api.dto
 
 public class ManualPaymentDTO implements Serializable {
 

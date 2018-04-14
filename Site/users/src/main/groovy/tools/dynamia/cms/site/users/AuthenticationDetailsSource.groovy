@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users;
+package tools.dynamia.cms.site.users
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.security.web.authentication.WebAuthenticationDetails
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import javax.servlet.http.HttpServletRequest
 
 /**
  *

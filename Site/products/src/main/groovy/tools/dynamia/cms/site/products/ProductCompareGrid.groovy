@@ -13,21 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products;
+package tools.dynamia.cms.site.products
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
-import tools.dynamia.cms.site.products.domain.Product;
-import tools.dynamia.cms.site.products.domain.ProductDetail;
-import tools.dynamia.cms.site.products.services.ProductsService;
-
-import tools.dynamia.commons.StringUtils;
-import tools.dynamia.commons.collect.ArrayListMultiMap;
-import tools.dynamia.commons.collect.MultiMap;
+import tools.dynamia.cms.site.products.domain.Product
+import tools.dynamia.cms.site.products.domain.ProductDetail
+import tools.dynamia.cms.site.products.services.ProductsService
+import tools.dynamia.commons.StringUtils
+import tools.dynamia.commons.collect.ArrayListMultiMap
+import tools.dynamia.commons.collect.MultiMap
 
 /**
  *

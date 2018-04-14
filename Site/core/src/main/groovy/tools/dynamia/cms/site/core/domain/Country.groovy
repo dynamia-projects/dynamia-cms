@@ -1,14 +1,12 @@
-package tools.dynamia.cms.site.core.domain;
+package tools.dynamia.cms.site.core.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import tools.dynamia.cms.site.core.dto.CountryDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore
+import tools.dynamia.cms.site.core.dto.CountryDTO
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.CascadeType
+import javax.persistence.Entity
+import javax.persistence.OneToMany
+import javax.persistence.Table
 
 /**
  * Created by mario on 4/07/2017.

@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.actions;
+package tools.dynamia.cms.admin.core.zk.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.cms.admin.core.zk.ui.ModuleInstanceUI;
-import tools.dynamia.cms.site.core.domain.ModuleInstance;
-import tools.dynamia.commons.ApplicableClass;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.crud.CrudState;
-import tools.dynamia.crud.actions.EditAction;
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.ui.MessageType;
-import tools.dynamia.ui.UIMessages;
-import tools.dynamia.zk.navigation.ComponentPage;
-import tools.dynamia.zk.navigation.ZKNavigationManager;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.admin.core.zk.ui.ModuleInstanceUI
+import tools.dynamia.cms.site.core.domain.ModuleInstance
+import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.CrudState
+import tools.dynamia.crud.actions.EditAction
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.ui.MessageType
+import tools.dynamia.ui.UIMessages
+import tools.dynamia.zk.navigation.ComponentPage
+import tools.dynamia.zk.navigation.ZKNavigationManager
 
 @InstallAction
 public class EditModuleInstanceAction extends EditAction {

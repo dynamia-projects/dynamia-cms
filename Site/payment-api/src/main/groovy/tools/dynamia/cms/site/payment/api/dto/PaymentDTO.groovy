@@ -1,13 +1,7 @@
-package tools.dynamia.cms.site.payment.api.dto;
+package tools.dynamia.cms.site.payment.api.dto
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore
+import tools.dynamia.cms.site.payment.api.PaymentTransactionStatus
 
 public class PaymentDTO implements Serializable {
 

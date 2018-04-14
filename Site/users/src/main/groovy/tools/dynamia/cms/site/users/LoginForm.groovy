@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users;
+package tools.dynamia.cms.site.users
 
-import java.io.Serializable;
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.domain.contraints.NotEmpty
 
-import javax.validation.constraints.NotNull;
-
-import tools.dynamia.cms.site.core.domain.Site;
-
-import tools.dynamia.domain.contraints.NotEmpty;
+import javax.validation.constraints.NotNull
 
 /**
  *

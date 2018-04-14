@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.ext;
+package tools.dynamia.cms.site.core.ext
 
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.CMSModules
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.api.CMSExtension
+import tools.dynamia.cms.site.core.api.SiteRequestInterceptorAdapter
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.core.domain.SiteParameter
+import tools.dynamia.cms.site.core.services.SiteService
+import tools.dynamia.cms.site.core.services.impl.ModulesService
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.CMSModules;
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.api.CMSExtension;
-import tools.dynamia.cms.site.core.api.SiteRequestInterceptorAdapter;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.domain.SiteParameter;
-import tools.dynamia.cms.site.core.services.SiteService;
-import tools.dynamia.cms.site.core.services.impl.ModulesService;
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 /**
  *

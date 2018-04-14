@@ -13,23 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.shoppingcart;
+package tools.dynamia.cms.site.shoppingcart
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.context.annotation.Scope;
-
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.payment.PaymentForm;
-import tools.dynamia.cms.site.payment.PaymentHolder;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-import tools.dynamia.cms.site.users.UserHolder;
-
-import tools.dynamia.integration.Containers;
-import tools.dynamia.integration.sterotypes.Component;
+import org.springframework.context.annotation.Scope
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.payment.PaymentHolder
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+import tools.dynamia.cms.site.users.UserHolder
+import tools.dynamia.integration.Containers
+import tools.dynamia.integration.sterotypes.Component
 
 /**
  *

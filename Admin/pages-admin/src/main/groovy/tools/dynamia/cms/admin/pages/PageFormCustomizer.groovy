@@ -17,7 +17,6 @@ package tools.dynamia.cms.admin.pages
 
 import tools.dynamia.cms.site.pages.domain.Page
 import tools.dynamia.cms.site.users.UserHolder
-
 import tools.dynamia.viewers.ViewCustomizer
 import tools.dynamia.zk.viewers.form.FormView
 

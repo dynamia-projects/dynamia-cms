@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.ui;
+package tools.dynamia.cms.admin.core.zk.ui
 
-import org.zkoss.zul.Comboitem;
-import org.zkoss.zul.ComboitemRenderer;
-
-import tools.dynamia.cms.site.core.api.TypeExtension;
+import org.zkoss.zul.Comboitem
+import org.zkoss.zul.ComboitemRenderer
+import tools.dynamia.cms.site.core.api.TypeExtension
 
 /**
  *

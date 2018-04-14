@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.menus.services;
+package tools.dynamia.cms.site.menus.services
 
-import java.util.List;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.menus.MenuContext;
-import tools.dynamia.cms.site.menus.api.MenuItemType;
-import tools.dynamia.cms.site.menus.domain.Menu;
-import tools.dynamia.cms.site.menus.domain.MenuItem;
-import tools.dynamia.domain.query.QueryConditions;
-import tools.dynamia.domain.query.QueryParameters;
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.menus.MenuContext
+import tools.dynamia.cms.site.menus.api.MenuItemType
+import tools.dynamia.cms.site.menus.domain.Menu
+import tools.dynamia.cms.site.menus.domain.MenuItem
 
 /**
  *

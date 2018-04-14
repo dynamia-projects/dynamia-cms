@@ -3,20 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.dynamia.cms.admin.mail.actions;
+package tools.dynamia.cms.admin.mail.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.mail.domain.MailAccount;
-import tools.dynamia.cms.site.mail.services.MailService;
-
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.commons.ApplicableClass;
-import tools.dynamia.crud.AbstractCrudAction;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.crud.CrudState;
-import tools.dynamia.ui.MessageType;
-import tools.dynamia.ui.UIMessages;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.site.mail.domain.MailAccount
+import tools.dynamia.cms.site.mail.services.MailService
+import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.crud.AbstractCrudAction
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.CrudState
+import tools.dynamia.ui.MessageType
+import tools.dynamia.ui.UIMessages
 
 /**
  *

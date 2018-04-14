@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.services.SiteService;
-import tools.dynamia.domain.query.Parameters;
-import tools.dynamia.integration.Containers;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Scope
+import org.springframework.stereotype.Component
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.core.services.SiteService
+import tools.dynamia.domain.query.Parameters
+import tools.dynamia.integration.Containers
 
 /**
  *

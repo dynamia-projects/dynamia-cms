@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.shoppingcart.actions;
+package tools.dynamia.cms.site.shoppingcart.actions
 
-import tools.dynamia.cms.site.core.actions.ActionEvent;
-import tools.dynamia.cms.site.core.actions.SiteAction;
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
+import tools.dynamia.cms.site.core.actions.ActionEvent
+import tools.dynamia.cms.site.core.actions.SiteAction
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.shoppingcart.ShoppingCartUtils
 
 /**
  *

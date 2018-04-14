@@ -1,7 +1,7 @@
-package tools.dynamia.cms.admin.pages;
+package tools.dynamia.cms.admin.pages
 
-import tools.dynamia.cms.site.pages.domain.Page;
-import tools.dynamia.zk.crud.CrudController;
+import tools.dynamia.cms.site.pages.domain.Page
+import tools.dynamia.zk.crud.CrudController
 
 public class PageCrudController extends CrudController<Page> {
 

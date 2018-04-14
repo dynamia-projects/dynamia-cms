@@ -1,11 +1,8 @@
-package com.dynamia.cms.admin.core.test;
+package com.dynamia.cms.admin.core.test
 
+import org.junit.Test
 
-import static org.junit.Assert.*;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class CoreTest{
 

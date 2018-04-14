@@ -13,22 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users.actions;
+package tools.dynamia.cms.site.users.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.actions.ActionEvent;
-import tools.dynamia.cms.site.core.actions.SiteAction;
-import tools.dynamia.cms.site.core.actions.SiteActionManager;
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.core.domain.City;
-import tools.dynamia.cms.site.users.UserHolder;
-import tools.dynamia.cms.site.users.domain.UserContactInfo;
-import tools.dynamia.domain.ValidationError;
-import tools.dynamia.domain.contraints.NotEmptyValidator;
-import tools.dynamia.domain.services.CrudService;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.servlet.view.RedirectView
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.actions.ActionEvent
+import tools.dynamia.cms.site.core.actions.SiteAction
+import tools.dynamia.cms.site.core.actions.SiteActionManager
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.core.domain.City
+import tools.dynamia.cms.site.users.UserHolder
+import tools.dynamia.cms.site.users.domain.UserContactInfo
+import tools.dynamia.domain.ValidationError
+import tools.dynamia.domain.contraints.NotEmptyValidator
+import tools.dynamia.domain.services.CrudService
 
 /**
  * @author Mario Serrano Leones

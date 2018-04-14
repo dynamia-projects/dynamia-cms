@@ -1,10 +1,10 @@
-package tools.dynamia.cms.admin.core.zk.actions.global;
+package tools.dynamia.cms.admin.core.zk.actions.global
 
-import tools.dynamia.actions.ActionEvent;
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.app.template.ApplicationGlobalAction;
-import tools.dynamia.cms.admin.core.zk.actions.SiteResourcesManagerAction;
-import tools.dynamia.integration.Containers;
+import tools.dynamia.actions.ActionEvent
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.app.template.ApplicationGlobalAction
+import tools.dynamia.cms.admin.core.zk.actions.SiteResourcesManagerAction
+import tools.dynamia.integration.Containers
 
 @InstallAction
 public class ResourcesGlobalAction extends ApplicationGlobalAction {

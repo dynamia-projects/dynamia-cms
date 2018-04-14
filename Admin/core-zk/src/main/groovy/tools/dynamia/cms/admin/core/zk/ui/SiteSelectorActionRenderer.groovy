@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.ui;
+package tools.dynamia.cms.admin.core.zk.ui
 
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.Events;
-
-import tools.dynamia.actions.Action;
-import tools.dynamia.actions.ActionEventBuilder;
-import tools.dynamia.actions.ActionRenderer;
+import org.zkoss.zk.ui.event.Event
+import org.zkoss.zk.ui.event.EventListener
+import org.zkoss.zk.ui.event.Events
+import tools.dynamia.actions.Action
+import tools.dynamia.actions.ActionEventBuilder
+import tools.dynamia.actions.ActionRenderer
 
 /**
  *

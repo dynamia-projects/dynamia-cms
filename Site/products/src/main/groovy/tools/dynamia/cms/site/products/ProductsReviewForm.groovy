@@ -1,10 +1,6 @@
-package tools.dynamia.cms.site.products;
+package tools.dynamia.cms.site.products
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import tools.dynamia.cms.site.products.domain.ProductReview;
+import tools.dynamia.cms.site.products.domain.ProductReview
 
 public class ProductsReviewForm implements Serializable {
 

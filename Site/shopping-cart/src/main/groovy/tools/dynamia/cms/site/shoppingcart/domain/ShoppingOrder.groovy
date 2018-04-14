@@ -15,18 +15,6 @@
  */
 package tools.dynamia.cms.site.shoppingcart.domain
 
-import java.util.Date
-
-import javax.persistence.CascadeType
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.OneToOne
-import javax.persistence.Table
-import javax.persistence.Temporal
-import javax.persistence.TemporalType
-import javax.persistence.UniqueConstraint
-import javax.validation.constraints.NotNull
-
 import tools.dynamia.cms.site.core.api.SiteAware
 import tools.dynamia.cms.site.core.domain.Region
 import tools.dynamia.cms.site.core.domain.Site
@@ -38,6 +26,9 @@ import tools.dynamia.domain.BaseEntity
 import tools.dynamia.domain.contraints.NotEmpty
 import tools.dynamia.domain.util.ContactInfo
 import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderDTO
+
+import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "sc_orders", uniqueConstraints = [@UniqueConstraint(columnNames = ["site_id", "number"])])

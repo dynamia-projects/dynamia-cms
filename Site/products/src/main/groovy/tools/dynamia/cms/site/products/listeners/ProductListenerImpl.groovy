@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.listeners;
+package tools.dynamia.cms.site.products.listeners
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.products.api.DataChangedEvent;
-import tools.dynamia.cms.site.products.api.InvalidTokenException;
-import tools.dynamia.cms.site.products.api.ProductsDatasource;
-import tools.dynamia.cms.site.products.api.ProductsListener;
-import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import tools.dynamia.cms.site.products.dto.ProductBrandDTO;
-import tools.dynamia.cms.site.products.dto.ProductCategoryDTO;
-import tools.dynamia.cms.site.products.dto.ProductDTO;
-import tools.dynamia.cms.site.products.dto.StoreDTO;
-import tools.dynamia.cms.site.products.services.ProductsService;
-import tools.dynamia.cms.site.products.services.ProductsSyncService;
-import tools.dynamia.cms.site.products.services.ProductsSynchronizer;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.products.api.DataChangedEvent
+import tools.dynamia.cms.site.products.api.InvalidTokenException
+import tools.dynamia.cms.site.products.api.ProductsDatasource
+import tools.dynamia.cms.site.products.api.ProductsListener
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig
+import tools.dynamia.cms.site.products.dto.ProductBrandDTO
+import tools.dynamia.cms.site.products.dto.ProductCategoryDTO
+import tools.dynamia.cms.site.products.dto.ProductDTO
+import tools.dynamia.cms.site.products.dto.StoreDTO
+import tools.dynamia.cms.site.products.services.ProductsService
+import tools.dynamia.cms.site.products.services.ProductsSyncService
+import tools.dynamia.cms.site.products.services.ProductsSynchronizer
 
 /**
  *

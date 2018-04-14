@@ -16,7 +16,6 @@
 package tools.dynamia.cms.site.core.api
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-
 import tools.dynamia.cms.site.core.domain.Site
 
 /**

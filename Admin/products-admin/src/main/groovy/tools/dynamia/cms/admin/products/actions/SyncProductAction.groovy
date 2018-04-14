@@ -1,20 +1,20 @@
-package tools.dynamia.cms.admin.products.actions;
+package tools.dynamia.cms.admin.products.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.products.api.ProductsDatasource;
-import tools.dynamia.cms.site.products.domain.Product;
-import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import tools.dynamia.cms.site.products.dto.ProductDTO;
-import tools.dynamia.cms.site.products.services.ProductsService;
-import tools.dynamia.cms.site.products.services.ProductsSyncService;
-import tools.dynamia.commons.ApplicableClass;
-import tools.dynamia.crud.AbstractCrudAction;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.crud.CrudState;
-import tools.dynamia.ui.MessageType;
-import tools.dynamia.ui.UIMessages;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.products.api.ProductsDatasource
+import tools.dynamia.cms.site.products.domain.Product
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig
+import tools.dynamia.cms.site.products.dto.ProductDTO
+import tools.dynamia.cms.site.products.services.ProductsService
+import tools.dynamia.cms.site.products.services.ProductsSyncService
+import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.crud.AbstractCrudAction
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.CrudState
+import tools.dynamia.ui.MessageType
+import tools.dynamia.ui.UIMessages
 
 @InstallAction
 public class SyncProductAction extends AbstractCrudAction {

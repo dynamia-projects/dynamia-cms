@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.actions;
+package tools.dynamia.cms.admin.core.zk.actions
 
-import tools.dynamia.cms.site.core.DynamiaCMS;
-
-import tools.dynamia.actions.ActionEvent;
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.ui.UIMessages;
-import tools.dynamia.zk.crud.cfg.SaveConfigAction;
-import tools.dynamia.zk.navigation.ZKNavigationManager;
+import tools.dynamia.actions.ActionEvent
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.site.core.DynamiaCMS
+import tools.dynamia.ui.UIMessages
+import tools.dynamia.zk.crud.cfg.SaveConfigAction
+import tools.dynamia.zk.navigation.ZKNavigationManager
 
 @InstallAction
 public class ApplySystemConfigAction extends SaveConfigAction {

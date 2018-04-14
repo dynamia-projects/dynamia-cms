@@ -1,13 +1,10 @@
-package tools.dynamia.cms.site.payment;
+package tools.dynamia.cms.site.payment
 
-import java.io.Serializable;
-
-import org.springframework.context.annotation.Scope;
-
-import tools.dynamia.cms.site.payment.domain.ManualPayment;
-import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
-import tools.dynamia.integration.Containers;
-import tools.dynamia.integration.sterotypes.Component;
+import org.springframework.context.annotation.Scope
+import tools.dynamia.cms.site.payment.domain.ManualPayment
+import tools.dynamia.cms.site.payment.domain.PaymentTransaction
+import tools.dynamia.integration.Containers
+import tools.dynamia.integration.sterotypes.Component
 
 @Component
 @Scope("session")

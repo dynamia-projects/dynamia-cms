@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.pages;
+package tools.dynamia.cms.site.pages
 
-import java.io.Serializable;
-import java.util.List;
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.pages.domain.Page
+import tools.dynamia.cms.site.pages.domain.PageParameter
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.pages.domain.Page;
-import tools.dynamia.cms.site.pages.domain.PageParameter;
+import javax.servlet.http.HttpServletRequest
 
 /**
  *

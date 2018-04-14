@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.templates.services;
+package tools.dynamia.cms.site.templates.services
 
-import java.util.List;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.templates.Template;
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.templates.Template
 
 /**
  *

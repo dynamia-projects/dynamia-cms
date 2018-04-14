@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.domain;
+package tools.dynamia.cms.site.products.domain
 
-import java.math.BigDecimal;
+import tools.dynamia.cms.site.core.api.SiteAware
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.products.dto.ProductCreditPriceDTO
+import tools.dynamia.domain.SimpleEntity
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import tools.dynamia.cms.site.core.api.SiteAware;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.products.dto.ProductCreditPriceDTO;
-
-import tools.dynamia.domain.SimpleEntity;
+import javax.persistence.Entity
+import javax.persistence.ManyToOne
+import javax.persistence.OneToOne
+import javax.persistence.Table
+import javax.validation.constraints.NotNull
 
 /**
  *

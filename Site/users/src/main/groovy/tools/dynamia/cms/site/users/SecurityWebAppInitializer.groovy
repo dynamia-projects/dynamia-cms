@@ -1,11 +1,11 @@
-package tools.dynamia.cms.site.users;
+package tools.dynamia.cms.site.users
 
-import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
+import org.springframework.web.WebApplicationInitializer
+import org.springframework.web.filter.DelegatingFilterProxy
 
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.filter.DelegatingFilterProxy;
+import javax.servlet.FilterRegistration
+import javax.servlet.ServletContext
+import javax.servlet.ServletException
 
 public class SecurityWebAppInitializer implements WebApplicationInitializer {
 

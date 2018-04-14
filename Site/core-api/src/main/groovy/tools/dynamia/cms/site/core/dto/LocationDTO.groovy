@@ -1,6 +1,4 @@
-package tools.dynamia.cms.site.core.dto;
-
-import java.io.Serializable;
+package tools.dynamia.cms.site.core.dto
 
 public class LocationDTO implements Serializable {
 

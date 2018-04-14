@@ -1,25 +1,23 @@
-package tools.dynamia.cms.admin.shopping.actions;
+package tools.dynamia.cms.admin.shopping.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.zkoss.zul.Window;
-
-import tools.dynamia.cms.admin.shopping.ui.ShoppingOrderShipmentUI;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
-
-import tools.dynamia.actions.AbstractAction;
-import tools.dynamia.actions.ActionEvent;
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.commons.ApplicableClass;
-import tools.dynamia.commons.Messages;
-import tools.dynamia.crud.AbstractCrudAction;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.crud.CrudState;
-import tools.dynamia.domain.ValidationError;
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.ui.MessageType;
-import tools.dynamia.ui.UIMessages;
-import tools.dynamia.zk.util.ZKUtil;
+import org.springframework.beans.factory.annotation.Autowired
+import org.zkoss.zul.Window
+import tools.dynamia.actions.AbstractAction
+import tools.dynamia.actions.ActionEvent
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.admin.shopping.ui.ShoppingOrderShipmentUI
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService
+import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.commons.Messages
+import tools.dynamia.crud.AbstractCrudAction
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.CrudState
+import tools.dynamia.domain.ValidationError
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.ui.MessageType
+import tools.dynamia.ui.UIMessages
+import tools.dynamia.zk.util.ZKUtil
 
 @InstallAction
 public class ShipOrderAction extends AbstractCrudAction {

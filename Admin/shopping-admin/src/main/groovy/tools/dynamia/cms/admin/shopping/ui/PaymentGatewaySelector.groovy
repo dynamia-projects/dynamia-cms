@@ -3,21 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.dynamia.cms.admin.shopping.ui;
+package tools.dynamia.cms.admin.shopping.ui
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.zkoss.zk.ui.Component;
-import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Comboitem;
-import org.zkoss.zul.ComboitemRenderer;
-
-import tools.dynamia.cms.site.payment.PaymentGateway;
-
-import tools.dynamia.integration.Containers;
-import tools.dynamia.zk.ComponentAliasIndex;
-import tools.dynamia.zk.util.ZKUtil;
+import org.zkoss.zk.ui.Component
+import org.zkoss.zul.Combobox
+import org.zkoss.zul.Comboitem
+import org.zkoss.zul.ComboitemRenderer
+import tools.dynamia.cms.site.payment.PaymentGateway
+import tools.dynamia.integration.Containers
+import tools.dynamia.zk.ComponentAliasIndex
+import tools.dynamia.zk.util.ZKUtil
 
 /**
  *

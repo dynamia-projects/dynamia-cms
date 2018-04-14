@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.menus;
+package tools.dynamia.cms.admin.menus
 
-import tools.dynamia.cms.site.core.api.AdminModule;
-import tools.dynamia.cms.site.core.api.AdminModuleOption;
-import tools.dynamia.cms.site.core.api.CMSModule;
-import tools.dynamia.cms.site.menus.domain.Menu;
+import tools.dynamia.cms.site.core.api.AdminModule
+import tools.dynamia.cms.site.core.api.AdminModuleOption
+import tools.dynamia.cms.site.core.api.CMSModule
+import tools.dynamia.cms.site.menus.domain.Menu
 
 /**
  *

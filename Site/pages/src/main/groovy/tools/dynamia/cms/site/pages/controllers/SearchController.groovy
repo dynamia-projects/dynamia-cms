@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.pages.controllers;
+package tools.dynamia.cms.site.pages.controllers
 
-import java.util.Collection;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Controller
+import org.springframework.validation.BindingResult
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.core.services.SiteService
+import tools.dynamia.cms.site.pages.SearchForm
+import tools.dynamia.cms.site.pages.api.SearchProvider
+import tools.dynamia.cms.site.pages.api.SearchResult
+import tools.dynamia.integration.Containers
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.services.SiteService;
-import tools.dynamia.cms.site.pages.SearchForm;
-import tools.dynamia.cms.site.pages.api.SearchProvider;
-import tools.dynamia.cms.site.pages.api.SearchResult;
-
-import tools.dynamia.integration.Containers;
+import javax.servlet.http.HttpServletRequest
+import javax.validation.Valid
 
 /**
  *

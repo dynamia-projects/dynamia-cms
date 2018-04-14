@@ -1,11 +1,9 @@
 package tools.dynamia.cms.admin.users.actions
 
 import org.springframework.beans.factory.annotation.Autowired
-
+import tools.dynamia.actions.InstallAction
 import tools.dynamia.cms.site.users.domain.User
 import tools.dynamia.cms.site.users.services.UserService
-
-import tools.dynamia.actions.InstallAction
 import tools.dynamia.commons.ApplicableClass
 import tools.dynamia.crud.AbstractCrudAction
 import tools.dynamia.crud.CrudActionEvent

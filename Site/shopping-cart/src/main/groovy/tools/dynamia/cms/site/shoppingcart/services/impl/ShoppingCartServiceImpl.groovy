@@ -63,12 +63,6 @@ import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSender
 import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSenderException
 import toosl.dynamia.cms.site.shoppingcart.dto.ShoppingOrderDTO
 
-import java.util.Date
-import java.util.HashMap
-import java.util.List
-import java.util.Map
-import java.util.stream.Collectors
-
 /**
  * @author Mario Serrano Leones
  */

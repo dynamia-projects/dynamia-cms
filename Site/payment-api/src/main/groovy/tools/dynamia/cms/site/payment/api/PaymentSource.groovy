@@ -1,6 +1,4 @@
-package tools.dynamia.cms.site.payment.api;
-
-import java.io.Serializable;
+package tools.dynamia.cms.site.payment.api
 
 public class PaymentSource implements Serializable {
     private String name;

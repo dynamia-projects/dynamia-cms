@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core;
+package tools.dynamia.cms.admin.core
 
-import tools.dynamia.integration.sterotypes.Component;
-import tools.dynamia.viewers.Field;
-import tools.dynamia.viewers.FieldCustomizer;
+import tools.dynamia.integration.sterotypes.Component
+import tools.dynamia.viewers.Field
+import tools.dynamia.viewers.FieldCustomizer
 
 @Component
 public class SiteAwareFieldCustomizer implements FieldCustomizer {

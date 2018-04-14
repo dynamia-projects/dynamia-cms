@@ -13,18 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products;
+package tools.dynamia.cms.site.products
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import tools.dynamia.cms.site.products.domain.Product;
-
-import tools.dynamia.commons.StringUtils;
+import org.springframework.context.annotation.Scope
+import org.springframework.stereotype.Component
+import tools.dynamia.cms.site.products.domain.Product
+import tools.dynamia.commons.StringUtils
 
 /**
  *

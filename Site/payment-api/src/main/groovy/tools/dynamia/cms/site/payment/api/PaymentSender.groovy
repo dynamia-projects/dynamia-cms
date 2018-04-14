@@ -1,10 +1,7 @@
-package tools.dynamia.cms.site.payment.api;
+package tools.dynamia.cms.site.payment.api
 
-import tools.dynamia.cms.site.payment.api.dto.ManualPaymentDTO;
-import tools.dynamia.cms.site.payment.api.dto.PaymentDTO;
-
-import java.util.List;
-import java.util.Map;
+import tools.dynamia.cms.site.payment.api.dto.ManualPaymentDTO
+import tools.dynamia.cms.site.payment.api.dto.PaymentDTO
 
 public interface PaymentSender {
 

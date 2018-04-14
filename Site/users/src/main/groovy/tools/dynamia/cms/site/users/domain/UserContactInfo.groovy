@@ -15,21 +15,15 @@
  */
 package tools.dynamia.cms.site.users.domain
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.OneToOne
-import javax.persistence.Table
-import javax.persistence.UniqueConstraint
-import javax.validation.constraints.NotNull
-
 import com.fasterxml.jackson.annotation.JsonIgnore
-
 import tools.dynamia.cms.site.core.api.SiteAware
 import tools.dynamia.cms.site.core.domain.City
 import tools.dynamia.cms.site.core.domain.Site
-
 import tools.dynamia.domain.SimpleEntity
 import tools.dynamia.domain.util.ContactInfo
+
+import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "usr_users_contacts", uniqueConstraints = [@UniqueConstraint(columnNames = ["site_id", "user_id"])])

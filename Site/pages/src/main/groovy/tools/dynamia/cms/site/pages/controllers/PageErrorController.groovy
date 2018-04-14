@@ -15,23 +15,21 @@
  */
 package tools.dynamia.cms.site.pages.controllers
 
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ControllerAdvice
-
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.servlet.ModelAndView
-
 import tools.dynamia.cms.site.core.api.SiteRequestInterceptor
 import tools.dynamia.cms.site.core.domain.Site
 import tools.dynamia.cms.site.core.services.SiteService
 import tools.dynamia.cms.site.pages.PageNotFoundException
 import tools.dynamia.integration.Containers
+
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 /**
  *

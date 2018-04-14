@@ -15,13 +15,10 @@
  */
 package tools.dynamia.cms.site.payment.gateways
 
-import java.util.Map
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
-
 import tools.dynamia.cms.site.payment.PaymentException
 import tools.dynamia.cms.site.payment.PaymentForm
 import tools.dynamia.cms.site.payment.PaymentGateway

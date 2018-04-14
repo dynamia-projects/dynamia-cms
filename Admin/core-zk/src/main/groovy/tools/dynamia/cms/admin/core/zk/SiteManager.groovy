@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk;
+package tools.dynamia.cms.admin.core.zk
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.services.SiteService;
-
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.ui.UIMessages;
-import tools.dynamia.zk.crud.CrudView;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Scope
+import org.springframework.stereotype.Component
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.core.services.SiteService
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.ui.UIMessages
+import tools.dynamia.zk.crud.CrudView
 
 @Component("siteMgr")
 @Scope("session")

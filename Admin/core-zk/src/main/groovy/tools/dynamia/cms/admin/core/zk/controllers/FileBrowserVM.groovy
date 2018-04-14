@@ -13,30 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.controllers;
+package tools.dynamia.cms.admin.core.zk.controllers
 
-import org.springframework.stereotype.Controller;
-import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.ExecutionParam;
-import org.zkoss.bind.annotation.Init;
-import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.select.Selectors;
-import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zk.ui.util.Clients;
-
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.pages.services.PageService;
-
-import tools.dynamia.integration.Containers;
-import tools.dynamia.io.FileInfo;
-import tools.dynamia.modules.filemanager.FileManager;
-import tools.dynamia.ui.MessageType;
-import tools.dynamia.ui.UIMessages;
+import org.springframework.stereotype.Controller
+import org.zkoss.bind.annotation.*
+import org.zkoss.zk.ui.Component
+import org.zkoss.zk.ui.Executions
+import org.zkoss.zk.ui.select.Selectors
+import org.zkoss.zk.ui.select.annotation.Wire
+import org.zkoss.zk.ui.util.Clients
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.pages.services.PageService
+import tools.dynamia.integration.Containers
+import tools.dynamia.io.FileInfo
+import tools.dynamia.modules.filemanager.FileManager
+import tools.dynamia.ui.MessageType
+import tools.dynamia.ui.UIMessages
 
 @Controller
 public class FileBrowserVM {

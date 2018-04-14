@@ -1,12 +1,11 @@
-package tools.dynamia.cms.site.products.modules;
+package tools.dynamia.cms.site.products.modules
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.core.api.AbstractModule;
-import tools.dynamia.cms.site.core.api.CMSModule;
-import tools.dynamia.cms.site.core.api.ModuleContext;
-import tools.dynamia.cms.site.products.services.ProductsService;
-import tools.dynamia.domain.services.CrudService;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.api.AbstractModule
+import tools.dynamia.cms.site.core.api.CMSModule
+import tools.dynamia.cms.site.core.api.ModuleContext
+import tools.dynamia.cms.site.products.services.ProductsService
+import tools.dynamia.domain.services.CrudService
 
 @CMSModule
 public class ProductCategoriesFiltersModule extends AbstractModule {

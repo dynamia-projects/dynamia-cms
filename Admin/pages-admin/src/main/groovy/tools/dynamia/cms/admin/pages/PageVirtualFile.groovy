@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.pages;
+package tools.dynamia.cms.admin.pages
 
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.api.URLProvider;
-import tools.dynamia.cms.site.pages.domain.Page;
-
-import tools.dynamia.io.VirtualFile;
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.api.URLProvider
+import tools.dynamia.cms.site.pages.domain.Page
+import tools.dynamia.io.VirtualFile
 
 public class PageVirtualFile extends VirtualFile implements URLProvider {
 

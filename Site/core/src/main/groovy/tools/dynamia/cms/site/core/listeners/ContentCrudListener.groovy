@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.listeners;
+package tools.dynamia.cms.site.core.listeners
 
-import java.util.UUID;
-
-import org.springframework.stereotype.Component;
-
-import tools.dynamia.cms.site.core.domain.Content;
-
-import tools.dynamia.domain.util.CrudServiceListenerAdapter;
+import org.springframework.stereotype.Component
+import tools.dynamia.cms.site.core.domain.Content
+import tools.dynamia.domain.util.CrudServiceListenerAdapter
 
 /**
  *

@@ -1,9 +1,5 @@
 package tools.dynamia.cms.site.payment.api
 
-import java.io.Serializable
-import java.util.List
-import java.util.Optional
-
 class Response implements Serializable {
 
     /**

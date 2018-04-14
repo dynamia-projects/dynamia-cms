@@ -13,22 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.menus.ext;
+package tools.dynamia.cms.site.menus.ext
 
-import java.util.ArrayList;
-import java.util.List;
-
-import tools.dynamia.cms.site.core.api.CMSExtension;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.api.SiteRequestInterceptorAdapter;
-import tools.dynamia.cms.site.menus.MenuContext;
-import tools.dynamia.cms.site.menus.domain.Menu;
-import tools.dynamia.cms.site.menus.domain.MenuItem;
-import tools.dynamia.cms.site.menus.services.MenuService;
-import tools.dynamia.cms.site.pages.domain.Page;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.api.CMSExtension
+import tools.dynamia.cms.site.core.api.SiteRequestInterceptorAdapter
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.menus.domain.Menu
+import tools.dynamia.cms.site.menus.domain.MenuItem
+import tools.dynamia.cms.site.menus.services.MenuService
 
 /**
  *

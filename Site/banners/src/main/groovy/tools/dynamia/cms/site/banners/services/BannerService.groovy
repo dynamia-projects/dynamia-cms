@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.banners.services;
+package tools.dynamia.cms.site.banners.services
 
-import java.util.List;
-
-import tools.dynamia.cms.site.banners.domain.Banner;
+import tools.dynamia.cms.site.banners.domain.Banner
 
 public interface BannerService {
 

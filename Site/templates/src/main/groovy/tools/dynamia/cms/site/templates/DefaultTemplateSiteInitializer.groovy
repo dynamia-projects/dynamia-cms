@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.dynamia.cms.site.templates;
+package tools.dynamia.cms.site.templates
 
-import org.springframework.beans.factory.annotation.Autowired;
-import tools.dynamia.cms.site.core.SiteInitializer;
-import tools.dynamia.cms.site.core.api.CMSExtension;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.templates.services.TemplateService;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.SiteInitializer
+import tools.dynamia.cms.site.core.api.CMSExtension
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.templates.services.TemplateService
 
 /**
  *

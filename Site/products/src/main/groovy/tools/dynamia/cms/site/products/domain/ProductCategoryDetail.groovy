@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.domain;
+package tools.dynamia.cms.site.products.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import tools.dynamia.cms.site.core.Orderable;
-import tools.dynamia.cms.site.core.api.SiteAware;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.products.dto.ProductCategoryDetailDTO;
-import tools.dynamia.commons.BeanUtils;
-import tools.dynamia.domain.SimpleEntity;
-import tools.dynamia.domain.contraints.NotEmpty;
+import com.fasterxml.jackson.annotation.JsonIgnore
+import tools.dynamia.cms.site.core.Orderable
+import tools.dynamia.cms.site.core.api.SiteAware
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.products.dto.ProductCategoryDetailDTO
+import tools.dynamia.commons.BeanUtils
+import tools.dynamia.domain.SimpleEntity
+import tools.dynamia.domain.contraints.NotEmpty
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 /**
  * @author Mario Serrano Leones

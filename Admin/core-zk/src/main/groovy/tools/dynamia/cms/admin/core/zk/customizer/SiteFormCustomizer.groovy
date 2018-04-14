@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.customizer;
+package tools.dynamia.cms.admin.core.zk.customizer
 
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.domain.Site;
-
-import tools.dynamia.viewers.ViewCustomizer;
-import tools.dynamia.zk.crud.ui.EntityPickerBox;
-import tools.dynamia.zk.viewers.form.FormView;
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.viewers.ViewCustomizer
+import tools.dynamia.zk.crud.ui.EntityPickerBox
+import tools.dynamia.zk.viewers.form.FormView
 
 public class SiteFormCustomizer implements ViewCustomizer<FormView<Site>> {
 

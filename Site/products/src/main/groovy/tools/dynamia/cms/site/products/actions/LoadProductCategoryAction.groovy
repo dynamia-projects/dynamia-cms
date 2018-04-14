@@ -32,12 +32,6 @@ import tools.dynamia.domain.query.QueryConditions
 import tools.dynamia.domain.query.QueryParameters
 import tools.dynamia.domain.services.CrudService
 
-import java.util.Arrays
-import java.util.Collections
-import java.util.List
-import java.util.Map
-import java.util.stream.Collectors
-
 /**
  * @author Mario Serrano Leones
  */

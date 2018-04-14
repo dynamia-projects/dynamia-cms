@@ -1,9 +1,8 @@
-package tools.dynamia.cms.site.shoppingcart.actions.menus;
+package tools.dynamia.cms.site.shoppingcart.actions.menus
 
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.users.actions.UserMenuAction;
-import tools.dynamia.cms.site.users.actions.UserMenuActionEnableable;
-import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.users.actions.UserMenuActionEnableable
+import tools.dynamia.cms.site.users.domain.User
 
 @CMSAction
 public class MyShoppingOrdersMenuAction implements UserMenuActionEnableable {

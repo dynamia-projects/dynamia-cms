@@ -13,11 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.dto;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-
+package tools.dynamia.cms.site.products.dto
 /**
  *
  * @author Mario Serrano Leons

@@ -1,12 +1,12 @@
-package tools.dynamia.cms.admin.core.zk;
+package tools.dynamia.cms.admin.core.zk
 
-import tools.dynamia.cms.site.core.domain.City;
-import tools.dynamia.cms.site.core.domain.Country;
-import tools.dynamia.cms.site.core.domain.Region;
-import tools.dynamia.crud.CrudPage;
-import tools.dynamia.integration.sterotypes.Provider;
-import tools.dynamia.navigation.Module;
-import tools.dynamia.navigation.ModuleProvider;
+import tools.dynamia.cms.site.core.domain.City
+import tools.dynamia.cms.site.core.domain.Country
+import tools.dynamia.cms.site.core.domain.Region
+import tools.dynamia.crud.CrudPage
+import tools.dynamia.integration.sterotypes.Provider
+import tools.dynamia.navigation.Module
+import tools.dynamia.navigation.ModuleProvider
 
 @Provider
 public class LocationInstaller implements ModuleProvider {

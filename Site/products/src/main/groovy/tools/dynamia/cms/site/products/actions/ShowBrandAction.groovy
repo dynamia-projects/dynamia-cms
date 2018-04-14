@@ -13,24 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.actions;
+package tools.dynamia.cms.site.products.actions
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.actions.ActionEvent;
-import tools.dynamia.cms.site.core.actions.SiteAction;
-import tools.dynamia.cms.site.core.actions.SiteActionManager;
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.products.ProductSearchForm;
-import tools.dynamia.cms.site.products.ProductSearchOrder;
-import tools.dynamia.cms.site.products.domain.ProductBrand;
-import tools.dynamia.cms.site.products.domain.ProductCategory;
-import tools.dynamia.cms.site.products.services.ProductsService;
-
-import tools.dynamia.domain.services.CrudService;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.actions.ActionEvent
+import tools.dynamia.cms.site.core.actions.SiteAction
+import tools.dynamia.cms.site.core.actions.SiteActionManager
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.products.ProductSearchForm
+import tools.dynamia.cms.site.products.ProductSearchOrder
+import tools.dynamia.cms.site.products.domain.ProductBrand
+import tools.dynamia.cms.site.products.domain.ProductCategory
+import tools.dynamia.cms.site.products.services.ProductsService
+import tools.dynamia.domain.services.CrudService
 
 /**
  *

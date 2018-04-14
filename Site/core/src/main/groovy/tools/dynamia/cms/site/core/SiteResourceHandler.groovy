@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import org.springframework.core.io.FileSystemResource
+import org.springframework.core.io.Resource
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.core.services.SiteService
+import tools.dynamia.integration.Containers
+import tools.dynamia.io.IOUtils
+import tools.dynamia.io.ImageUtil
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.services.SiteService;
-import tools.dynamia.integration.Containers;
-import tools.dynamia.io.IOUtils;
-import tools.dynamia.io.ImageUtil;
+import javax.servlet.http.HttpServletRequest
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  *

@@ -1,13 +1,13 @@
-package tools.dynamia.cms.site.users.domain;
+package tools.dynamia.cms.site.users.domain
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import tools.dynamia.cms.site.core.domain.SiteSimpleEntity
+import tools.dynamia.cms.site.mail.domain.MailAccount
+import tools.dynamia.cms.site.mail.domain.MailTemplate
 
-import tools.dynamia.cms.site.core.domain.SiteSimpleEntity;
-import tools.dynamia.cms.site.mail.domain.MailAccount;
-import tools.dynamia.cms.site.mail.domain.MailTemplate;
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.OneToOne
+import javax.persistence.Table
 
 @Entity
 @Table(name = "usr_config")

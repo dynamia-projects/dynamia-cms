@@ -1,7 +1,6 @@
 package tools.dynamia.cms.admin.importer
 
 import org.apache.commons.lang.time.DurationFormatUtils
-
 import tools.dynamia.cms.admin.importer.ui.Importer
 import tools.dynamia.domain.ValidationError
 import tools.dynamia.integration.ProgressEvent

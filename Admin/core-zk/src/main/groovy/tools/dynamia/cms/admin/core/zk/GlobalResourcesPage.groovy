@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.dynamia.cms.admin.core.zk;
+package tools.dynamia.cms.admin.core.zk
 
-import org.zkoss.zk.ui.Component;
-import tools.dynamia.cms.site.core.DynamiaCMS;
-import tools.dynamia.modules.filemanager.FileManager;
-import tools.dynamia.zk.navigation.ComponentPage;
+import org.zkoss.zk.ui.Component
+import tools.dynamia.cms.site.core.DynamiaCMS
+import tools.dynamia.modules.filemanager.FileManager
+import tools.dynamia.zk.navigation.ComponentPage
 
 /**
  *

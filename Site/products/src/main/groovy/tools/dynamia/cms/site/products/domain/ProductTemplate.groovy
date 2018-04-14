@@ -13,17 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.domain;
+package tools.dynamia.cms.site.products.domain
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import tools.dynamia.cms.site.core.domain.SiteBaseEntity
+import tools.dynamia.domain.contraints.NotEmpty
 
-import tools.dynamia.cms.site.core.domain.SiteBaseEntity;
-import tools.dynamia.domain.contraints.NotEmpty;
+import javax.persistence.*
 
 /**
  *

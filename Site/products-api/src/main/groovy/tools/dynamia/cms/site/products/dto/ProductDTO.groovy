@@ -13,15 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.dto;
+package tools.dynamia.cms.site.products.dto
 
-import tools.dynamia.cms.site.products.api.ValueType;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import tools.dynamia.cms.site.products.api.ValueType
 
 /**
  * @author Mario Serrano Leones

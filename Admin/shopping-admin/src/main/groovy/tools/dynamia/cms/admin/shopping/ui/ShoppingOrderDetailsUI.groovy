@@ -1,16 +1,14 @@
-package tools.dynamia.cms.admin.shopping.ui;
+package tools.dynamia.cms.admin.shopping.ui
 
-import org.zkoss.zul.Caption;
-import org.zkoss.zul.Div;
-import org.zkoss.zul.Groupbox;
-
-import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-
-import tools.dynamia.viewers.util.Viewers;
-import tools.dynamia.zk.viewers.form.FormView;
-import tools.dynamia.zk.viewers.table.TableView;
+import org.zkoss.zul.Caption
+import org.zkoss.zul.Div
+import org.zkoss.zul.Groupbox
+import tools.dynamia.cms.site.payment.domain.PaymentTransaction
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+import tools.dynamia.viewers.util.Viewers
+import tools.dynamia.zk.viewers.form.FormView
+import tools.dynamia.zk.viewers.table.TableView
 
 public class ShoppingOrderDetailsUI extends Div {
 

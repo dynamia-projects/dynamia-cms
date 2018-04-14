@@ -3,22 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.dynamia.cms.admin.users;
+package tools.dynamia.cms.admin.users
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Scope
+import tools.dynamia.cms.site.core.DynamiaCMS
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.core.services.SiteService
+import tools.dynamia.cms.site.users.services.UserService
+import tools.dynamia.integration.sterotypes.Component
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-
-import tools.dynamia.app.ApplicationUserInfo;
-import tools.dynamia.cms.site.core.DynamiaCMS;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.services.SiteService;
-import tools.dynamia.cms.site.users.UserHolder;
-import tools.dynamia.cms.site.users.services.UserService;
-
-import tools.dynamia.integration.sterotypes.Component;
+import javax.servlet.http.HttpServletRequest
 
 /**
  *

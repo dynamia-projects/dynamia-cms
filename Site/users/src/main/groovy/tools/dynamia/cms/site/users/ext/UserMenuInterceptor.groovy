@@ -13,23 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users.ext;
+package tools.dynamia.cms.site.users.ext
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.api.CMSExtension;
-import tools.dynamia.cms.site.core.api.SiteRequestInterceptorAdapter;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.users.UserHolder;
-import tools.dynamia.cms.site.users.actions.UserMenuAction;
-import tools.dynamia.cms.site.users.actions.UserMenuActionEnableable;
-import tools.dynamia.cms.site.users.domain.User;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.api.CMSExtension
+import tools.dynamia.cms.site.core.api.SiteRequestInterceptorAdapter
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.users.UserHolder
+import tools.dynamia.cms.site.users.actions.UserMenuAction
+import tools.dynamia.cms.site.users.actions.UserMenuActionEnableable
+import tools.dynamia.cms.site.users.domain.User
 
 /**
  *

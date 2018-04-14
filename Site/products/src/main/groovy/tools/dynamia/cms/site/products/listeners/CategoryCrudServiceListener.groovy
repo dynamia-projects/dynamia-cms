@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.listeners;
+package tools.dynamia.cms.site.products.listeners
 
-import tools.dynamia.cms.site.core.api.CMSListener;
-import tools.dynamia.cms.site.products.domain.ProductCategory;
-
-import tools.dynamia.commons.StringUtils;
-import tools.dynamia.domain.util.CrudServiceListenerAdapter;
+import tools.dynamia.cms.site.core.api.CMSListener
+import tools.dynamia.cms.site.products.domain.ProductCategory
+import tools.dynamia.commons.StringUtils
+import tools.dynamia.domain.util.CrudServiceListenerAdapter
 
 /**
  *

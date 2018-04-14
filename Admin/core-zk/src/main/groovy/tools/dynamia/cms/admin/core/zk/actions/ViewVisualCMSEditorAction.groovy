@@ -2,7 +2,6 @@ package tools.dynamia.cms.admin.core.zk.actions
 
 import org.zkforge.ckez.CKeditor
 import org.zkoss.zhtml.Form
-
 import tools.dynamia.actions.ActionEvent
 import tools.dynamia.actions.ActionRenderer
 import tools.dynamia.actions.InstallAction

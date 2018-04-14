@@ -13,20 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.banners.modules;
+package tools.dynamia.cms.site.banners.modules
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.banners.domain.Banner;
-import tools.dynamia.cms.site.banners.services.BannerService;
-import tools.dynamia.cms.site.core.JavaScriptResource;
-import tools.dynamia.cms.site.core.StyleSheetResource;
-import tools.dynamia.cms.site.core.api.AbstractModule;
-import tools.dynamia.cms.site.core.api.CMSModule;
-import tools.dynamia.cms.site.core.api.ModuleContext;
-import tools.dynamia.cms.site.core.domain.ModuleInstanceParameter;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.banners.domain.Banner
+import tools.dynamia.cms.site.banners.services.BannerService
+import tools.dynamia.cms.site.core.JavaScriptResource
+import tools.dynamia.cms.site.core.StyleSheetResource
+import tools.dynamia.cms.site.core.api.AbstractModule
+import tools.dynamia.cms.site.core.api.CMSModule
+import tools.dynamia.cms.site.core.api.ModuleContext
+import tools.dynamia.cms.site.core.domain.ModuleInstanceParameter
 
 @CMSModule
 public class BannerSlidersModule extends AbstractModule {

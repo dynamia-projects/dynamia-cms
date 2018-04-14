@@ -1,8 +1,8 @@
-package tools.dynamia.cms.site.users.actions;
+package tools.dynamia.cms.site.users.actions
 
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.users.api.UserProfile;
-import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.users.api.UserProfile
+import tools.dynamia.cms.site.users.domain.User
 
 @CMSAction
 public class MyCustomersUserMenuAction implements UserMenuActionEnableable {

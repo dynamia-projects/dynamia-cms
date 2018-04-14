@@ -13,28 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.shoppingcart.actions;
+package tools.dynamia.cms.site.shoppingcart.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.actions.ActionEvent;
-import tools.dynamia.cms.site.core.actions.SiteAction;
-import tools.dynamia.cms.site.core.actions.SiteActionManager;
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder;
-import tools.dynamia.cms.site.shoppingcart.ShoppingCartUtils;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
-import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
-import tools.dynamia.cms.site.users.UserHolder;
-import tools.dynamia.cms.site.users.api.UserProfile;
-import tools.dynamia.cms.site.users.services.UserService;
-
-import tools.dynamia.domain.ValidationError;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.servlet.view.RedirectView
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.actions.ActionEvent
+import tools.dynamia.cms.site.core.actions.SiteAction
+import tools.dynamia.cms.site.core.actions.SiteActionManager
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.shoppingcart.ShoppingCartHolder
+import tools.dynamia.cms.site.shoppingcart.ShoppingCartUtils
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig
+import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService
+import tools.dynamia.cms.site.users.UserHolder
+import tools.dynamia.cms.site.users.services.UserService
+import tools.dynamia.domain.ValidationError
 
 /**
  * @author Mario Serrano Leones

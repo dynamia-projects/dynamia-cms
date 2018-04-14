@@ -13,22 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.domain;
+package tools.dynamia.cms.site.products.domain
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.BatchSize
+import tools.dynamia.cms.site.core.api.SiteAware
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.products.dto.ProductBrandDTO
+import tools.dynamia.domain.SimpleEntity
+import tools.dynamia.domain.contraints.NotEmpty
 
-import org.hibernate.annotations.BatchSize;
-
-import tools.dynamia.cms.site.core.api.SiteAware;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.products.dto.ProductBrandDTO;
-
-import tools.dynamia.domain.SimpleEntity;
-import tools.dynamia.domain.contraints.NotEmpty;
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.OneToOne
+import javax.persistence.Table
+import javax.validation.constraints.NotNull
 
 /**
  *

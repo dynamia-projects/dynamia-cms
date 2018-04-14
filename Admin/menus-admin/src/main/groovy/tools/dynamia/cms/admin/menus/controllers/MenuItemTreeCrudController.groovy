@@ -1,12 +1,10 @@
-package tools.dynamia.cms.admin.menus.controllers;
+package tools.dynamia.cms.admin.menus.controllers
 
-import java.util.Collection;
-
-import tools.dynamia.cms.site.menus.domain.Menu;
-import tools.dynamia.cms.site.menus.domain.MenuItem;
-import tools.dynamia.domain.query.QueryConditions;
-import tools.dynamia.domain.query.QueryParameters;
-import tools.dynamia.zk.crud.TreeCrudController;
+import tools.dynamia.cms.site.menus.domain.Menu
+import tools.dynamia.cms.site.menus.domain.MenuItem
+import tools.dynamia.domain.query.QueryConditions
+import tools.dynamia.domain.query.QueryParameters
+import tools.dynamia.zk.crud.TreeCrudController
 
 public class MenuItemTreeCrudController extends TreeCrudController<MenuItem> {
 

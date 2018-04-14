@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.templates;
+package tools.dynamia.cms.site.templates
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.DynamiaCMS
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.core.services.SiteService
+import tools.dynamia.cms.site.templates.services.TemplateService
+import tools.dynamia.integration.Containers
 
-import javax.servlet.http.HttpServletRequest;
-
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.DynamiaCMS;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.services.SiteService;
-import tools.dynamia.cms.site.templates.services.TemplateService;
-
-import tools.dynamia.integration.Containers;
+import javax.servlet.http.HttpServletRequest
+import java.nio.file.Files
+import java.nio.file.Path
 
 /**
  *

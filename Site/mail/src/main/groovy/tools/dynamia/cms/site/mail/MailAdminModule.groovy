@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.mail;
+package tools.dynamia.cms.site.mail
 
-import tools.dynamia.cms.site.core.api.AdminModule;
-import tools.dynamia.cms.site.core.api.AdminModuleOption;
-import tools.dynamia.cms.site.core.api.CMSModule;
-import tools.dynamia.cms.site.mail.domain.MailAccount;
-import tools.dynamia.cms.site.mail.domain.MailTemplate;
+import tools.dynamia.cms.site.core.api.AdminModule
+import tools.dynamia.cms.site.core.api.AdminModuleOption
+import tools.dynamia.cms.site.core.api.CMSModule
+import tools.dynamia.cms.site.mail.domain.MailAccount
+import tools.dynamia.cms.site.mail.domain.MailTemplate
 
 /**
  *

@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.mail.ext;
+package tools.dynamia.cms.site.mail.ext
 
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.api.CMSExtension;
-import tools.dynamia.cms.site.core.api.SiteRequestInterceptorAdapter;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.mail.domain.MailingContact;
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.api.CMSExtension
+import tools.dynamia.cms.site.core.api.SiteRequestInterceptorAdapter
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.mail.domain.MailingContact
 
 @CMSExtension
 public class MailingContactSiteInterceptor extends SiteRequestInterceptorAdapter {

@@ -1,27 +1,16 @@
 package tools.dynamia.cms.admin.menus.ui
 
-import java.util.ArrayList
-import java.util.List
-import java.util.Map
-
 import org.zkoss.zk.ui.Component
 import org.zkoss.zk.ui.event.Events
-import org.zkoss.zul.Borderlayout
-import org.zkoss.zul.Center
-import org.zkoss.zul.Label
-import org.zkoss.zul.North
-import org.zkoss.zul.Vlayout
-import org.zkoss.zul.Window
-
+import org.zkoss.zul.*
+import tools.dynamia.actions.Action
+import tools.dynamia.actions.ActionEvent
+import tools.dynamia.actions.ActionEventBuilder
 import tools.dynamia.cms.admin.core.zk.ui.TypeSelector
 import tools.dynamia.cms.site.menus.api.MenuItemType
 import tools.dynamia.cms.site.menus.domain.MenuItem
 import tools.dynamia.cms.site.menus.domain.MenuItemParameter
 import tools.dynamia.cms.site.menus.services.MenuService
-
-import tools.dynamia.actions.Action
-import tools.dynamia.actions.ActionEvent
-import tools.dynamia.actions.ActionEventBuilder
 import tools.dynamia.commons.MapBuilder
 import tools.dynamia.domain.query.Parameter
 import tools.dynamia.integration.Containers

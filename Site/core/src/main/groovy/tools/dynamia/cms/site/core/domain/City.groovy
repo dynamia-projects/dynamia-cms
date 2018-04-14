@@ -1,11 +1,11 @@
-package tools.dynamia.cms.site.core.domain;
+package tools.dynamia.cms.site.core.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import tools.dynamia.cms.site.core.dto.CityDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore
+import tools.dynamia.cms.site.core.dto.CityDTO
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.Entity
+import javax.persistence.ManyToOne
+import javax.persistence.Table
 
 /**
  * Created by mario on 4/07/2017.

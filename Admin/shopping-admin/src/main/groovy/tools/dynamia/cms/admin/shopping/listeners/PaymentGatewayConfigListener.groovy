@@ -1,15 +1,13 @@
-package tools.dynamia.cms.admin.shopping.listeners;
+package tools.dynamia.cms.admin.shopping.listeners
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.api.CMSListener;
-import tools.dynamia.cms.site.payment.PaymentGateway;
-import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
-import tools.dynamia.cms.site.payment.services.PaymentService;
-
-import tools.dynamia.domain.query.QueryParameters;
-import tools.dynamia.domain.util.CrudServiceListenerAdapter;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.api.CMSListener
+import tools.dynamia.cms.site.payment.PaymentGateway
+import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig
+import tools.dynamia.cms.site.payment.services.PaymentService
+import tools.dynamia.domain.query.QueryParameters
+import tools.dynamia.domain.util.CrudServiceListenerAdapter
 
 @CMSListener
 public class PaymentGatewayConfigListener extends CrudServiceListenerAdapter<PaymentGatewayConfig> {

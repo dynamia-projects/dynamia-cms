@@ -1,14 +1,14 @@
-package tools.dynamia.cms.site.shoppingcart;
+package tools.dynamia.cms.site.shoppingcart
 
-import org.springframework.beans.factory.annotation.Autowired;
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.payment.api.PaymentSource;
-import tools.dynamia.cms.site.payment.api.PaymentSourceProvider;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
-import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
-import tools.dynamia.integration.sterotypes.Provider;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.payment.api.PaymentSource
+import tools.dynamia.cms.site.payment.api.PaymentSourceProvider
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig
+import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService
+import tools.dynamia.integration.sterotypes.Provider
 
 @Provider
 public class SitePaymentSourceProvider implements PaymentSourceProvider {

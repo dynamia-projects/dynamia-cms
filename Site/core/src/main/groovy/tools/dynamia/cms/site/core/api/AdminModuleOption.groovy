@@ -13,10 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.api;
-
-import java.io.Serializable;
-
+package tools.dynamia.cms.site.core.api
 /**
  *
  * @author Mario Serrano Leones

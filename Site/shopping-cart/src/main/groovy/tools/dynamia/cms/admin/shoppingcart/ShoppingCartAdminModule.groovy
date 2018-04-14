@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.shoppingcart;
+package tools.dynamia.cms.admin.shoppingcart
 
-import tools.dynamia.cms.site.core.api.AdminModule;
-import tools.dynamia.cms.site.core.api.AdminModuleOption;
-import tools.dynamia.cms.site.core.api.CMSModule;
-import tools.dynamia.cms.site.payment.domain.ManualPayment;
-import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig;
-import tools.dynamia.cms.site.payment.domain.PaymentTransaction;
-import tools.dynamia.cms.site.shoppingcart.domain.ShippingCompany;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
+import tools.dynamia.cms.site.core.api.AdminModule
+import tools.dynamia.cms.site.core.api.AdminModuleOption
+import tools.dynamia.cms.site.core.api.CMSModule
+import tools.dynamia.cms.site.payment.domain.ManualPayment
+import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig
+import tools.dynamia.cms.site.payment.domain.PaymentTransaction
+import tools.dynamia.cms.site.shoppingcart.domain.ShippingCompany
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig
 
 @CMSModule
 public class ShoppingCartAdminModule implements AdminModule {

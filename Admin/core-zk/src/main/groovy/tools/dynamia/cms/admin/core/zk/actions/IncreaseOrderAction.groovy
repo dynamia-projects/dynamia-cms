@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.actions;
+package tools.dynamia.cms.admin.core.zk.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.cms.site.core.Orderable;
-
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.commons.ApplicableClass;
-import tools.dynamia.crud.AbstractCrudAction;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.crud.CrudState;
-import tools.dynamia.domain.AbstractEntity;
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.ui.MessageType;
-import tools.dynamia.ui.UIMessages;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.site.core.Orderable
+import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.crud.AbstractCrudAction
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.CrudState
+import tools.dynamia.domain.AbstractEntity
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.ui.MessageType
+import tools.dynamia.ui.UIMessages
 
 /**
  * Created by Mario on 18/11/2014.

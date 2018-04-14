@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.payment;
+package tools.dynamia.cms.site.payment
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+import java.util.Map.Entry
 
 public class PaymentUtils {
 

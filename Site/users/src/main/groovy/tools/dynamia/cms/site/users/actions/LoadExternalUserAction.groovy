@@ -1,14 +1,14 @@
-package tools.dynamia.cms.site.users.actions;
+package tools.dynamia.cms.site.users.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.actions.ActionEvent;
-import tools.dynamia.cms.site.core.actions.SiteAction;
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.users.api.UserDTO;
-import tools.dynamia.cms.site.users.services.UserService;
-import tools.dynamia.domain.services.CrudService;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.actions.ActionEvent
+import tools.dynamia.cms.site.core.actions.SiteAction
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.users.api.UserDTO
+import tools.dynamia.cms.site.users.services.UserService
+import tools.dynamia.domain.services.CrudService
 
 @CMSAction
 public class LoadExternalUserAction implements SiteAction {

@@ -13,24 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
+import tools.dynamia.cms.site.core.api.SiteRequestInterceptor
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.core.services.SiteService
+import tools.dynamia.commons.logger.LoggingService
+import tools.dynamia.commons.logger.SLF4JLoggingService
+import tools.dynamia.integration.Containers
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import tools.dynamia.cms.site.core.api.SiteRequestInterceptor;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.services.SiteService;
-import tools.dynamia.commons.logger.LoggingService;
-import tools.dynamia.commons.logger.SLF4JLoggingService;
-import tools.dynamia.integration.Containers;
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 /**
  *

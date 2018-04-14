@@ -1,8 +1,8 @@
-package com.dynamia.cms.admin.shopping;
+package com.dynamia.cms.admin.shopping
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.Test
+import junit.framework.TestCase
+import junit.framework.TestSuite
 
 /**
  * Unit test for simple App.

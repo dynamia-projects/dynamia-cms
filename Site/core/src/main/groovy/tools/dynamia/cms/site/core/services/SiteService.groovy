@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.services;
+package tools.dynamia.cms.site.core.services
 
-import java.util.List;
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.core.domain.SiteParameter
 
-import javax.servlet.http.HttpServletRequest;
-
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.core.domain.SiteParameter;
+import javax.servlet.http.HttpServletRequest
 
 /**
  *

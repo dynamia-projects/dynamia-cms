@@ -1,9 +1,5 @@
 package toosl.dynamia.cms.site.shoppingcart.api
 
-import java.io.Serializable
-import java.util.List
-import java.util.Optional
-
 class Response implements Serializable {
 
     /**

@@ -20,11 +20,6 @@ import tools.dynamia.cms.site.core.domain.ModuleInstance
 import tools.dynamia.cms.site.core.domain.Site
 import tools.dynamia.cms.site.core.services.impl.ModulesService
 
-import java.util.HashSet
-import java.util.List
-import java.util.Set
-import java.util.stream.Collectors
-
 class CMSModules {
 
     private Site site

@@ -1,6 +1,4 @@
-package tools.dynamia.cms.site.products.dto;
-
-import java.io.Serializable;
+package tools.dynamia.cms.site.products.dto
 
 public class StoreContactDTO implements Serializable {
 

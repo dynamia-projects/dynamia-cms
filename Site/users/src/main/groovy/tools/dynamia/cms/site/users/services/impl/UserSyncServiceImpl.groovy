@@ -1,22 +1,18 @@
-package tools.dynamia.cms.site.users.services.impl;
+package tools.dynamia.cms.site.users.services.impl
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import tools.dynamia.cms.site.users.api.UserDTO;
-import tools.dynamia.cms.site.users.api.UsersDatasource;
-import tools.dynamia.cms.site.users.domain.User;
-import tools.dynamia.cms.site.users.domain.UserSiteConfig;
-import tools.dynamia.cms.site.users.services.UserService;
-import tools.dynamia.cms.site.users.services.UserSyncService;
-import tools.dynamia.commons.StringUtils;
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.web.util.HttpRemotingServiceClient;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Propagation
+import org.springframework.transaction.annotation.Transactional
+import tools.dynamia.cms.site.users.api.UserDTO
+import tools.dynamia.cms.site.users.api.UsersDatasource
+import tools.dynamia.cms.site.users.domain.User
+import tools.dynamia.cms.site.users.domain.UserSiteConfig
+import tools.dynamia.cms.site.users.services.UserService
+import tools.dynamia.cms.site.users.services.UserSyncService
+import tools.dynamia.commons.StringUtils
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.web.util.HttpRemotingServiceClient
 
 @Service
 public class UserSyncServiceImpl implements UserSyncService {

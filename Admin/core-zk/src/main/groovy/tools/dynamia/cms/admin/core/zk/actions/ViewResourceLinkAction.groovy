@@ -13,25 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.actions;
+package tools.dynamia.cms.admin.core.zk.actions
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.zkoss.zul.Messagebox;
-
-import tools.dynamia.actions.ActionEvent;
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.integration.Containers;
-import tools.dynamia.io.FileInfo;
-import tools.dynamia.modules.filemanager.FileManagerAction;
-import tools.dynamia.ui.MessageType;
-import tools.dynamia.ui.UIMessages;
+import org.zkoss.zul.Messagebox
+import tools.dynamia.actions.ActionEvent
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.integration.Containers
+import tools.dynamia.io.FileInfo
+import tools.dynamia.modules.filemanager.FileManagerAction
+import tools.dynamia.ui.MessageType
+import tools.dynamia.ui.UIMessages
 
 @InstallAction
 public class ViewResourceLinkAction extends FileManagerAction {

@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.contacts.domain;
+package tools.dynamia.cms.site.contacts.domain
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import tools.dynamia.cms.site.core.Orderable
+import tools.dynamia.cms.site.core.domain.SiteSimpleEntity
+import tools.dynamia.domain.contraints.NotEmpty
 
-import tools.dynamia.cms.site.core.Orderable;
-import tools.dynamia.cms.site.core.domain.SiteSimpleEntity;
-
-import tools.dynamia.domain.contraints.NotEmpty;
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Table
 
 @Entity
 @Table(name = "cts_categories")

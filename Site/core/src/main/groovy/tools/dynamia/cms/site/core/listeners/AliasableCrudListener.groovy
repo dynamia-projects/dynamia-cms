@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.listeners;
+package tools.dynamia.cms.site.core.listeners
 
-import tools.dynamia.cms.site.core.Aliasable;
-import tools.dynamia.commons.StringUtils;
-import tools.dynamia.domain.util.CrudServiceListenerAdapter;
-import tools.dynamia.integration.sterotypes.Listener;
+import tools.dynamia.cms.site.core.Aliasable
+import tools.dynamia.commons.StringUtils
+import tools.dynamia.domain.util.CrudServiceListenerAdapter
+import tools.dynamia.integration.sterotypes.Listener
 
 /**
  *

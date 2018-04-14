@@ -1,9 +1,4 @@
-package tools.dynamia.cms.site.products.dto;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+package tools.dynamia.cms.site.products.dto
 
 public class ProductsReviewResponse implements Serializable {
 

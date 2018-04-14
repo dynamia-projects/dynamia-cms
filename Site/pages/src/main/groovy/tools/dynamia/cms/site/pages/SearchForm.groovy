@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.pages;
+package tools.dynamia.cms.site.pages
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore
+import tools.dynamia.domain.contraints.NotEmpty
 
-import javax.servlet.http.HttpServletRequest;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import tools.dynamia.domain.contraints.NotEmpty;
+import javax.servlet.http.HttpServletRequest
 
 /**
  *

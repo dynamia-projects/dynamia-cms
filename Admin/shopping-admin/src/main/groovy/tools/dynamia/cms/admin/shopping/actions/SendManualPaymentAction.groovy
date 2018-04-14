@@ -1,20 +1,19 @@
-package tools.dynamia.cms.admin.shopping.actions;
+package tools.dynamia.cms.admin.shopping.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.payment.api.Payment;
-import tools.dynamia.cms.site.payment.services.PaymentService;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
-import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
-import tools.dynamia.commons.ApplicableClass;
-import tools.dynamia.crud.AbstractCrudAction;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.crud.CrudState;
-import tools.dynamia.ui.MessageType;
-import tools.dynamia.ui.UIMessages;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.payment.api.Payment
+import tools.dynamia.cms.site.payment.services.PaymentService
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig
+import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService
+import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.crud.AbstractCrudAction
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.CrudState
+import tools.dynamia.ui.MessageType
+import tools.dynamia.ui.UIMessages
 
 @InstallAction
 public class SendManualPaymentAction extends AbstractCrudAction {

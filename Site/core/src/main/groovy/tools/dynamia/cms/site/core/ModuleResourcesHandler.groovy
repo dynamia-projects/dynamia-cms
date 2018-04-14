@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
-import java.nio.file.Path;
+import tools.dynamia.cms.site.core.domain.Site
 
-import tools.dynamia.cms.site.core.domain.Site;
+import java.nio.file.Path
 
 public class ModuleResourcesHandler extends SiteResourceHandler {
 

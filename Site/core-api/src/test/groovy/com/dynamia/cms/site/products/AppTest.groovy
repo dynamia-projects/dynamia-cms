@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.dynamia.cms.site.products;
+package com.dynamia.cms.site.products
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.Test
+import junit.framework.TestCase
+import junit.framework.TestSuite
 
 /**
  * Unit test for simple App.

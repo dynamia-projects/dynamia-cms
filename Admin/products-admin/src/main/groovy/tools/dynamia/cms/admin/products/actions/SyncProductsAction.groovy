@@ -16,12 +16,10 @@
 package tools.dynamia.cms.admin.products.actions
 
 import org.springframework.beans.factory.annotation.Autowired
-
-import tools.dynamia.cms.site.products.domain.ProductsSiteConfig
-import tools.dynamia.cms.site.products.services.ProductsSynchronizer
-
 import tools.dynamia.actions.ActionGroup
 import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig
+import tools.dynamia.cms.site.products.services.ProductsSynchronizer
 import tools.dynamia.commons.ApplicableClass
 import tools.dynamia.crud.AbstractCrudAction
 import tools.dynamia.crud.CrudActionEvent

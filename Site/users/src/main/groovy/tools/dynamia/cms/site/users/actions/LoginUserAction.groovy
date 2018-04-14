@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users.actions;
+package tools.dynamia.cms.site.users.actions
 
-import org.springframework.security.web.WebAttributes;
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.actions.ActionEvent;
-import tools.dynamia.cms.site.core.actions.SiteAction;
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.users.LoginForm;
-import tools.dynamia.cms.site.users.UserForm;
-import tools.dynamia.cms.site.users.UsersUtil;
+import org.springframework.security.web.WebAttributes
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.actions.ActionEvent
+import tools.dynamia.cms.site.core.actions.SiteAction
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.users.LoginForm
+import tools.dynamia.cms.site.users.UserForm
+import tools.dynamia.cms.site.users.UsersUtil
 
 /**
  *

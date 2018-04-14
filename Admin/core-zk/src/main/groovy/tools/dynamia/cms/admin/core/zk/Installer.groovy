@@ -19,7 +19,6 @@ import org.springframework.beans.BeansException
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory
 import org.springframework.context.annotation.Configuration
-
 import tools.dynamia.cms.site.core.api.AdminModule
 import tools.dynamia.cms.site.core.api.AdminModuleOption
 import tools.dynamia.cms.site.core.api.ConfigAdminModuleOption

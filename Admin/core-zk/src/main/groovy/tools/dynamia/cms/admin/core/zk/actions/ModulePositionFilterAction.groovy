@@ -1,21 +1,17 @@
-package tools.dynamia.cms.admin.core.zk.actions;
+package tools.dynamia.cms.admin.core.zk.actions
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import tools.dynamia.actions.ActionGroup;
-import tools.dynamia.actions.ActionRenderer;
-import tools.dynamia.actions.InstallAction;
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.domain.ModuleInstance;
-import tools.dynamia.cms.site.core.services.impl.ModulesService;
-import tools.dynamia.commons.ApplicableClass;
-import tools.dynamia.crud.AbstractCrudAction;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.crud.CrudState;
-import tools.dynamia.zk.actions.ComboboxActionRenderer;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.actions.ActionGroup
+import tools.dynamia.actions.ActionRenderer
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.domain.ModuleInstance
+import tools.dynamia.cms.site.core.services.impl.ModulesService
+import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.crud.AbstractCrudAction
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.CrudState
+import tools.dynamia.zk.actions.ComboboxActionRenderer
 
 @InstallAction
 public class ModulePositionFilterAction extends AbstractCrudAction {

@@ -1,19 +1,18 @@
-package tools.dynamia.cms.site.shoppingcart.actions;
+package tools.dynamia.cms.site.shoppingcart.actions
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.CMSUtil;
-import tools.dynamia.cms.site.core.actions.ActionEvent;
-import tools.dynamia.cms.site.core.actions.SiteAction;
-import tools.dynamia.cms.site.core.api.CMSAction;
-import tools.dynamia.cms.site.core.html.Option;
-import tools.dynamia.cms.site.payment.PaymentHolder;
-import tools.dynamia.cms.site.payment.domain.ManualPayment;
-import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig;
-import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService;
-import tools.dynamia.cms.site.users.UserHolder;
-import tools.dynamia.cms.site.users.domain.User;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.CMSUtil
+import tools.dynamia.cms.site.core.actions.ActionEvent
+import tools.dynamia.cms.site.core.actions.SiteAction
+import tools.dynamia.cms.site.core.api.CMSAction
+import tools.dynamia.cms.site.core.html.Option
+import tools.dynamia.cms.site.payment.PaymentHolder
+import tools.dynamia.cms.site.payment.domain.ManualPayment
+import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig
+import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService
+import tools.dynamia.cms.site.users.UserHolder
+import tools.dynamia.cms.site.users.domain.User
 
 @CMSAction
 public class NewPaymentAction implements SiteAction {

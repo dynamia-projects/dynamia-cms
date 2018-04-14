@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core;
+package tools.dynamia.cms.admin.core
 
-import tools.dynamia.cms.site.core.SiteContext;
-import tools.dynamia.cms.site.core.api.SiteAware;
-import tools.dynamia.cms.site.core.domain.Site;
-
-import tools.dynamia.commons.BeanUtils;
-import tools.dynamia.domain.query.QueryParameters;
-import tools.dynamia.domain.util.CrudServiceListenerAdapter;
-import tools.dynamia.integration.sterotypes.Component;
+import tools.dynamia.cms.site.core.SiteContext
+import tools.dynamia.cms.site.core.api.SiteAware
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.commons.BeanUtils
+import tools.dynamia.domain.query.QueryParameters
+import tools.dynamia.domain.util.CrudServiceListenerAdapter
+import tools.dynamia.integration.sterotypes.Component
 
 @Component
 public class SiteAwareCrudListener extends CrudServiceListenerAdapter<SiteAware> {

@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.controllers;
+package tools.dynamia.cms.admin.core.zk.controllers
 
-import tools.dynamia.cms.site.core.domain.ModuleInstance;
-import tools.dynamia.cms.site.core.domain.ModuleInstanceParameter;
-
-import tools.dynamia.zk.crud.CrudController;
+import tools.dynamia.cms.site.core.domain.ModuleInstance
+import tools.dynamia.cms.site.core.domain.ModuleInstanceParameter
+import tools.dynamia.zk.crud.CrudController
 
 public class ModuleInstanceParameterController extends CrudController<ModuleInstanceParameter> {
 

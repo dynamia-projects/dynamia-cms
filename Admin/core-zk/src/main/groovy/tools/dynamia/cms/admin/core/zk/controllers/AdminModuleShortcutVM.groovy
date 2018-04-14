@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.core.zk.controllers;
+package tools.dynamia.cms.admin.core.zk.controllers
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.zkoss.bind.annotation.BindingParam;
-import org.zkoss.bind.annotation.Command;
-
-import tools.dynamia.cms.site.core.api.AdminModule;
-import tools.dynamia.cms.site.core.api.AdminModuleOption;
-
-import tools.dynamia.integration.Containers;
-import tools.dynamia.navigation.NavigationRestrictions;
-import tools.dynamia.navigation.Page;
-import tools.dynamia.zk.navigation.ZKNavigationManager;
+import org.zkoss.bind.annotation.BindingParam
+import org.zkoss.bind.annotation.Command
+import tools.dynamia.cms.site.core.api.AdminModule
+import tools.dynamia.cms.site.core.api.AdminModuleOption
+import tools.dynamia.integration.Containers
+import tools.dynamia.navigation.NavigationRestrictions
+import tools.dynamia.navigation.Page
+import tools.dynamia.zk.navigation.ZKNavigationManager
 
 public class AdminModuleShortcutVM {
 

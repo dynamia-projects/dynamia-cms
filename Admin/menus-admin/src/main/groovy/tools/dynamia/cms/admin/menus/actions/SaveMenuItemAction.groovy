@@ -1,18 +1,16 @@
-package tools.dynamia.cms.admin.menus.actions;
+package tools.dynamia.cms.admin.menus.actions
 
-import java.util.List;
-
-import tools.dynamia.actions.AbstractAction;
-import tools.dynamia.actions.ActionEvent;
-import tools.dynamia.actions.ActionRenderer;
-import tools.dynamia.cms.admin.menus.ui.MenuItemsUI;
-import tools.dynamia.cms.site.menus.domain.MenuItem;
-import tools.dynamia.cms.site.menus.domain.MenuItemParameter;
-import tools.dynamia.crud.CrudActionEvent;
-import tools.dynamia.domain.query.Parameter;
-import tools.dynamia.domain.services.CrudService;
-import tools.dynamia.ui.UIMessages;
-import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer;
+import tools.dynamia.actions.AbstractAction
+import tools.dynamia.actions.ActionEvent
+import tools.dynamia.actions.ActionRenderer
+import tools.dynamia.cms.admin.menus.ui.MenuItemsUI
+import tools.dynamia.cms.site.menus.domain.MenuItem
+import tools.dynamia.cms.site.menus.domain.MenuItemParameter
+import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.domain.query.Parameter
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.ui.UIMessages
+import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer
 
 public class SaveMenuItemAction extends AbstractAction {
 

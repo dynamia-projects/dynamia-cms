@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users.services;
+package tools.dynamia.cms.site.users.services
 
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.users.UserForm;
-import tools.dynamia.cms.site.users.api.UserDTO;
-import tools.dynamia.cms.site.users.domain.User;
-import tools.dynamia.cms.site.users.domain.UserContactInfo;
-import tools.dynamia.cms.site.users.domain.UserSiteConfig;
-
-import java.util.List;
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.users.UserForm
+import tools.dynamia.cms.site.users.api.UserDTO
+import tools.dynamia.cms.site.users.domain.User
+import tools.dynamia.cms.site.users.domain.UserContactInfo
+import tools.dynamia.cms.site.users.domain.UserSiteConfig
 
 /**
  * @author Mario Serrano Leones

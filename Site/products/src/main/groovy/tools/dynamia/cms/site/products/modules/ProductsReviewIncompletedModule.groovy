@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.modules;
+package tools.dynamia.cms.site.products.modules
 
-import org.springframework.beans.factory.annotation.Autowired;
-import tools.dynamia.cms.site.core.api.AbstractModule;
-import tools.dynamia.cms.site.core.api.CMSModule;
-import tools.dynamia.cms.site.core.api.ModuleContext;
-import tools.dynamia.cms.site.core.domain.ModuleInstance;
-import tools.dynamia.cms.site.products.domain.ProductReview;
-import tools.dynamia.cms.site.products.domain.ProductsSiteConfig;
-import tools.dynamia.cms.site.products.dto.ProductsReviewResponse;
-import tools.dynamia.cms.site.products.services.ProductsService;
-import tools.dynamia.cms.site.users.UserHolder;
-
-import java.util.Collections;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.site.core.api.AbstractModule
+import tools.dynamia.cms.site.core.api.CMSModule
+import tools.dynamia.cms.site.core.api.ModuleContext
+import tools.dynamia.cms.site.core.domain.ModuleInstance
+import tools.dynamia.cms.site.products.domain.ProductReview
+import tools.dynamia.cms.site.products.domain.ProductsSiteConfig
+import tools.dynamia.cms.site.products.dto.ProductsReviewResponse
+import tools.dynamia.cms.site.products.services.ProductsService
+import tools.dynamia.cms.site.users.UserHolder
 
 /**
  * Created by Mario on 18/11/2014.

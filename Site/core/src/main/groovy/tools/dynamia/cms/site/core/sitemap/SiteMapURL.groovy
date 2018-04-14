@@ -1,13 +1,9 @@
-package tools.dynamia.cms.site.core.sitemap;
+package tools.dynamia.cms.site.core.sitemap
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlAccessType
+import javax.xml.bind.annotation.XmlAccessorType
+import javax.xml.bind.annotation.XmlElement
+import javax.xml.bind.annotation.XmlTransient
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SiteMapURL implements Serializable {

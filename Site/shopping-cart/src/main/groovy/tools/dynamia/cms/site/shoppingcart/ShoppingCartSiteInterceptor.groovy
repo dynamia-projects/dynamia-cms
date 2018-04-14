@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.shoppingcart;
+package tools.dynamia.cms.site.shoppingcart
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.site.core.api.CMSExtension
+import tools.dynamia.cms.site.core.api.SiteRequestInterceptor
+import tools.dynamia.cms.site.core.domain.Site
 
-import org.springframework.web.servlet.ModelAndView;
-
-import tools.dynamia.cms.site.core.api.CMSExtension;
-import tools.dynamia.cms.site.core.api.SiteRequestInterceptor;
-import tools.dynamia.cms.site.core.domain.Site;
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 @CMSExtension
 public class ShoppingCartSiteInterceptor implements SiteRequestInterceptor {

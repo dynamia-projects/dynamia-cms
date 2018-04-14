@@ -13,31 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.templates.services.impl;
+package tools.dynamia.cms.site.templates.services.impl
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
+import tools.dynamia.cms.site.core.DynamiaCMS
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.templates.Template
+import tools.dynamia.cms.site.templates.TemplateNotFoundException
+import tools.dynamia.cms.site.templates.services.TemplateService
+import tools.dynamia.domain.query.Parameter
+import tools.dynamia.domain.query.Parameters
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import tools.dynamia.cms.site.core.DynamiaCMS;
-import tools.dynamia.cms.site.core.domain.Site;
-import tools.dynamia.cms.site.templates.Template;
-import tools.dynamia.cms.site.templates.TemplateNotFoundException;
-import tools.dynamia.cms.site.templates.services.TemplateService;
-
-import tools.dynamia.domain.query.Parameter;
-import tools.dynamia.domain.query.Parameters;
+import java.nio.charset.Charset
+import java.nio.file.DirectoryStream
+import java.nio.file.Files
+import java.nio.file.Path
+import java.util.logging.Level
+import java.util.logging.Logger
 
 /**
  *

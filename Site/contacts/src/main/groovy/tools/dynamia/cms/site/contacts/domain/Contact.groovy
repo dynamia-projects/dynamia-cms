@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.contacts.domain;
+package tools.dynamia.cms.site.contacts.domain
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import tools.dynamia.cms.site.core.domain.SiteSimpleEntity
+import tools.dynamia.domain.contraints.Email
+import tools.dynamia.domain.contraints.NotEmpty
 
-import tools.dynamia.cms.site.core.domain.SiteSimpleEntity;
-
-import tools.dynamia.domain.contraints.Email;
-import tools.dynamia.domain.contraints.NotEmpty;
+import javax.persistence.Entity
+import javax.persistence.OneToOne
+import javax.persistence.Table
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "cts_contacts")

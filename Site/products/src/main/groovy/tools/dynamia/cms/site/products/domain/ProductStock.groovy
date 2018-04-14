@@ -15,20 +15,18 @@
  */
 package tools.dynamia.cms.site.products.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import tools.dynamia.cms.site.core.api.SiteAware
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.cms.site.products.dto.ProductStockDTO
+import tools.dynamia.domain.SimpleEntity
+
 import javax.persistence.Entity
 import javax.persistence.ManyToOne
 import javax.persistence.OneToOne
 import javax.persistence.Table
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
-
-import com.fasterxml.jackson.annotation.JsonIgnore
-
-import tools.dynamia.cms.site.core.api.SiteAware
-import tools.dynamia.cms.site.core.domain.Site
-import tools.dynamia.cms.site.products.dto.ProductStockDTO
-
-import tools.dynamia.domain.SimpleEntity
 
 /**
  *

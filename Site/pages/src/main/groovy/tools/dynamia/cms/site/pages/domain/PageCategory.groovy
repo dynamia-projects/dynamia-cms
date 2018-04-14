@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.pages.domain;
+package tools.dynamia.cms.site.pages.domain
 
-import tools.dynamia.cms.site.core.Aliasable;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import org.hibernate.annotations.BatchSize
+import tools.dynamia.cms.site.core.Aliasable
+import tools.dynamia.cms.site.core.api.SiteAware
+import tools.dynamia.cms.site.core.domain.Site
+import tools.dynamia.domain.SimpleEntity
+import tools.dynamia.domain.contraints.NotEmpty
 
-import org.hibernate.annotations.BatchSize;
-
-import tools.dynamia.cms.site.core.api.SiteAware;
-import tools.dynamia.cms.site.core.domain.Site;
-import javax.persistence.Column;
-
-import tools.dynamia.domain.SimpleEntity;
-import tools.dynamia.domain.contraints.NotEmpty;
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.OneToOne
+import javax.persistence.Table
 
 /**
  *

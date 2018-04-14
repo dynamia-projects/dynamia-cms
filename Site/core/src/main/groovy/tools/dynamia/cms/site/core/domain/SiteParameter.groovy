@@ -15,19 +15,12 @@
  */
 package tools.dynamia.cms.site.core.domain
 
-import javax.persistence.Basic
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.FetchType
-import javax.persistence.Lob
-import javax.persistence.ManyToOne
-import javax.persistence.Table
-import javax.validation.constraints.NotNull
-
 import tools.dynamia.cms.site.core.api.Parameter
-
 import tools.dynamia.domain.SimpleEntity
 import tools.dynamia.domain.contraints.NotEmpty
+
+import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 /**
  *
