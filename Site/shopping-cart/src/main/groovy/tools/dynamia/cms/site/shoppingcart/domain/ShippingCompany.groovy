@@ -25,60 +25,60 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "sc_shipping_companies")
-public class ShippingCompany extends SimpleEntity implements SiteAware {
+class ShippingCompany extends SimpleEntity implements SiteAware {
 
 	@OneToOne
-	private Site site;
-	private String name;
-	private String website;
-	private String trackingSiteURL;
-	private Long externalRef;
+	private Site site
+    private String name
+    private String website
+    private String trackingSiteURL
+    private Long externalRef
 
-	public Site getSite() {
-		return site;
-	}
+    Site getSite() {
+		return site
+    }
 
-	public void setSite(Site site) {
-		this.site = site;
-	}
+    void setSite(Site site) {
+		this.site = site
+    }
 
-	public String getName() {
-		return name;
-	}
+    String getName() {
+		return name
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    void setName(String name) {
+		this.name = name
+    }
 
-	public String getWebsite() {
-		return website;
-	}
+    String getWebsite() {
+		return website
+    }
 
-	public void setWebsite(String website) {
-		this.website = website;
-	}
+    void setWebsite(String website) {
+		this.website = website
+    }
 
-	public String getTrackingSiteURL() {
-		return trackingSiteURL;
-	}
+    String getTrackingSiteURL() {
+		return trackingSiteURL
+    }
 
-	public void setTrackingSiteURL(String trackingSiteURL) {
-		this.trackingSiteURL = trackingSiteURL;
-	}
+    void setTrackingSiteURL(String trackingSiteURL) {
+		this.trackingSiteURL = trackingSiteURL
+    }
 
-	public Long getExternalRef() {
-		return externalRef;
-	}
+    Long getExternalRef() {
+		return externalRef
+    }
 
-	public void setExternalRef(Long externalRef) {
-		this.externalRef = externalRef;
-	}
+    void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef
+    }
 
 	@Override
-	public String toString() {
-		return getName();
-	}
+    String toString() {
+		return getName()
+    }
 
-	public void addItem(ShoppingCartItem item, int qty) {
+    void addItem(ShoppingCartItem item, int qty) {
 	}
 }

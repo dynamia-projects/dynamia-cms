@@ -30,102 +30,102 @@ import tools.dynamia.integration.Containers
  *
  * @author Mario Serrano Leones
  */
-public class ProductsUtil {
+class ProductsUtil {
 
-	public static ProductsUtil get() {
-		return new ProductsUtil();
-	}
+	static ProductsUtil get() {
+		return new ProductsUtil()
+    }
 
-	public static void setupDefaultVars(Site site, ModelAndView mv) {
-		ProductsService service = Containers.get().findObject(ProductsService.class);
+    static void setupDefaultVars(Site site, ModelAndView mv) {
+		ProductsService service = Containers.get().findObject(ProductsService.class)
 
-		mv.addObject("prdUtil", ProductsUtil.get());
-		mv.addObject("prd_categories", service.getCategories(site));
-		mv.addObject("prd_brands", service.getBrands(site));
-		mv.addObject("prd_config", service.getSiteConfig(site));
-		if (mv.getModel().get("prd_searchForm") == null) {
-			mv.addObject("prd_searchForm", new ProductSearchForm());
-		}
+        mv.addObject("prdUtil", ProductsUtil.get())
+        mv.addObject("prd_categories", service.getCategories(site))
+        mv.addObject("prd_brands", service.getBrands(site))
+        mv.addObject("prd_config", service.getSiteConfig(site))
+        if (mv.getModel().get("prd_searchForm") == null) {
+			mv.addObject("prd_searchForm", new ProductSearchForm())
+        }
 		if (mv.getModel().get("prd_product") != null) {
-			addShareForm(site, mv);
-		}
+			addShareForm(site, mv)
+        }
 
 		if (mv.getModel().get("cart") != null) {
 			try {
-				Object cart = mv.getModel().get("cart");
-				if(cart instanceof String) {
-					cart = ShoppingCartHolder.get().getCart((String) cart);
-				}
+				Object cart = mv.getModel().get("cart")
+                if(cart instanceof String) {
+					cart = ShoppingCartHolder.get().getCart((String) cart)
+                }
 				
-				ShoppingCart shoppingCart = (ShoppingCart) cart;
-				if (shoppingCart != null && shoppingCart.getName() != null) {
+				ShoppingCart shoppingCart = (ShoppingCart) cart
+                if (shoppingCart != null && shoppingCart.getName() != null) {
 					switch (shoppingCart.getName()) {
 					case "quote":
-						mv.addObject("title", "Cotizacion");
-						mv.addObject("icon", "icon-external-link");
-						break;
-					case "shop":
-						mv.addObject("title", "Carrito de Compra");
-						mv.addObject("icon", "icon-shopping-cart");
-						break;
-					}
+						mv.addObject("title", "Cotizacion")
+                        mv.addObject("icon", "icon-external-link")
+                        break
+                        case "shop":
+						mv.addObject("title", "Carrito de Compra")
+                            mv.addObject("icon", "icon-shopping-cart")
+                            break
+                    }
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
-			}
+				e.printStackTrace()
+            }
 		}
 	}
 
 	private static void addShareForm(Site site, ModelAndView mv) {
-		Product product = (Product) mv.getModel().get("prd_product");
-		ProductShareForm form = new ProductShareForm(site);
-		form.setProductId(product.getId());
+		Product product = (Product) mv.getModel().get("prd_product")
+        ProductShareForm form = new ProductShareForm(site)
+        form.setProductId(product.getId())
 
-		if (UserHolder.get().isAuthenticated()) {
-			form.setYourName(UserHolder.get().getFullName());
-		}
+        if (UserHolder.get().isAuthenticated()) {
+			form.setYourName(UserHolder.get().getFullName())
+        }
 
-		mv.addObject("prd_shareForm", form);
+		mv.addObject("prd_shareForm", form)
 
-	}
+    }
 
-	public static void setupProductsVar(List<Product> products, ModelAndView mv) {
-		mv.addObject("prd_products", products);
-	}
+    static void setupProductsVar(List<Product> products, ModelAndView mv) {
+		mv.addObject("prd_products", products)
+    }
 
-	public static void setupProductsVar(List<Product> products, Map<String, Object> map) {
-		map.put("prd_products", products);
-	}
+    static void setupProductsVar(List<Product> products, Map<String, Object> map) {
+		map.put("prd_products", products)
+    }
 
-	public static void setupProductVar(Product product, ModelAndView mv) {
-		mv.addObject("product", product);
-	}
+    static void setupProductVar(Product product, ModelAndView mv) {
+		mv.addObject("product", product)
+    }
 
-	public BigDecimal getUserPrice(Product product, ProductsSiteConfig cfg) {
-		User user = UserHolder.get().getCurrent();
-		User customer = UserHolder.get().getCustomer();
+    BigDecimal getUserPrice(Product product, ProductsSiteConfig cfg) {
+		User user = UserHolder.get().getCurrent()
+        User customer = UserHolder.get().getCustomer()
 
-		String group = null;
+        String group = null
 
-		if (customer != null) {
-			group = customer.getGroupName();
-		} else if (user != null) {
-			group = user.getGroupName();
-		}
+        if (customer != null) {
+			group = customer.getGroupName()
+        } else if (user != null) {
+			group = user.getGroupName()
+        }
 
 		if (cfg == null || group == null || group.isEmpty()) {
-			return product.getRealPrice();
-		} else {
+			return product.getRealPrice()
+        } else {
 
 			if (cfg.getPriceUserGroup() != null && cfg.getPriceUserGroup().contains(group)) {
-				return product.getPrice();
-			} else if (cfg.getPrice2UserGroup() != null && cfg.getPrice2UserGroup().contains(group)) {
-				return product.getPrice2();
-			} else if (cfg.getCostUserGroup() != null && cfg.getCostUserGroup().contains(group)) {
-				return product.getPrice();
-			} else {
-				return product.getRealPrice();
-			}
+				return product.getPrice()
+            } else if (cfg.getPrice2UserGroup() != null && cfg.getPrice2UserGroup().contains(group)) {
+				return product.getPrice2()
+            } else if (cfg.getCostUserGroup() != null && cfg.getCostUserGroup().contains(group)) {
+				return product.getPrice()
+            } else {
+				return product.getRealPrice()
+            }
 		}
 
 	}

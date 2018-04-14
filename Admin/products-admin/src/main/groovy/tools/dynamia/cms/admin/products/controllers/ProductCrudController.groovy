@@ -22,12 +22,12 @@ import tools.dynamia.zk.crud.CrudController
  *
  * @author Mario Serrano Leones
  */
-public class ProductCrudController extends CrudController<Product> {
+class ProductCrudController extends CrudController<Product> {
 
     @Override
     protected void beforeQuery() {
         if (getParameter("active") == null) {
-            setParemeter("active", true);
+            setParemeter("active", true)
         }
     }
 

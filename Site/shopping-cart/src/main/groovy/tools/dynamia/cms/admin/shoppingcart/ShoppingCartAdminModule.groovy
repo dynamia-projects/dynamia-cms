@@ -26,25 +26,25 @@ import tools.dynamia.cms.site.shoppingcart.domain.ShoppingOrder
 import tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfig
 
 @CMSModule
-public class ShoppingCartAdminModule implements AdminModule {
+class ShoppingCartAdminModule implements AdminModule {
 
     @Override
-    public String getGroup() {
-        return "shopping";
+    String getGroup() {
+        return "shopping"
     }
 
     @Override
-    public String getName() {
-        return "Shopping";
+    String getName() {
+        return "Shopping"
     }
 
     @Override
-    public String getImage() {
-        return "shopping-cart";
+    String getImage() {
+        return "shopping-cart"
     }
 
     @Override
-    public AdminModuleOption[] getOptions() {
+    AdminModuleOption[] getOptions() {
         return [
                 new AdminModuleOption("shopConfig", "Configuration", ShoppingSiteConfig.class, false, true),
                 new AdminModuleOption("paymentConfig", "Payment Gateway Config", PaymentGatewayConfig.class, false,

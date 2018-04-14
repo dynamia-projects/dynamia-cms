@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.payment.api;
+package tools.dynamia.cms.site.payment.api
 
-public enum PaymentTransactionStatus {
-	NEW, PROCESSING, COMPLETED, CANCELLED, REJECTED, FAILED, ERROR, UNKNOWN, EXPIRED;
+enum PaymentTransactionStatus {
+	NEW, PROCESSING, COMPLETED, CANCELLED, REJECTED, FAILED, ERROR, UNKNOWN, EXPIRED
 }

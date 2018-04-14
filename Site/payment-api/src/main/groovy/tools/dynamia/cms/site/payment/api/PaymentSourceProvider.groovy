@@ -1,8 +1,8 @@
-package tools.dynamia.cms.site.payment.api;
+package tools.dynamia.cms.site.payment.api
 
-public interface PaymentSourceProvider {
+interface PaymentSourceProvider {
 
-    PaymentSource findSource(Object request);
+    PaymentSource findSource(Object request)
 
 
 }

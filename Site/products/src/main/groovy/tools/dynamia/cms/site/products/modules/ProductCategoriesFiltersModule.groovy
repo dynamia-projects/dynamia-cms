@@ -8,25 +8,25 @@ import tools.dynamia.cms.site.products.services.ProductsService
 import tools.dynamia.domain.services.CrudService
 
 @CMSModule
-public class ProductCategoriesFiltersModule extends AbstractModule {
+class ProductCategoriesFiltersModule extends AbstractModule {
 
 	@Autowired
-	private ProductsService service;
+	private ProductsService service
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
 
-	public ProductCategoriesFiltersModule() {
-		super("products_categories_filters", "Products Categories Filters", "products/modules/categoryfilters");
-		setDescription("Show a products categories filters");
-		putMetadata("author", "Mario Serrano Leones");
-		putMetadata("version", "1.0");
-		putMetadata("created at", "13-03-2017");
+    ProductCategoriesFiltersModule() {
+		super("products_categories_filters", "Products Categories Filters", "products/modules/categoryfilters")
+        setDescription("Show a products categories filters")
+        putMetadata("author", "Mario Serrano Leones")
+        putMetadata("version", "1.0")
+        putMetadata("created at", "13-03-2017")
 
-	}
+    }
 
 	@Override
-	public void init(ModuleContext context) {
+    void init(ModuleContext context) {
 			
 
 	}

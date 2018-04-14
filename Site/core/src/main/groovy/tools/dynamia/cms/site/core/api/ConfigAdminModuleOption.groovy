@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.api;
+package tools.dynamia.cms.site.core.api
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public class ConfigAdminModuleOption extends AdminModuleOption {
+class ConfigAdminModuleOption extends AdminModuleOption {
 
-	private String descriptorID;
+	private String descriptorID
 
-	public ConfigAdminModuleOption(String id, String name, String descriptorID) {
-		super(id, name, null, false, true);
-		this.descriptorID = descriptorID;
+    ConfigAdminModuleOption(String id, String name, String descriptorID) {
+		super(id, name, null, false, true)
+        this.descriptorID = descriptorID
 
-	}
+    }
 
-	public String getDescriptorID() {
-		return descriptorID;
-	}
+    String getDescriptorID() {
+		return descriptorID
+    }
 
-	public void setDescriptorID(String descriptorID) {
-		this.descriptorID = descriptorID;
-	}
+    void setDescriptorID(String descriptorID) {
+		this.descriptorID = descriptorID
+    }
 
 }

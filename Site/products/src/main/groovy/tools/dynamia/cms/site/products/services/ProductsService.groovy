@@ -29,105 +29,105 @@ import tools.dynamia.domain.query.QueryParameters
 /**
  * @author Mario Serrano Leones
  */
-public interface ProductsService {
+interface ProductsService {
 
-    public List<ProductCategory> getCategories(Site site);
+    List<ProductCategory> getCategories(Site site)
 
-    public List<ProductCategory> getSubcategories(ProductCategory category);
+    List<ProductCategory> getSubcategories(ProductCategory category)
 
-    public List<Product> getProducts(ProductCategory category);
+    List<Product> getProducts(ProductCategory category)
 
-    public List<Product> getProducts(ProductBrand brand);
+    List<Product> getProducts(ProductBrand brand)
 
-    public List<Product> filterProducts(Site site, QueryParameters params);
+    List<Product> filterProducts(Site site, QueryParameters params)
 
-    public List<Product> getFeaturedProducts(Site site);
+    List<Product> getFeaturedProducts(Site site)
 
-    public List<ProductBrand> getBrands(Site site);
+    List<ProductBrand> getBrands(Site site)
 
-    public ProductsSiteConfig getSiteConfig(Site site);
+    ProductsSiteConfig getSiteConfig(Site site)
 
-    List<Product> find(Site site, String query);
+    List<Product> find(Site site, String query)
 
-    public List<Product> filterProducts(Site site, ProductSearchForm form);
+    List<Product> filterProducts(Site site, ProductSearchForm form)
 
-    public List<Product> getRelatedCategoryProducts(Product product);
+    List<Product> getRelatedCategoryProducts(Product product)
 
-    public void generateToken(ProductsSiteConfig config);
+    void generateToken(ProductsSiteConfig config)
 
-    ProductsSiteConfig getSiteConfig(String token);
+    ProductsSiteConfig getSiteConfig(String token)
 
-    ProductCategory getCategoryByAlias(Site site, String alias);
+    ProductCategory getCategoryByAlias(Site site, String alias)
 
-    ProductBrand getBrandByAlias(Site site, String alias);
+    ProductBrand getBrandByAlias(Site site, String alias)
 
-    public List<ProductBrand> getBrands(ProductCategory category);
+    List<ProductBrand> getBrands(ProductCategory category)
 
-    List<ProductCategory> getSubcategories(ProductCategory category, ProductBrand brand);
+    List<ProductCategory> getSubcategories(ProductCategory category, ProductBrand brand)
 
-    List<ProductCategory> getCategories(ProductBrand brand);
+    List<ProductCategory> getCategories(ProductBrand brand)
 
-    public void updateViewsCount(Product product);
+    void updateViewsCount(Product product)
 
-    public List<Product> getSaleProducts(Site site);
+    List<Product> getSaleProducts(Site site)
 
-    public List<Product> getMostViewedProducts(Site site);
+    List<Product> getMostViewedProducts(Site site)
 
-    List<Product> getProductsById(List<Long> ids);
+    List<Product> getProductsById(List<Long> ids)
 
-    public List<Product> getSpecialProducts(ProductCategory category);
+    List<Product> getSpecialProducts(ProductCategory category)
 
-    List<Product> getSpecialProducts(Site site);
+    List<Product> getSpecialProducts(Site site)
 
-    void updateProductStoryViews(Product product);
+    void updateProductStoryViews(Product product)
 
-    void updateProductStoryShops(Product product);
+    void updateProductStoryShops(Product product)
 
-    ProductUserStory getProductStory(Product product, User user);
+    ProductUserStory getProductStory(Product product, User user)
 
-    List<Product> getRecentProducts(User user);
+    List<Product> getRecentProducts(User user)
 
-    public List<ProductDetail> getProductsDetails(List<Product> products);
+    List<ProductDetail> getProductsDetails(List<Product> products)
 
-    Product getProductBySku(Site site, String sku);
+    Product getProductBySku(Site site, String sku)
 
-    Product getProductById(Site site, Long id);
+    Product getProductById(Site site, Long id)
 
-    public List<Store> getStores(Site site);
+    List<Store> getStores(Site site)
 
-    public List<Product> getPriceVariationsProducts(Site site);
+    List<Product> getPriceVariationsProducts(Site site)
 
-    public abstract void shareProduct(ProductShareForm form);
+    abstract void shareProduct(ProductShareForm form)
 
-    public List<ProductCategory> getRelatedCategories(ProductCategory category);
+    List<ProductCategory> getRelatedCategories(ProductCategory category)
 
-    public ProductCategory getCategoryById(Long categoryId);
+    ProductCategory getCategoryById(Long categoryId)
 
-    List<ProductCategoryDetail> getCategoryDetails(ProductCategory category);
+    List<ProductCategoryDetail> getCategoryDetails(ProductCategory category)
 
-    List<RelatedProduct> getRelatedProducts(Product product, boolean requires);
+    List<RelatedProduct> getRelatedProducts(Product product, boolean requires)
 
-    List<Product> getProducts(ProductCategory category, String orderfield, boolean asc);
+    List<Product> getProducts(ProductCategory category, String orderfield, boolean asc)
 
-    int computeProductCountByCategory(Site site);
+    int computeProductCountByCategory(Site site)
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    void saveReview(Product product, String comment, int rate);
+    void saveReview(Product product, String comment, int rate)
 
-    ProductReview getUserReview(Product product, User user);
+    ProductReview getUserReview(Product product, User user)
 
     @Transactional
-    void computeProductStars(Product product);
+    void computeProductStars(Product product)
 
-    List<ProductReview> getTopReviews(Product product, int max);
+    List<ProductReview> getTopReviews(Product product, int max)
 
-    ProductsReviewResponse requestExternalReviews(ProductsSiteConfig config, String requestUuid);
+    ProductsReviewResponse requestExternalReviews(ProductsSiteConfig config, String requestUuid)
 
-    public User findUserForReview(Site site, ProductsReviewResponse response);
+    User findUserForReview(Site site, ProductsReviewResponse response)
 
-    public Product getProduct(Site site, ProductDTO dto);
+    Product getProduct(Site site, ProductDTO dto)
 
-    List<ProductReview> getIncompleteProductReviews(User user);
+    List<ProductReview> getIncompleteProductReviews(User user)
 
-    List<ProductReview> getExternalProductReviews(Site site, ProductsReviewResponse response, User user);
+    List<ProductReview> getExternalProductReviews(Site site, ProductsReviewResponse response, User user)
 }

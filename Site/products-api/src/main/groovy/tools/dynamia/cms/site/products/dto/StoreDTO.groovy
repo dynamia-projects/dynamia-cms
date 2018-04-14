@@ -17,137 +17,137 @@ package tools.dynamia.cms.site.products.dto
 /**
  * @author Mario Serrano Leones
  */
-public class StoreDTO implements Serializable {
+class StoreDTO implements Serializable {
 
     /**
      *
      */
-    private static final long serialVersionUID = 936740099546344064L;
-    private String name;
-    private Long externalRef;
-    private String address;
-    private String mobileNumber;
-    private String phoneNumber;
-    private String city;
-    private String country;
-    private String email;
-    private String image;
-    private String image2;
-    private String image3;
-    private String image4;
-    private String info;
+    private static final long serialVersionUID = 936740099546344064L
+    private String name
+    private Long externalRef
+    private String address
+    private String mobileNumber
+    private String phoneNumber
+    private String city
+    private String country
+    private String email
+    private String image
+    private String image2
+    private String image3
+    private String image4
+    private String info
 
-    public String getImage2() {
-        return image2;
+    String getImage2() {
+        return image2
     }
 
-    public void setImage2(String image2) {
-        this.image2 = image2;
+    void setImage2(String image2) {
+        this.image2 = image2
     }
 
-    public String getImage3() {
-        return image3;
+    String getImage3() {
+        return image3
     }
 
-    public void setImage3(String image3) {
-        this.image3 = image3;
+    void setImage3(String image3) {
+        this.image3 = image3
     }
 
-    public String getImage4() {
-        return image4;
+    String getImage4() {
+        return image4
     }
 
-    public void setImage4(String image4) {
-        this.image4 = image4;
+    void setImage4(String image4) {
+        this.image4 = image4
     }
 
-    private List<StoreContactDTO> contacts = new ArrayList<>();
+    private List<StoreContactDTO> contacts = new ArrayList<>()
 
-    public List<StoreContactDTO> getContacts() {
-        return contacts;
+    List<StoreContactDTO> getContacts() {
+        return contacts
     }
 
-    public void setContacts(List<StoreContactDTO> contacts) {
-        this.contacts = contacts;
+    void setContacts(List<StoreContactDTO> contacts) {
+        this.contacts = contacts
     }
 
-    public String getImage() {
-        return image;
+    String getImage() {
+        return image
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    void setImage(String image) {
+        this.image = image
     }
 
-    public String getName() {
-        return name;
+    String getName() {
+        return name
     }
 
-    public void setName(String name) {
-        this.name = name;
+    void setName(String name) {
+        this.name = name
     }
 
-    public Long getExternalRef() {
-        return externalRef;
+    Long getExternalRef() {
+        return externalRef
     }
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
+    void setExternalRef(Long externalRef) {
+        this.externalRef = externalRef
     }
 
-    public String getAddress() {
-        return address;
+    String getAddress() {
+        return address
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    void setAddress(String address) {
+        this.address = address
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    String getMobileNumber() {
+        return mobileNumber
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    String getPhoneNumber() {
+        return phoneNumber
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber
     }
 
-    public String getCity() {
-        return city;
+    String getCity() {
+        return city
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    void setCity(String city) {
+        this.city = city
     }
 
-    public String getCountry() {
-        return country;
+    String getCountry() {
+        return country
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    void setCountry(String country) {
+        this.country = country
     }
 
-    public String getEmail() {
-        return email;
+    String getEmail() {
+        return email
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    void setEmail(String email) {
+        this.email = email
     }
 
-    public String getInfo() {
-        return info;
+    String getInfo() {
+        return info
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    void setInfo(String info) {
+        this.info = info
     }
 }

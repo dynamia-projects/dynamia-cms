@@ -19,11 +19,11 @@ import tools.dynamia.cms.site.core.domain.Site
 
 import java.nio.file.Path
 
-public class ModuleResourcesHandler extends SiteResourceHandler {
+class ModuleResourcesHandler extends SiteResourceHandler {
 
 	@Override
 	protected Path resolveResourceDirectory(Site site) {
-		return DynamiaCMS.getModulesLocation();
-	}
+		return DynamiaCMS.getModulesLocation()
+    }
 
 }

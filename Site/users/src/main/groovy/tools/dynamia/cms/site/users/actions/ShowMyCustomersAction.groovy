@@ -29,25 +29,25 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ShowMyCustomersAction implements SiteAction {
+class ShowMyCustomersAction implements SiteAction {
 
 	@Autowired
-	private UserService userService;
+	private UserService userService
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
+
+    @Override
+    String getName() {
+		return "showMyCustomers"
+    }
 
 	@Override
-	public String getName() {
-		return "showMyCustomers";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        mv.addObject("title", "Mis Clientes")
+        mv.addObject("customers", userService.getUserCustomers(UserHolder.get().getCurrent()))
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		mv.addObject("title", "Mis Clientes");
-		mv.addObject("customers", userService.getUserCustomers(UserHolder.get().getCurrent()));
-
-	}
+    }
 
 }

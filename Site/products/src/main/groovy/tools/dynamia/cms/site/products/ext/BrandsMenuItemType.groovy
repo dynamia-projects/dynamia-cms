@@ -28,46 +28,46 @@ import tools.dynamia.cms.site.products.services.ProductsService
  * @author Mario Serrano Leones
  */
 @CMSExtension
-public class BrandsMenuItemType implements MenuItemType {
+class BrandsMenuItemType implements MenuItemType {
 
-	private static final String BRANDS_PATH = "/store/brands/";
+	private static final String BRANDS_PATH = "/store/brands/"
 
-	@Autowired
-	private ProductsService service;
+    @Autowired
+	private ProductsService service
 
-	@Override
-	public String getId() {
-		return "productBrands";
-	}
-
-	@Override
-	public String getName() {
-		return "Products Brands menu item";
-	}
+    @Override
+    String getId() {
+		return "productBrands"
+    }
 
 	@Override
-	public String getDescription() {
-		return "A brands list items";
-	}
+    String getName() {
+		return "Products Brands menu item"
+    }
 
 	@Override
-	public void setupMenuItem(MenuContext context) {
+    String getDescription() {
+		return "A brands list items"
+    }
 
-		List<ProductBrand> brands = service.getBrands(context.getMenuItem().getMenu().getSite());
+	@Override
+    void setupMenuItem(MenuContext context) {
 
-		MenuItem item = context.getMenuItem().clone();
-		item.setName(context.getMenuItem().getName());
-		item.setTitle(context.getMenuItem().getTitle());
-		item.setOrder(context.getMenuItem().getOrder());
+		List<ProductBrand> brands = service.getBrands(context.getMenuItem().getMenu().getSite())
 
-		for (ProductBrand brd : brands) {
-			MenuItem brandItem = new MenuItem(brd.getName(), BRANDS_PATH + brd.getAlias());
-			item.addMenuItem(brandItem);
+        MenuItem item = context.getMenuItem().clone()
+        item.setName(context.getMenuItem().getName())
+        item.setTitle(context.getMenuItem().getTitle())
+        item.setOrder(context.getMenuItem().getOrder())
 
-		}
+        for (ProductBrand brd : brands) {
+			MenuItem brandItem = new MenuItem(brd.getName(), BRANDS_PATH + brd.getAlias())
+            item.addMenuItem(brandItem)
 
-		context.update(item);
+        }
 
-	}
+		context.update(item)
+
+    }
 
 }

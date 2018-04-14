@@ -10,20 +10,20 @@ import org.springframework.core.io.ClassPathResource
 
 @Configuration
 @EnableCaching
-public class SiteCacheConfig {
+class SiteCacheConfig {
 
 	
 	@Bean
-	public CacheManager cacheManager() {
-		return new EhCacheCacheManager(ehCacheCacheManager().getObject());
-	}
+    CacheManager cacheManager() {
+		return new EhCacheCacheManager(ehCacheCacheManager().getObject())
+    }
 
 	@Bean
-	public EhCacheManagerFactoryBean ehCacheCacheManager() {
-		EhCacheManagerFactoryBean cmfb = new EhCacheManagerFactoryBean();
-		cmfb.setConfigLocation(new ClassPathResource("ehcache.xml"));
-		cmfb.setShared(true);
-		return cmfb;
-	}
+    EhCacheManagerFactoryBean ehCacheCacheManager() {
+		EhCacheManagerFactoryBean cmfb = new EhCacheManagerFactoryBean()
+        cmfb.setConfigLocation(new ClassPathResource("ehcache.xml"))
+        cmfb.setShared(true)
+        return cmfb
+    }
 	
 }

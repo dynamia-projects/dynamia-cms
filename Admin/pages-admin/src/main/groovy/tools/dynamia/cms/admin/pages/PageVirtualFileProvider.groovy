@@ -25,29 +25,29 @@ import tools.dynamia.io.VirtualFile
 import tools.dynamia.io.VirtualFileProvider
 
 @Provider
-public class PageVirtualFileProvider implements VirtualFileProvider {
+class PageVirtualFileProvider implements VirtualFileProvider {
 
 	@Autowired
-	private PageService service;
+	private PageService service
 
-	@Override
-	public List<VirtualFile> getVirtualFiles() {
-		List<VirtualFile> files = new ArrayList<>();
-		Site site = SiteContext.get().getCurrent();
-		if (site != null) {
+    @Override
+    List<VirtualFile> getVirtualFiles() {
+		List<VirtualFile> files = new ArrayList<>()
+        Site site = SiteContext.get().getCurrent()
+        if (site != null) {
 
-			PageCategoryVirtualFile pagesVF = new PageCategoryVirtualFile("pages", site, service);
+			PageCategoryVirtualFile pagesVF = new PageCategoryVirtualFile("pages", site, service)
 
-			List<PageCategory> categories = service.getPagesCategories(site);
-			for (PageCategory pageCategory : categories) {
-				pagesVF.addSubdirectory(new PageCategoryVirtualFile(service, pageCategory));
-			}
+            List<PageCategory> categories = service.getPagesCategories(site)
+            for (PageCategory pageCategory : categories) {
+				pagesVF.addSubdirectory(new PageCategoryVirtualFile(service, pageCategory))
+            }
 
 			
-			files.add(pagesVF);			
+			files.add(pagesVF)
 		} 
 		
-		return files;
-	}
+		return files
+    }
 
 }

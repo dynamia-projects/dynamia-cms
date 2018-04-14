@@ -31,28 +31,28 @@ import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class SyncShoppingOrderAction implements SiteAction {
+class SyncShoppingOrderAction implements SiteAction {
 
 	@Autowired
-	private ShoppingCartService service;
+	private ShoppingCartService service
 
-	@Autowired
-	private PaymentService paymentService;
+    @Autowired
+	private PaymentService paymentService
+
+    @Override
+    String getName() {
+		return "syncShoppingOrder"
+    }
 
 	@Override
-	public String getName() {
-		return "syncShoppingOrder";
-	}
+    void actionPerformed(ActionEvent evt) {
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
+		ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder()
+        SiteAware cart = ShoppingCartUtils.getShoppingCart(evt.getModelAndView())
 
-		ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder();
-		SiteAware cart = ShoppingCartUtils.getShoppingCart(evt.getModelAndView());
-
-		if (order != null && cart != null && order.getShoppingCart().equals(cart)) {
-			order.sync();
-		}
+        if (order != null && cart != null && order.getShoppingCart().equals(cart)) {
+			order.sync()
+        }
 
 	}
 

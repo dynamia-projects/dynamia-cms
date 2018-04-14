@@ -24,18 +24,18 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @CMSExtension
-public class ShoppingCartSiteInterceptor implements SiteRequestInterceptor {
+class ShoppingCartSiteInterceptor implements SiteRequestInterceptor {
 
 	@Override
-	public void beforeRequest(Site site, HttpServletRequest request, HttpServletResponse response) {
+    void beforeRequest(Site site, HttpServletRequest request, HttpServletResponse response) {
 
 	}
 
 	@Override
-	public void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) {
+    void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) {
 
-		ShoppingCartUtils.loadConfig(site, modelAndView);
+		ShoppingCartUtils.loadConfig(site, modelAndView)
 
-	}
+    }
 
 }

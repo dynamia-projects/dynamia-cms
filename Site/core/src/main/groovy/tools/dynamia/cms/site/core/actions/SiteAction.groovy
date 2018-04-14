@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.actions;
+package tools.dynamia.cms.site.core.actions
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public interface SiteAction{
+interface SiteAction{
     
     
-    public String getName();
-    
-    
-    public void actionPerformed(ActionEvent evt);
-    
+    String getName()
+
+
+    void actionPerformed(ActionEvent evt)
+
 }

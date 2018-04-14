@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users;
+package tools.dynamia.cms.site.users
 
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.AuthenticationException
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public class SiteNotFoundException extends AuthenticationException {
+class SiteNotFoundException extends AuthenticationException {
 
-    public SiteNotFoundException(String msg, Throwable t) {
-        super(msg, t);
+    SiteNotFoundException(String msg, Throwable t) {
+        super(msg, t)
     }
 
 }

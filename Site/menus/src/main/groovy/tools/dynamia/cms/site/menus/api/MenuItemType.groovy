@@ -22,8 +22,8 @@ import tools.dynamia.cms.site.menus.MenuContext
  *
  * @author Mario Serrano Leones
  */
-public interface MenuItemType extends TypeExtension {
+interface MenuItemType extends TypeExtension {
 
-	public void setupMenuItem(MenuContext context);
+	void setupMenuItem(MenuContext context)
 
 }

@@ -15,51 +15,51 @@ import tools.dynamia.cms.site.users.UserHolder
 import tools.dynamia.cms.site.users.domain.User
 
 @CMSAction
-public class NewPaymentAction implements SiteAction {
+class NewPaymentAction implements SiteAction {
 
 	@Autowired
-	private ShoppingCartService service;
+	private ShoppingCartService service
+
+    @Override
+    String getName() {
+		return "createNewPayment"
+    }
 
 	@Override
-	public String getName() {
-		return "createNewPayment";
-	}
+    void actionPerformed(ActionEvent evt) {
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        mv.setViewName("payment/new")
+        mv.addObject("title", "Nuevo Pago Manual")
+        ShoppingSiteConfig config = service.getConfiguration(evt.getSite())
 
-		ModelAndView mv = evt.getModelAndView();
-		mv.setViewName("payment/new");
-		mv.addObject("title", "Nuevo Pago Manual");
-		ShoppingSiteConfig config = service.getConfiguration(evt.getSite());
+        ManualPayment pay = new ManualPayment()
+        pay.setSource(evt.getSite().getKey())
+        pay.setRegistrator(UserHolder.get().getFullName())
+        pay.setRegistratorId(UserHolder.get().getCurrent().getId().toString())
+        pay.setRegistratorCode(UserHolder.get().getCurrent().getCode())
 
-		ManualPayment pay = new ManualPayment();
-		pay.setSource(evt.getSite().getKey());
-		pay.setRegistrator(UserHolder.get().getFullName());
-		pay.setRegistratorId(UserHolder.get().getCurrent().getId().toString());
-		pay.setRegistratorCode(UserHolder.get().getCurrent().getCode());
+        User customer = UserHolder.get().getCustomer()
+        if (customer == null) {
+			CMSUtil.addErrorMessage("Seleccione cliente para registrar pago", mv)
+            return
+        }
+		pay.setPayer(customer.getFullName())
+        pay.setPayerCode(customer.getCode())
+        pay.setPayerId(customer.getId().toString())
 
-		User customer = UserHolder.get().getCustomer();
-		if (customer == null) {
-			CMSUtil.addErrorMessage("Seleccione cliente para registrar pago", mv);
-			return;
-		}
-		pay.setPayer(customer.getFullName());
-		pay.setPayerCode(customer.getCode());
-		pay.setPayerId(customer.getId().toString());
+        loadPaymentTypes(mv, config)
+        mv.addObject("payment", pay)
 
-		loadPaymentTypes(mv, config);
-		mv.addObject("payment", pay);
+        PaymentHolder.get().setCurrentManualPayment(pay)
 
-		PaymentHolder.get().setCurrentManualPayment(pay);
-
-	}
+    }
 
 	private void loadPaymentTypes(ModelAndView mv, ShoppingSiteConfig config) {
-		String types = config.getPaymentTypes();
-		if (types != null) {
-			mv.addObject("paymentTypes", Option.buildFromArray(types.split(","), null));
-		}
+		String types = config.getPaymentTypes()
+        if (types != null) {
+			mv.addObject("paymentTypes", Option.buildFromArray(types.split(","), null))
+        }
 	}
 
 }

@@ -23,155 +23,155 @@ import tools.dynamia.cms.site.mail.domain.MailTemplate
  *
  * @author Mario Serrano Leones
  */
-public class MailMessage implements Serializable {
+class MailMessage implements Serializable {
 
-	private final Set<String> tos = new HashSet<>();
-	private final Set<String> ccs = new HashSet<>();
-	private final Set<String> bccs = new HashSet<>();
-	private String to;
-	private String subject;
-	private String content;
-	private String plainText;
-	private final List<File> attachtments = new ArrayList<>();
-	private MailAccount mailAccount;
-	private MailTemplate template;
-	private Map<String, Object> templateModel = new HashMap<>();
-	private Site site;
+	private final Set<String> tos = new HashSet<>()
+    private final Set<String> ccs = new HashSet<>()
+    private final Set<String> bccs = new HashSet<>()
+    private String to
+    private String subject
+    private String content
+    private String plainText
+    private final List<File> attachtments = new ArrayList<>()
+    private MailAccount mailAccount
+    private MailTemplate template
+    private Map<String, Object> templateModel = new HashMap<>()
+    private Site site
 
-	public MailMessage() {
+    MailMessage() {
 	}
 
-	public MailMessage(MailTemplate template) {
-		super();
-		this.template = template;
-	}
+    MailMessage(MailTemplate template) {
+		super()
+        this.template = template
+    }
 
-	public MailMessage(String to, String subject, String content) {
-		this.to = to;
-		this.subject = subject;
-		this.content = content;
-	}
+    MailMessage(String to, String subject, String content) {
+		this.to = to
+        this.subject = subject
+        this.content = content
+    }
 
-	public Site getSite() {
-		return site;
-	}
+    Site getSite() {
+		return site
+    }
 
-	public void setSite(Site site) {
-		this.site = site;
-	}
+    void setSite(Site site) {
+		this.site = site
+    }
 
-	public Map<String, Object> getTemplateModel() {
-		return templateModel;
-	}
+    Map<String, Object> getTemplateModel() {
+		return templateModel
+    }
 
-	public void setTemplateModel(Map<String, Object> templateModel) {
-		this.templateModel = templateModel;
-	}
+    void setTemplateModel(Map<String, Object> templateModel) {
+		this.templateModel = templateModel
+    }
 
-	public MailAccount getMailAccount() {
-		return mailAccount;
-	}
+    MailAccount getMailAccount() {
+		return mailAccount
+    }
 
-	public void setMailAccount(MailAccount emailAccount) {
-		this.mailAccount = emailAccount;
-	}
+    void setMailAccount(MailAccount emailAccount) {
+		this.mailAccount = emailAccount
+    }
 
-	public MailTemplate getTemplate() {
-		return template;
-	}
+    MailTemplate getTemplate() {
+		return template
+    }
 
-	public void setTemplate(MailTemplate template) {
-		this.template = template;
-	}
+    void setTemplate(MailTemplate template) {
+		this.template = template
+    }
 
-	public String getPlainText() {
-		return plainText;
-	}
+    String getPlainText() {
+		return plainText
+    }
 
-	public void setPlainText(String plainText) {
-		this.plainText = plainText;
-	}
+    void setPlainText(String plainText) {
+		this.plainText = plainText
+    }
 
-	public void setTo(String to) {
-		this.to = to;
-	}
+    void setTo(String to) {
+		this.to = to
+    }
 
-	public String getTo() {
-		return to;
-	}
+    String getTo() {
+		return to
+    }
 
-	public void addTo(String to) {
+    void addTo(String to) {
 		if (!tos.contains(to)) {
-			tos.add(to);
-		}
+			tos.add(to)
+        }
 	}
 
-	public void addCc(String cc) {
+    void addCc(String cc) {
 		if (!ccs.contains(cc)) {
-			ccs.add(cc);
-		}
+			ccs.add(cc)
+        }
 	}
 
-	public void addBcc(String bcc) {
+    void addBcc(String bcc) {
 		if (!bccs.contains(bcc)) {
-			bccs.add(bcc);
-		}
+			bccs.add(bcc)
+        }
 	}
 
-	public void addAttachtment(File file) {
-		attachtments.add(file);
-	}
+    void addAttachtment(File file) {
+		attachtments.add(file)
+    }
 
-	public String getSubject() {
-		return subject;
-	}
+    String getSubject() {
+		return subject
+    }
 
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
+    void setSubject(String subject) {
+		this.subject = subject
+    }
 
-	public String getContent() {
-		return content;
-	}
+    String getContent() {
+		return content
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    void setContent(String content) {
+		this.content = content
+    }
 
-	public Set<String> getTos() {
-		return tos;
-	}
+    Set<String> getTos() {
+		return tos
+    }
 
-	public String[] getTosAsArray() {
-		return getTos().toArray(new String[tos.size()]);
-	}
+    String[] getTosAsArray() {
+		return getTos().toArray(new String[tos.size()])
+    }
 
-	public Set<String> getCcs() {
-		return ccs;
-	}
+    Set<String> getCcs() {
+		return ccs
+    }
 
-	public String[] getCcsAsArray() {
-		return getCcs().toArray(new String[ccs.size()]);
-	}
+    String[] getCcsAsArray() {
+		return getCcs().toArray(new String[ccs.size()])
+    }
 
-	public Set<String> getBccs() {
-		return bccs;
-	}
+    Set<String> getBccs() {
+		return bccs
+    }
 
-	public String[] getBccsAsArray() {
-		return getBccs().toArray(new String[bccs.size()]);
-	}
+    String[] getBccsAsArray() {
+		return getBccs().toArray(new String[bccs.size()])
+    }
 
-	public List<File> getAttachtments() {
-		return attachtments;
-	}
+    List<File> getAttachtments() {
+		return attachtments
+    }
 
 	@Override
-	public String toString() {
+    String toString() {
 		if (!tos.isEmpty()) {
-			return tos.toString() + " Subject: " + subject;
-		} else {
-			return to + " Subject: " + subject;
-		}
+			return tos.toString() + " Subject: " + subject
+        } else {
+			return to + " Subject: " + subject
+        }
 	}
 }

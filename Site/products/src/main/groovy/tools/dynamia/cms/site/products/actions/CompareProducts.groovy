@@ -34,43 +34,43 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class CompareProducts implements SiteAction {
+class CompareProducts implements SiteAction {
 
     @Autowired
-    private ProductsService service;
+    private ProductsService service
     @Autowired
-    private CrudService crudService;
+    private CrudService crudService
 
     @Override
-    public String getName() {
-        return "compareProducts";
+    String getName() {
+        return "compareProducts"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        String[] idsString = (String[]) evt.getData();
-        List<Long> ids = new ArrayList<>();
+    void actionPerformed(ActionEvent evt) {
+        String[] idsString = (String[]) evt.getData()
+        List<Long> ids = new ArrayList<>()
         for (String id : idsString) {
-            ids.add(new Long(id));
+            ids.add(new Long(id))
         }
 
-        List<Product> products = service.getProductsById(ids);
-        ProductCompareGrid grid = new ProductCompareGrid(service, products);
-        grid.loadData();
+        List<Product> products = service.getProductsById(ids)
+        ProductCompareGrid grid = new ProductCompareGrid(service, products)
+        grid.loadData()
 
-        ModelAndView mv = evt.getModelAndView();
-        mv.addObject("comparegrid", grid);
-        mv.addObject("title", buildTitle(products, evt.getSite()));
-        ProductsUtil.setupDefaultVars(evt.getSite(), mv);
+        ModelAndView mv = evt.getModelAndView()
+        mv.addObject("comparegrid", grid)
+        mv.addObject("title", buildTitle(products, evt.getSite()))
+        ProductsUtil.setupDefaultVars(evt.getSite(), mv)
     }
 
     private String buildTitle(List<Product> products, Site site) {
-        CMSUtil utils = new CMSUtil(site);
-        List<String> names = new ArrayList<>();
+        CMSUtil utils = new CMSUtil(site)
+        List<String> names = new ArrayList<>()
         for (Product product : products) {
-            names.add(utils.cropText(product.getName(), 30).replace(".", "").trim().toUpperCase());
+            names.add(utils.cropText(product.getName(), 30).replace(".", "").trim().toUpperCase())
         }
-        return StringUtils.arrayToDelimitedString(names.toArray(), " vs ");
+        return StringUtils.arrayToDelimitedString(names.toArray(), " vs ")
     }
 
 }

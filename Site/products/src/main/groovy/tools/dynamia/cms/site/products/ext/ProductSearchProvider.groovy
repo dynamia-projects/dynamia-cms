@@ -28,18 +28,18 @@ import tools.dynamia.cms.site.pages.api.SearchResult
  * @author Mario Serrano Leones
  */
 @CMSExtension
-public class ProductSearchProvider implements SearchProvider {
+class ProductSearchProvider implements SearchProvider {
 
     @Override
-    public SearchResult search(Site site, SearchForm form) {
+    SearchResult search(Site site, SearchForm form) {
 
-        ModelAndView mv = new ModelAndView("products/productquery");
+        ModelAndView mv = new ModelAndView("products/productquery")
 
-        SiteActionManager.performAction("searchProducts", mv, form.getRequest(), form.getQuery());
+        SiteActionManager.performAction("searchProducts", mv, form.getRequest(), form.getQuery())
 
-        SearchResult rs = new SearchResult(mv.getViewName(), false);
-        rs.getEntries().putAll(mv.getModel());
-        return rs;
+        SearchResult rs = new SearchResult(mv.getViewName(), false)
+        rs.getEntries().putAll(mv.getModel())
+        return rs
     }
 
 }

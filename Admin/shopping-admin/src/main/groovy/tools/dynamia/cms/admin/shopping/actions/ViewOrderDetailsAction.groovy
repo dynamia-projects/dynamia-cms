@@ -14,43 +14,43 @@ import tools.dynamia.zk.crud.actions.ViewDataAction
 import tools.dynamia.zk.util.ZKUtil
 
 @InstallAction
-public class ViewOrderDetailsAction extends ViewDataAction {
+class ViewOrderDetailsAction extends ViewDataAction {
 
 	@Autowired
-	private CrudService crudService;
+	private CrudService crudService
 
-	public ViewOrderDetailsAction() {
-		setName("Details");
-		setMenuSupported(true);
-		setImage("table");
-	}
-
-	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    ViewOrderDetailsAction() {
+		setName("Details")
+        setMenuSupported(true)
+        setImage("table")
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(ShoppingOrder.class);
-	}
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		ShoppingOrder shoppingOrder = (ShoppingOrder) evt.getData();
-		if (shoppingOrder != null) {
-			shoppingOrder = crudService.reload(shoppingOrder);
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(ShoppingOrder.class)
+    }
 
-			ShoppingOrderDetailsUI ui = new ShoppingOrderDetailsUI(shoppingOrder);
-			ui.setVflex("1");
-			ui.setStyle("overflow: auto");
-			ZKUtil.showDialog("Shopping Order No. " + shoppingOrder.getNumber(), ui, "90%", "90%");
-		}
+	@Override
+    void actionPerformed(CrudActionEvent evt) {
+		ShoppingOrder shoppingOrder = (ShoppingOrder) evt.getData()
+        if (shoppingOrder != null) {
+			shoppingOrder = crudService.reload(shoppingOrder)
+
+            ShoppingOrderDetailsUI ui = new ShoppingOrderDetailsUI(shoppingOrder)
+            ui.setVflex("1")
+            ui.setStyle("overflow: auto")
+            ZKUtil.showDialog("Shopping Order No. " + shoppingOrder.getNumber(), ui, "90%", "90%")
+        }
 	}
 	
 	@Override
-	public ActionRenderer getRenderer() {
-		return new ToolbarbuttonActionRenderer(true);
-	}
+    ActionRenderer getRenderer() {
+		return new ToolbarbuttonActionRenderer(true)
+    }
 
 }

@@ -13,22 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users.actions;
+package tools.dynamia.cms.site.users.actions
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public interface UserMenuAction {
+interface UserMenuAction {
 
-    public String getLabel();
+    String getLabel()
 
-    public String getDescription();
+    String getDescription()
 
-    public String getIcon();
+    String getIcon()
 
-    public int getOrder();
+    int getOrder()
 
-    public String action();
+    String action()
 
 }

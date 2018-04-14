@@ -25,10 +25,10 @@ import javax.servlet.http.HttpServletResponse
  *
  * @author Mario Serrano Leones
  */
-public interface SiteRequestInterceptor {
+interface SiteRequestInterceptor {
 
-    public void beforeRequest(Site site, HttpServletRequest request, HttpServletResponse response);
+    void beforeRequest(Site site, HttpServletRequest request, HttpServletResponse response)
 
-    public void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView);
+    void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView)
 
 }

@@ -20,62 +20,62 @@ import javax.servlet.http.HttpServletRequest
 
 @Controller
 @RequestMapping("/payment")
-public class PaymentLinkController {
+class PaymentLinkController {
 
     @Autowired
-    private PaymentService paymentService;
+    private PaymentService paymentService
 
     @GetMapping(value = "/link/{gatewayId}")
-    public ModelAndView link(@PathVariable String gatewayId,
-                             @RequestParam(value = "doc", required = false) String document,
-                             @RequestParam("v") BigDecimal value,
-                             @RequestParam("i") String identification,
-                             @RequestParam("n") String name,
-                             @RequestParam(value = "d", required = false) String description,
-                             @RequestParam("e") String email,
-                             @RequestParam(value = "ph", required = false) String phone,
-                             @RequestParam(value = "mb", required = false) String mobile,
-                             @RequestParam(value = "cr", required = false) String currency,
-                             HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("payment/link");
+    ModelAndView link(@PathVariable String gatewayId,
+                      @RequestParam(value = "doc", required = false) String document,
+                      @RequestParam("v") BigDecimal value,
+                      @RequestParam("i") String identification,
+                      @RequestParam("n") String name,
+                      @RequestParam(value = "d", required = false) String description,
+                      @RequestParam("e") String email,
+                      @RequestParam(value = "ph", required = false) String phone,
+                      @RequestParam(value = "mb", required = false) String mobile,
+                      @RequestParam(value = "cr", required = false) String currency,
+                      HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView("payment/link")
 
-        PaymentSource source = paymentService.findPaymentSource(request);
+        PaymentSource source = paymentService.findPaymentSource(request)
         if (source != null) {
-            PaymentGateway gateway = paymentService.findGateway(gatewayId);
-            PaymentTransaction tx = gateway.newTransaction(source.getName(), source.getBaseURL());
-            tx.setStatus(PaymentTransactionStatus.NEW);
-            tx.setGatewayId(gatewayId);
-            tx.setAmount(value);
-            tx.setDescription(document + " - " + description);
-            tx.setEmail(email);
-            tx.setPayerDocument(identification);
-            tx.setPayerFullname(name);
-            tx.setDocument(document);
-            tx.setPayerMobileNumber(mobile);
-            tx.setPayerPhoneNumber(phone);
+            PaymentGateway gateway = paymentService.findGateway(gatewayId)
+            PaymentTransaction tx = gateway.newTransaction(source.getName(), source.getBaseURL())
+            tx.setStatus(PaymentTransactionStatus.NEW)
+            tx.setGatewayId(gatewayId)
+            tx.setAmount(value)
+            tx.setDescription(document + " - " + description)
+            tx.setEmail(email)
+            tx.setPayerDocument(identification)
+            tx.setPayerFullname(name)
+            tx.setDocument(document)
+            tx.setPayerMobileNumber(mobile)
+            tx.setPayerPhoneNumber(phone)
             if (currency == null || currency.isEmpty()) {
-                currency = source.getCurrency();
+                currency = source.getCurrency()
             }
 
             if (currency == null || currency.isEmpty()) {
-                throw new PaymentException("No currency for payment link provided");
+                throw new PaymentException("No currency for payment link provided")
             }
 
-            tx.setCurrency(currency);
-            mv.addObject("transaction", tx);
-            mv.addObject("title", "Payment");
+            tx.setCurrency(currency)
+            mv.addObject("transaction", tx)
+            mv.addObject("title", "Payment")
 
 
-            PaymentForm form = gateway.createForm(tx);
-            mv.addObject("paymentForm", form);
+            PaymentForm form = gateway.createForm(tx)
+            mv.addObject("paymentForm", form)
 
-            PaymentHolder.get().setCurrentPaymentForm(form);
-            PaymentHolder.get().setCurrentPaymentTransaction(tx);
+            PaymentHolder.get().setCurrentPaymentForm(form)
+            PaymentHolder.get().setCurrentPaymentTransaction(tx)
         } else {
-            throw new PaymentException("No payment gateway found: " + gatewayId);
+            throw new PaymentException("No payment gateway found: " + gatewayId)
         }
 
-        return mv;
+        return mv
     }
 
 }

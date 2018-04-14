@@ -1,47 +1,47 @@
 package tools.dynamia.cms.site.core.dto
 
-public class LocationDTO implements Serializable {
+class LocationDTO implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private String name;
-	private String code;
-	private String externalRef;
+	private static final long serialVersionUID = 1L
+    private String name
+    private String code
+    private String externalRef
 
-	public LocationDTO() {
+    LocationDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public LocationDTO(String name, String code) {
-		super();
-		this.name = name;
-		this.code = code;
-	}
+    LocationDTO(String name, String code) {
+		super()
+        this.name = name
+        this.code = code
+    }
 
-	public String getExternalRef() {
-		return externalRef;
-	}
+    String getExternalRef() {
+		return externalRef
+    }
 
-	public void setExternalRef(String externalRef) {
-		this.externalRef = externalRef;
-	}
+    void setExternalRef(String externalRef) {
+		this.externalRef = externalRef
+    }
 
-	public String getName() {
-		return name;
-	}
+    String getName() {
+		return name
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    void setName(String name) {
+		this.name = name
+    }
 
-	public String getCode() {
-		return code;
-	}
+    String getCode() {
+		return code
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    void setCode(String code) {
+		this.code = code
+    }
 
 }

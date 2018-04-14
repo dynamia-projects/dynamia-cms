@@ -8,14 +8,14 @@ import tools.dynamia.cms.site.users.domain.User
 import tools.dynamia.cms.site.users.ext.CustomerChangeListener
 
 @CMSListener
-public class ClearShoppingCartOnCustomerChangeListener implements CustomerChangeListener {
+class ClearShoppingCartOnCustomerChangeListener implements CustomerChangeListener {
 
 	@Override
-	public void onCustomerChange(User customer) {
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("cartName", "shop");				
-		SiteActionManager.performAction("clearShoppingCart", mv, null);
-		ShoppingCartHolder.get().clearAll();
-	}
+    void onCustomerChange(User customer) {
+		ModelAndView mv = new ModelAndView()
+        mv.addObject("cartName", "shop")
+		SiteActionManager.performAction("clearShoppingCart", mv, null)
+        ShoppingCartHolder.get().clearAll()
+    }
 
 }

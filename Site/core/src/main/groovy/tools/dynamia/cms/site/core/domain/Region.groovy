@@ -10,93 +10,93 @@ import javax.persistence.*
  */
 @Entity
 @Table(name = "cr_loc_regions")
-public class Region extends SiteSimpleEntity {
+class Region extends SiteSimpleEntity {
 
     @ManyToOne
     @JsonIgnore
-    private Country country;
-    private String name;
-    private String code;
+    private Country country
+    private String name
+    private String code
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<City> cities = new ArrayList<>();
+    private List<City> cities = new ArrayList<>()
 
-    private String taxName;
-    private double taxPercent;
+    private String taxName
+    private double taxPercent
     @JsonIgnore
-    private String externalRef;
+    private String externalRef
 
-    public Region() {
+    Region() {
     }
 
-    public Country getCountry() {
-        return country;
+    Country getCountry() {
+        return country
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    void setCountry(Country country) {
+        this.country = country
     }
 
-    public String getTaxName() {
-        return taxName;
+    String getTaxName() {
+        return taxName
     }
 
-    public void setTaxName(String taxName) {
-        this.taxName = taxName;
+    void setTaxName(String taxName) {
+        this.taxName = taxName
     }
 
-    public double getTaxPercent() {
-        return taxPercent;
+    double getTaxPercent() {
+        return taxPercent
     }
 
-    public void setTaxPercent(double taxPercent) {
-        this.taxPercent = taxPercent;
+    void setTaxPercent(double taxPercent) {
+        this.taxPercent = taxPercent
     }
 
-    public String getName() {
-        return name;
+    String getName() {
+        return name
     }
 
-    public void setName(String name) {
-        this.name = name;
+    void setName(String name) {
+        this.name = name
     }
 
-    public String getCode() {
-        return code;
+    String getCode() {
+        return code
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    void setCode(String code) {
+        this.code = code
     }
 
-    public List<City> getCities() {
-        return cities;
+    List<City> getCities() {
+        return cities
     }
 
-    public void setCities(List<City> cities) {
-        this.cities = cities;
+    void setCities(List<City> cities) {
+        this.cities = cities
     }
 
     @Override
-    public String toString() {
-        return String.format("%s, %s", name, country);
+    String toString() {
+        return String.format("%s, %s", name, country)
     }
 
-    public void sync(RegionDTO dto) {
-        name = dto.getName();
-        code = dto.getCode();
-        taxName = dto.getTaxName();
-        taxPercent = dto.getTaxPercent();
-        externalRef = dto.getExternalRef();
+    void sync(RegionDTO dto) {
+        name = dto.getName()
+        code = dto.getCode()
+        taxName = dto.getTaxName()
+        taxPercent = dto.getTaxPercent()
+        externalRef = dto.getExternalRef()
 
     }
 
-    public String getExternalRef() {
-        return externalRef;
+    String getExternalRef() {
+        return externalRef
     }
 
-    public void setExternalRef(String externalRef) {
-        this.externalRef = externalRef;
+    void setExternalRef(String externalRef) {
+        this.externalRef = externalRef
     }
 
 

@@ -7,12 +7,12 @@ import javax.servlet.FilterRegistration
 import javax.servlet.ServletContext
 import javax.servlet.ServletException
 
-public class SecurityWebAppInitializer implements WebApplicationInitializer {
+class SecurityWebAppInitializer implements WebApplicationInitializer {
 
     @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        FilterRegistration filter = servletContext.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class);
-        filter.addMappingForUrlPatterns(null, false, "/*");
+    void onStartup(ServletContext servletContext) throws ServletException {
+        FilterRegistration filter = servletContext.addFilter("springSecurityFilterChain", DelegatingFilterProxy.class)
+        filter.addMappingForUrlPatterns(null, false, "/*")
     }
 
 }

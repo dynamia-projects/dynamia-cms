@@ -1,31 +1,31 @@
 package tools.dynamia.cms.site.payment.api
 
-public class PaymentSource implements Serializable {
-    private String name;
-    private String baseURL;
-    private String description;
-    private String currency;
+class PaymentSource implements Serializable {
+    private String name
+    private String baseURL
+    private String description
+    private String currency
 
-    public PaymentSource(String name, String baseURL, String description, String currency) {
-        this.name = name;
-        this.baseURL = baseURL;
-        this.description = description;
-        this.currency = currency;
+    PaymentSource(String name, String baseURL, String description, String currency) {
+        this.name = name
+        this.baseURL = baseURL
+        this.description = description
+        this.currency = currency
     }
 
-    public String getCurrency() {
-        return currency;
+    String getCurrency() {
+        return currency
     }
 
-    public String getName() {
-        return name;
+    String getName() {
+        return name
     }
 
-    public String getBaseURL() {
-        return baseURL;
+    String getBaseURL() {
+        return baseURL
     }
 
-    public String getDescription() {
-        return description;
+    String getDescription() {
+        return description
     }
 }

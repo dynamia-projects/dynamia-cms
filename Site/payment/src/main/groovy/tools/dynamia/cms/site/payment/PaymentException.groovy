@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.payment;
+package tools.dynamia.cms.site.payment
 
-public class PaymentException extends RuntimeException {
+class PaymentException extends RuntimeException {
 
-	public PaymentException() {
-		super();
+	PaymentException() {
+		super()
 
-	}
+    }
 
-	public PaymentException(String message, Throwable cause) {
-		super(message, cause);
+    PaymentException(String message, Throwable cause) {
+		super(message, cause)
 
-	}
+    }
 
-	public PaymentException(String message) {
-		super(message);
+    PaymentException(String message) {
+		super(message)
 
-	}
+    }
 
-	public PaymentException(Throwable cause) {
-		super(cause);
+    PaymentException(Throwable cause) {
+		super(cause)
 
-	}
+    }
 
 }

@@ -17,55 +17,55 @@ import tools.dynamia.cms.site.users.services.UserService
 import tools.dynamia.commons.BigDecimalUtils
 
 @CMSAction
-public class ShowManualPaymentsAction implements SiteAction {
+class ShowManualPaymentsAction implements SiteAction {
 
 	@Autowired
-	private ShoppingCartService service;
+	private ShoppingCartService service
 
-	@Autowired
-	private PaymentService paymentService;
+    @Autowired
+	private PaymentService paymentService
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+	private UserService userService
+
+    @Override
+    String getName() {
+		return "showManualPayments"
+    }
 
 	@Override
-	public String getName() {
-		return "showManualPayments";
-	}
+    void actionPerformed(ActionEvent evt) {
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        mv.setViewName("payment/manuallist")
 
-		ModelAndView mv = evt.getModelAndView();
-		mv.setViewName("payment/manuallist");
+        mv.addObject("title", "Pagos Registrados")
 
-		mv.addObject("title", "Pagos Registrados");
+        ShoppingSiteConfig cfg = service.getConfiguration(evt.getSite())
+        String customer = (String) evt.getData()
 
-		ShoppingSiteConfig cfg = service.getConfiguration(evt.getSite());
-		String customer = (String) evt.getData();
-
-		if (customer == null) {
+        if (customer == null) {
 			if (UserHolder.get().getCustomer() != null) {
-				customer = UserHolder.get().getCustomer().getExternalRef();
-			} else if (UserHolder.get().getCurrent().getProfile() == UserProfile.USER) {
-				customer = UserHolder.get().getCurrent().getExternalRef();
-			}
+				customer = UserHolder.get().getCustomer().getExternalRef()
+            } else if (UserHolder.get().getCurrent().getProfile() == UserProfile.USER) {
+				customer = UserHolder.get().getCurrent().getExternalRef()
+            }
 		}
 
-		User user = userService.getByExternalRef(evt.getSite(), customer);
-		if (user != null) {
-			mv.addObject("title", "Pagos Registrados - " + user.getFullName());
-			List<ManualPayment> payments = paymentService.findManualPaymentsByPayerId(evt.getSite().getKey(),
-					user.getId().toString());
-			BigDecimal total = BigDecimalUtils.sum("amount", payments);
+		User user = userService.getByExternalRef(evt.getSite(), customer)
+        if (user != null) {
+			mv.addObject("title", "Pagos Registrados - " + user.getFullName())
+            List<ManualPayment> payments = paymentService.findManualPaymentsByPayerId(evt.getSite().getKey(),
+					user.getId().toString())
+            BigDecimal total = BigDecimalUtils.sum("amount", payments)
 
-			mv.addObject("payments", payments);
-			mv.addObject("total", total);
-			mv.addObject("customer", user);
+            mv.addObject("payments", payments)
+            mv.addObject("total", total)
+            mv.addObject("customer", user)
 
-			if (payments.isEmpty()) {
-				CMSUtil.addSuccessMessage("No se encontraron pagos manuales registrados", mv);
-			}
+            if (payments.isEmpty()) {
+				CMSUtil.addSuccessMessage("No se encontraron pagos manuales registrados", mv)
+            }
 		}
 
 	}

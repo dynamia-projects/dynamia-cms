@@ -39,73 +39,73 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class CompleteShoppingOrderAction implements SiteAction {
+class CompleteShoppingOrderAction implements SiteAction {
 
 	@Autowired
-	private ShoppingCartService service;
+	private ShoppingCartService service
 
-	@Autowired
-	private PaymentService paymentService;
+    @Autowired
+	private PaymentService paymentService
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
+
+    @Override
+    String getName() {
+		return "completeShoppingOrder"
+    }
 
 	@Override
-	public String getName() {
-		return "completeShoppingOrder";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        mv.setViewName("shoppingcart/complete")
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		mv.setViewName("shoppingcart/complete");
+        mv.addObject("title", "Pedido Confirmado Exitosamente!")
 
-		mv.addObject("title", "Pedido Confirmado Exitosamente!");
+        ShoppingSiteConfig config = service.getConfiguration(evt.getSite())
+        ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder()
 
-		ShoppingSiteConfig config = service.getConfiguration(evt.getSite());
-		ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder();
+        try {
 
-		try {
+			validate(order, config)
+            String name = order.getShoppingCart().getName()
+            if (order.getTransaction().getStatus() != PaymentTransactionStatus.COMPLETED) {
+				order.getShoppingCart().setStatus(ShoppingCartStatus.COMPLETED)
+                order.getTransaction().setStatus(PaymentTransactionStatus.COMPLETED)
+                service.saveOrder(order)
+                service.notifyOrderCompleted(order)
+            }
 
-			validate(order, config);
-			String name = order.getShoppingCart().getName();
-			if (order.getTransaction().getStatus() != PaymentTransactionStatus.COMPLETED) {
-				order.getShoppingCart().setStatus(ShoppingCartStatus.COMPLETED);
-				order.getTransaction().setStatus(PaymentTransactionStatus.COMPLETED);
-				service.saveOrder(order);
-				service.notifyOrderCompleted(order);
-			}
+			mv.addObject("shoppingOrder", order)
 
-			mv.addObject("shoppingOrder", order);
+            UserHolder.get().setCustomer(null)
 
-			UserHolder.get().setCustomer(null);
-
-		} catch (ValidationError e) {
-			SiteActionManager.performAction("confirmShoppingCart", mv, evt.getRequest(), evt.getRedirectAttributes());
-			CMSUtil.addErrorMessage(e.getMessage(), mv);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        } catch (ValidationError e) {
+			SiteActionManager.performAction("confirmShoppingCart", mv, evt.getRequest(), evt.getRedirectAttributes())
+            CMSUtil.addErrorMessage(e.getMessage(), mv)
+        } catch (Exception e) {
+			e.printStackTrace()
+        }
 	}
 
 	private void validate(ShoppingOrder order, ShoppingSiteConfig config) {
 		if (!order.isPayLater() || !config.isAllowEmptyPayment()) {
-			throw new ValidationError("El sitio web no permite este tipo de pedidos");
-		}
+			throw new ValidationError("El sitio web no permite este tipo de pedidos")
+        }
 
 	}
 
 	private UserContactInfo loadContactInfo(String string, ActionEvent evt) {
-		UserContactInfo userContactInfo = null;
+		UserContactInfo userContactInfo = null
 
-		try {
-			Long id = Long.parseLong(evt.getRequest().getParameter(string));
-			userContactInfo = crudService.find(UserContactInfo.class, id);
-		} catch (Exception e) {
+        try {
+			Long id = Long.parseLong(evt.getRequest().getParameter(string))
+            userContactInfo = crudService.find(UserContactInfo.class, id)
+        } catch (Exception e) {
 			// TODO: handle exception
 		}
 
-		return userContactInfo;
-	}
+		return userContactInfo
+    }
 
 }

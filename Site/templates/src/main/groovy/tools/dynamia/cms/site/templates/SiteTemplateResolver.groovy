@@ -23,12 +23,12 @@ import org.thymeleaf.templateresource.ITemplateResource
  *
  * @author Mario Serrano Leones
  */
-public class SiteTemplateResolver extends AbstractConfigurableTemplateResolver {
+class SiteTemplateResolver extends AbstractConfigurableTemplateResolver {
 
-	public SiteTemplateResolver() {
-		System.out.println("Initializing DynamiaCMS " + getClass().getSimpleName());
+	SiteTemplateResolver() {
+		System.out.println("Initializing DynamiaCMS " + getClass().getSimpleName())
 
-	}
+    }
 
 	@Override
 	protected ITemplateResource computeTemplateResource(IEngineConfiguration configuration, String ownerTemplate,
@@ -36,10 +36,10 @@ public class SiteTemplateResolver extends AbstractConfigurableTemplateResolver {
 			Map<String, Object> templateResolutionAttributes) {
 
 		if (resourceName == null || resourceName.startsWith("<")) {
-			return null;
-		}
+			return null
+        }
 
-		return new SiteTemplateResource(resourceName, characterEncoding);
-	}
+		return new SiteTemplateResource(resourceName, characterEncoding)
+    }
 
 }

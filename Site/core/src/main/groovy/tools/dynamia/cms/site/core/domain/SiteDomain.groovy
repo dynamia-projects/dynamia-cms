@@ -30,62 +30,62 @@ import javax.validation.constraints.NotNull
  */
 @Entity
 @Table(name = "cr_sites_domains")
-public class SiteDomain extends SimpleEntity {
+class SiteDomain extends SimpleEntity {
 
     @ManyToOne
     @NotNull
-    private Site site;
+    private Site site
     @NotEmpty(message = "Enter domain Name")
     @NotNull
     @Column(unique = true)
-    private String name;
-    private int port;
-    private String context;
-    private String description;
+    private String name
+    private int port
+    private String context
+    private String description
 
-    public String getContext() {
-        return context;
+    String getContext() {
+        return context
     }
 
-    public void setContext(String context) {
-        this.context = context;
+    void setContext(String context) {
+        this.context = context
     }
 
-    public int getPort() {
-        return port;
+    int getPort() {
+        return port
     }
 
-    public void setPort(int port) {
-        this.port = port;
+    void setPort(int port) {
+        this.port = port
     }
 
-    public Site getSite() {
-        return site;
+    Site getSite() {
+        return site
     }
 
-    public void setSite(Site site) {
-        this.site = site;
+    void setSite(Site site) {
+        this.site = site
     }
 
-    public String getName() {
-        return name;
+    String getName() {
+        return name
     }
 
-    public void setName(String name) {
-        this.name = name;
+    void setName(String name) {
+        this.name = name
     }
 
-    public String getDescription() {
-        return description;
+    String getDescription() {
+        return description
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    void setDescription(String description) {
+        this.description = description
     }
 
     @Override
-    public String toString() {
-        return getName();
+    String toString() {
+        return getName()
     }
 
 }

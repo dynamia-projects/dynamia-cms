@@ -27,16 +27,16 @@ import tools.dynamia.cms.site.pages.domain.PageCategory
  * @author Mario Serrano Leones
  */
 @CMSModule
-public class ContentAdminModule implements AdminModule {
+class ContentAdminModule implements AdminModule {
 
     @Override
-    public String getGroup() {
-        return "Content";
+    String getGroup() {
+        return "Content"
     }
 
     @Override
-    public String getName() {
-        return "Content";
+    String getName() {
+        return "Content"
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ContentAdminModule implements AdminModule {
     }
 
     @Override
-    public AdminModuleOption[] getOptions() {
+    AdminModuleOption[] getOptions() {
         return [
                 new AdminModuleOption("authors", "Authors", ContentAuthor.class),
                 new AdminModuleOption("pages", "Pages", Page.class, true, true, "edit", true),

@@ -24,44 +24,44 @@ import javax.validation.constraints.NotNull
  *
  * @author Mario Serrano Leones
  */
-public class LoginForm implements Serializable {
+class LoginForm implements Serializable {
 
     @NotEmpty
-    private String username;
+    private String username
     @NotEmpty
-    private String password;
+    private String password
     @NotNull
-    private Site site;
+    private Site site
 
-    public LoginForm() {
+    LoginForm() {
     }
 
-    public LoginForm(Site site) {
-        this.site = site;
+    LoginForm(Site site) {
+        this.site = site
     }
 
-    public Site getSite() {
-        return site;
+    Site getSite() {
+        return site
     }
 
-    public void setSite(Site site) {
-        this.site = site;
+    void setSite(Site site) {
+        this.site = site
     }
 
-    public String getUsername() {
-        return username;
+    String getUsername() {
+        return username
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    void setUsername(String username) {
+        this.username = username
     }
 
-    public String getPassword() {
-        return password;
+    String getPassword() {
+        return password
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    void setPassword(String password) {
+        this.password = password
     }
 
 }

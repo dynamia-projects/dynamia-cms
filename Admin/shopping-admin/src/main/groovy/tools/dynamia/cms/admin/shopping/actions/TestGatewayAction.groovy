@@ -17,45 +17,45 @@ import tools.dynamia.crud.CrudActionEvent
 import tools.dynamia.crud.CrudState
 
 @InstallAction
-public class TestGatewayAction extends AbstractCrudAction {
+class TestGatewayAction extends AbstractCrudAction {
 
 	@Autowired
-	private PaymentService service;
+	private PaymentService service
 
-	public TestGatewayAction() {
-		setName("Test");
-	}
-
-	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    TestGatewayAction() {
+		setName("Test")
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(PaymentGatewayConfig.class);
-	}
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		PaymentGateway gateway = service.getDefaultGateway();
-		PaymentTransaction tx = gateway.newTransaction("main", CMSUtil.getSiteURL(SiteContext.get().getCurrent(), "/"));
-		tx.setCurrency("COP");
-		tx.setEmail("user@emails.com");
-		tx.setAmount(new BigDecimal(1000));
-		tx.setTaxes(BigDecimal.ZERO);
-		tx.setTaxesBase(BigDecimal.ZERO);
-		tx.setTest(true);
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(PaymentGatewayConfig.class)
+    }
 
-		PaymentForm form = gateway.createForm(tx);
+	@Override
+    void actionPerformed(CrudActionEvent evt) {
+		PaymentGateway gateway = service.getDefaultGateway()
+        PaymentTransaction tx = gateway.newTransaction("main", CMSUtil.getSiteURL(SiteContext.get().getCurrent(), "/"))
+        tx.setCurrency("COP")
+        tx.setEmail("user@emails.com")
+        tx.setAmount(new BigDecimal(1000))
+        tx.setTaxes(BigDecimal.ZERO)
+        tx.setTaxesBase(BigDecimal.ZERO)
+        tx.setTest(true)
 
-		StringBuilder sb = new StringBuilder();
-		sb.append("TX: " + tx.getUuid() + "\n");
-		sb.append("FORM: " + form.getUrl() + "  " + form.getHttpMethod() + "\n");
-		sb.append(PaymentUtils.mapToString(form.getParameters()));
-		
-		Messagebox.show(sb.toString());
+        PaymentForm form = gateway.createForm(tx)
 
-	}
+        StringBuilder sb = new StringBuilder()
+        sb.append("TX: " + tx.getUuid() + "\n")
+        sb.append("FORM: " + form.getUrl() + "  " + form.getHttpMethod() + "\n")
+        sb.append(PaymentUtils.mapToString(form.getParameters()))
+
+        Messagebox.show(sb.toString())
+
+    }
 
 }

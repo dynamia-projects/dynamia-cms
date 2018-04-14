@@ -28,34 +28,34 @@ import javax.servlet.http.HttpServletResponse
  * @author Mario Serrano Leones
  */
 @Controller
-public class AdminUsersController {
+class AdminUsersController {
 
 	@Autowired
-	private SiteService service;
+	private SiteService service
 
-	@RequestMapping("/login")
-	public ModelAndView login(HttpServletRequest request) {
-		Initializer initializer = Containers.get().findObject(Initializer.class);
-		initializer.init(request);
+    @RequestMapping("/login")
+    ModelAndView login(HttpServletRequest request) {
+		Initializer initializer = Containers.get().findObject(Initializer.class)
+        initializer.init(request)
 
-		Site site = service.getSite(request);
-		SiteContext.get().setCurrent(site);
+        Site site = service.getSite(request)
+        SiteContext.get().setCurrent(site)
 
-		ModelAndView mv = new ModelAndView("login");
-		mv.addObject("contextPath", request.getContextPath());
+        ModelAndView mv = new ModelAndView("login")
+        mv.addObject("contextPath", request.getContextPath())
 
-		return mv;
-	}
+        return mv
+    }
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null) {
-			new SecurityContextLogoutHandler().logout(request, response, auth);
-		}
-		ModelAndView mv = new ModelAndView();
-		mv.setView(new RedirectView("/", false, true, false));
-		return mv;
-	}
+    ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication()
+        if (auth != null) {
+			new SecurityContextLogoutHandler().logout(request, response, auth)
+        }
+		ModelAndView mv = new ModelAndView()
+        mv.setView(new RedirectView("/", false, true, false))
+        return mv
+    }
 
 }

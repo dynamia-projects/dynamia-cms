@@ -7,21 +7,21 @@ import tools.dynamia.app.template.ApplicationGlobalAction
 import tools.dynamia.cms.admin.core.zk.SiteManager
 
 @InstallAction
-public class SettingsAction extends ApplicationGlobalAction {
+class SettingsAction extends ApplicationGlobalAction {
 
 	@Autowired
-	private SiteManager siteManager;
+	private SiteManager siteManager
 
-	public SettingsAction() {
-		setName("Settings");
-		setImage("cog");
-		setPosition(2);
-		setAttribute("background", "btn btn-warning btn-flat bg-yellow ");
-	}
+    SettingsAction() {
+		setName("Settings")
+        setImage("cog")
+        setPosition(2)
+        setAttribute("background", "btn btn-warning btn-flat bg-yellow ")
+    }
 
 	@Override
-	public void actionPerformed(ActionEvent evt) {
-		siteManager.edit();
-	}
+    void actionPerformed(ActionEvent evt) {
+		siteManager.edit()
+    }
 
 }

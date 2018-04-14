@@ -34,94 +34,94 @@ import org.thymeleaf.templatemode.TemplateMode
  * @author Mario Serrano Leones
  */
 @Configuration
-public class TemplateJavaConfig {
+class TemplateJavaConfig {
 
-	public static final String DEFAULT_TEMPLATE = "CMSCurrentTemplate";
+	public static final String DEFAULT_TEMPLATE = "CMSCurrentTemplate"
 
-	@Bean
-	public ViewResolver contentNegotiatingViewResolver() {
+    @Bean
+    ViewResolver contentNegotiatingViewResolver() {
 
-		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver()
 
-		Map<String, MediaType> mediaTypes = new HashMap<>();
-		mediaTypes.put("html", MediaType.TEXT_HTML);
-		mediaTypes.put("json", MediaType.APPLICATION_JSON);
+        Map<String, MediaType> mediaTypes = new HashMap<>()
+        mediaTypes.put("html", MediaType.TEXT_HTML)
+        mediaTypes.put("json", MediaType.APPLICATION_JSON)
 
-		ContentNegotiationManager manager = new ContentNegotiationManager(
+        ContentNegotiationManager manager = new ContentNegotiationManager(
 				new PathExtensionContentNegotiationStrategy(mediaTypes),
 				new FixedContentNegotiationStrategy(MediaType.TEXT_HTML)
-				);
-		resolver.setContentNegotiationManager(manager);
+				)
+        resolver.setContentNegotiationManager(manager)
 
-		// Define all possible view resolvers
-		List<ViewResolver> resolvers = new ArrayList<ViewResolver>();
-		resolvers.add(jsonViewResolver());
-		resolvers.add(thymeleafViewResolver());
+        // Define all possible view resolvers
+		List<ViewResolver> resolvers = new ArrayList<ViewResolver>()
+        resolvers.add(jsonViewResolver())
+        resolvers.add(thymeleafViewResolver())
 
-		resolver.setViewResolvers(resolvers);
-		return resolver;
-	}
-
-	@Bean
-	public SiteTemplateResolver templateResolver() {
-		SiteTemplateResolver resolver = new SiteTemplateResolver();
-		resolver.setSuffix(".html");
-		resolver.setTemplateMode(TemplateMode.HTML);
-		resolver.setCharacterEncoding("UTF-8");
-		resolver.setCacheable(false);
-		return resolver;
-	}
+        resolver.setViewResolvers(resolvers)
+        return resolver
+    }
 
 	@Bean
-	public SpringTemplateEngine templateEngine() {
-		SpringTemplateEngine engine = new SpringTemplateEngine();
-
-		engine.addDialect(new LayoutDialect());
-		engine.addTemplateResolver(templateResolver());
-
-		return engine;
-	}
-	
-
-	public ViewResolver thymeleafViewResolver() {
-		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-		viewResolver.setOrder(1);
-		viewResolver.setTemplateEngine(templateEngine());
-		viewResolver.setCharacterEncoding("UTF-8");
-
-		return viewResolver;
-	}
-
-	public ViewResolver jsonViewResolver() {
-		JsonViewResolver json = new JsonViewResolver();
-		json.setOrder(2);
-		return json;
-	}
+    SiteTemplateResolver templateResolver() {
+		SiteTemplateResolver resolver = new SiteTemplateResolver()
+        resolver.setSuffix(".html")
+        resolver.setTemplateMode(TemplateMode.HTML)
+        resolver.setCharacterEncoding("UTF-8")
+        resolver.setCacheable(false)
+        return resolver
+    }
 
 	@Bean
-	public SimpleUrlHandlerMapping templateResourcesMapping() {
+    SpringTemplateEngine templateEngine() {
+		SpringTemplateEngine engine = new SpringTemplateEngine()
 
-		TemplateResourceHandler handler = templateResourcesHandler();
-		Map<String, Object> map = new HashMap<>();
-		map.put("css/**", handler);
-		map.put("styles/**", handler);
-		map.put("img/**", handler);
-		map.put("images/**", handler);
-		map.put("assets/**", handler);
-		map.put("js/**", handler);
-		map.put("fonts/**", handler);
-		map.put("font/**", handler);
-		map.put("plugins/**", handler);
+        engine.addDialect(new LayoutDialect())
+        engine.addTemplateResolver(templateResolver())
 
-		SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
-		mapping.setUrlMap(map);
+        return engine
+    }
 
-		return mapping;
-	}
+
+    ViewResolver thymeleafViewResolver() {
+		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver()
+        viewResolver.setOrder(1)
+        viewResolver.setTemplateEngine(templateEngine())
+        viewResolver.setCharacterEncoding("UTF-8")
+
+        return viewResolver
+    }
+
+    ViewResolver jsonViewResolver() {
+		JsonViewResolver json = new JsonViewResolver()
+        json.setOrder(2)
+        return json
+    }
 
 	@Bean
-	public TemplateResourceHandler templateResourcesHandler() {
-		return new TemplateResourceHandler();
-	}
+    SimpleUrlHandlerMapping templateResourcesMapping() {
+
+		TemplateResourceHandler handler = templateResourcesHandler()
+        Map<String, Object> map = new HashMap<>()
+        map.put("css/**", handler)
+        map.put("styles/**", handler)
+        map.put("img/**", handler)
+        map.put("images/**", handler)
+        map.put("assets/**", handler)
+        map.put("js/**", handler)
+        map.put("fonts/**", handler)
+        map.put("font/**", handler)
+        map.put("plugins/**", handler)
+
+        SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping()
+        mapping.setUrlMap(map)
+
+        return mapping
+    }
+
+	@Bean
+    TemplateResourceHandler templateResourcesHandler() {
+		return new TemplateResourceHandler()
+    }
 
 }

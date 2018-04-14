@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.mail;
+package tools.dynamia.cms.site.mail
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public interface MailServiceListener {
+interface MailServiceListener {
 
-	public void onMailSending(MailMessage message);
+	void onMailSending(MailMessage message)
 
-	public void onMailSended(MailMessage message);
+    void onMailSended(MailMessage message)
 
-	public void onMailSendFail(MailMessage message, Throwable cause);
+    void onMailSendFail(MailMessage message, Throwable cause)
 
 }

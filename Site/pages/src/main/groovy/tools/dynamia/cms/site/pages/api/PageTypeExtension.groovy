@@ -22,10 +22,10 @@ import tools.dynamia.cms.site.pages.PageContext
  *
  * @author Mario Serrano Leones
  */
-public interface PageTypeExtension extends TypeExtension {
+interface PageTypeExtension extends TypeExtension {
 
-	public String getDescriptorId();
+	String getDescriptorId()
 
-	public void setupPage(PageContext context);
+    void setupPage(PageContext context)
 
 }

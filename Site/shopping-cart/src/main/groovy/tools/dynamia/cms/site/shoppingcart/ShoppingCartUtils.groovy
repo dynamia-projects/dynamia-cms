@@ -24,28 +24,28 @@ import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService
 import tools.dynamia.cms.site.users.UserHolder
 import tools.dynamia.integration.Containers
 
-public class ShoppingCartUtils {
+class ShoppingCartUtils {
 
-	public static ShoppingCart getShoppingCart(ModelAndView mv) {
-		String cartName = (String) mv.getModel().get("cartName");
-		ShoppingCart cart = ShoppingCartHolder.get().getCart(cartName);
-		mv.addObject("cart", cart);
-		return cart;
-	}
+	static ShoppingCart getShoppingCart(ModelAndView mv) {
+		String cartName = (String) mv.getModel().get("cartName")
+        ShoppingCart cart = ShoppingCartHolder.get().getCart(cartName)
+        mv.addObject("cart", cart)
+        return cart
+    }
 
-	public static void loadConfig(Site site, ModelAndView mv) {
-		ShoppingCartService service = Containers.get().findObject(ShoppingCartService.class);
+    static void loadConfig(Site site, ModelAndView mv) {
+		ShoppingCartService service = Containers.get().findObject(ShoppingCartService.class)
 
-		ShoppingSiteConfig config = service.getConfiguration(site);
-		SiteAware shoppingCart = getShoppingCart(mv);
-		mv.addObject("shoppingConfig", config);
-		boolean paymentEnabled = false;
-		if (config != null) {
-			paymentEnabled = config.isPaymentEnabled() || UserHolder.get().isAdmin();
-		}
-		mv.addObject("paymentEnabled", paymentEnabled);
+        ShoppingSiteConfig config = service.getConfiguration(site)
+        SiteAware shoppingCart = getShoppingCart(mv)
+        mv.addObject("shoppingConfig", config)
+        boolean paymentEnabled = false
+        if (config != null) {
+			paymentEnabled = config.isPaymentEnabled() || UserHolder.get().isAdmin()
+        }
+		mv.addObject("paymentEnabled", paymentEnabled)
 
-	}
+    }
 	
 	
 

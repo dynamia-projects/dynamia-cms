@@ -27,32 +27,32 @@ import javax.servlet.http.HttpServletRequest
 import java.nio.file.Path
 
 @Controller
-public class FileBrowserController {
+class FileBrowserController {
 
 	@RequestMapping("/browse")
-	public ModelAndView login(HttpServletRequest request) {
+    ModelAndView login(HttpServletRequest request) {
 
-		ModelAndView mv = new ModelAndView("browse");
+		ModelAndView mv = new ModelAndView("browse")
 
-		try {
-			Site site = SiteContext.get().getCurrent();
-			String url = CMSUtil.getSiteURL(site, "resources");
-			Path sitePath = DynamiaCMS.getSitesResourceLocation(site);
+        try {
+			Site site = SiteContext.get().getCurrent()
+            String url = CMSUtil.getSiteURL(site, "resources")
+            Path sitePath = DynamiaCMS.getSitesResourceLocation(site)
 
-			mv.addObject("rootDirectory", sitePath.toFile());
-			mv.addObject("baseUrl", url);
-			mv.addObject("CKEditorFuncNum", request.getParameter("CKEditorFuncNum"));
-			mv.addObject("CKEditor", request.getParameter("CKEditor"));
-			mv.addObject("Type", request.getParameter("Type"));
-			mv.addObject("url", request.getParameter("url"));
+            mv.addObject("rootDirectory", sitePath.toFile())
+            mv.addObject("baseUrl", url)
+            mv.addObject("CKEditorFuncNum", request.getParameter("CKEditorFuncNum"))
+            mv.addObject("CKEditor", request.getParameter("CKEditor"))
+            mv.addObject("Type", request.getParameter("Type"))
+            mv.addObject("url", request.getParameter("url"))
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			e.printStackTrace()
+        }
 
-		return mv;
+		return mv
 
-	}
+    }
 
 }

@@ -10,42 +10,42 @@ import tools.dynamia.commons.StringUtils
 import tools.dynamia.integration.Containers
 import tools.dynamia.zk.crud.CrudController
 
-public class PaymentGatewayConfigController extends CrudController<PaymentGatewayConfig> {
+class PaymentGatewayConfigController extends CrudController<PaymentGatewayConfig> {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8595110206029594544L;
+	private static final long serialVersionUID = 8595110206029594544L
 
-	@Override
+    @Override
 	protected void beforeQuery() {
-		ShoppingCartService cartService = Containers.get().findObject(ShoppingCartService.class);
-		ShoppingSiteConfig shopConfig = cartService.getConfiguration(SiteContext.get().getCurrent());
+		ShoppingCartService cartService = Containers.get().findObject(ShoppingCartService.class)
+        ShoppingSiteConfig shopConfig = cartService.getConfiguration(SiteContext.get().getCurrent())
 
-		PaymentService service = Containers.get().findObject(PaymentService.class);
+        PaymentService service = Containers.get().findObject(PaymentService.class)
 
-		PaymentGateway gateway = null;
+        PaymentGateway gateway = null
 
-		if (shopConfig != null && shopConfig.getPaymentGatewayId() != null) {
-			String gatewayId = shopConfig.getPaymentGatewayId();
-			gateway = service.findGateway(gatewayId);
-		}
+        if (shopConfig != null && shopConfig.getPaymentGatewayId() != null) {
+			String gatewayId = shopConfig.getPaymentGatewayId()
+            gateway = service.findGateway(gatewayId)
+        }
 
 		if (gateway == null) {
-			gateway = service.getDefaultGateway();
-		}
+			gateway = service.getDefaultGateway()
+        }
 
-		String source = SiteContext.get().getCurrent().getKey();
-		if (gateway != null) {
+		String source = SiteContext.get().getCurrent().getKey()
+        if (gateway != null) {
 
 			for (String param : gateway.getRequiredParams()) {
-				PaymentGatewayConfig config = service.getConfig(gateway, param, source);
-				if (config == null) {
-					String label = StringUtils.capitalize(param);
-					label = StringUtils.addSpaceBetweenWords(label);
-					config = new PaymentGatewayConfig(gateway, param, "", source, label);
-					crudService.create(config);
-				}
+				PaymentGatewayConfig config = service.getConfig(gateway, param, source)
+                if (config == null) {
+					String label = StringUtils.capitalize(param)
+                    label = StringUtils.addSpaceBetweenWords(label)
+                    config = new PaymentGatewayConfig(gateway, param, "", source, label)
+                    crudService.create(config)
+                }
 			}
 		}
 

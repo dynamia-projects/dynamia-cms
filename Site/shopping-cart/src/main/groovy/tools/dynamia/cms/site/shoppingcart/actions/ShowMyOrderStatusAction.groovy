@@ -37,67 +37,67 @@ import toosl.dynamia.cms.site.shoppingcart.dto.OrderStatusDTO
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ShowMyOrderStatusAction implements SiteAction {
+class ShowMyOrderStatusAction implements SiteAction {
 
 	@Autowired
-	private ShoppingCartService service;
+	private ShoppingCartService service
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+	private UserService userService
+
+    @Override
+    String getName() {
+		return "showMyOrdersStatus"
+    }
 
 	@Override
-	public String getName() {
-		return "showMyOrdersStatus";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        mv.setViewName("shoppingcart/myorderstatus")
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		mv.setViewName("shoppingcart/myorderstatus");
+        mv.addObject("title", "Estado de Cuenta")
 
-		mv.addObject("title", "Estado de Cuenta");
+        ShoppingSiteConfig cfg = service.getConfiguration(evt.getSite())
+        String customer = (String) evt.getData()
 
-		ShoppingSiteConfig cfg = service.getConfiguration(evt.getSite());
-		String customer = (String) evt.getData();
-
-		if (customer == null) {
+        if (customer == null) {
 			if (UserHolder.get().getCustomer() != null) {
-				customer = UserHolder.get().getCustomer().getExternalRef();
-			} else if (UserHolder.get().getCurrent().getProfile() == UserProfile.USER) {
-				customer = UserHolder.get().getCurrent().getExternalRef();
-			}
+				customer = UserHolder.get().getCustomer().getExternalRef()
+            } else if (UserHolder.get().getCurrent().getProfile() == UserProfile.USER) {
+				customer = UserHolder.get().getCurrent().getExternalRef()
+            }
 		}
 
-		List<OrderStatusDTO> orders = new ArrayList<>();
-		User userCustomer = userService.getByExternalRef(evt.getSite(), customer);
-		mv.addObject("customer", userCustomer);
-		try {
+		List<OrderStatusDTO> orders = new ArrayList<>()
+        User userCustomer = userService.getByExternalRef(evt.getSite(), customer)
+        mv.addObject("customer", userCustomer)
+        try {
 			if (cfg.getOrderStatusURL() != null && !cfg.getOrderStatusURL().isEmpty() && customer != null) {
 				OrderStatusService service = HttpRemotingServiceClient.build(OrderStatusService.class)
-						.setServiceURL(cfg.getOrderStatusURL()).getProxy();
-			
-				
-				orders = service.getOrdersStatus(customer);
-				
+						.setServiceURL(cfg.getOrderStatusURL()).getProxy()
 
-			} else {
-				CMSUtil.addErrorMessage("No se ha configurado estado de cuenta", mv);
 
-			}
+                orders = service.getOrdersStatus(customer)
+
+
+            } else {
+				CMSUtil.addErrorMessage("No se ha configurado estado de cuenta", mv)
+
+            }
 		} catch (Exception e) {
-			e.printStackTrace();
-			CMSUtil.addWarningMessage("No se puede consultar estado de cuenta en este momento, intente mas tarde", mv);
-		}
+			e.printStackTrace()
+            CMSUtil.addWarningMessage("No se puede consultar estado de cuenta en este momento, intente mas tarde", mv)
+        }
 
 		if (customer == null) {
-			CMSUtil.addErrorMessage("No se ha seleccionado cliente", mv);
-		}
+			CMSUtil.addErrorMessage("No se ha seleccionado cliente", mv)
+        }
 
-		mv.addObject("orders", orders);
-		mv.addObject("sumTotal",BigDecimalUtils.sum("total", orders));
-		mv.addObject("sumPaid",BigDecimalUtils.sum("paid", orders));
-		mv.addObject("sumBalance",BigDecimalUtils.sum("balance", orders));
+		mv.addObject("orders", orders)
+        mv.addObject("sumTotal",BigDecimalUtils.sum("total", orders))
+        mv.addObject("sumPaid",BigDecimalUtils.sum("paid", orders))
+        mv.addObject("sumBalance",BigDecimalUtils.sum("balance", orders))
 
-	}
+    }
 
 }

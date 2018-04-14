@@ -25,64 +25,64 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "cts_categories")
-public class ContactCategory extends SiteSimpleEntity implements Orderable {
+class ContactCategory extends SiteSimpleEntity implements Orderable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5084812821635888414L;
-	@NotEmpty(message = "Enter Contact category name")
-	private String name;
-	@Column(length = 1000)
-	private String description;
-	private boolean active = true;
-	@Column(name="catOrder")
-	private int order;
-	private String defaultEmail;
+	private static final long serialVersionUID = -5084812821635888414L
+    @NotEmpty(message = "Enter Contact category name")
+	private String name
+    @Column(length = 1000)
+	private String description
+    private boolean active = true
+    @Column(name="catOrder")
+	private int order
+    private String defaultEmail
 
-	public String getDefaultEmail() {
-		return defaultEmail;
-	}
+    String getDefaultEmail() {
+		return defaultEmail
+    }
 
-	public void setDefaultEmail(String defaultEmail) {
-		this.defaultEmail = defaultEmail;
-	}
+    void setDefaultEmail(String defaultEmail) {
+		this.defaultEmail = defaultEmail
+    }
 
-	public String getName() {
-		return name;
-	}
+    String getName() {
+		return name
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    void setName(String name) {
+		this.name = name
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    String getDescription() {
+		return description
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    void setDescription(String description) {
+		this.description = description
+    }
 
-	public boolean isActive() {
-		return active;
-	}
+    boolean isActive() {
+		return active
+    }
 
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+    void setActive(boolean active) {
+		this.active = active
+    }
 
-	public int getOrder() {
-		return order;
-	}
+    int getOrder() {
+		return order
+    }
 
-	public void setOrder(int order) {
-		this.order = order;
-	}
+    void setOrder(int order) {
+		this.order = order
+    }
 
 	@Override
-	public String toString() {
-		return name;
-	}
+    String toString() {
+		return name
+    }
 
 }

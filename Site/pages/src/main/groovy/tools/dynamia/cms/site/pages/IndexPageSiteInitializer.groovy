@@ -18,38 +18,38 @@ import tools.dynamia.domain.services.CrudService
  * @author mario
  */
 @CMSExtension
-public class IndexPageSiteInitializer implements SiteInitializer {
+class IndexPageSiteInitializer implements SiteInitializer {
 
     @Autowired
-    private CrudService crudService;
+    private CrudService crudService
 
     @Override
-    public void init(Site site) {
+    void init(Site site) {
     }
 
     @Override
-    public void postInit(Site site) {
-        Page index = new Page();
-        index.setAlias("index");
-        index.setTitle(site.getName());
-        index.setSite(site);
-        ContentAuthor author = getAuthor(site);
-        index.setAuthor(author);
+    void postInit(Site site) {
+        Page index = new Page()
+        index.setAlias("index")
+        index.setTitle(site.getName())
+        index.setSite(site)
+        ContentAuthor author = getAuthor(site)
+        index.setAuthor(author)
 
-        crudService.create(index);
+        crudService.create(index)
 
     }
 
     private ContentAuthor getAuthor(Site site) {
-        ContentAuthor author = crudService.findSingle(ContentAuthor.class, "site", site);
+        ContentAuthor author = crudService.findSingle(ContentAuthor.class, "site", site)
         if (author == null) {
-            author = new ContentAuthor();
-            author.setFirstName("Default");
-            author.setLastName("Author");
-            author.setEmail("admin@" + site.getKey() + ".login");
-            crudService.save(author);
+            author = new ContentAuthor()
+            author.setFirstName("Default")
+            author.setLastName("Author")
+            author.setEmail("admin@" + site.getKey() + ".login")
+            crudService.save(author)
         }
-        return author;
+        return author
     }
 
 }

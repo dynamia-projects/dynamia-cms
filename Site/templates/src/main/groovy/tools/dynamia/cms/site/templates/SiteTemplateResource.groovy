@@ -30,138 +30,138 @@ import java.nio.file.Path
  *
  * @author Mario Serrano Leones
  */
-public class SiteTemplateResource implements ITemplateResource, Serializable {
+class SiteTemplateResource implements ITemplateResource, Serializable {
 
-	private String templateName;
-	private String enconding;
-	private Path templatePath;
+	private String templateName
+    private String enconding
+    private Path templatePath
 
-	public SiteTemplateResource(String templateName, String enconding) {
-		super();
-		this.templateName = templateName;
-		this.enconding = enconding;
-		this.templatePath = findTemplate(getSiteKey(), templateName);
-	}
+    SiteTemplateResource(String templateName, String enconding) {
+		super()
+        this.templateName = templateName
+        this.enconding = enconding
+        this.templatePath = findTemplate(getSiteKey(), templateName)
+    }
 
-	public SiteTemplateResource(String templateName, String enconding, Path templatePath) {
-		super();
-		this.templateName = templateName;
-		this.enconding = enconding;
-		this.templatePath = templatePath;
-	}
+    SiteTemplateResource(String templateName, String enconding, Path templatePath) {
+		super()
+        this.templateName = templateName
+        this.enconding = enconding
+        this.templatePath = templatePath
+    }
 
-	public String getSiteKey() {
+    String getSiteKey() {
 
-		String siteKey = null;
-		if (siteKey == null) {
+		String siteKey = null
+        if (siteKey == null) {
 			try {
-				siteKey = SiteContext.get().getCurrent().getKey();
-			} catch (Exception e) {
+				siteKey = SiteContext.get().getCurrent().getKey()
+            } catch (Exception e) {
 
-				e.printStackTrace();
-			}
+				e.printStackTrace()
+            }
 		}
 
 		if (siteKey == null) {
-			siteKey = "main";
-		}
+			siteKey = "main"
+        }
 
-		return siteKey;
+		return siteKey
 
-	}
+    }
 
 	private Path findTemplate(String siteKey, String name) {
 
-		SiteService coreService = Containers.get().findObject(SiteService.class);
-		Site site = coreService.getSite(siteKey);
+		SiteService coreService = Containers.get().findObject(SiteService.class)
+        Site site = coreService.getSite(siteKey)
 
-		Path file = null;
+        Path file = null
 
-		// find view in site folders
-		Path siteHome = DynamiaCMS.getSitesResourceLocation(site);
-		for (String loc : DynamiaCMS.getRelativeLocations()) {
-			file = siteHome.resolve(loc + File.separator + name);
-			if (Files.exists(file)) {
-				break;
-			}
+        // find view in site folders
+		Path siteHome = DynamiaCMS.getSitesResourceLocation(site)
+        for (String loc : DynamiaCMS.getRelativeLocations()) {
+			file = siteHome.resolve(loc + File.separator + name)
+            if (Files.exists(file)) {
+				break
+            }
 		}
 
 		// find view in site local templates
 		if (!Files.exists(file)) {
-			String loc = TemplateResources.getTemplateName(site);
-			if (loc != null) {
-				loc = DynamiaCMS.TEMPLATES + File.separator + loc;
-				file = siteHome.resolve(loc + File.separator + name);
-			}
+			String loc = TemplateResources.getTemplateName(site)
+            if (loc != null) {
+				loc = DynamiaCMS.TEMPLATES + File.separator + loc
+                file = siteHome.resolve(loc + File.separator + name)
+            }
 		}
 
 		// find view in templates sub folders
 		if (Files.notExists(file)) {
 			for (String loc : DynamiaCMS.getRelativeLocations()) {
-				file = TemplateResources.find(site, loc + File.separator + name);
-				if (Files.exists(file)) {
-					break;
-				}
+				file = TemplateResources.find(site, loc + File.separator + name)
+                if (Files.exists(file)) {
+					break
+                }
 			}
 		}
 
 		// find in home default folders
 		if (Files.notExists(file)) {
-			Path home = DynamiaCMS.getHomePath();
-			for (String loc : DynamiaCMS.getRelativeLocations()) {
-				file = home.resolve(loc + File.separator + name);
-				if (Files.exists(file)) {
-					break;
-				}
+			Path home = DynamiaCMS.getHomePath()
+            for (String loc : DynamiaCMS.getRelativeLocations()) {
+				file = home.resolve(loc + File.separator + name)
+                if (Files.exists(file)) {
+					break
+                }
 			}
 
 		}
 
 		// Find last in root template folder
 		if (Files.notExists(file)) {
-			file = TemplateResources.find(site, name);
-		}
+			file = TemplateResources.find(site, name)
+        }
 
-		return file;
+		return file
+    }
+
+	@Override
+    String getDescription() {
+		return templatePath.toString()
+    }
+
+	@Override
+    String getBaseName() {
+		return StringUtils.removeFilenameExtension(templatePath.getFileName().toString())
+    }
+
+	@Override
+    boolean exists() {
+		return Files.exists(templatePath)
+    }
+
+	@Override
+    Reader reader() throws IOException {
+		InputStream inputStream = Files.newInputStream(templatePath)
+        if (enconding != null) {
+			return new BufferedReader(new InputStreamReader(inputStream, enconding))
+        } else {
+			return new BufferedReader(new InputStreamReader(inputStream))
+        }
 	}
 
 	@Override
-	public String getDescription() {
-		return templatePath.toString();
-	}
+    ITemplateResource relative(String relativeLocation) {
+		Path path = templatePath
+        if (!Files.isDirectory(path)) {
+			path = path.getParent()
+        }
 
-	@Override
-	public String getBaseName() {
-		return StringUtils.removeFilenameExtension(templatePath.getFileName().toString());
-	}
+		return new SiteTemplateResource(templateName, enconding, path.resolve(relativeLocation))
+    }
 
-	@Override
-	public boolean exists() {
-		return Files.exists(templatePath);
-	}
-
-	@Override
-	public Reader reader() throws IOException {
-		InputStream inputStream = Files.newInputStream(templatePath);
-		if (enconding != null) {
-			return new BufferedReader(new InputStreamReader(inputStream, enconding));
-		} else {
-			return new BufferedReader(new InputStreamReader(inputStream));
-		}
-	}
-
-	@Override
-	public ITemplateResource relative(String relativeLocation) {
-		Path path = templatePath;
-		if (!Files.isDirectory(path)) {
-			path = path.getParent();
-		}
-
-		return new SiteTemplateResource(templateName, enconding, path.resolve(relativeLocation));
-	}
-
-	public Path getTemplatePath() {
-		return templatePath;
-	}
+    Path getTemplatePath() {
+		return templatePath
+    }
 
 }

@@ -14,16 +14,16 @@ import tools.dynamia.zk.navigation.ComponentPage
  *
  * @author mario
  */
-public class GlobalResourcesPage extends ComponentPage {
+class GlobalResourcesPage extends ComponentPage {
 
-    public GlobalResourcesPage(String id, String name) {
-        super(id, name, null);
+    GlobalResourcesPage(String id, String name) {
+        super(id, name, null)
     }
 
     @Override
-    public Component renderPage() {
-        FileManager fileManager = new FileManager(DynamiaCMS.getHomePath());
-        return fileManager;
+    Component renderPage() {
+        FileManager fileManager = new FileManager(DynamiaCMS.getHomePath())
+        return fileManager
     }
 
 }

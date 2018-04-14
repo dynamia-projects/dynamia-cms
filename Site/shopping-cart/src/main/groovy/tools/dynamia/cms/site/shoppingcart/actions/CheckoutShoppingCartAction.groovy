@@ -37,52 +37,52 @@ import tools.dynamia.domain.ValidationError
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class CheckoutShoppingCartAction implements SiteAction {
+class CheckoutShoppingCartAction implements SiteAction {
 
     @Autowired
-    private ShoppingCartService service;
+    private ShoppingCartService service
 
     @Autowired
-    private UserService userService;
+    private UserService userService
 
     @Override
-    public String getName() {
-        return "checkoutShoppingCart";
+    String getName() {
+        return "checkoutShoppingCart"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView();
+    void actionPerformed(ActionEvent evt) {
+        ModelAndView mv = evt.getModelAndView()
 
-        ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
-        ShoppingSiteConfig config = service.getConfiguration(evt.getSite());
+        ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv)
+        ShoppingSiteConfig config = service.getConfiguration(evt.getSite())
 
         if (shoppingCart == null || shoppingCart.getQuantity() == 0) {
-            CMSUtil.addWarningMessage("El carrito de compra esta vacio", mv);
-            mv.setView(new RedirectView("/", false, true, false));
+            CMSUtil.addWarningMessage("El carrito de compra esta vacio", mv)
+            mv.setView(new RedirectView("/", false, true, false))
         } else if (config.isPaymentEnabled() || UserHolder.get().isAdmin()) {
-            mv.setViewName("shoppingcart/checkout");
+            mv.setViewName("shoppingcart/checkout")
 
             if (UserHolder.get().isSeller()) {
-                mv.setViewName("shoppingcart/checkoutSeller");
+                mv.setViewName("shoppingcart/checkoutSeller")
             }
 
-            mv.addObject("title", "Confirmar Pedido");
-            mv.addObject("userContactInfos", userService.getContactInfos(UserHolder.get().getCurrent()));
+            mv.addObject("title", "Confirmar Pedido")
+            mv.addObject("userContactInfos", userService.getContactInfos(UserHolder.get().getCurrent()))
 
             try {
-                ShoppingOrder order = service.createOrder(shoppingCart, config);
-                order.getTransaction().setClientIP(evt.getRequest().getRemoteAddr());
-                ShoppingCartHolder.get().setCurrentOrder(order);
+                ShoppingOrder order = service.createOrder(shoppingCart, config)
+                order.getTransaction().setClientIP(evt.getRequest().getRemoteAddr())
+                ShoppingCartHolder.get().setCurrentOrder(order)
 
-                mv.addObject("shoppingOrder", order);
+                mv.addObject("shoppingOrder", order)
             } catch (ValidationError e) {
-                CMSUtil.addErrorMessage(e.getMessage(), mv);
-                SiteActionManager.performAction("viewShoppingCart", mv, evt.getRequest());
+                CMSUtil.addErrorMessage(e.getMessage(), mv)
+                SiteActionManager.performAction("viewShoppingCart", mv, evt.getRequest())
             }
         } else {
-            mv.setView(new RedirectView("/", false, true, false));
-            CMSUtil.addErrorMessage("Sistema de pagos dehabilitado temporalmente", mv);
+            mv.setView(new RedirectView("/", false, true, false))
+            CMSUtil.addErrorMessage("Sistema de pagos dehabilitado temporalmente", mv)
         }
 
     }

@@ -32,45 +32,45 @@ import tools.dynamia.ui.MessageType
 import tools.dynamia.ui.UIMessages
 
 @Controller
-public class FileBrowserVM {
+class FileBrowserVM {
 
 	@Wire("#fileMgr")
-	private FileManager fileMgr;
+	private FileManager fileMgr
 
-	private String baseUrl;
-	private int ckEditorFuncNum;
-	private String ckEditor;
+    private String baseUrl
+    private int ckEditorFuncNum
+    private String ckEditor
 
-	@Init
-	public void init(@ExecutionParam("CKEditor") String ckeditor,
-			@ExecutionParam("CKEditorFuncNum") int ckEditorFuncNum,
-			@ExecutionParam("baseUrl") String baseUrl) {
+    @Init
+    void init(@ExecutionParam("CKEditor") String ckeditor,
+              @ExecutionParam("CKEditorFuncNum") int ckEditorFuncNum,
+              @ExecutionParam("baseUrl") String baseUrl) {
 
-		this.baseUrl = baseUrl;
-		this.ckEditorFuncNum = ckEditorFuncNum;
-		this.ckEditor = ckeditor;
+		this.baseUrl = baseUrl
+        this.ckEditorFuncNum = ckEditorFuncNum
+        this.ckEditor = ckeditor
 
-	}
+    }
 
 	@AfterCompose
-	public void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
-		Selectors.wireComponents(view, this, false);
-		PageService pageService = Containers.get().findObject(PageService.class);
-		
-	}
+    void afterCompose(@ContextParam(ContextType.VIEW) Component view) {
+		Selectors.wireComponents(view, this, false)
+        PageService pageService = Containers.get().findObject(PageService.class)
+
+    }
 
 	@Command
-	public void select() {
-		FileInfo resource = fileMgr.getValue();
-		if (resource != null) {
-			String path = CMSUtil.getResourceURL(SiteContext.get().getCurrent(), resource.getFile());
-			String script = "window.opener.CKEDITOR.tools.callFunction(" +
-					ckEditorFuncNum + ", '" + Executions.getCurrent().encodeURL(path) + "'); window.close(); ";
+    void select() {
+		FileInfo resource = fileMgr.getValue()
+        if (resource != null) {
+			String path = CMSUtil.getResourceURL(SiteContext.get().getCurrent(), resource.getFile())
+            String script = "window.opener.CKEDITOR.tools.callFunction(" +
+					ckEditorFuncNum + ", '" + Executions.getCurrent().encodeURL(path) + "'); window.close(); "
 
-			Clients.evalJavaScript(script);
-		} else {
-			UIMessages.showMessage("No file selected", MessageType.ERROR);
-		}
+            Clients.evalJavaScript(script)
+        } else {
+			UIMessages.showMessage("No file selected", MessageType.ERROR)
+        }
 
 	}
 

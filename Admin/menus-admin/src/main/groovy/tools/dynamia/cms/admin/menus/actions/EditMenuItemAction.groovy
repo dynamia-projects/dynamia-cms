@@ -17,37 +17,37 @@ import tools.dynamia.zk.crud.CrudView
 import tools.dynamia.zk.util.ZKUtil
 
 @InstallAction
-public class EditMenuItemAction extends EditAction {
+class EditMenuItemAction extends EditAction {
 
 	@Autowired
-	private CrudService crudService;
+	private CrudService crudService
+
+    @Override
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(MenuItem.class)
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(MenuItem.class);
-	}
+    void actionPerformed(CrudActionEvent evt) {
+		CrudView<MenuItem> crudView = (CrudView<MenuItem>) evt.getView()
+        MenuItemTreeCrudController controller = (MenuItemTreeCrudController) evt.getController()
+        Menu menu = controller.getMenu()
 
-	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		CrudView<MenuItem> crudView = (CrudView<MenuItem>) evt.getView();
-		MenuItemTreeCrudController controller = (MenuItemTreeCrudController) evt.getController();
-		Menu menu = controller.getMenu();
-
-		MenuItem menuItem = (MenuItem) evt.getData();
-		if (menuItem != null) {
-			menuItem = crudService.reload(menuItem);
-			MenuItemsUI ui = new MenuItemsUI(menuItem);
-			ui.addAction(new SaveMenuItemAction(crudService, evt));
-			ZKUtil.showDialog("Edit Item " + menuItem.getName() + " - " + menu.getName(), ui, "90%", "90%")
-					.setMaximizable(true);
-		} else {
-			UIMessages.showMessage("Select menu item to edit", MessageType.ERROR);
-		}
+        MenuItem menuItem = (MenuItem) evt.getData()
+        if (menuItem != null) {
+			menuItem = crudService.reload(menuItem)
+            MenuItemsUI ui = new MenuItemsUI(menuItem)
+            ui.addAction(new SaveMenuItemAction(crudService, evt))
+            ZKUtil.showDialog("Edit Item " + menuItem.getName() + " - " + menu.getName(), ui, "90%", "90%")
+					.setMaximizable(true)
+        } else {
+			UIMessages.showMessage("Select menu item to edit", MessageType.ERROR)
+        }
 
 	}
 }

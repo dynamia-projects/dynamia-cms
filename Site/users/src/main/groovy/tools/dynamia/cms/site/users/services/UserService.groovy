@@ -25,37 +25,37 @@ import tools.dynamia.cms.site.users.domain.UserSiteConfig
 /**
  * @author Mario Serrano Leones
  */
-public interface UserService {
+interface UserService {
 
-    User getUser(Site site, String name, String identification);
+    User getUser(Site site, String name, String identification)
 
-    public void saveUser(UserForm user);
+    void saveUser(UserForm user)
 
-    public User getUser(Site site, String name);
+    User getUser(Site site, String name)
 
-    public void changePassword(UserForm form);
+    void changePassword(UserForm form)
 
-    void checkAdminUser(Site site);
+    void checkAdminUser(Site site)
 
-    public List<UserContactInfo> getContactInfos(User current);
+    List<UserContactInfo> getContactInfos(User current)
 
-    public void resetPassword(Site site, String username);
+    void resetPassword(Site site, String username)
 
-    public void resetPassword(User user, String newpassword, String newpassword2);
+    void resetPassword(User user, String newpassword, String newpassword2)
 
-    UserSiteConfig getSiteConfig(Site site);
+    UserSiteConfig getSiteConfig(Site site)
 
-    void setupPassword(User user, String newPassword);
+    void setupPassword(User user, String newPassword)
 
-    public List<User> getUserCustomers(User current);
+    List<User> getUserCustomers(User current)
 
-    public User getByExternalRef(Site site, String customer);
+    User getByExternalRef(Site site, String customer)
 
-    void enableUser(User user);
+    void enableUser(User user)
 
-    void disableUser(User user);
+    void disableUser(User user)
 
-    User getUserByValidationKey(Site site, String key);
+    User getUserByValidationKey(Site site, String key)
 
-    UserDTO loadExternalUser(Site site, String identification);
+    UserDTO loadExternalUser(Site site, String identification)
 }

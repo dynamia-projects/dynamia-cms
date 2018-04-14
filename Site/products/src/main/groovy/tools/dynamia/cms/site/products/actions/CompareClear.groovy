@@ -32,28 +32,28 @@ import tools.dynamia.integration.Containers
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class CompareClear implements SiteAction {
+class CompareClear implements SiteAction {
 
     @Autowired
-    private CrudService crudService;
+    private CrudService crudService
     @Autowired
-    private ProductsService service;
+    private ProductsService service
 
     @Override
-    public String getName() {
-        return "compareClear";
+    String getName() {
+        return "compareClear"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
+    void actionPerformed(ActionEvent evt) {
 
-        ProductCompareList list = Containers.get().findObject(ProductCompareList.class);
-        list.clear();
+        ProductCompareList list = Containers.get().findObject(ProductCompareList.class)
+        list.clear()
 
-        ModelAndView mv = evt.getModelAndView();
-        CMSUtil.addSuccessMessage("Se ha limpiado la lista de comparacion.", evt.getRedirectAttributes());
-        String redirect = "/";
-        mv.setView(new RedirectView(redirect, true, true, false));
+        ModelAndView mv = evt.getModelAndView()
+        CMSUtil.addSuccessMessage("Se ha limpiado la lista de comparacion.", evt.getRedirectAttributes())
+        String redirect = "/"
+        mv.setView(new RedirectView(redirect, true, true, false))
     }
 
 }

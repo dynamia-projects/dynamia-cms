@@ -33,69 +33,69 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 
-public class UsersAuthenticationProvider implements AuthenticationProvider {
+class UsersAuthenticationProvider implements AuthenticationProvider {
 
 	@Autowired
-	private UserService userService;
+	private UserService userService
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
 
-	@Override
-	public Authentication authenticate(Authentication a) throws AuthenticationException {
+    @Override
+    Authentication authenticate(Authentication a) throws AuthenticationException {
 
-		String username = a.getName();
-		String password = (String) a.getCredentials();
-		Site site = null;
-		if (a.getDetails() instanceof AuthenticationDetails) {
-			site = ((AuthenticationDetails) a.getDetails()).getSite();
-		}
+		String username = a.getName()
+        String password = (String) a.getCredentials()
+        Site site = null
+        if (a.getDetails() instanceof AuthenticationDetails) {
+			site = ((AuthenticationDetails) a.getDetails()).getSite()
+        }
 
 		if (site == null) {
-			throw new SiteNotFoundException("No site", null);
-		}
+			throw new SiteNotFoundException("No site", null)
+        }
 
-		site = crudService.reload(site);
+		site = crudService.reload(site)
 
-		if (site.getParent() != null) {
-			site = site.getParent();
-		}
+        if (site.getParent() != null) {
+			site = site.getParent()
+        }
 
 		if (username.isEmpty() || password.isEmpty()) {
-			throw new BadCredentialsException("Ingrese email y password para acceder");
-		}
+			throw new BadCredentialsException("Ingrese email y password para acceder")
+        }
 
-		EmailValidator emailValidator = new EmailValidator();
-		if (!emailValidator.isValid(username, null)) {
-			throw new BadCredentialsException("Ingrese direccion valida de email");
-		}
+		EmailValidator emailValidator = new EmailValidator()
+        if (!emailValidator.isValid(username, null)) {
+			throw new BadCredentialsException("Ingrese direccion valida de email")
+        }
 
-		password = Sha512DigestUtils.shaHex(username + ":" + password);
+		password = Sha512DigestUtils.shaHex(username + ":" + password)
 
-		User user = userService.getUser(site, username);
-		if (user == null) {
-			throw new UserNotFoundException("Usuario [" + username + "] no encontrado en [" + site.getName() + "]");
-		}
+        User user = userService.getUser(site, username)
+        if (user == null) {
+			throw new UserNotFoundException("Usuario [" + username + "] no encontrado en [" + site.getName() + "]")
+        }
 
 		if (!user.isEnabled()) {
-			throw new UserNotFoundException("El usuario [" + username + "] esta desactivado");
-		}
+			throw new UserNotFoundException("El usuario [" + username + "] esta desactivado")
+        }
 
 		if (!password.equals(user.getPassword())) {
-			throw new InvalidPasswordException("Password invalido");
-		}
+			throw new InvalidPasswordException("Password invalido")
+        }
 
-		Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
+		Collection<? extends GrantedAuthority> authorities = user.getAuthorities()
 
-		Authentication auth = new SiteUsernamePasswordAuthenticationToken(site, user, password, authorities);
+        Authentication auth = new SiteUsernamePasswordAuthenticationToken(site, user, password, authorities)
 
-		return auth;
+        return auth
 
-	}
+    }
 
 	@Override
-	public boolean supports(Class<?> type) {
-		return true;
-	}
+    boolean supports(Class<?> type) {
+		return true
+    }
 
 }

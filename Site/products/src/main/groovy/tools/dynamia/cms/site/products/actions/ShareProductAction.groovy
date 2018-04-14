@@ -29,26 +29,26 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ShareProductAction implements SiteAction {
+class ShareProductAction implements SiteAction {
 
     @Autowired
-    private ProductsService service;
+    private ProductsService service
 
     @Autowired
-    private CrudService crudService;
+    private CrudService crudService
 
     @Override
-    public String getName() {
-        return "shareProduct";
+    String getName() {
+        return "shareProduct"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
+    void actionPerformed(ActionEvent evt) {
 
-        ProductShareForm form = (ProductShareForm) evt.getData();
-        service.shareProduct(form);
+        ProductShareForm form = (ProductShareForm) evt.getData()
+        service.shareProduct(form)
 
-        CMSUtil.addSuccessMessage("Producto compartido exitosamente", evt.getRedirectAttributes());
+        CMSUtil.addSuccessMessage("Producto compartido exitosamente", evt.getRedirectAttributes())
 
     }
 

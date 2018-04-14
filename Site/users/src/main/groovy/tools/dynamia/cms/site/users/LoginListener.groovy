@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users;
+package tools.dynamia.cms.site.users
 
-import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.cms.site.users.domain.User
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public interface LoginListener {
+interface LoginListener {
 
-    void onLoginSuccess(User user);
+    void onLoginSuccess(User user)
 }

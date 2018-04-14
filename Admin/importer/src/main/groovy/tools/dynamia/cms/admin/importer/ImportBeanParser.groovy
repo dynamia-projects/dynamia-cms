@@ -1,10 +1,10 @@
-package tools.dynamia.cms.admin.importer;
+package tools.dynamia.cms.admin.importer
 
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Row
 
 @FunctionalInterface
-public interface ImportBeanParser<T> {
+interface ImportBeanParser<T> {
 
-	T parse(Row row);
+	T parse(Row row)
 
 }

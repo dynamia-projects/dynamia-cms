@@ -13,40 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users.actions;
+package tools.dynamia.cms.site.users.actions
 
-import tools.dynamia.cms.site.core.api.CMSAction;
+import tools.dynamia.cms.site.core.api.CMSAction
 
 /**
  *
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class LogoutUserMenuAction implements UserMenuAction {
+class LogoutUserMenuAction implements UserMenuAction {
 
     @Override
-    public String getLabel() {
-        return "Cerrar Sesion";
+    String getLabel() {
+        return "Cerrar Sesion"
     }
 
     @Override
-    public String getDescription() {
-        return "Finalizar sesion de usuario";
+    String getDescription() {
+        return "Finalizar sesion de usuario"
     }
 
     @Override
-    public String getIcon() {
-        return null;
+    String getIcon() {
+        return null
     }
 
     @Override
-    public int getOrder() {
-        return Integer.MAX_VALUE;
+    int getOrder() {
+        return Integer.MAX_VALUE
     }
 
     @Override
-    public String action() {
-        return "users/logout";
+    String action() {
+        return "users/logout"
     }
 
 }

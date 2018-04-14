@@ -33,50 +33,50 @@ import javax.servlet.http.HttpServletRequest
  */
 @Controller
 @RequestMapping("/cache")
-public class CacheController {
+class CacheController {
 
     @Autowired(required = false)
-    private CacheManager cacheManager;
+    private CacheManager cacheManager
 
     @Autowired(required = false)
-    private TemplateEngine templateEngine;
+    private TemplateEngine templateEngine
 
-    private long lastCacheClear;
+    private long lastCacheClear
 
     @RequestMapping("/clear/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public void clearCache(@PathVariable String name, HttpServletRequest request) {
+    void clearCache(@PathVariable String name, HttpServletRequest request) {
         if (cacheManager != null) {
-            Cache cache = cacheManager.getCache(name);
+            Cache cache = cacheManager.getCache(name)
             if (cache != null) {
-                cache.clear();
+                cache.clear()
             }
         }
-        lastCacheClear = System.currentTimeMillis();
+        lastCacheClear = System.currentTimeMillis()
     }
 
     @RequestMapping("/clear")
     @ResponseStatus(HttpStatus.OK)
-    public void clearAllCache() {
+    void clearAllCache() {
         if (cacheManager != null) {
-            Collection<String> names = cacheManager.getCacheNames();
+            Collection<String> names = cacheManager.getCacheNames()
             for (String name : names) {
-                cacheManager.getCache(name).clear();
+                cacheManager.getCache(name).clear()
             }
         }
-        lastCacheClear = System.currentTimeMillis();
+        lastCacheClear = System.currentTimeMillis()
     }
 
     @RequestMapping("/clear/template")
     @ResponseStatus(HttpStatus.OK)
-    public void clearTemplate() {
+    void clearTemplate() {
         if (templateEngine != null) {
-            templateEngine.clearTemplateCache();
+            templateEngine.clearTemplateCache()
         }
     }
 
-    public long getLastCacheClear() {
-        return lastCacheClear;
+    long getLastCacheClear() {
+        return lastCacheClear
     }
 
 }

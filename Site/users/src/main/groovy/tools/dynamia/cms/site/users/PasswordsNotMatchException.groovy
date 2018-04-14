@@ -22,21 +22,21 @@ import tools.dynamia.domain.ValidationError
  *
  * @author Mario Serrano Leones
  */
-public class PasswordsNotMatchException extends ValidationError {
+class PasswordsNotMatchException extends ValidationError {
 
-    private User user;
+    private User user
 
-    public PasswordsNotMatchException(User user) {
-        this(user, "");
+    PasswordsNotMatchException(User user) {
+        this(user, "")
     }
 
-    public PasswordsNotMatchException(User user, String message) {
-        super(message);
-        this.user = user;
+    PasswordsNotMatchException(User user, String message) {
+        super(message)
+        this.user = user
     }
 
-    public User getUser() {
-        return user;
+    User getUser() {
+        return user
     }
 
 }

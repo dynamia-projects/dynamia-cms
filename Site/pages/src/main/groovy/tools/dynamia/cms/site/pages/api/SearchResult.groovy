@@ -18,43 +18,43 @@ package tools.dynamia.cms.site.pages.api
  *
  * @author Mario Serrano Leones
  */
-public class SearchResult implements Serializable {
+class SearchResult implements Serializable {
 
-    private String viewName = "site/page";
-    private final Map<String, Object> entries = new HashMap<>();
-    private boolean keepSearching;
+    private String viewName = "site/page"
+    private final Map<String, Object> entries = new HashMap<>()
+    private boolean keepSearching
 
-    public SearchResult() {
+    SearchResult() {
     }
 
-    public SearchResult(String viewName, boolean keepSearching) {
-        this.viewName = viewName;
-        this.keepSearching = keepSearching;
+    SearchResult(String viewName, boolean keepSearching) {
+        this.viewName = viewName
+        this.keepSearching = keepSearching
     }
 
-    public String getViewName() {
-        return viewName;
+    String getViewName() {
+        return viewName
     }
 
-    public void setViewName(String viewName) {
-        this.viewName = viewName;
+    void setViewName(String viewName) {
+        this.viewName = viewName
     }
 
-    public boolean isKeepSearching() {
-        return keepSearching;
+    boolean isKeepSearching() {
+        return keepSearching
     }
 
-    public void setKeepSearching(boolean keepSearching) {
-        this.keepSearching = keepSearching;
+    void setKeepSearching(boolean keepSearching) {
+        this.keepSearching = keepSearching
 
     }
 
-    public void addEntry(String name, Object value) {
-        entries.put(name, value);
+    void addEntry(String name, Object value) {
+        entries.put(name, value)
     }
 
-    public Map<String, Object> getEntries() {
-        return entries;
+    Map<String, Object> getEntries() {
+        return entries
     }
 
 }

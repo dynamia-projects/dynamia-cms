@@ -23,27 +23,27 @@ import tools.dynamia.cms.site.pages.domain.PageCategory
  *
  * @author Mario Serrano Leones
  */
-public interface PageService {
+interface PageService {
 
-    Page loadPage(Site site, String alias);
+    Page loadPage(Site site, String alias)
 
-    Page loadPageByUUID(String uuid);
+    Page loadPageByUUID(String uuid)
 
-    List<Page> getPages(Site site);
+    List<Page> getPages(Site site)
 
-    int publishPages();
+    int publishPages()
 
-    int unpublishPages();
+    int unpublishPages()
 
-    List<Page> getPages(Site site, PageCategory category);
+    List<Page> getPages(Site site, PageCategory category)
 
-    List<Page> getPagesWithoutCategory(Site site);
+    List<Page> getPagesWithoutCategory(Site site)
 
-    List<PageCategory> getPagesCategories(Site site);
+    List<PageCategory> getPagesCategories(Site site)
 
-    public void generateSummary(Page entity);
+    void generateSummary(Page entity)
 
-    void generateImageURL(Page entity);
+    void generateImageURL(Page entity)
 
     /**
      * Find all published pages in indexable by date categories
@@ -53,7 +53,7 @@ public interface PageService {
      * @param endDate
      * @return
      */
-    public List<Page> findPagesByDate(Site site, Date startDate, Date endDate);
+    List<Page> findPagesByDate(Site site, Date startDate, Date endDate)
 
     /**
      * 
@@ -61,7 +61,7 @@ public interface PageService {
      * @param alias
      * @return
      */
-    PageCategory getPageCategoryByAlias(Site site, String alias);
+    PageCategory getPageCategoryByAlias(Site site, String alias)
 
     /**
      * 
@@ -69,6 +69,6 @@ public interface PageService {
      * @param model
      * @return
      */
-	String parsePageContent(Page page, Map<String, Object> model);
+	String parsePageContent(Page page, Map<String, Object> model)
 
 }

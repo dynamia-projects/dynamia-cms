@@ -22,14 +22,14 @@ import tools.dynamia.cms.site.templates.Template
  *
  * @author Mario Serrano Leones
  */
-public interface TemplateService {
+interface TemplateService {
 
-    List<Template> getInstalledTemplates();
+    List<Template> getInstalledTemplates()
 
-    Template getTemplate(Site site);
+    Template getTemplate(Site site)
 
-    Template getDefaultTemplate();
+    Template getDefaultTemplate()
 
-    Template getTemplate(String templateName);
+    Template getTemplate(String templateName)
 
 }

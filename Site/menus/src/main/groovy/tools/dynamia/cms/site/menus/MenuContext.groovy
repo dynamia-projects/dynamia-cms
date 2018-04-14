@@ -23,36 +23,36 @@ import tools.dynamia.cms.site.menus.domain.MenuItemParameter
  *
  * @author Mario Serrano Leones
  */
-public class MenuContext implements Serializable {
+class MenuContext implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3721516938528381332L;
+	private static final long serialVersionUID = -3721516938528381332L
 
-	private MenuItem menuItem;
+    private MenuItem menuItem
 
-	private Menu parent;
+    private Menu parent
 
-	public MenuContext(MenuItem menuItem, Menu parent) {
-		this.menuItem = menuItem;
-		this.parent = parent;
-	}
+    MenuContext(MenuItem menuItem, Menu parent) {
+		this.menuItem = menuItem
+        this.parent = parent
+    }
 
-	public MenuItem getMenuItem() {
-		return menuItem;
-	}
+    MenuItem getMenuItem() {
+		return menuItem
+    }
 
-	public Menu getParent() {
-		return parent;
-	}
+    Menu getParent() {
+		return parent
+    }
 
-	public MenuItemParameter getParameter(String name) {
-		return menuItem.getParameter(name);
-	}
+    MenuItemParameter getParameter(String name) {
+		return menuItem.getParameter(name)
+    }
 
-	public void update(MenuItem item) {
-		this.menuItem = item;
-	}
+    void update(MenuItem item) {
+		this.menuItem = item
+    }
 
 }

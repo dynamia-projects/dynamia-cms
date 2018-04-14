@@ -21,14 +21,14 @@ import tools.dynamia.cms.site.payment.domain.ManualPayment
 import tools.dynamia.cms.site.payment.domain.PaymentGatewayConfig
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction
 
-public interface PaymentService {
+interface PaymentService {
 
     /**
      * @param gateway
      * @param source
      * @return
      */
-    public abstract Map<String, String> getGatewayConfigMap(PaymentGateway gateway, String source);
+    abstract Map<String, String> getGatewayConfigMap(PaymentGateway gateway, String source)
 
     /**
      * @param gateway
@@ -36,54 +36,54 @@ public interface PaymentService {
      * @param source
      * @return
      */
-    public abstract PaymentGatewayConfig getConfig(PaymentGateway gateway, String name, String source);
+    abstract PaymentGatewayConfig getConfig(PaymentGateway gateway, String name, String source)
 
     /**
      * @param config
      */
-    public abstract void addGatewayConfig(PaymentGatewayConfig config);
+    abstract void addGatewayConfig(PaymentGatewayConfig config)
 
     /**
      * @param gatewayId
      * @return
      */
-    public abstract PaymentGateway findGateway(String gatewayId);
+    abstract PaymentGateway findGateway(String gatewayId)
 
     /**
      * @param gateway
      * @param response
      * @return
      */
-    public abstract PaymentTransaction findTransaction(PaymentGateway gateway, Map<String, String> response);
+    abstract PaymentTransaction findTransaction(PaymentGateway gateway, Map<String, String> response)
 
     /**
      * @return
      */
-    public abstract PaymentGateway getDefaultGateway();
+    abstract PaymentGateway getDefaultGateway()
 
     /**
      * @param tx
      */
-    public abstract void saveTransaction(PaymentTransaction tx);
+    abstract void saveTransaction(PaymentTransaction tx)
 
     /**
      * @param payment
      */
-    public abstract void register(ManualPayment payment);
+    abstract void register(ManualPayment payment)
 
     /**
      * @param source
      * @param payerCode
      * @return
      */
-    List<ManualPayment> findManualPaymentsByPayerCode(String source, String payerCode);
+    List<ManualPayment> findManualPaymentsByPayerCode(String source, String payerCode)
 
     /**
      * @param source
      * @param payerId
      * @return
      */
-    List<ManualPayment> findManualPaymentsByPayerId(String source, String payerId);
+    List<ManualPayment> findManualPaymentsByPayerId(String source, String payerId)
 
     /**
      * @param source
@@ -91,21 +91,21 @@ public interface PaymentService {
      * @param payerCode
      * @return
      */
-    List<ManualPayment> findManualPayments(String source, String registratorCode, String payerCode);
+    List<ManualPayment> findManualPayments(String source, String registratorCode, String payerCode)
 
     /**
      * @param source
      * @param serviceUrl
      * @param params
      */
-    public void sendManualPayments(String source, String serviceUrl, Map<String, String> params);
+    void sendManualPayments(String source, String serviceUrl, Map<String, String> params)
 
     /**
      * @param source
      * @param serviceUrl
      * @param params
      */
-    public void sendPayments(String source, String serviceUrl, Map<String, String> params);
+    void sendPayments(String source, String serviceUrl, Map<String, String> params)
 
-    PaymentSource findPaymentSource(Object request);
+    PaymentSource findPaymentSource(Object request)
 }

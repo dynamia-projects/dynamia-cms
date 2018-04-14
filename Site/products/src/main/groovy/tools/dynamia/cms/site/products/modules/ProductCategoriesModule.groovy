@@ -11,52 +11,52 @@ import tools.dynamia.cms.site.products.services.ProductsService
 import tools.dynamia.domain.services.CrudService
 
 @CMSModule
-public class ProductCategoriesModule extends AbstractModule {
+class ProductCategoriesModule extends AbstractModule {
 
 	@Autowired
-	private ProductsService service;
+	private ProductsService service
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
 
-	public ProductCategoriesModule() {
-		super("products_categories", "Products Categories", "products/modules/categorylist");
-		setDescription("Show a products categories list");
-		putMetadata("author", "Mario Serrano Leones");
-		putMetadata("version", "1.0");
-		putMetadata("created at", "25-07-2016");
-		setVariablesNames("categories");
+    ProductCategoriesModule() {
+		super("products_categories", "Products Categories", "products/modules/categorylist")
+        setDescription("Show a products categories list")
+        putMetadata("author", "Mario Serrano Leones")
+        putMetadata("version", "1.0")
+        putMetadata("created at", "25-07-2016")
+        setVariablesNames("categories")
 
-	}
+    }
 
 	@Override
-	public void init(ModuleContext context) {
-		List<ProductCategory> categories = null;
+    void init(ModuleContext context) {
+		List<ProductCategory> categories = null
 
-		ModuleInstanceParameter brandId = context.getParameter("brand");
-		if (brandId != null) {
-			ProductBrand brand = crudService.find(ProductBrand.class, new Long(brandId.getValue()));
-			if (brand != null) {
-				categories = service.getCategories(brand);
-			}
+        ModuleInstanceParameter brandId = context.getParameter("brand")
+        if (brandId != null) {
+			ProductBrand brand = crudService.find(ProductBrand.class, new Long(brandId.getValue()))
+            if (brand != null) {
+				categories = service.getCategories(brand)
+            }
 		}
 
 		try {
-			long parentCategoryId = Long.parseLong(context.getParameterValue("parentCategory", "0"));
-			if (parentCategoryId > 0) {
-				ProductCategory parentCategory = crudService.find(ProductCategory.class, parentCategoryId);
-				categories = service.getSubcategories(parentCategory);
-			}
+			long parentCategoryId = Long.parseLong(context.getParameterValue("parentCategory", "0"))
+            if (parentCategoryId > 0) {
+				ProductCategory parentCategory = crudService.find(ProductCategory.class, parentCategoryId)
+                categories = service.getSubcategories(parentCategory)
+            }
 		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			e.printStackTrace()
+        }
 
 		if (categories == null || categories.isEmpty()) {
-			categories = service.getCategories(context.getSite());
-		}
+			categories = service.getCategories(context.getSite())
+        }
 
-		context.getModuleInstance().addObject("categories", categories);
+		context.getModuleInstance().addObject("categories", categories)
 
-	}
+    }
 
 }

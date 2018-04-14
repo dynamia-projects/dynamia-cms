@@ -23,20 +23,20 @@ import tools.dynamia.zk.crud.cfg.SaveConfigAction
 import tools.dynamia.zk.navigation.ZKNavigationManager
 
 @InstallAction
-public class ApplySystemConfigAction extends SaveConfigAction {
+class ApplySystemConfigAction extends SaveConfigAction {
 
-    public ApplySystemConfigAction() {
-        setName("Apply");
-        setImage("refresh");
-        setPosition(1);
+    ApplySystemConfigAction() {
+        setName("Apply")
+        setImage("refresh")
+        setPosition(1)
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        super.actionPerformed(evt);
-        DynamiaCMS.reloadHomePath();
-        ZKNavigationManager.getInstance().refresh();
-        UIMessages.showMessage("Done");
+    void actionPerformed(ActionEvent evt) {
+        super.actionPerformed(evt)
+        DynamiaCMS.reloadHomePath()
+        ZKNavigationManager.getInstance().refresh()
+        UIMessages.showMessage("Done")
 
     }
 

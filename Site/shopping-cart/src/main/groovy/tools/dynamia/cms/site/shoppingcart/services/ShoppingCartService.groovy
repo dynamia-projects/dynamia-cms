@@ -26,28 +26,28 @@ import tools.dynamia.cms.site.users.domain.User
  *
  * @author Mario Serrano Leones
  */
-public interface ShoppingCartService {
+interface ShoppingCartService {
 
-	public ShoppingCartItem getItem(Site site, String code);
+	ShoppingCartItem getItem(Site site, String code)
 
-	public abstract ShoppingSiteConfig getConfiguration(Site site);
+    abstract ShoppingSiteConfig getConfiguration(Site site)
 
-	public ShoppingOrder createOrder(ShoppingCart shoppingCart, ShoppingSiteConfig config);
+    ShoppingOrder createOrder(ShoppingCart shoppingCart, ShoppingSiteConfig config)
 
-	public abstract void cancelOrder(ShoppingOrder order);
+    abstract void cancelOrder(ShoppingOrder order)
 
-	public abstract void saveOrder(ShoppingOrder order);
+    abstract void saveOrder(ShoppingOrder order)
 
-	public abstract void notifyOrderCompleted(ShoppingOrder order);
+    abstract void notifyOrderCompleted(ShoppingOrder order)
 
-	public abstract void shipOrder(ShoppingOrder shoppingOrder);
+    abstract void shipOrder(ShoppingOrder shoppingOrder)
 
-	public abstract void notifyOrderShipped(ShoppingOrder order);
+    abstract void notifyOrderShipped(ShoppingOrder order)
 
-	public List<ShoppingOrder> getOrders(User current);
+    List<ShoppingOrder> getOrders(User current)
 
-	void sendOrder(ShoppingOrder order);
+    void sendOrder(ShoppingOrder order)
 
-	void sendAllOrders();
+    void sendAllOrders()
 
 }

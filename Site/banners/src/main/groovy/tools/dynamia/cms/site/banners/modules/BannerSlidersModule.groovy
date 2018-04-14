@@ -26,32 +26,32 @@ import tools.dynamia.cms.site.core.api.ModuleContext
 import tools.dynamia.cms.site.core.domain.ModuleInstanceParameter
 
 @CMSModule
-public class BannerSlidersModule extends AbstractModule {
+class BannerSlidersModule extends AbstractModule {
 
-	private final static String PARAM_CATEGORY_ID = "category";
+	private final static String PARAM_CATEGORY_ID = "category"
 
-	@Autowired
-	private BannerService service;
+    @Autowired
+	private BannerService service
 
-	public BannerSlidersModule() {
-		super("banner_sliders", "Banners Slider", "banners/modules/bannersliders");
-		addResource(new JavaScriptResource("jquery.flexslider", "banners/js/jquery.flexslider.js"));
-		addResource(new JavaScriptResource("banner_sliders", "banners/js/banners.sliders.js"));
-		addResource(new StyleSheetResource("flexslider", "banners/css/flexslider.css"));
-		setVariablesNames("banners");
-	}
+    BannerSlidersModule() {
+		super("banner_sliders", "Banners Slider", "banners/modules/bannersliders")
+        addResource(new JavaScriptResource("jquery.flexslider", "banners/js/jquery.flexslider.js"))
+        addResource(new JavaScriptResource("banner_sliders", "banners/js/banners.sliders.js"))
+        addResource(new StyleSheetResource("flexslider", "banners/css/flexslider.css"))
+        setVariablesNames("banners")
+    }
 
 	@Override
-	public void init(ModuleContext context) {
+    void init(ModuleContext context) {
 
-		ModuleInstanceParameter categoryId = context.getParameter(PARAM_CATEGORY_ID);
-		if (categoryId != null) {
+		ModuleInstanceParameter categoryId = context.getParameter(PARAM_CATEGORY_ID)
+        if (categoryId != null) {
 			try {
 
-				List<Banner> banners = service.getBannersByCategory(new Long(categoryId.getValue()));
-				context.getModuleInstance().addObject("banners", banners);
+				List<Banner> banners = service.getBannersByCategory(new Long(categoryId.getValue()))
+                context.getModuleInstance().addObject("banners", banners)
 
-			} catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
 				// ignore
 			}
 		}

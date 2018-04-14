@@ -15,46 +15,46 @@ import org.springframework.stereotype.Component
  * @author Mario Serrano Leones
  */
 @Component
-public class VelocityStringParser implements StringParser {
+class VelocityStringParser implements StringParser {
 
-    private VelocityEngine velocityEngine;
+    private VelocityEngine velocityEngine
 
     @Autowired
-    public VelocityStringParser(VelocityEngine velocityEngine) {
-        this.velocityEngine = velocityEngine;
+    VelocityStringParser(VelocityEngine velocityEngine) {
+        this.velocityEngine = velocityEngine
     }
 
     @Override
-    public String parse(String template, Map<String, Object> templateModel) {
+    String parse(String template, Map<String, Object> templateModel) {
 
-        StringWriter writer = new StringWriter();
-        VelocityContext context = new VelocityContext();
+        StringWriter writer = new StringWriter()
+        VelocityContext context = new VelocityContext()
 
         if (templateModel != null) {
             for (Map.Entry<String, Object> entry : templateModel.entrySet()) {
-                context.put(entry.getKey(), entry.getValue());
+                context.put(entry.getKey(), entry.getValue())
             }
         }
 
-        velocityEngine.evaluate(context, writer, "log", template);
-        writer.flush();
+        velocityEngine.evaluate(context, writer, "log", template)
+        writer.flush()
 
-        return writer.toString();
+        return writer.toString()
     }
 
     @Override
-    public String getId() {
-        return "velocity";
+    String getId() {
+        return "velocity"
     }
 
     @Override
-    public String getName() {
-        return "Velocity";
+    String getName() {
+        return "Velocity"
     }
 
     @Override
-    public String getDescription() {
-        return "Use this if you need advanced template with conditionals and such";
+    String getDescription() {
+        return "Use this if you need advanced template with conditionals and such"
     }
 
 }

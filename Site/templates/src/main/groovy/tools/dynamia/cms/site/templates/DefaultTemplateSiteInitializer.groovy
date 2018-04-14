@@ -16,20 +16,20 @@ import tools.dynamia.cms.site.templates.services.TemplateService
  * @author mario
  */
 @CMSExtension
-public class DefaultTemplateSiteInitializer implements SiteInitializer {
+class DefaultTemplateSiteInitializer implements SiteInitializer {
 
     @Autowired
-    private TemplateService service;
+    private TemplateService service
 
     @Override
-    public void init(Site site) {
+    void init(Site site) {
         if (site.getTemplate() == null) {
-            site.setTemplate(service.getDefaultTemplate().getName());
+            site.setTemplate(service.getDefaultTemplate().getName())
         }
     }
 
     @Override
-    public void postInit(Site site) {
+    void postInit(Site site) {
 
     }
 

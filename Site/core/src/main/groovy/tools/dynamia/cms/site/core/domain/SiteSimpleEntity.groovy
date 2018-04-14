@@ -24,23 +24,23 @@ import javax.persistence.OneToOne
 import javax.validation.constraints.NotNull
 
 @MappedSuperclass
-public abstract class SiteSimpleEntity extends SimpleEntity implements SiteAware {
+abstract class SiteSimpleEntity extends SimpleEntity implements SiteAware {
 
     /**
      *
      */
-    private static final long serialVersionUID = -8298102526377692771L;
+    private static final long serialVersionUID = -8298102526377692771L
     @OneToOne
     @NotNull
     @JsonIgnore
-    private Site site;
+    private Site site
 
-    public Site getSite() {
-        return site;
+    Site getSite() {
+        return site
     }
 
-    public void setSite(Site site) {
-        this.site = site;
+    void setSite(Site site) {
+        this.site = site
     }
 
 }

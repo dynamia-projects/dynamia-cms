@@ -23,13 +23,13 @@ import tools.dynamia.cms.site.templates.Template
  *
  * @author Mario Serrano Leones
  */
-public class TemplateSelectorRenderer implements ComboitemRenderer<Template> {
+class TemplateSelectorRenderer implements ComboitemRenderer<Template> {
 
     @Override
-    public void render(Comboitem cmbtm, Template t, int i) throws Exception {
-        cmbtm.setValue(t.getDirectoryName());
-        cmbtm.setLabel(String.format("%s (%s)", t.getName(), t.getVersion()));
-        cmbtm.setDescription(t.getDescription());
+    void render(Comboitem cmbtm, Template t, int i) throws Exception {
+        cmbtm.setValue(t.getDirectoryName())
+        cmbtm.setLabel(String.format("%s (%s)", t.getName(), t.getVersion()))
+        cmbtm.setDescription(t.getDescription())
     }
 
 }

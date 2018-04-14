@@ -31,359 +31,359 @@ import javax.validation.constraints.NotNull
  */
 @Entity
 @Table(name = "prd_sites_config")
-public class ProductsSiteConfig extends SimpleEntity implements SiteAware {
+class ProductsSiteConfig extends SimpleEntity implements SiteAware {
 
 	@OneToOne
 	@NotNull
 	@JoinColumn(unique = true)
-	private Site site;
+	private Site site
 
-	private String pricePattern = "";
-	private String defaultCurrency = "";
+    private String pricePattern = ""
+    private String defaultCurrency = ""
 
-	@JsonIgnore
-	private String datasourceURL;
-	@JsonIgnore
-	private String datasourceUsername;
-	@JsonIgnore
-	private String datasourcePassword;
-	@JsonIgnore
-	private String datasourceImagesURL;
-	@JsonIgnore
-	private String datasourceBrandImagesURL;
-	@JsonIgnore
-	private String datasourceStoreImagesURL;
-	@JsonIgnore
-	private String datasourceStoreContactImagesURL;
+    @JsonIgnore
+	private String datasourceURL
+    @JsonIgnore
+	private String datasourceUsername
+    @JsonIgnore
+	private String datasourcePassword
+    @JsonIgnore
+	private String datasourceImagesURL
+    @JsonIgnore
+	private String datasourceBrandImagesURL
+    @JsonIgnore
+	private String datasourceStoreImagesURL
+    @JsonIgnore
+	private String datasourceStoreContactImagesURL
 
-	@JsonIgnore
-	private String token;
+    @JsonIgnore
+	private String token
 
-	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
-	private Date lastSync;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	private Date lastSync
 
-	private int productsPerPage;
+    private int productsPerPage
 
-	private int productsStockToShow;
+    private int productsStockToShow
 
-	private boolean shopEnabled;
+    private boolean shopEnabled
 
-	private boolean quoteEnabled;
+    private boolean quoteEnabled
 
-	private boolean showBadges;
+    private boolean showBadges
 
-	private boolean synchronizationEnabled;
+    private boolean synchronizationEnabled
 
-	@OneToOne
+    @OneToOne
 	@JsonIgnore
-	private MailAccount mailAccount;
-	@OneToOne
+	private MailAccount mailAccount
+    @OneToOne
 	@JsonIgnore
-	private MailTemplate shareProductMailTemplate;
-	@OneToOne
+	private MailTemplate shareProductMailTemplate
+    @OneToOne
 	@JsonIgnore
-	private MailTemplate orderCompletedMailTemplate;
+	private MailTemplate orderCompletedMailTemplate
 
-	@OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnore
-	private List<ProductsSiteConfigParameter> parameters = new ArrayList<>();
-	@JsonIgnore
-	private int minStock;
-	@JsonIgnore
-	private boolean syncStockDetails;
-	@JsonIgnore
-	private boolean syncProductDetails;
-	@JsonIgnore
-	private boolean syncProductImages;
-	@JsonIgnore
-	private boolean syncProductCreditPrices;
-	@JsonIgnore
-	private boolean syncStoreContacts;
+	private List<ProductsSiteConfigParameter> parameters = new ArrayList<>()
+    @JsonIgnore
+	private int minStock
+    @JsonIgnore
+	private boolean syncStockDetails
+    @JsonIgnore
+	private boolean syncProductDetails
+    @JsonIgnore
+	private boolean syncProductImages
+    @JsonIgnore
+	private boolean syncProductCreditPrices
+    @JsonIgnore
+	private boolean syncStoreContacts
 
+    @Column(length = 4000)
+	@JsonIgnore
+	private String priceUserGroup
+    @JsonIgnore
 	@Column(length = 4000)
-	@JsonIgnore
-	private String priceUserGroup;
-	@JsonIgnore
+	private String price2UserGroup
+    @JsonIgnore
 	@Column(length = 4000)
-	private String price2UserGroup;
-	@JsonIgnore
-	@Column(length = 4000)
-	private String costUserGroup;
+	private String costUserGroup
 
-	@JsonIgnore
-	private String reviewsConnectorURL;
+    @JsonIgnore
+	private String reviewsConnectorURL
 
-	public String getReviewsConnectorURL() {
-		return reviewsConnectorURL;
-	}
+    String getReviewsConnectorURL() {
+		return reviewsConnectorURL
+    }
 
-	public void setReviewsConnectorURL(String reviewsConnectorURL) {
-		this.reviewsConnectorURL = reviewsConnectorURL;
-	}
+    void setReviewsConnectorURL(String reviewsConnectorURL) {
+		this.reviewsConnectorURL = reviewsConnectorURL
+    }
 
-	public String getDatasourceStoreContactImagesURL() {
-		return datasourceStoreContactImagesURL;
-	}
+    String getDatasourceStoreContactImagesURL() {
+		return datasourceStoreContactImagesURL
+    }
 
-	public void setDatasourceStoreContactImagesURL(String datasourceStoreContactImagesURL) {
-		this.datasourceStoreContactImagesURL = datasourceStoreContactImagesURL;
-	}
+    void setDatasourceStoreContactImagesURL(String datasourceStoreContactImagesURL) {
+		this.datasourceStoreContactImagesURL = datasourceStoreContactImagesURL
+    }
 
-	public boolean isSyncStoreContacts() {
-		return syncStoreContacts;
-	}
+    boolean isSyncStoreContacts() {
+		return syncStoreContacts
+    }
 
-	public void setSyncStoreContacts(boolean syncStoreContacts) {
-		this.syncStoreContacts = syncStoreContacts;
-	}
+    void setSyncStoreContacts(boolean syncStoreContacts) {
+		this.syncStoreContacts = syncStoreContacts
+    }
 
-	public String getPriceUserGroup() {
-		return priceUserGroup;
-	}
+    String getPriceUserGroup() {
+		return priceUserGroup
+    }
 
-	public void setPriceUserGroup(String priceUserGroup) {
-		this.priceUserGroup = priceUserGroup;
-	}
+    void setPriceUserGroup(String priceUserGroup) {
+		this.priceUserGroup = priceUserGroup
+    }
 
-	public String getPrice2UserGroup() {
-		return price2UserGroup;
-	}
+    String getPrice2UserGroup() {
+		return price2UserGroup
+    }
 
-	public void setPrice2UserGroup(String price2UserGroup) {
-		this.price2UserGroup = price2UserGroup;
-	}
+    void setPrice2UserGroup(String price2UserGroup) {
+		this.price2UserGroup = price2UserGroup
+    }
 
-	public String getCostUserGroup() {
-		return costUserGroup;
-	}
+    String getCostUserGroup() {
+		return costUserGroup
+    }
 
-	public void setCostUserGroup(String costUserGroup) {
-		this.costUserGroup = costUserGroup;
-	}
+    void setCostUserGroup(String costUserGroup) {
+		this.costUserGroup = costUserGroup
+    }
 
-	public boolean isSyncProductCreditPrices() {
-		return syncProductCreditPrices;
-	}
+    boolean isSyncProductCreditPrices() {
+		return syncProductCreditPrices
+    }
 
-	public void setSyncProductCreditPrices(boolean syncProductCreditPrices) {
-		this.syncProductCreditPrices = syncProductCreditPrices;
-	}
+    void setSyncProductCreditPrices(boolean syncProductCreditPrices) {
+		this.syncProductCreditPrices = syncProductCreditPrices
+    }
 
-	public boolean isSyncStockDetails() {
-		return syncStockDetails;
-	}
+    boolean isSyncStockDetails() {
+		return syncStockDetails
+    }
 
-	public void setSyncStockDetails(boolean syncStockDetails) {
-		this.syncStockDetails = syncStockDetails;
-	}
+    void setSyncStockDetails(boolean syncStockDetails) {
+		this.syncStockDetails = syncStockDetails
+    }
 
-	public boolean isSyncProductDetails() {
-		return syncProductDetails;
-	}
+    boolean isSyncProductDetails() {
+		return syncProductDetails
+    }
 
-	public void setSyncProductDetails(boolean syncProductDetails) {
-		this.syncProductDetails = syncProductDetails;
-	}
+    void setSyncProductDetails(boolean syncProductDetails) {
+		this.syncProductDetails = syncProductDetails
+    }
 
-	public boolean isSyncProductImages() {
-		return syncProductImages;
-	}
+    boolean isSyncProductImages() {
+		return syncProductImages
+    }
 
-	public void setSyncProductImages(boolean syncProductImages) {
-		this.syncProductImages = syncProductImages;
-	}
+    void setSyncProductImages(boolean syncProductImages) {
+		this.syncProductImages = syncProductImages
+    }
 
-	public int getMinStock() {
-		return minStock;
-	}
+    int getMinStock() {
+		return minStock
+    }
 
-	public void setMinStock(int minStock) {
-		this.minStock = minStock;
-	}
+    void setMinStock(int minStock) {
+		this.minStock = minStock
+    }
 
-	public boolean isSynchronizationEnabled() {
-		return synchronizationEnabled;
-	}
+    boolean isSynchronizationEnabled() {
+		return synchronizationEnabled
+    }
 
-	public void setSynchronizationEnabled(boolean synchronizationEnabled) {
-		this.synchronizationEnabled = synchronizationEnabled;
-	}
+    void setSynchronizationEnabled(boolean synchronizationEnabled) {
+		this.synchronizationEnabled = synchronizationEnabled
+    }
 
-	public boolean isShowBadges() {
-		return showBadges;
-	}
+    boolean isShowBadges() {
+		return showBadges
+    }
 
-	public void setShowBadges(boolean showBadges) {
-		this.showBadges = showBadges;
-	}
+    void setShowBadges(boolean showBadges) {
+		this.showBadges = showBadges
+    }
 
-	public MailAccount getMailAccount() {
-		return mailAccount;
-	}
+    MailAccount getMailAccount() {
+		return mailAccount
+    }
 
-	public void setMailAccount(MailAccount mailAccount) {
-		this.mailAccount = mailAccount;
-	}
+    void setMailAccount(MailAccount mailAccount) {
+		this.mailAccount = mailAccount
+    }
 
-	public MailTemplate getShareProductMailTemplate() {
-		return shareProductMailTemplate;
-	}
+    MailTemplate getShareProductMailTemplate() {
+		return shareProductMailTemplate
+    }
 
-	public void setShareProductMailTemplate(MailTemplate shareProductMailTemplate) {
-		this.shareProductMailTemplate = shareProductMailTemplate;
-	}
+    void setShareProductMailTemplate(MailTemplate shareProductMailTemplate) {
+		this.shareProductMailTemplate = shareProductMailTemplate
+    }
 
-	public MailTemplate getOrderCompletedMailTemplate() {
-		return orderCompletedMailTemplate;
-	}
+    MailTemplate getOrderCompletedMailTemplate() {
+		return orderCompletedMailTemplate
+    }
 
-	public void setOrderCompletedMailTemplate(MailTemplate orderCompletedMailTemplate) {
-		this.orderCompletedMailTemplate = orderCompletedMailTemplate;
-	}
+    void setOrderCompletedMailTemplate(MailTemplate orderCompletedMailTemplate) {
+		this.orderCompletedMailTemplate = orderCompletedMailTemplate
+    }
 
 	@Override
-	public Site getSite() {
-		return site;
-	}
+    Site getSite() {
+		return site
+    }
 
 	@Override
-	public void setSite(Site site) {
-		this.site = site;
-	}
+    void setSite(Site site) {
+		this.site = site
+    }
 
-	public List<ProductsSiteConfigParameter> getParameters() {
-		return parameters;
-	}
+    List<ProductsSiteConfigParameter> getParameters() {
+		return parameters
+    }
 
-	public void setParameters(List<ProductsSiteConfigParameter> parameters) {
-		this.parameters = parameters;
-	}
+    void setParameters(List<ProductsSiteConfigParameter> parameters) {
+		this.parameters = parameters
+    }
 
-	public boolean isShopEnabled() {
-		return shopEnabled;
-	}
+    boolean isShopEnabled() {
+		return shopEnabled
+    }
 
-	public void setShopEnabled(boolean shopEnabled) {
-		this.shopEnabled = shopEnabled;
-	}
+    void setShopEnabled(boolean shopEnabled) {
+		this.shopEnabled = shopEnabled
+    }
 
-	public boolean isQuoteEnabled() {
-		return quoteEnabled;
-	}
+    boolean isQuoteEnabled() {
+		return quoteEnabled
+    }
 
-	public void setQuoteEnabled(boolean quoteEnabled) {
-		this.quoteEnabled = quoteEnabled;
-	}
+    void setQuoteEnabled(boolean quoteEnabled) {
+		this.quoteEnabled = quoteEnabled
+    }
 
-	public int getProductsPerPage() {
+    int getProductsPerPage() {
 		if (productsPerPage <= 0) {
-			productsPerPage = 16;
-		}
-		return productsPerPage;
-	}
+			productsPerPage = 16
+        }
+		return productsPerPage
+    }
 
-	public void setProductsPerPage(int productsPerPage) {
-		this.productsPerPage = productsPerPage;
-	}
+    void setProductsPerPage(int productsPerPage) {
+		this.productsPerPage = productsPerPage
+    }
 
-	public int getProductsStockToShow() {
+    int getProductsStockToShow() {
 		if (productsStockToShow <= 0) {
-			productsStockToShow = 5;
-		}
-		return productsStockToShow;
-	}
+			productsStockToShow = 5
+        }
+		return productsStockToShow
+    }
 
-	public void setProductsStockToShow(int productsStockToShow) {
-		this.productsStockToShow = productsStockToShow;
-	}
+    void setProductsStockToShow(int productsStockToShow) {
+		this.productsStockToShow = productsStockToShow
+    }
 
-	public String getDefaultCurrency() {
-		return defaultCurrency;
-	}
+    String getDefaultCurrency() {
+		return defaultCurrency
+    }
 
-	public void setDefaultCurrency(String defaultCurrency) {
-		this.defaultCurrency = defaultCurrency;
-	}
+    void setDefaultCurrency(String defaultCurrency) {
+		this.defaultCurrency = defaultCurrency
+    }
 
-	public Date getLastSync() {
-		return lastSync;
-	}
+    Date getLastSync() {
+		return lastSync
+    }
 
-	public void setLastSync(Date lastSync) {
-		this.lastSync = lastSync;
-	}
+    void setLastSync(Date lastSync) {
+		this.lastSync = lastSync
+    }
 
-	public String getDatasourceURL() {
-		return datasourceURL;
-	}
+    String getDatasourceURL() {
+		return datasourceURL
+    }
 
-	public void setDatasourceURL(String datasourceURL) {
-		this.datasourceURL = datasourceURL;
-	}
+    void setDatasourceURL(String datasourceURL) {
+		this.datasourceURL = datasourceURL
+    }
 
-	public String getDatasourceUsername() {
-		return datasourceUsername;
-	}
+    String getDatasourceUsername() {
+		return datasourceUsername
+    }
 
-	public void setDatasourceUsername(String datasourceUsername) {
-		this.datasourceUsername = datasourceUsername;
-	}
+    void setDatasourceUsername(String datasourceUsername) {
+		this.datasourceUsername = datasourceUsername
+    }
 
-	public String getDatasourcePassword() {
-		return datasourcePassword;
-	}
+    String getDatasourcePassword() {
+		return datasourcePassword
+    }
 
-	public void setDatasourcePassword(String datasourcePassword) {
-		this.datasourcePassword = datasourcePassword;
-	}
+    void setDatasourcePassword(String datasourcePassword) {
+		this.datasourcePassword = datasourcePassword
+    }
 
-	public String getDatasourceImagesURL() {
-		return datasourceImagesURL;
-	}
+    String getDatasourceImagesURL() {
+		return datasourceImagesURL
+    }
 
-	public void setDatasourceImagesURL(String datasourceImagesURL) {
-		this.datasourceImagesURL = datasourceImagesURL;
-	}
+    void setDatasourceImagesURL(String datasourceImagesURL) {
+		this.datasourceImagesURL = datasourceImagesURL
+    }
 
-	public String getDatasourceBrandImagesURL() {
-		return datasourceBrandImagesURL;
-	}
+    String getDatasourceBrandImagesURL() {
+		return datasourceBrandImagesURL
+    }
 
-	public void setDatasourceBrandImagesURL(String datasourceBrandImagesURL) {
-		this.datasourceBrandImagesURL = datasourceBrandImagesURL;
-	}
+    void setDatasourceBrandImagesURL(String datasourceBrandImagesURL) {
+		this.datasourceBrandImagesURL = datasourceBrandImagesURL
+    }
 
-	public String getDatasourceStoreImagesURL() {
-		return datasourceStoreImagesURL;
-	}
+    String getDatasourceStoreImagesURL() {
+		return datasourceStoreImagesURL
+    }
 
-	public void setDatasourceStoreImagesURL(String datasourceStoreImagesURL) {
-		this.datasourceStoreImagesURL = datasourceStoreImagesURL;
-	}
+    void setDatasourceStoreImagesURL(String datasourceStoreImagesURL) {
+		this.datasourceStoreImagesURL = datasourceStoreImagesURL
+    }
 
-	public String getPricePattern() {
-		return pricePattern;
-	}
+    String getPricePattern() {
+		return pricePattern
+    }
 
-	public void setPricePattern(String pricePattern) {
-		this.pricePattern = pricePattern;
-	}
+    void setPricePattern(String pricePattern) {
+		this.pricePattern = pricePattern
+    }
 
-	public String getToken() {
-		return token;
-	}
+    String getToken() {
+		return token
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    void setToken(String token) {
+		this.token = token
+    }
 
 	@JsonIgnore
-	public Map<String, String> getParametersAsMap() {
-		Map<String, String> params = new HashMap<>();
-		for (ProductsSiteConfigParameter param : getParameters()) {
-			params.put(param.getName(), param.getValue());
-		}
-		return params;
-	}
+    Map<String, String> getParametersAsMap() {
+		Map<String, String> params = new HashMap<>()
+        for (ProductsSiteConfigParameter param : getParameters()) {
+			params.put(param.getName(), param.getValue())
+        }
+		return params
+    }
 
 }

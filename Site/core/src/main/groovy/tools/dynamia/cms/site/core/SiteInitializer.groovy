@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
-import tools.dynamia.cms.site.core.domain.Site;
+import tools.dynamia.cms.site.core.domain.Site
 
 /**
  *
  * @author mario
  */
-public interface SiteInitializer {
+interface SiteInitializer {
 
-    public void init(Site site);
+    void init(Site site)
 
-    public void postInit(Site site);
+    void postInit(Site site)
 }

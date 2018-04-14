@@ -5,35 +5,35 @@ import tools.dynamia.cms.site.users.actions.UserMenuActionEnableable
 import tools.dynamia.cms.site.users.domain.User
 
 @CMSAction
-public class MyShoppingOrdersMenuAction implements UserMenuActionEnableable {
+class MyShoppingOrdersMenuAction implements UserMenuActionEnableable {
 
 	@Override
-	public String getLabel() {
-		return "Mis Pedidos";
-	}
+    String getLabel() {
+		return "Mis Pedidos"
+    }
 
 	@Override
-	public String getDescription() {
-		return "Historial de Pedidos Completados";
-	}
+    String getDescription() {
+		return "Historial de Pedidos Completados"
+    }
 
 	@Override
-	public String getIcon() {
-		return null;
-	}
+    String getIcon() {
+		return null
+    }
 
 	@Override
-	public int getOrder() {
-		return 4;
-	}
+    int getOrder() {
+		return 4
+    }
 
 	@Override
-	public String action() {
-		return "shoppingcart/orders";
-	}
+    String action() {
+		return "shoppingcart/orders"
+    }
 
 	@Override
-	public boolean isEnabled(User currentUser) {
-		return currentUser.getSite().isCorporateSite();
-	}
+    boolean isEnabled(User currentUser) {
+		return currentUser.getSite().isCorporateSite()
+    }
 }

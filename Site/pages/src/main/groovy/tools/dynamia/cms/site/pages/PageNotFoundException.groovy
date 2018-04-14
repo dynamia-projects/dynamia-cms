@@ -24,52 +24,52 @@ import tools.dynamia.cms.site.core.CMSException
  * @author Mario Serrano Leones
  */
 @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "page not found in site")
-public class PageNotFoundException extends CMSException {
+class PageNotFoundException extends CMSException {
 
-    private String pageAlias;
-    private String siteKey;
+    private String pageAlias
+    private String siteKey
 
-    public PageNotFoundException() {
+    PageNotFoundException() {
     }
 
-    public PageNotFoundException(String pageAlias, String siteKey) {
-        this.pageAlias = pageAlias;
-        this.siteKey = siteKey;
+    PageNotFoundException(String pageAlias, String siteKey) {
+        this.pageAlias = pageAlias
+        this.siteKey = siteKey
     }
 
-    public PageNotFoundException(String pageAlias, String siteKey, String message) {
-        super(message);
-        this.pageAlias = pageAlias;
-        this.siteKey = siteKey;
+    PageNotFoundException(String pageAlias, String siteKey, String message) {
+        super(message)
+        this.pageAlias = pageAlias
+        this.siteKey = siteKey
     }
 
-    public PageNotFoundException(String message) {
-        super(message);
+    PageNotFoundException(String message) {
+        super(message)
     }
 
-    public PageNotFoundException(String message, Throwable cause) {
-        super(message, cause);
+    PageNotFoundException(String message, Throwable cause) {
+        super(message, cause)
     }
 
-    public PageNotFoundException(Throwable cause) {
-        super(cause);
+    PageNotFoundException(Throwable cause) {
+        super(cause)
     }
 
-    public PageNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    PageNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace)
     }
 
-    public String getPageAlias() {
-        return pageAlias;
+    String getPageAlias() {
+        return pageAlias
     }
 
-    public String getSiteKey() {
-        return siteKey;
+    String getSiteKey() {
+        return siteKey
     }
 
     @Override
-    public HttpStatus getStatus() {
-        return HttpStatus.NOT_FOUND;
+    HttpStatus getStatus() {
+        return HttpStatus.NOT_FOUND
     }
 
 }

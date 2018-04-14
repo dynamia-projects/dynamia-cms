@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.shoppingcart.domain.enums;
+package tools.dynamia.cms.site.shoppingcart.domain.enums
 
-public enum ShoppingCartStatus {
-	NEW, COMPLETED, CANCELLED;
+enum ShoppingCartStatus {
+	NEW, COMPLETED, CANCELLED
 }

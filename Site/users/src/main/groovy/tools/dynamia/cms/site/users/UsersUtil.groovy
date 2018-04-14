@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users;
+package tools.dynamia.cms.site.users
 
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.ModelAndView
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public class UsersUtil {
+class UsersUtil {
 
-    public static void setupUserFormVar(ModelAndView mv, UserForm userForm) {
-        mv.addObject("userForm", userForm);
+    static void setupUserFormVar(ModelAndView mv, UserForm userForm) {
+        mv.addObject("userForm", userForm)
     }
     
    

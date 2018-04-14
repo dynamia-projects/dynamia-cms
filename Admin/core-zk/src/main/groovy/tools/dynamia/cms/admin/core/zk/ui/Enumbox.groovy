@@ -24,63 +24,63 @@ import tools.dynamia.zk.util.ZKUtil
  *
  * @author Mario Serrano Leones
  */
-public class Enumbox extends Combobox {
+class Enumbox extends Combobox {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4436232527032479771L;
-	private Class<? extends Enum> enumClass;
-	private boolean valuesAsString;
+	private static final long serialVersionUID = -4436232527032479771L
+    private Class<? extends Enum> enumClass
+    private boolean valuesAsString
 
-	static {
-		ComponentAliasIndex.getInstance().add(Enumbox.class);
-	}
+    static {
+		ComponentAliasIndex.getInstance().add(Enumbox.class)
+    }
 
-	public Enumbox() {
-		setReadonly(true);
-	}
+    Enumbox() {
+		setReadonly(true)
+    }
 
-	public Class<? extends Enum> getEnumClass() {
-		return enumClass;
-	}
+    Class<? extends Enum> getEnumClass() {
+		return enumClass
+    }
 
-	public void setEnumClass(Class<? extends Enum> enumClass) {
-		this.enumClass = enumClass;
-	}
+    void setEnumClass(Class<? extends Enum> enumClass) {
+		this.enumClass = enumClass
+    }
 
 	@SuppressWarnings("unchecked")
-	public void setEnumClass(String className) throws ClassNotFoundException {
-		enumClass = (Class<? extends Enum>) Class.forName(className);
-	}
+    void setEnumClass(String className) throws ClassNotFoundException {
+		enumClass = (Class<? extends Enum>) Class.forName(className)
+    }
 
-	public void init() {
-		Enum[] constants = enumClass.getEnumConstants();
-		if (valuesAsString) {
-			List<String> names = new ArrayList<>();
-			for (Enum c : constants) {
-				names.add(c.name());
-			}
-			ZKUtil.fillCombobox(this, names, true);
-		} else {
-			ZKUtil.fillCombobox(this, constants, true);
-		}
+    void init() {
+		Enum[] constants = enumClass.getEnumConstants()
+        if (valuesAsString) {
+			List<String> names = new ArrayList<>()
+            for (Enum c : constants) {
+				names.add(c.name())
+            }
+			ZKUtil.fillCombobox(this, names, true)
+        } else {
+			ZKUtil.fillCombobox(this, constants, true)
+        }
 
 	}
 
 	@Override
-	public void setParent(Component parent) {
-		super.setParent(parent); // To change body of generated methods, choose
+    void setParent(Component parent) {
+		super.setParent(parent) // To change body of generated methods, choose
 									// Tools | Templates.
-		init();
-	}
+		init()
+    }
 
-	public boolean isValuesAsString() {
-		return valuesAsString;
-	}
+    boolean isValuesAsString() {
+		return valuesAsString
+    }
 
-	public void setValuesAsString(boolean valuesAsString) {
-		this.valuesAsString = valuesAsString;
-	}
+    void setValuesAsString(boolean valuesAsString) {
+		this.valuesAsString = valuesAsString
+    }
 
 }

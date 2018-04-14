@@ -27,40 +27,40 @@ import tools.dynamia.zk.ComponentAliasIndex
  *
  * @author Mario Serrano Leones
  */
-public class TemplateSelector extends Combobox {
+class TemplateSelector extends Combobox {
 
     static {
-        ComponentAliasIndex.getInstance().add(TemplateSelector.class);
+        ComponentAliasIndex.getInstance().add(TemplateSelector.class)
     }
 
-    public TemplateSelector() {
-        setItemRenderer(new TemplateSelectorRenderer());
+    TemplateSelector() {
+        setItemRenderer(new TemplateSelectorRenderer())
     }
 
-    public void init() {
-        getChildren().clear();
-        setReadonly(true);
-        TemplateService service = Containers.get().findObject(TemplateService.class);
-        List<Template> templates = service.getInstalledTemplates();
+    void init() {
+        getChildren().clear()
+        setReadonly(true)
+        TemplateService service = Containers.get().findObject(TemplateService.class)
+        List<Template> templates = service.getInstalledTemplates()
         if (templates != null && !templates.isEmpty()) {
-            int i = 0;
+            int i = 0
             for (Template template : templates) {
-                Comboitem item = new Comboitem();
-                item.setParent(this);
+                Comboitem item = new Comboitem()
+                item.setParent(this)
                 try {
-                    getItemRenderer().render(item, template, i);
+                    getItemRenderer().render(item, template, i)
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    ex.printStackTrace()
                 }
-                i++;
+                i++
             }
         }
     }
 
     @Override
-    public void setParent(Component parent) {
-        super.setParent(parent); //To change body of generated methods, choose Tools | Templates.
-        init();
+    void setParent(Component parent) {
+        super.setParent(parent) //To change body of generated methods, choose Tools | Templates.
+        init()
     }
 
 }

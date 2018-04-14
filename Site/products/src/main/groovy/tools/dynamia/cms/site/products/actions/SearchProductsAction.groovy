@@ -34,53 +34,53 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class SearchProductsAction implements SiteAction {
+class SearchProductsAction implements SiteAction {
 
     @Autowired
-    private ProductsService service;
+    private ProductsService service
 
     @Autowired
-    private CrudService crudService;
+    private CrudService crudService
 
     @Override
-    public String getName() {
-        return "searchProducts";
+    String getName() {
+        return "searchProducts"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView();
-        Site site = evt.getSite();
+    void actionPerformed(ActionEvent evt) {
+        ModelAndView mv = evt.getModelAndView()
+        Site site = evt.getSite()
 
-        List<Product> products = null;
+        List<Product> products = null
         if (evt.getData() instanceof String) {
-            String query = (String) evt.getData();
-            products = service.find(site, query);
+            String query = (String) evt.getData()
+            products = service.find(site, query)
         } else if (evt.getData() instanceof ProductSearchForm) {
-            ProductSearchForm form = (ProductSearchForm) evt.getData();
-            products = service.filterProducts(site, form);
-            mv.addObject("prd_searchForm", form);
+            ProductSearchForm form = (ProductSearchForm) evt.getData()
+            products = service.filterProducts(site, form)
+            mv.addObject("prd_searchForm", form)
             if (form.getCategoryId() != null) {
-                ProductCategory category = crudService.find(ProductCategory.class, form.getCategoryId());
-                List<ProductCategory> subcategories = service.getSubcategories(category);
+                ProductCategory category = crudService.find(ProductCategory.class, form.getCategoryId())
+                List<ProductCategory> subcategories = service.getSubcategories(category)
 
-                mv.addObject("prd_category", category);
-                mv.addObject("prd_parentCategory", category.getParent());
-                mv.addObject("prd_subcategories", subcategories);
+                mv.addObject("prd_category", category)
+                mv.addObject("prd_parentCategory", category.getParent())
+                mv.addObject("prd_subcategories", subcategories)
             }
         }
 
         if (products == null) {
-            products = service.getFeaturedProducts(site);
-            mv.addObject("title", "Ingrese los campos de busqueda");
+            products = service.getFeaturedProducts(site)
+            mv.addObject("title", "Ingrese los campos de busqueda")
         } else if (!products.isEmpty()) {
-            mv.addObject("title", products.size() + " productos encontrados");
+            mv.addObject("title", products.size() + " productos encontrados")
         } else {
-            mv.addObject("title", " No se encontraron productos para la busqueda avanzada");
+            mv.addObject("title", " No se encontraron productos para la busqueda avanzada")
         }
 
-        products = CMSUtil.setupPagination(products, evt.getRequest(), mv);
-        ProductsUtil.setupProductsVar(products, mv);
+        products = CMSUtil.setupPagination(products, evt.getRequest(), mv)
+        ProductsUtil.setupProductsVar(products, mv)
 
     }
 

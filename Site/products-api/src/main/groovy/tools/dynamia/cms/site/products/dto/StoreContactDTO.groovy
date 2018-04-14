@@ -1,114 +1,114 @@
 package tools.dynamia.cms.site.products.dto
 
-public class StoreContactDTO implements Serializable {
+class StoreContactDTO implements Serializable {
 
-	private String name;
-	private String lastName;
-	private String department;
-	private String jobTitle;
-	private String address;
-	private String mobileNumber;
-	private String phoneNumber;
-	private String city;
-	private String country;
-	private String email;
-	private String image;
-	private Long externalRef;
+	private String name
+    private String lastName
+    private String department
+    private String jobTitle
+    private String address
+    private String mobileNumber
+    private String phoneNumber
+    private String city
+    private String country
+    private String email
+    private String image
+    private Long externalRef
 
-	public Long getExternalRef() {
-		return externalRef;
-	}
+    Long getExternalRef() {
+		return externalRef
+    }
 
-	public void setExternalRef(Long externalRef) {
-		this.externalRef = externalRef;
-	}
+    void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef
+    }
 
-	public String getName() {
-		return name;
-	}
+    String getName() {
+		return name
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    void setName(String name) {
+		this.name = name
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    String getLastName() {
+		return lastName
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    void setLastName(String lastName) {
+		this.lastName = lastName
+    }
 
-	public String getDepartment() {
-		return department;
-	}
+    String getDepartment() {
+		return department
+    }
 
-	public void setDepartment(String department) {
-		this.department = department;
-	}
+    void setDepartment(String department) {
+		this.department = department
+    }
 
-	public String getJobTitle() {
-		return jobTitle;
-	}
+    String getJobTitle() {
+		return jobTitle
+    }
 
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
-	}
+    void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    String getAddress() {
+		return address
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    void setAddress(String address) {
+		this.address = address
+    }
 
-	public String getMobileNumber() {
-		return mobileNumber;
-	}
+    String getMobileNumber() {
+		return mobileNumber
+    }
 
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
+    void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    String getPhoneNumber() {
+		return phoneNumber
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber
+    }
 
-	public String getCity() {
-		return city;
-	}
+    String getCity() {
+		return city
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    void setCity(String city) {
+		this.city = city
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    String getCountry() {
+		return country
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    void setCountry(String country) {
+		this.country = country
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    String getEmail() {
+		return email
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    void setEmail(String email) {
+		this.email = email
+    }
 
-	public String getImage() {
-		return image;
-	}
+    String getImage() {
+		return image
+    }
 
-	public void setImage(String image) {
-		this.image = image;
-	}
+    void setImage(String image) {
+		this.image = image
+    }
 
 }

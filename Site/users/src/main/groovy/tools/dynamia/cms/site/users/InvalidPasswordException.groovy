@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users;
+package tools.dynamia.cms.site.users
 
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.BadCredentialsException
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public class InvalidPasswordException extends BadCredentialsException {
+class InvalidPasswordException extends BadCredentialsException {
 
-    public InvalidPasswordException(String msg) {
-        super(msg);
+    InvalidPasswordException(String msg) {
+        super(msg)
     }
 
 }

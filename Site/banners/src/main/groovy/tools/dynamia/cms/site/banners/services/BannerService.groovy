@@ -17,10 +17,10 @@ package tools.dynamia.cms.site.banners.services
 
 import tools.dynamia.cms.site.banners.domain.Banner
 
-public interface BannerService {
+interface BannerService {
 
-	public abstract List<Banner> getBannersByCategory(Long categoryId);
+	abstract List<Banner> getBannersByCategory(Long categoryId)
 
-	public abstract List<Banner> createBannersFromCategory(Long categoryId);
+    abstract List<Banner> createBannersFromCategory(Long categoryId)
 
 }

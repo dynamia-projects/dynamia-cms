@@ -21,23 +21,23 @@ import javax.servlet.http.HttpServletRequest
  */
 @Component
 @Scope("session")
-public class Initializer {
+class Initializer {
 
 	@Autowired
-	private UserService userService;
-	@Autowired
-	private SiteService siteService;
+	private UserService userService
+    @Autowired
+	private SiteService siteService
 
-	public void init(HttpServletRequest request) {
+    void init(HttpServletRequest request) {
 
 		if (userService != null && request != null && siteService != null) {
-			Site site = siteService.getSite(request);
-			if (site != null) {
-				userService.checkAdminUser(site);
+			Site site = siteService.getSite(request)
+            if (site != null) {
+				userService.checkAdminUser(site)
 
-				if ("main".equals(site.getKey())) {
-					DynamiaCMS.initDefaultLocations();
-				}
+                if ("main".equals(site.getKey())) {
+					DynamiaCMS.initDefaultLocations()
+                }
 			}
 
 		

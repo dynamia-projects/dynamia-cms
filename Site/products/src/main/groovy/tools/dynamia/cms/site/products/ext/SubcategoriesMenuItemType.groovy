@@ -32,117 +32,117 @@ import tools.dynamia.cms.site.products.services.ProductsService
  * @author Mario Serrano Leones
  */
 @CMSExtension
-public class SubcategoriesMenuItemType implements MenuItemType {
+class SubcategoriesMenuItemType implements MenuItemType {
 
-	private static final String PARAM_CATEGORY = "category";
+	private static final String PARAM_CATEGORY = "category"
 
-	private static final String CATEGORIES_PATH = "/store/categories/";
+    private static final String CATEGORIES_PATH = "/store/categories/"
 
-	@Autowired
-	private ProductsService service;
+    @Autowired
+	private ProductsService service
 
-	@Override
-	public String getId() {
-		return "subcategories";
-	}
-
-	@Override
-	public String getName() {
-		return "Sub categories menu item";
-	}
+    @Override
+    String getId() {
+		return "subcategories"
+    }
 
 	@Override
-	public String getDescription() {
-		return "A sub category list items, you should specified a category id using item parameters";
-	}
+    String getName() {
+		return "Sub categories menu item"
+    }
 
 	@Override
-	public void setupMenuItem(MenuContext context) {
+    String getDescription() {
+		return "A sub category list items, you should specified a category id using item parameters"
+    }
 
-		String categoryParamValue = tryGetPageCategory(context.getMenuItem().getPage());
-		if (categoryParamValue == null) {
-			MenuItemParameter parameter = context.getParameter(PARAM_CATEGORY);
-			if (parameter != null) {
-				categoryParamValue = parameter.getValue();
-			}
+	@Override
+    void setupMenuItem(MenuContext context) {
+
+		String categoryParamValue = tryGetPageCategory(context.getMenuItem().getPage())
+        if (categoryParamValue == null) {
+			MenuItemParameter parameter = context.getParameter(PARAM_CATEGORY)
+            if (parameter != null) {
+				categoryParamValue = parameter.getValue()
+            }
 		}
 
 		if (categoryParamValue != null) {
-			Long categoryId = new Long(categoryParamValue);
-			ProductCategory category = service.getCategoryById(categoryId);
-			if (category != null) {
-				List<ProductCategory> subcategories = service.getSubcategories(category);
-				MenuItem item = context.getMenuItem().clone();
-				item.setName(context.getMenuItem().getName());
-				item.setTitle(context.getMenuItem().getTitle());
-				item.setOrder(context.getMenuItem().getOrder());
+			Long categoryId = new Long(categoryParamValue)
+            ProductCategory category = service.getCategoryById(categoryId)
+            if (category != null) {
+				List<ProductCategory> subcategories = service.getSubcategories(category)
+                MenuItem item = context.getMenuItem().clone()
+                item.setName(context.getMenuItem().getName())
+                item.setTitle(context.getMenuItem().getTitle())
+                item.setOrder(context.getMenuItem().getOrder())
 
-				item.setSubtitle(getCategoryName(category));
-				if (item.getHref() == null) {
-					item.setHref(CATEGORIES_PATH + category.getId() + "/" + category.getAlias());
-				}
+                item.setSubtitle(getCategoryName(category))
+                if (item.getHref() == null) {
+					item.setHref(CATEGORIES_PATH + category.getId() + "/" + category.getAlias())
+                }
 
-				item.getSubitems().clear();
-				if (subcategories != null) {
+				item.getSubitems().clear()
+                if (subcategories != null) {
 					for (ProductCategory subcat : subcategories) {
 						item.addMenuItem(new MenuItem(clean(getCategoryName(subcat)), CATEGORIES_PATH + subcat.getId() + "/"
-								+ subcat.getAlias()));
-					}
+								+ subcat.getAlias()))
+                    }
 				}
 
-				item.getItemsGroups().clear();
-				List<ProductCategory> relatedCategories = service.getRelatedCategories(category);
-				if (relatedCategories != null && !relatedCategories.isEmpty()) {
+				item.getItemsGroups().clear()
+                List<ProductCategory> relatedCategories = service.getRelatedCategories(category)
+                if (relatedCategories != null && !relatedCategories.isEmpty()) {
 					for (ProductCategory relatedCategory : relatedCategories) {
-						String groupName = getCategoryName(relatedCategory);
+						String groupName = getCategoryName(relatedCategory)
 
-						MenuItemGroup group = new MenuItemGroup(groupName);
-						group.setHref(CATEGORIES_PATH + relatedCategory.getId() + "/" + relatedCategory.getAlias());
+                        MenuItemGroup group = new MenuItemGroup(groupName)
+                        group.setHref(CATEGORIES_PATH + relatedCategory.getId() + "/" + relatedCategory.getAlias())
 
-						List<ProductCategory> relatedSubcategories = service.getSubcategories(relatedCategory);
-						if (relatedSubcategories != null) {
+                        List<ProductCategory> relatedSubcategories = service.getSubcategories(relatedCategory)
+                        if (relatedSubcategories != null) {
 							for (ProductCategory relSubcat : relatedSubcategories) {
 								group.addMenuItem(new MenuItem(clean(relSubcat.getName()), CATEGORIES_PATH + relSubcat.getId() + "/"
-										+ relSubcat.getAlias()));
-							}
+										+ relSubcat.getAlias()))
+                            }
 						}
 						if (!group.getSubitems().isEmpty()) {
-							item.addMenuItemGroup(group);
-						}
+							item.addMenuItemGroup(group)
+                        }
 					}
 				}
-				context.update(item);
-			}
+				context.update(item)
+            }
 		}
 
 	}
 
 	private String tryGetPageCategory(Page page) {
-		String value = null;
-		ProductsPageType productsPageType = new ProductsPageType();
-		if (page != null && page.getType().equals(productsPageType.getId())) {
-			PageParameter param = page.getParam(PARAM_CATEGORY);
-			if (param != null) {
-				value = param.getValue();
-			}
+		String value = null
+        ProductsPageType productsPageType = new ProductsPageType()
+        if (page != null && page.getType().equals(productsPageType.getId())) {
+			PageParameter param = page.getParam(PARAM_CATEGORY)
+            if (param != null) {
+				value = param.getValue()
+            }
 		}
 
-		return value;
-	}
+		return value
+    }
 
 	private String getCategoryName(ProductCategory category) {
-		String name = category.getName();
-		if (category.getAlternateName() != null && !category.getAlternateName().trim().isEmpty()) {
-			name = category.getAlternateName();
-		}
-		return name;
-	}
+		String name = category.getName()
+        if (category.getAlternateName() != null && !category.getAlternateName().trim().isEmpty()) {
+			name = category.getAlternateName()
+        }
+		return name
+    }
 
 	private String clean(String name) {
-		name = name.replace("-", " ");
-		name = name.trim();
+		name = name.replace("-", " ")
+        name = name.trim()
 
-		return name;
-	}
+        return name
+    }
 
 }

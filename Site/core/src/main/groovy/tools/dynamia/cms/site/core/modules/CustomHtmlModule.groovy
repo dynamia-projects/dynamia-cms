@@ -22,47 +22,47 @@ import tools.dynamia.cms.site.core.domain.ModuleInstance
 import tools.dynamia.cms.site.core.domain.ModuleInstanceParameter
 
 @CMSModule
-public class CustomHtmlModule extends AbstractModule {
+class CustomHtmlModule extends AbstractModule {
 
-	private static final String PARAM_CONTENT = "content";
-	private static final String PARAM_CONTENT_PLAIN = "contentPlain";
-	private static final String PARAM_TEMPLATE_ENGINE = "templateEngine";
+	private static final String PARAM_CONTENT = "content"
+    private static final String PARAM_CONTENT_PLAIN = "contentPlain"
+    private static final String PARAM_TEMPLATE_ENGINE = "templateEngine"
 
-	public CustomHtmlModule() {
-		super("custom_html", "Custom Html", "core/modules/customhtml");
-		setDescription("Allow you add custom html code");
-		setVariablesNames(PARAM_TEMPLATE_ENGINE, PARAM_CONTENT);
-	}
+    CustomHtmlModule() {
+		super("custom_html", "Custom Html", "core/modules/customhtml")
+        setDescription("Allow you add custom html code")
+        setVariablesNames(PARAM_TEMPLATE_ENGINE, PARAM_CONTENT)
+    }
 
 	@Override
-	public void init(ModuleContext context) {
+    void init(ModuleContext context) {
 
-		ModuleInstance instance = context.getModuleInstance();
-		String contentText = "<b>CUSTOM MODULE NO CONTENT</b>";
+		ModuleInstance instance = context.getModuleInstance()
+        String contentText = "<b>CUSTOM MODULE NO CONTENT</b>"
 
-		ModuleInstanceParameter content = instance.getParameter(PARAM_CONTENT);
-		if (content != null && content.isEnabled()) {
+        ModuleInstanceParameter content = instance.getParameter(PARAM_CONTENT)
+        if (content != null && content.isEnabled()) {
 			if (content.getExtra() != null && !content.getExtra().isEmpty()) {
-				contentText = content.getExtra();
-			} else {
-				contentText = content.getValue();
-			}
+				contentText = content.getExtra()
+            } else {
+				contentText = content.getValue()
+            }
 		}
 
-		ModuleInstanceParameter contentPlain = instance.getParameter(PARAM_CONTENT_PLAIN);
-		if (contentPlain != null && contentPlain.isEnabled()) {
+		ModuleInstanceParameter contentPlain = instance.getParameter(PARAM_CONTENT_PLAIN)
+        if (contentPlain != null && contentPlain.isEnabled()) {
 			if (contentPlain.getExtra() != null && !contentPlain.getExtra().isEmpty()) {
-				contentText = contentPlain.getExtra();
-			} else {
-				contentText = contentPlain.getValue();
-			}
+				contentText = contentPlain.getExtra()
+            } else {
+				contentText = contentPlain.getValue()
+            }
 		}
 
-		String templateEngine = context.getParameterValue(PARAM_TEMPLATE_ENGINE);
+		String templateEngine = context.getParameterValue(PARAM_TEMPLATE_ENGINE)
 
-		instance.addObject(PARAM_TEMPLATE_ENGINE, templateEngine);
+        instance.addObject(PARAM_TEMPLATE_ENGINE, templateEngine)
 
-		instance.addObject(PARAM_CONTENT, contentText);
-	}
+        instance.addObject(PARAM_CONTENT, contentText)
+    }
 
 }

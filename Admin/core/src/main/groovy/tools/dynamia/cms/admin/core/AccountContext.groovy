@@ -5,10 +5,10 @@ import tools.dynamia.cms.site.core.SiteContext
 import tools.dynamia.cms.site.core.domain.Site
 
 @Component("accountContext")
-public class AccountContext {
+class AccountContext {
 	
-	public Site getAccount(){
-		return SiteContext.get().getCurrent();
-	}
+	Site getAccount(){
+		return SiteContext.get().getCurrent()
+    }
 
 }

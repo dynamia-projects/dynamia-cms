@@ -26,62 +26,62 @@ import javax.persistence.*
  */
 @Entity
 @Table(name = "prd_templates")
-public class ProductTemplate extends SiteBaseEntity {
+class ProductTemplate extends SiteBaseEntity {
 
     @NotEmpty(message = "Enter template name")
-    private String name;
+    private String name
     @Column(length = 2000)
-    private String description;
+    private String description
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    private String content;
-    private boolean enabled;
-    private String templateEngine;
+    private String content
+    private boolean enabled
+    private String templateEngine
 
-    public String getTemplateEngine() {
-        return templateEngine;
+    String getTemplateEngine() {
+        return templateEngine
     }
 
-    public void setTemplateEngine(String templateEngine) {
-        this.templateEngine = templateEngine;
+    void setTemplateEngine(String templateEngine) {
+        this.templateEngine = templateEngine
     }
 
-    public String getName() {
-        return name;
+    String getName() {
+        return name
     }
 
-    public void setName(String name) {
-        this.name = name;
+    void setName(String name) {
+        this.name = name
     }
 
-    public String getDescription() {
-        return description;
+    String getDescription() {
+        return description
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    void setDescription(String description) {
+        this.description = description
     }
 
-    public String getContent() {
-        return content;
+    String getContent() {
+        return content
     }
 
-    public void setContent(String content) {
+    void setContent(String content) {
     	
-        this.content = content;
+        this.content = content
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    boolean isEnabled() {
+        return enabled
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    void setEnabled(boolean enabled) {
+        this.enabled = enabled
     }
 
     @Override
-    public String toString() {
-        return name;
+    String toString() {
+        return name
     }
 
 }

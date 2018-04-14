@@ -17,22 +17,22 @@ package tools.dynamia.cms.site.payment
 
 import tools.dynamia.cms.site.payment.domain.PaymentTransaction
 
-public interface PaymentGateway {
+interface PaymentGateway {
 
-	String getName();
+	String getName()
 
-	String getId();
+    String getId()
 
-	String[] getRequiredParams();
+    String[] getRequiredParams()
 
-	String[] getResponseParams();
+    String[] getResponseParams()
 
-	PaymentTransaction newTransaction(String source, String baseURL);
+    PaymentTransaction newTransaction(String source, String baseURL)
 
-	public PaymentForm createForm(PaymentTransaction tx);
+    PaymentForm createForm(PaymentTransaction tx)
 
-	public boolean processResponse(PaymentTransaction tx, Map<String, String> response, ResponseType type);
+    boolean processResponse(PaymentTransaction tx, Map<String, String> response, ResponseType type)
 
-	String locateTransactionId(Map<String, String> response);
+    String locateTransactionId(Map<String, String> response)
 
 }

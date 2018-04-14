@@ -26,32 +26,32 @@ import tools.dynamia.domain.util.CrudServiceListenerAdapter
  * @author Mario Serrano Leones
  */
 @CMSListener
-public class PageCrudListener extends CrudServiceListenerAdapter<Page> {
+class PageCrudListener extends CrudServiceListenerAdapter<Page> {
 
 	@Autowired
-	private PageService service;
+	private PageService service
 
-	@Override
-	public void beforeCreate(Page page) {
+    @Override
+    void beforeCreate(Page page) {
 		if (page.getId() == null) {
-			page.setCreationDate(new Date());
-		}
+			page.setCreationDate(new Date())
+        }
 
 		if (page.getSummary() == null || page.getSummary().isEmpty()) {
-			service.generateSummary(page);
-		}
+			service.generateSummary(page)
+        }
 
 		if (page.getImageURL() == null || page.getImageURL().isEmpty()) {
-			service.generateImageURL(page);
-		}
+			service.generateImageURL(page)
+        }
 
 	}
 
 	@Override
-	public void beforeUpdate(Page page) {
-		beforeCreate(page);
-		page.setLastUpdate(new Date());
+    void beforeUpdate(Page page) {
+		beforeCreate(page)
+        page.setLastUpdate(new Date())
 
-	}
+    }
 
 }

@@ -24,12 +24,12 @@ import tools.dynamia.domain.util.CrudServiceListenerAdapter
  * @author Mario Serrano Leones
  */
 @Component
-public class ContentCrudListener extends CrudServiceListenerAdapter<Content> {
+class ContentCrudListener extends CrudServiceListenerAdapter<Content> {
 
     @Override
-    public void beforeCreate(Content entity) {
+    void beforeCreate(Content entity) {
 
-        entity.setUuid(UUID.randomUUID().toString().toUpperCase());
+        entity.setUuid(UUID.randomUUID().toString().toUpperCase())
 
     }
 }

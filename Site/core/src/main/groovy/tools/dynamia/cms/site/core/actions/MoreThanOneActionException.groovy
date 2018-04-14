@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.actions;
+package tools.dynamia.cms.site.core.actions
 
-import tools.dynamia.cms.site.core.CMSException;
+import tools.dynamia.cms.site.core.CMSException
 
 /**
  *
@@ -23,35 +23,35 @@ import tools.dynamia.cms.site.core.CMSException;
  */
 class MoreThanOneActionException extends CMSException {
 
-    private String actionName;
+    private String actionName
 
-    public MoreThanOneActionException(String actionName) {
-        this.actionName = actionName;
+    MoreThanOneActionException(String actionName) {
+        this.actionName = actionName
 
     }
 
-    public MoreThanOneActionException(String actionName, String message) {
-        super(message);
-        this.actionName = actionName;
+    MoreThanOneActionException(String actionName, String message) {
+        super(message)
+        this.actionName = actionName
     }
 
-    public MoreThanOneActionException(String actionName, String message, Throwable cause) {
-        super(message, cause);
-        this.actionName = actionName;
+    MoreThanOneActionException(String actionName, String message, Throwable cause) {
+        super(message, cause)
+        this.actionName = actionName
     }
 
-    public MoreThanOneActionException(String actionName, Throwable cause) {
-        super(cause);
-        this.actionName = actionName;
+    MoreThanOneActionException(String actionName, Throwable cause) {
+        super(cause)
+        this.actionName = actionName
     }
 
-    public MoreThanOneActionException(String actionName, String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-        this.actionName = actionName;
+    MoreThanOneActionException(String actionName, String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace)
+        this.actionName = actionName
     }
 
-    public String getActionName() {
-        return actionName;
+    String getActionName() {
+        return actionName
     }
 
 }

@@ -28,71 +28,71 @@ import tools.dynamia.cms.site.products.services.ProductsService
  * @author Mario Serrano Leones
  */
 @CMSExtension
-public class CategoriesMenuItemType implements MenuItemType {
+class CategoriesMenuItemType implements MenuItemType {
 
-	private static final String CATEGORIES_PATH = "/store/categories/";
+	private static final String CATEGORIES_PATH = "/store/categories/"
 
-	@Autowired
-	private ProductsService service;
+    @Autowired
+	private ProductsService service
 
-	@Override
-	public String getId() {
-		return "productCategories";
-	}
-
-	@Override
-	public String getName() {
-		return "Products Categories menu item";
-	}
+    @Override
+    String getId() {
+		return "productCategories"
+    }
 
 	@Override
-	public String getDescription() {
-		return "A category list items";
-	}
+    String getName() {
+		return "Products Categories menu item"
+    }
 
 	@Override
-	public void setupMenuItem(MenuContext context) {
+    String getDescription() {
+		return "A category list items"
+    }
 
-		List<ProductCategory> categories = service.getCategories(context.getMenuItem().getMenu().getSite());
+	@Override
+    void setupMenuItem(MenuContext context) {
 
-		MenuItem item = context.getMenuItem().clone();
-		item.setName(context.getMenuItem().getName());
-		item.setTitle(context.getMenuItem().getTitle());
-		item.setOrder(context.getMenuItem().getOrder());
-		
+		List<ProductCategory> categories = service.getCategories(context.getMenuItem().getMenu().getSite())
 
-		for (ProductCategory cat : categories) {
+        MenuItem item = context.getMenuItem().clone()
+        item.setName(context.getMenuItem().getName())
+        item.setTitle(context.getMenuItem().getTitle())
+        item.setOrder(context.getMenuItem().getOrder())
+
+
+        for (ProductCategory cat : categories) {
 			MenuItem catMenuItem = new MenuItem(getCategoryName(cat),
-					CATEGORIES_PATH + cat.getId() + "/" + cat.getAlias());
-			item.addMenuItem(catMenuItem);
+					CATEGORIES_PATH + cat.getId() + "/" + cat.getAlias())
+            item.addMenuItem(catMenuItem)
 
-			List<ProductCategory> subcategories = service.getSubcategories(cat);
+            List<ProductCategory> subcategories = service.getSubcategories(cat)
 
-			for (ProductCategory subcat : subcategories) {
+            for (ProductCategory subcat : subcategories) {
 				MenuItem subcatMenuItem = new MenuItem(getCategoryName(subcat),
-						CATEGORIES_PATH + subcat.getId() + "/" + subcat.getAlias());
-				catMenuItem.addMenuItem(subcatMenuItem);
-			}
+						CATEGORIES_PATH + subcat.getId() + "/" + subcat.getAlias())
+                catMenuItem.addMenuItem(subcatMenuItem)
+            }
 
 		}
 
-		context.update(item);
+		context.update(item)
 
-	}
+    }
 
 	private String getCategoryName(ProductCategory category) {
-		String name = category.getName();
-		if (category.getAlternateName() != null && !category.getAlternateName().trim().isEmpty()) {
-			name = category.getAlternateName();
-		}
-		return name;
-	}
+		String name = category.getName()
+        if (category.getAlternateName() != null && !category.getAlternateName().trim().isEmpty()) {
+			name = category.getAlternateName()
+        }
+		return name
+    }
 
 	private String clean(String name) {
-		name = name.replace("-", " ");
-		name = name.trim();
+		name = name.replace("-", " ")
+        name = name.trim()
 
-		return name;
-	}
+        return name
+    }
 
 }

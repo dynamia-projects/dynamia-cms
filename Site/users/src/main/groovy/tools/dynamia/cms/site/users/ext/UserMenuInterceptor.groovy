@@ -30,43 +30,43 @@ import tools.dynamia.cms.site.users.domain.User
  * @author Mario Serrano Leones
  */
 @CMSExtension
-public class UserMenuInterceptor extends SiteRequestInterceptorAdapter {
+class UserMenuInterceptor extends SiteRequestInterceptorAdapter {
 
 	@Autowired
-	private List<UserMenuAction> allActions;
+	private List<UserMenuAction> allActions
 
-	@Override
+    @Override
 	protected void afterRequest(Site site, ModelAndView modelAndView) {
-		List<UserMenuAction> orderedActions = new ArrayList<>();
+		List<UserMenuAction> orderedActions = new ArrayList<>()
 
-		if (UserHolder.get().isAuthenticated()) {
+        if (UserHolder.get().isAuthenticated()) {
 			for (UserMenuAction action : allActions) {
 				if (action instanceof UserMenuActionEnableable) {
-					User currentUser = UserHolder.get().getCurrent();
-					if (((UserMenuActionEnableable) action).isEnabled(currentUser)) {
-						orderedActions.add(action);
-					}
+					User currentUser = UserHolder.get().getCurrent()
+                    if (((UserMenuActionEnableable) action).isEnabled(currentUser)) {
+						orderedActions.add(action)
+                    }
 				} else {
-					orderedActions.add(action);
+					orderedActions.add(action)
 
-				}
+                }
 			}
 
 			Collections.sort(orderedActions, new Comparator<UserMenuAction>() {
 
 				@Override
-				public int compare(UserMenuAction t, UserMenuAction t1) {
-					Integer ua = t.getOrder();
-					Integer ub = t1.getOrder();
-					return ua.compareTo(ub);
-				}
-			});
+                int compare(UserMenuAction t, UserMenuAction t1) {
+					Integer ua = t.getOrder()
+                    Integer ub = t1.getOrder()
+                    return ua.compareTo(ub)
+                }
+			})
 
-			modelAndView.addObject("site", UserHolder.get().getCurrent().getSite());
-		}
+            modelAndView.addObject("site", UserHolder.get().getCurrent().getSite())
+        }
 
-		modelAndView.addObject("userMenuActions", orderedActions);
+		modelAndView.addObject("userMenuActions", orderedActions)
 
-	}
+    }
 
 }

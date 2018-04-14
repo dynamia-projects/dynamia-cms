@@ -29,91 +29,91 @@ import javax.validation.constraints.NotNull
  */
 @Entity
 @Table(name = "prd_related_products")
-public class RelatedProduct extends SiteSimpleEntity {
+class RelatedProduct extends SiteSimpleEntity {
 
-    private Long externalRef;
+    private Long externalRef
     @OneToOne
-    private ProductCategory targetCategory;
+    private ProductCategory targetCategory
     @OneToOne
-    private Product targetProduct;
+    private Product targetProduct
     @OneToOne
     @NotNull
-    private Product product;
-    private boolean gift;
-    private boolean required;
-    private boolean active = true;
-    private BigDecimal price;
+    private Product product
+    private boolean gift
+    private boolean required
+    private boolean active = true
+    private BigDecimal price
 
-    public Long getExternalRef() {
-        return externalRef;
+    Long getExternalRef() {
+        return externalRef
     }
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
+    void setExternalRef(Long externalRef) {
+        this.externalRef = externalRef
     }
 
-    public ProductCategory getTargetCategory() {
-        return targetCategory;
+    ProductCategory getTargetCategory() {
+        return targetCategory
     }
 
-    public void setTargetCategory(ProductCategory targetCategory) {
-        this.targetCategory = targetCategory;
+    void setTargetCategory(ProductCategory targetCategory) {
+        this.targetCategory = targetCategory
     }
 
-    public Product getTargetProduct() {
-        return targetProduct;
+    Product getTargetProduct() {
+        return targetProduct
     }
 
-    public void setTargetProduct(Product targetProduct) {
-        this.targetProduct = targetProduct;
+    void setTargetProduct(Product targetProduct) {
+        this.targetProduct = targetProduct
     }
 
-    public Product getProduct() {
-        return product;
+    Product getProduct() {
+        return product
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    void setProduct(Product product) {
+        this.product = product
     }
 
-    public boolean isGift() {
-        return gift;
+    boolean isGift() {
+        return gift
     }
 
-    public void setGift(boolean gift) {
-        this.gift = gift;
+    void setGift(boolean gift) {
+        this.gift = gift
     }
 
-    public boolean isRequired() {
-        return required;
+    boolean isRequired() {
+        return required
     }
 
-    public void setRequired(boolean required) {
-        this.required = required;
+    void setRequired(boolean required) {
+        this.required = required
     }
 
-    public boolean isActive() {
-        return active;
+    boolean isActive() {
+        return active
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    void setActive(boolean active) {
+        this.active = active
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    BigDecimal getPrice() {
+        return price
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    void setPrice(BigDecimal price) {
+        this.price = price
     }
 
-    public void sync(RelatedProductDTO dto) {
-        this.externalRef = dto.getExternalRef();
-        this.gift = dto.isGift();
-        this.active = dto.isActive();
-        this.price = dto.getPrice();
-        this.required = dto.isRequired();
+    void sync(RelatedProductDTO dto) {
+        this.externalRef = dto.getExternalRef()
+        this.gift = dto.isGift()
+        this.active = dto.isActive()
+        this.price = dto.getPrice()
+        this.required = dto.isRequired()
     }
 
 }

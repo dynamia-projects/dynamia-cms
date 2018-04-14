@@ -14,16 +14,16 @@ import tools.dynamia.integration.sterotypes.Listener
  * @author mario
  */
 @Listener
-public class MailAccountCrudListener extends CrudServiceListenerAdapter<MailAccount> {
+class MailAccountCrudListener extends CrudServiceListenerAdapter<MailAccount> {
 
     @Override
-    public void beforeCreate(MailAccount entity) {
-        entity.setTimestamp(System.currentTimeMillis());
+    void beforeCreate(MailAccount entity) {
+        entity.setTimestamp(System.currentTimeMillis())
     }
 
     @Override
-    public void beforeUpdate(MailAccount entity) {
-        beforeCreate(entity);
+    void beforeUpdate(MailAccount entity) {
+        beforeCreate(entity)
     }
 
 }

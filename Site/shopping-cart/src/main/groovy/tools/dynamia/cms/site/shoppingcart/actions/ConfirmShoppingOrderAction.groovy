@@ -42,138 +42,138 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ConfirmShoppingOrderAction implements SiteAction {
+class ConfirmShoppingOrderAction implements SiteAction {
 
 	@Autowired
-	private ShoppingCartService service;
+	private ShoppingCartService service
 
-	@Autowired
-	private PaymentService paymentService;
+    @Autowired
+	private PaymentService paymentService
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
+
+    @Override
+    String getName() {
+		return "confirmShoppingOrder"
+    }
 
 	@Override
-	public String getName() {
-		return "confirmShoppingOrder";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        mv.setViewName("shoppingcart/confirm")
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		mv.setViewName("shoppingcart/confirm");
+        mv.addObject("title", "Resumen de Pedido")
 
-		mv.addObject("title", "Resumen de Pedido");
+        ShoppingSiteConfig config = service.getConfiguration(evt.getSite())
+        ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder()
 
-		ShoppingSiteConfig config = service.getConfiguration(evt.getSite());
-		ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder();
+        if (order.getId() != null) {
+			order = crudService.find(ShoppingOrder.class, order.getId())
+            ShoppingCartHolder.get().setCurrentOrder(order)
+        }
+		order.sync()
+        order.setUserComments(evt.getRequest().getParameter("userComments"))
+        order.setBillingAddress(loadContactInfo("billingAddress", evt))
+        order.setShippingAddress(loadContactInfo("shippingAddress", evt))
 
-		if (order.getId() != null) {
-			order = crudService.find(ShoppingOrder.class, order.getId());
-			ShoppingCartHolder.get().setCurrentOrder(order);
-		}
-		order.sync();
-		order.setUserComments(evt.getRequest().getParameter("userComments"));
-		order.setBillingAddress(loadContactInfo("billingAddress", evt));
-		order.setShippingAddress(loadContactInfo("shippingAddress", evt));
+        String customer = evt.getRequest().getParameter("customer")
+        if (customer != null && !customer.equals("0")) {
+			Long customerId = Long.parseLong(customer)
+            User userCustomer = crudService.find(User.class, customerId)
+            order.getShoppingCart().setCustomer(userCustomer)
+        }
 
-		String customer = evt.getRequest().getParameter("customer");
-		if (customer != null && !customer.equals("0")) {
-			Long customerId = Long.parseLong(customer);
-			User userCustomer = crudService.find(User.class, customerId);
-			order.getShoppingCart().setCustomer(userCustomer);
-		}
-
-		String deliveryType = evt.getRequest().getParameter("deliveryType");
-		if (deliveryType == null) {
-			deliveryType = "";
-		}
+		String deliveryType = evt.getRequest().getParameter("deliveryType")
+        if (deliveryType == null) {
+			deliveryType = ""
+        }
 		if (deliveryType.equals("pickupAtStore")) {
-			order.setPickupAtStore(true);
-			order.setPayAtDelivery(false);
-		} else if (deliveryType.equals("payAtDelivery")) {
-			order.setPickupAtStore(false);
-			order.setPayAtDelivery(true);
-		}
+			order.setPickupAtStore(true)
+            order.setPayAtDelivery(false)
+        } else if (deliveryType.equals("payAtDelivery")) {
+			order.setPickupAtStore(false)
+            order.setPayAtDelivery(true)
+        }
 
-		String paymentType = evt.getRequest().getParameter("paymentType");
+		String paymentType = evt.getRequest().getParameter("paymentType")
 
-		if (paymentType == null) {
-			paymentType = "";
-		}
+        if (paymentType == null) {
+			paymentType = ""
+        }
 
 		if (paymentType.equals("later")) {
-			order.setPayLater(true);
-		}
+			order.setPayLater(true)
+        }
 
 		try {
 
-			validate(order, config);
-			String name = order.getShoppingCart().getName();
-			service.saveOrder(order);
-			ShoppingCartHolder.get().setCurrentOrder(order);
+			validate(order, config)
+            String name = order.getShoppingCart().getName()
+            service.saveOrder(order)
+            ShoppingCartHolder.get().setCurrentOrder(order)
 
-			ShoppingCartHolder.get().removeCart(name);
+            ShoppingCartHolder.get().removeCart(name)
 
-			PaymentForm form = new PaymentForm();
-			if (!order.isPayLater()) {
+            PaymentForm form = new PaymentForm()
+            if (!order.isPayLater()) {
 				try {
-					PaymentGateway gateway = paymentService.findGateway(order.getTransaction().getGatewayId());
-					form = gateway.createForm(order.getTransaction());
-					PaymentHolder.get().setCurrentPaymentForm(form);
-				} catch (PaymentException e) {
-					System.err.println("GATEWAY EXCEPTION:: " + e.getMessage());
-					e.printStackTrace();
-				}
+					PaymentGateway gateway = paymentService.findGateway(order.getTransaction().getGatewayId())
+                    form = gateway.createForm(order.getTransaction())
+                    PaymentHolder.get().setCurrentPaymentForm(form)
+                } catch (PaymentException e) {
+					System.err.println("GATEWAY EXCEPTION:: " + e.getMessage())
+                    e.printStackTrace()
+                }
 
 			}
 
-			mv.addObject("paymentForm", form);
-			mv.addObject("shoppingOrder", order);
+			mv.addObject("paymentForm", form)
+            mv.addObject("shoppingOrder", order)
 
-		} catch (ValidationError e) {
-			SiteActionManager.performAction("checkoutShoppingCart", mv, evt.getRequest(), evt.getRedirectAttributes());
-			CMSUtil.addErrorMessage(e.getMessage(), mv);
-		}
+        } catch (ValidationError e) {
+			SiteActionManager.performAction("checkoutShoppingCart", mv, evt.getRequest(), evt.getRedirectAttributes())
+            CMSUtil.addErrorMessage(e.getMessage(), mv)
+        }
 	}
 
 	private void validate(ShoppingOrder order, ShoppingSiteConfig config) {
 		if (order.getBillingAddress() == null && config.isBillingAddressRequired()) {
-			throw new ValidationError("Seleccione direccion de facturacion");
-		}
+			throw new ValidationError("Seleccione direccion de facturacion")
+        }
 
 		if (!order.isPickupAtStore() && order.getShippingAddress() == null && config.isShippingAddressRequired()) {
-			throw new ValidationError("Seleccione direccion de envio o marque la opcion recoger en tienda");
-		} else if (order.isPickupAtStore()) {
-			order.setShippingAddress(null);
-		}
+			throw new ValidationError("Seleccione direccion de envio o marque la opcion recoger en tienda")
+        } else if (order.isPickupAtStore()) {
+			order.setShippingAddress(null)
+        }
 
 		if (order.getShoppingCart() == null) {
-			throw new ValidationError("La orden de pedido no tiene carrito de compra asociado");
-		}
+			throw new ValidationError("La orden de pedido no tiene carrito de compra asociado")
+        }
 
 		if (order.getShoppingCart().getUser() == null) {
-			throw new ValidationError("La orden de pedido no tiene usuario asociado");
-		}
+			throw new ValidationError("La orden de pedido no tiene usuario asociado")
+        }
 
 		if (order.getShoppingCart().getUser().getProfile() == UserProfile.SELLER
 				&& order.getShoppingCart().getCustomer() == null) {
-			throw new ValidationError("Seleccione cliente");
-		}
+			throw new ValidationError("Seleccione cliente")
+        }
 
 	}
 
 	private UserContactInfo loadContactInfo(String string, ActionEvent evt) {
-		UserContactInfo userContactInfo = null;
+		UserContactInfo userContactInfo = null
 
-		try {
-			Long id = Long.parseLong(evt.getRequest().getParameter(string));
-			userContactInfo = crudService.find(UserContactInfo.class, id);
-		} catch (Exception e) {
+        try {
+			Long id = Long.parseLong(evt.getRequest().getParameter(string))
+            userContactInfo = crudService.find(UserContactInfo.class, id)
+        } catch (Exception e) {
 			// TODO: handle exception
 		}
 
-		return userContactInfo;
-	}
+		return userContactInfo
+    }
 
 }

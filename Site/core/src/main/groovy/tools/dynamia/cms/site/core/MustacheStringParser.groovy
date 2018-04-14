@@ -15,40 +15,40 @@ import org.springframework.stereotype.Component
  * @author Mario Serrano Leones
  */
 @Component("mustacheStringParser")
-public class MustacheStringParser implements StringParser {
+class MustacheStringParser implements StringParser {
 
-    private MustacheFactory factory;
+    private MustacheFactory factory
 
     @Autowired
-    public MustacheStringParser(MustacheFactory factory) {
-        this.factory = factory;
+    MustacheStringParser(MustacheFactory factory) {
+        this.factory = factory
     }
 
     @Override
-    public String parse(String template, Map<String, Object> templateModel) {
+    String parse(String template, Map<String, Object> templateModel) {
 
-        StringWriter writer = new StringWriter();
+        StringWriter writer = new StringWriter()
 
-        Mustache mustache = factory.compile(new StringReader(template), "template");
-        mustache.execute(writer, templateModel);
-        writer.flush();
+        Mustache mustache = factory.compile(new StringReader(template), "template")
+        mustache.execute(writer, templateModel)
+        writer.flush()
 
-        return writer.toString();
+        return writer.toString()
     }
 
     @Override
-    public String getId() {
-        return "mustache";
+    String getId() {
+        return "mustache"
     }
 
     @Override
-    public String getName() {
-        return "Mustache";
+    String getName() {
+        return "Mustache"
     }
 
     @Override
-    public String getDescription() {
-        return "useful for simple templates";
+    String getDescription() {
+        return "useful for simple templates"
     }
 
 }

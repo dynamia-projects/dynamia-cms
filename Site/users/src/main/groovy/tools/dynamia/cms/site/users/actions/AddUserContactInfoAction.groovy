@@ -30,28 +30,28 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class AddUserContactInfoAction implements SiteAction {
+class AddUserContactInfoAction implements SiteAction {
 
 	@Autowired
-	private CrudService crudService;
+	private CrudService crudService
 
-	@Autowired
-	private SiteService siteService;
+    @Autowired
+	private SiteService siteService
+
+    @Override
+    String getName() {
+		return "addUserContactInfo"
+    }
 
 	@Override
-	public String getName() {
-		return "addUserContactInfo";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
+        UserContactInfo userContactInfo = new UserContactInfo()
+        mv.addObject("title", "Nueva direccion de contacto")
+        mv.addObject("userContactInfo", userContactInfo)
 
-		UserContactInfo userContactInfo = new UserContactInfo();
-		mv.addObject("title", "Nueva direccion de contacto");
-		mv.addObject("userContactInfo", userContactInfo);
-
-		CMSUtil.buildContactInfoOptions(evt.getSite(), mv, "uci", userContactInfo.getInfo());
-	}
+        CMSUtil.buildContactInfoOptions(evt.getSite(), mv, "uci", userContactInfo.getInfo())
+    }
 
 }

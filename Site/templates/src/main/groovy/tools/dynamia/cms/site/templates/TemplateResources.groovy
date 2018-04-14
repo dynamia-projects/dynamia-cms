@@ -30,51 +30,51 @@ import java.nio.file.Path
  *
  * @author Mario Serrano Leones
  */
-public class TemplateResources {
+class TemplateResources {
 
-	public static Path find(Site site, String resourceName) {
-		SiteService service = Containers.get().findObject(SiteService.class);
-		TemplateService tpltService = Containers.get().findObject(TemplateService.class);
+	static Path find(Site site, String resourceName) {
+		SiteService service = Containers.get().findObject(SiteService.class)
+        TemplateService tpltService = Containers.get().findObject(TemplateService.class)
 
-		if (site == null) {
-			site = service.getMainSite();
-		}
+        if (site == null) {
+			site = service.getMainSite()
+        }
 
-		String currentTemplate = getTemplateName(site);
+		String currentTemplate = getTemplateName(site)
 
-		if (currentTemplate == null || currentTemplate.isEmpty()) {
-			currentTemplate = tpltService.getDefaultTemplate().getDirectoryName();
-		}
+        if (currentTemplate == null || currentTemplate.isEmpty()) {
+			currentTemplate = tpltService.getDefaultTemplate().getDirectoryName()
+        }
 
 		// find first in local site template resources
 		Path templateResource = DynamiaCMS.getSitesResourceLocation(site)
-				.resolve("templates" + File.separator + currentTemplate + File.separator + resourceName);
+				.resolve("templates" + File.separator + currentTemplate + File.separator + resourceName)
 
-		//if not found find in global template resources
+        //if not found find in global template resources
 		if (!Files.exists(templateResource)) {
 			templateResource = DynamiaCMS.getTemplatesLocation()
-					.resolve(currentTemplate + File.separator + resourceName);
+					.resolve(currentTemplate + File.separator + resourceName)
+        }
+
+		return templateResource
+    }
+
+    static String getTemplateName(Site site) {
+		String name = site.getTemplate()
+
+        HttpServletRequest request = CMSUtil.getCurrentRequest()
+        if (request != null) {
+			String sessionTemplate = request.getParameter("setSessionTemplate")
+            if (sessionTemplate != null && !sessionTemplate.isEmpty()) {
+				request.getSession().setAttribute("SessionTemplate", sessionTemplate)
+            }
+			sessionTemplate = (String) request.getSession().getAttribute("SessionTemplate")
+            if (sessionTemplate != null) {
+				name = sessionTemplate
+            }
 		}
 
-		return templateResource;
-	}
-
-	public static String getTemplateName(Site site) {
-		String name = site.getTemplate();
-
-		HttpServletRequest request = CMSUtil.getCurrentRequest();
-		if (request != null) {
-			String sessionTemplate = request.getParameter("setSessionTemplate");
-			if (sessionTemplate != null && !sessionTemplate.isEmpty()) {
-				request.getSession().setAttribute("SessionTemplate", sessionTemplate);
-			}
-			sessionTemplate = (String) request.getSession().getAttribute("SessionTemplate");
-			if (sessionTemplate != null) {
-				name = sessionTemplate;
-			}
-		}
-
-		return name;
-	}
+		return name
+    }
 
 }

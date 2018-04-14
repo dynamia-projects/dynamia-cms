@@ -1,8 +1,8 @@
-package tools.dynamia.cms.site.payment.api;
+package tools.dynamia.cms.site.payment.api
 
-public interface Payment {
+interface Payment {
 
-    String getSource();
+    String getSource()
 
-    void setSource(String source);
+    void setSource(String source)
 }

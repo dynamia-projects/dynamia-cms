@@ -29,35 +29,35 @@ import tools.dynamia.zk.navigation.ComponentPage
 import tools.dynamia.zk.navigation.ZKNavigationManager
 
 @InstallAction
-public class NewModuleInstanceAction extends NewAction {
+class NewModuleInstanceAction extends NewAction {
 
 	@Autowired
-	private CrudService crudService;
+	private CrudService crudService
 
-	public NewModuleInstanceAction() {
-		setAttribute("background", "#ff5722");
-		setAttribute("color", "white");
-	}
-
-	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    NewModuleInstanceAction() {
+		setAttribute("background", "#ff5722")
+        setAttribute("color", "white")
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(ModuleInstance.class);
-	}
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		ModuleInstance moduleInstance = new ModuleInstance();
-		moduleInstance.setSite(SiteContext.get().getCurrent());
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(ModuleInstance.class)
+    }
 
-		ModuleInstanceUI ui = new ModuleInstanceUI(moduleInstance);
-		ui.addAction(new SaveModuleInstanceAction(crudService, evt));
-		ZKNavigationManager.getInstance()
-				.setCurrentPage(new ComponentPage("newModule" + System.currentTimeMillis(), "New Module Instance", ui));
+	@Override
+    void actionPerformed(CrudActionEvent evt) {
+		ModuleInstance moduleInstance = new ModuleInstance()
+        moduleInstance.setSite(SiteContext.get().getCurrent())
 
-	}
+        ModuleInstanceUI ui = new ModuleInstanceUI(moduleInstance)
+        ui.addAction(new SaveModuleInstanceAction(crudService, evt))
+        ZKNavigationManager.getInstance()
+				.setCurrentPage(new ComponentPage("newModule" + System.currentTimeMillis(), "New Module Instance", ui))
+
+    }
 }

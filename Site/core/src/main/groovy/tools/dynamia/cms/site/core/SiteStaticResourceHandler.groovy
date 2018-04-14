@@ -33,49 +33,49 @@ import java.nio.file.Paths
  *
  * @author Mario Serrano Leones
  */
-public class SiteStaticResourceHandler extends ResourceHttpRequestHandler {
+class SiteStaticResourceHandler extends ResourceHttpRequestHandler {
 
 	@Override
-	public void handleRequest(HttpServletRequest request, HttpServletResponse response)
+    void handleRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("response", response);
-		super.handleRequest(request, response);
-	}
+		request.setAttribute("response", response)
+        super.handleRequest(request, response)
+    }
 
 	@Override
 	protected Resource getResource(HttpServletRequest request) throws IOException {
-		HttpServletResponse response = (HttpServletResponse) request.getAttribute("response");
-		SiteService coreService = Containers.get().findObject(SiteService.class);
-		Site site = coreService.getSite(request);
-		if (site == null) {
-			site = coreService.getMainSite();
-		}
+		HttpServletResponse response = (HttpServletResponse) request.getAttribute("response")
+        SiteService coreService = Containers.get().findObject(SiteService.class)
+        Site site = coreService.getSite(request)
+        if (site == null) {
+			site = coreService.getMainSite()
+        }
 
 		if (site == null) {
-			throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.getServerName());
-		}
+			throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.getServerName())
+        }
 
-		Path resource = Paths.get(request.getPathInfo().replaceFirst("/static/", ""));
-		Path staticDir = DynamiaCMS.getSitesStaticResourceLocation(site);
-		Path absoluteResource = staticDir.resolve(resource);
-		if (Files.isDirectory(absoluteResource)) {
+		Path resource = Paths.get(request.getPathInfo().replaceFirst("/static/", ""))
+        Path staticDir = DynamiaCMS.getSitesStaticResourceLocation(site)
+        Path absoluteResource = staticDir.resolve(resource)
+        if (Files.isDirectory(absoluteResource)) {
 			if (!request.getPathInfo().endsWith("/")) {
 				try {
-					response.sendRedirect(request.getPathInfo() + "/");
-				} catch (IOException e) {
+					response.sendRedirect(request.getPathInfo() + "/")
+                } catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					e.printStackTrace()
+                }
 			}
 
-			absoluteResource = absoluteResource.resolve("index.html");
+			absoluteResource = absoluteResource.resolve("index.html")
 
-		}
-		File file = absoluteResource.toFile();
-		if (!file.exists()) {
-			return null;
-		}
-		return new FileSystemResource(file);
-	}
+        }
+		File file = absoluteResource.toFile()
+        if (!file.exists()) {
+			return null
+        }
+		return new FileSystemResource(file)
+    }
 
 }

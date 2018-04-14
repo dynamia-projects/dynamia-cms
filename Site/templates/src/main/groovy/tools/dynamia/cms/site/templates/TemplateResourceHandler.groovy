@@ -29,16 +29,16 @@ import java.nio.file.Path
  *
  * @author Mario Serrano Leones
  */
-public class TemplateResourceHandler extends ResourceHttpRequestHandler {
+class TemplateResourceHandler extends ResourceHttpRequestHandler {
 
 	@Override
 	protected Resource getResource(HttpServletRequest request) {
-		SiteService service = Containers.get().findObject(SiteService.class);
+		SiteService service = Containers.get().findObject(SiteService.class)
 
-		Site site = service.getSite(request);
+        Site site = service.getSite(request)
 
-		Path templateResource = TemplateResources.find(site, request.getPathInfo());
-		return new FileSystemResource(templateResource.toFile());
-	}
+        Path templateResource = TemplateResources.find(site, request.getPathInfo())
+        return new FileSystemResource(templateResource.toFile())
+    }
 
 }

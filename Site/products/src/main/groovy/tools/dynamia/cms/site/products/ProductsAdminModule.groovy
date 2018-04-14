@@ -24,25 +24,25 @@ import tools.dynamia.cms.site.products.domain.*
  * @author Mario Serrano Leones
  */
 @CMSModule
-public class ProductsAdminModule implements AdminModule {
+class ProductsAdminModule implements AdminModule {
 
     @Override
-    public String getGroup() {
-        return "Products";
+    String getGroup() {
+        return "Products"
     }
 
     @Override
-    public String getName() {
-        return "Store";
+    String getName() {
+        return "Store"
     }
 
     @Override
-    public String getImage() {
-        return "fa-home";
+    String getImage() {
+        return "fa-home"
     }
 
     @Override
-    public AdminModuleOption[] getOptions() {
+    AdminModuleOption[] getOptions() {
         return [
                 new AdminModuleOption("config", "Configuration", ProductsSiteConfig.class, false, true),
                 new AdminModuleOption("products", "Products", Product.class, true, true, "th", true),

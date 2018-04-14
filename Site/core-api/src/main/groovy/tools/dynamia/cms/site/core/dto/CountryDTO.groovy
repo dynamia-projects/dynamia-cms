@@ -1,20 +1,20 @@
-package tools.dynamia.cms.site.core.dto;
+package tools.dynamia.cms.site.core.dto
 
-public class CountryDTO extends LocationDTO{
+class CountryDTO extends LocationDTO{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3594377972462967638L;
+	private static final long serialVersionUID = -3594377972462967638L
 
-	public CountryDTO() {
-		super();
-		// TODO Auto-generated constructor stub
+    CountryDTO() {
+		super()
+        // TODO Auto-generated constructor stub
 	}
 
-	public CountryDTO(String name, String code) {
-		super(name, code);
-		// TODO Auto-generated constructor stub
+    CountryDTO(String name, String code) {
+		super(name, code)
+        // TODO Auto-generated constructor stub
 	}
 	
 	

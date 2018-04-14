@@ -33,62 +33,62 @@ import tools.dynamia.cms.site.products.services.ProductsSynchronizer
  *
  * @author Mario Serrano Leones
  */
-public class ProductListenerImpl implements ProductsListener {
+class ProductListenerImpl implements ProductsListener {
 
     @Autowired
-    private ProductsSyncService syncService;
+    private ProductsSyncService syncService
 
     @Autowired
-    private ProductsService service;
+    private ProductsService service
 
     @Autowired
-    private ProductsSynchronizer synchronizer;
+    private ProductsSynchronizer synchronizer
 
     @Override
-    public void productChanged(final DataChangedEvent evt) {
-        final ProductsSiteConfig config = getConfig(evt);
+    void productChanged(final DataChangedEvent evt) {
+        final ProductsSiteConfig config = getConfig(evt)
 
-        ProductsDatasource ds = syncService.getDatasource(config);
-        ProductDTO dto = ds.getProduct(evt.getExternalRef(), config.getParametersAsMap());
-        synchronizer.synchronize(config, dto);
+        ProductsDatasource ds = syncService.getDatasource(config)
+        ProductDTO dto = ds.getProduct(evt.getExternalRef(), config.getParametersAsMap())
+        synchronizer.synchronize(config, dto)
 
     }
 
     @Override
-    public void categoryChanged(final DataChangedEvent evt) {
-        final ProductsSiteConfig config = getConfig(evt);
-        ProductsDatasource ds = syncService.getDatasource(config);
-        ProductCategoryDTO dto = ds.getCategory(evt.getExternalRef(), config.getParametersAsMap());
-        syncService.synchronizeCategory(config, dto);
+    void categoryChanged(final DataChangedEvent evt) {
+        final ProductsSiteConfig config = getConfig(evt)
+        ProductsDatasource ds = syncService.getDatasource(config)
+        ProductCategoryDTO dto = ds.getCategory(evt.getExternalRef(), config.getParametersAsMap())
+        syncService.synchronizeCategory(config, dto)
 
     }
 
     @Override
-    public void brandChanged(final DataChangedEvent evt) {
-        final ProductsSiteConfig config = getConfig(evt);
+    void brandChanged(final DataChangedEvent evt) {
+        final ProductsSiteConfig config = getConfig(evt)
 
-        ProductsDatasource ds = syncService.getDatasource(config);
-        ProductBrandDTO dto = ds.getBrand(evt.getExternalRef(), config.getParametersAsMap());
-        syncService.synchronizeBrand(config, dto);
+        ProductsDatasource ds = syncService.getDatasource(config)
+        ProductBrandDTO dto = ds.getBrand(evt.getExternalRef(), config.getParametersAsMap())
+        syncService.synchronizeBrand(config, dto)
 
     }
 
     @Override
-    public void storeChanged(final DataChangedEvent evt) {
-        final ProductsSiteConfig config = getConfig(evt);
+    void storeChanged(final DataChangedEvent evt) {
+        final ProductsSiteConfig config = getConfig(evt)
 
-        ProductsDatasource ds = syncService.getDatasource(config);
-        StoreDTO dto = ds.getStore(evt.getExternalRef(), config.getParametersAsMap());
-        syncService.synchronizeStore(config, dto);
+        ProductsDatasource ds = syncService.getDatasource(config)
+        StoreDTO dto = ds.getStore(evt.getExternalRef(), config.getParametersAsMap())
+        syncService.synchronizeStore(config, dto)
 
     }
 
     private ProductsSiteConfig getConfig(DataChangedEvent evt) {
-        final ProductsSiteConfig config = service.getSiteConfig(evt.getToken());
+        final ProductsSiteConfig config = service.getSiteConfig(evt.getToken())
         if (config == null) {
-            throw new InvalidTokenException("Cannot find ProductSiteConfig for supplied token");
+            throw new InvalidTokenException("Cannot find ProductSiteConfig for supplied token")
         }
-        return config;
+        return config
     }
 
 }

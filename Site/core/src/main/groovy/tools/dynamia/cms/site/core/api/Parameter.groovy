@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.api;
+package tools.dynamia.cms.site.core.api
 
-public interface Parameter {
+interface Parameter {
 
-	String getName();
+	String getName()
 
-	String getValue();
+    String getValue()
 
-	String getExtra();
+    String getExtra()
 
-	void setName(String name);
+    void setName(String name)
 
-	void setValue(String value);
+    void setValue(String value)
 
-	void setExtra(String extra);
+    void setExtra(String extra)
 }

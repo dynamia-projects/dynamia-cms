@@ -21,13 +21,13 @@ import tools.dynamia.viewers.ViewCustomizer
 import tools.dynamia.zk.crud.ui.EntityPickerBox
 import tools.dynamia.zk.viewers.form.FormView
 
-public class SiteFormCustomizer implements ViewCustomizer<FormView<Site>> {
+class SiteFormCustomizer implements ViewCustomizer<FormView<Site>> {
 
 	@Override
-	public void customize(FormView<Site> view) {
-		EntityPickerBox parentPicker = (EntityPickerBox) view.getFieldComponent("parent").getInputComponent();
-		parentPicker.setDisabled(!SiteContext.get().isSuperAdmin());
+    void customize(FormView<Site> view) {
+		EntityPickerBox parentPicker = (EntityPickerBox) view.getFieldComponent("parent").getInputComponent()
+        parentPicker.setDisabled(!SiteContext.get().isSuperAdmin())
 
-	}
+    }
 
 }

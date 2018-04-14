@@ -7,22 +7,22 @@ import tools.dynamia.domain.util.CrudServiceListenerAdapter
 import tools.dynamia.integration.sterotypes.Listener
 
 @Listener
-public class ProductReviewCrudListener extends CrudServiceListenerAdapter<ProductReview> {
+class ProductReviewCrudListener extends CrudServiceListenerAdapter<ProductReview> {
 
 	@Autowired
-	private ProductsService service;
+	private ProductsService service
 
-	@Override
-	public void afterCreate(ProductReview entity) {
+    @Override
+    void afterCreate(ProductReview entity) {
 		try {
-			service.computeProductStars(entity.getProduct());
-		} catch (Exception e) {
+			service.computeProductStars(entity.getProduct())
+        } catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
 
 	@Override
-	public void afterUpdate(ProductReview entity) {
-		afterCreate(entity);
-	}
+    void afterUpdate(ProductReview entity) {
+		afterCreate(entity)
+    }
 }

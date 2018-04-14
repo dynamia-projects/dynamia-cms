@@ -13,58 +13,58 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatus
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public class CMSException extends RuntimeException {
+class CMSException extends RuntimeException {
 
-    private HttpStatus status;
+    private HttpStatus status
 
-    public CMSException() {
+    CMSException() {
     }
 
-    public CMSException(String message) {
-        super(message);
+    CMSException(String message) {
+        super(message)
     }
 
-    public CMSException(String message, Throwable cause) {
-        super(message, cause);
+    CMSException(String message, Throwable cause) {
+        super(message, cause)
     }
 
-    public CMSException(Throwable cause) {
-        super(cause);
+    CMSException(Throwable cause) {
+        super(cause)
     }
 
-    public CMSException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    CMSException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace)
     }
 
-    public CMSException(HttpStatus status) {
-        this.status = status;
+    CMSException(HttpStatus status) {
+        this.status = status
     }
 
-    public CMSException(HttpStatus status, String message) {
-        super(message);
-        this.status = status;
+    CMSException(HttpStatus status, String message) {
+        super(message)
+        this.status = status
     }
 
-    public CMSException(HttpStatus status, String message, Throwable cause) {
-        super(message, cause);
-        this.status = status;
+    CMSException(HttpStatus status, String message, Throwable cause) {
+        super(message, cause)
+        this.status = status
     }
 
-    public CMSException(HttpStatus status, Throwable cause) {
-        super(cause);
-        this.status = status;
+    CMSException(HttpStatus status, Throwable cause) {
+        super(cause)
+        this.status = status
     }
 
-    public HttpStatus getStatus() {
-        return status;
+    HttpStatus getStatus() {
+        return status
     }
 
 }

@@ -26,11 +26,11 @@ import tools.dynamia.cms.site.products.ProductsUtil
  * @author Mario Serrano Leones
  */
 @CMSExtension
-public class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+class ProductsInterceptor extends SiteRequestInterceptorAdapter {
 
     @Override
     protected void afterRequest(Site site, ModelAndView mv) {
-        ProductsUtil.setupDefaultVars(site, mv);
+        ProductsUtil.setupDefaultVars(site, mv)
     }
 
 }

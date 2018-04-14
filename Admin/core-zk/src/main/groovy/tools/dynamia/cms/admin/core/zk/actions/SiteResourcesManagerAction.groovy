@@ -34,43 +34,43 @@ import tools.dynamia.zk.navigation.ZKNavigationManager
  * @author Mario Serrano Leones
  */
 @InstallAction
-public class SiteResourcesManagerAction extends AbstractCrudAction {
+class SiteResourcesManagerAction extends AbstractCrudAction {
 
-    public SiteResourcesManagerAction() {
-        setName("Manage Resources");
-        setImage("package");
-        setMenuSupported(true);
+    SiteResourcesManagerAction() {
+        setName("Manage Resources")
+        setImage("package")
+        setMenuSupported(true)
     }
 
     @Override
-    public void actionPerformed(CrudActionEvent evt) {
-        Site site = (Site) evt.getData();
+    void actionPerformed(CrudActionEvent evt) {
+        Site site = (Site) evt.getData()
         if (site != null) {
-            FileManager mgr = new FileManager(DynamiaCMS.getSitesResourceLocation(site));
-            ComponentPage page = new ComponentPage("resourcesMrg" + site.getKey(), "Resources " + site.getName(), mgr);
+            FileManager mgr = new FileManager(DynamiaCMS.getSitesResourceLocation(site))
+            ComponentPage page = new ComponentPage("resourcesMrg" + site.getKey(), "Resources " + site.getName(), mgr)
 
-            ZKNavigationManager.getInstance().setCurrentPage(page);
+            ZKNavigationManager.getInstance().setCurrentPage(page)
         }
     }
-    
-    public void show(){
-    	CrudActionEvent evt = new CrudActionEvent(SiteContext.get().getCurrent(), null, null, null);
-    	actionPerformed(evt);
+
+    void show(){
+    	CrudActionEvent evt = new CrudActionEvent(SiteContext.get().getCurrent(), null, null, null)
+        actionPerformed(evt)
     }
 
     @Override
-    public CrudState[] getApplicableStates() {
-        return CrudState.get(CrudState.READ);
+    CrudState[] getApplicableStates() {
+        return CrudState.get(CrudState.READ)
     }
 
     @Override
-    public ApplicableClass[] getApplicableClasses() {
-        return ApplicableClass.get(Site.class);
+    ApplicableClass[] getApplicableClasses() {
+        return ApplicableClass.get(Site.class)
     }
 
     @Override
-    public ActionRenderer getRenderer() {
-        return new ToolbarbuttonActionRenderer(true);
+    ActionRenderer getRenderer() {
+        return new ToolbarbuttonActionRenderer(true)
     }
 
 }

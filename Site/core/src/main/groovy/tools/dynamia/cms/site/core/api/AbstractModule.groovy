@@ -18,109 +18,109 @@ package tools.dynamia.cms.site.core.api
 import tools.dynamia.cms.site.core.JavaScriptResource
 import tools.dynamia.cms.site.core.StyleSheetResource
 
-public abstract class AbstractModule implements Module {
+abstract class AbstractModule implements Module {
 
-    private String id;
-    private String name;
-    private String description;
-    private String templateViewName;
+    private String id
+    private String name
+    private String description
+    private String templateViewName
 
-    private Map<String, Object> metadata = new HashMap<>();
-    private List<JavaScriptResource> javaScriptResources = new ArrayList<>();
-    private List<StyleSheetResource> styleSheetResources = new ArrayList<>();
-    private String[] variablesNames = {};
-    private boolean cacheable = true;
+    private Map<String, Object> metadata = new HashMap<>()
+    private List<JavaScriptResource> javaScriptResources = new ArrayList<>()
+    private List<StyleSheetResource> styleSheetResources = new ArrayList<>()
+    private String[] variablesNames = {}
+    private boolean cacheable = true
 
-    public AbstractModule(String id, String name, String templateViewName) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.templateViewName = templateViewName;
+    AbstractModule(String id, String name, String templateViewName) {
+        super()
+        this.id = id
+        this.name = name
+        this.templateViewName = templateViewName
     }
 
-    public void setVariablesNames(String... variablesNames) {
-        this.variablesNames = variablesNames;
-    }
-
-    @Override
-    public String[] getVariablesNames() {
-        return variablesNames;
-    }
-
-    public void putMetadata(String key, Object value) {
-        metadata.put(key, value);
+    void setVariablesNames(String... variablesNames) {
+        this.variablesNames = variablesNames
     }
 
     @Override
-    public Map<String, Object> getMetadata() {
-        return metadata;
+    String[] getVariablesNames() {
+        return variablesNames
+    }
+
+    void putMetadata(String key, Object value) {
+        metadata.put(key, value)
     }
 
     @Override
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    Map<String, Object> getMetadata() {
+        return metadata
     }
 
     @Override
-    public String getName() {
-        return name;
+    String getId() {
+        return id
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    void setId(String id) {
+        this.id = id
     }
 
     @Override
-    public String getTemplateViewName() {
-        return templateViewName;
+    String getName() {
+        return name
     }
 
-    public void setTemplateViewName(String templateViewName) {
-        this.templateViewName = templateViewName;
-    }
-
-    @Override
-    public List<JavaScriptResource> getJavaScriptResources() {
-        return javaScriptResources;
+    void setName(String name) {
+        this.name = name
     }
 
     @Override
-    public List<StyleSheetResource> getStyleSheetResources() {
-        return styleSheetResources;
+    String getDescription() {
+        return description
     }
 
-    public void addResource(JavaScriptResource resource) {
-        javaScriptResources.add(resource);
-    }
-
-    public void addResource(StyleSheetResource resource) {
-        styleSheetResources.add(resource);
+    void setDescription(String description) {
+        this.description = description
     }
 
     @Override
-    public String toString() {
-        return getName() + "(" + getTemplateViewName() + ")";
+    String getTemplateViewName() {
+        return templateViewName
+    }
+
+    void setTemplateViewName(String templateViewName) {
+        this.templateViewName = templateViewName
     }
 
     @Override
-    public boolean isCacheable() {
-        return cacheable;
+    List<JavaScriptResource> getJavaScriptResources() {
+        return javaScriptResources
     }
 
-    public void setCacheable(boolean cacheable) {
-        this.cacheable = cacheable;
+    @Override
+    List<StyleSheetResource> getStyleSheetResources() {
+        return styleSheetResources
+    }
+
+    void addResource(JavaScriptResource resource) {
+        javaScriptResources.add(resource)
+    }
+
+    void addResource(StyleSheetResource resource) {
+        styleSheetResources.add(resource)
+    }
+
+    @Override
+    String toString() {
+        return getName() + "(" + getTemplateViewName() + ")"
+    }
+
+    @Override
+    boolean isCacheable() {
+        return cacheable
+    }
+
+    void setCacheable(boolean cacheable) {
+        this.cacheable = cacheable
     }
 }

@@ -30,18 +30,18 @@ import tools.dynamia.integration.sterotypes.Component
  */
 @Component
 @Scope("session")
-public class ShoppingCartHolder implements Serializable {
+class ShoppingCartHolder implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7780236453596280623L;
-	private Map<String, ShoppingCart> carts = new HashMap<String, ShoppingCart>();
-	private ShoppingOrder currentOrder;
+	private static final long serialVersionUID = 7780236453596280623L
+    private Map<String, ShoppingCart> carts = new HashMap<String, ShoppingCart>()
+    private ShoppingOrder currentOrder
 
-	public static ShoppingCartHolder get() {
-		return Containers.get().findObject(ShoppingCartHolder.class);
-	}
+    static ShoppingCartHolder get() {
+		return Containers.get().findObject(ShoppingCartHolder.class)
+    }
 
 	/**
 	 * Get a shopping cart with given name. If not exist it create a new one
@@ -49,43 +49,43 @@ public class ShoppingCartHolder implements Serializable {
 	 * @param name
 	 * @return
 	 */
-	public ShoppingCart getCart(String name) {
-		return getCart(name, "");
+	ShoppingCart getCart(String name) {
+		return getCart(name, "")
+    }
+
+    ShoppingCart getCart(String name, String title) {
+		ShoppingCart cart = carts.get(name)
+        if (cart == null) {
+			cart = new ShoppingCart(name)
+            cart.setTitle(title)
+            cart.setSite(SiteContext.get().getCurrent())
+            cart.setUser(UserHolder.get().getCurrent())
+            carts.put(name, cart)
+        }
+		return cart
+    }
+
+    void removeCart(String name) {
+		carts.remove(name)
+    }
+
+    ShoppingOrder getCurrentOrder() {
+		return currentOrder
+    }
+
+    void setCurrentOrder(ShoppingOrder currentOrder) {
+		this.currentOrder = currentOrder
+        if (currentOrder == null) {
+			PaymentHolder.get().setCurrentPaymentForm(null)
+            PaymentHolder.get().setCurrentPaymentTransaction(null)
+        } else {
+			PaymentHolder.get().setCurrentPaymentTransaction(currentOrder.getTransaction())
+        }
 	}
 
-	public ShoppingCart getCart(String name, String title) {
-		ShoppingCart cart = carts.get(name);
-		if (cart == null) {
-			cart = new ShoppingCart(name);
-			cart.setTitle(title);
-			cart.setSite(SiteContext.get().getCurrent());
-			cart.setUser(UserHolder.get().getCurrent());
-			carts.put(name, cart);
-		}
-		return cart;
-	}
-
-	public void removeCart(String name) {
-		carts.remove(name);
-	}
-
-	public ShoppingOrder getCurrentOrder() {
-		return currentOrder;
-	}
-
-	public void setCurrentOrder(ShoppingOrder currentOrder) {
-		this.currentOrder = currentOrder;
-		if (currentOrder == null) {
-			PaymentHolder.get().setCurrentPaymentForm(null);
-			PaymentHolder.get().setCurrentPaymentTransaction(null);
-		} else {
-			PaymentHolder.get().setCurrentPaymentTransaction(currentOrder.getTransaction());
-		}
-	}
-
-	public void clearAll() {
-		currentOrder = null;
-		carts.clear();
-	}
+    void clearAll() {
+		currentOrder = null
+        carts.clear()
+    }
 
 }

@@ -27,19 +27,19 @@ import tools.dynamia.domain.util.CrudServiceListenerAdapter
 class ParamsCrudListener extends CrudServiceListenerAdapter<Parameter> {
 
 	@Override
-	public void afterCreate(Parameter entity) {
-		checkHomeVar(entity);
-	}
+    void afterCreate(Parameter entity) {
+		checkHomeVar(entity)
+    }
 
 	@Override
-	public void afterUpdate(Parameter entity) {
-		checkHomeVar(entity);
-	}
+    void afterUpdate(Parameter entity) {
+		checkHomeVar(entity)
+    }
 
 	private void checkHomeVar(Parameter entity) {
 		if (DynamiaCMS.CFG_HOMEVAR.equals(entity.getName())) {
-			DynamiaCMS.reloadHomePath();
-		}
+			DynamiaCMS.reloadHomePath()
+        }
 	}
 
 }

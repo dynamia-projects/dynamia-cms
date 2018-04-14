@@ -34,58 +34,58 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ViewShoppingOrderAction implements SiteAction {
+class ViewShoppingOrderAction implements SiteAction {
 
 	@Autowired
-	private CrudService crudService;
+	private CrudService crudService
+
+    @Override
+    String getName() {
+		return "viewShoppingOrder"
+    }
 
 	@Override
-	public String getName() {
-		return "viewShoppingOrder";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        mv.setViewName("shoppingcart/order")
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		mv.setViewName("shoppingcart/order");
+        mv.addObject("title", "Pedido")
 
-		mv.addObject("title", "Pedido");
+        Long id = (Long) evt.getData()
 
-		Long id = (Long) evt.getData();
+        ShoppingOrder order = null
 
-		ShoppingOrder order = null;
-
-		if (id != null) {
-			order = crudService.find(ShoppingOrder.class, id);
-		}
+        if (id != null) {
+			order = crudService.find(ShoppingOrder.class, id)
+        }
 		
 		if (order == null || !order.getShoppingCart().getUser().equals(UserHolder.get().getCurrent())) {
-			SiteActionManager.performAction("showMyShoppingOrders", mv, evt.getRequest(), evt.getRedirectAttributes());
-			CMSUtil.addErrorMessage("No se encontro pedido", mv);
-		} else {
-			mv.addObject("shoppingOrder", order);
-		}
+			SiteActionManager.performAction("showMyShoppingOrders", mv, evt.getRequest(), evt.getRedirectAttributes())
+            CMSUtil.addErrorMessage("No se encontro pedido", mv)
+        } else {
+			mv.addObject("shoppingOrder", order)
+        }
 
 	}
 
 	private void validate(ShoppingOrder order, ShoppingSiteConfig config) {
 		if (!order.isPayLater() || !config.isAllowEmptyPayment()) {
-			throw new ValidationError("El sitio web no permite este tipo de pedidos");
-		}
+			throw new ValidationError("El sitio web no permite este tipo de pedidos")
+        }
 
 	}
 
 	private UserContactInfo loadContactInfo(String string, ActionEvent evt) {
-		UserContactInfo userContactInfo = null;
+		UserContactInfo userContactInfo = null
 
-		try {
-			Long id = Long.parseLong(evt.getRequest().getParameter(string));
-			userContactInfo = crudService.find(UserContactInfo.class, id);
-		} catch (Exception e) {
+        try {
+			Long id = Long.parseLong(evt.getRequest().getParameter(string))
+            userContactInfo = crudService.find(UserContactInfo.class, id)
+        } catch (Exception e) {
 			// TODO: handle exception
 		}
 
-		return userContactInfo;
-	}
+		return userContactInfo
+    }
 
 }

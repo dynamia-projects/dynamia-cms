@@ -29,30 +29,30 @@ import tools.dynamia.cms.site.users.services.UserService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ShowUserContactInfosAction implements SiteAction {
+class ShowUserContactInfosAction implements SiteAction {
 
 	@Autowired
-	private UserService userService;
+	private UserService userService
+
+    @Override
+    String getName() {
+		return "showUserContactInfos"
+    }
 
 	@Override
-	public String getName() {
-		return "showUserContactInfos";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
+        List<UserContactInfo> userContactInfos = userService.getContactInfos(UserHolder.get().getCurrent())
+        mv.addObject("userContactInfos", userContactInfos)
 
-		List<UserContactInfo> userContactInfos = userService.getContactInfos(UserHolder.get().getCurrent());
-		mv.addObject("userContactInfos", userContactInfos);
-		
-		mv.addObject("title", "Direcciones de Contacto");
-		if (userContactInfos == null || userContactInfos.isEmpty()) {
-			mv.addObject("subtitle", "No tiene direcciones registradas");
-		} else {
-			mv.addObject("subtitle", userContactInfos.size() + " direcciones de contactos registradas");
+        mv.addObject("title", "Direcciones de Contacto")
+        if (userContactInfos == null || userContactInfos.isEmpty()) {
+			mv.addObject("subtitle", "No tiene direcciones registradas")
+        } else {
+			mv.addObject("subtitle", userContactInfos.size() + " direcciones de contactos registradas")
 
-		}
+        }
 		
 
 	}

@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.modules;
+package tools.dynamia.cms.site.products.modules
 
-public enum ProductOrderField {
+enum ProductOrderField {
 
-	NAME("name"), PRICE("price"), VIEWS("views"), BRAND("brand.name");
+	NAME("name"), PRICE("price"), VIEWS("views"), BRAND("brand.name")
 
-	private String field;
+    private String field
 
-	private ProductOrderField(String field) {
-		this.field = field;
-	}
+    private ProductOrderField(String field) {
+		this.field = field
+    }
 
-	public String getField() {
-		return field;
-	}
+    String getField() {
+		return field
+    }
 
 }

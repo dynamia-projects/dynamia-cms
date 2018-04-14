@@ -26,22 +26,22 @@ import tools.dynamia.zk.util.ZKUtil
  *
  * @author Mario Serrano Leones
  */
-public class SiteSelector extends Combobox {
+class SiteSelector extends Combobox {
 
     static {
-        ComponentAliasIndex.getInstance().add(SiteSelector.class);
+        ComponentAliasIndex.getInstance().add(SiteSelector.class)
     }
 
-    public SiteSelector() {
-        init();
+    SiteSelector() {
+        init()
     }
 
-    public void init() {
-        getChildren().clear();
-        setReadonly(true);
-        CrudService crudService = Containers.get().findObject(CrudService.class);
-        Collection<Site> sites = crudService.findAll(Site.class, "name");
-        ZKUtil.fillCombobox(this, sites, true);
+    void init() {
+        getChildren().clear()
+        setReadonly(true)
+        CrudService crudService = Containers.get().findObject(CrudService.class)
+        Collection<Site> sites = crudService.findAll(Site.class, "name")
+        ZKUtil.fillCombobox(this, sites, true)
 
     }
 

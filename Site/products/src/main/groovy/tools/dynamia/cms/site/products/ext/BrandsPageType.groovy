@@ -26,34 +26,34 @@ import tools.dynamia.cms.site.pages.api.PageTypeExtension
  * @author Mario Serrano Leones
  */
 @CMSExtension
-public class BrandsPageType implements PageTypeExtension {
+class BrandsPageType implements PageTypeExtension {
 
     @Override
-    public String getId() {
-        return "products-brands";
+    String getId() {
+        return "products-brands"
     }
 
     @Override
-    public String getName() {
-        return "Product Brands List Page";
+    String getName() {
+        return "Product Brands List Page"
     }
 
     @Override
-    public String getDescription() {
-        return "A brand list page, you cant specified a brand id using page parameters";
+    String getDescription() {
+        return "A brand list page, you cant specified a brand id using page parameters"
     }
 
     @Override
-    public String getDescriptorId() {
-        return "BrandGridConfig";
+    String getDescriptorId() {
+        return "BrandGridConfig"
     }
 
     @Override
-    public void setupPage(PageContext context) {
-        ModelAndView mv = context.getModelAndView();
-        mv.addObject("subtitle", context.getPage().getSubtitle());
+    void setupPage(PageContext context) {
+        ModelAndView mv = context.getModelAndView()
+        mv.addObject("subtitle", context.getPage().getSubtitle())
 
-        SiteActionManager.performAction("showBrands", mv, context.getRequest());
+        SiteActionManager.performAction("showBrands", mv, context.getRequest())
 
     }
 

@@ -27,28 +27,28 @@ import javax.validation.constraints.NotNull
  * @author Mario Serrano Leones
  */
 @MappedSuperclass
-public abstract class Content extends SimpleEntity implements SiteAware {
+abstract class Content extends SimpleEntity implements SiteAware {
 
 	@NotNull
-	private String uuid;
+	private String uuid
 
-	@OneToOne
+    @OneToOne
 	@NotNull
-	private Site site;
+	private Site site
 
-	public String getUuid() {
-		return uuid;
-	}
+    String getUuid() {
+		return uuid
+    }
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
+    void setUuid(String uuid) {
+		this.uuid = uuid
+    }
 
-	public Site getSite() {
-		return site;
-	}
+    Site getSite() {
+		return site
+    }
 
-	public void setSite(Site site) {
-		this.site = site;
-	}
+    void setSite(Site site) {
+		this.site = site
+    }
 }

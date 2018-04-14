@@ -24,50 +24,50 @@ import tools.dynamia.cms.site.products.dto.*
  *
  * @author Mario Serrano Leones
  */
-public interface ProductsSyncService {
+interface ProductsSyncService {
 
-    public List<ProductCategoryDTO> synchronizeCategories(ProductsSiteConfig siteCfg);
+    List<ProductCategoryDTO> synchronizeCategories(ProductsSiteConfig siteCfg)
 
-    public List<ProductDTO> synchronizeProducts(ProductsSiteConfig siteCfg);
+    List<ProductDTO> synchronizeProducts(ProductsSiteConfig siteCfg)
 
-    public List<ProductBrandDTO> synchronizeBrands(ProductsSiteConfig siteCfg);
+    List<ProductBrandDTO> synchronizeBrands(ProductsSiteConfig siteCfg)
 
-    public void synchronizeProduct(ProductsSiteConfig siteCfg, ProductDTO product);
+    void synchronizeProduct(ProductsSiteConfig siteCfg, ProductDTO product)
 
-    public void synchronizeCategory(ProductsSiteConfig siteCfg, ProductCategoryDTO category);
+    void synchronizeCategory(ProductsSiteConfig siteCfg, ProductCategoryDTO category)
 
-    public void synchronizeBrand(ProductsSiteConfig config, ProductBrandDTO dto);
+    void synchronizeBrand(ProductsSiteConfig config, ProductBrandDTO dto)
 
-    ProductsDatasource getDatasource(ProductsSiteConfig cfg);
+    ProductsDatasource getDatasource(ProductsSiteConfig cfg)
 
-    void disableCategoriesNoInList(ProductsSiteConfig siteCfg, List<ProductCategoryDTO> categories);
+    void disableCategoriesNoInList(ProductsSiteConfig siteCfg, List<ProductCategoryDTO> categories)
 
-    void disableProductsNoInList(ProductsSiteConfig siteCfg, List<ProductDTO> products);
+    void disableProductsNoInList(ProductsSiteConfig siteCfg, List<ProductDTO> products)
 
-    void deleteStoreContactsNoInList(ProductsSiteConfig siteCfg, List<StoreDTO> stores);
+    void deleteStoreContactsNoInList(ProductsSiteConfig siteCfg, List<StoreDTO> stores)
 
-    public void update(ProductsSiteConfig siteCfg);
+    void update(ProductsSiteConfig siteCfg)
 
-    public void synchronizeStore(ProductsSiteConfig config, StoreDTO dto);
+    void synchronizeStore(ProductsSiteConfig config, StoreDTO dto)
 
-    List<StoreDTO> synchronizeStores(ProductsSiteConfig siteCfg);
+    List<StoreDTO> synchronizeStores(ProductsSiteConfig siteCfg)
 
-    void syncProductDetails(ProductsSiteConfig siteCfg, ProductDTO remoteProduct);
+    void syncProductDetails(ProductsSiteConfig siteCfg, ProductDTO remoteProduct)
 
-    void syncProductStockDetails(ProductsSiteConfig siteCfg, ProductDTO remoteProduct);
+    void syncProductStockDetails(ProductsSiteConfig siteCfg, ProductDTO remoteProduct)
 
-    void syncProductCreditPrices(ProductsSiteConfig siteCfg, ProductDTO remoteProduct);
+    void syncProductCreditPrices(ProductsSiteConfig siteCfg, ProductDTO remoteProduct)
 
-    void downloadProductImages(ProductsSiteConfig siteCfg, ProductDTO product);
+    void downloadProductImages(ProductsSiteConfig siteCfg, ProductDTO product)
 
-    void downloadStoreImages(ProductsSiteConfig siteCfg, StoreDTO store);
+    void downloadStoreImages(ProductsSiteConfig siteCfg, StoreDTO store)
 
-    void downloadBrandImages(ProductsSiteConfig siteCfg, ProductBrandDTO store);
+    void downloadBrandImages(ProductsSiteConfig siteCfg, ProductBrandDTO store)
 
-    List<RelatedProductDTO> synchronizeRelatedProducts(ProductsSiteConfig siteCfg);
+    List<RelatedProductDTO> synchronizeRelatedProducts(ProductsSiteConfig siteCfg)
 
-    public void disableRelatedProductsNoInList(ProductsSiteConfig siteCfg, List<RelatedProductDTO> relatedProducts);
+    void disableRelatedProductsNoInList(ProductsSiteConfig siteCfg, List<RelatedProductDTO> relatedProducts)
 
-	void downloadImage(String baseURL, final String imageName, final String localFolder) throws Exception;
+    void downloadImage(String baseURL, final String imageName, final String localFolder) throws Exception
 
 }

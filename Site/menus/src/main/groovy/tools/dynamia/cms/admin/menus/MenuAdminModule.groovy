@@ -25,16 +25,16 @@ import tools.dynamia.cms.site.menus.domain.Menu
  * @author Mario Serrano Leones
  */
 @CMSModule
-public class MenuAdminModule implements AdminModule {
+class MenuAdminModule implements AdminModule {
 
     @Override
-    public String getGroup() {
-        return "content";
+    String getGroup() {
+        return "content"
     }
 
     @Override
-    public String getName() {
-        return "Content";
+    String getName() {
+        return "Content"
     }
 
     @Override
@@ -43,7 +43,7 @@ public class MenuAdminModule implements AdminModule {
     }
 
     @Override
-    public AdminModuleOption[] getOptions() {
+    AdminModuleOption[] getOptions() {
         return [
             new AdminModuleOption("menus", "Menus", Menu.class,true,true,"indent",true)
         ]

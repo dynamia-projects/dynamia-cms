@@ -27,26 +27,26 @@ import tools.dynamia.zk.util.ZKUtil
  *
  * @author Mario Serrano Leones
  */
-public class PositionSelector extends Combobox {
+class PositionSelector extends Combobox {
 
 	static {
-		ComponentAliasIndex.getInstance().add(PositionSelector.class);
-	}
+		ComponentAliasIndex.getInstance().add(PositionSelector.class)
+    }
 
-	public PositionSelector() {
-		init();
-	}
+    PositionSelector() {
+		init()
+    }
 
 	private void init() {
-		getChildren().clear();
-		setReadonly(true);
-		TemplateService service = Containers.get().findObject(TemplateService.class);
-		Template template = service.getTemplate(SiteContext.get().getCurrent());
-		if (template != null) {
-			List<String> positions = new ArrayList(template.getPositions());
-			Collections.sort(positions);
-			ZKUtil.fillCombobox(this, positions);
-		}
+		getChildren().clear()
+        setReadonly(true)
+        TemplateService service = Containers.get().findObject(TemplateService.class)
+        Template template = service.getTemplate(SiteContext.get().getCurrent())
+        if (template != null) {
+			List<String> positions = new ArrayList(template.getPositions())
+            Collections.sort(positions)
+            ZKUtil.fillCombobox(this, positions)
+        }
 
 	}
 

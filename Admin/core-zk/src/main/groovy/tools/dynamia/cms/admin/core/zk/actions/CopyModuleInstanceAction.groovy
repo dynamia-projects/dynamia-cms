@@ -31,42 +31,42 @@ import tools.dynamia.ui.UIMessages
 import tools.dynamia.zk.util.ZKUtil
 
 @InstallAction
-public class CopyModuleInstanceAction extends AbstractCrudAction {
+class CopyModuleInstanceAction extends AbstractCrudAction {
 
 	@Autowired
-	private ModulesService modulesService;
+	private ModulesService modulesService
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
 
-	public CopyModuleInstanceAction() {
-		setGroup(ActionGroup.get("CRUD"));
-		setName("Copy");
-		setImage("copy");
-	}
-
-	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    CopyModuleInstanceAction() {
+		setGroup(ActionGroup.get("CRUD"))
+        setName("Copy")
+        setImage("copy")
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(ModuleInstance.class);
-	}
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		ModuleInstance moduleInstance = (ModuleInstance) evt.getData();
-		if (moduleInstance != null) {
-			moduleInstance = crudService.reload(moduleInstance);
-			moduleInstance = moduleInstance.clone();
-			ModuleInstanceUI ui = new ModuleInstanceUI(moduleInstance);
-			ui.addAction(new SaveModuleInstanceAction(crudService, evt));
-			ZKUtil.showDialog(moduleInstance.getTitle(), ui, "90%", "90%");
-		} else {
-			UIMessages.showMessage("Select module instance", MessageType.ERROR);
-		}
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(ModuleInstance.class)
+    }
+
+	@Override
+    void actionPerformed(CrudActionEvent evt) {
+		ModuleInstance moduleInstance = (ModuleInstance) evt.getData()
+        if (moduleInstance != null) {
+			moduleInstance = crudService.reload(moduleInstance)
+            moduleInstance = moduleInstance.clone()
+            ModuleInstanceUI ui = new ModuleInstanceUI(moduleInstance)
+            ui.addAction(new SaveModuleInstanceAction(crudService, evt))
+            ZKUtil.showDialog(moduleInstance.getTitle(), ui, "90%", "90%")
+        } else {
+			UIMessages.showMessage("Select module instance", MessageType.ERROR)
+        }
 
 	}
 }

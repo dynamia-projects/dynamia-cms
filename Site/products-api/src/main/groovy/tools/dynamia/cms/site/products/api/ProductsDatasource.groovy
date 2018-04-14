@@ -24,23 +24,23 @@ import tools.dynamia.cms.site.products.dto.*
  *
  * @author Mario Serrano Leones
  */
-public interface ProductsDatasource {
+interface ProductsDatasource {
 
-    public List<ProductCategoryDTO> getCategories(Map<String, String> params);
+    List<ProductCategoryDTO> getCategories(Map<String, String> params)
 
-    public ProductCategoryDTO getCategory(Long externalRef, Map<String, String> params);
+    ProductCategoryDTO getCategory(Long externalRef, Map<String, String> params)
 
-    public List<ProductDTO> getProducts(Map<String, String> params);
+    List<ProductDTO> getProducts(Map<String, String> params)
 
-    public ProductDTO getProduct(Long externalRef, Map<String, String> params);
+    ProductDTO getProduct(Long externalRef, Map<String, String> params)
 
-    public List<ProductBrandDTO> getBrands(Map<String, String> params);
+    List<ProductBrandDTO> getBrands(Map<String, String> params)
 
-    public ProductBrandDTO getBrand(Long externalRef, Map<String, String> params);
+    ProductBrandDTO getBrand(Long externalRef, Map<String, String> params)
 
-    public List<StoreDTO> getStores(Map<String, String> params);
+    List<StoreDTO> getStores(Map<String, String> params)
 
-    public StoreDTO getStore(Long externalRef, Map<String, String> params);
+    StoreDTO getStore(Long externalRef, Map<String, String> params)
 
-    public List<RelatedProductDTO> getRelatedProducts(Map<String, String> params);
+    List<RelatedProductDTO> getRelatedProducts(Map<String, String> params)
 }

@@ -1,36 +1,36 @@
-package toosl.dynamia.cms.site.shoppingcart.api;
+package toosl.dynamia.cms.site.shoppingcart.api
 
-public class ShoppingOrderSenderException extends RuntimeException {
+class ShoppingOrderSenderException extends RuntimeException {
 
-	private String errorCode;
+	private String errorCode
 
-	public ShoppingOrderSenderException() {
-		super();
-		// TODO Auto-generated constructor stub
+    ShoppingOrderSenderException() {
+		super()
+        // TODO Auto-generated constructor stub
 	}
 
-	public ShoppingOrderSenderException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
+    ShoppingOrderSenderException(String message, Throwable cause) {
+		super(message, cause)
+        // TODO Auto-generated constructor stub
 	}
 
-	public ShoppingOrderSenderException(String message, String errorCode) {
-		super(message);
-		this.errorCode = errorCode;
+    ShoppingOrderSenderException(String message, String errorCode) {
+		super(message)
+        this.errorCode = errorCode
+    }
+
+    ShoppingOrderSenderException(String message) {
+		super(message)
+        // TODO Auto-generated constructor stub
 	}
 
-	public ShoppingOrderSenderException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
+    ShoppingOrderSenderException(Throwable cause) {
+		super(cause)
+        // TODO Auto-generated constructor stub
 	}
 
-	public ShoppingOrderSenderException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
-	}
-
-	public String getErrorCode() {
-		return errorCode;
-	}
+    String getErrorCode() {
+		return errorCode
+    }
 
 }

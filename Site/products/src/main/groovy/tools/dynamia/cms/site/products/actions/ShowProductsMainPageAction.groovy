@@ -37,100 +37,100 @@ import javax.servlet.http.Cookie
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ShowProductsMainPageAction implements SiteAction {
+class ShowProductsMainPageAction implements SiteAction {
 
-	private LoggingService logger = new SLF4JLoggingService(ShowProductsMainPageAction.class);
+	private LoggingService logger = new SLF4JLoggingService(ShowProductsMainPageAction.class)
 
-	@Autowired
-	private ProductsService service;
+    @Autowired
+	private ProductsService service
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
+
+    @Override
+    String getName() {
+		return "showMainProductPage"
+    }
 
 	@Override
-	public String getName() {
-		return "showMainProductPage";
-	}
+    void actionPerformed(ActionEvent evt) {
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
 
-		ModelAndView mv = evt.getModelAndView();
+        List<Product> mostViewed = service.getMostViewedProducts(evt.getSite())
+        List<Product> priceVariations = service.getPriceVariationsProducts(evt.getSite())
 
-		List<Product> mostViewed = service.getMostViewedProducts(evt.getSite());
-		List<Product> priceVariations = service.getPriceVariationsProducts(evt.getSite());
+        mv.addObject("prd_mostViewedProducts", mostViewed)
+        mv.addObject("prd_priceVariations", priceVariations)
 
-		mv.addObject("prd_mostViewedProducts", mostViewed);
-		mv.addObject("prd_priceVariations", priceVariations);
-
-		if (UserHolder.get().isAuthenticated()) {
-			loadRecentProductsFromUser(evt, mv);
-		} else {
+        if (UserHolder.get().isAuthenticated()) {
+			loadRecentProductsFromUser(evt, mv)
+        } else {
 			// loadRecentProductsFromCookies(evt, mv);
 		}
 
-		applyParams(mv);
+		applyParams(mv)
 
-	}
+    }
 
 	private void applyParams(ModelAndView mv) {
-		Map<String, Object> pageParams = (Map<String, Object>) mv.getModel().get("pageParams");
+		Map<String, Object> pageParams = (Map<String, Object>) mv.getModel().get("pageParams")
 
-	}
+    }
 
 	private void loadRecentProductsFromUser(ActionEvent evt, ModelAndView mv) {
 		try {
 
-			List<Product> recentViewed = service.getRecentProducts(UserHolder.get().getCurrent());
-			Product firstProduct = recentViewed.get(0);
-			List<Product> relatedProducts = service.getRelatedCategoryProducts(firstProduct);
-			mv.addObject("prd_recentViewedProducts", recentViewed);
-			mv.addObject("prd_relatedProducts", relatedProducts);
-		} catch (Exception e) {
-			System.out.println("ERROR loadRecentProductsFromUser " + e.getMessage());
-		}
+			List<Product> recentViewed = service.getRecentProducts(UserHolder.get().getCurrent())
+            Product firstProduct = recentViewed.get(0)
+            List<Product> relatedProducts = service.getRelatedCategoryProducts(firstProduct)
+            mv.addObject("prd_recentViewedProducts", recentViewed)
+            mv.addObject("prd_relatedProducts", relatedProducts)
+        } catch (Exception e) {
+			System.out.println("ERROR loadRecentProductsFromUser " + e.getMessage())
+        }
 
 	}
 
 	private void loadRecentProductsFromCookies(ActionEvent evt, ModelAndView mv) throws NumberFormatException {
 		try {
 			Cookie cookie = CMSUtil.getCookie(evt.getRequest(),
-					StoreController.RECENT_PRODUCTS_COOKIE_NAME + evt.getSite().getKey());
-			if (cookie != null) {
-				List<Long> ids = new ArrayList<>();
-				String values[] = StringUtils.commaDelimitedListToStringArray(cookie.getValue());
-				for (String idText : values) {
-					ids.add(new Long(idText));
-				}
+					StoreController.RECENT_PRODUCTS_COOKIE_NAME + evt.getSite().getKey())
+            if (cookie != null) {
+				List<Long> ids = new ArrayList<>()
+                String values[] = StringUtils.commaDelimitedListToStringArray(cookie.getValue())
+                for (String idText : values) {
+					ids.add(new Long(idText))
+                }
 				if (!ids.isEmpty()) {
 
-					List<Product> recentViewed = service.getProductsById(ids);
-					recentViewed = sortByIdList(recentViewed, ids);
+					List<Product> recentViewed = service.getProductsById(ids)
+                    recentViewed = sortByIdList(recentViewed, ids)
 
-					Product firstProduct = recentViewed.get(0);
-					List<Product> relatedProducts = service.getRelatedCategoryProducts(firstProduct);
-					mv.addObject("prd_recentViewedProducts", recentViewed);
-					mv.addObject("prd_relatedProducts", relatedProducts);
-				}
+                    Product firstProduct = recentViewed.get(0)
+                    List<Product> relatedProducts = service.getRelatedCategoryProducts(firstProduct)
+                    mv.addObject("prd_recentViewedProducts", recentViewed)
+                    mv.addObject("prd_relatedProducts", relatedProducts)
+                }
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Error processing RECENT PRODUCTS COOKIE", e);
-		}
+			e.printStackTrace()
+            logger.error("Error processing RECENT PRODUCTS COOKIE", e)
+        }
 	}
 
 	private List<Product> sortByIdList(List<Product> list, List<Long> ids) {
-		List<Product> resultList = new ArrayList<>();
-		for (Long id : ids) {
+		List<Product> resultList = new ArrayList<>()
+        for (Long id : ids) {
 			for (Product product : list) {
 				if (product.getId().equals(id)) {
-					resultList.add(product);
-					break;
-				}
+					resultList.add(product)
+                    break
+                }
 			}
 		}
-		return resultList;
+		return resultList
 
-	}
+    }
 
 }

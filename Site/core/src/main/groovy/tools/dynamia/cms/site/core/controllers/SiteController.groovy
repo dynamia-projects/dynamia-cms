@@ -30,24 +30,24 @@ import javax.servlet.http.HttpServletRequest
  * @author Mario Serrano Leones
  */
 @Controller
-public class SiteController {
+class SiteController {
 
     @Autowired
-    private SiteService service;
+    private SiteService service
 
     @ResponseBody
     @RequestMapping("/google{siteid}.html")
-    public String googleSiteVerification(@PathVariable String siteid, HttpServletRequest request) {
-        Site site = service.getSite(request);
+    String googleSiteVerification(@PathVariable String siteid, HttpServletRequest request) {
+        Site site = service.getSite(request)
         if (site == null) {
-            site = service.getMainSite();
+            site = service.getMainSite()
         }
 
-        String fullId = "google" + siteid + ".html";
+        String fullId = "google" + siteid + ".html"
         if (!fullId.equals(site.getGoogleSiteVerification())) {
-            fullId = "unknown";
+            fullId = "unknown"
         }
-        return "google-site-verification: " + fullId;
+        return "google-site-verification: " + fullId
 
     }
 }

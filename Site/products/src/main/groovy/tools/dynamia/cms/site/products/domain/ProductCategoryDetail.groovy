@@ -32,145 +32,145 @@ import javax.validation.constraints.NotNull
  */
 @Entity
 @Table(name = "prd_category_details")
-public class ProductCategoryDetail extends SimpleEntity implements SiteAware, Orderable, Cloneable {
+class ProductCategoryDetail extends SimpleEntity implements SiteAware, Orderable, Cloneable {
 
     @OneToOne
     @NotNull
-    private Site site;
+    private Site site
     @NotEmpty
-    private String name;
+    private String name
     @Column(name = "detvalues")
-    private String values;
-    private Long externalRef;
+    private String values
+    private Long externalRef
     @Column(name = "detorder")
-    private int order;
-    private long stock;
-    private long totalRef;
+    private int order
+    private long stock
+    private long totalRef
 
     @Transient
-    private List<String> currentValues;
+    private List<String> currentValues
 
     @Transient
-    private boolean selected;
+    private boolean selected
     @Transient
-    private String selectedValue;
+    private String selectedValue
 
     @ManyToOne
     @JsonIgnore
-    private ProductCategory category;
+    private ProductCategory category
 
-    private boolean filterable = true;
+    private boolean filterable = true
 
-    public List<String> getCurrentValues() {
+    List<String> getCurrentValues() {
         if (currentValues == null) {
-            currentValues = new ArrayList<String>();
+            currentValues = new ArrayList<String>()
         }
-        return currentValues;
+        return currentValues
     }
 
-    public long getStock() {
-        return stock;
+    long getStock() {
+        return stock
     }
 
-    public void setStock(long stock) {
-        this.stock = stock;
+    void setStock(long stock) {
+        this.stock = stock
     }
 
-    public long getTotalRef() {
-        return totalRef;
+    long getTotalRef() {
+        return totalRef
     }
 
-    public void setTotalRef(long totalRef) {
-        this.totalRef = totalRef;
+    void setTotalRef(long totalRef) {
+        this.totalRef = totalRef
     }
 
-    public boolean isFilterable() {
-        return filterable;
+    boolean isFilterable() {
+        return filterable
     }
 
-    public void setFilterable(boolean filterable) {
-        this.filterable = filterable;
+    void setFilterable(boolean filterable) {
+        this.filterable = filterable
     }
 
-    public int getOrder() {
-        return order;
+    int getOrder() {
+        return order
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    void setOrder(int order) {
+        this.order = order
     }
 
-    public Site getSite() {
-        return site;
+    Site getSite() {
+        return site
     }
 
-    public void setSite(Site site) {
-        this.site = site;
+    void setSite(Site site) {
+        this.site = site
     }
 
-    public ProductCategory getCategory() {
-        return category;
+    ProductCategory getCategory() {
+        return category
     }
 
-    public void setCategory(ProductCategory category) {
-        this.category = category;
+    void setCategory(ProductCategory category) {
+        this.category = category
     }
 
-    public Long getExternalRef() {
-        return externalRef;
+    Long getExternalRef() {
+        return externalRef
     }
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
+    void setExternalRef(Long externalRef) {
+        this.externalRef = externalRef
     }
 
-    public String getName() {
-        return name;
+    String getName() {
+        return name
     }
 
-    public void setName(String name) {
-        this.name = name;
+    void setName(String name) {
+        this.name = name
     }
 
-    public String getValues() {
-        return values;
+    String getValues() {
+        return values
     }
 
-    public void setValues(String values) {
-        this.values = values;
+    void setValues(String values) {
+        this.values = values
     }
 
-    public void sync(ProductCategoryDetailDTO dto) {
-        this.name = dto.getName();
-        this.values = dto.getValues();
-        this.externalRef = dto.getExternalRef();
-        this.order = dto.getOrder();
-        this.filterable = dto.isFilterable();
+    void sync(ProductCategoryDetailDTO dto) {
+        this.name = dto.getName()
+        this.values = dto.getValues()
+        this.externalRef = dto.getExternalRef()
+        this.order = dto.getOrder()
+        this.filterable = dto.isFilterable()
 
     }
 
-    public boolean isSelected() {
-        return selected;
+    boolean isSelected() {
+        return selected
     }
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
+    void setSelected(boolean selected) {
+        this.selected = selected
     }
 
-    public String getSelectedValue() {
-        return selectedValue;
+    String getSelectedValue() {
+        return selectedValue
     }
 
-    public void setSelectedValue(String selectedValue) {
-        this.selectedValue = selectedValue;
+    void setSelectedValue(String selectedValue) {
+        this.selectedValue = selectedValue
     }
 
     @Override
-    public ProductCategoryDetail clone() {
-        ProductCategoryDetail clone = new ProductCategoryDetail();
-        clone.currentValues = currentValues;
-        BeanUtils.setupBean(clone, this);
+    ProductCategoryDetail clone() {
+        ProductCategoryDetail clone = new ProductCategoryDetail()
+        clone.currentValues = currentValues
+        BeanUtils.setupBean(clone, this)
 
-        return clone;
+        return clone
     }
 }

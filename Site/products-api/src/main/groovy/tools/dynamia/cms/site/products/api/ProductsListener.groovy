@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.api;
+package tools.dynamia.cms.site.products.api
 
 /**
  * This interface is used by remote datasources to notify DynamiaCMS that some product or category as changed. ProductsListeners' implementation should be
@@ -21,13 +21,13 @@ package tools.dynamia.cms.site.products.api;
  *
  * @author Mario Serrano Leones
  */
-public interface ProductsListener {
+interface ProductsListener {
 
-    public void productChanged(DataChangedEvent evt);
+    void productChanged(DataChangedEvent evt)
 
-    public void categoryChanged(DataChangedEvent evt);
+    void categoryChanged(DataChangedEvent evt)
 
-    public void brandChanged(DataChangedEvent evt);
-    
-    public void storeChanged(DataChangedEvent evt);
+    void brandChanged(DataChangedEvent evt)
+
+    void storeChanged(DataChangedEvent evt)
 }

@@ -27,22 +27,22 @@ import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCart
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ViewShoppingCartAction implements SiteAction {
+class ViewShoppingCartAction implements SiteAction {
 
 	@Override
-	public String getName() {
-		return "viewShoppingCart";
-	}
+    String getName() {
+		return "viewShoppingCart"
+    }
 
 	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		mv.setViewName("shoppingcart/details");
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        mv.setViewName("shoppingcart/details")
 
-		ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
-		if (shoppingCart != null) {
-			mv.addObject("title", shoppingCart.getTitle());
-		}
+        ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv)
+        if (shoppingCart != null) {
+			mv.addObject("title", shoppingCart.getTitle())
+        }
 	}
 
 }

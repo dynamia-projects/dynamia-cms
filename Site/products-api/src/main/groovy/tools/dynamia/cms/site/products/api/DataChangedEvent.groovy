@@ -18,22 +18,22 @@ package tools.dynamia.cms.site.products.api
  *
  * @author Mario Serrano Leones
  */
-public class DataChangedEvent implements Serializable {
+class DataChangedEvent implements Serializable {
 
-    private String token;
-    private Long externalRef;
+    private String token
+    private Long externalRef
 
-    public DataChangedEvent(String token, Long externalRef) {
-        this.token = token;
-        this.externalRef = externalRef;
+    DataChangedEvent(String token, Long externalRef) {
+        this.token = token
+        this.externalRef = externalRef
     }
 
-    public String getToken() {
-        return token;
+    String getToken() {
+        return token
     }
 
-    public Long getExternalRef() {
-        return externalRef;
+    Long getExternalRef() {
+        return externalRef
     }
 
 }

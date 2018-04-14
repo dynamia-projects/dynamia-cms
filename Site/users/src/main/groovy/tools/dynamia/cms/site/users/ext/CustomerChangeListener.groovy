@@ -1,8 +1,8 @@
-package tools.dynamia.cms.site.users.ext;
+package tools.dynamia.cms.site.users.ext
 
-import tools.dynamia.cms.site.users.domain.User;
+import tools.dynamia.cms.site.users.domain.User
 
-public interface CustomerChangeListener {
+interface CustomerChangeListener {
 
-	public void onCustomerChange(User customer);
+	void onCustomerChange(User customer)
 }

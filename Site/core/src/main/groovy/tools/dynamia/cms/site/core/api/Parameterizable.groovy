@@ -15,8 +15,8 @@
  */
 package tools.dynamia.cms.site.core.api
 
-public interface Parameterizable {
+interface Parameterizable {
 
-	List<? extends Parameter> getParameters();
+	List<? extends Parameter> getParameters()
 
 }

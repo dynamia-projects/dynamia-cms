@@ -10,25 +10,25 @@ import tools.dynamia.cms.site.users.api.UserDTO
 import tools.dynamia.cms.site.users.services.UserService
 
 @CMSAction
-public class SaveExternalUserAction implements SiteAction {
+class SaveExternalUserAction implements SiteAction {
 
     @Autowired
-    private UserService service;
+    private UserService service
 
 
     @Override
-    public String getName() {
-        return "saveExternalUser";
+    String getName() {
+        return "saveExternalUser"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
+    void actionPerformed(ActionEvent evt) {
 
-        ModelAndView mv = new ModelAndView();
-        CMSUtil.redirectHome(mv);
+        ModelAndView mv = new ModelAndView()
+        CMSUtil.redirectHome(mv)
 
 
-        UserDTO dto = (UserDTO) evt.getRequest().getSession().getAttribute("externalUser");
+        UserDTO dto = (UserDTO) evt.getRequest().getSession().getAttribute("externalUser")
         if (dto != null) {
 
         }

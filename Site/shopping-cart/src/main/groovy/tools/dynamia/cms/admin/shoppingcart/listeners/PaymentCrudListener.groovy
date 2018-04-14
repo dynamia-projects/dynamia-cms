@@ -9,39 +9,39 @@ import tools.dynamia.domain.util.CrudServiceListenerAdapter
 import tools.dynamia.integration.sterotypes.Listener
 
 @Listener
-public class PaymentCrudListener extends CrudServiceListenerAdapter<Payment> {
+class PaymentCrudListener extends CrudServiceListenerAdapter<Payment> {
 
 	@Override
-	public void beforeCreate(Payment entity) {
+    void beforeCreate(Payment entity) {
 		if (entity.getSource() == null) {
 			try {
-				entity.setSource(SiteContext.get().getCurrent().getKey());
-			} catch (Exception e) {
+				entity.setSource(SiteContext.get().getCurrent().getKey())
+            } catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				e.printStackTrace()
+            }
 		}
 
 	}
 
 	@Override
-	public void beforeQuery(QueryParameters params) {
-		Class entityClass = params.getType();
+    void beforeQuery(QueryParameters params) {
+		Class entityClass = params.getType()
 
-		if (BeanUtils.isAssignable(entityClass, Payment.class)) {
+        if (BeanUtils.isAssignable(entityClass, Payment.class)) {
 
 			if (!params.containsKey("source")) {
-				String source = null;
-				try {
-					source = SiteContext.get().getCurrent().getKey();
-				} catch (Exception e) {
+				String source = null
+                try {
+					source = SiteContext.get().getCurrent().getKey()
+                } catch (Exception e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					e.printStackTrace()
+                }
 
 				if (source != null) {
-					params.put("source", QueryConditions.eq(source));
-				}
+					params.put("source", QueryConditions.eq(source))
+                }
 			}
 		}
 	}

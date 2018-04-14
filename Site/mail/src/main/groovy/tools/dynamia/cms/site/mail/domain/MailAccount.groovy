@@ -31,126 +31,126 @@ import javax.validation.constraints.NotNull
  */
 @Entity
 @Table(name = "ntf_email_accounts")
-public class MailAccount extends SimpleEntity implements SiteAware {
+class MailAccount extends SimpleEntity implements SiteAware {
 
 	@OneToOne
 	@NotNull
-	private Site site;
+	private Site site
 
-	@NotEmpty(message = "Enter account's name")
-	private String name;
-	@NotEmpty(message = "Enter account's username")
-	private String username;
-	private String password;
-	@NotEmpty(message = "Enter server host name or ip address")
-	private String serverAddress;
-	private String fromAddress;
-	private int port = 25;
-	private boolean useTTLS;
-	private boolean loginRequired;
-	private boolean preferred;
-	private String enconding;
-	private long timestamp;
+    @NotEmpty(message = "Enter account's name")
+	private String name
+    @NotEmpty(message = "Enter account's username")
+	private String username
+    private String password
+    @NotEmpty(message = "Enter server host name or ip address")
+	private String serverAddress
+    private String fromAddress
+    private int port = 25
+    private boolean useTTLS
+    private boolean loginRequired
+    private boolean preferred
+    private String enconding
+    private long timestamp
 
-	public long getTimestamp() {
-		return timestamp;
-	}
+    long getTimestamp() {
+		return timestamp
+    }
 
-	public void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;
-	}
+    void setTimestamp(long timestamp) {
+		this.timestamp = timestamp
+    }
 
-	public Site getSite() {
-		return site;
-	}
+    Site getSite() {
+		return site
+    }
 
-	public void setSite(Site site) {
-		this.site = site;
-	}
+    void setSite(Site site) {
+		this.site = site
+    }
 
-	public String getName() {
-		return name;
-	}
+    String getName() {
+		return name
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    void setName(String name) {
+		this.name = name
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    String getUsername() {
+		return username
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    void setUsername(String username) {
+		this.username = username
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    String getPassword() {
+		return password
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    void setPassword(String password) {
+		this.password = password
+    }
 
-	public String getServerAddress() {
-		return serverAddress;
-	}
+    String getServerAddress() {
+		return serverAddress
+    }
 
-	public void setServerAddress(String serverAddress) {
-		this.serverAddress = serverAddress;
-	}
+    void setServerAddress(String serverAddress) {
+		this.serverAddress = serverAddress
+    }
 
-	public String getFromAddress() {
-		return fromAddress;
-	}
+    String getFromAddress() {
+		return fromAddress
+    }
 
-	public void setFromAddress(String fromAddress) {
-		this.fromAddress = fromAddress;
-	}
+    void setFromAddress(String fromAddress) {
+		this.fromAddress = fromAddress
+    }
 
-	public int getPort() {
-		return port;
-	}
+    int getPort() {
+		return port
+    }
 
-	public void setPort(int port) {
-		this.port = port;
-	}
+    void setPort(int port) {
+		this.port = port
+    }
 
-	public boolean isUseTTLS() {
-		return useTTLS;
-	}
+    boolean isUseTTLS() {
+		return useTTLS
+    }
 
-	public void setUseTTLS(boolean useTTLS) {
-		this.useTTLS = useTTLS;
-	}
+    void setUseTTLS(boolean useTTLS) {
+		this.useTTLS = useTTLS
+    }
 
-	public boolean isLoginRequired() {
-		return loginRequired;
-	}
+    boolean isLoginRequired() {
+		return loginRequired
+    }
 
-	public void setLoginRequired(boolean loginRequired) {
-		this.loginRequired = loginRequired;
-	}
+    void setLoginRequired(boolean loginRequired) {
+		this.loginRequired = loginRequired
+    }
 
-	public boolean isPreferred() {
-		return preferred;
-	}
+    boolean isPreferred() {
+		return preferred
+    }
 
-	public void setPreferred(boolean preferred) {
-		this.preferred = preferred;
-	}
+    void setPreferred(boolean preferred) {
+		this.preferred = preferred
+    }
 
-	public String getEnconding() {
-		return enconding;
-	}
+    String getEnconding() {
+		return enconding
+    }
 
-	public void setEnconding(String enconding) {
-		this.enconding = enconding;
-	}
+    void setEnconding(String enconding) {
+		this.enconding = enconding
+    }
 
 	@Override
-	public String toString() {
-		return String.format("%s (%s)", name, fromAddress);
-	}
+    String toString() {
+		return String.format("%s (%s)", name, fromAddress)
+    }
 
 }

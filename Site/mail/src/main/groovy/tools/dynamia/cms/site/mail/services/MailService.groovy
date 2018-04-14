@@ -24,20 +24,20 @@ import tools.dynamia.cms.site.mail.domain.MailingContact
  *
  * @author ronald
  */
-public interface MailService {
+interface MailService {
 
-	public void send(MailMessage message);
+	void send(MailMessage message)
 
-	public void send(String to, String subject, String content);
+    void send(String to, String subject, String content)
 
-	public void setPreferredEmailAccount(MailAccount account);
+    void setPreferredEmailAccount(MailAccount account)
 
-	public MailAccount getPreferredEmailAccount(Site site);
+    MailAccount getPreferredEmailAccount(Site site)
 
-	public boolean existsMailingContact(MailingContact contact);
+    boolean existsMailingContact(MailingContact contact)
 
-	void sendAsync(MailMessage mailMessage);
+    void sendAsync(MailMessage mailMessage)
 
-	void sendAsync(String to, String subject, String content);
+    void sendAsync(String to, String subject, String content)
 
 }

@@ -32,37 +32,37 @@ import tools.dynamia.domain.ValidationError
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class SaveUserAction implements SiteAction {
+class SaveUserAction implements SiteAction {
 
     @Autowired
-    private UserService userService;
+    private UserService userService
 
     @Override
-    public String getName() {
-        return "saveUser";
+    String getName() {
+        return "saveUser"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView();
+    void actionPerformed(ActionEvent evt) {
+        ModelAndView mv = evt.getModelAndView()
 
-        mv.addObject("loginForm", new LoginForm(evt.getSite()));
+        mv.addObject("loginForm", new LoginForm(evt.getSite()))
         if (evt.getData() == null) {
-            UsersUtil.setupUserFormVar(mv, new UserForm(evt.getSite()));
-            mv.setViewName("redirect:/user/login");
-            return;
+            UsersUtil.setupUserFormVar(mv, new UserForm(evt.getSite()))
+            mv.setViewName("redirect:/user/login")
+            return
         }
 
-        UserForm userForm = (UserForm) evt.getData();
-        userForm.setSite(evt.getSite());
+        UserForm userForm = (UserForm) evt.getData()
+        userForm.setSite(evt.getSite())
         try {
-            userService.saveUser(userForm);
-            User user = userService.getUser(evt.getSite(), userForm.getData().getUsername());
-            mv.addObject("user", user);
+            userService.saveUser(userForm)
+            User user = userService.getUser(evt.getSite(), userForm.getData().getUsername())
+            mv.addObject("user", user)
         } catch (ValidationError e) {
-            mv.setViewName("users/login");
-            mv.addObject("errormessage", e.getMessage());
-            UsersUtil.setupUserFormVar(mv, userForm);
+            mv.setViewName("users/login")
+            mv.addObject("errormessage", e.getMessage())
+            UsersUtil.setupUserFormVar(mv, userForm)
         } 
 
     }

@@ -1,9 +1,9 @@
-package tools.dynamia.cms.site.products.api;
+package tools.dynamia.cms.site.products.api
 
-import tools.dynamia.cms.site.products.dto.ProductsReviewResponse;
+import tools.dynamia.cms.site.products.dto.ProductsReviewResponse
 
-public interface ProductReviewsConnector {
+interface ProductReviewsConnector {
 
-	public ProductsReviewResponse requestReviews(String requestUuid);
+	ProductsReviewResponse requestReviews(String requestUuid)
 
 }

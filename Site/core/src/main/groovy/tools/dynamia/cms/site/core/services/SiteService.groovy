@@ -24,24 +24,24 @@ import javax.servlet.http.HttpServletRequest
  *
  * @author Mario Serrano Leones
  */
-public interface SiteService {
+interface SiteService {
 
-	Site getMainSite();
+	Site getMainSite()
 
-	Site getSite(String key);
+    Site getSite(String key)
 
-	Site getSiteByDomain(String domainName);
+    Site getSiteByDomain(String domainName)
 
-	Site getSite(HttpServletRequest request);
+    Site getSite(HttpServletRequest request)
 
-	List<SiteParameter> getSiteParameters(Site site);
+    List<SiteParameter> getSiteParameters(Site site)
 
-	SiteParameter getSiteParameter(Site site, String name, String defaultValue);
+    SiteParameter getSiteParameter(Site site, String name, String defaultValue)
 
-	public void clearCache(Site site);
+    void clearCache(Site site)
 
-	public abstract String[] getSiteParameterAsArray(Site site, String name);
+    abstract String[] getSiteParameterAsArray(Site site, String name)
 
-	public List<Site> getOnlineSites();
+    List<Site> getOnlineSites()
 
 }

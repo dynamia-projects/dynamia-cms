@@ -10,36 +10,36 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "usr_logs")
-public class UserLog extends SiteBaseEntity {
+class UserLog extends SiteBaseEntity {
 
     @OneToOne
     @NotNull
-    private User user;
+    private User user
     @Column(length = 2000)
-    private String event;
+    private String event
 
-    public UserLog() {
+    UserLog() {
     }
 
-    public UserLog(User user, String event) {
-        this.user = user;
-        this.event = event;
-        setSite(user.getSite());
+    UserLog(User user, String event) {
+        this.user = user
+        this.event = event
+        setSite(user.getSite())
     }
 
-    public User getUser() {
-        return user;
+    User getUser() {
+        return user
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    void setUser(User user) {
+        this.user = user
     }
 
-    public String getEvent() {
-        return event;
+    String getEvent() {
+        return event
     }
 
-    public void setEvent(String event) {
-        this.event = event;
+    void setEvent(String event) {
+        this.event = event
     }
 }

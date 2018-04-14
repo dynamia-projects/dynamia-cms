@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
 /**
  *
  * @author Mario Serrano Leones
  * @since 1.2.0
  */
-public interface Aliasable {
+interface Aliasable {
 
-    public String getAlias();
+    String getAlias()
 
-    public void setAlias(String alias);
+    void setAlias(String alias)
 
-    public String aliasSource();
+    String aliasSource()
 
 }

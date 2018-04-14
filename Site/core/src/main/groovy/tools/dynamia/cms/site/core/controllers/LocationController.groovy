@@ -13,30 +13,30 @@ import tools.dynamia.domain.services.CrudService
 
 @RestController
 @RequestMapping("/api/locations")
-public class LocationController {
+class LocationController {
 
     @Autowired
-    private CrudService service;
+    private CrudService service
 
     @GetMapping("/countries")
-    public List<Country> getCountries() {
-        return service.findAll(Country.class, "name");
+    List<Country> getCountries() {
+        return service.findAll(Country.class, "name")
     }
 
     @GetMapping("/countries/{country}/regions")
-    public List<Region> getRegions(@PathVariable String country) {
+    List<Region> getRegions(@PathVariable String country) {
         return service.find(Region.class, QueryParameters.with("country.name", country)
-                .setAutocreateSearcheableStrings(false).orderBy("name"));
+                .setAutocreateSearcheableStrings(false).orderBy("name"))
 
     }
 
     @GetMapping("/countries/{country}/regions/{regionId}/cities")
-    public List<City> getCities(@PathVariable String country, @PathVariable Long regionId) {
+    List<City> getCities(@PathVariable String country, @PathVariable Long regionId) {
 
         return service.find(City.class, QueryParameters.with("region.country.name", country)
                 .add("region.id", regionId)
                 .setAutocreateSearcheableStrings(false)
-                .orderBy("name"));
+                .orderBy("name"))
 
     }
 }

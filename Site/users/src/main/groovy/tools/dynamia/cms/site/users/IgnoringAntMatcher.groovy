@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users;
+package tools.dynamia.cms.site.users
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public interface IgnoringAntMatcher {
+interface IgnoringAntMatcher {
 
-    String[] matchers();
+    String[] matchers()
 
 }

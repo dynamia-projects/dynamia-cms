@@ -27,25 +27,25 @@ import tools.dynamia.cms.site.users.domain.UserSiteConfig
  * @author Mario Serrano Leones
  */
 @CMSModule
-public class UsersAdminModule implements AdminModule {
+class UsersAdminModule implements AdminModule {
 
     @Override
-    public String getGroup() {
-        return "users";
+    String getGroup() {
+        return "users"
     }
 
     @Override
-    public String getName() {
-        return "Users";
+    String getName() {
+        return "Users"
     }
 
     @Override
-    public String getImage() {
-        return "fa-user";
+    String getImage() {
+        return "fa-user"
     }
 
     @Override
-    public AdminModuleOption[] getOptions() {
+    AdminModuleOption[] getOptions() {
         return [
                 new AdminModuleOption("users", "List", User.class, false, true, "users", true),
                 new AdminModuleOption("userConfig", "Configuration", UserSiteConfig.class, false, true),

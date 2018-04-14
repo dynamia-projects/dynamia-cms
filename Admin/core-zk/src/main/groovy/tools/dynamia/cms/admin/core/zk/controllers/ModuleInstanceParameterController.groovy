@@ -19,24 +19,24 @@ import tools.dynamia.cms.site.core.domain.ModuleInstance
 import tools.dynamia.cms.site.core.domain.ModuleInstanceParameter
 import tools.dynamia.zk.crud.CrudController
 
-public class ModuleInstanceParameterController extends CrudController<ModuleInstanceParameter> {
+class ModuleInstanceParameterController extends CrudController<ModuleInstanceParameter> {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3698793765557086771L;
+	private static final long serialVersionUID = 3698793765557086771L
 
-	@Override
-	public void newEntity() {
+    @Override
+    void newEntity() {
 		// TODO Auto-generated method stub
-		super.newEntity();
+		super.newEntity()
 
-		try {
-			getEntity().setModuleInstance((ModuleInstance) getParameter("moduleInstance"));
-		} catch (Exception e) {
+        try {
+			getEntity().setModuleInstance((ModuleInstance) getParameter("moduleInstance"))
+        } catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			e.printStackTrace()
+        }
 	}
 
 }

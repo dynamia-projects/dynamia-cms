@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
 /**
  * Created by Mario on 18/11/2014.
  */
-public interface Orderable {
+interface Orderable {
 
-    public int getOrder();
+    int getOrder()
 
-    public void setOrder(int order);
+    void setOrder(int order)
 }

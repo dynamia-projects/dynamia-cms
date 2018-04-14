@@ -11,32 +11,32 @@ import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer
 import tools.dynamia.zk.crud.actions.ViewDataAction
 
 @InstallAction
-public class OrderPaymentDetailAction extends ViewDataAction {
+class OrderPaymentDetailAction extends ViewDataAction {
 
-	public OrderPaymentDetailAction() {
-		setName("Payment");
-		setMenuSupported(true);
+	OrderPaymentDetailAction() {
+		setName("Payment")
+        setMenuSupported(true)
 
-	}
-
-	@Override
-	public ActionRenderer getRenderer() {
-		return new ToolbarbuttonActionRenderer(true);
-	}
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(ShoppingOrder.class);
-	}
+    ActionRenderer getRenderer() {
+		return new ToolbarbuttonActionRenderer(true)
+    }
 
 	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		ShoppingOrder order = (ShoppingOrder) evt.getData();
-		if (order != null) {
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(ShoppingOrder.class)
+    }
+
+	@Override
+    void actionPerformed(CrudActionEvent evt) {
+		ShoppingOrder order = (ShoppingOrder) evt.getData()
+        if (order != null) {
 			super.actionPerformed(
-					new CrudActionEvent(order.getTransaction(), evt.getSource(), evt.getView(), evt.getController()));
-		} else {
-			UIMessages.showMessage("Select order", MessageType.WARNING);
-		}
+					new CrudActionEvent(order.getTransaction(), evt.getSource(), evt.getView(), evt.getController()))
+        } else {
+			UIMessages.showMessage("Select order", MessageType.WARNING)
+        }
 	}
 }

@@ -18,40 +18,40 @@ import tools.dynamia.zk.util.ZKUtil
  *
  * @author Mario Serrano Leones
  */
-public class PaymentGatewaySelector extends Combobox {
+class PaymentGatewaySelector extends Combobox {
 
 	static {
-		ComponentAliasIndex.getInstance().add(PaymentGatewaySelector.class);
-	}
+		ComponentAliasIndex.getInstance().add(PaymentGatewaySelector.class)
+    }
 
-	public PaymentGatewaySelector() {
+    PaymentGatewaySelector() {
 		setItemRenderer(new ComboitemRenderer<PaymentGateway>() {
 
 			@Override
-			public void render(Comboitem item, PaymentGateway data, int index) throws Exception {
-				item.setValue(data);
-				item.setLabel(data.getName());
-			}
-		});
-		init();
-	}
+            void render(Comboitem item, PaymentGateway data, int index) throws Exception {
+				item.setValue(data)
+                item.setLabel(data.getName())
+            }
+		})
+        init()
+    }
 
-	public void init() {
+    void init() {
 
-		setReadonly(true);
+		setReadonly(true)
 
-		List<PaymentGateway> gateways = new ArrayList<>(Containers.get().findObjects(PaymentGateway.class));
-		if (gateways != null && !gateways.isEmpty()) {
+        List<PaymentGateway> gateways = new ArrayList<>(Containers.get().findObjects(PaymentGateway.class))
+        if (gateways != null && !gateways.isEmpty()) {
 
-			ZKUtil.fillCombobox(this, gateways);
-		}
+			ZKUtil.fillCombobox(this, gateways)
+        }
 	}
 
 	@Override
-	public void setParent(Component parent) {
-		super.setParent(parent); // To change body of generated methods, choose
+    void setParent(Component parent) {
+		super.setParent(parent) // To change body of generated methods, choose
 									// Tools | Templates.
-		init();
-	}
+		init()
+    }
 
 }

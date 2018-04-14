@@ -26,14 +26,14 @@ import tools.dynamia.domain.util.CrudServiceListenerAdapter
  * @author Mario Serrano Leones
  */
 @CMSListener
-public class ProductSiteConfigCrudListener extends CrudServiceListenerAdapter<ProductsSiteConfig> {
+class ProductSiteConfigCrudListener extends CrudServiceListenerAdapter<ProductsSiteConfig> {
 
     @Autowired
-    private ProductsService service;
-    
+    private ProductsService service
+
     @Override
-    public void beforeCreate(ProductsSiteConfig config) {
-        service.generateToken(config);
+    void beforeCreate(ProductsSiteConfig config) {
+        service.generateToken(config)
     }
     
     

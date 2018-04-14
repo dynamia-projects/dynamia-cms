@@ -30,54 +30,54 @@ import javax.validation.constraints.NotNull
  */
 @Entity
 @Table(name = "pg_pages_parameters")
-public class PageParameter extends SimpleEntity {
+class PageParameter extends SimpleEntity {
 
     @ManyToOne
     @NotNull
-    private Page page;
+    private Page page
     @Column(name = "paramName")
     @NotEmpty(message = "Enter parameter's name")
-    private String name;
+    private String name
     @Column(name = "paramValue")
     @NotEmpty(message = "Enter parameter's value")
-    private String value;
-    private boolean enabled = true;
+    private String value
+    private boolean enabled = true
 
-    public Page getPage() {
-        return page;
+    Page getPage() {
+        return page
     }
 
-    public void setPage(Page page) {
-        this.page = page;
+    void setPage(Page page) {
+        this.page = page
     }
 
-    public String getName() {
-        return name;
+    String getName() {
+        return name
     }
 
-    public void setName(String name) {
-        this.name = name;
+    void setName(String name) {
+        this.name = name
     }
 
-    public String getValue() {
-        return value;
+    String getValue() {
+        return value
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    void setValue(String value) {
+        this.value = value
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    boolean isEnabled() {
+        return enabled
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    void setEnabled(boolean enabled) {
+        this.enabled = enabled
     }
 
     @Override
-    public String toString() {
-        return value;
+    String toString() {
+        return value
     }
 
 }

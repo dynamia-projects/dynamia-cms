@@ -31,38 +31,38 @@ import tools.dynamia.cms.site.pages.services.PageService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class LoadPagesByCategoryAction implements SiteAction {
+class LoadPagesByCategoryAction implements SiteAction {
 
     @Autowired
-    private PageService service;
+    private PageService service
 
     @Override
-    public String getName() {
-        return "loadPagesByCategory";
+    String getName() {
+        return "loadPagesByCategory"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
+    void actionPerformed(ActionEvent evt) {
 
-        ModelAndView mv = evt.getModelAndView();
-        mv.setViewName("site/pagelist");
+        ModelAndView mv = evt.getModelAndView()
+        mv.setViewName("site/pagelist")
 
-        String categoryAlias = (String) evt.getData();
+        String categoryAlias = (String) evt.getData()
         if (categoryAlias == null) {
-            return;
+            return
         }
 
-        PageCategory pageCategory = service.getPageCategoryByAlias(evt.getSite(), categoryAlias);
+        PageCategory pageCategory = service.getPageCategoryByAlias(evt.getSite(), categoryAlias)
         if (pageCategory != null) {
-            mv.addObject("title", pageCategory.getName());
+            mv.addObject("title", pageCategory.getName())
 
-            List<Page> pages = service.getPages(evt.getSite(), pageCategory);
-            pages = CMSUtil.setupPagination(pages, evt.getRequest(), mv);
+            List<Page> pages = service.getPages(evt.getSite(), pageCategory)
+            pages = CMSUtil.setupPagination(pages, evt.getRequest(), mv)
 
-            mv.addObject("pages", pages);
+            mv.addObject("pages", pages)
 
             if (pages.isEmpty()) {
-                mv.setView(new RedirectView("/", true, true, false));                
+                mv.setView(new RedirectView("/", true, true, false))
             }
         }
 

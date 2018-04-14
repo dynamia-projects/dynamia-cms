@@ -13,57 +13,57 @@ import javax.persistence.Table
  */
 @Entity
 @Table(name = "cr_loc_countries")
-public class Country extends SiteSimpleEntity {
+class Country extends SiteSimpleEntity {
 
-    private String name;
-    private String code;
+    private String name
+    private String code
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Region> regions = new ArrayList<>();
+    private List<Region> regions = new ArrayList<>()
     @JsonIgnore
-    private String externalRef;
+    private String externalRef
 
 
-    public String getName() {
-        return name;
+    String getName() {
+        return name
     }
 
-    public void setName(String name) {
-        this.name = name;
+    void setName(String name) {
+        this.name = name
     }
 
-    public String getCode() {
-        return code;
+    String getCode() {
+        return code
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    void setCode(String code) {
+        this.code = code
     }
 
-    public List<Region> getRegions() {
-        return regions;
+    List<Region> getRegions() {
+        return regions
     }
 
-    public void setRegions(List<Region> regions) {
-        this.regions = regions;
+    void setRegions(List<Region> regions) {
+        this.regions = regions
     }
 
     @Override
-    public String toString() {
-        return name;
+    String toString() {
+        return name
     }
 
-    public void sync(CountryDTO dto) {
-        name = dto.getName();
-        code = dto.getCode();
-        externalRef = dto.getExternalRef();
+    void sync(CountryDTO dto) {
+        name = dto.getName()
+        code = dto.getCode()
+        externalRef = dto.getExternalRef()
     }
 
-    public String getExternalRef() {
-        return externalRef;
+    String getExternalRef() {
+        return externalRef
     }
 
-    public void setExternalRef(String externalRef) {
-        this.externalRef = externalRef;
+    void setExternalRef(String externalRef) {
+        this.externalRef = externalRef
     }
 }

@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core.api;
+package tools.dynamia.cms.site.core.api
 
-public interface URLProvider {
+interface URLProvider {
 
-	public String getURL();
+	String getURL()
 
 }

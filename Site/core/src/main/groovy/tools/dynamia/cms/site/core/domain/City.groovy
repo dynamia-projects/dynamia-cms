@@ -12,56 +12,56 @@ import javax.persistence.Table
  */
 @Entity
 @Table(name = "cr_loc_cities")
-public class City extends SiteSimpleEntity {
+class City extends SiteSimpleEntity {
 
     @ManyToOne
     @JsonIgnore
-    private Region region;
-    private String name;
-    private String code;
+    private Region region
+    private String name
+    private String code
     @JsonIgnore
-    private String externalRef;
+    private String externalRef
 
-    public String getName() {
-        return name;
+    String getName() {
+        return name
     }
 
-    public void setName(String name) {
-        this.name = name;
+    void setName(String name) {
+        this.name = name
     }
 
-    public String getCode() {
-        return code;
+    String getCode() {
+        return code
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    void setCode(String code) {
+        this.code = code
     }
 
-    public Region getRegion() {
-        return region;
+    Region getRegion() {
+        return region
     }
 
-    public void setRegion(Region region) {
-        this.region = region;
+    void setRegion(Region region) {
+        this.region = region
     }
 
     @Override
-    public String toString() {
-        return String.format("%s, %s", name, region);
+    String toString() {
+        return String.format("%s, %s", name, region)
     }
 
-    public void sync(CityDTO dto) {
-        name = dto.getName();
-        code = dto.getCode();
-        externalRef = dto.getExternalRef();
+    void sync(CityDTO dto) {
+        name = dto.getName()
+        code = dto.getCode()
+        externalRef = dto.getExternalRef()
     }
 
-    public String getExternalRef() {
-        return externalRef;
+    String getExternalRef() {
+        return externalRef
     }
 
-    public void setExternalRef(String externalRef) {
-        this.externalRef = externalRef;
+    void setExternalRef(String externalRef) {
+        this.externalRef = externalRef
     }
 }

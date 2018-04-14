@@ -35,90 +35,90 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(name = "prd_brands")
 @BatchSize(size = 50)
-public class ProductBrand extends SimpleEntity implements SiteAware {
+class ProductBrand extends SimpleEntity implements SiteAware {
 
 	@OneToOne
 	@NotNull
-	private Site site;
+	private Site site
 
-	@NotEmpty
-	private String name;
-	private String website;
-	private String description;
-	private Long externalRef;
-	private String image;
-	@Column(name = "brandAlias")
-	private String alias;
+    @NotEmpty
+	private String name
+    private String website
+    private String description
+    private Long externalRef
+    private String image
+    @Column(name = "brandAlias")
+	private String alias
 
-	public String getAlias() {
-		return alias;
-	}
+    String getAlias() {
+		return alias
+    }
 
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
+    void setAlias(String alias) {
+		this.alias = alias
+    }
 
-	public Site getSite() {
-		return site;
-	}
+    Site getSite() {
+		return site
+    }
 
-	public void setSite(Site site) {
-		this.site = site;
-	}
+    void setSite(Site site) {
+		this.site = site
+    }
 
-	public String getImage() {
-		return image;
-	}
+    String getImage() {
+		return image
+    }
 
-	public void setImage(String image) {
-		this.image = image;
-	}
+    void setImage(String image) {
+		this.image = image
+    }
 
-	public Long getExternalRef() {
-		return externalRef;
-	}
+    Long getExternalRef() {
+		return externalRef
+    }
 
-	public void setExternalRef(Long externalRef) {
-		this.externalRef = externalRef;
-	}
+    void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef
+    }
 
-	public String getName() {
-		return name;
-	}
+    String getName() {
+		return name
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    void setName(String name) {
+		this.name = name
+    }
 
-	public String getWebsite() {
-		return website;
-	}
+    String getWebsite() {
+		return website
+    }
 
-	public void setWebsite(String website) {
-		this.website = website;
-	}
+    void setWebsite(String website) {
+		this.website = website
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    String getDescription() {
+		return description
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    void setDescription(String description) {
+		this.description = description
+    }
 
-	public void sync(ProductBrandDTO r) {
-		description = r.getDescription();
-		externalRef = r.getExternalRef();
-		if (r.getImage() != null && !r.getImage().isEmpty()) {
-			image = r.getImage();
-		}
-		name = r.getName();
-		website = r.getWebsite();
-	}
+    void sync(ProductBrandDTO r) {
+		description = r.getDescription()
+        externalRef = r.getExternalRef()
+        if (r.getImage() != null && !r.getImage().isEmpty()) {
+			image = r.getImage()
+        }
+		name = r.getName()
+        website = r.getWebsite()
+    }
 
 	@Override
-	public String toString() {
-		return getName();
-	}
+    String toString() {
+		return getName()
+    }
 
 }

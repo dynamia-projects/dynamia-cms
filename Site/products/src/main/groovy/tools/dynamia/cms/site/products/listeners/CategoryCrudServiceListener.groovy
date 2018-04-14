@@ -25,23 +25,23 @@ import tools.dynamia.domain.util.CrudServiceListenerAdapter
  * @author Mario Serrano Leones
  */
 @CMSListener
-public class CategoryCrudServiceListener extends CrudServiceListenerAdapter<ProductCategory> {
+class CategoryCrudServiceListener extends CrudServiceListenerAdapter<ProductCategory> {
 
     @Override
-    public void beforeCreate(ProductCategory entity) {
-        generateAlias(entity);
+    void beforeCreate(ProductCategory entity) {
+        generateAlias(entity)
     }
 
     @Override
-    public void beforeUpdate(ProductCategory entity) {
-        generateAlias(entity);
+    void beforeUpdate(ProductCategory entity) {
+        generateAlias(entity)
     }
 
     private void generateAlias(ProductCategory entity) {
-        String name = entity.getName();
+        String name = entity.getName()
 
-        name = StringUtils.simplifiedString(name);
-        entity.setAlias(name);
+        name = StringUtils.simplifiedString(name)
+        entity.setAlias(name)
     }
 
 }

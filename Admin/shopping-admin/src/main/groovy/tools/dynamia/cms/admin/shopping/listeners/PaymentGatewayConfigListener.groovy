@@ -10,32 +10,32 @@ import tools.dynamia.domain.query.QueryParameters
 import tools.dynamia.domain.util.CrudServiceListenerAdapter
 
 @CMSListener
-public class PaymentGatewayConfigListener extends CrudServiceListenerAdapter<PaymentGatewayConfig> {
+class PaymentGatewayConfigListener extends CrudServiceListenerAdapter<PaymentGatewayConfig> {
 
 	@Autowired
-	private PaymentService service;
+	private PaymentService service
 
-	@Override
-	public void beforeCreate(PaymentGatewayConfig entity) {
+    @Override
+    void beforeCreate(PaymentGatewayConfig entity) {
 		if (entity.getSource() == null || entity.getSource().isEmpty()) {
-			String siteKey = SiteContext.get().getCurrent().getKey();
-			entity.setSource(siteKey);
-		}
+			String siteKey = SiteContext.get().getCurrent().getKey()
+            entity.setSource(siteKey)
+        }
 
 		if (entity.getGatewayId() == null || entity.getGatewayId().isEmpty()) {
-			PaymentGateway gateway = service.getDefaultGateway();
-			if (gateway != null) {
-				entity.setGatewayId(gateway.getId());
-			}
+			PaymentGateway gateway = service.getDefaultGateway()
+            if (gateway != null) {
+				entity.setGatewayId(gateway.getId())
+            }
 		}
 	}
 
 	@Override
-	public void beforeQuery(QueryParameters params) {
+    void beforeQuery(QueryParameters params) {
 		if (params.getType() == PaymentGatewayConfig.class) {
-			String siteKey = SiteContext.get().getCurrent().getKey();
-			params.add("source", siteKey);
-		}
+			String siteKey = SiteContext.get().getCurrent().getKey()
+            params.add("source", siteKey)
+        }
 	}
 
 }

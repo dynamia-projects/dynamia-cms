@@ -34,48 +34,48 @@ import javax.servlet.http.HttpServletResponse
  * @author Mario Serrano Leones
  */
 @CMSExtension
-public class UtilsVarSiteInterceptor extends SiteRequestInterceptorAdapter {
+class UtilsVarSiteInterceptor extends SiteRequestInterceptorAdapter {
 
 	@Autowired
-	private SiteService service;
+	private SiteService service
 
-	@Autowired
-	private ModulesService modulesService;
+    @Autowired
+	private ModulesService modulesService
 
-	@Override
-	public void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response,
-			ModelAndView modelAndView) {
+    @Override
+    void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response,
+                      ModelAndView modelAndView) {
 		if (modelAndView == null) {
-			return;
-		}
+			return
+        }
 
-		String requestURI = request.getRequestURI();
-		String requestURL = request.getRequestURL().toString();
+		String requestURI = request.getRequestURI()
+        String requestURL = request.getRequestURL().toString()
 
-		if (requestURI != null) {
-			modelAndView.addObject("currentURI", requestURI);
-		}
+        if (requestURI != null) {
+			modelAndView.addObject("currentURI", requestURI)
+        }
 		if (requestURL != null) {
-			modelAndView.addObject("currentURL", requestURL);
-		}
-		modelAndView.addObject("site", site);
-		modelAndView.addObject("siteParams", createParams(site));
-		modelAndView.addObject("cmsUtil", new CMSUtil(site));
-		if (modelAndView.getModel().get("cmsModules") == null) {
-			modelAndView.addObject("cmsModules", new CMSModules(site, modulesService));
-		}
+			modelAndView.addObject("currentURL", requestURL)
+        }
+		modelAndView.addObject("site", site)
+        modelAndView.addObject("siteParams", createParams(site))
+        modelAndView.addObject("cmsUtil", new CMSUtil(site))
+        if (modelAndView.getModel().get("cmsModules") == null) {
+			modelAndView.addObject("cmsModules", new CMSModules(site, modulesService))
+        }
 
 	}
 
 	private Object createParams(Site site) {
-		Map<String, String> map = new HashMap<>();
-		try {
+		Map<String, String> map = new HashMap<>()
+        try {
 			for (SiteParameter p : service.getSiteParameters(site)) {
-				map.put(p.getName(), p.getValue());
-			}
+				map.put(p.getName(), p.getValue())
+            }
 		} catch (Exception e) {
 		}
-		return map;
-	}
+		return map
+    }
 
 }

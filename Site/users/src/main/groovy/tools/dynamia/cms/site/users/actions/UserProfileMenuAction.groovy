@@ -13,40 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users.actions;
+package tools.dynamia.cms.site.users.actions
 
-import tools.dynamia.cms.site.core.api.CMSAction;
+import tools.dynamia.cms.site.core.api.CMSAction
 
 /**
  *
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class UserProfileMenuAction implements UserMenuAction {
+class UserProfileMenuAction implements UserMenuAction {
 
     @Override
-    public String getLabel() {
-        return "Mi informacion personal";
+    String getLabel() {
+        return "Mi informacion personal"
     }
 
     @Override
-    public String getDescription() {
-        return "Actualizar datos personales";
+    String getDescription() {
+        return "Actualizar datos personales"
     }
 
     @Override
-    public String getIcon() {
-        return null;
+    String getIcon() {
+        return null
     }
 
     @Override
-    public int getOrder() {
-        return 2;
+    int getOrder() {
+        return 2
     }
 
     @Override
-    public String action() {
-        return "users/profile";
+    String action() {
+        return "users/profile"
     }
 
 }

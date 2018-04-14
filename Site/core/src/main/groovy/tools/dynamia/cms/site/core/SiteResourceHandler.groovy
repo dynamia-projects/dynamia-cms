@@ -33,100 +33,100 @@ import java.nio.file.Paths
  *
  * @author Mario Serrano Leones
  */
-public class SiteResourceHandler extends ResourceHttpRequestHandler {
+class SiteResourceHandler extends ResourceHttpRequestHandler {
 
-	private final static String THUMBNAILS = "/thumbnails/";
+	private final static String THUMBNAILS = "/thumbnails/"
 
-	@Override
+    @Override
 	protected Resource getResource(HttpServletRequest request) {
 
-		SiteService coreService = Containers.get().findObject(SiteService.class);
-		Site site = coreService.getSite(request);
-		if (site == null) {
-			site = coreService.getMainSite();
-		}
+		SiteService coreService = Containers.get().findObject(SiteService.class)
+        Site site = coreService.getSite(request)
+        if (site == null) {
+			site = coreService.getMainSite()
+        }
 
 		if (site == null) {
-			throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.getServerName());
-		}
+			throw new SiteNotFoundException("Cannot load resources. Site Not found for " + request.getServerName())
+        }
 
-		Path dir = resolveResourceDirectory(site);
-		Path resource = Paths.get(request.getPathInfo());
+		Path dir = resolveResourceDirectory(site)
+        Path resource = Paths.get(request.getPathInfo())
 
-		resource = resource.subpath(1, resource.getNameCount());
-		if (isPrivateResource(resource)) {
-			return null;
-		}
+        resource = resource.subpath(1, resource.getNameCount())
+        if (isPrivateResource(resource)) {
+			return null
+        }
 		if (Files.isDirectory(dir.resolve(resource))) {
-			resource = resource.resolve("index.html");
-		}
+			resource = resource.resolve("index.html")
+        }
 
-		File file = dir.resolve(resource).toFile();
-		if (ImageUtil.isImage(file)) {
+		File file = dir.resolve(resource).toFile()
+        if (ImageUtil.isImage(file)) {
 
 			if (isThumbnail(request)) {
-				file = createOrLoadThumbnail(file, resource.toString(), request);
-			}
+				file = createOrLoadThumbnail(file, resource.toString(), request)
+            }
 
 			if (!file.exists()) {
-				file = dir.resolve("images/nophoto.jpg").toFile();
-			}
+				file = dir.resolve("images/nophoto.jpg").toFile()
+            }
 		}
 		if (!file.exists()) {
-			return null;
-		}
+			return null
+        }
 
-		return new FileSystemResource(file);
-	}
+		return new FileSystemResource(file)
+    }
 
 	private boolean isPrivateResource(Path resource) {
 		for (String folder : DynamiaCMS.getPrivateLocations()) {
 
 			if (resource.toString().startsWith(folder)) {
-				return true;
-			}
+				return true
+            }
 		}
 
-		return false;
-	}
+		return false
+    }
 
 	protected Path resolveResourceDirectory(Site site) {
-		return DynamiaCMS.getSitesResourceLocation(site);
-	}
+		return DynamiaCMS.getSitesResourceLocation(site)
+    }
 
 	private boolean isThumbnail(HttpServletRequest request) {
-		return request.getPathInfo().contains(THUMBNAILS);
-	}
+		return request.getPathInfo().contains(THUMBNAILS)
+    }
 
 	private File createOrLoadThumbnail(File file, String uri, HttpServletRequest request) {
 
-		String fileName = file.getName();
-		String baseUri = file.getParentFile().getParent();
+		String fileName = file.getName()
+        String baseUri = file.getParentFile().getParent()
 
-		String w = getParam(request, "w", "200");
-		String h = getParam(request, "h", "200");
-		String subfolder = w + "x" + h;
-		File realThumbImg = new File(baseUri + "/" + subfolder + "/" + fileName);
-		if (!realThumbImg.exists()) {
-			File realImg = new File(baseUri, fileName);
-			if (realImg.exists()) {
-				String format = IOUtils.getFileExtension(realImg);
-				ImageUtil.resizeImage(realImg, realThumbImg, format, Integer.parseInt(w), Integer.parseInt(h));
-			}
+        String w = getParam(request, "w", "200")
+        String h = getParam(request, "h", "200")
+        String subfolder = w + "x" + h
+        File realThumbImg = new File(baseUri + "/" + subfolder + "/" + fileName)
+        if (!realThumbImg.exists()) {
+			File realImg = new File(baseUri, fileName)
+            if (realImg.exists()) {
+				String format = IOUtils.getFileExtension(realImg)
+                ImageUtil.resizeImage(realImg, realThumbImg, format, Integer.parseInt(w), Integer.parseInt(h))
+            }
 		}
 		if (realThumbImg.exists()) {
-			return realThumbImg;
-		} else {
-			return file;
-		}
+			return realThumbImg
+        } else {
+			return file
+        }
 
 	}
 
-	public String getParam(HttpServletRequest request, String name, String defaultValue) {
-		String value = request.getParameter(name);
-		if (value == null || value.trim().isEmpty()) {
-			value = defaultValue;
-		}
-		return value;
-	}
+    String getParam(HttpServletRequest request, String name, String defaultValue) {
+		String value = request.getParameter(name)
+        if (value == null || value.trim().isEmpty()) {
+			value = defaultValue
+        }
+		return value
+    }
 }

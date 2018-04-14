@@ -26,23 +26,23 @@ import tools.dynamia.cms.site.products.listeners.ProductListenerImpl
  * @author Mario Serrano Leones
  */
 @Configuration
-public class ProductsConfig {
+class ProductsConfig {
 
-    public ProductsConfig() {
-        System.out.println(">>>>CREANDO " + getClass());
+    ProductsConfig() {
+        System.out.println(">>>>CREANDO " + getClass())
     }
 
     @Bean(name = "/services/ProductsListenerService")
-    public HttpInvokerServiceExporter productListenerExporter() {
-        HttpInvokerServiceExporter exporter = new HttpInvokerServiceExporter();
-        exporter.setService(productListener());
-        exporter.setServiceInterface(ProductsListener.class);
-        return exporter;
+    HttpInvokerServiceExporter productListenerExporter() {
+        HttpInvokerServiceExporter exporter = new HttpInvokerServiceExporter()
+        exporter.setService(productListener())
+        exporter.setServiceInterface(ProductsListener.class)
+        return exporter
     }
 
     @Bean
-    public ProductsListener productListener() {
-        return new ProductListenerImpl();
+    ProductsListener productListener() {
+        return new ProductListenerImpl()
     }
 
 }

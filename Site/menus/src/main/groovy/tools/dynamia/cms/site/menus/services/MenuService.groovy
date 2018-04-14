@@ -25,18 +25,18 @@ import tools.dynamia.cms.site.menus.domain.MenuItem
  *
  * @author Mario Serrano Leones
  */
-public interface MenuService {
+interface MenuService {
 
-	Menu getMainMenu(Site site);
+	Menu getMainMenu(Site site)
 
-	MenuContext setupMenuItem(MenuItem menuItem);
+    MenuContext setupMenuItem(MenuItem menuItem)
 
-	public Menu getMenu(Site site, String alias);
+    Menu getMenu(Site site, String alias)
 
-	public Menu getMenu(Site site, Long id);
+    Menu getMenu(Site site, Long id)
 
-	MenuItemType getMenuItemType(MenuItem menuItem);
+    MenuItemType getMenuItemType(MenuItem menuItem)
 
-	List<MenuItem> getItems(Menu menu);
+    List<MenuItem> getItems(Menu menu)
 
 }

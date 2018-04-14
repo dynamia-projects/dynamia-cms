@@ -10,50 +10,50 @@ import tools.dynamia.viewers.util.Viewers
 import tools.dynamia.zk.viewers.form.FormView
 import tools.dynamia.zk.viewers.table.TableView
 
-public class ShoppingOrderDetailsUI extends Div {
+class ShoppingOrderDetailsUI extends Div {
 
-	private ShoppingOrder shoppingOrder;
+	private ShoppingOrder shoppingOrder
 
-	public ShoppingOrderDetailsUI(ShoppingOrder order) {
-		this.shoppingOrder = order;
-		createUI();
-	}
+    ShoppingOrderDetailsUI(ShoppingOrder order) {
+		this.shoppingOrder = order
+        createUI()
+    }
 
 	private void createUI() {
 
-		FormView<ShoppingOrder> orderFormView = (FormView<ShoppingOrder>) Viewers.getView(ShoppingOrder.class, "form", shoppingOrder);
-		orderFormView.setReadOnly(true);
+		FormView<ShoppingOrder> orderFormView = (FormView<ShoppingOrder>) Viewers.getView(ShoppingOrder.class, "form", shoppingOrder)
+        orderFormView.setReadOnly(true)
 
-		FormView<PaymentTransaction> txFormView = (FormView<PaymentTransaction>) Viewers.getView(PaymentTransaction.class, "form",
-				shoppingOrder.getTransaction());
-		txFormView.setReadOnly(true);
-		txFormView.setVflex("min");
+        FormView<PaymentTransaction> txFormView = (FormView<PaymentTransaction>) Viewers.getView(PaymentTransaction.class, "form",
+				shoppingOrder.getTransaction())
+        txFormView.setReadOnly(true)
+        txFormView.setVflex("min")
 
-		TableView<ShoppingCartItem> itemTableView = (TableView<ShoppingCartItem>) Viewers.getView(ShoppingCartItem.class, "table",
-				shoppingOrder.getShoppingCart().getItems());
+        TableView<ShoppingCartItem> itemTableView = (TableView<ShoppingCartItem>) Viewers.getView(ShoppingCartItem.class, "table",
+				shoppingOrder.getShoppingCart().getItems())
 
-		itemTableView.setVflex(null);
-		itemTableView.setHeight("400px");
+        itemTableView.setVflex(null)
+        itemTableView.setHeight("400px")
 
-		orderFormView.setParent(this);
+        orderFormView.setParent(this)
 
-		Groupbox title = new Groupbox();
-		title.setMold("3d");
-		title.setOpen(false);
-		title.setClosable(false);
-		title.appendChild(new Caption("Transaction Details"));
-		title.setParent(this);
+        Groupbox title = new Groupbox()
+        title.setMold("3d")
+        title.setOpen(false)
+        title.setClosable(false)
+        title.appendChild(new Caption("Transaction Details"))
+        title.setParent(this)
 
-		txFormView.setParent(this);
+        txFormView.setParent(this)
 
-		title = new Groupbox();
-		title.setMold("3d");
-		title.setOpen(false);
-		title.setClosable(false);
-		title.appendChild(new Caption("Order Details"));
-		title.setParent(this);
+        title = new Groupbox()
+        title.setMold("3d")
+        title.setOpen(false)
+        title.setClosable(false)
+        title.appendChild(new Caption("Order Details"))
+        title.setParent(this)
 
-		itemTableView.setParent(this);
-	}
+        itemTableView.setParent(this)
+    }
 
 }

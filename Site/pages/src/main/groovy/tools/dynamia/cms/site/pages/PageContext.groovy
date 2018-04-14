@@ -26,49 +26,49 @@ import javax.servlet.http.HttpServletRequest
  *
  * @author Mario Serrano Leones
  */
-public class PageContext implements Serializable {
+class PageContext implements Serializable {
 
-    private Page page;
-    private Site site;
-    private HttpServletRequest request;
-    private ModelAndView modelAndView;
-    private List<PageParameter> parameters;
+    private Page page
+    private Site site
+    private HttpServletRequest request
+    private ModelAndView modelAndView
+    private List<PageParameter> parameters
 
-    public PageContext(Page page, Site site, ModelAndView modelAndView, HttpServletRequest request) {
-        this.page = page;
-        this.site = site;
-        this.modelAndView = modelAndView;
-        this.request = request;
+    PageContext(Page page, Site site, ModelAndView modelAndView, HttpServletRequest request) {
+        this.page = page
+        this.site = site
+        this.modelAndView = modelAndView
+        this.request = request
         if (page != null) {
-            this.parameters = page.getParameters();
+            this.parameters = page.getParameters()
         }
     }
 
-    public Site getSite() {
-        return site;
+    Site getSite() {
+        return site
     }
 
-    public Page getPage() {
-        return page;
+    Page getPage() {
+        return page
     }
 
-    public ModelAndView getModelAndView() {
-        return modelAndView;
+    ModelAndView getModelAndView() {
+        return modelAndView
     }
 
-    public HttpServletRequest getRequest() {
-        return request;
+    HttpServletRequest getRequest() {
+        return request
     }
 
-    public PageParameter getParameter(String name) {
+    PageParameter getParameter(String name) {
         if (parameters != null) {
             for (PageParameter param : parameters) {
                 if (param.getName().equals(name)) {
-                    return param;
+                    return param
                 }
             }
         }
-        return null;
+        return null
     }
 
 }

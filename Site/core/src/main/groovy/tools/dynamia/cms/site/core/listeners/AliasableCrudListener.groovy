@@ -26,28 +26,28 @@ import tools.dynamia.integration.sterotypes.Listener
  * @since 1.2.0
  */
 @Listener
-public class AliasableCrudListener extends CrudServiceListenerAdapter<Aliasable> {
+class AliasableCrudListener extends CrudServiceListenerAdapter<Aliasable> {
 
     @Override
-    public void beforeCreate(Aliasable entity) {
-        createAlias(entity);
+    void beforeCreate(Aliasable entity) {
+        createAlias(entity)
     }
 
     @Override
-    public void beforeUpdate(Aliasable entity) {
-        createAlias(entity);
+    void beforeUpdate(Aliasable entity) {
+        createAlias(entity)
     }
 
     private void createAlias(Aliasable entity) {
         if (entity.getAlias() == null || entity.getAlias().isEmpty()) {
             if (entity.getAlias() == null || entity.getAlias().isEmpty()) {
-                entity.setAlias(entity.aliasSource());
+                entity.setAlias(entity.aliasSource())
                 if (entity.getAlias() != null && entity.getAlias().length() > 255) {
-                    String alias = entity.getAlias().substring(0, 254);
-                    entity.setAlias(alias);
+                    String alias = entity.getAlias().substring(0, 254)
+                    entity.setAlias(alias)
                 }
             }
-            entity.setAlias(StringUtils.simplifiedString(entity.getAlias()));
+            entity.setAlias(StringUtils.simplifiedString(entity.getAlias()))
         }
     }
 

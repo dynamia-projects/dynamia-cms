@@ -26,25 +26,25 @@ import tools.dynamia.cms.site.mail.domain.MailTemplate
  * @author Mario Serrano Leones
  */
 @CMSModule
-public class MailAdminModule implements AdminModule {
+class MailAdminModule implements AdminModule {
 
     @Override
-    public String getGroup() {
-        return "mail";
+    String getGroup() {
+        return "mail"
     }
 
     @Override
-    public String getName() {
-        return "Email";
+    String getName() {
+        return "Email"
     }
 
     @Override
-    public String getImage() {
-        return "fa-envelope";
+    String getImage() {
+        return "fa-envelope"
     }
 
     @Override
-    public AdminModuleOption[] getOptions() {
+    AdminModuleOption[] getOptions() {
         return [
                 new AdminModuleOption("mailAccounts", "Accounts", MailAccount.class, false, true),
                 new AdminModuleOption("mailTemplates", "Templates", MailTemplate.class)

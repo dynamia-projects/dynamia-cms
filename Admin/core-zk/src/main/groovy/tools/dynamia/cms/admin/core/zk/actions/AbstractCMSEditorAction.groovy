@@ -1,8 +1,8 @@
-package tools.dynamia.cms.admin.core.zk.actions;
+package tools.dynamia.cms.admin.core.zk.actions
 
-import tools.dynamia.actions.AbstractAction;
+import tools.dynamia.actions.AbstractAction
 
-public abstract class AbstractCMSEditorAction extends AbstractAction {
+abstract class AbstractCMSEditorAction extends AbstractAction {
 
 	
 

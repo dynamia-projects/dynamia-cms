@@ -18,41 +18,41 @@ import tools.dynamia.zk.navigation.ComponentPage
 import tools.dynamia.zk.navigation.ZKNavigationManager
 
 @InstallAction
-public class ViewSubmenuItemsAction extends AbstractCrudAction {
+class ViewSubmenuItemsAction extends AbstractCrudAction {
 
 	@Autowired
-	private CrudService crudService;
+	private CrudService crudService
 
-	public ViewSubmenuItemsAction() {
-		setName("Items");
-		setImage("menu");
-		setMenuSupported(true);
-	}
-
-	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    ViewSubmenuItemsAction() {
+		setName("Items")
+        setImage("menu")
+        setMenuSupported(true)
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(Menu.class);
-	}
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		Menu menu = (Menu) evt.getData();
-		if (menu != null) {
-			menu = crudService.reload(menu);
-			CrudView<MenuItem> ui = (CrudView<MenuItem>) Viewers.getView(MenuItem.class, "crud", null);
-			MenuItemTreeCrudController controller = (MenuItemTreeCrudController) ui.getController();
-			controller.setMenu(menu);
-			controller.doQuery();
-			ZKNavigationManager.getInstance().setCurrentPage(
-					new ComponentPage("viewSubmenus" + menu.getId(),  menu.getName()+" Items", ui));
-		} else {
-			UIMessages.showMessage("Select menu to view submenus", MessageType.ERROR);
-		}
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(Menu.class)
+    }
+
+	@Override
+    void actionPerformed(CrudActionEvent evt) {
+		Menu menu = (Menu) evt.getData()
+        if (menu != null) {
+			menu = crudService.reload(menu)
+            CrudView<MenuItem> ui = (CrudView<MenuItem>) Viewers.getView(MenuItem.class, "crud", null)
+            MenuItemTreeCrudController controller = (MenuItemTreeCrudController) ui.getController()
+            controller.setMenu(menu)
+            controller.doQuery()
+            ZKNavigationManager.getInstance().setCurrentPage(
+					new ComponentPage("viewSubmenus" + menu.getId(),  menu.getName()+" Items", ui))
+        } else {
+			UIMessages.showMessage("Select menu to view submenus", MessageType.ERROR)
+        }
 
 	}
 }

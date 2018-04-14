@@ -26,20 +26,20 @@ import tools.dynamia.actions.ActionRenderer
  *
  * @author Mario Serrano Leones
  */
-public class SiteSelectorActionRenderer implements ActionRenderer<SiteSelector> {
+class SiteSelectorActionRenderer implements ActionRenderer<SiteSelector> {
 
     @Override
-    public SiteSelector render(final Action action, final ActionEventBuilder evtBuilder) {
-        final SiteSelector selector = new SiteSelector();
+    SiteSelector render(final Action action, final ActionEventBuilder evtBuilder) {
+        final SiteSelector selector = new SiteSelector()
         selector.addEventListener(Events.ON_SELECT, new EventListener<Event>() {
 
             @Override
-            public void onEvent(Event event) throws Exception {
-                action.actionPerformed(evtBuilder.buildActionEvent(selector.getSelectedItem().getValue(), null));
+            void onEvent(Event event) throws Exception {
+                action.actionPerformed(evtBuilder.buildActionEvent(selector.getSelectedItem().getValue(), null))
             }
-        });
+        })
 
-        return selector;
+        return selector
     }
 
 }

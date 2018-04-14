@@ -14,44 +14,44 @@ import tools.dynamia.ui.MessageType
 import tools.dynamia.ui.UIMessages
 
 @InstallAction
-public class DisableUserAction extends AbstractCrudAction {
+class DisableUserAction extends AbstractCrudAction {
 
     @Autowired
-    private UserService service;
+    private UserService service
 
-    public DisableUserAction() {
-        setName("Disable User");
-        setGroup(ActionGroup.get("user"));
+    DisableUserAction() {
+        setName("Disable User")
+        setGroup(ActionGroup.get("user"))
     }
 
     @Override
-    public CrudState[] getApplicableStates() {
-        return CrudState.get(CrudState.READ);
+    CrudState[] getApplicableStates() {
+        return CrudState.get(CrudState.READ)
     }
 
     @Override
-    public ApplicableClass[] getApplicableClasses() {
-        return ApplicableClass.get(User.class);
+    ApplicableClass[] getApplicableClasses() {
+        return ApplicableClass.get(User.class)
     }
 
     @Override
-    public void actionPerformed(CrudActionEvent evt) {
+    void actionPerformed(CrudActionEvent evt) {
 
-        User user = (User) evt.getData();
+        User user = (User) evt.getData()
 
         if (user != null && user.isEnabled()) {
 
             UIMessages.showQuestion("Confirm you want disable user: " + user + "?", {
                 try {
-                    service.disableUser(user);
-                    UIMessages.showMessage("User disabled successfull");
-                    evt.getController().doQuery();
+                    service.disableUser(user)
+                    UIMessages.showMessage("User disabled successfull")
+                    evt.getController().doQuery()
                 } catch (ValidationError e) {
-                    UIMessages.showMessage(e.getMessage(), MessageType.ERROR);
+                    UIMessages.showMessage(e.getMessage(), MessageType.ERROR)
                 }
-            });
+            })
         } else {
-            UIMessages.showMessage("Select user first", MessageType.WARNING);
+            UIMessages.showMessage("Select user first", MessageType.WARNING)
         }
 
     }

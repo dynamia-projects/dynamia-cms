@@ -32,31 +32,31 @@ import tools.dynamia.commons.collect.CollectionsUtils
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class LoadPagesByDateAction implements SiteAction {
+class LoadPagesByDateAction implements SiteAction {
 
     @Autowired
-    private PageService service;
+    private PageService service
 
     @Override
-    public String getName() {
-        return "loadPagesByDate";
+    String getName() {
+        return "loadPagesByDate"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        DateInfo dateInfo = (DateInfo) evt.getData();
-        DateRange dateRange = dateInfo.toRange();
+    void actionPerformed(ActionEvent evt) {
+        DateInfo dateInfo = (DateInfo) evt.getData()
+        DateRange dateRange = dateInfo.toRange()
 
-        ModelAndView mv = evt.getModelAndView();
-        mv.setViewName("site/pagelist");
+        ModelAndView mv = evt.getModelAndView()
+        mv.setViewName("site/pagelist")
 
-        List<Page> pages = service.findPagesByDate(evt.getSite(), dateRange.getStartDate(), dateRange.getEndDate());
-        mv.addObject("pages", pages);
+        List<Page> pages = service.findPagesByDate(evt.getSite(), dateRange.getStartDate(), dateRange.getEndDate())
+        mv.addObject("pages", pages)
 
         if (pages.isEmpty()) {
-            mv.setView(new RedirectView("/", true, true, false));            
+            mv.setView(new RedirectView("/", true, true, false))
         } else {
-            mv.addObject("title", CollectionsUtils.findFirst(pages).getTitle());
+            mv.addObject("title", CollectionsUtils.findFirst(pages).getTitle())
         }
 
     }

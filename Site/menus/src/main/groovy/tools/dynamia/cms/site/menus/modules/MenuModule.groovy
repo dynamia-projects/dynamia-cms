@@ -26,47 +26,47 @@ import tools.dynamia.cms.site.menus.domain.MenuItem
 import tools.dynamia.cms.site.menus.services.MenuService
 
 @CMSModule
-public class MenuModule extends AbstractModule {
+class MenuModule extends AbstractModule {
 
-	private static final String PARAM_MENU = "menu";
-	@Autowired
-	private MenuService service;
+	private static final String PARAM_MENU = "menu"
+    @Autowired
+	private MenuService service
 
-	public MenuModule() {
-		super("menu_module", "Menus and MenuItems", "menus/modules/menu");
-		setDescription("Basic module for creation menubars width its items");
-		putMetadata("author", "Mario Serrano Leones");
-		putMetadata("Created at", "03-09-2014");
-		setVariablesNames(PARAM_MENU, "menuitems");
-	}
+    MenuModule() {
+		super("menu_module", "Menus and MenuItems", "menus/modules/menu")
+        setDescription("Basic module for creation menubars width its items")
+        putMetadata("author", "Mario Serrano Leones")
+        putMetadata("Created at", "03-09-2014")
+        setVariablesNames(PARAM_MENU, "menuitems")
+    }
 
 	@Override
-	public void init(ModuleContext context) {
-		ModuleInstance mod = context.getModuleInstance();
+    void init(ModuleContext context) {
+		ModuleInstance mod = context.getModuleInstance()
 
-		String menuId = mod.getParameterValue(PARAM_MENU);
-		if (menuId == null) {
-			menuId = "mainmenu";
-		}
+        String menuId = mod.getParameterValue(PARAM_MENU)
+        if (menuId == null) {
+			menuId = "mainmenu"
+        }
 
-		Menu menu = null;
-		try {
-			menu = service.getMenu(context.getSite(), new Long(menuId));
-		} catch (NumberFormatException e) {
-			menu = service.getMenu(context.getSite(), menuId);
-		}
+		Menu menu = null
+        try {
+			menu = service.getMenu(context.getSite(), new Long(menuId))
+        } catch (NumberFormatException e) {
+			menu = service.getMenu(context.getSite(), menuId)
+        }
 
 		if (menu != null) {
-			List<MenuItem> itemsToDisplay = new ArrayList<>();
-			for (MenuItem menuItem : service.getItems(menu)) {
-				menuItem.getSubitems().size();
-				MenuContext menuContext = service.setupMenuItem(menuItem);
-				itemsToDisplay.add(menuContext.getMenuItem());
-			}
+			List<MenuItem> itemsToDisplay = new ArrayList<>()
+            for (MenuItem menuItem : service.getItems(menu)) {
+				menuItem.getSubitems().size()
+                MenuContext menuContext = service.setupMenuItem(menuItem)
+                itemsToDisplay.add(menuContext.getMenuItem())
+            }
 
-			mod.addObject(PARAM_MENU, menu);
-			mod.addObject("menuitems", itemsToDisplay);
-		}
+			mod.addObject(PARAM_MENU, menu)
+            mod.addObject("menuitems", itemsToDisplay)
+        }
 
 	}
 

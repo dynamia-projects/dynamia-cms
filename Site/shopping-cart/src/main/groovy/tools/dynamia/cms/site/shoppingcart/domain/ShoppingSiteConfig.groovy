@@ -26,282 +26,282 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "sc_configuration")
-public class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
+class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
 
 	@NotNull
 	@OneToOne
-	private Site site;
-	private String paymentGatewayId;
-	private String paymentGatewayName;
-	private boolean paymentEnabled;
-	private boolean allowEmptyPayment;
-	private boolean billingAddressRequired;
-	private boolean shippingAddressRequired;
+	private Site site
+    private String paymentGatewayId
+    private String paymentGatewayName
+    private boolean paymentEnabled
+    private boolean allowEmptyPayment
+    private boolean billingAddressRequired
+    private boolean shippingAddressRequired
 
-	private BigDecimal minPaymentAmount;
-	private BigDecimal maxPaymentAmount;
-	private float shipmentPercent;
-	private BigDecimal minShipmentAmount;
-	private String defaultCurrency;
-	private String descriptionTemplate;
-	private String notificationEmails;
-	private String orderSenderURL;
-	private boolean autoSendOrders;
-	private String orderStatusURL;
-	private String paymentsSenderURL;
-	private boolean autoSendPayments;
-	private int minQuantityByProducts;
-	private int minQuantityByCart;
+    private BigDecimal minPaymentAmount
+    private BigDecimal maxPaymentAmount
+    private float shipmentPercent
+    private BigDecimal minShipmentAmount
+    private String defaultCurrency
+    private String descriptionTemplate
+    private String notificationEmails
+    private String orderSenderURL
+    private boolean autoSendOrders
+    private String orderStatusURL
+    private String paymentsSenderURL
+    private boolean autoSendPayments
+    private int minQuantityByProducts
+    private int minQuantityByCart
 
-	@OneToOne
-	private MailTemplate orderCompletedMailTemplate;
-	@OneToOne
-	private MailTemplate orderShippedMailTemplate;
-	@OneToOne
-	private MailTemplate notificationMailTemplate;
-	@OneToOne
-	private MailAccount mailAccount;
+    @OneToOne
+	private MailTemplate orderCompletedMailTemplate
+    @OneToOne
+	private MailTemplate orderShippedMailTemplate
+    @OneToOne
+	private MailTemplate notificationMailTemplate
+    @OneToOne
+	private MailAccount mailAccount
 
-	@OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<ShoppingSiteConfigParameter> parameters = new ArrayList<>();
+    @OneToMany(mappedBy = "siteConfig", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<ShoppingSiteConfigParameter> parameters = new ArrayList<>()
 
-	@Column(length = 3000)
-	private String paymentTypes;
+    @Column(length = 3000)
+	private String paymentTypes
 
-	public int getMinQuantityByProducts() {
-		return minQuantityByProducts;
-	}
+    int getMinQuantityByProducts() {
+		return minQuantityByProducts
+    }
 
-	public void setMinQuantityByProducts(int minQuantityByProducts) {
-		this.minQuantityByProducts = minQuantityByProducts;
-	}
+    void setMinQuantityByProducts(int minQuantityByProducts) {
+		this.minQuantityByProducts = minQuantityByProducts
+    }
 
-	public int getMinQuantityByCart() {
-		return minQuantityByCart;
-	}
+    int getMinQuantityByCart() {
+		return minQuantityByCart
+    }
 
-	public void setMinQuantityByCart(int minQuantityByCart) {
-		this.minQuantityByCart = minQuantityByCart;
-	}
+    void setMinQuantityByCart(int minQuantityByCart) {
+		this.minQuantityByCart = minQuantityByCart
+    }
 
-	public String getPaymentsSenderURL() {
-		return paymentsSenderURL;
-	}
+    String getPaymentsSenderURL() {
+		return paymentsSenderURL
+    }
 
-	public void setPaymentsSenderURL(String paymentsSenderURL) {
-		this.paymentsSenderURL = paymentsSenderURL;
-	}
+    void setPaymentsSenderURL(String paymentsSenderURL) {
+		this.paymentsSenderURL = paymentsSenderURL
+    }
 
-	public boolean isAutoSendPayments() {
-		return autoSendPayments;
-	}
+    boolean isAutoSendPayments() {
+		return autoSendPayments
+    }
 
-	public void setAutoSendPayments(boolean autoSendPayments) {
-		this.autoSendPayments = autoSendPayments;
-	}
+    void setAutoSendPayments(boolean autoSendPayments) {
+		this.autoSendPayments = autoSendPayments
+    }
 
-	public String getPaymentTypes() {
-		return paymentTypes;
-	}
+    String getPaymentTypes() {
+		return paymentTypes
+    }
 
-	public void setPaymentTypes(String paymentTypes) {
-		this.paymentTypes = paymentTypes;
-	}
+    void setPaymentTypes(String paymentTypes) {
+		this.paymentTypes = paymentTypes
+    }
 
-	public List<ShoppingSiteConfigParameter> getParameters() {
-		return parameters;
-	}
+    List<ShoppingSiteConfigParameter> getParameters() {
+		return parameters
+    }
 
-	public void setParameters(List<ShoppingSiteConfigParameter> parameters) {
-		this.parameters = parameters;
-	}
+    void setParameters(List<ShoppingSiteConfigParameter> parameters) {
+		this.parameters = parameters
+    }
 
-	public String getOrderStatusURL() {
-		return orderStatusURL;
-	}
+    String getOrderStatusURL() {
+		return orderStatusURL
+    }
 
-	public void setOrderStatusURL(String orderStatusURL) {
-		this.orderStatusURL = orderStatusURL;
-	}
+    void setOrderStatusURL(String orderStatusURL) {
+		this.orderStatusURL = orderStatusURL
+    }
 
-	public boolean isBillingAddressRequired() {
-		return billingAddressRequired;
-	}
+    boolean isBillingAddressRequired() {
+		return billingAddressRequired
+    }
 
-	public void setBillingAddressRequired(boolean billingAddressRequired) {
-		this.billingAddressRequired = billingAddressRequired;
-	}
+    void setBillingAddressRequired(boolean billingAddressRequired) {
+		this.billingAddressRequired = billingAddressRequired
+    }
 
-	public boolean isShippingAddressRequired() {
-		return shippingAddressRequired;
-	}
+    boolean isShippingAddressRequired() {
+		return shippingAddressRequired
+    }
 
-	public void setShippingAddressRequired(boolean shippingAddressRequired) {
-		this.shippingAddressRequired = shippingAddressRequired;
-	}
+    void setShippingAddressRequired(boolean shippingAddressRequired) {
+		this.shippingAddressRequired = shippingAddressRequired
+    }
 
-	public boolean isAutoSendOrders() {
-		return autoSendOrders;
-	}
+    boolean isAutoSendOrders() {
+		return autoSendOrders
+    }
 
-	public void setAutoSendOrders(boolean autoSendOrders) {
-		this.autoSendOrders = autoSendOrders;
-	}
+    void setAutoSendOrders(boolean autoSendOrders) {
+		this.autoSendOrders = autoSendOrders
+    }
 
-	public boolean isAllowEmptyPayment() {
-		return allowEmptyPayment;
-	}
+    boolean isAllowEmptyPayment() {
+		return allowEmptyPayment
+    }
 
-	public void setAllowEmptyPayment(boolean allowEmptyPayment) {
-		this.allowEmptyPayment = allowEmptyPayment;
-	}
+    void setAllowEmptyPayment(boolean allowEmptyPayment) {
+		this.allowEmptyPayment = allowEmptyPayment
+    }
 
-	public String getOrderSenderURL() {
-		return orderSenderURL;
-	}
+    String getOrderSenderURL() {
+		return orderSenderURL
+    }
 
-	public void setOrderSenderURL(String orderSenderURL) {
-		this.orderSenderURL = orderSenderURL;
-	}
+    void setOrderSenderURL(String orderSenderURL) {
+		this.orderSenderURL = orderSenderURL
+    }
 
-	public BigDecimal getMinShipmentAmount() {
+    BigDecimal getMinShipmentAmount() {
 		if (minShipmentAmount == null) {
-			minShipmentAmount = BigDecimal.ZERO;
-		}
-		return minShipmentAmount;
-	}
+			minShipmentAmount = BigDecimal.ZERO
+        }
+		return minShipmentAmount
+    }
 
-	public void setMinShipmentAmount(BigDecimal minShipmentAmount) {
-		this.minShipmentAmount = minShipmentAmount;
-	}
+    void setMinShipmentAmount(BigDecimal minShipmentAmount) {
+		this.minShipmentAmount = minShipmentAmount
+    }
 
-	public BigDecimal getMaxPaymentAmount() {
+    BigDecimal getMaxPaymentAmount() {
 		if (maxPaymentAmount == null) {
-			maxPaymentAmount = BigDecimal.ZERO;
-		}
-		return maxPaymentAmount;
-	}
+			maxPaymentAmount = BigDecimal.ZERO
+        }
+		return maxPaymentAmount
+    }
 
-	public void setMaxPaymentAmount(BigDecimal maxPaymentAmount) {
-		this.maxPaymentAmount = maxPaymentAmount;
-	}
+    void setMaxPaymentAmount(BigDecimal maxPaymentAmount) {
+		this.maxPaymentAmount = maxPaymentAmount
+    }
 
-	public float getShipmentPercent() {
-		return shipmentPercent;
-	}
+    float getShipmentPercent() {
+		return shipmentPercent
+    }
 
-	public void setShipmentPercent(float shipmentPercent) {
-		this.shipmentPercent = shipmentPercent;
-	}
+    void setShipmentPercent(float shipmentPercent) {
+		this.shipmentPercent = shipmentPercent
+    }
 
-	public MailAccount getMailAccount() {
-		return mailAccount;
-	}
+    MailAccount getMailAccount() {
+		return mailAccount
+    }
 
-	public void setMailAccount(MailAccount mailAccount) {
-		this.mailAccount = mailAccount;
-	}
+    void setMailAccount(MailAccount mailAccount) {
+		this.mailAccount = mailAccount
+    }
 
-	public MailTemplate getOrderCompletedMailTemplate() {
-		return orderCompletedMailTemplate;
-	}
+    MailTemplate getOrderCompletedMailTemplate() {
+		return orderCompletedMailTemplate
+    }
 
-	public void setOrderCompletedMailTemplate(MailTemplate orderCompletedMailTemplate) {
-		this.orderCompletedMailTemplate = orderCompletedMailTemplate;
-	}
+    void setOrderCompletedMailTemplate(MailTemplate orderCompletedMailTemplate) {
+		this.orderCompletedMailTemplate = orderCompletedMailTemplate
+    }
 
-	public MailTemplate getOrderShippedMailTemplate() {
-		return orderShippedMailTemplate;
-	}
+    MailTemplate getOrderShippedMailTemplate() {
+		return orderShippedMailTemplate
+    }
 
-	public void setOrderShippedMailTemplate(MailTemplate orderShippedMailTemplate) {
-		this.orderShippedMailTemplate = orderShippedMailTemplate;
-	}
+    void setOrderShippedMailTemplate(MailTemplate orderShippedMailTemplate) {
+		this.orderShippedMailTemplate = orderShippedMailTemplate
+    }
 
-	public MailTemplate getNotificationMailTemplate() {
-		return notificationMailTemplate;
-	}
+    MailTemplate getNotificationMailTemplate() {
+		return notificationMailTemplate
+    }
 
-	public void setNotificationMailTemplate(MailTemplate notificationMailTemplate) {
-		this.notificationMailTemplate = notificationMailTemplate;
-	}
+    void setNotificationMailTemplate(MailTemplate notificationMailTemplate) {
+		this.notificationMailTemplate = notificationMailTemplate
+    }
 
-	public Site getSite() {
-		return site;
-	}
+    Site getSite() {
+		return site
+    }
 
-	public void setSite(Site site) {
-		this.site = site;
-	}
+    void setSite(Site site) {
+		this.site = site
+    }
 
-	public String getDescriptionTemplate() {
-		return descriptionTemplate;
-	}
+    String getDescriptionTemplate() {
+		return descriptionTemplate
+    }
 
-	public String getNotificationEmails() {
-		return notificationEmails;
-	}
+    String getNotificationEmails() {
+		return notificationEmails
+    }
 
-	public void setNotificationEmails(String notificationEmails) {
-		this.notificationEmails = notificationEmails;
-	}
+    void setNotificationEmails(String notificationEmails) {
+		this.notificationEmails = notificationEmails
+    }
 
-	public void setDescriptionTemplate(String descriptionTemplate) {
-		this.descriptionTemplate = descriptionTemplate;
-	}
+    void setDescriptionTemplate(String descriptionTemplate) {
+		this.descriptionTemplate = descriptionTemplate
+    }
 
-	public String getPaymentGatewayId() {
-		return paymentGatewayId;
-	}
+    String getPaymentGatewayId() {
+		return paymentGatewayId
+    }
 
-	public void setPaymentGatewayId(String paymentGatewayId) {
-		this.paymentGatewayId = paymentGatewayId;
-	}
+    void setPaymentGatewayId(String paymentGatewayId) {
+		this.paymentGatewayId = paymentGatewayId
+    }
 
-	public String getPaymentGatewayName() {
-		return paymentGatewayName;
-	}
+    String getPaymentGatewayName() {
+		return paymentGatewayName
+    }
 
-	public void setPaymentGatewayName(String paymentGatewayName) {
-		this.paymentGatewayName = paymentGatewayName;
-	}
+    void setPaymentGatewayName(String paymentGatewayName) {
+		this.paymentGatewayName = paymentGatewayName
+    }
 
-	public boolean isPaymentEnabled() {
-		return paymentEnabled;
-	}
+    boolean isPaymentEnabled() {
+		return paymentEnabled
+    }
 
-	public void setPaymentEnabled(boolean paymentEnabled) {
-		this.paymentEnabled = paymentEnabled;
-	}
+    void setPaymentEnabled(boolean paymentEnabled) {
+		this.paymentEnabled = paymentEnabled
+    }
 
-	public BigDecimal getMinPaymentAmount() {
+    BigDecimal getMinPaymentAmount() {
 		if (minPaymentAmount == null) {
-			minPaymentAmount = BigDecimal.ZERO;
-		}
-		return minPaymentAmount;
+			minPaymentAmount = BigDecimal.ZERO
+        }
+		return minPaymentAmount
+    }
+
+    void setMinPaymentAmount(BigDecimal minPaymentAmount) {
+		this.minPaymentAmount = minPaymentAmount
+    }
+
+    String getDefaultCurrency() {
+		return defaultCurrency
+    }
+
+    void setDefaultCurrency(String defaultCurrency) {
+		this.defaultCurrency = defaultCurrency
+    }
+
+    void addItem(ShoppingCartItem item, int qty) {
 	}
 
-	public void setMinPaymentAmount(BigDecimal minPaymentAmount) {
-		this.minPaymentAmount = minPaymentAmount;
-	}
-
-	public String getDefaultCurrency() {
-		return defaultCurrency;
-	}
-
-	public void setDefaultCurrency(String defaultCurrency) {
-		this.defaultCurrency = defaultCurrency;
-	}
-
-	public void addItem(ShoppingCartItem item, int qty) {
-	}
-
-	public Map<String, String> getParametersAsMap() {
-		Map<String, String> params = new HashMap<>();
-		for (ShoppingSiteConfigParameter param : getParameters()) {
-			params.put(param.getName(), param.getValue());
-		}
-		return params;
-	}
+    Map<String, String> getParametersAsMap() {
+		Map<String, String> params = new HashMap<>()
+        for (ShoppingSiteConfigParameter param : getParameters()) {
+			params.put(param.getName(), param.getValue())
+        }
+		return params
+    }
 
 }

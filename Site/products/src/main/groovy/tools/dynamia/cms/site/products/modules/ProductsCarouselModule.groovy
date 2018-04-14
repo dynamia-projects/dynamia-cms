@@ -32,139 +32,139 @@ import tools.dynamia.domain.services.CrudService
  * Created by Mario on 18/11/2014.
  */
 @CMSModule
-public class ProductsCarouselModule extends AbstractModule {
+class ProductsCarouselModule extends AbstractModule {
 
-	private static final String PARAM_PAGE_SIZE = "pageSize";
+	private static final String PARAM_PAGE_SIZE = "pageSize"
 
-	private static final String PARAM_ORDER_BY = "orderBy";
+    private static final String PARAM_ORDER_BY = "orderBy"
 
-	private static final String PARAM_STATUS = "status";
+    private static final String PARAM_STATUS = "status"
 
-	private static final String PARAM_CATEGORY = "category";
+    private static final String PARAM_CATEGORY = "category"
 
-	private static final String PARAM_COLUMNS = "columns";
+    private static final String PARAM_COLUMNS = "columns"
 
-	private static final String PARAM_TYPE = "type";
+    private static final String PARAM_TYPE = "type"
 
-	@Autowired
-	private ProductsService service;
+    @Autowired
+	private ProductsService service
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
 
-	public ProductsCarouselModule() {
-		super("products_carousel", "Products Carousel", "products/modules/carousel");
-		setDescription("Show a products list carousel");
-		putMetadata("author", "Mario Serrano Leones");
-		putMetadata("version", "1.0");
-		putMetadata("created at", "18-11-2014");
-		putMetadata(PARAM_COLUMNS, "4");
-		putMetadata(PARAM_TYPE, "featured");
-		putMetadata(PARAM_PAGE_SIZE, "16");
-		setVariablesNames("products,", PARAM_COLUMNS);
-	}
+    ProductsCarouselModule() {
+		super("products_carousel", "Products Carousel", "products/modules/carousel")
+        setDescription("Show a products list carousel")
+        putMetadata("author", "Mario Serrano Leones")
+        putMetadata("version", "1.0")
+        putMetadata("created at", "18-11-2014")
+        putMetadata(PARAM_COLUMNS, "4")
+        putMetadata(PARAM_TYPE, "featured")
+        putMetadata(PARAM_PAGE_SIZE, "16")
+        setVariablesNames("products,", PARAM_COLUMNS)
+    }
 
 	@Override
-	public void init(ModuleContext context) {
-		ProductCarouselType type = ProductCarouselType.valueOf(getParameter(context, PARAM_TYPE).toUpperCase());
-		int columns;
-		try {
-			columns = Integer.parseInt(getParameter(context, PARAM_COLUMNS));
-		} catch (NumberFormatException e1) {
-			columns = Integer.parseInt((String) getMetadata().get(PARAM_COLUMNS));
-		}
+    void init(ModuleContext context) {
+		ProductCarouselType type = ProductCarouselType.valueOf(getParameter(context, PARAM_TYPE).toUpperCase())
+        int columns
+        try {
+			columns = Integer.parseInt(getParameter(context, PARAM_COLUMNS))
+        } catch (NumberFormatException e1) {
+			columns = Integer.parseInt((String) getMetadata().get(PARAM_COLUMNS))
+        }
 
-		String category = getParameter(context, PARAM_CATEGORY);
-		String status = getParameter(context, PARAM_STATUS);
-		String orderBy = null;
-		try {
+		String category = getParameter(context, PARAM_CATEGORY)
+        String status = getParameter(context, PARAM_STATUS)
+        String orderBy = null
+        try {
 			ProductOrderField orderField = ProductOrderField
-					.valueOf(getParameter(context, PARAM_ORDER_BY).toUpperCase());
-			orderBy = orderField.getField();
-		} catch (Exception e) {
+					.valueOf(getParameter(context, PARAM_ORDER_BY).toUpperCase())
+            orderBy = orderField.getField()
+        } catch (Exception e) {
 			// TODO: handle exception
 		}
 
-		String pageSizeParam = getParameter(context, PARAM_PAGE_SIZE);
+		String pageSizeParam = getParameter(context, PARAM_PAGE_SIZE)
 
-		List<Product> products = new ArrayList<>();
-		QueryParameters params = QueryParameters.with("site", context.getSite()).add("active", true)
-				.paginate(columns * 4);
+        List<Product> products = new ArrayList<>()
+        QueryParameters params = QueryParameters.with("site", context.getSite()).add("active", true)
+				.paginate(columns * 4)
 
-		if (pageSizeParam != null) {
+        if (pageSizeParam != null) {
 			try {
-				int pageSize = Integer.parseInt(pageSizeParam);
-				params.paginate(pageSize);
-			} catch (Exception e) {
+				int pageSize = Integer.parseInt(pageSizeParam)
+                params.paginate(pageSize)
+            } catch (Exception e) {
 				// TODO: handle exception
 			}
 		}
 
 		switch (type) {
 		case ALL:
-			products = service.getSpecialProducts(context.getSite());
-			break;
-		case FEATURED:
-			params.add("featured", true);
-			break;
-		case NEW:
-			params.add("newproduct", true);
-			break;
-		case SALE:
-			params.add("sale", true);
-			break;
-		case MOST_VIEWED:
-			params.orderBy("views", false);
-			break;
-		case CUSTOM:
-			params.add(PARAM_STATUS, status);
-			break;
-		}
+			products = service.getSpecialProducts(context.getSite())
+            break
+            case FEATURED:
+			params.add("featured", true)
+                break
+            case NEW:
+			params.add("newproduct", true)
+                break
+            case SALE:
+			params.add("sale", true)
+                break
+            case MOST_VIEWED:
+			params.orderBy("views", false)
+                break
+            case CUSTOM:
+			params.add(PARAM_STATUS, status)
+                break
+        }
 
 		if (orderBy != null) {
-			params.orderBy(orderBy, true);
-		}
+			params.orderBy(orderBy, true)
+        }
 
 		if (category != null && !category.isEmpty()) {
 			try {
-				Long categoryId = new Long(category);
-				QueryParameters catParams = QueryParameters
+				Long categoryId = new Long(category)
+                QueryParameters catParams = QueryParameters
 						.with("category.id", QueryConditions.eq(categoryId, BooleanOp.OR))
-						.add("category.parent.id", QueryConditions.eq(categoryId, BooleanOp.OR));
-				params.addGroup(catParams, BooleanOp.AND);
-			} catch (NumberFormatException nf) {
+						.add("category.parent.id", QueryConditions.eq(categoryId, BooleanOp.OR))
+                params.addGroup(catParams, BooleanOp.AND)
+            } catch (NumberFormatException nf) {
 
 			}
 		}
 
 		if (products.isEmpty()) {
-			products = crudService.find(Product.class, params);
-		}
+			products = crudService.find(Product.class, params)
+        }
 
 		if (products instanceof PagedList) {
-			PagedList<Product> pagedList = (PagedList<Product>) products;
-			products = pagedList.getDataSource().getPageData();
-		}
+			PagedList<Product> pagedList = (PagedList<Product>) products
+            products = pagedList.getDataSource().getPageData()
+        }
 
-		ModuleInstance mod = context.getModuleInstance();
-		mod.addObject("products", products);
-		mod.addObject(PARAM_COLUMNS, columns);
-	}
+		ModuleInstance mod = context.getModuleInstance()
+        mod.addObject("products", products)
+        mod.addObject(PARAM_COLUMNS, columns)
+    }
 
 	private String getParameter(ModuleContext context, String name) {
-		String param = context.getModuleInstance().getParameterValue(name);
-		if (param == null || param.trim().isEmpty()) {
-			Object metadata = getMetadata().get(name);
-			if (metadata != null) {
-				param = metadata.toString();
-			}
+		String param = context.getModuleInstance().getParameterValue(name)
+        if (param == null || param.trim().isEmpty()) {
+			Object metadata = getMetadata().get(name)
+            if (metadata != null) {
+				param = metadata.toString()
+            }
 		}
 
 		if (param != null) {
-			param = param.trim();
-		}
+			param = param.trim()
+        }
 
-		return param;
-	}
+		return param
+    }
 
 }

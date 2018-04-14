@@ -15,40 +15,40 @@ import tools.dynamia.zk.crud.CrudView
 import tools.dynamia.zk.util.ZKUtil
 
 @InstallAction
-public class NewMenuItemAction extends NewAction {
+class NewMenuItemAction extends NewAction {
 
 	@Autowired
-	private CrudService crudService;
+	private CrudService crudService
+
+    @Override
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(MenuItem.class)
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(MenuItem.class);
-	}
+    void actionPerformed(CrudActionEvent evt) {
+		CrudView<MenuItem> crudView = (CrudView<MenuItem>) evt.getView()
+        MenuItemTreeCrudController controller = (MenuItemTreeCrudController) evt.getController()
+        MenuItem selectedItem = (MenuItem) evt.getData()
+        Menu menu = controller.getMenu()
 
-	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		CrudView<MenuItem> crudView = (CrudView<MenuItem>) evt.getView();
-		MenuItemTreeCrudController controller = (MenuItemTreeCrudController) evt.getController();
-		MenuItem selectedItem = (MenuItem) evt.getData();
-		Menu menu = controller.getMenu();
-		
-		controller.doCreate();
-		
-		MenuItemsUI ui = new MenuItemsUI(controller.getEntity());
-		ui.addAction(new SaveMenuItemAction(crudService, evt));
+        controller.doCreate()
 
-		String title = "New Item for " + menu.getName();
-		if (selectedItem != null) {
-			title = "New Subitem for " + menu.getName() + " - " + selectedItem.getName();
+        MenuItemsUI ui = new MenuItemsUI(controller.getEntity())
+        ui.addAction(new SaveMenuItemAction(crudService, evt))
 
-		}
+        String title = "New Item for " + menu.getName()
+        if (selectedItem != null) {
+			title = "New Subitem for " + menu.getName() + " - " + selectedItem.getName()
 
-		ZKUtil.showDialog(title, ui, "90%", "90%").setMaximizable(true);
+        }
 
-	}
+		ZKUtil.showDialog(title, ui, "90%", "90%").setMaximizable(true)
+
+    }
 }

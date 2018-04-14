@@ -30,30 +30,30 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class EditUserContactInfoAction implements SiteAction {
+class EditUserContactInfoAction implements SiteAction {
 
 	@Autowired
-	private CrudService crudService;
+	private CrudService crudService
+
+    @Override
+    String getName() {
+		return "editUserContactInfo"
+    }
 
 	@Override
-	public String getName() {
-		return "editUserContactInfo";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        Long id = (Long) evt.getData()
+        UserContactInfo userContactInfo = crudService.find(UserContactInfo.class, id)
+        if (userContactInfo.getUser().equals(UserHolder.get().getCurrent())) {
+			mv.addObject("title", "Editar Direccion de Contacto")
+            mv.addObject("userContactInfo", userContactInfo)
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		Long id = (Long) evt.getData();
-		UserContactInfo userContactInfo = crudService.find(UserContactInfo.class, id);
-		if (userContactInfo.getUser().equals(UserHolder.get().getCurrent())) {
-			mv.addObject("title", "Editar Direccion de Contacto");
-			mv.addObject("userContactInfo", userContactInfo);
+            CMSUtil.buildContactInfoOptions(evt.getSite(), mv, "uci", userContactInfo.getInfo())
+        } else {
+			CMSUtil.addErrorMessage("Direccion de contacto NO pertenece a este usuario -.-", evt.getRedirectAttributes())
 
-			CMSUtil.buildContactInfoOptions(evt.getSite(), mv, "uci", userContactInfo.getInfo());
-		} else {
-			CMSUtil.addErrorMessage("Direccion de contacto NO pertenece a este usuario -.-", evt.getRedirectAttributes());
-
-		}
+        }
 	}
 
 }

@@ -26,84 +26,84 @@ import javax.persistence.*
  */
 @Entity
 @Table(name = "cr_modules_instances_params")
-public class ModuleInstanceParameter extends SimpleEntity implements Parameter {
+class ModuleInstanceParameter extends SimpleEntity implements Parameter {
 
 	@Column(name = "paramName")
-	private String name;
-	@Column(name = "paramValue")
-	private String value;
-	@Lob
+	private String name
+    @Column(name = "paramValue")
+	private String value
+    @Lob
 	@Basic(fetch = FetchType.LAZY)
-	private String extra;
-	private boolean enabled = true;
+	private String extra
+    private boolean enabled = true
 
-	@ManyToOne
-	private ModuleInstance moduleInstance;
+    @ManyToOne
+	private ModuleInstance moduleInstance
 
-	public ModuleInstanceParameter() {
+    ModuleInstanceParameter() {
 	}
 
-	public ModuleInstanceParameter(String name, String value) {
-		this.name = name;
-		setValue(value);
+    ModuleInstanceParameter(String name, String value) {
+		this.name = name
+        setValue(value)
 
-	}
+    }
 
-	public ModuleInstance getModuleInstance() {
-		return moduleInstance;
-	}
+    ModuleInstance getModuleInstance() {
+		return moduleInstance
+    }
 
-	public void setModuleInstance(ModuleInstance moduleInstance) {
-		this.moduleInstance = moduleInstance;
-	}
+    void setModuleInstance(ModuleInstance moduleInstance) {
+		this.moduleInstance = moduleInstance
+    }
 
-	public String getName() {
-		return name;
-	}
+    String getName() {
+		return name
+    }
 
-	public void setName(String paramName) {
-		this.name = paramName;
-	}
+    void setName(String paramName) {
+		this.name = paramName
+    }
 
-	public String getValue() {
-		return value;
-	}
+    String getValue() {
+		return value
+    }
 
-	public void setValue(String value) {
+    void setValue(String value) {
 		if (value != null && value.length() <= 255) {
-			this.value = value;
-		} else {
-			this.extra = value;
-		}
+			this.value = value
+        } else {
+			this.extra = value
+        }
 
 	}
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    boolean isEnabled() {
+		return enabled
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    void setEnabled(boolean enabled) {
+		this.enabled = enabled
+    }
 
-	public String getExtra() {
-		return extra;
-	}
+    String getExtra() {
+		return extra
+    }
 
-	public void setExtra(String extra) {
-		this.extra = extra;
-	}
+    void setExtra(String extra) {
+		this.extra = extra
+    }
 
 	@Override
-	public String toString() {
-		return getName();
-	}
+    String toString() {
+		return getName()
+    }
 
-	public ModuleInstanceParameter clone() {
-		ModuleInstanceParameter clone = new ModuleInstanceParameter(name, value);
-		clone.extra = extra;
-		clone.enabled = enabled;
-		return clone;
-	}
+    ModuleInstanceParameter clone() {
+		ModuleInstanceParameter clone = new ModuleInstanceParameter(name, value)
+        clone.extra = extra
+        clone.enabled = enabled
+        return clone
+    }
 
 }

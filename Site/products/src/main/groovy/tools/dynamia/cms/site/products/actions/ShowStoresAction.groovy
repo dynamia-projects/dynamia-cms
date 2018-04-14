@@ -27,22 +27,22 @@ import tools.dynamia.cms.site.products.services.ProductsService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ShowStoresAction implements SiteAction {
+class ShowStoresAction implements SiteAction {
 
     @Autowired
-    private ProductsService service;
+    private ProductsService service
 
     @Override
-    public String getName() {
-        return "showProductStores";
+    String getName() {
+        return "showProductStores"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView();
-        mv.addObject("title", "Nuestras Tiendas");
-        mv.addObject("icon", "building");
-        mv.addObject("storeslist", service.getStores(evt.getSite()));
+    void actionPerformed(ActionEvent evt) {
+        ModelAndView mv = evt.getModelAndView()
+        mv.addObject("title", "Nuestras Tiendas")
+        mv.addObject("icon", "building")
+        mv.addObject("storeslist", service.getStores(evt.getSite()))
 
     }
 

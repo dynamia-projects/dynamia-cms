@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.shoppingcart;
+package tools.dynamia.cms.site.shoppingcart
 
-public class ShoppingException extends RuntimeException {
+class ShoppingException extends RuntimeException {
 
-	public ShoppingException() {
-		super();
-		// TODO Auto-generated constructor stub
+	ShoppingException() {
+		super()
+        // TODO Auto-generated constructor stub
 	}
 
-	public ShoppingException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
+    ShoppingException(String message, Throwable cause) {
+		super(message, cause)
+        // TODO Auto-generated constructor stub
 	}
 
-	public ShoppingException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
+    ShoppingException(String message) {
+		super(message)
+        // TODO Auto-generated constructor stub
 	}
 
-	public ShoppingException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
+    ShoppingException(Throwable cause) {
+		super(cause)
+        // TODO Auto-generated constructor stub
 	}
 
 }

@@ -25,28 +25,28 @@ import javax.servlet.http.HttpServletRequest
  * @author Mario Serrano Leones
  */
 
-public class SearchForm implements Serializable {
+class SearchForm implements Serializable {
 
 	@NotEmpty
-	private String query;
+	private String query
 
-	@JsonIgnore
-	private HttpServletRequest request;
+    @JsonIgnore
+	private HttpServletRequest request
 
-	public String getQuery() {
-		return query;
-	}
+    String getQuery() {
+		return query
+    }
 
-	public void setQuery(String query) {
-		this.query = query;
-	}
+    void setQuery(String query) {
+		this.query = query
+    }
 
-	public HttpServletRequest getRequest() {
-		return request;
-	}
+    HttpServletRequest getRequest() {
+		return request
+    }
 
-	public void setRequest(HttpServletRequest request) {
-		this.request = request;
-	}
+    void setRequest(HttpServletRequest request) {
+		this.request = request
+    }
 
 }

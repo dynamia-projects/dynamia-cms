@@ -34,34 +34,34 @@ import tools.dynamia.integration.Containers
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class AddProductToCompareList implements SiteAction {
+class AddProductToCompareList implements SiteAction {
 
     @Autowired
-    private CrudService crudService;
+    private CrudService crudService
     @Autowired
-    private ProductsService service;
+    private ProductsService service
 
     @Override
-    public String getName() {
-        return "addProductToCompareList";
+    String getName() {
+        return "addProductToCompareList"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        Long id = (Long) evt.getData();
+    void actionPerformed(ActionEvent evt) {
+        Long id = (Long) evt.getData()
 
-        Product product = crudService.find(Product.class, id);
-        ProductCompareList list = Containers.get().findObject(ProductCompareList.class);
-        list.add(product);
+        Product product = crudService.find(Product.class, id)
+        ProductCompareList list = Containers.get().findObject(ProductCompareList.class)
+        list.add(product)
 
-        ModelAndView mv = evt.getModelAndView();
-        ProductsUtil.setupDefaultVars(evt.getSite(), mv);
+        ModelAndView mv = evt.getModelAndView()
+        ProductsUtil.setupDefaultVars(evt.getSite(), mv)
 
         if (list.getProducts().size() == 1) {
-            CMSUtil.addSuccessMessage("Agregue otros productos de la misma categoria o similares para comparar", evt.getRedirectAttributes());
+            CMSUtil.addSuccessMessage("Agregue otros productos de la misma categoria o similares para comparar", evt.getRedirectAttributes())
         }
-        String redirect = "/store/compare/" + list.toString();
-        mv.setView(new RedirectView(redirect, true, true, false));
+        String redirect = "/store/compare/" + list.toString()
+        mv.setView(new RedirectView(redirect, true, true, false))
     }
 
 }

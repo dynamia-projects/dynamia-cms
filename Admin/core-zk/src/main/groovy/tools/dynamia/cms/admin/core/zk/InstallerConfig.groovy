@@ -27,18 +27,18 @@ import tools.dynamia.zk.crud.cfg.ConfigPage
  * @author Mario Serrano Leones
  */
 @Component("CMSInstallerConfigModule")
-public class InstallerConfig implements ModuleProvider {
+class InstallerConfig implements ModuleProvider {
 
     @Override
-    public Module getModule() {
-        Module module = new Module("system", "System");
-        module.setIcon("fa-cogs");
-        module.setIconSize(IconSize.NORMAL);
-        module.addPage(new CrudPage("sites", "Sites", Site.class));
-        module.addPage(new ConfigPage("cmsconfig", "Configuration", "CMSConfig"));
-        module.addPage(new GlobalResourcesPage("globalResources", "Global Resources"));
+    Module getModule() {
+        Module module = new Module("system", "System")
+        module.setIcon("fa-cogs")
+        module.setIconSize(IconSize.NORMAL)
+        module.addPage(new CrudPage("sites", "Sites", Site.class))
+        module.addPage(new ConfigPage("cmsconfig", "Configuration", "CMSConfig"))
+        module.addPage(new GlobalResourcesPage("globalResources", "Global Resources"))
 
-        return module;
+        return module
     }
 
 }

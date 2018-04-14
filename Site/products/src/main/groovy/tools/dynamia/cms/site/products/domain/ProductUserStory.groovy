@@ -30,89 +30,89 @@ import javax.persistence.Temporal
  */
 @Entity
 @Table(name = "prd_user_story")
-public class ProductUserStory extends SimpleEntity {
+class ProductUserStory extends SimpleEntity {
 
     @OneToOne
     @JsonIgnore
-    private Product product;
+    private Product product
 
     @OneToOne
     @JsonIgnore
-    private User user;
-    private long views;
-    private long shops;
+    private User user
+    private long views
+    private long shops
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date lastView;
+    private Date lastView
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date firstView;
+    private Date firstView
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date lastShop;
+    private Date lastShop
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date firstShop;
+    private Date firstShop
 
-    public Product getProduct() {
-        return product;
+    Product getProduct() {
+        return product
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    void setProduct(Product product) {
+        this.product = product
     }
 
-    public User getUser() {
-        return user;
+    User getUser() {
+        return user
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    void setUser(User user) {
+        this.user = user
     }
 
-    public long getViews() {
-        return views;
+    long getViews() {
+        return views
     }
 
-    public void setViews(long views) {
-        this.views = views;
+    void setViews(long views) {
+        this.views = views
     }
 
-    public long getShops() {
-        return shops;
+    long getShops() {
+        return shops
     }
 
-    public void setShops(long shops) {
-        this.shops = shops;
+    void setShops(long shops) {
+        this.shops = shops
     }
 
-    public Date getLastView() {
-        return lastView;
+    Date getLastView() {
+        return lastView
     }
 
-    public void setLastView(Date lastView) {
-        this.lastView = lastView;
+    void setLastView(Date lastView) {
+        this.lastView = lastView
     }
 
-    public Date getFirstView() {
-        return firstView;
+    Date getFirstView() {
+        return firstView
     }
 
-    public void setFirstView(Date firstView) {
-        this.firstView = firstView;
+    void setFirstView(Date firstView) {
+        this.firstView = firstView
     }
 
-    public Date getLastShop() {
-        return lastShop;
+    Date getLastShop() {
+        return lastShop
     }
 
-    public void setLastShop(Date lastShop) {
-        this.lastShop = lastShop;
+    void setLastShop(Date lastShop) {
+        this.lastShop = lastShop
     }
 
-    public Date getFirstShop() {
-        return firstShop;
+    Date getFirstShop() {
+        return firstShop
     }
 
-    public void setFirstShop(Date firstShop) {
-        this.firstShop = firstShop;
+    void setFirstShop(Date firstShop) {
+        this.firstShop = firstShop
     }
 
 }

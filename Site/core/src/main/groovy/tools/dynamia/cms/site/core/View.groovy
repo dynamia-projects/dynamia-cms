@@ -1,10 +1,10 @@
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
-public class View {
+class View {
 
-	public interface Summary {
+	interface Summary {
 	}
 
-	public interface Detailed extends Summary {
+    interface Detailed extends Summary {
 	}
 }

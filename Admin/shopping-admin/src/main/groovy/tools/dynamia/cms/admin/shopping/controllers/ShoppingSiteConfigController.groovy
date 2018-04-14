@@ -6,12 +6,12 @@ import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService
 import tools.dynamia.integration.Containers
 import tools.dynamia.zk.crud.CrudController
 
-public class ShoppingSiteConfigController extends CrudController<ShoppingSiteConfig> {
+class ShoppingSiteConfigController extends CrudController<ShoppingSiteConfig> {
 
 	@Override
 	protected void beforeQuery() {
-		ShoppingCartService service = Containers.get().findObject(ShoppingCartService.class);
-		service.getConfiguration(SiteContext.get().getCurrent());
-	}
+		ShoppingCartService service = Containers.get().findObject(ShoppingCartService.class)
+        service.getConfiguration(SiteContext.get().getCurrent())
+    }
 
 }

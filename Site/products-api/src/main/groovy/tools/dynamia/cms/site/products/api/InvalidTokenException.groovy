@@ -13,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products.api;
+package tools.dynamia.cms.site.products.api
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public class InvalidTokenException extends RuntimeException {
+class InvalidTokenException extends RuntimeException {
 
-    public InvalidTokenException() {
+    InvalidTokenException() {
     }
 
-    public InvalidTokenException(String message) {
-        super(message);
+    InvalidTokenException(String message) {
+        super(message)
     }
 
-    public InvalidTokenException(String message, Throwable cause) {
-        super(message, cause);
+    InvalidTokenException(String message, Throwable cause) {
+        super(message, cause)
     }
 
-    public InvalidTokenException(Throwable cause) {
-        super(cause);
+    InvalidTokenException(Throwable cause) {
+        super(cause)
     }
 
 }

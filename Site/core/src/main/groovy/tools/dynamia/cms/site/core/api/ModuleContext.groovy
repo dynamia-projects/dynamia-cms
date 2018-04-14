@@ -23,44 +23,44 @@ import tools.dynamia.cms.site.core.domain.Site
  *
  * @author Mario Serrano Leones
  */
-public class ModuleContext {
+class ModuleContext {
 
-	private ModuleInstance moduleInstance;
-	private Site site;
+	private ModuleInstance moduleInstance
+    private Site site
 
-	public ModuleContext(ModuleInstance moduleInstance) {
-		super();
-		this.moduleInstance = moduleInstance;
-		this.site = moduleInstance.getSite();
+    ModuleContext(ModuleInstance moduleInstance) {
+		super()
+        this.moduleInstance = moduleInstance
+        this.site = moduleInstance.getSite()
+    }
+
+    ModuleInstance getModuleInstance() {
+		return moduleInstance
+    }
+
+    ModuleInstanceParameter getParameter(String name) {
+		return moduleInstance.getParameter(name)
+    }
+
+    String getParameterValue(String name, String defaultValue) {
+		ModuleInstanceParameter param = getParameter(name)
+        if (param != null) {
+			return param.getValue()
+        } else {
+			return defaultValue
+        }
 	}
 
-	public ModuleInstance getModuleInstance() {
-		return moduleInstance;
-	}
+    String getParameterValue(String name) {
+		return getParameterValue(name, null)
+    }
 
-	public ModuleInstanceParameter getParameter(String name) {
-		return moduleInstance.getParameter(name);
-	}
+    boolean isTrue(String parameterName) {
+		return "true".equalsIgnoreCase(getParameterValue(parameterName, "false"))
+    }
 
-	public String getParameterValue(String name, String defaultValue) {
-		ModuleInstanceParameter param = getParameter(name);
-		if (param != null) {
-			return param.getValue();
-		} else {
-			return defaultValue;
-		}
-	}
-
-	public String getParameterValue(String name) {
-		return getParameterValue(name, null);
-	}
-
-	public boolean isTrue(String parameterName) {
-		return "true".equalsIgnoreCase(getParameterValue(parameterName, "false"));
-	}
-
-	public Site getSite() {
-		return site;
-	}
+    Site getSite() {
+		return site
+    }
 
 }

@@ -11,42 +11,42 @@ import tools.dynamia.crud.CrudState
 import tools.dynamia.zk.actions.ComboboxActionRenderer
 
 @InstallAction
-public class ModuleStatusFilterAction extends AbstractCrudAction {
+class ModuleStatusFilterAction extends AbstractCrudAction {
 
-	private static final String ENABLED = "Enabled";
+	private static final String ENABLED = "Enabled"
 
-	private static final String DISABLED = "Disabled";
+    private static final String DISABLED = "Disabled"
 
-	public ModuleStatusFilterAction() {
-		setName("Status");
-		setGroup(ActionGroup.get("CRUD"));
-		setPosition(11);
-	}
-
-	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    ModuleStatusFilterAction() {
+		setName("Status")
+        setGroup(ActionGroup.get("CRUD"))
+        setPosition(11)
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(ModuleInstance.class);
-	}
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		String status = (String) evt.getData();
-		evt.getController().setParemeter("enabled", ENABLED.equalsIgnoreCase(status));
-		evt.getController().doQuery();
-
-	}
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(ModuleInstance.class)
+    }
 
 	@Override
-	public ActionRenderer getRenderer() {
+    void actionPerformed(CrudActionEvent evt) {
+		String status = (String) evt.getData()
+        evt.getController().setParemeter("enabled", ENABLED.equalsIgnoreCase(status))
+        evt.getController().doQuery()
 
-		ComboboxActionRenderer renderer = new ComboboxActionRenderer(Arrays.asList(ENABLED, DISABLED), ENABLED);
+    }
 
-		return renderer;
-	}
+	@Override
+    ActionRenderer getRenderer() {
+
+		ComboboxActionRenderer renderer = new ComboboxActionRenderer(Arrays.asList(ENABLED, DISABLED), ENABLED)
+
+        return renderer
+    }
 
 }

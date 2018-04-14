@@ -1,47 +1,47 @@
-package tools.dynamia.cms.site.core.dto;
+package tools.dynamia.cms.site.core.dto
 
-public class RegionDTO extends LocationDTO {
+class RegionDTO extends LocationDTO {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L
 
-	private CountryDTO country;
-	private String taxName;
-	private double taxPercent;
+    private CountryDTO country
+    private String taxName
+    private double taxPercent
 
-	public RegionDTO() {
+    RegionDTO() {
 
 	}
 
-	public RegionDTO(String name, String code, CountryDTO country) {
-		super(name, code);
-		this.country = country;
-	}
+    RegionDTO(String name, String code, CountryDTO country) {
+		super(name, code)
+        this.country = country
+    }
 
-	public CountryDTO getCountry() {
-		return country;
-	}
+    CountryDTO getCountry() {
+		return country
+    }
 
-	public void setCountry(CountryDTO country) {
-		this.country = country;
-	}
+    void setCountry(CountryDTO country) {
+		this.country = country
+    }
 
-	public String getTaxName() {
-		return taxName;
-	}
+    String getTaxName() {
+		return taxName
+    }
 
-	public void setTaxName(String taxName) {
-		this.taxName = taxName;
-	}
+    void setTaxName(String taxName) {
+		this.taxName = taxName
+    }
 
-	public double getTaxPercent() {
-		return taxPercent;
-	}
+    double getTaxPercent() {
+		return taxPercent
+    }
 
-	public void setTaxPercent(double taxPercent) {
-		this.taxPercent = taxPercent;
-	}
+    void setTaxPercent(double taxPercent) {
+		this.taxPercent = taxPercent
+    }
 
 }

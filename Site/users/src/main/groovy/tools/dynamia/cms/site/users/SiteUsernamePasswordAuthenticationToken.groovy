@@ -23,27 +23,27 @@ import tools.dynamia.cms.site.core.domain.Site
  *
  * @author Mario Serrano Leones
  */
-public class SiteUsernamePasswordAuthenticationToken extends UsernamePasswordAuthenticationToken {
+class SiteUsernamePasswordAuthenticationToken extends UsernamePasswordAuthenticationToken {
 
-    private Site site;
+    private Site site
 
-    public SiteUsernamePasswordAuthenticationToken(Site site, UsernamePasswordAuthenticationToken originalToken) {
-        super(originalToken.getPrincipal(), originalToken.getCredentials(), originalToken.getAuthorities());
-        this.site = site;
+    SiteUsernamePasswordAuthenticationToken(Site site, UsernamePasswordAuthenticationToken originalToken) {
+        super(originalToken.getPrincipal(), originalToken.getCredentials(), originalToken.getAuthorities())
+        this.site = site
     }
 
-    public SiteUsernamePasswordAuthenticationToken(Site site, Object principal, Object credentials) {
-        super(principal, credentials);
-        this.site = site;
+    SiteUsernamePasswordAuthenticationToken(Site site, Object principal, Object credentials) {
+        super(principal, credentials)
+        this.site = site
     }
 
-    public SiteUsernamePasswordAuthenticationToken(Site site, Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
-        super(principal, credentials, authorities);
-        this.site = site;
+    SiteUsernamePasswordAuthenticationToken(Site site, Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
+        super(principal, credentials, authorities)
+        this.site = site
     }
 
-    public Site getSite() {
-        return site;
+    Site getSite() {
+        return site
     }
 
 }

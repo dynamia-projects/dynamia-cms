@@ -24,11 +24,11 @@ import javax.servlet.http.HttpServletRequest
  *
  * @author Mario Serrano Leones
  */
-public class AuthenticationDetailsSource extends WebAuthenticationDetailsSource {
+class AuthenticationDetailsSource extends WebAuthenticationDetailsSource {
 
     @Override
-    public WebAuthenticationDetails buildDetails(HttpServletRequest context) {
-        return new AuthenticationDetails(context);
+    WebAuthenticationDetails buildDetails(HttpServletRequest context) {
+        return new AuthenticationDetails(context)
     }
 
 }

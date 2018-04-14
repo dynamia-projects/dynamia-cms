@@ -30,35 +30,35 @@ import tools.dynamia.zk.navigation.ComponentPage
 import tools.dynamia.zk.navigation.ZKNavigationManager
 
 @InstallAction
-public class EditModuleInstanceAction extends EditAction {
+class EditModuleInstanceAction extends EditAction {
 
 	@Autowired
-	private CrudService crudService;
+	private CrudService crudService
+
+    @Override
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(ModuleInstance.class)
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(ModuleInstance.class);
-	}
+    void actionPerformed(CrudActionEvent evt) {
+		ModuleInstance moduleInstance = (ModuleInstance) evt.getData()
+        if (moduleInstance != null) {
+			moduleInstance = crudService.reload(moduleInstance)
+            moduleInstance.getParameters().size()
+            ModuleInstanceUI ui = new ModuleInstanceUI(moduleInstance)
+            ui.addAction(new SaveModuleInstanceAction(crudService, evt))
+            ZKNavigationManager.getInstance().setCurrentPage(new ComponentPage("editModule" + moduleInstance.getId(),
+					"Edit Module Instance - " + moduleInstance.getAlias(), ui))
 
-	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		ModuleInstance moduleInstance = (ModuleInstance) evt.getData();
-		if (moduleInstance != null) {
-			moduleInstance = crudService.reload(moduleInstance);
-			moduleInstance.getParameters().size();
-			ModuleInstanceUI ui = new ModuleInstanceUI(moduleInstance);
-			ui.addAction(new SaveModuleInstanceAction(crudService, evt));
-			ZKNavigationManager.getInstance().setCurrentPage(new ComponentPage("editModule" + moduleInstance.getId(),
-					"Edit Module Instance - " + moduleInstance.getAlias(), ui));
-
-		} else {
-			UIMessages.showMessage("Select module instance", MessageType.ERROR);
-		}
+        } else {
+			UIMessages.showMessage("Select module instance", MessageType.ERROR)
+        }
 
 	}
 }

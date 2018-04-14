@@ -25,18 +25,18 @@ import tools.dynamia.cms.site.shoppingcart.ShoppingCartUtils
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class PrintShoppingCartAction implements SiteAction {
+class PrintShoppingCartAction implements SiteAction {
 
 	@Override
-	public String getName() {
-		return "printShoppingCart";
-	}
+    String getName() {
+		return "printShoppingCart"
+    }
 
 	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ShoppingCartUtils.getShoppingCart(evt.getModelAndView());
-		evt.getModelAndView().setViewName("shoppingcart/print");
+    void actionPerformed(ActionEvent evt) {
+		ShoppingCartUtils.getShoppingCart(evt.getModelAndView())
+        evt.getModelAndView().setViewName("shoppingcart/print")
 
-	}
+    }
 
 }

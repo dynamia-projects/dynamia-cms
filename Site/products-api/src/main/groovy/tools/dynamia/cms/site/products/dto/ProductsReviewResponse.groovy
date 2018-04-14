@@ -1,158 +1,158 @@
 package tools.dynamia.cms.site.products.dto
 
-public class ProductsReviewResponse implements Serializable {
+class ProductsReviewResponse implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1234515750141844185L;
-	private boolean accepted;
-	private List<ProductDTO> products = new ArrayList<>();
+	private static final long serialVersionUID = -1234515750141844185L
+    private boolean accepted
+    private List<ProductDTO> products = new ArrayList<>()
 
-	private String email;
-	private String name;
-	private String lastName;
-	private String identification;
-	private String externalRef;
-	private String address;
-	private String phoneNumber;
-	private String mobileNumber;
-	private String city;
-	private String region;
-	private String country;
-	private String description;
-	private Date date;
-	private String document;
+    private String email
+    private String name
+    private String lastName
+    private String identification
+    private String externalRef
+    private String address
+    private String phoneNumber
+    private String mobileNumber
+    private String city
+    private String region
+    private String country
+    private String description
+    private Date date
+    private String document
 
-	public ProductsReviewResponse() {
+    ProductsReviewResponse() {
 
 	}
 
-	public ProductsReviewResponse(List<ProductDTO> products, String email, String name) {
-		super();
-		this.products = products;
-		this.email = email;
-		this.name = name;
-		this.accepted = true;
-	}
+    ProductsReviewResponse(List<ProductDTO> products, String email, String name) {
+		super()
+        this.products = products
+        this.email = email
+        this.name = name
+        this.accepted = true
+    }
 
-	public String getDocument() {
-		return document;
-	}
+    String getDocument() {
+		return document
+    }
 
-	public void setDocument(String document) {
-		this.document = document;
-	}
+    void setDocument(String document) {
+		this.document = document
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    Date getDate() {
+		return date
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    void setDate(Date date) {
+		this.date = date
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    String getDescription() {
+		return description
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    void setDescription(String description) {
+		this.description = description
+    }
 
-	public boolean isAccepted() {
-		return accepted;
-	}
+    boolean isAccepted() {
+		return accepted
+    }
 
-	public List<ProductDTO> getProducts() {
-		return products;
-	}
+    List<ProductDTO> getProducts() {
+		return products
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    String getEmail() {
+		return email
+    }
 
-	public String getName() {
-		return name;
-	}
+    String getName() {
+		return name
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    String getLastName() {
+		return lastName
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    void setLastName(String lastName) {
+		this.lastName = lastName
+    }
 
-	public String getIdentification() {
-		return identification;
-	}
+    String getIdentification() {
+		return identification
+    }
 
-	public void setIdentification(String identification) {
-		this.identification = identification;
-	}
+    void setIdentification(String identification) {
+		this.identification = identification
+    }
 
-	public String getExternalRef() {
-		return externalRef;
-	}
+    String getExternalRef() {
+		return externalRef
+    }
 
-	public void setExternalRef(String externalRef) {
-		this.externalRef = externalRef;
-	}
+    void setExternalRef(String externalRef) {
+		this.externalRef = externalRef
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    String getAddress() {
+		return address
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    void setAddress(String address) {
+		this.address = address
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    String getPhoneNumber() {
+		return phoneNumber
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber
+    }
 
-	public String getMobileNumber() {
-		return mobileNumber;
-	}
+    String getMobileNumber() {
+		return mobileNumber
+    }
 
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
+    void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber
+    }
 
-	public String getCity() {
-		return city;
-	}
+    String getCity() {
+		return city
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    void setCity(String city) {
+		this.city = city
+    }
 
-	public String getRegion() {
-		return region;
-	}
+    String getRegion() {
+		return region
+    }
 
-	public void setRegion(String region) {
-		this.region = region;
-	}
+    void setRegion(String region) {
+		this.region = region
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    String getCountry() {
+		return country
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    void setCountry(String country) {
+		this.country = country
+    }
 
-	public static ProductsReviewResponse rejected() {
-		return new ProductsReviewResponse();
-	}
+    static ProductsReviewResponse rejected() {
+		return new ProductsReviewResponse()
+    }
 
-	public static ProductsReviewResponse rejected(String description) {
-		return new ProductsReviewResponse();
-	}
+    static ProductsReviewResponse rejected(String description) {
+		return new ProductsReviewResponse()
+    }
 }

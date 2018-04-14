@@ -20,74 +20,74 @@ import java.util.logging.Logger
  *
  * @author mario
  */
-public class ResourceUploadLink extends Uploadlink {
+class ResourceUploadLink extends Uploadlink {
 
     static {
-        BindingComponentIndex.getInstance().put("value", ResourceUploadLink.class);
-        ComponentAliasIndex.getInstance().put("resourceUploadlink", ResourceUploadLink.class);
+        BindingComponentIndex.getInstance().put("value", ResourceUploadLink.class)
+        ComponentAliasIndex.getInstance().put("resourceUploadlink", ResourceUploadLink.class)
     }
 
-    private String value;
-    private String subfolder;
-    private boolean generateFileName;
+    private String value
+    private String subfolder
+    private boolean generateFileName
 
-    public ResourceUploadLink() {
-        generateUploadDirectory();
+    ResourceUploadLink() {
+        generateUploadDirectory()
     }
 
-    public boolean isGenerateFileName() {
-        return generateFileName;
+    boolean isGenerateFileName() {
+        return generateFileName
     }
 
-    public void setGenerateFileName(boolean generateFileName) {
-        this.generateFileName = generateFileName;
+    void setGenerateFileName(boolean generateFileName) {
+        this.generateFileName = generateFileName
     }
 
-    public String getSubfolder() {
-        return subfolder;
+    String getSubfolder() {
+        return subfolder
     }
 
-    public void setSubfolder(String subfolder) {
-        this.subfolder = subfolder;
-        generateUploadDirectory();
+    void setSubfolder(String subfolder) {
+        this.subfolder = subfolder
+        generateUploadDirectory()
     }
 
-    public String getValue() {
-        return value;
+    String getValue() {
+        return value
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    void setValue(String value) {
+        this.value = value
         if (value != null) {
-            setLabel(value);
+            setLabel(value)
         }
     }
 
     @Override
     protected void onFileUpload() {
-        String name = getUploadedFile().getName();
+        String name = getUploadedFile().getName()
         if (isGenerateFileName()) {
             try {
 
-                name = System.nanoTime() + "." + getUploadedFile().getExtension();
-                File output = new File(getUploadedFile().getFile().getParentFile(), name);
-                IOUtils.copy(getUploadedFile().getFile(), output);
-                getUploadedFile().delete();
+                name = System.nanoTime() + "." + getUploadedFile().getExtension()
+                File output = new File(getUploadedFile().getFile().getParentFile(), name)
+                IOUtils.copy(getUploadedFile().getFile(), output)
+                getUploadedFile().delete()
             } catch (IOException ex) {
-                Logger.getLogger(ResourceUploadLink.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ResourceUploadLink.class.getName()).log(Level.SEVERE, null, ex)
             }
         }
-        setValue(name);
+        setValue(name)
     }
 
     private void generateUploadDirectory() {
-        Path base = DynamiaCMS.getSitesResourceLocation(SiteContext.get().getCurrent());
+        Path base = DynamiaCMS.getSitesResourceLocation(SiteContext.get().getCurrent())
         if (subfolder != null) {
-            Path subfolderPath = base.resolve(subfolder);
-            DynamiaCMS.createDirectoryIfNotExists(subfolderPath);
-            setUploadDirectory(subfolderPath.toFile().getAbsolutePath());
+            Path subfolderPath = base.resolve(subfolder)
+            DynamiaCMS.createDirectoryIfNotExists(subfolderPath)
+            setUploadDirectory(subfolderPath.toFile().getAbsolutePath())
         } else {
-            setUploadDirectory(base.toFile().getAbsolutePath());
+            setUploadDirectory(base.toFile().getAbsolutePath())
         }
 
     }

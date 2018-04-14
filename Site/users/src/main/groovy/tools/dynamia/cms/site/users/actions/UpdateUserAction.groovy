@@ -33,33 +33,33 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class UpdateUserAction implements SiteAction {
+class UpdateUserAction implements SiteAction {
 
     @Autowired
-    private UserService service;
+    private UserService service
 
     @Autowired
-    private CrudService crudService;
+    private CrudService crudService
 
     @Override
-    public String getName() {
-        return "updateUser";
+    String getName() {
+        return "updateUser"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView();
+    void actionPerformed(ActionEvent evt) {
+        ModelAndView mv = evt.getModelAndView()
 
-        User user = crudService.reload(UserHolder.get().getCurrent());
+        User user = crudService.reload(UserHolder.get().getCurrent())
 
-        UserForm form = new UserForm();
-        form.setData(user);
-        form.setSite(evt.getSite());
-        UsersUtil.setupUserFormVar(mv, form);
-        
-    	List<UserContactInfo> userContactInfos = service.getContactInfos(UserHolder.get().getCurrent());
-		mv.addObject("userContactInfos", userContactInfos);
-		
+        UserForm form = new UserForm()
+        form.setData(user)
+        form.setSite(evt.getSite())
+        UsersUtil.setupUserFormVar(mv, form)
+
+        List<UserContactInfo> userContactInfos = service.getContactInfos(UserHolder.get().getCurrent())
+        mv.addObject("userContactInfos", userContactInfos)
+
     }
 
 }

@@ -18,47 +18,47 @@ package tools.dynamia.cms.site.products.dto
  *
  * @author Mario Serrano Leones
  */
-public class ProductCreditPriceDTO implements Serializable{
+class ProductCreditPriceDTO implements Serializable{
 
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 5111921265189786308L;
-	private ProductDTO product;
-    private int number;
-    private String description;
-    private BigDecimal price;
+	private static final long serialVersionUID = 5111921265189786308L
+    private ProductDTO product
+    private int number
+    private String description
+    private BigDecimal price
 
-    public ProductDTO getProduct() {
-        return product;
+    ProductDTO getProduct() {
+        return product
     }
 
-    public void setProduct(ProductDTO product) {
-        this.product = product;
+    void setProduct(ProductDTO product) {
+        this.product = product
     }
 
-    public int getNumber() {
-        return number;
+    int getNumber() {
+        return number
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    void setNumber(int number) {
+        this.number = number
     }
 
-    public String getDescription() {
-        return description;
+    String getDescription() {
+        return description
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    void setDescription(String description) {
+        this.description = description
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    BigDecimal getPrice() {
+        return price
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    void setPrice(BigDecimal price) {
+        this.price = price
     }
 
 }

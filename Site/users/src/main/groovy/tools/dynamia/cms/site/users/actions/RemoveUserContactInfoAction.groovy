@@ -30,33 +30,33 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class RemoveUserContactInfoAction implements SiteAction {
+class RemoveUserContactInfoAction implements SiteAction {
 
 	@Autowired
-	private CrudService crudService;
+	private CrudService crudService
+
+    @Override
+    String getName() {
+		return "removeUserContactInfo"
+    }
 
 	@Override
-	public String getName() {
-		return "removeUserContactInfo";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        Long id = (Long) evt.getData()
+        UserContactInfo userContactInfo = crudService.find(UserContactInfo.class, id)
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		Long id = (Long) evt.getData();
-		UserContactInfo userContactInfo = crudService.find(UserContactInfo.class, id);
-
-		try {
+        try {
 			if (userContactInfo.getUser().equals(UserHolder.get().getCurrent())) {
-				crudService.delete(userContactInfo);
-				CMSUtil.addSuccessMessage("Direccion de contacto elimidada exitosamente", evt.getRedirectAttributes());
-			} else {
-				CMSUtil.addErrorMessage("Direccion de contacto NO pertenece a este usuario -.-", evt.getRedirectAttributes());
-			}
+				crudService.delete(userContactInfo)
+                CMSUtil.addSuccessMessage("Direccion de contacto elimidada exitosamente", evt.getRedirectAttributes())
+            } else {
+				CMSUtil.addErrorMessage("Direccion de contacto NO pertenece a este usuario -.-", evt.getRedirectAttributes())
+            }
 		} catch (Exception e) {
-			CMSUtil.addWarningMessage("Direccion de contacto utilizada, no puede ser borrada", evt.getRedirectAttributes());
+			CMSUtil.addWarningMessage("Direccion de contacto utilizada, no puede ser borrada", evt.getRedirectAttributes())
 
-		}
+        }
 
 	}
 

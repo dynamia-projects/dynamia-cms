@@ -26,66 +26,66 @@ import tools.dynamia.commons.collect.MultiMap
  *
  * @author Mario Serrano Leones
  */
-public class ProductCompareGrid implements Serializable {
+class ProductCompareGrid implements Serializable {
 
-    private ProductsService service;
-    private Set<String> features = new TreeSet<>();
-    private MultiMap<String, ProductDetail> data = new ArrayListMultiMap<String, ProductDetail>();
-    private List<Product> products;
+    private ProductsService service
+    private Set<String> features = new TreeSet<>()
+    private MultiMap<String, ProductDetail> data = new ArrayListMultiMap<String, ProductDetail>()
+    private List<Product> products
 
-    public ProductCompareGrid(ProductsService service, List<Product> products) {
-        this.service = service;
-        this.products = products;
+    ProductCompareGrid(ProductsService service, List<Product> products) {
+        this.service = service
+        this.products = products
     }
 
-    public void loadData() {
-        List<ProductDetail> allDetails = service.getProductsDetails(products);
+    void loadData() {
+        List<ProductDetail> allDetails = service.getProductsDetails(products)
         for (ProductDetail productDetail : allDetails) {
-            features.add(cleanFeature(productDetail.getName()));
+            features.add(cleanFeature(productDetail.getName()))
         }
 
         for (Product product : products) {
-            List<ProductDetail> productDetails = getDetails(product, allDetails);
+            List<ProductDetail> productDetails = getDetails(product, allDetails)
             for (String name : features) {
-                ProductDetail det = getDetail(name, productDetails);
-                data.put(name, det);
+                ProductDetail det = getDetail(name, productDetails)
+                data.put(name, det)
             }
         }
 
     }
 
-    public MultiMap<String, ProductDetail> getData() {
-        return data;
+    MultiMap<String, ProductDetail> getData() {
+        return data
     }
 
-    public List<Product> getProducts() {
-        return products;
+    List<Product> getProducts() {
+        return products
     }
 
-    public Set<String> getFeatures() {
-        return features;
+    Set<String> getFeatures() {
+        return features
     }
 
     private List<ProductDetail> getDetails(Product product, List<ProductDetail> allDetails) {
-        List<ProductDetail> details = new ArrayList<>();
+        List<ProductDetail> details = new ArrayList<>()
         for (ProductDetail det : allDetails) {
             if (det.getProduct().equals(product)) {
-                details.add(det);
+                details.add(det)
             }
         }
-        return details;
+        return details
     }
 
     private ProductDetail getDetail(String name, List<ProductDetail> productDetails) {
         for (ProductDetail productDetail : productDetails) {
             if (cleanFeature(productDetail.getName()).equals(name)) {
-                return productDetail;
+                return productDetail
             }
         }
-        return null;
+        return null
     }
 
     private String cleanFeature(String name) {
-        return StringUtils.capitalize(name.trim().toLowerCase());
+        return StringUtils.capitalize(name.trim().toLowerCase())
     }
 }

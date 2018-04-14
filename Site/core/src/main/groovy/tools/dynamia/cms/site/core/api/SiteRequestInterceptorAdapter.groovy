@@ -25,16 +25,16 @@ import javax.servlet.http.HttpServletResponse
  *
  * @author Mario Serrano Leones
  */
-public class SiteRequestInterceptorAdapter implements SiteRequestInterceptor {
+class SiteRequestInterceptorAdapter implements SiteRequestInterceptor {
 
     @Override
-    public void beforeRequest(Site site, HttpServletRequest request, HttpServletResponse response) {
-        beforeRequest(site);
+    void beforeRequest(Site site, HttpServletRequest request, HttpServletResponse response) {
+        beforeRequest(site)
     }
 
     @Override
-    public void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) {
-        afterRequest(site, modelAndView);
+    void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) {
+        afterRequest(site, modelAndView)
     }
 
     protected void beforeRequest(Site site) {

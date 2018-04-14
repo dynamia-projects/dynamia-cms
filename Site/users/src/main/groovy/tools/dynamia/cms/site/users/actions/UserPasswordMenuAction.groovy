@@ -13,40 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.users.actions;
+package tools.dynamia.cms.site.users.actions
 
-import tools.dynamia.cms.site.core.api.CMSAction;
+import tools.dynamia.cms.site.core.api.CMSAction
 
 /**
  *
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class UserPasswordMenuAction implements UserMenuAction {
+class UserPasswordMenuAction implements UserMenuAction {
 
     @Override
-    public String getLabel() {
-        return "Cambiar Password";
+    String getLabel() {
+        return "Cambiar Password"
     }
 
     @Override
-    public String getDescription() {
-        return "Modificar password para acceder al sitio";
+    String getDescription() {
+        return "Modificar password para acceder al sitio"
     }
 
     @Override
-    public String getIcon() {
-        return null;
+    String getIcon() {
+        return null
     }
 
     @Override
-    public int getOrder() {
-        return 1;
+    int getOrder() {
+        return 1
     }
 
     @Override
-    public String action() {
-        return "users/changepassword";
+    String action() {
+        return "users/changepassword"
     }
 
 }

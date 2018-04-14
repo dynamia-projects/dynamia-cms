@@ -26,57 +26,57 @@ import javax.servlet.http.HttpServletResponse
  *
  * @author Mario Serrano Leones
  */
-public class ActionEvent implements Serializable {
+class ActionEvent implements Serializable {
 
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 6809369433426936140L;
-	private Site site;
-    private ModelAndView modelAndView;
-    private HttpServletRequest request;
-    private HttpServletResponse response;
-    private RedirectAttributes redirectAttributes;
-    private Object source;
-    private Object data;
- 
+	private static final long serialVersionUID = 6809369433426936140L
+    private Site site
+    private ModelAndView modelAndView
+    private HttpServletRequest request
+    private HttpServletResponse response
+    private RedirectAttributes redirectAttributes
+    private Object source
+    private Object data
+
 
     ActionEvent(Site site, ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes, Object source, Object data) {
-        this.site = site;
-        this.modelAndView = modelAndView;
-        this.request = request;
-        this.response = response;
-        this.redirectAttributes = redirectAttributes;
-        this.source = source;
-        this.data = data;
+        this.site = site
+        this.modelAndView = modelAndView
+        this.request = request
+        this.response = response
+        this.redirectAttributes = redirectAttributes
+        this.source = source
+        this.data = data
     }
 
-    public RedirectAttributes getRedirectAttributes() {
-        return redirectAttributes;
+    RedirectAttributes getRedirectAttributes() {
+        return redirectAttributes
     }
 
-    public Site getSite() {
-        return site;
+    Site getSite() {
+        return site
     }
 
-    public ModelAndView getModelAndView() {
-        return modelAndView;
+    ModelAndView getModelAndView() {
+        return modelAndView
     }
 
-    public HttpServletRequest getRequest() {
-        return request;
+    HttpServletRequest getRequest() {
+        return request
     }
 
-    public HttpServletResponse getResponse() {
-        return response;
+    HttpServletResponse getResponse() {
+        return response
     }
 
-    public Object getSource() {
-        return source;
+    Object getSource() {
+        return source
     }
 
-    public Object getData() {
-        return data;
+    Object getData() {
+        return data
     }
    
 }

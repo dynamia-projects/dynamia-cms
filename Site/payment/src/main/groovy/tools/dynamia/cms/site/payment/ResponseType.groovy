@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.payment;
+package tools.dynamia.cms.site.payment
 
-public enum ResponseType {
-	RESPONSE, CONFIRMATION;
+enum ResponseType {
+	RESPONSE, CONFIRMATION
 }

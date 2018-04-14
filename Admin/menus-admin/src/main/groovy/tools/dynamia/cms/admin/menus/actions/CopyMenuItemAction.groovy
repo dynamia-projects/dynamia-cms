@@ -15,38 +15,38 @@ import tools.dynamia.ui.UIMessages
 import tools.dynamia.zk.util.ZKUtil
 
 @InstallAction
-public class CopyMenuItemAction extends AbstractCrudAction {
+class CopyMenuItemAction extends AbstractCrudAction {
 
     @Autowired
-    private CrudService crudService;
+    private CrudService crudService
 
-    public CopyMenuItemAction() {
-        setGroup(ActionGroup.get("CRUD"));
-        setName("Copy");
-        setImage("copy");
+    CopyMenuItemAction() {
+        setGroup(ActionGroup.get("CRUD"))
+        setName("Copy")
+        setImage("copy")
     }
 
     @Override
-    public CrudState[] getApplicableStates() {
-        return CrudState.get(CrudState.READ);
+    CrudState[] getApplicableStates() {
+        return CrudState.get(CrudState.READ)
     }
 
     @Override
-    public ApplicableClass[] getApplicableClasses() {
-        return ApplicableClass.get(MenuItem.class);
+    ApplicableClass[] getApplicableClasses() {
+        return ApplicableClass.get(MenuItem.class)
     }
 
     @Override
-    public void actionPerformed(CrudActionEvent evt) {
-        MenuItem menuItem = (MenuItem) evt.getData();
+    void actionPerformed(CrudActionEvent evt) {
+        MenuItem menuItem = (MenuItem) evt.getData()
         if (menuItem != null) {
-            menuItem = crudService.reload(menuItem);
-            menuItem = menuItem.clone();
-            MenuItemsUI ui = new MenuItemsUI(menuItem);
-            ui.addAction(new SaveMenuItemAction(crudService, evt));
-            ZKUtil.showDialog(menuItem.getTitle(), ui, "90%", "90%");
+            menuItem = crudService.reload(menuItem)
+            menuItem = menuItem.clone()
+            MenuItemsUI ui = new MenuItemsUI(menuItem)
+            ui.addAction(new SaveMenuItemAction(crudService, evt))
+            ZKUtil.showDialog(menuItem.getTitle(), ui, "90%", "90%")
         } else {
-            UIMessages.showMessage("Select menu item", MessageType.ERROR);
+            UIMessages.showMessage("Select menu item", MessageType.ERROR)
         }
 
     }

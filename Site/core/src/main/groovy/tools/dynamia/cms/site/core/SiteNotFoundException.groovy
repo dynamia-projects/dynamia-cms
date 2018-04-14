@@ -13,31 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.core;
+package tools.dynamia.cms.site.core
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public class SiteNotFoundException extends CMSException {
+class SiteNotFoundException extends CMSException {
 
-    public SiteNotFoundException() {
+    SiteNotFoundException() {
     }
 
-    public SiteNotFoundException(String message) {
-        super(message);
+    SiteNotFoundException(String message) {
+        super(message)
     }
 
-    public SiteNotFoundException(String message, Throwable cause) {
-        super(message, cause);
+    SiteNotFoundException(String message, Throwable cause) {
+        super(message, cause)
     }
 
-    public SiteNotFoundException(Throwable cause) {
-        super(cause);
+    SiteNotFoundException(Throwable cause) {
+        super(cause)
     }
 
-    public SiteNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    SiteNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace)
     }
 
 }

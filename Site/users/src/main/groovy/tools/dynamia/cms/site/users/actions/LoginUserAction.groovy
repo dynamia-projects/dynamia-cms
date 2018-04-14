@@ -29,27 +29,27 @@ import tools.dynamia.cms.site.users.UsersUtil
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class LoginUserAction implements SiteAction {
+class LoginUserAction implements SiteAction {
 
     @Override
-    public String getName() {
-        return "loginUser";
+    String getName() {
+        return "loginUser"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView();
+    void actionPerformed(ActionEvent evt) {
+        ModelAndView mv = evt.getModelAndView()
 
-        mv.addObject("loginForm", new LoginForm(evt.getSite()));
-        UsersUtil.setupUserFormVar(mv, new UserForm(evt.getSite()));
+        mv.addObject("loginForm", new LoginForm(evt.getSite()))
+        UsersUtil.setupUserFormVar(mv, new UserForm(evt.getSite()))
 
         try {
 
-            Exception ex = (Exception) evt.getRequest().getSession(false).getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+            Exception ex = (Exception) evt.getRequest().getSession(false).getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION)
 
             if (ex != null) {
-                String message = ex.getLocalizedMessage();
-                mv.addObject("errormessage", message);
+                String message = ex.getLocalizedMessage()
+                mv.addObject("errormessage", message)
             }
         } catch (Exception e) {
         }

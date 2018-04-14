@@ -19,25 +19,25 @@ import tools.dynamia.cms.site.core.api.CMSExtension
 import tools.dynamia.cms.site.menus.MenuContext
 
 @CMSExtension
-public class DefaultMenuItemType implements MenuItemType {
+class DefaultMenuItemType implements MenuItemType {
 
 	@Override
-	public String getId() {
-		return "default";
-	}
+    String getId() {
+		return "default"
+    }
 
 	@Override
-	public String getName() {
-		return "Default Menu Item";
-	}
+    String getName() {
+		return "Default Menu Item"
+    }
 
 	@Override
-	public String getDescription() {
-		return "";
-	}
+    String getDescription() {
+		return ""
+    }
 
 	@Override
-	public void setupMenuItem(MenuContext context) {
+    void setupMenuItem(MenuContext context) {
 		
 
 	}

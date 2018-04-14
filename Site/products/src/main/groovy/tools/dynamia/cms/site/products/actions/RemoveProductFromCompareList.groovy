@@ -34,35 +34,35 @@ import tools.dynamia.integration.Containers
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class RemoveProductFromCompareList implements SiteAction {
+class RemoveProductFromCompareList implements SiteAction {
 
     @Autowired
-    private CrudService crudService;
+    private CrudService crudService
     @Autowired
-    private ProductsService service;
+    private ProductsService service
 
     @Override
-    public String getName() {
-        return "removeProductFromCompareList";
+    String getName() {
+        return "removeProductFromCompareList"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        Long id = (Long) evt.getData();
+    void actionPerformed(ActionEvent evt) {
+        Long id = (Long) evt.getData()
 
-        Product product = crudService.find(Product.class, id);
-        ProductCompareList list = Containers.get().findObject(ProductCompareList.class);
-        list.remove(product);
+        Product product = crudService.find(Product.class, id)
+        ProductCompareList list = Containers.get().findObject(ProductCompareList.class)
+        list.remove(product)
 
-        ModelAndView mv = evt.getModelAndView();
-        String action = "/store/compare/" + list.toString();
-        ProductsUtil.setupDefaultVars(evt.getSite(), mv);
+        ModelAndView mv = evt.getModelAndView()
+        String action = "/store/compare/" + list.toString()
+        ProductsUtil.setupDefaultVars(evt.getSite(), mv)
         if (list.getProducts().size() == 1) {
-            CMSUtil.addSuccessMessage("Agregue otros productos de la misma categoria o similares para comparar", evt.getRedirectAttributes());
+            CMSUtil.addSuccessMessage("Agregue otros productos de la misma categoria o similares para comparar", evt.getRedirectAttributes())
         } else if (list.getProducts().isEmpty()) {
-            action = "/";
+            action = "/"
         }
-        mv.setView(new RedirectView(action, true, true, false));
+        mv.setView(new RedirectView(action, true, true, false))
 
     }
 

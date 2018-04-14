@@ -22,8 +22,8 @@ import tools.dynamia.cms.site.shoppingcart.domain.ShoppingCartItem
  *
  * @author Mario Serrano Leones
  */
-public interface ShoppingCartItemProvider {
+interface ShoppingCartItemProvider {
 
-    public ShoppingCartItem getItem(Site site, String code);
+    ShoppingCartItem getItem(Site site, String code)
 
 }

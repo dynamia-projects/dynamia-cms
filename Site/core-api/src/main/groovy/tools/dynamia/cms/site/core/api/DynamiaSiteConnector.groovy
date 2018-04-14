@@ -4,14 +4,13 @@ import tools.dynamia.cms.site.core.dto.CityDTO
 import tools.dynamia.cms.site.core.dto.CountryDTO
 import tools.dynamia.cms.site.core.dto.RegionDTO
 
-public interface DynamiaSiteConnector {
+interface DynamiaSiteConnector {
 
-	public List<CountryDTO> getCountries();
+	List<CountryDTO> getCountries()
 
-	public List<RegionDTO> getRegions(CountryDTO country);
+    List<RegionDTO> getRegions(CountryDTO country)
 
-	public List<CityDTO> getCities(CountryDTO country, RegionDTO region);
-	
-	
+    List<CityDTO> getCities(CountryDTO country, RegionDTO region)
+
 
 }

@@ -19,7 +19,7 @@ import tools.dynamia.cms.site.core.api.Module
 import tools.dynamia.cms.site.core.domain.ModuleInstance
 import tools.dynamia.cms.site.core.domain.Site
 
-public interface ModulesService {
+interface ModulesService {
 
 	/**
 	 * Return all enabled modules instances in an specific position
@@ -28,22 +28,22 @@ public interface ModulesService {
 	 * @param position
 	 * @return
 	 */
-	public List<ModuleInstance> getModules(Site site, String position);
+    List<ModuleInstance> getModules(Site site, String position)
 
-	/**
+    /**
 	 * Return a list of used positions by enabled modules instances
 	 * 
 	 * @param site
 	 * @return
 	 */
-	public List<String> getUsedPositions(Site site);
+	List<String> getUsedPositions(Site site)
 
-	public abstract Module getModule(ModuleInstance instance);
+    abstract Module getModule(ModuleInstance instance)
 
-	public abstract void initModuleInstance(ModuleInstance moduleInstance);
+    abstract void initModuleInstance(ModuleInstance moduleInstance)
 
-	List<Module> getInstalledModules();
+    List<Module> getInstalledModules()
 
-	List<String> getAllUsedPositions(Site site);
+    List<String> getAllUsedPositions(Site site)
 
 }

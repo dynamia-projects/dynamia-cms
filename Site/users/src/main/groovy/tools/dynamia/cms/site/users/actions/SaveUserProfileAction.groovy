@@ -33,35 +33,35 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class SaveUserProfileAction implements SiteAction {
+class SaveUserProfileAction implements SiteAction {
 
 	@Autowired
-	private UserService userService;
+	private UserService userService
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
+
+    @Override
+    String getName() {
+		return "saveUserProfile"
+    }
 
 	@Override
-	public String getName() {
-		return "saveUserProfile";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-
-		UserForm userForm = (UserForm) evt.getData();
-		userForm.setSite(evt.getSite());
-		try {
-			userService.saveUser(userForm);
-			User user = crudService.find(User.class, userForm.getData().getId());
-			UserHolder.get().update(user);
-			mv.addObject("successmessage", "Informacion Personal actualizada correctamente");
-		} catch (ValidationError e) {
-			mv.addObject("errormessage", e.getMessage());
-			mv.setViewName("users/profile");
-			UsersUtil.setupUserFormVar(mv, userForm);
-		}
+        UserForm userForm = (UserForm) evt.getData()
+        userForm.setSite(evt.getSite())
+        try {
+			userService.saveUser(userForm)
+            User user = crudService.find(User.class, userForm.getData().getId())
+            UserHolder.get().update(user)
+            mv.addObject("successmessage", "Informacion Personal actualizada correctamente")
+        } catch (ValidationError e) {
+			mv.addObject("errormessage", e.getMessage())
+            mv.setViewName("users/profile")
+            UsersUtil.setupUserFormVar(mv, userForm)
+        }
 
 	}
 

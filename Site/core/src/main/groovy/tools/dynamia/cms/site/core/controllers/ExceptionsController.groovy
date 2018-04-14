@@ -36,69 +36,69 @@ import javax.servlet.http.HttpServletResponse
  * @author Mario Serrano Leones
  */
 @Controller
-public class ExceptionsController {
+class ExceptionsController {
 
-    private LoggingService logger = new SLF4JLoggingService(DynamiaCMS.class);
+    private LoggingService logger = new SLF4JLoggingService(DynamiaCMS.class)
 
     @Autowired
-    private SiteService siteService;
+    private SiteService siteService
 
     @RequestMapping("/exception")
     @ExceptionHandler(Exception.class)
-    public ModelAndView error(HttpServletRequest request, HttpServletResponse response, Exception exception) {
-        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-        Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+    ModelAndView error(HttpServletRequest request, HttpServletResponse response, Exception exception) {
+        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code")
+        Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception")
 
         if (throwable == null) {
-            throwable = exception;
+            throwable = exception
         }
 
         if (exception instanceof CMSException) {
-            statusCode = ((CMSException) exception).getStatus().value();
+            statusCode = ((CMSException) exception).getStatus().value()
         }
 
-        String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri");
+        String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri")
 
         if (requestUri == null) {
-            requestUri = request.getRequestURI() + "";
+            requestUri = request.getRequestURI() + ""
         }
 
         if (statusCode != 404) {
-            logger.error("ERROR " + statusCode + ": " + requestUri + " on  " + request.getServerName(), throwable);
+            logger.error("ERROR " + statusCode + ": " + requestUri + " on  " + request.getServerName(), throwable)
         } else {
-            logger.warn(String.format("Error 404 - Resource [%s] not found in site [%s]", requestUri, request.getServerName()));
+            logger.warn(String.format("Error 404 - Resource [%s] not found in site [%s]", requestUri, request.getServerName()))
         }
-        ModelAndView mv = new ModelAndView("error/exception");
+        ModelAndView mv = new ModelAndView("error/exception")
         if (statusCode != null && statusCode == 404) {
-            mv.setViewName("error/404");
-            mv.addObject("pageAlias", requestUri);
+            mv.setViewName("error/404")
+            mv.addObject("pageAlias", requestUri)
         }
-        mv.addObject("title", "Error");
-        mv.addObject("statusCode", statusCode);
-        mv.addObject("uri", requestUri);
-        mv.addObject("exception", throwable);
-        mv.addObject("contextPath", request.getContextPath());
+        mv.addObject("title", "Error")
+        mv.addObject("statusCode", statusCode)
+        mv.addObject("uri", requestUri)
+        mv.addObject("exception", throwable)
+        mv.addObject("contextPath", request.getContextPath())
 
-        List<String> causes = new ArrayList<>();
-        getCauses(causes, throwable.getCause());
-        mv.addObject("causes", causes);
+        List<String> causes = new ArrayList<>()
+        getCauses(causes, throwable.getCause())
+        mv.addObject("causes", causes)
 
-        Site site = siteService.getSite(request);
+        Site site = siteService.getSite(request)
         Containers.get().findObjects(SiteRequestInterceptor.class).forEach { i ->
-            i.afterRequest(site, request, response, mv);
+            i.afterRequest(site, request, response, mv)
         }
-        return mv;
+        return mv
     }
 
     private void getCauses(List<String> causes, Throwable throwable) {
 
         if (throwable != null) {
             if (causes.size() <= 10) {
-                causes.add(throwable.getMessage());
+                causes.add(throwable.getMessage())
             }
 
             if (throwable.getCause() != null) {
-                getCauses(causes, throwable.getCause());
+                getCauses(causes, throwable.getCause())
             }
         }
 

@@ -31,44 +31,44 @@ import tools.dynamia.ui.UIMessages
  * Created by Mario on 18/11/2014.
  */
 @InstallAction
-public class IncreaseOrderAction extends AbstractCrudAction {
+class IncreaseOrderAction extends AbstractCrudAction {
 
 	@Autowired
-	private CrudService crudService;
+	private CrudService crudService
 
-	public IncreaseOrderAction() {
-		setName("Move up");
-		setImage("up");
-		setMenuSupported(true);
-	}
+    IncreaseOrderAction() {
+		setName("Move up")
+        setImage("up")
+        setMenuSupported(true)
+    }
 
 	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		Orderable orderable = (Orderable) evt.getData();
-		if (orderable != null) {
-			orderable.setOrder(orderable.getOrder() - 1);
+    void actionPerformed(CrudActionEvent evt) {
+		Orderable orderable = (Orderable) evt.getData()
+        if (orderable != null) {
+			orderable.setOrder(orderable.getOrder() - 1)
 
-			crudService.update(orderable);
-			if (evt.getController() != null) {
-				evt.getController().doQuery();
-				evt.getController().setSelected((AbstractEntity) orderable);
-			}
+            crudService.update(orderable)
+            if (evt.getController() != null) {
+				evt.getController().doQuery()
+                evt.getController().setSelected((AbstractEntity) orderable)
+            }
 
 			if (orderable.getOrder() <= 0) {
-				UIMessages.showMessage("Done");
-			}
+				UIMessages.showMessage("Done")
+            }
 		} else {
-			UIMessages.showMessage("Select row", MessageType.WARNING);
-		}
+			UIMessages.showMessage("Select row", MessageType.WARNING)
+        }
 	}
 
 	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(Orderable.class);
-	}
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(Orderable.class)
+    }
 }

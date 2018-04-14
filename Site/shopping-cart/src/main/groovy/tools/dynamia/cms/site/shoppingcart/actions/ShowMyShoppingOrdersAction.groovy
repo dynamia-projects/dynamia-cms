@@ -29,27 +29,27 @@ import tools.dynamia.cms.site.users.UserHolder
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ShowMyShoppingOrdersAction implements SiteAction {
+class ShowMyShoppingOrdersAction implements SiteAction {
 
 	@Autowired
-	private ShoppingCartService service;
+	private ShoppingCartService service
+
+    @Override
+    String getName() {
+		return "showMyShoppingOrders"
+    }
 
 	@Override
-	public String getName() {
-		return "showMyShoppingOrders";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        mv.setViewName("shoppingcart/myorders")
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		mv.setViewName("shoppingcart/myorders");
+        mv.addObject("title", "Mis Pedidos")
 
-		mv.addObject("title", "Mis Pedidos");
+        List<ShoppingOrder> orders = service.getOrders(UserHolder.get().getCurrent())
 
-		List<ShoppingOrder> orders = service.getOrders(UserHolder.get().getCurrent());
+        mv.addObject("orders", orders)
 
-		mv.addObject("orders", orders);
-
-	}
+    }
 
 }

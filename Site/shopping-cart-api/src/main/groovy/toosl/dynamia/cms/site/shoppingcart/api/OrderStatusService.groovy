@@ -2,8 +2,8 @@ package toosl.dynamia.cms.site.shoppingcart.api
 
 import toosl.dynamia.cms.site.shoppingcart.dto.OrderStatusDTO
 
-public interface OrderStatusService {
+interface OrderStatusService {
 
-	public List<OrderStatusDTO> getOrdersStatus(String customer);
+	List<OrderStatusDTO> getOrdersStatus(String customer)
 
 }

@@ -31,49 +31,49 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSExtension
-public class ProductsPageType implements PageTypeExtension {
+class ProductsPageType implements PageTypeExtension {
 
     @Autowired
-    private ProductsService service;
+    private ProductsService service
 
     @Autowired
-    private CrudService crudService;
+    private CrudService crudService
 
     @Override
-    public String getId() {
-        return "products";
+    String getId() {
+        return "products"
     }
 
     @Override
-    public String getName() {
-        return "Products List Page";
+    String getName() {
+        return "Products List Page"
     }
 
     @Override
-    public String getDescription() {
-        return "A product list page, you cant specified a category id using page parameters";
+    String getDescription() {
+        return "A product list page, you cant specified a category id using page parameters"
     }
 
     @Override
-    public String getDescriptorId() {
-        return "ProductGridConfig";
+    String getDescriptorId() {
+        return "ProductGridConfig"
     }
 
     @Override
-    public void setupPage(PageContext context) {
-        ModelAndView mv = context.getModelAndView();
-        mv.addObject("subtitle", context.getPage().getSubtitle());
+    void setupPage(PageContext context) {
+        ModelAndView mv = context.getModelAndView()
+        mv.addObject("subtitle", context.getPage().getSubtitle())
 
-        PageParameter categoryParam = context.getParameter("category");
+        PageParameter categoryParam = context.getParameter("category")
 
         if (categoryParam != null) {
-            Long id = new Long(categoryParam.getValue());
-            SiteActionManager.performAction("loadProductCategory", mv, context.getRequest(), id);
-            mv.setViewName("products/products");
+            Long id = new Long(categoryParam.getValue())
+            SiteActionManager.performAction("loadProductCategory", mv, context.getRequest(), id)
+            mv.setViewName("products/products")
         } else {
-            ProductsUtil.setupProductsVar(service.getFeaturedProducts(context.getSite()), context.getModelAndView());
-            mv.setViewName("products/main");
-            SiteActionManager.performAction("showMainProductPage", mv, context.getRequest());
+            ProductsUtil.setupProductsVar(service.getFeaturedProducts(context.getSite()), context.getModelAndView())
+            mv.setViewName("products/main")
+            SiteActionManager.performAction("showMainProductPage", mv, context.getRequest())
 
         }
 

@@ -21,25 +21,25 @@ import tools.dynamia.navigation.NavigationElement
 import tools.dynamia.navigation.NavigationRestriction
 
 @CMSExtension
-public class SystemNavigationRestriction implements NavigationRestriction {
+class SystemNavigationRestriction implements NavigationRestriction {
 
     @Override
-    public Boolean allowAccess(NavigationElement element) {
+    Boolean allowAccess(NavigationElement element) {
         if (element.getId().equals("system")) {
             try {
-				return SiteContext.get().isSuperAdmin();
-			} catch (Exception e) {
-				return false;
-			}
+				return SiteContext.get().isSuperAdmin()
+            } catch (Exception e) {
+				return false
+            }
         }
 
-        return null;
+        return null
     }
 
     @Override
-    public int getOrder() {
+    int getOrder() {
 
-        return 0;
+        return 0
     }
 
 }

@@ -26,34 +26,34 @@ import tools.dynamia.commons.StringUtils
  */
 @Component
 @Scope("session")
-public class ProductCompareList implements Serializable {
+class ProductCompareList implements Serializable {
 
-    private List<Product> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>()
 
-    public void add(Product product) {
+    void add(Product product) {
         if (product != null && !products.contains(product)) {
-            products.add(product);
+            products.add(product)
         }
     }
 
-    public void remove(Product product) {
-        products.remove(product);
+    void remove(Product product) {
+        products.remove(product)
     }
 
-    public List<Product> getProducts() {
-        return products;
+    List<Product> getProducts() {
+        return products
     }
 
     @Override
-    public String toString() {
-        List<Long> ids = new ArrayList<>();
+    String toString() {
+        List<Long> ids = new ArrayList<>()
         for (Product product : products) {
-            ids.add(product.getId());
+            ids.add(product.getId())
         }
-        return StringUtils.arrayToCommaDelimitedString(ids.toArray());
+        return StringUtils.arrayToCommaDelimitedString(ids.toArray())
     }
 
-    public void clear() {
-        products = new ArrayList<>();
+    void clear() {
+        products = new ArrayList<>()
     }
 }

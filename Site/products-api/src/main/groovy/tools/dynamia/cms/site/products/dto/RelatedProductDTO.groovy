@@ -18,80 +18,80 @@ package tools.dynamia.cms.site.products.dto
  *
  * @author Mario Serrano Leons
  */
-public class RelatedProductDTO implements Serializable {
+class RelatedProductDTO implements Serializable {
 
-    private Long externalRef;
-    private Long targetCategoryExternalRef;
-    private Long targetProductExternalRef;
-    private Long productExternalRef;
+    private Long externalRef
+    private Long targetCategoryExternalRef
+    private Long targetProductExternalRef
+    private Long productExternalRef
 
-    private boolean gift;
-    private boolean required;
-    private boolean active = true;
-    private BigDecimal price;
+    private boolean gift
+    private boolean required
+    private boolean active = true
+    private BigDecimal price
 
-    public Long getExternalRef() {
-        return externalRef;
+    Long getExternalRef() {
+        return externalRef
     }
 
-    public void setExternalRef(Long externalRef) {
-        this.externalRef = externalRef;
+    void setExternalRef(Long externalRef) {
+        this.externalRef = externalRef
     }
 
-    public Long getTargetCategoryExternalRef() {
-        return targetCategoryExternalRef;
+    Long getTargetCategoryExternalRef() {
+        return targetCategoryExternalRef
     }
 
-    public void setTargetCategoryExternalRef(Long targetCategoryExternalRef) {
-        this.targetCategoryExternalRef = targetCategoryExternalRef;
+    void setTargetCategoryExternalRef(Long targetCategoryExternalRef) {
+        this.targetCategoryExternalRef = targetCategoryExternalRef
     }
 
-    public Long getTargetProductExternalRef() {
-        return targetProductExternalRef;
+    Long getTargetProductExternalRef() {
+        return targetProductExternalRef
     }
 
-    public void setTargetProductExternalRef(Long targetProductExternalRef) {
-        this.targetProductExternalRef = targetProductExternalRef;
+    void setTargetProductExternalRef(Long targetProductExternalRef) {
+        this.targetProductExternalRef = targetProductExternalRef
     }
 
-    public Long getProductExternalRef() {
-        return productExternalRef;
+    Long getProductExternalRef() {
+        return productExternalRef
     }
 
-    public void setProductExternalRef(Long productExternalRef) {
-        this.productExternalRef = productExternalRef;
+    void setProductExternalRef(Long productExternalRef) {
+        this.productExternalRef = productExternalRef
     }
 
-    public boolean isGift() {
-        return gift;
+    boolean isGift() {
+        return gift
     }
 
-    public void setGift(boolean gift) {
-        this.gift = gift;
+    void setGift(boolean gift) {
+        this.gift = gift
     }
 
-    public boolean isRequired() {
-        return required;
+    boolean isRequired() {
+        return required
     }
 
-    public void setRequired(boolean required) {
-        this.required = required;
+    void setRequired(boolean required) {
+        this.required = required
     }
 
-    public boolean isActive() {
-        return active;
+    boolean isActive() {
+        return active
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    void setActive(boolean active) {
+        this.active = active
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    BigDecimal getPrice() {
+        return price
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    void setPrice(BigDecimal price) {
+        this.price = price
     }
 
 }

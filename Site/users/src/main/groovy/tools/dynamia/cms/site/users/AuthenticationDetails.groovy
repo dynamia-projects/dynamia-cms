@@ -26,21 +26,21 @@ import javax.servlet.http.HttpServletRequest
  *
  * @author Mario Serrano Leones
  */
-public class AuthenticationDetails extends WebAuthenticationDetails {
+class AuthenticationDetails extends WebAuthenticationDetails {
 
-    private Site site;
+    private Site site
 
-    public AuthenticationDetails(HttpServletRequest request) {
-        super(request);
-        SiteService service = Containers.get().findObject(SiteService.class);
-        this.site = service.getSite(request);
+    AuthenticationDetails(HttpServletRequest request) {
+        super(request)
+        SiteService service = Containers.get().findObject(SiteService.class)
+        this.site = service.getSite(request)
         if (this.site == null) {
-            this.site = service.getMainSite();
+            this.site = service.getMainSite()
         }
     }
 
-    public Site getSite() {
-        return site;
+    Site getSite() {
+        return site
     }
 
 }

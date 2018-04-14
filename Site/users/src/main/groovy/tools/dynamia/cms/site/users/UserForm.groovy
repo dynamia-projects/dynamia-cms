@@ -23,53 +23,53 @@ import tools.dynamia.domain.contraints.NotEmpty
  *
  * @author Mario Serrano Leones
  */
-public class UserForm implements Serializable {
+class UserForm implements Serializable {
 
     
-    private User data = new User();
+    private User data = new User()
     @NotEmpty
-    private String passwordConfirm;
+    private String passwordConfirm
     @NotEmpty
-    private String currentPassword;
-    private Site site;
+    private String currentPassword
+    private Site site
 
-    public UserForm() {
+    UserForm() {
     }
 
-    public UserForm(Site site) {
-        this.site = site;
+    UserForm(Site site) {
+        this.site = site
     }
 
-    public String getCurrentPassword() {
-        return currentPassword;
+    String getCurrentPassword() {
+        return currentPassword
     }
 
-    public void setCurrentPassword(String currentPassword) {
-        this.currentPassword = currentPassword;
+    void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword
     }
 
-    public Site getSite() {
-        return site;
+    Site getSite() {
+        return site
     }
 
-    public void setSite(Site site) {
-        this.site = site;
+    void setSite(Site site) {
+        this.site = site
     }
 
-    public User getData() {
-        return data;
+    User getData() {
+        return data
     }
 
-    public void setData(User data) {
-        this.data = data;
+    void setData(User data) {
+        this.data = data
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
+    String getPasswordConfirm() {
+        return passwordConfirm
     }
 
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
+    void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm
     }
 
 }

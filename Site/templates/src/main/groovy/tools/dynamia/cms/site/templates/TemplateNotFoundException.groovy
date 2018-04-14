@@ -13,33 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.templates;
+package tools.dynamia.cms.site.templates
 
-import tools.dynamia.cms.site.core.CMSException;
+import tools.dynamia.cms.site.core.CMSException
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public class TemplateNotFoundException extends CMSException {
+class TemplateNotFoundException extends CMSException {
 
-    public TemplateNotFoundException() {
+    TemplateNotFoundException() {
     }
 
-    public TemplateNotFoundException(String message) {
-        super(message);
+    TemplateNotFoundException(String message) {
+        super(message)
     }
 
-    public TemplateNotFoundException(String message, Throwable cause) {
-        super(message, cause);
+    TemplateNotFoundException(String message, Throwable cause) {
+        super(message, cause)
     }
 
-    public TemplateNotFoundException(Throwable cause) {
-        super(cause);
+    TemplateNotFoundException(Throwable cause) {
+        super(cause)
     }
 
-    public TemplateNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    TemplateNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace)
     }
 
 }

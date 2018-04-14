@@ -1,163 +1,163 @@
 package tools.dynamia.cms.site.users.api
 
-public class UserDTO implements Serializable {
+class UserDTO implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 206617741224283708L;
-	private String email;
-	private String password;
-	private String fullName;
-	private String firstName;
-	private String lastName;
-	private String address;
-	private String phoneNumber;
-	private String mobileNumber;
-	private String city;
-	private String country;
-	private String identification;
-	private String externalRef;
-	private boolean enabled;
-	private String relatedUser;
-	private UserProfile profile = UserProfile.USER;
-	private String groupName;
+	private static final long serialVersionUID = 206617741224283708L
+    private String email
+    private String password
+    private String fullName
+    private String firstName
+    private String lastName
+    private String address
+    private String phoneNumber
+    private String mobileNumber
+    private String city
+    private String country
+    private String identification
+    private String externalRef
+    private boolean enabled
+    private String relatedUser
+    private UserProfile profile = UserProfile.USER
+    private String groupName
 
-	public String getGroupName() {
-		return groupName;
-	}
+    String getGroupName() {
+		return groupName
+    }
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
+    void setGroupName(String groupName) {
+		this.groupName = groupName
+    }
 
-	public String getFullName() {
-		return fullName;
-	}
+    String getFullName() {
+		return fullName
+    }
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+    void setFullName(String fullName) {
+		this.fullName = fullName
+    }
 
-	public UserProfile getProfile() {
-		return profile;
-	}
+    UserProfile getProfile() {
+		return profile
+    }
 
-	public void setProfile(UserProfile profile) {
-		this.profile = profile;
-	}
+    void setProfile(UserProfile profile) {
+		this.profile = profile
+    }
 
-	public String getRelatedUser() {
-		return relatedUser;
-	}
+    String getRelatedUser() {
+		return relatedUser
+    }
 
-	public void setRelatedUser(String relatedUser) {
-		this.relatedUser = relatedUser;
-	}
+    void setRelatedUser(String relatedUser) {
+		this.relatedUser = relatedUser
+    }
 
-	public String getCity() {
-		return city;
-	}
+    String getCity() {
+		return city
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    void setCity(String city) {
+		this.city = city
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    String getCountry() {
+		return country
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    void setCountry(String country) {
+		this.country = country
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    String getEmail() {
+		return email
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    void setEmail(String email) {
+		this.email = email
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    String getPassword() {
+		return password
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    void setPassword(String password) {
+		this.password = password
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    String getFirstName() {
+		return firstName
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    void setFirstName(String firstName) {
+		this.firstName = firstName
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    String getLastName() {
+		return lastName
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    void setLastName(String lastName) {
+		this.lastName = lastName
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    String getAddress() {
+		return address
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    void setAddress(String address) {
+		this.address = address
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    String getPhoneNumber() {
+		return phoneNumber
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber
+    }
 
-	public String getMobileNumber() {
-		return mobileNumber;
-	}
+    String getMobileNumber() {
+		return mobileNumber
+    }
 
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
+    void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber
+    }
 
-	public String getIdentification() {
-		return identification;
-	}
+    String getIdentification() {
+		return identification
+    }
 
-	public void setIdentification(String identification) {
-		this.identification = identification;
-	}
+    void setIdentification(String identification) {
+		this.identification = identification
+    }
 
-	public String getExternalRef() {
-		return externalRef;
-	}
+    String getExternalRef() {
+		return externalRef
+    }
 
-	public void setExternalRef(String externalRef) {
-		this.externalRef = externalRef;
-	}
+    void setExternalRef(String externalRef) {
+		this.externalRef = externalRef
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    boolean isEnabled() {
+		return enabled
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    void setEnabled(boolean enabled) {
+		this.enabled = enabled
+    }
 
 	@Override
-	public String toString() {
+    String toString() {
 		return "UserDTO [email=" + email + ", password=" + password + ", fullName=" + fullName + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", address=" + address + ", phoneNumber=" + phoneNumber
 				+ ", mobileNumber=" + mobileNumber + ", city=" + city + ", country=" + country + ", identification="
 				+ identification + ", externalRef=" + externalRef + ", enabled=" + enabled + ", relatedUser="
-				+ relatedUser + ", profile=" + profile + ", groupName=" + groupName + "]";
-	}
+				+ relatedUser + ", profile=" + profile + ", groupName=" + groupName + "]"
+    }
 
 }

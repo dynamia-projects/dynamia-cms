@@ -22,14 +22,14 @@ import tools.dynamia.cms.site.core.domain.Site
 import tools.dynamia.cms.site.mail.domain.MailingContact
 
 @CMSExtension
-public class MailingContactSiteInterceptor extends SiteRequestInterceptorAdapter {
+class MailingContactSiteInterceptor extends SiteRequestInterceptorAdapter {
 
 	
 	
 	@Override
 	protected void afterRequest(Site site, ModelAndView mv) {
 
-		mv.addObject("mailingContact", new MailingContact());
+		mv.addObject("mailingContact", new MailingContact())
 
-	}
+    }
 }

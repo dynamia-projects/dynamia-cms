@@ -29,23 +29,23 @@ import tools.dynamia.cms.site.menus.services.MenuService
  * @author Mario Serrano Leones
  */
 @CMSExtension
-public class MenuInterceptor extends SiteRequestInterceptorAdapter {
+class MenuInterceptor extends SiteRequestInterceptorAdapter {
 
 	@Autowired
-	private MenuService service;
+	private MenuService service
 
-	@Override
+    @Override
 	protected void afterRequest(Site site, ModelAndView mv) {
-		Menu menu = service.getMainMenu(site);
-		if (menu != null) {
-			List<MenuItem> items = new ArrayList<>(menu.getItems());
-			for (MenuItem menuItem : items) {
-				service.setupMenuItem(menuItem);
-			}
+		Menu menu = service.getMainMenu(site)
+        if (menu != null) {
+			List<MenuItem> items = new ArrayList<>(menu.getItems())
+            for (MenuItem menuItem : items) {
+				service.setupMenuItem(menuItem)
+            }
 
-			mv.addObject("menu", menu);
-			mv.addObject("menuitems", items);
-		}
+			mv.addObject("menu", menu)
+            mv.addObject("menuitems", items)
+        }
 	}
 
 }

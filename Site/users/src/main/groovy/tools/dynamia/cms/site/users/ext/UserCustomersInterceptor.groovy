@@ -28,16 +28,16 @@ import tools.dynamia.cms.site.users.services.UserService
  * @author Mario Serrano Leones
  */
 @CMSExtension
-public class UserCustomersInterceptor extends SiteRequestInterceptorAdapter {
+class UserCustomersInterceptor extends SiteRequestInterceptorAdapter {
 
 	@Autowired
-	private UserService service;
+	private UserService service
 
-	@Override
+    @Override
 	protected void afterRequest(Site site, ModelAndView modelAndView) {
 		if (UserHolder.get().isSeller() && modelAndView.getModelMap().get("userCustomers") == null) {
-			modelAndView.addObject("userCustomers", service.getUserCustomers(UserHolder.get().getCurrent()));
-		}
+			modelAndView.addObject("userCustomers", service.getUserCustomers(UserHolder.get().getCurrent()))
+        }
 	}
 
 }

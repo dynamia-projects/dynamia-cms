@@ -29,44 +29,44 @@ import tools.dynamia.ui.MessageType
 import tools.dynamia.ui.UIMessages
 
 @InstallAction
-public class ViewResourceLinkAction extends FileManagerAction {
+class ViewResourceLinkAction extends FileManagerAction {
 
-	public ViewResourceLinkAction() {
-		setImage("link");
-		setName("View Link");
-		setPosition(Double.MAX_VALUE);
-		setMenuSupported(true);
-	}
+	ViewResourceLinkAction() {
+		setImage("link")
+        setName("View Link")
+        setPosition(Double.MAX_VALUE)
+        setMenuSupported(true)
+    }
 
 	@Override
-	public void actionPerformed(ActionEvent evt) {
-		List<FileInfo> files = new ArrayList<>();
+    void actionPerformed(ActionEvent evt) {
+		List<FileInfo> files = new ArrayList<>()
 
-		if (evt.getData() instanceof FileInfo) {
-			files.add((FileInfo) evt.getData());
-		} else if (evt.getData() instanceof List) {
-			files.addAll((Collection<? extends FileInfo>) evt.getData());
-		}
+        if (evt.getData() instanceof FileInfo) {
+			files.add((FileInfo) evt.getData())
+        } else if (evt.getData() instanceof List) {
+			files.addAll((Collection<? extends FileInfo>) evt.getData())
+        }
 
 		if (!files.isEmpty()) {
 			try {
 
-				CrudService crudService = Containers.get().findObject(CrudService.class);
-				Site site = SiteContext.get().getCurrent();
-				site = crudService.reload(site);
+				CrudService crudService = Containers.get().findObject(CrudService.class)
+                Site site = SiteContext.get().getCurrent()
+                site = crudService.reload(site)
 
-				String url = "";
-				for (FileInfo file : files) {
-					url = url + CMSUtil.getResourceURL(site, file.getFile()) + "\n";
-				}
+                String url = ""
+                for (FileInfo file : files) {
+					url = url + CMSUtil.getResourceURL(site, file.getFile()) + "\n"
+                }
 
-				Messagebox.show(url, "Link", Messagebox.OK, null);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+				Messagebox.show(url, "Link", Messagebox.OK, null)
+            } catch (Exception e) {
+				e.printStackTrace()
+            }
 		} else {
-			UIMessages.showMessage("Selecte a file first", MessageType.ERROR);
-		}
+			UIMessages.showMessage("Selecte a file first", MessageType.ERROR)
+        }
 
 	}
 

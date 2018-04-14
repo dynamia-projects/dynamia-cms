@@ -18,21 +18,21 @@ import tools.dynamia.app.JPAConfigurationAdapter
  */
 @Configuration
 @EnableTransactionManagement
-public class DatabaseConfiguration extends JPAConfigurationAdapter {
+class DatabaseConfiguration extends JPAConfigurationAdapter {
 
     @Autowired
-    private ApplicationInfo appInfo;
+    private ApplicationInfo appInfo
 
     @Override
-    public String jndiName() {
-        return appInfo.getJndiName();
+    String jndiName() {
+        return appInfo.getJndiName()
     }
 
     @Override
     protected void configureJpaVendorAdapter(HibernateJpaVendorAdapter va) {
-        super.configureJpaVendorAdapter(va);
-        va.getJpaPropertyMap().put("hibernate.id.new_generator_mappings", false);
-        va.setShowSql(false);
+        super.configureJpaVendorAdapter(va)
+        va.getJpaPropertyMap().put("hibernate.id.new_generator_mappings", false)
+        va.setShowSql(false)
     }
 
 }

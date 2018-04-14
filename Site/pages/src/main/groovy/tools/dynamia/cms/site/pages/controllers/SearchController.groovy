@@ -35,30 +35,30 @@ import javax.validation.Valid
  * @author Mario Serrano Leones
  */
 @Controller
-public class SearchController {
+class SearchController {
 
     @Autowired
-    private SiteService siteService;
+    private SiteService siteService
 
     @RequestMapping("/search")
-    public ModelAndView search(@Valid SearchForm form, BindingResult bindingResult, final HttpServletRequest request) {
-        Site site = siteService.getSite(request);
+    ModelAndView search(@Valid SearchForm form, BindingResult bindingResult, final HttpServletRequest request) {
+        Site site = siteService.getSite(request)
 
-        ModelAndView mv = new ModelAndView("site/page");
-        mv.addObject("searchForm", form);
-        form.setRequest(request);
-        Collection<SearchProvider> providers = Containers.get().findObjects(SearchProvider.class);
+        ModelAndView mv = new ModelAndView("site/page")
+        mv.addObject("searchForm", form)
+        form.setRequest(request)
+        Collection<SearchProvider> providers = Containers.get().findObjects(SearchProvider.class)
         for (SearchProvider searchProvider : providers) {
-            SearchResult result = searchProvider.search(site, form);
+            SearchResult result = searchProvider.search(site, form)
             if (result != null) {
-                mv.addAllObjects(result.getEntries());
-                mv.setViewName(result.getViewName());
+                mv.addAllObjects(result.getEntries())
+                mv.setViewName(result.getViewName())
                 if (!result.isKeepSearching()) {
-                    break;
+                    break
                 }
             }
         }
-        return mv;
+        return mv
     }
 
 }

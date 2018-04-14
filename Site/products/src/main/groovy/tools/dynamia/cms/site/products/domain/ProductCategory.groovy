@@ -34,186 +34,186 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(name = "prd_categories")
 @BatchSize(size = 50)
-public class ProductCategory extends SimpleEntity implements SiteAware, Orderable {
+class ProductCategory extends SimpleEntity implements SiteAware, Orderable {
 
 	@OneToOne
 	@NotNull
-	private Site site;
+	private Site site
 
-	@ManyToOne
+    @ManyToOne
 	@JsonIgnore
-	private ProductCategory parent;
-	@OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
-	private List<ProductCategory> subcategories = new ArrayList<>();
-	@NotNull
+	private ProductCategory parent
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+	private List<ProductCategory> subcategories = new ArrayList<>()
+    @NotNull
 	@NotEmpty(message = "Enter product category name")
 
-	private String name;
-	private String alternateName;
-	@Column(name = "catAlias")
+	private String name
+    private String alternateName
+    @Column(name = "catAlias")
 
-	private String alias;
+	private String alias
 
-	private String description;
+    private String description
 
-	private boolean active = true;
+    private boolean active = true
 
-	private Long externalRef;
-	@OneToOne
+    private Long externalRef
+    @OneToOne
 	@JsonIgnore
-	private ProductCategory relatedCategory;
+	private ProductCategory relatedCategory
 
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	@OrderBy("order")
 	@JsonIgnore
-	private List<ProductCategoryDetail> details = new ArrayList<>();
+	private List<ProductCategoryDetail> details = new ArrayList<>()
 
-	@Column(name = "catOrder")
-	private int order;
+    @Column(name = "catOrder")
+	private int order
 
-	@OneToOne
+    @OneToOne
 	@JsonIgnore
-	private ProductTemplate template;
+	private ProductTemplate template
 
-	@OneToOne
+    @OneToOne
 	@JsonIgnore
-	private ProductTemplate alternateTemplate;
+	private ProductTemplate alternateTemplate
 
-	private Long productsCount;
+    private Long productsCount
 
-	public Long getProductsCount() {
-		return productsCount;
-	}
+    Long getProductsCount() {
+		return productsCount
+    }
 
-	public void setProductsCount(Long productsCount) {
-		this.productsCount = productsCount;
-	}
+    void setProductsCount(Long productsCount) {
+		this.productsCount = productsCount
+    }
 
-	public ProductTemplate getAlternateTemplate() {
-		return alternateTemplate;
-	}
+    ProductTemplate getAlternateTemplate() {
+		return alternateTemplate
+    }
 
-	public void setAlternateTemplate(ProductTemplate alternateTemplate) {
-		this.alternateTemplate = alternateTemplate;
-	}
+    void setAlternateTemplate(ProductTemplate alternateTemplate) {
+		this.alternateTemplate = alternateTemplate
+    }
 
-	public ProductTemplate getTemplate() {
-		return template;
-	}
+    ProductTemplate getTemplate() {
+		return template
+    }
 
-	public void setTemplate(ProductTemplate template) {
-		this.template = template;
-	}
+    void setTemplate(ProductTemplate template) {
+		this.template = template
+    }
 
-	public int getOrder() {
-		return order;
-	}
+    int getOrder() {
+		return order
+    }
 
-	public void setOrder(int order) {
-		this.order = order;
-	}
+    void setOrder(int order) {
+		this.order = order
+    }
 
-	public String getAlternateName() {
-		return alternateName;
-	}
+    String getAlternateName() {
+		return alternateName
+    }
 
-	public void setAlternateName(String alternateName) {
-		this.alternateName = alternateName;
-	}
+    void setAlternateName(String alternateName) {
+		this.alternateName = alternateName
+    }
 
-	public ProductCategory getRelatedCategory() {
-		return relatedCategory;
-	}
+    ProductCategory getRelatedCategory() {
+		return relatedCategory
+    }
 
-	public void setRelatedCategory(ProductCategory relatedCategory) {
-		this.relatedCategory = relatedCategory;
-	}
+    void setRelatedCategory(ProductCategory relatedCategory) {
+		this.relatedCategory = relatedCategory
+    }
 
-	public String getAlias() {
-		return alias;
-	}
+    String getAlias() {
+		return alias
+    }
 
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
+    void setAlias(String alias) {
+		this.alias = alias
+    }
 
-	public Site getSite() {
-		return site;
-	}
+    Site getSite() {
+		return site
+    }
 
-	public void setSite(Site site) {
-		this.site = site;
-	}
+    void setSite(Site site) {
+		this.site = site
+    }
 
-	public List<ProductCategoryDetail> getDetails() {
-		return details;
-	}
+    List<ProductCategoryDetail> getDetails() {
+		return details
+    }
 
-	public void setDetails(List<ProductCategoryDetail> details) {
-		this.details = details;
-	}
+    void setDetails(List<ProductCategoryDetail> details) {
+		this.details = details
+    }
 
-	public Long getExternalRef() {
-		return externalRef;
-	}
+    Long getExternalRef() {
+		return externalRef
+    }
 
-	public void setExternalRef(Long externalRef) {
-		this.externalRef = externalRef;
-	}
+    void setExternalRef(Long externalRef) {
+		this.externalRef = externalRef
+    }
 
-	public boolean isActive() {
-		return active;
-	}
+    boolean isActive() {
+		return active
+    }
 
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+    void setActive(boolean active) {
+		this.active = active
+    }
 
-	public ProductCategory getParent() {
-		return parent;
-	}
+    ProductCategory getParent() {
+		return parent
+    }
 
-	public void setParent(ProductCategory parent) {
-		this.parent = parent;
-	}
+    void setParent(ProductCategory parent) {
+		this.parent = parent
+    }
 
-	public List<ProductCategory> getSubcategories() {
-		return subcategories;
-	}
+    List<ProductCategory> getSubcategories() {
+		return subcategories
+    }
 
-	public void setSubcategories(List<ProductCategory> subcategories) {
-		this.subcategories = subcategories;
-	}
+    void setSubcategories(List<ProductCategory> subcategories) {
+		this.subcategories = subcategories
+    }
 
-	public String getName() {
-		return name;
-	}
+    String getName() {
+		return name
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    void setName(String name) {
+		this.name = name
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    String getDescription() {
+		return description
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    void setDescription(String description) {
+		this.description = description
+    }
 
-	public void sync(ProductCategoryDTO dto) {
-		name = dto.getName();
-		order = dto.getOrder();
-		alternateName = dto.getAlternateName();
-		active = dto.isActive();
-		description = dto.getDescription();
-		externalRef = dto.getExternalRef();
+    void sync(ProductCategoryDTO dto) {
+		name = dto.getName()
+        order = dto.getOrder()
+        alternateName = dto.getAlternateName()
+        active = dto.isActive()
+        description = dto.getDescription()
+        externalRef = dto.getExternalRef()
 
-	}
+    }
 
 	@Override
-	public String toString() {
-		return getName();
-	}
+    String toString() {
+		return getName()
+    }
 
 }

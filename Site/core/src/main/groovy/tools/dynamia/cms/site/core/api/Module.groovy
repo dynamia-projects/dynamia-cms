@@ -21,20 +21,20 @@ import tools.dynamia.cms.site.core.StyleSheetResource
 /**
  * @author Mario Serrano Leones
  */
-public interface Module extends TypeExtension {
+interface Module extends TypeExtension {
 
-    String getTemplateViewName();
+    String getTemplateViewName()
 
-    Map<String, Object> getMetadata();
+    Map<String, Object> getMetadata()
 
-    List<StyleSheetResource> getStyleSheetResources();
+    List<StyleSheetResource> getStyleSheetResources()
 
-    List<JavaScriptResource> getJavaScriptResources();
+    List<JavaScriptResource> getJavaScriptResources()
 
-    String[] getVariablesNames();
+    String[] getVariablesNames()
 
-    boolean isCacheable();
+    boolean isCacheable()
 
-    void init(ModuleContext context);
+    void init(ModuleContext context)
 
 }

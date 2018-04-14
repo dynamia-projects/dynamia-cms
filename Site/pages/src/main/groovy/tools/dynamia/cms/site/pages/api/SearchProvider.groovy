@@ -22,8 +22,8 @@ import tools.dynamia.cms.site.pages.SearchForm
  *
  * @author Mario Serrano Leones
  */
-public interface SearchProvider {
+interface SearchProvider {
 
-    public SearchResult search(Site site, SearchForm form);
+    SearchResult search(Site site, SearchForm form)
 
 }

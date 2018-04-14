@@ -21,5 +21,5 @@ import tools.dynamia.zk.crud.TreeCrudController
 /**
  * Created by Mario on 18/11/2014.
  */
-public class ProductCategoryTreeCrudController extends TreeCrudController<ProductCategory> {
+class ProductCategoryTreeCrudController extends TreeCrudController<ProductCategory> {
 }

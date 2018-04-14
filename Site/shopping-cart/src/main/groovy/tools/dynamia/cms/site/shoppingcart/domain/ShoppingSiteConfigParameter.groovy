@@ -30,44 +30,44 @@ import javax.validation.constraints.NotNull
  */
 @Entity
 @Table(name = "sc_config_parameters")
-public class ShoppingSiteConfigParameter extends SimpleEntity {
+class ShoppingSiteConfigParameter extends SimpleEntity {
 
 	@NotNull
 	@ManyToOne
-	private ShoppingSiteConfig siteConfig;
-	@NotEmpty(message = "Enter parameter value")
+	private ShoppingSiteConfig siteConfig
+    @NotEmpty(message = "Enter parameter value")
 	@NotNull
-	private String name;
-	@Column(name = "paramValue")
-	private String value;
+	private String name
+    @Column(name = "paramValue")
+	private String value
 
-	public ShoppingSiteConfig getSiteConfig() {
-		return siteConfig;
-	}
+    ShoppingSiteConfig getSiteConfig() {
+		return siteConfig
+    }
 
-	public void setSiteConfig(ShoppingSiteConfig siteConfig) {
-		this.siteConfig = siteConfig;
-	}
+    void setSiteConfig(ShoppingSiteConfig siteConfig) {
+		this.siteConfig = siteConfig
+    }
 
-	public String getName() {
-		return name;
-	}
+    String getName() {
+		return name
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    void setName(String name) {
+		this.name = name
+    }
 
-	public String getValue() {
-		return value;
-	}
+    String getValue() {
+		return value
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    void setValue(String value) {
+		this.value = value
+    }
 
 	@Override
-	public String toString() {
-		return getName();
-	}
+    String toString() {
+		return getName()
+    }
 
 }

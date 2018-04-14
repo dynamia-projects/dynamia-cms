@@ -31,33 +31,33 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ChangePasswordAction implements SiteAction {
+class ChangePasswordAction implements SiteAction {
 
     @Autowired
-    private UserService service;
+    private UserService service
 
     @Autowired
-    private CrudService crudService;
+    private CrudService crudService
 
     @Override
-    public String getName() {
-        return "changePassword";
+    String getName() {
+        return "changePassword"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        ModelAndView mv = evt.getModelAndView();
-        mv.setViewName("users/account");
-        UserForm form = (UserForm) evt.getData();
-        form.setSite(evt.getSite());
+    void actionPerformed(ActionEvent evt) {
+        ModelAndView mv = evt.getModelAndView()
+        mv.setViewName("users/account")
+        UserForm form = (UserForm) evt.getData()
+        form.setSite(evt.getSite())
 
         try {
-            service.changePassword(form);
-            mv.addObject("successmessage", "Password modificado correctamente!");
+            service.changePassword(form)
+            mv.addObject("successmessage", "Password modificado correctamente!")
         } catch (ValidationError e) {
-            mv.setViewName("users/changepassword");
-            mv.addObject("errormessage", e.getMessage());
-            SiteActionManager.performAction("updateUser", evt);
+            mv.setViewName("users/changepassword")
+            mv.addObject("errormessage", e.getMessage())
+            SiteActionManager.performAction("updateUser", evt)
         }
 
     }

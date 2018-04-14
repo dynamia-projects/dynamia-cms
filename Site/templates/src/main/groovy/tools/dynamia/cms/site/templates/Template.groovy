@@ -21,75 +21,75 @@ import java.nio.file.Path
  *
  * @author Mario Serrano Leones
  */
-public class Template implements Serializable {
+class Template implements Serializable {
 
-	private String name;
-	private String directoryName;
-	private String description;
-	private String author;
-	private String date;
-	private String version;
-	private List<String> positions;
+	private String name
+    private String directoryName
+    private String description
+    private String author
+    private String date
+    private String version
+    private List<String> positions
 
-	private Template() {
+    private Template() {
 	}
 
-	public String getName() {
-		return name;
-	}
+    String getName() {
+		return name
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    String getDescription() {
+		return description
+    }
 
-	public String getAuthor() {
-		return author;
-	}
+    String getAuthor() {
+		return author
+    }
 
-	public String getDate() {
-		return date;
-	}
+    String getDate() {
+		return date
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    String getVersion() {
+		return version
+    }
 
-	public List<String> getPositions() {
-		return positions;
-	}
+    List<String> getPositions() {
+		return positions
+    }
 
-	public String getDirectoryName() {
-		return directoryName;
-	}
+    String getDirectoryName() {
+		return directoryName
+    }
 
-	public static Template build(Properties prop, Path directory) {
-		Template t = new Template();
-		t.name = prop.getProperty("name");
-		t.author = prop.getProperty("author");
-		t.date = prop.getProperty("date");
-		t.version = prop.getProperty("version");
-		t.description = prop.getProperty("description");
-		t.directoryName = directory.getFileName().toString();
+    static Template build(Properties prop, Path directory) {
+		Template t = new Template()
+        t.name = prop.getProperty("name")
+        t.author = prop.getProperty("author")
+        t.date = prop.getProperty("date")
+        t.version = prop.getProperty("version")
+        t.description = prop.getProperty("description")
+        t.directoryName = directory.getFileName().toString()
 
-		String pos = prop.getProperty("positions");
-		if (pos != null && !pos.isEmpty()) {
-			String[] positions = pos.split(",");
-			if (positions != null) {
-				Arrays.sort(positions);
-				List<String> positionsList = new ArrayList<>();
-				for (String position : positions) {
-					positionsList.add(position.trim());
-				}
-				t.positions = Collections.unmodifiableList(positionsList);
-			}
+        String pos = prop.getProperty("positions")
+        if (pos != null && !pos.isEmpty()) {
+			String[] positions = pos.split(",")
+            if (positions != null) {
+				Arrays.sort(positions)
+                List<String> positionsList = new ArrayList<>()
+                for (String position : positions) {
+					positionsList.add(position.trim())
+                }
+				t.positions = Collections.unmodifiableList(positionsList)
+            }
 		}
 
-		return t;
-	}
+		return t
+    }
 
 	@Override
-	public String toString() {
-		return name;
-	}
+    String toString() {
+		return name
+    }
 
 }

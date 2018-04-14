@@ -17,58 +17,58 @@ import tools.dynamia.ui.UIMessages
 import toosl.dynamia.cms.site.shoppingcart.api.ShoppingOrderSenderException
 
 @InstallAction
-public class SendShoppingOrderAction extends AbstractCrudAction {
+class SendShoppingOrderAction extends AbstractCrudAction {
 
 	@Autowired
-	private ShoppingCartService service;
+	private ShoppingCartService service
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
 
-	public SendShoppingOrderAction() {
-		setName("Send Order");
-		setDescription("Send selected order to external system");
-	}
-
-	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    SendShoppingOrderAction() {
+		setName("Send Order")
+        setDescription("Send selected order to external system")
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(ShoppingOrder.class);
-	}
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		ShoppingOrder order = (ShoppingOrder) evt.getData();
-		if (order != null) {
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(ShoppingOrder.class)
+    }
+
+	@Override
+    void actionPerformed(CrudActionEvent evt) {
+		ShoppingOrder order = (ShoppingOrder) evt.getData()
+        if (order != null) {
 
 			if (order.isSended()) {
-				throw new ValidationError("Order " + order.getNumber() + " already was sended");
-			}
+				throw new ValidationError("Order " + order.getNumber() + " already was sended")
+            }
 
 			if (order.getTransaction().getStatus() != PaymentTransactionStatus.COMPLETED) {
-				throw new ValidationError("Order is NOT completed");
-			}
+				throw new ValidationError("Order is NOT completed")
+            }
 
 			UIMessages.showQuestion("Are you sure send order " + order.getNumber() + "?",  {
 				try {
-					service.sendOrder(order);
-					UIMessages.showMessage("Order " + order.getNumber() + " sended successfully");
-					evt.getController().doQuery();
-				} catch (ShoppingOrderSenderException e) {
-					Messagebox.show(e.getMessage());
-				} catch (ValidationError e) {
-					UIMessages.showMessage(e.getMessage(), MessageType.WARNING);
+					service.sendOrder(order)
+                    UIMessages.showMessage("Order " + order.getNumber() + " sended successfully")
+                    evt.getController().doQuery()
+                } catch (ShoppingOrderSenderException e) {
+					Messagebox.show(e.getMessage())
+                } catch (ValidationError e) {
+					UIMessages.showMessage(e.getMessage(), MessageType.WARNING)
 
-				} catch (Exception e) {
-					UIMessages.showMessage("Error sending order: " + e.getMessage(), MessageType.ERROR);
-					e.printStackTrace();
-				}
-			});
-		}
+                } catch (Exception e) {
+					UIMessages.showMessage("Error sending order: " + e.getMessage(), MessageType.ERROR)
+                    e.printStackTrace()
+                }
+			})
+        }
 
 	}
 

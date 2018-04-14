@@ -32,35 +32,35 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ResetPasswordAction implements SiteAction {
+class ResetPasswordAction implements SiteAction {
 
 	@Autowired
-	private UserService service;
+	private UserService service
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
+
+    @Override
+    String getName() {
+		return "resetPassword"
+    }
 
 	@Override
-	public String getName() {
-		return "resetPassword";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        mv.setViewName("users/resetpassword")
+        UserForm form = (UserForm) evt.getData()
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		mv.setViewName("users/resetpassword");
-		UserForm form = (UserForm) evt.getData();
+        String username = form.getData().getUsername()
+        Site site = evt.getSite()
 
-		String username = form.getData().getUsername();
-		Site site = evt.getSite();
-
-		try {
-			service.resetPassword(site, username);
-			form.setData(new User());
-			mv.addObject("successmessage", "Se ha enviado un correo a [" + username + "] con un nuevo password generado");
-		} catch (ValidationError e) {
-			mv.addObject("errormessage", e.getMessage());
-		}
+        try {
+			service.resetPassword(site, username)
+            form.setData(new User())
+            mv.addObject("successmessage", "Se ha enviado un correo a [" + username + "] con un nuevo password generado")
+        } catch (ValidationError e) {
+			mv.addObject("errormessage", e.getMessage())
+        }
 
 	}
 

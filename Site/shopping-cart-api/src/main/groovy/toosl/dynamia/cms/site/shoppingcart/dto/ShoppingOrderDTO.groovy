@@ -1,400 +1,400 @@
 package toosl.dynamia.cms.site.shoppingcart.dto
 
-public class ShoppingOrderDTO implements Serializable {
-
-	private String site;
-	private Date timeStamp;
-	private String number;
-	private String shippingComments;
-	private String user;
-	private String userExternalRef;
-	private String userIdentification;
-
-	private String customer;
-	private String customerExternalRef;
-	private String customerIdentification;
-
-	private int quantity;
-	private BigDecimal subtotal;
-	private BigDecimal totalShipmentPrice;
-	private BigDecimal totalTaxes;
-	private BigDecimal totalPrice;
-	private BigDecimal totalUnit;
-	private float shipmentPercent;
-
-	private BigDecimal totalDiscount;
-	private String paymentUuid;
-	private String paymentStatus;
-	private String paymentMethod;
-	private BigDecimal paymentAmount;
-	private BigDecimal paymentTaxes;
-	private BigDecimal paymentTaxesBase;
-	private String paymentResponseCode;
-
-	private String shippingAddress;
-	private String shippingCity;
-	private String shippingCountry;
-	private String shippingPhone;
-	private String shippingEmail;
-
-	private String billingAddress;
-	private String billingCity;
-	private String billingCountry;
-	private String billingPhone;
-	private String billingEmail;
-
-	private boolean pickupAtStore;
-	private boolean payAtDelivery;
-	private boolean payLater;
-
-	private String userComments;
-	private String externalRef;
-
-	private List<ShoppingOrderItemDTO> items = new ArrayList<>();
-	private Map<String, String> params = new HashMap<>();
-
-	public Map<String, String> getParams() {
-		return params;
-	}
-
-	public void setParams(Map<String, String> params) {
-		this.params = params;
-	}
-
-	public boolean isPayLater() {
-		return payLater;
-	}
-
-	public void setPayLater(boolean payLater) {
-		this.payLater = payLater;
-	}
-
-	public String getUserIdentification() {
-		return userIdentification;
-	}
-
-	public void setUserIdentification(String userIdentification) {
-		this.userIdentification = userIdentification;
-	}
-
-	public String getCustomerIdentification() {
-		return customerIdentification;
-	}
-
-	public void setCustomerIdentification(String customerIdentification) {
-		this.customerIdentification = customerIdentification;
-	}
-
-	public Date getTimeStamp() {
-		return timeStamp;
-	}
-
-	public void setTimeStamp(Date timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-
-	public String getSite() {
-		return site;
-	}
-
-	public void setSite(String site) {
-		this.site = site;
-	}
-
-	public String getNumber() {
-		return number;
-	}
+class ShoppingOrderDTO implements Serializable {
+
+	private String site
+    private Date timeStamp
+    private String number
+    private String shippingComments
+    private String user
+    private String userExternalRef
+    private String userIdentification
+
+    private String customer
+    private String customerExternalRef
+    private String customerIdentification
+
+    private int quantity
+    private BigDecimal subtotal
+    private BigDecimal totalShipmentPrice
+    private BigDecimal totalTaxes
+    private BigDecimal totalPrice
+    private BigDecimal totalUnit
+    private float shipmentPercent
+
+    private BigDecimal totalDiscount
+    private String paymentUuid
+    private String paymentStatus
+    private String paymentMethod
+    private BigDecimal paymentAmount
+    private BigDecimal paymentTaxes
+    private BigDecimal paymentTaxesBase
+    private String paymentResponseCode
+
+    private String shippingAddress
+    private String shippingCity
+    private String shippingCountry
+    private String shippingPhone
+    private String shippingEmail
+
+    private String billingAddress
+    private String billingCity
+    private String billingCountry
+    private String billingPhone
+    private String billingEmail
+
+    private boolean pickupAtStore
+    private boolean payAtDelivery
+    private boolean payLater
+
+    private String userComments
+    private String externalRef
+
+    private List<ShoppingOrderItemDTO> items = new ArrayList<>()
+    private Map<String, String> params = new HashMap<>()
+
+    Map<String, String> getParams() {
+		return params
+    }
+
+    void setParams(Map<String, String> params) {
+		this.params = params
+    }
+
+    boolean isPayLater() {
+		return payLater
+    }
+
+    void setPayLater(boolean payLater) {
+		this.payLater = payLater
+    }
+
+    String getUserIdentification() {
+		return userIdentification
+    }
+
+    void setUserIdentification(String userIdentification) {
+		this.userIdentification = userIdentification
+    }
+
+    String getCustomerIdentification() {
+		return customerIdentification
+    }
+
+    void setCustomerIdentification(String customerIdentification) {
+		this.customerIdentification = customerIdentification
+    }
+
+    Date getTimeStamp() {
+		return timeStamp
+    }
+
+    void setTimeStamp(Date timeStamp) {
+		this.timeStamp = timeStamp
+    }
+
+    String getSite() {
+		return site
+    }
+
+    void setSite(String site) {
+		this.site = site
+    }
+
+    String getNumber() {
+		return number
+    }
 
-	public void setNumber(String number) {
-		this.number = number;
-	}
+    void setNumber(String number) {
+		this.number = number
+    }
 
-	public String getShippingComments() {
-		return shippingComments;
-	}
+    String getShippingComments() {
+		return shippingComments
+    }
 
-	public void setShippingComments(String shippingComments) {
-		this.shippingComments = shippingComments;
-	}
+    void setShippingComments(String shippingComments) {
+		this.shippingComments = shippingComments
+    }
 
-	public String getUser() {
-		return user;
-	}
+    String getUser() {
+		return user
+    }
 
-	public void setUser(String user) {
-		this.user = user;
-	}
+    void setUser(String user) {
+		this.user = user
+    }
 
-	public String getCustomer() {
-		return customer;
-	}
+    String getCustomer() {
+		return customer
+    }
 
-	public void setCustomer(String customer) {
-		this.customer = customer;
-	}
+    void setCustomer(String customer) {
+		this.customer = customer
+    }
 
-	public String getUserExternalRef() {
-		return userExternalRef;
-	}
+    String getUserExternalRef() {
+		return userExternalRef
+    }
 
-	public void setUserExternalRef(String userExternalRef) {
-		this.userExternalRef = userExternalRef;
-	}
+    void setUserExternalRef(String userExternalRef) {
+		this.userExternalRef = userExternalRef
+    }
 
-	public String getCustomerExternalRef() {
-		return customerExternalRef;
-	}
+    String getCustomerExternalRef() {
+		return customerExternalRef
+    }
 
-	public void setCustomerExternalRef(String customerExternalRef) {
-		this.customerExternalRef = customerExternalRef;
-	}
+    void setCustomerExternalRef(String customerExternalRef) {
+		this.customerExternalRef = customerExternalRef
+    }
 
-	public int getQuantity() {
-		return quantity;
-	}
+    int getQuantity() {
+		return quantity
+    }
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+    void setQuantity(int quantity) {
+		this.quantity = quantity
+    }
 
-	public BigDecimal getSubtotal() {
-		return subtotal;
-	}
+    BigDecimal getSubtotal() {
+		return subtotal
+    }
 
-	public void setSubtotal(BigDecimal subtotal) {
-		this.subtotal = subtotal;
-	}
+    void setSubtotal(BigDecimal subtotal) {
+		this.subtotal = subtotal
+    }
 
-	public BigDecimal getTotalShipmentPrice() {
-		return totalShipmentPrice;
-	}
+    BigDecimal getTotalShipmentPrice() {
+		return totalShipmentPrice
+    }
 
-	public void setTotalShipmentPrice(BigDecimal totalShipmentPrice) {
-		this.totalShipmentPrice = totalShipmentPrice;
-	}
+    void setTotalShipmentPrice(BigDecimal totalShipmentPrice) {
+		this.totalShipmentPrice = totalShipmentPrice
+    }
 
-	public BigDecimal getTotalTaxes() {
-		return totalTaxes;
-	}
+    BigDecimal getTotalTaxes() {
+		return totalTaxes
+    }
 
-	public void setTotalTaxes(BigDecimal totalTaxes) {
-		this.totalTaxes = totalTaxes;
-	}
+    void setTotalTaxes(BigDecimal totalTaxes) {
+		this.totalTaxes = totalTaxes
+    }
 
-	public BigDecimal getTotalPrice() {
-		return totalPrice;
-	}
+    BigDecimal getTotalPrice() {
+		return totalPrice
+    }
 
-	public void setTotalPrice(BigDecimal totalPrice) {
-		this.totalPrice = totalPrice;
-	}
+    void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice
+    }
 
-	public BigDecimal getTotalUnit() {
-		return totalUnit;
-	}
+    BigDecimal getTotalUnit() {
+		return totalUnit
+    }
 
-	public void setTotalUnit(BigDecimal totalUnit) {
-		this.totalUnit = totalUnit;
-	}
+    void setTotalUnit(BigDecimal totalUnit) {
+		this.totalUnit = totalUnit
+    }
 
-	public float getShipmentPercent() {
-		return shipmentPercent;
-	}
+    float getShipmentPercent() {
+		return shipmentPercent
+    }
 
-	public void setShipmentPercent(float shipmentPercent) {
-		this.shipmentPercent = shipmentPercent;
-	}
+    void setShipmentPercent(float shipmentPercent) {
+		this.shipmentPercent = shipmentPercent
+    }
 
-	public BigDecimal getTotalDiscount() {
-		return totalDiscount;
-	}
+    BigDecimal getTotalDiscount() {
+		return totalDiscount
+    }
 
-	public void setTotalDiscount(BigDecimal totalDiscount) {
-		this.totalDiscount = totalDiscount;
-	}
+    void setTotalDiscount(BigDecimal totalDiscount) {
+		this.totalDiscount = totalDiscount
+    }
 
-	public String getPaymentUuid() {
-		return paymentUuid;
-	}
+    String getPaymentUuid() {
+		return paymentUuid
+    }
 
-	public void setPaymentUuid(String paymentUuid) {
-		this.paymentUuid = paymentUuid;
-	}
+    void setPaymentUuid(String paymentUuid) {
+		this.paymentUuid = paymentUuid
+    }
 
-	public String getPaymentStatus() {
-		return paymentStatus;
-	}
+    String getPaymentStatus() {
+		return paymentStatus
+    }
 
-	public void setPaymentStatus(String paymentStatus) {
-		this.paymentStatus = paymentStatus;
-	}
+    void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus
+    }
 
-	public String getPaymentMethod() {
-		return paymentMethod;
-	}
+    String getPaymentMethod() {
+		return paymentMethod
+    }
 
-	public void setPaymentMethod(String paymentMethod) {
-		this.paymentMethod = paymentMethod;
-	}
+    void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod
+    }
 
-	public BigDecimal getPaymentAmount() {
-		return paymentAmount;
-	}
+    BigDecimal getPaymentAmount() {
+		return paymentAmount
+    }
 
-	public void setPaymentAmount(BigDecimal paymentAmount) {
-		this.paymentAmount = paymentAmount;
-	}
+    void setPaymentAmount(BigDecimal paymentAmount) {
+		this.paymentAmount = paymentAmount
+    }
 
-	public BigDecimal getPaymentTaxes() {
-		return paymentTaxes;
-	}
+    BigDecimal getPaymentTaxes() {
+		return paymentTaxes
+    }
 
-	public void setPaymentTaxes(BigDecimal paymentTaxes) {
-		this.paymentTaxes = paymentTaxes;
-	}
+    void setPaymentTaxes(BigDecimal paymentTaxes) {
+		this.paymentTaxes = paymentTaxes
+    }
 
-	public BigDecimal getPaymentTaxesBase() {
-		return paymentTaxesBase;
-	}
+    BigDecimal getPaymentTaxesBase() {
+		return paymentTaxesBase
+    }
 
-	public void setPaymentTaxesBase(BigDecimal paymentTaxesBase) {
-		this.paymentTaxesBase = paymentTaxesBase;
-	}
+    void setPaymentTaxesBase(BigDecimal paymentTaxesBase) {
+		this.paymentTaxesBase = paymentTaxesBase
+    }
 
-	public String getPaymentResponseCode() {
-		return paymentResponseCode;
-	}
+    String getPaymentResponseCode() {
+		return paymentResponseCode
+    }
 
-	public void setPaymentResponseCode(String paymentResponseCode) {
-		this.paymentResponseCode = paymentResponseCode;
-	}
+    void setPaymentResponseCode(String paymentResponseCode) {
+		this.paymentResponseCode = paymentResponseCode
+    }
 
-	public String getShippingAddress() {
-		return shippingAddress;
-	}
+    String getShippingAddress() {
+		return shippingAddress
+    }
 
-	public void setShippingAddress(String shippingAddress) {
-		this.shippingAddress = shippingAddress;
-	}
+    void setShippingAddress(String shippingAddress) {
+		this.shippingAddress = shippingAddress
+    }
 
-	public String getShippingCity() {
-		return shippingCity;
-	}
+    String getShippingCity() {
+		return shippingCity
+    }
 
-	public void setShippingCity(String shippingCity) {
-		this.shippingCity = shippingCity;
-	}
+    void setShippingCity(String shippingCity) {
+		this.shippingCity = shippingCity
+    }
 
-	public String getShippingCountry() {
-		return shippingCountry;
-	}
+    String getShippingCountry() {
+		return shippingCountry
+    }
 
-	public void setShippingCountry(String shippingCountry) {
-		this.shippingCountry = shippingCountry;
-	}
+    void setShippingCountry(String shippingCountry) {
+		this.shippingCountry = shippingCountry
+    }
 
-	public String getShippingPhone() {
-		return shippingPhone;
-	}
+    String getShippingPhone() {
+		return shippingPhone
+    }
 
-	public void setShippingPhone(String shippingPhone) {
-		this.shippingPhone = shippingPhone;
-	}
+    void setShippingPhone(String shippingPhone) {
+		this.shippingPhone = shippingPhone
+    }
 
-	public String getShippingEmail() {
-		return shippingEmail;
-	}
+    String getShippingEmail() {
+		return shippingEmail
+    }
 
-	public void setShippingEmail(String shippingEmail) {
-		this.shippingEmail = shippingEmail;
-	}
+    void setShippingEmail(String shippingEmail) {
+		this.shippingEmail = shippingEmail
+    }
 
-	public String getBillingAddress() {
-		return billingAddress;
-	}
+    String getBillingAddress() {
+		return billingAddress
+    }
 
-	public void setBillingAddress(String billingAddress) {
-		this.billingAddress = billingAddress;
-	}
+    void setBillingAddress(String billingAddress) {
+		this.billingAddress = billingAddress
+    }
 
-	public String getBillingCity() {
-		return billingCity;
-	}
+    String getBillingCity() {
+		return billingCity
+    }
 
-	public void setBillingCity(String billingCity) {
-		this.billingCity = billingCity;
-	}
+    void setBillingCity(String billingCity) {
+		this.billingCity = billingCity
+    }
 
-	public String getBillingCountry() {
-		return billingCountry;
-	}
+    String getBillingCountry() {
+		return billingCountry
+    }
 
-	public void setBillingCountry(String billingCountry) {
-		this.billingCountry = billingCountry;
-	}
+    void setBillingCountry(String billingCountry) {
+		this.billingCountry = billingCountry
+    }
 
-	public String getBillingPhone() {
-		return billingPhone;
-	}
+    String getBillingPhone() {
+		return billingPhone
+    }
 
-	public void setBillingPhone(String billingPhone) {
-		this.billingPhone = billingPhone;
-	}
+    void setBillingPhone(String billingPhone) {
+		this.billingPhone = billingPhone
+    }
 
-	public String getBillingEmail() {
-		return billingEmail;
-	}
+    String getBillingEmail() {
+		return billingEmail
+    }
 
-	public void setBillingEmail(String billingEmail) {
-		this.billingEmail = billingEmail;
-	}
+    void setBillingEmail(String billingEmail) {
+		this.billingEmail = billingEmail
+    }
 
-	public boolean isPickupAtStore() {
-		return pickupAtStore;
-	}
+    boolean isPickupAtStore() {
+		return pickupAtStore
+    }
 
-	public void setPickupAtStore(boolean pickupAtStore) {
-		this.pickupAtStore = pickupAtStore;
-	}
+    void setPickupAtStore(boolean pickupAtStore) {
+		this.pickupAtStore = pickupAtStore
+    }
 
-	public boolean isPayAtDelivery() {
-		return payAtDelivery;
-	}
+    boolean isPayAtDelivery() {
+		return payAtDelivery
+    }
 
-	public void setPayAtDelivery(boolean payAtDelivery) {
-		this.payAtDelivery = payAtDelivery;
-	}
+    void setPayAtDelivery(boolean payAtDelivery) {
+		this.payAtDelivery = payAtDelivery
+    }
 
-	public String getUserComments() {
-		return userComments;
-	}
+    String getUserComments() {
+		return userComments
+    }
 
-	public void setUserComments(String userComments) {
-		this.userComments = userComments;
-	}
+    void setUserComments(String userComments) {
+		this.userComments = userComments
+    }
 
-	public String getExternalRef() {
-		return externalRef;
-	}
+    String getExternalRef() {
+		return externalRef
+    }
 
-	public void setExternalRef(String externalRef) {
-		this.externalRef = externalRef;
-	}
+    void setExternalRef(String externalRef) {
+		this.externalRef = externalRef
+    }
 
-	public List<ShoppingOrderItemDTO> getItems() {
-		return items;
-	}
+    List<ShoppingOrderItemDTO> getItems() {
+		return items
+    }
 
-	public void setItems(List<ShoppingOrderItemDTO> items) {
-		this.items = items;
-	}
+    void setItems(List<ShoppingOrderItemDTO> items) {
+		this.items = items
+    }
 
-	public void addItem(ShoppingOrderItemDTO item) {
-		items.add(item);
-	}
+    void addItem(ShoppingOrderItemDTO item) {
+		items.add(item)
+    }
 
 	@Override
-	public String toString() {
-		return getNumber();
-	}
+    String toString() {
+		return getNumber()
+    }
 }

@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.products;
+package tools.dynamia.cms.site.products
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public enum ProductSearchOrder {
+enum ProductSearchOrder {
 
-    NAME("name", true), MINPRICE("price", true), MAXPRICE("price", false), RATE("rate", true), VIEWS("views", true);
+    NAME("name", true), MINPRICE("price", true), MAXPRICE("price", false), RATE("rate", true), VIEWS("views", true)
 
-    private String field;
-    private boolean asc;
+    private String field
+    private boolean asc
 
     ProductSearchOrder(String field, boolean asc) {
-        this.field = field;
-        this.asc = asc;
+        this.field = field
+        this.asc = asc
     }
 
-    public String getField() {
-        return field;
+    String getField() {
+        return field
     }
 
-    public boolean isAsc() {
-        return asc;
+    boolean isAsc() {
+        return asc
     }
 
 }

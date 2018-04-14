@@ -6,47 +6,47 @@ import tools.dynamia.domain.query.QueryConditions
 import tools.dynamia.domain.query.QueryParameters
 import tools.dynamia.zk.crud.TreeCrudController
 
-public class MenuItemTreeCrudController extends TreeCrudController<MenuItem> {
+class MenuItemTreeCrudController extends TreeCrudController<MenuItem> {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private Menu menu;
+	private static final long serialVersionUID = 1L
+    private Menu menu
 
-	public void setMenu(Menu menu) {
-		this.menu = menu;
-	}
+    void setMenu(Menu menu) {
+		this.menu = menu
+    }
 
-	public Menu getMenu() {
-		return menu;
-	}
+    Menu getMenu() {
+		return menu
+    }
 
 	@Override
 	protected void beforeQuery() {
 		if (menu != null) {
-			setParemeter("menu", menu);
-		}
+			setParemeter("menu", menu)
+        }
 	}
 
 	@Override
 	protected void afterCreate() {
-		getEntity().setMenu(menu);
-	}
+		getEntity().setMenu(menu)
+    }
 
 	@Override
 	protected boolean isLeaf(MenuItem data) {
-		return data.getSubitems().isEmpty();
-	}
+		return data.getSubitems().isEmpty()
+    }
 	@Override
-	public String getRootLabel() {
-		return menu.getName();
-	}
+    String getRootLabel() {
+		return menu.getName()
+    }
 	
 	@Override
 	protected Collection<MenuItem> loadRoots() {
 		return crudService.find(MenuItem.class, QueryParameters.with("menu", menu)
 				.add(getParentName(), QueryConditions.isNull())
-				.orderBy("order"));
-	}
+				.orderBy("order"))
+    }
 }

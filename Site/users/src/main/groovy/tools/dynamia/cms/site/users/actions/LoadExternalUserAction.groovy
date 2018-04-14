@@ -11,41 +11,41 @@ import tools.dynamia.cms.site.users.services.UserService
 import tools.dynamia.domain.services.CrudService
 
 @CMSAction
-public class LoadExternalUserAction implements SiteAction {
+class LoadExternalUserAction implements SiteAction {
 
     @Autowired
-    private UserService service;
+    private UserService service
 
     @Autowired
-    private CrudService crudService;
+    private CrudService crudService
 
 
     @Override
-    public String getName() {
-        return "loadExternalUser";
+    String getName() {
+        return "loadExternalUser"
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
+    void actionPerformed(ActionEvent evt) {
 
-        ModelAndView mv = new ModelAndView("users/external");
-        String id = evt.getRequest().getParameter("id");
-     
+        ModelAndView mv = new ModelAndView("users/external")
+        String id = evt.getRequest().getParameter("id")
+
 
         if (id != null && !id.isEmpty()) {
 
 
-            UserDTO dto = service.loadExternalUser(evt.getSite(), id);
+            UserDTO dto = service.loadExternalUser(evt.getSite(), id)
             if (dto != null) {
-                mv.addObject("externalUser", dto);
-                evt.getRequest().getSession().setAttribute("externalUser", dto);
-                CMSUtil.addSuccessMessage("Por favor verifique los datos antes de continuar", mv);
+                mv.addObject("externalUser", dto)
+                evt.getRequest().getSession().setAttribute("externalUser", dto)
+                CMSUtil.addSuccessMessage("Por favor verifique los datos antes de continuar", mv)
             } else {
-                CMSUtil.addErrorMessage("No se encontro cliente con identificacion: " + id, mv);
+                CMSUtil.addErrorMessage("No se encontro cliente con identificacion: " + id, mv)
             }
 
         } else {
-            CMSUtil.addErrorMessage("Ingrese identificacion de cliente", mv);
+            CMSUtil.addErrorMessage("Ingrese identificacion de cliente", mv)
         }
 
     }

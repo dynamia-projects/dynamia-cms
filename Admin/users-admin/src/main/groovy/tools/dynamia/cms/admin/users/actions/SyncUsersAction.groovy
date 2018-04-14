@@ -12,42 +12,42 @@ import tools.dynamia.ui.MessageType
 import tools.dynamia.ui.UIMessages
 
 @InstallAction
-public class SyncUsersAction extends AbstractCrudAction {
+class SyncUsersAction extends AbstractCrudAction {
 
 	@Autowired
-	private UserSyncService service;
+	private UserSyncService service
 
-	public SyncUsersAction() {
-		setName("Sync User");
-		setImage("sync");
-		setMenuSupported(true);
-	}
-
-	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    SyncUsersAction() {
+		setName("Sync User")
+        setImage("sync")
+        setMenuSupported(true)
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(UserSiteConfig.class);
-	}
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		UserSiteConfig cfg = (UserSiteConfig) evt.getData();
-		if (cfg != null) {
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(UserSiteConfig.class)
+    }
+
+	@Override
+    void actionPerformed(CrudActionEvent evt) {
+		UserSiteConfig cfg = (UserSiteConfig) evt.getData()
+        if (cfg != null) {
 			UIMessages.showQuestion("Are you sure to sync all users? This may take serveral minutes", {
 				try {
-					service.syncUsers(cfg, new HashMap<>());
-					UIMessages.showMessage("Sync Successfull");
-					evt.getController().doQuery();
-				} catch (Exception e) {
-					UIMessages.showMessage("Error sync users: " + e.getMessage(), MessageType.ERROR);
-					e.printStackTrace();
-				}
-			});
-		}
+					service.syncUsers(cfg, new HashMap<>())
+                    UIMessages.showMessage("Sync Successfull")
+                    evt.getController().doQuery()
+                } catch (Exception e) {
+					UIMessages.showMessage("Error sync users: " + e.getMessage(), MessageType.ERROR)
+                    e.printStackTrace()
+                }
+			})
+        }
 
 	}
 

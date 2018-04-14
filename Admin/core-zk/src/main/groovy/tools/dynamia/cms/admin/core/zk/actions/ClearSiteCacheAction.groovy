@@ -31,37 +31,37 @@ import tools.dynamia.ui.UIMessages
  * @author Mario Serrano Leones
  */
 @InstallAction
-public class ClearSiteCacheAction extends AbstractCrudAction {
+class ClearSiteCacheAction extends AbstractCrudAction {
 
 	@Autowired
-	private SiteService service;
+	private SiteService service
 
-	public ClearSiteCacheAction() {
-		setName("Clear Cache");
-		setImage("refresh");
-		setMenuSupported(true);
+    ClearSiteCacheAction() {
+		setName("Clear Cache")
+        setImage("refresh")
+        setMenuSupported(true)
+    }
+
+	@Override
+    void actionPerformed(CrudActionEvent evt) {
+		Site site = (Site) evt.getData()
+        if (site != null) {
+			service.clearCache(site)
+            UIMessages.showMessage("Site Cache cleared successfull")
+        } else {
+			UIMessages.showMessage("Select site", MessageType.WARNING)
+        }
 	}
 
 	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		Site site = (Site) evt.getData();
-		if (site != null) {
-			service.clearCache(site);
-			UIMessages.showMessage("Site Cache cleared successfull");
-		} else {
-			UIMessages.showMessage("Select site", MessageType.WARNING);
-		}
-	}
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
-
-	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(Site.class);
-	}
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(Site.class)
+    }
 
 	
 

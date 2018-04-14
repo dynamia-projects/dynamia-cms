@@ -14,49 +14,49 @@ import tools.dynamia.crud.CrudState
 import tools.dynamia.zk.actions.ComboboxActionRenderer
 
 @InstallAction
-public class ModulePositionFilterAction extends AbstractCrudAction {
+class ModulePositionFilterAction extends AbstractCrudAction {
 
-	private static final String ALL = "-all positions-";
+	private static final String ALL = "-all positions-"
 
-	@Autowired
-	private ModulesService service;
+    @Autowired
+	private ModulesService service
 
-	public ModulePositionFilterAction() {
-		setName("Module Position");
-		setGroup(ActionGroup.get("CRUD"));
-		setPosition(10);
-	}
-
-	@Override
-	public CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ);
-	}
+    ModulePositionFilterAction() {
+		setName("Module Position")
+        setGroup(ActionGroup.get("CRUD"))
+        setPosition(10)
+    }
 
 	@Override
-	public ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(ModuleInstance.class);
-	}
+    CrudState[] getApplicableStates() {
+		return CrudState.get(CrudState.READ)
+    }
 
 	@Override
-	public void actionPerformed(CrudActionEvent evt) {
-		String position = (String) evt.getData();
-		if (position == null || position.equals(ALL)) {
-			evt.getController().getParams().remove("position");
-		} else {
-			evt.getController().setParemeter("position", position);
-		}
-		evt.getController().doQuery();
-
-	}
+    ApplicableClass[] getApplicableClasses() {
+		return ApplicableClass.get(ModuleInstance.class)
+    }
 
 	@Override
-	public ActionRenderer getRenderer() {
+    void actionPerformed(CrudActionEvent evt) {
+		String position = (String) evt.getData()
+        if (position == null || position.equals(ALL)) {
+			evt.getController().getParams().remove("position")
+        } else {
+			evt.getController().setParemeter("position", position)
+        }
+		evt.getController().doQuery()
 
-		List<String> positions = new ArrayList<>(service.getAllUsedPositions(SiteContext.get().getCurrent()));
-		positions.add(0, ALL);
-		ComboboxActionRenderer renderer = new ComboboxActionRenderer(positions, ALL);
+    }
 
-		return renderer;
-	}
+	@Override
+    ActionRenderer getRenderer() {
+
+		List<String> positions = new ArrayList<>(service.getAllUsedPositions(SiteContext.get().getCurrent()))
+        positions.add(0, ALL)
+        ComboboxActionRenderer renderer = new ComboboxActionRenderer(positions, ALL)
+
+        return renderer
+    }
 
 }

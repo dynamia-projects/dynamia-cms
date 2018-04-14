@@ -20,35 +20,35 @@ import tools.dynamia.cms.site.core.api.URLProvider
 import tools.dynamia.cms.site.pages.domain.Page
 import tools.dynamia.io.VirtualFile
 
-public class PageVirtualFile extends VirtualFile implements URLProvider {
+class PageVirtualFile extends VirtualFile implements URLProvider {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private Page page;
+	private static final long serialVersionUID = 1L
+    private Page page
 
-	public PageVirtualFile(Page page) {
-		super(page.getAlias());
-		this.page = page;
-		setName(page.getTitle()+".html");
-		setCanWrite(false);
-		setDirectory(false);
+    PageVirtualFile(Page page) {
+		super(page.getAlias())
+        this.page = page
+        setName(page.getTitle()+".html")
+        setCanWrite(false)
+        setDirectory(false)
 
-	}
-
-	@Override
-	public String getURL() {
-		return CMSUtil.getSiteURL(page.getSite(), page.getAlias());
-	}
+    }
 
 	@Override
-	public boolean isFile() {
-		return true;
-	}
+    String getURL() {
+		return CMSUtil.getSiteURL(page.getSite(), page.getAlias())
+    }
+
+	@Override
+    boolean isFile() {
+		return true
+    }
 	
 	@Override
-	public long lastModified() {
-		return page.getCreationDate().getTime();
-	}
+    long lastModified() {
+		return page.getCreationDate().getTime()
+    }
 }

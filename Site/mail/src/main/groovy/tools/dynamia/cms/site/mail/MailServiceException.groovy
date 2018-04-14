@@ -13,31 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.site.mail;
+package tools.dynamia.cms.site.mail
 
 /**
  *
  * @author Mario Serrano Leones
  */
-public class MailServiceException extends RuntimeException {
+class MailServiceException extends RuntimeException {
 
-	public MailServiceException() {
+	MailServiceException() {
 	}
 
-	public MailServiceException(String message) {
-		super(message);
-	}
+    MailServiceException(String message) {
+		super(message)
+    }
 
-	public MailServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    MailServiceException(String message, Throwable cause) {
+		super(message, cause)
+    }
 
-	public MailServiceException(Throwable cause) {
-		super(cause);
-	}
+    MailServiceException(Throwable cause) {
+		super(cause)
+    }
 
-	public MailServiceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
+    MailServiceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace)
+    }
 
 }

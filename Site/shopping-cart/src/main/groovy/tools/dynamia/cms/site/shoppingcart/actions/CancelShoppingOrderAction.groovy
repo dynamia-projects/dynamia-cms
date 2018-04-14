@@ -34,46 +34,46 @@ import tools.dynamia.domain.services.CrudService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class CancelShoppingOrderAction implements SiteAction {
+class CancelShoppingOrderAction implements SiteAction {
 
 	@Autowired
-	private ShoppingCartService service;
+	private ShoppingCartService service
 
-	@Autowired
-	private PaymentService paymentService;
+    @Autowired
+	private PaymentService paymentService
 
-	@Autowired
-	private CrudService crudService;
+    @Autowired
+	private CrudService crudService
+
+    @Override
+    String getName() {
+		return "cancelShoppingOrder"
+    }
 
 	@Override
-	public String getName() {
-		return "cancelShoppingOrder";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
+        mv.setView(new RedirectView("/", true, true, false))
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
-		mv.setView(new RedirectView("/", true, true, false));
-
-		ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder();
-		if (order == null) {
-			return;
-		}
+        ShoppingOrder order = ShoppingCartHolder.get().getCurrentOrder()
+        if (order == null) {
+			return
+        }
 
 		if (order.getId() != null) {
-			order = crudService.find(ShoppingOrder.class, order.getId());
-			ShoppingCartHolder.get().setCurrentOrder(order);
-		}
-		order.sync();
+			order = crudService.find(ShoppingOrder.class, order.getId())
+            ShoppingCartHolder.get().setCurrentOrder(order)
+        }
+		order.sync()
 
-		try {
-			service.cancelOrder(order);
-			CMSUtil.addSuccessMessage("Pedido No." + order.getNumber() + " cancelado exitosamente", mv);
-		} catch (ValidationError e) {
-			CMSUtil.addErrorMessage(e.getMessage(), mv);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        try {
+			service.cancelOrder(order)
+            CMSUtil.addSuccessMessage("Pedido No." + order.getNumber() + " cancelado exitosamente", mv)
+        } catch (ValidationError e) {
+			CMSUtil.addErrorMessage(e.getMessage(), mv)
+        } catch (Exception e) {
+			e.printStackTrace()
+        }
 	}
 
 }

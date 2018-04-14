@@ -2,14 +2,14 @@ package com.dynamia.cms.admin.core.test
 
 import org.junit.Test
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals
 
-public class CoreTest{
+class CoreTest{
 
 	
 	@Test
-	public void testCore(){
-		 assertEquals("Dynamia","Dynamia");
-	}
+    void testCore(){
+		 assertEquals("Dynamia","Dynamia")
+    }
 	
 }

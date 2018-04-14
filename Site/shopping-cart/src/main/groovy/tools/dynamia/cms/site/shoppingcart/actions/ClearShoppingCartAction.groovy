@@ -31,31 +31,31 @@ import tools.dynamia.cms.site.shoppingcart.services.ShoppingCartService
  * @author Mario Serrano Leones
  */
 @CMSAction
-public class ClearShoppingCartAction implements SiteAction {
+class ClearShoppingCartAction implements SiteAction {
 
 	@Autowired
-	private ShoppingCartService service;
+	private ShoppingCartService service
+
+    @Override
+    String getName() {
+		return "clearShoppingCart"
+    }
 
 	@Override
-	public String getName() {
-		return "clearShoppingCart";
-	}
+    void actionPerformed(ActionEvent evt) {
+		ModelAndView mv = evt.getModelAndView()
 
-	@Override
-	public void actionPerformed(ActionEvent evt) {
-		ModelAndView mv = evt.getModelAndView();
+        ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv)
+        if (shoppingCart != null) {
+			shoppingCart.getItems().clear()
+            shoppingCart.compute()
 
-		ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv);
-		if (shoppingCart != null) {
-			shoppingCart.getItems().clear();
-			shoppingCart.compute();
+            if (shoppingCart.getName().equals("shop")) {
+				ShoppingCartHolder.get().setCurrentOrder(null)
+            }
 
-			if (shoppingCart.getName().equals("shop")) {
-				ShoppingCartHolder.get().setCurrentOrder(null);
-			}
-
-			CMSUtil.addSuccessMessage("Carrito limpiado exitosamente", evt.getRedirectAttributes());
-		}
+			CMSUtil.addSuccessMessage("Carrito limpiado exitosamente", evt.getRedirectAttributes())
+        }
 
 	}
 

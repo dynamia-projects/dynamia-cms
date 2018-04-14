@@ -8,26 +8,26 @@ import tools.dynamia.domain.util.CrudServiceListenerAdapter
 import tools.dynamia.integration.sterotypes.Listener
 
 @Listener
-public class ProductCrudListener extends CrudServiceListenerAdapter<Product> {
+class ProductCrudListener extends CrudServiceListenerAdapter<Product> {
 
 	@Autowired
-	private ProductsService service;
+	private ProductsService service
+
+    @Override
+    void afterCreate(Product entity) {
+		updateProductsCounts()
+    }
 
 	@Override
-	public void afterCreate(Product entity) {
-		updateProductsCounts();
-	}
-
-	@Override
-	public void afterUpdate(Product entity) {
-		updateProductsCounts();
-	}
+    void afterUpdate(Product entity) {
+		updateProductsCounts()
+    }
 
 	private void updateProductsCounts() {
 		try {
-			service.computeProductCountByCategory(SiteContext.get().getCurrent());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			service.computeProductCountByCategory(SiteContext.get().getCurrent())
+        } catch (Exception e) {
+			e.printStackTrace()
+        }
 	}
 }

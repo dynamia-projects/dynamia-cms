@@ -17,123 +17,123 @@ package tools.dynamia.cms.site.products
 /**
  * @author Mario Serrano Leones
  */
-public class ProductSearchForm implements Serializable {
+class ProductSearchForm implements Serializable {
 
     /**
      *
      */
-    private static final long serialVersionUID = 9079552167006719550L;
-    private String name;
-    private BigDecimal minPrice;
-    private BigDecimal maxPrice;
-    private Long categoryId;
-    private Long brandId;
-    private boolean stock;
-    private ProductSearchOrder order = ProductSearchOrder.NAME;
-    private String detail;
-    private String detail2;
-    private String detail3;
-    private String detail4;
+    private static final long serialVersionUID = 9079552167006719550L
+    private String name
+    private BigDecimal minPrice
+    private BigDecimal maxPrice
+    private Long categoryId
+    private Long brandId
+    private boolean stock
+    private ProductSearchOrder order = ProductSearchOrder.NAME
+    private String detail
+    private String detail2
+    private String detail3
+    private String detail4
 
-    private Map<String, Object> attributes = new HashMap<>();
+    private Map<String, Object> attributes = new HashMap<>()
 
-    public String getDetail() {
-        return detail;
+    String getDetail() {
+        return detail
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    void setDetail(String detail) {
+        this.detail = detail
     }
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
+    static long getSerialversionuid() {
+        return serialVersionUID
     }
 
-    public String getName() {
-        return name;
+    String getName() {
+        return name
     }
 
-    public void setName(String name) {
-        this.name = name;
+    void setName(String name) {
+        this.name = name
     }
 
-    public BigDecimal getMinPrice() {
-        return minPrice;
+    BigDecimal getMinPrice() {
+        return minPrice
     }
 
-    public void setMinPrice(BigDecimal minPrice) {
-        this.minPrice = minPrice;
+    void setMinPrice(BigDecimal minPrice) {
+        this.minPrice = minPrice
     }
 
-    public BigDecimal getMaxPrice() {
-        return maxPrice;
+    BigDecimal getMaxPrice() {
+        return maxPrice
     }
 
-    public void setMaxPrice(BigDecimal maxPrice) {
-        this.maxPrice = maxPrice;
+    void setMaxPrice(BigDecimal maxPrice) {
+        this.maxPrice = maxPrice
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    Long getCategoryId() {
+        return categoryId
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId
     }
 
-    public Long getBrandId() {
-        return brandId;
+    Long getBrandId() {
+        return brandId
     }
 
-    public void setBrandId(Long brandId) {
-        this.brandId = brandId;
+    void setBrandId(Long brandId) {
+        this.brandId = brandId
     }
 
-    public boolean isStock() {
-        return stock;
+    boolean isStock() {
+        return stock
     }
 
-    public void setStock(boolean stock) {
-        this.stock = stock;
+    void setStock(boolean stock) {
+        this.stock = stock
     }
 
-    public ProductSearchOrder getOrder() {
-        return order;
+    ProductSearchOrder getOrder() {
+        return order
     }
 
-    public void setOrder(ProductSearchOrder order) {
-        this.order = order;
+    void setOrder(ProductSearchOrder order) {
+        this.order = order
     }
 
-    public String getDetail2() {
-        return detail2;
+    String getDetail2() {
+        return detail2
     }
 
-    public void setDetail2(String detail2) {
-        this.detail2 = detail2;
+    void setDetail2(String detail2) {
+        this.detail2 = detail2
     }
 
-    public String getDetail3() {
-        return detail3;
+    String getDetail3() {
+        return detail3
     }
 
-    public void setDetail3(String detail3) {
-        this.detail3 = detail3;
+    void setDetail3(String detail3) {
+        this.detail3 = detail3
     }
 
-    public String getDetail4() {
-        return detail4;
+    String getDetail4() {
+        return detail4
     }
 
-    public void setDetail4(String detail4) {
-        this.detail4 = detail4;
+    void setDetail4(String detail4) {
+        this.detail4 = detail4
     }
 
-    public void setAttribute(String name, Object value) {
-        attributes.put(name, value);
+    void setAttribute(String name, Object value) {
+        attributes.put(name, value)
     }
 
-    public Object getAttribute(String name) {
-        return attributes.get(name);
+    Object getAttribute(String name) {
+        return attributes.get(name)
     }
 }

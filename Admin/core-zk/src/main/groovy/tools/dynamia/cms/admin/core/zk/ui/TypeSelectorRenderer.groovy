@@ -23,13 +23,13 @@ import tools.dynamia.cms.site.core.api.TypeExtension
  *
  * @author Mario Serrano Leones
  */
-public class TypeSelectorRenderer implements ComboitemRenderer<TypeExtension> {
+class TypeSelectorRenderer implements ComboitemRenderer<TypeExtension> {
 
 	@Override
-	public void render(Comboitem cmbtm, TypeExtension t, int i) throws Exception {
-		cmbtm.setValue(t.getId());
-		cmbtm.setLabel(t.getName());
-		cmbtm.setDescription(t.getDescription());
-	}
+    void render(Comboitem cmbtm, TypeExtension t, int i) throws Exception {
+		cmbtm.setValue(t.getId())
+        cmbtm.setLabel(t.getName())
+        cmbtm.setDescription(t.getDescription())
+    }
 
 }
