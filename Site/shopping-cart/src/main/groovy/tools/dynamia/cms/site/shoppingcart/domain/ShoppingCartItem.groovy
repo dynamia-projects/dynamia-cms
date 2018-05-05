@@ -82,7 +82,6 @@ class ShoppingCartItem extends SimpleEntity {
     boolean taxIncluded
     String unit
 
-   
 
     void setUnitPrice(BigDecimal unitPrice) {
         if (unitPrice == null || unitPrice.longValue() < 0) {
@@ -91,16 +90,18 @@ class ShoppingCartItem extends SimpleEntity {
         this.unitPrice = unitPrice
     }
 
-   
 
     void compute() {
+        if (discount == null) {
+            discount = BigDecimal.ZERO
+        }
+
         if (quantity > 0 && unitPrice != null && unitPrice.doubleValue() > 0) {
-            subtotal = unitPrice.add(discount).multiply(new BigDecimal(quantity))
+            subtotal = (unitPrice + discount) * quantity
         }
 
         if (taxable && taxPercent > 0) {
-            taxes = BigDecimalUtils.computePercent(unitPrice, taxPercent, taxIncluded)
-                    .multiply(new BigDecimal(quantity))
+            taxes = BigDecimalUtils.computePercent(unitPrice, taxPercent, taxIncluded) * quantity
         }
 
         if (shoppingCart.shipmentPercent > 0) {

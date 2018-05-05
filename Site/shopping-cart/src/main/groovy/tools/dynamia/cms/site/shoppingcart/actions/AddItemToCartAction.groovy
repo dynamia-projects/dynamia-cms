@@ -63,6 +63,9 @@ class AddItemToCartAction implements SiteAction {
                 CMSUtil.addSuccessMessage(item.name.toUpperCase() + " agregado exitosamente al carrito",
                         evt.redirectAttributes)
             }
+        } else {
+            CMSUtil.addSuccessMessage("No encontrado item con codigo $code",
+                    evt.redirectAttributes)
         }
 
     }

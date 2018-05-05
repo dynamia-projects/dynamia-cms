@@ -638,8 +638,7 @@ class ProductsServiceImpl implements ProductsService {
         List<ProductCategoryDetail> details = query.resultList
 
 
-        String sqlValues = "select det.name, det.value from ProductDetail det inner join det.product p inner join p.category c"
-        +" where (c = :category or c.parent = :category)  and p.active=true group by det.value order by det.value"
+        String sqlValues = "select det.name, det.value from ProductDetail det inner join det.product p inner join p.category c where (c = :category or c.parent = :category)  and p.active=true group by det.value order by det.value"
         List values = entityManager.createQuery(sqlValues).setParameter("category", category).resultList
 
         for (ProductCategoryDetail det : details) {

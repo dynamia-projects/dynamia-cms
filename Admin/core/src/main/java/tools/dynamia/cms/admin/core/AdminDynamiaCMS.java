@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,7 @@ import tools.dynamia.commons.logger.SLF4JLoggingService;
         @ComponentScan.Filter(classes = Configuration.class, type = FilterType.ANNOTATION),
         @ComponentScan.Filter(value = Controller.class, type = FilterType.ANNOTATION)})
 @ComponentScan(basePackages = {"tools.dynamia.app", "tools.dynamia.zk", "com.dynamia.icons"})
+@Order(1)
 public class AdminDynamiaCMS extends MvcConfiguration {
 
     public AdminDynamiaCMS() {

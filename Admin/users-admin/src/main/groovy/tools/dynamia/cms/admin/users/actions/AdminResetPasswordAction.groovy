@@ -39,11 +39,11 @@ class AdminResetPasswordAction extends AbstractCrudAction {
         User user = (User) evt.data
         if (user != null) {
 
-            ZKUtil.showInputDialog("Ingrese nuevo passwrod", String.class, {
-                String newpassword = (String) e.getData()
+            ZKUtil.showInputDialog("Ingrese nuevo password", String.class, { e ->
+                String newpassword = e.data as String
                 try {
                     userService.resetPassword(user, newpassword, newpassword)
-                    UIMessages.showMessage("Password de usuario " + user.username + " reiniciado exitosamente")
+                    UIMessages.showMessage("Password de usuario $user.username  reiniciado exitosamente")
                 } catch (ValidationError ex) {
                     UIMessages.showMessage(ex.message, MessageType.WARNING)
 

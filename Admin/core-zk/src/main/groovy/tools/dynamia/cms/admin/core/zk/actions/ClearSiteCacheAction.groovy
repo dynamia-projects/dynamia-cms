@@ -47,10 +47,11 @@ class ClearSiteCacheAction extends AbstractCrudAction {
 		Site site = (Site) evt.data
         if (site != null) {
 			service.clearCache(site)
-            UIMessages.showMessage("Site Cache cleared successfull")
+            UIMessages.showMessage("Site Cache cleared successful")
         } else {
 			UIMessages.showMessage("Select site", MessageType.WARNING)
         }
+
 	}
 
 	@Override

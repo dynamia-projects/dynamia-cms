@@ -34,7 +34,7 @@ import tools.dynamia.domain.services.CrudService
 @CMSModule
 class ProductsCarouselModule extends AbstractModule {
 
-	private static final String PARAM_PAGE_SIZE = "pageSize"
+    private static final String PARAM_PAGE_SIZE = "pageSize"
 
     private static final String PARAM_ORDER_BY = "orderBy"
 
@@ -47,13 +47,13 @@ class ProductsCarouselModule extends AbstractModule {
     private static final String PARAM_TYPE = "type"
 
     @Autowired
-	private ProductsService service
+    private ProductsService service
 
     @Autowired
-	private CrudService crudService
+    private CrudService crudService
 
     ProductsCarouselModule() {
-		super("products_carousel", "Products Carousel", "products/modules/carousel")
+        super("products_carousel", "Products Carousel", "products/modules/carousel")
         description = "Show a products list carousel"
         putMetadata("author", "Mario Serrano Leones")
         putMetadata("version", "1.0")
@@ -64,107 +64,107 @@ class ProductsCarouselModule extends AbstractModule {
         setVariablesNames("products,", PARAM_COLUMNS)
     }
 
-	@Override
+    @Override
     void init(ModuleContext context) {
-		ProductCarouselType type = ProductCarouselType.valueOf(getParameter(context, PARAM_TYPE).toUpperCase())
+        ProductCarouselType type = ProductCarouselType.valueOf(getParameter(context, PARAM_TYPE).toUpperCase())
         int columns
         try {
-			columns = Integer.parseInt(getParameter(context, PARAM_COLUMNS))
+            columns = Integer.parseInt(getParameter(context, PARAM_COLUMNS))
         } catch (NumberFormatException e1) {
-			columns = Integer.parseInt((String) metadata.get(PARAM_COLUMNS))
+            columns = Integer.parseInt((String) metadata.get(PARAM_COLUMNS))
         }
 
-		String category = getParameter(context, PARAM_CATEGORY)
+        String category = getParameter(context, PARAM_CATEGORY)
         String status = getParameter(context, PARAM_STATUS)
         String orderBy = null
         try {
-			ProductOrderField orderField = ProductOrderField
-					.valueOf(getParameter(context, PARAM_ORDER_BY).toUpperCase())
+            ProductOrderField orderField = ProductOrderField
+                    .valueOf(getParameter(context, PARAM_ORDER_BY).toUpperCase())
             orderBy = orderField.field
         } catch (Exception e) {
-			// TODO: handle exception
-		}
+            // TODO: handle exception
+        }
 
-		String pageSizeParam = getParameter(context, PARAM_PAGE_SIZE)
+        String pageSizeParam = getParameter(context, PARAM_PAGE_SIZE)
 
         List<Product> products = new ArrayList<>()
         QueryParameters params = QueryParameters.with("site", context.site).add("active", true)
-				.paginate(columns * 4)
+                .paginate(columns * 4)
 
         if (pageSizeParam != null) {
-			try {
-				int pageSize = Integer.parseInt(pageSizeParam)
+            try {
+                int pageSize = Integer.parseInt(pageSizeParam)
                 params.paginate(pageSize)
             } catch (Exception e) {
-				// TODO: handle exception
-			}
-		}
+                // TODO: handle exception
+            }
+        }
 
-		switch (type) {
-		case ALL:
-			products = service.getSpecialProducts(context.site)
-            break
-            case FEATURED:
-			params.add("featured", true)
+        switch (type) {
+            case ProductCarouselType.ALL:
+                products = service.getSpecialProducts(context.site)
                 break
-            case NEW:
-			params.add("newproduct", true)
+            case ProductCarouselType.FEATURED:
+                params.add("featured", true)
                 break
-            case SALE:
-			params.add("sale", true)
+            case ProductCarouselType.NEW:
+                params.add("newproduct", true)
                 break
-            case MOST_VIEWED:
-			params.orderBy("views", false)
+            case ProductCarouselType.SALE:
+                params.add("sale", true)
                 break
-            case CUSTOM:
-			params.add(PARAM_STATUS, status)
+            case ProductCarouselType.MOST_VIEWED:
+                params.orderBy("views", false)
+                break
+            case ProductCarouselType.CUSTOM:
+                params.add(PARAM_STATUS, status)
                 break
         }
 
-		if (orderBy != null) {
-			params.orderBy(orderBy, true)
+        if (orderBy != null) {
+            params.orderBy(orderBy, true)
         }
 
-		if (category != null && !category.empty) {
-			try {
-				Long categoryId = new Long(category)
+        if (category != null && !category.empty) {
+            try {
+                Long categoryId = new Long(category)
                 QueryParameters catParams = QueryParameters
-						.with("category.id", QueryConditions.eq(categoryId, BooleanOp.OR))
-						.add("category.parent.id", QueryConditions.eq(categoryId, BooleanOp.OR))
+                        .with("category.id", QueryConditions.eq(categoryId, BooleanOp.OR))
+                        .add("category.parent.id", QueryConditions.eq(categoryId, BooleanOp.OR))
                 params.addGroup(catParams, BooleanOp.AND)
             } catch (NumberFormatException nf) {
 
-			}
-		}
-
-		if (products.empty) {
-			products = crudService.find(Product.class, params)
+            }
         }
 
-		if (products instanceof PagedList) {
-			PagedList<Product> pagedList = (PagedList<Product>) products
+        if (products.empty) {
+            products = crudService.find(Product.class, params)
+        }
+
+        if (products instanceof PagedList) {
+            PagedList<Product> pagedList = (PagedList<Product>) products
             products = pagedList.dataSource.pageData
         }
 
-		ModuleInstance mod = context.moduleInstance
+        ModuleInstance mod = context.moduleInstance
         mod.addObject("products", products)
         mod.addObject(PARAM_COLUMNS, columns)
     }
 
-	private String getParameter(ModuleContext context, String name) {
-		String param = context.moduleInstance.getParameterValue(name)
+    private String getParameter(ModuleContext context, String name) {
+        String param = context.moduleInstance.getParameterValue(name)
         if (param == null || param.trim().empty) {
-			Object metadata = metadata.get(name)
+            Object metadata = metadata.get(name)
             if (metadata != null) {
-				param = metadata.toString()
+                param = metadata.toString()
             }
-		}
-
-		if (param != null) {
-			param = param.trim()
         }
 
-		return param
+        if (param != null) {
+            param = param.trim()
+        }
+
+        return param
     }
 
 }

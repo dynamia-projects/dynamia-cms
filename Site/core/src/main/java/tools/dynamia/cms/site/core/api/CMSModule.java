@@ -17,10 +17,15 @@ package tools.dynamia.cms.site.core.api;
 
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.*;
+
 /**
  *
  * @author Mario Serrano Leones
  */
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
 @Component
 public @interface CMSModule {
     
