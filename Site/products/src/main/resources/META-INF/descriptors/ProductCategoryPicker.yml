@@ -1,9 +1,0 @@
-view: entitypicker
-beanClass: tools.dynamia.cms.site.products.domain.ProductCategory
-autofields: false
-
-fields:
-   name:
-   parent:
-   site:
-   active:

@@ -1,8 +1,0 @@
-view: table
-beanClass: tools.dynamia.cms.site.core.domain.ModuleInstanceParameter
-autofields: false
-
-fields:
-  name:
-  value:
-  enabled:

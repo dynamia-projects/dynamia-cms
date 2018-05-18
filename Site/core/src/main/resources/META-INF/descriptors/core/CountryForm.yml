@@ -1,7 +1,0 @@
-view: form
-beanClass: tools.dynamia.cms.site.core.domain.Country
-autofields: false
-
-fields:
-  name:
-  code:

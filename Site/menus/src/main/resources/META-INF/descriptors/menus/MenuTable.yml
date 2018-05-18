@@ -1,8 +1,0 @@
-view: table
-beanClass: tools.dynamia.cms.site.menus.domain.Menu
-autofields: false
-
-fields:
-    name:
-    alias:
-    description:

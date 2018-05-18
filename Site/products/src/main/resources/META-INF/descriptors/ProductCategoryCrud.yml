@@ -1,5 +1,0 @@
-view: crud
-beanClass: tools.dynamia.cms.site.products.domain.ProductCategory
-dataSetView: tree
-parentName: parent
-controller: tools.dynamia.cms.admin.products.controllers.ProductCategoryTreeCrudController

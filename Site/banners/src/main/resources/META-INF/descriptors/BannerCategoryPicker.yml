@@ -1,7 +1,0 @@
-view: entitypicker
-beanClass: tools.dynamia.cms.site.banners.domain.BannerCategory
-autofields: false
-
-fields:
-    name:    
-    

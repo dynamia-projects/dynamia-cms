@@ -1,4 +1,0 @@
-view: table
-beanClass: tools.dynamia.cms.site.shoppingcart.domain.ShoppingSiteConfigParameter
-hidden: [id,siteConfig]
-sortFields: [name,value]

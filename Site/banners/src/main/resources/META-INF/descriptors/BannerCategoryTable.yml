@@ -1,9 +1,0 @@
-view: table
-beanClass: tools.dynamia.cms.site.banners.domain.BannerCategory
-autofields: false
-
-fields:
-    name:
-    folderImages:
-    description:
-    
