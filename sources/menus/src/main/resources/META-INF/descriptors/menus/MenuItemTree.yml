@@ -1,0 +1,19 @@
+view: tree
+beanClass: tools.dynamia.cms.menus.domain.MenuItem
+autofields: false
+
+fields:
+    name:
+    title:
+    type:
+    icon:
+    href:
+    target:
+    page:
+    page.category:
+        label: Page Category
+    order:
+
+        
+params:
+    orderBy: order

@@ -1,0 +1,12 @@
+view: table
+beanClass: tools.dynamia.cms.pages.domain.PageCategory
+autofields: false
+
+fields:
+    name: 
+    alias:    
+    description:        
+    indexableByDates:
+        label: Indexable
+    hidden:
+    paginationSize:

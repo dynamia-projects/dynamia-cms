@@ -1,0 +1,21 @@
+view: table
+beanClass: tools.dynamia.cms.users.domain.User
+autofields: false
+
+fields:
+    creationDate:
+        params:
+           converter: converters.Date
+    username:  
+    profile:
+    enabled:
+    identification:
+    fullName:
+    contactInfo:
+    relatedUser:
+    groupName:
+      label: Group
+    validated:
+    validationKey:
+    validationDateLimit:
+    validationDate:

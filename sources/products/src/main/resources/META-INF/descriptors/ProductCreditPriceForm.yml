@@ -1,0 +1,15 @@
+view: form
+beanClass: tools.dynamia.cms.products.domain.ProductCreditPrice
+autofields: false
+
+fields:
+  
+    number:
+    price:
+    description:
+  
+    
+   
+
+layout:
+    columns: 1

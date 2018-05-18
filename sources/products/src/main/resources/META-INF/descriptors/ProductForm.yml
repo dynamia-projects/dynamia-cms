@@ -1,0 +1,118 @@
+view: form
+beanClass: tools.dynamia.cms.products.domain.Product
+autofields: false
+
+fields:   
+   name:
+     params:
+         span: 2
+   sku:
+   reference:
+   brand:   
+   category:
+   template:
+   alternateTemplate:
+   description:
+      params:
+          span: 4
+          multiline: true
+          height: 80px
+   longDescription:
+      component: ckeditor
+      params:       
+          span: 4
+          height: 200px
+   price:
+   price2:
+   cost:
+   lastPrice:
+     
+   storePrice:
+      
+   stock:   
+   active:
+   featured:
+   sale:
+   newproduct:
+      label: New
+   status:
+   sellInWeb:
+   sellInStore:
+       
+       
+   image:
+       component: resourceUploadlink
+       params:
+           subfolder: products/images
+           generateFileName: true
+           span: 2
+   image2:
+       component: resourceUploadlink
+       params:
+           subfolder: products/images
+           generateFileName: true
+           span: 2
+   image3:
+       component: resourceUploadlink
+       params:
+           subfolder: products/images
+           generateFileName: true
+           span: 2
+   image4:
+       component: resourceUploadlink
+       params:
+           subfolder: products/images
+           generateFileName: true
+           span: 2
+   videoURL:
+       label: Video URL
+       params:
+           span: 4
+       
+       
+   promoEnabled:
+       label: Enabled
+   promoValue:
+       label: Value
+   promoValueType:
+       label: Value Type
+   promoStartDate:
+       label: Start Date
+   promoEndDate:
+       label: End Date
+   promoName:
+       label: Name
+       
+   details:
+       component: crudview
+   
+   stockDetails:
+       component: crudview
+       
+   creditPrices:
+       component: crudview
+
+   userReviews:
+       component: crudview
+groups:
+   general:
+       fields: [name,sku,reference,brand,category,template,alternateTemplate,description,longDescription]
+       
+   sales:
+       fields: [stock,price,price2,cost,lastPrice,storePrice]
+       
+   status:
+       fields: [active,featured,sale,newproduct,status, sellInWeb, sellInStore]
+       
+   promotion:
+       fields: [promoEnabled,promoName,promoValue,promoValueType,promoStartDate,promoEndDate]
+       
+   images:
+       fields: [image,image2,image3,image4]
+       
+   videos:
+       fields: [videoURL]
+   
+   
+layout:
+   columns: 4

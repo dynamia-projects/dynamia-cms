@@ -1,0 +1,4 @@
+view: table
+beanClass: tools.dynamia.cms.pages.domain.PageParameter
+hidden: [id,page]
+sortFields: [name,value,enabled]

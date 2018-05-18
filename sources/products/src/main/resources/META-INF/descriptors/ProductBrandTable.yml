@@ -1,0 +1,10 @@
+view: table
+beanClass: tools.dynamia.cms.products.domain.ProductBrand
+autofields: false
+
+fields:
+  
+    name:
+    website:    
+    image:
+    

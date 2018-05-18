@@ -1,0 +1,46 @@
+view: form
+beanClass: tools.dynamia.cms.core.domain.ContentAuthor
+autofields: false
+
+fields:
+    firstName:
+        params:
+            span: 2
+    lastName:
+        params:
+            span: 2
+    email:
+        params:
+            span: 2
+    website:
+        params:
+            span: 2
+    bio:
+        description: Max 1000 chracters
+        params:
+            span: 4
+            multiline: true
+            height: 80px
+            
+        
+    twitter:
+    googlePlus:
+    facebook:
+    instagram:
+    linkedin:
+    tumblr:
+    snapchat:
+    pinterest:
+    vk:
+    flickr:
+    vine:
+    meetup:
+
+groups:
+    social:
+        fields: [twitter, googlePlus, facebook,instagram,linkedin, tumblr, 
+        snapchat, pinterest, vk, flickr,vine, meetup]
+
+        
+layout:
+    columns: 4

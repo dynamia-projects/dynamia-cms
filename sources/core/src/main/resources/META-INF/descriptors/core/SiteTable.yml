@@ -1,0 +1,22 @@
+view: table
+beanClass: tools.dynamia.cms.core.domain.Site
+autofields: false
+
+fields:
+  id:
+  name:
+  key:
+  template:
+  parent:
+  corporateSite:
+  offline:
+  googleAnalyticsID:
+    label: Googlge Analytics ID
+  
+  description:
+    params:
+      header:
+        width: 400px
+        
+params:
+  showRowNumber: false

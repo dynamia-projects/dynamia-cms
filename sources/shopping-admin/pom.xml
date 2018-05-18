@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>tools.dynamia.cms</groupId>
+		<artifactId>tools.dynamia.cms.parent</artifactId>
+		<version>3.0.0.Beta</version>
+	</parent>
+	<groupId>tools.dynamia.cms</groupId>
+	<artifactId>tools.dynamia.cms.shopping.admin</artifactId>
+	<version>3.0.0.Beta</version>
+	<name>DynamiaCMS - Shopping Admin (${project.version})</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>tools.dynamia.cms</groupId>
+			<artifactId>tools.dynamia.cms.admin.ui</artifactId>
+			<version>3.0.0.Beta</version>
+		</dependency>
+		<dependency>
+			<groupId>tools.dynamia.cms</groupId>
+			<artifactId>tools.dynamia.cms.shoppingcart</artifactId>
+			<version>3.0.0.Beta</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

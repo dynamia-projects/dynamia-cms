@@ -1,0 +1,15 @@
+view: form
+beanClass: tools.dynamia.cms.shoppingcart.domain.ShippingCompany
+autofields: false
+
+fields:
+  name:
+    params:
+      span: 2
+  website:
+  trackingSiteURL:
+    label: Tracking Site URL
+  
+ 
+layout:
+  columns: 2

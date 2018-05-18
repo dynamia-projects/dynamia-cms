@@ -1,0 +1,16 @@
+view: form
+beanClass: tools.dynamia.cms.core.domain.SiteDomain
+hidden: [id,site]
+sortFields: [name,port,context,description]
+
+fields:
+    
+   
+    
+    description:
+        params:
+            multiline: true=boolean
+            height: 100px
+      
+layout:
+    columns: 1

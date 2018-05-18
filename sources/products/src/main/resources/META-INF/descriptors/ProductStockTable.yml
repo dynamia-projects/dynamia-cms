@@ -1,0 +1,10 @@
+view: table
+beanClass: tools.dynamia.cms.products.domain.ProductStock
+autofields: false
+
+fields:
+  
+    store:
+    stock:
+    store.contactInfo:
+        label: Contact

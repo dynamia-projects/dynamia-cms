@@ -1,0 +1,44 @@
+view: form
+id: topMenuItem
+autofields: false
+
+fields:
+
+    name:
+      component: textbox
+    title:
+      component: textbox
+    subtitle:
+      component: textbox
+    
+    page:
+        component: entitypicker
+        label: Page (optional)
+        params:
+            entityClass: Page
+            
+    
+    href:
+      component: resourceSelector
+          
+    target:
+      component: textbox
+    
+    type:
+        component: typeSelector
+        params:
+            typeExtensionClass: MenuItemType
+   
+    order:
+      component: intbox
+    icon:
+      component: textbox
+    styleClass:
+      component: textbox
+    backgroundImage:
+      label: Background
+      component: resourceSelector
+
+        
+layout:
+    columns: 3

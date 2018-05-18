@@ -1,0 +1,13 @@
+view: table
+beanClass: tools.dynamia.cms.mail.domain.MailTemplate
+autofields: false
+
+
+fields:
+   name:
+   templateEngine:
+       label: Engine
+   enabled:
+   description:
+
+   

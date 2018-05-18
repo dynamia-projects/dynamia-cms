@@ -1,0 +1,21 @@
+view: form
+beanClass: tools.dynamia.cms.contacts.domain.Contact
+autofields: false
+
+fields:
+  category:
+  name:
+  email:
+  phoneNumber:
+  mobileNumber:
+  city:
+  zipCode:
+  address:
+    params:
+      span: 2
+  
+  active:
+  
+layout:
+  columns: 2
+  

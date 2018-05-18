@@ -1,0 +1,11 @@
+view: form
+beanClass: tools.dynamia.cms.products.domain.ProductsSiteConfigParameter
+hidden: [id,siteConfig]
+sortFields: [name,value]
+
+fields:
+    
+   
+      
+layout:
+    columns: 1

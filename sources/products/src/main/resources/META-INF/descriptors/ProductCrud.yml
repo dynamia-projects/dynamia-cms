@@ -1,0 +1,3 @@
+view: crud
+beanClass: tools.dynamia.cms.products.domain.Product
+controller: tools.dynamia.cms.products.admin.controllers.ProductCrudController

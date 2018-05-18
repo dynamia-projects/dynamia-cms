@@ -1,0 +1,42 @@
+view: form
+beanClass: tools.dynamia.cms.banners.domain.Banner
+autofields: false
+
+fields:
+    title:
+        params:
+            span: 2
+            
+    
+    subtitle:
+    buttonLabel:    
+    category:
+    enabled:
+    description:
+        params:
+            span: 3
+            multiline: true
+            height: 80px
+    
+    imageURL:
+        component: resourceSelector
+        label: Image URL
+        params:
+            span: 3
+            placeholder: Enter image URL
+    
+    alternateImageURL:
+        component: resourceSelector
+        label: Alternate Image URL
+        params:
+            span: 3
+            placeholder: Enter image URL
+    
+    url:
+        component: resourceSelector
+        params:
+            span: 3
+            placeholder: When user click the banner go to this url 
+    
+layout:
+    columns: 3

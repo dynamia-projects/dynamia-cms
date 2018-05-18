@@ -1,0 +1,54 @@
+view: table
+beanClass: tools.dynamia.cms.payment.domain.PaymentTransaction
+autofields: false
+
+fields:
+
+  document:
+  gatewayId:
+    label: Gateway  
+  status:
+  statusText:  
+  startDate:      
+  endDate:
+  amount:
+     params:
+      converter: converters.Currency
+      header:
+        align: right
+  taxes:
+     params:
+      converter: converters.Currency
+      header:
+        align: right
+  taxesBase:
+     params:
+      converter: converters.Currency
+      header:
+        align: right
+  paymentMethod:
+  currency:
+  responseCode:
+  signature:  
+  description:
+  payerFullname:
+  payerDocument:
+  payerCode:
+  payerPhoneNumber:
+  payerMobileNumber:
+  email:
+  source:
+  bank:
+  reference:
+  reference2:
+  reference3:
+  clientIP:
+  confirmed:
+  sended:
+  errorCode:
+  errorMessage:
+  uuid:
+    label: TX Reference  
+
+ 
+  

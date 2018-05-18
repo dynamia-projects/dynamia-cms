@@ -1,0 +1,17 @@
+view: form
+beanClass: tools.dynamia.cms.products.domain.Store
+autofields: false
+
+
+fields:
+  name:  
+  image:
+    component: resourceSelector
+  page:
+  contactInfo:
+  contacts:
+    description: Store Contacts or Sellers
+    component: crudview
+  
+layout:
+  columns: 3

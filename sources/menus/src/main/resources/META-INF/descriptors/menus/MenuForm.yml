@@ -1,0 +1,29 @@
+view: form
+beanClass: tools.dynamia.cms.menus.domain.Menu
+autofields: false
+
+fields:
+    
+    name:
+    alias:
+    description:
+        params:
+           span: 2
+           multiline: true
+           height: 100px
+           
+    styleClass:
+       label: Menu Class
+    menuItemStyleClass:
+       label: Items Class
+       
+ 
+groups:
+    style:
+        label: CSS Classes
+        fields: [styleClass,menuItemStyleClass]
+        
+    
+        
+layout:
+    columns: 2

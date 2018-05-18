@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>tools.dynamia.cms</groupId>
+    <artifactId>DynamiaCMS</artifactId>
+    <version>3.0.0.Beta</version>
+    <packaging>jar</packaging>
+
+    <name>DynamiaCMS</name>
+    <description>Demo project for Spring Boot</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.13.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <name>DynamiaCMS</name>
+        <author>Dynamia Soluciones IT</author>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <dynamiatools.version>3.1.0.Final</dynamiatools.version>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <hibernate.version>5.2.10.Final</hibernate.version>
+        <groovy.version>2.4.15</groovy.version>
+        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+        <thymeleaf.layout.version>2.2.2</thymeleaf.layout.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>${groovy.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>${thymeleaf.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring4</artifactId>
+            <version>${thymeleaf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+            <version>${thymeleaf.layout.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia</groupId>
+            <artifactId>tools.dynamia.zk.app</artifactId>
+            <version>${dynamiatools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.core</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin.ui</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.users</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.users.admin</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.pages</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.pages.admin</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.menus</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.menus.admin</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.mail</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.mail.admin</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.shoppingcart</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.shopping.admin</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.templates</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.banners</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.contacts</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.products</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.products.admin</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+        <dependency>
+            <groupId>tools.dynamia.themes</groupId>
+            <artifactId>tools.dynamia.themes.dynamical</artifactId>
+            <version>3.1.0.RC</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>addSources</goal>
+                            <goal>addTestSources</goal>
+                            <goal>generateStubs</goal>
+                            <goal>compile</goal>
+                            <goal>generateTestStubs</goal>
+                            <goal>compileTests</goal>
+                            <goal>removeStubs</goal>
+                            <goal>removeTestStubs</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <invokeDynamic>true</invokeDynamic>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

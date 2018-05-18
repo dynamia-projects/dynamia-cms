@@ -1,0 +1,29 @@
+view: form
+beanClass: tools.dynamia.cms.products.domain.ProductTemplate
+autofields: false
+
+fields:
+  
+    name:   
+    templateEngine:
+       label: Engine
+       component: typeSelector
+       params:
+            typeExtensionClass: StringParser
+    enabled:
+    description:
+       params:
+          multiline: true
+          span: 3
+          height: 100px
+    content:
+        component: cmseditor
+        params:
+            unescape: true
+            span: 3
+            height: 400px
+    
+   
+
+layout:
+    columns: 3

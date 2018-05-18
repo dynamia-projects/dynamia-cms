@@ -1,0 +1,18 @@
+view: config
+id: module_custom_html
+
+fields:
+
+  content:
+    component: cmseditor
+    params:
+      span: 2
+      height: 300px
+      copyFrom: contentPlain
+      unescape: true
+      
+  templateEngine:
+       component: typeSelector
+       params:
+            typeExtensionClass: StringParser
+      

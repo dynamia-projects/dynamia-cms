@@ -1,0 +1,17 @@
+view: table
+beanClass: tools.dynamia.cms.products.domain.ProductsSiteConfig
+hidden: [id,datasourcePassword,parametersAsMap,datasourceStoreImagesURL,datasourceImagesURL,datasourceBrandImagesURL,datasourcePassword,shareProductMailTemplate,orderCompletedMailTemplate]
+sortFields: [lastSync,datasourceURL,datasourceUsername,defaultCurrency,pricePattern,productsPerPage,productsStockToShow,mailAccount,token,synchronizationEnabled]
+
+fields:
+    datasourceURL:
+        label: URL
+    
+    datasourceImagesURL:
+        label: Images URL
+    
+    datasourceUsername:
+        label: Username
+        
+    lastSync:
+        nullValue: none

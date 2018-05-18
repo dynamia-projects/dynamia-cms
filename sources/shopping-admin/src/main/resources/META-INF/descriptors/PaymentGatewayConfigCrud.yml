@@ -1,0 +1,8 @@
+view: crud
+beanClass: tools.dynamia.cms.payment.domain.PaymentGatewayConfig
+controller: tools.dynamia.cms.shopping.admin.controllers.PaymentGatewayConfigController
+autofields: false
+
+ 
+ 
+  

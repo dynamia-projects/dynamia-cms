@@ -1,0 +1,30 @@
+beanClass: tools.dynamia.cms.users.domain.UserLog
+view: table
+autofields: false
+
+fields:
+  creationTime:
+    params:
+      converter: converters.Time
+
+  creationDate:
+    params:
+      converter: converters.Date
+
+  user.username:
+    label: Username
+  user.profile:
+    label: Profile
+  user.identification:
+    label: Identification
+  user.fullName:
+    label: Full Name
+  user.contactInfo:
+    label: Contact
+  user.groupName:
+    label: Group
+
+  event:
+
+params:
+  orderBy: id desc

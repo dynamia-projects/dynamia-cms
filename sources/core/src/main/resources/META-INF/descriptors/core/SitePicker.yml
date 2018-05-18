@@ -1,0 +1,9 @@
+view: entitypicker
+beanClass: tools.dynamia.cms.core.domain.Site
+autofields: false
+sortFields: [name,key]
+
+fields:
+    
+   name:
+   key:

@@ -1,0 +1,25 @@
+view: table
+beanClass: tools.dynamia.cms.core.domain.ContentAuthor
+autofields: false
+
+fields:
+    
+    firstName:       
+    lastName:      
+    email:        
+    website:
+    twitter:
+    googlePlus:
+    facebook:
+    instagram:
+    linkedin:
+    tumblr:
+    snapchat:
+    pinterest:
+    vk:
+    flickr:
+    vine:
+    meetup:
+    
+        
+

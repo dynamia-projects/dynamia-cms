@@ -1,0 +1,25 @@
+view: form
+beanClass: tools.dynamia.cms.products.domain.ProductBrand
+autofields: false
+
+fields:
+  
+    name:
+    website:
+    description:
+       params:
+          multiline: true
+          span: 2
+          height: 100px
+    image:
+       component: resourceUploadlink
+       params:
+           subfolder: products/brands
+           generateFileName: true
+       
+    
+    
+   
+
+layout:
+    columns: 2

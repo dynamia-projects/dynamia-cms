@@ -1,0 +1,13 @@
+view: form
+beanClass: tools.dynamia.cms.core.domain.ModuleInstanceParameter
+autofields: false
+
+fields:
+  name:
+  value:
+  enabled:
+    
+   
+      
+layout:
+    columns: 1

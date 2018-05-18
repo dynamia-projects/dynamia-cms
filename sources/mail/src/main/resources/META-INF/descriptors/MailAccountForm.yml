@@ -1,0 +1,23 @@
+view: form
+beanClass: tools.dynamia.cms.mail.domain.MailAccount
+autofields: false
+
+fields:
+
+
+   name:
+    params:
+      span: 2
+   username:
+
+
+   password:
+   serverAddress:
+   port:
+   fromAddress:
+
+   useTTLS:
+         label: TTLS
+
+   loginRequired:
+   enconding:

@@ -1,0 +1,21 @@
+view: table
+beanClass: tools.dynamia.cms.users.domain.UserSiteConfig
+autofields: false
+
+fields:
+  registrationEnabled:
+  registrationValidated:
+  registrationPendingTemplate:
+  registrationCompletedTemplate:
+  
+  synchronizationEnabled:
+    label: Enabled
+  datasourceURL:
+    label: URL
+  datasourceUsername:
+    label: Username    
+  datasourcePassword:
+    label: Password
+  
+
+ 

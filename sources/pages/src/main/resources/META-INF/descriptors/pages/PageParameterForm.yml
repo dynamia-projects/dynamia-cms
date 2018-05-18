@@ -1,0 +1,12 @@
+view: form
+beanClass: tools.dynamia.cms.pages.domain.PageParameter
+hidden: [id,page]
+sortFields: [name,value,enabled]
+
+
+fields:
+    value:
+        component: resourceSelector
+        
+layout:
+    columns: 1

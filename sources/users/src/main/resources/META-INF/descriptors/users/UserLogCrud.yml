@@ -1,0 +1,12 @@
+beanClass: tools.dynamia.cms.users.domain.UserLog
+view: crud
+
+actions:
+  NewAction:
+    enabled: false
+
+  EditAction:
+    enabled: false
+
+  DeleteAction:
+    enabled: false

@@ -1,0 +1,30 @@
+view: config
+id: module_products_carousel
+
+fields:            
+
+  type:        
+    component: enumbox
+    required: true
+    params:
+      enumClass: ProductCarouselType
+      valuesAsString: true
+      
+    
+  category:
+    component: entitypicker
+    params:
+      entityClass: ProductCategory
+  
+  status:
+    description: Only for CUSTOM type
+  
+  columns:
+  
+  orderBy:  
+    component: enumbox
+    params:
+      enumClass: ProductOrderField
+      valuesAsString: true
+  pageSize:
+    

@@ -1,0 +1,27 @@
+view: table
+beanClass: tools.dynamia.cms.mail.domain.MailAccount
+autofields: false
+
+fields:
+
+
+       
+   preferred:
+       label: P
+       description: Preferred Account
+       component: iconimage
+       params:
+           trueIcon: star
+           falseIcon: staroff
+           header:
+              width: 32px
+
+   name:
+   username:
+   serverAddress:
+   port:
+   fromAddress:
+   useTTLS:
+         label: TTLS
+   loginRequired:
+   enconding:

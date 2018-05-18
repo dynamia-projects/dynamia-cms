@@ -1,0 +1,12 @@
+view: crud
+beanClass: tools.dynamia.cms.core.domain.ModuleInstance
+controller: tools.dynamia.cms.admin.ui.controllers.ModuleInstanceCrudController
+
+
+actions:
+  EditAction:
+    enabled: false
+  
+  NewAction:
+    enabled: false
+

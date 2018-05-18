@@ -1,0 +1,7 @@
+view: entitypicker
+beanClass: tools.dynamia.cms.menus.domain.Menu
+autofields: false
+
+fields:
+    name:    
+    description:

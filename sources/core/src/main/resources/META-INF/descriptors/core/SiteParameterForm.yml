@@ -1,0 +1,11 @@
+view: form
+beanClass: tools.dynamia.cms.core.domain.SiteParameter
+hidden: [id,site,extra]
+sortFields: [name,value]
+
+fields:
+  value:
+    component: resourceSelector   
+      
+layout:
+    columns: 1

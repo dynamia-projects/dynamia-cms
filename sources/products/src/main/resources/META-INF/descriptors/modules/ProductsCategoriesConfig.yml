@@ -1,0 +1,19 @@
+view: config
+id: module_products_categories
+
+fields:            
+
+
+  brand:
+    label: Brand (optional)
+    component: entitypicker
+    params:
+      entityClass: ProductBrand
+      
+  parentCategory:
+    label: Parent Category (optional)
+    component: entitypicker
+    params:
+      entityClass: ProductCategory
+ 
+    

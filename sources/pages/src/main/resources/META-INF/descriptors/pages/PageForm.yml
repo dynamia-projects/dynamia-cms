@@ -1,0 +1,83 @@
+view: form
+beanClass: tools.dynamia.cms.pages.domain.Page
+customizer: tools.dynamia.cms.pages.admin.PageFormCustomizer
+autofields: false
+
+fields:
+    
+    title:
+        params: 
+            span: 2
+    alias:
+    subtitle:
+    category:
+        params:
+            fields: name,description
+            
+    author:
+        params:
+            fields: firstName,lastName,email
+    
+    type:
+        component: typeSelector
+        params:
+            typeExtensionClass: PageTypeExtension
+
+
+            
+    layout:
+        component: combobox
+        
+   
+        
+    content:
+        component: cmseditor
+        params:
+            span: 3
+            height: 400px
+            showLabel: false
+            
+    imageURL:
+        label: Image URL
+        component: resourceSelector
+        params:
+            span: 3
+            
+    summary:
+        description: Max 2000 characters
+        params:
+            span: 3
+            multiline: true
+            height: 80px
+            
+            
+    tags:        
+  
+    icon:        
+    styleClass:
+    startDate:
+    endDate:
+    showTitle:
+    published:
+    neverExpire:
+    templateEngine:
+       component: typeSelector
+       params:
+            typeExtensionClass: StringParser
+            
+    parameters:
+        component: crudview
+        
+        
+groups:
+   
+    content:
+      fields: [content]
+      
+    summary:
+      fields: [imageURL,summary]
+      
+    advanced:
+      fields: [type,layout,tags, icon,styleClass, startDate,endDate,templateEngine,neverExpire,published, showTitle]
+layout:
+    columns: 3

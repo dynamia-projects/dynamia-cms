@@ -1,0 +1,69 @@
+view: table
+beanClass: tools.dynamia.cms.shoppingcart.domain.ShoppingCartItem
+autofields: false
+
+
+fields:
+  code:
+    params:
+      header:
+        width: 50px
+        
+  sku:
+    params:
+      header:
+        width: 90px
+  
+  name:
+    params:
+      header:
+        width: 50%
+
+  taxes:
+    params:
+      converter: converters.Currency
+      header:
+        align: right
+      footer:
+        function: sum
+        functionConverter: converters.Currency
+
+
+  unitPrice:
+    params:
+      converter: converters.Currency
+      header:
+        align: right
+      footer:
+        function: sum
+        functionConverter: converters.Currency
+
+  quantity:
+    label: Qty
+    params:    
+      header:
+        width: 50px;
+        align: center
+      footer:
+        function: sum
+      
+
+  totalPrice:
+    params:
+      converter: converters.Currency
+      header:
+        align: right
+      footer:
+        function: sum
+        functionConverter: converters.Currency 
+        
+  
+  
+    
+
+params:
+  sizedByContent: false
+  width: 100%
+      
+    
+  

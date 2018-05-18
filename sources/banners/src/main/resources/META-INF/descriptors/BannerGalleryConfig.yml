@@ -1,0 +1,15 @@
+view: config
+id: module_banners_gallery
+
+
+fields:    
+    category:
+        component: entitypicker
+        params:
+            entityClass: BannerCategory
+    
+    useImagesFolder:
+       
+        
+    thumbnailWidth:
+    thumbnailHeight:

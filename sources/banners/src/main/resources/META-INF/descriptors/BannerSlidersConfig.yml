@@ -1,0 +1,10 @@
+view: config
+id: module_banner_sliders
+
+
+fields:    
+    category:
+        component: entitypicker
+        params:
+            entityClass: BannerCategory
+        

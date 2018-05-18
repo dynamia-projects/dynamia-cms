@@ -1,0 +1,12 @@
+view: table
+beanClass: tools.dynamia.cms.core.domain.City
+autofields: false
+
+fields:
+
+  region.country:
+    label: Country
+  region.name:
+    label: Region
+  name:
+  code:

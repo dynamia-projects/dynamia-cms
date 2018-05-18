@@ -1,0 +1,21 @@
+view: tree
+beanClass: tools.dynamia.cms.products.domain.ProductCategory
+autofields: false
+
+
+fields:
+    id:
+    name:
+      params:
+        header:
+          width: 200px
+    relatedCategory:
+       label: Related
+    description:
+    template:
+        description: Product Template    
+    alternateTemplate:
+    productsCount:
+      label: Products
+    active:
+    externalRef:

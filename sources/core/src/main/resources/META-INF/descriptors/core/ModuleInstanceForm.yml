@@ -1,0 +1,32 @@
+view: form
+beanClass: tools.dynamia.cms.core.domain.ModuleInstance
+
+autofields: false
+
+fields:
+   
+   title:
+    params:
+      span: 2
+   alias:
+   titleVisible:
+   moduleId:
+      label: Type
+      component: typeSelector
+      params:
+          typeExtensionClass: Module
+   
+   position:
+      component: positionSelector
+   
+   
+   
+   styleClass:     
+   customView:  
+   includePaths:
+    params:
+      span: 2 
+   order:   
+   enabled:     
+layout:
+    columns: 4

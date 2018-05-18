@@ -1,0 +1,12 @@
+view: config
+id: module_menu_module
+
+fields:            
+    
+  menu:
+    component: entitypicker
+    params:
+      entityClass: Menu
+  
+
+    

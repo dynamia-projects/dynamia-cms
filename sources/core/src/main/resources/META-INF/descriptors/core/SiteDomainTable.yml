@@ -1,0 +1,4 @@
+view: table
+beanClass: tools.dynamia.cms.core.domain.SiteDomain
+hidden: [id,site]
+sortFields: [name,port,context,description]

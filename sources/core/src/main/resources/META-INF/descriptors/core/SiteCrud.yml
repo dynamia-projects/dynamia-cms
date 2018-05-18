@@ -1,0 +1,3 @@
+view: crud
+beanClass: tools.dynamia.cms.core.domain.Site
+controller: tools.dynamia.cms.admin.ui.controllers.SiteCrudController

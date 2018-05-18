@@ -1,0 +1,31 @@
+view: table
+beanClass: tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig
+autofields: false
+
+fields:
+  paymentGatewayId:
+    label: Gateway ID
+  paymentGatewayName:
+    label: Gateway Name
+  paymentEnabled:    
+  minPaymentAmount:
+    params:
+      converter: converters.Decimal
+      header:
+        align: right
+  maxPaymentAmount:
+    params:
+      converter: converters.Decimal
+      header:
+        align: right
+  shipmentPercent:
+  defaultCurrency:
+  descriptionTemplate:
+  notificationEmails:
+  orderCompletedMailTemplate:
+  orderShippedMailTemplate:
+  notificationMailTemplate:
+  mailAccount:
+ 
+layout:
+  columns: 2

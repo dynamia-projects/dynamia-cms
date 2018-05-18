@@ -1,0 +1,20 @@
+view: crud
+beanClass: tools.dynamia.cms.menus.domain.MenuItem
+autofields: false
+dataSetView: tree
+parentName: parentItem
+controller: tools.dynamia.cms.menus.admin.controllers.MenuItemTreeCrudController
+
+actions:
+    NewAction:    
+        enabled: false
+        
+    EditAction:
+        enabled: false
+        
+    DeleteAction:
+        enabled: false
+        
+   
+        
+    

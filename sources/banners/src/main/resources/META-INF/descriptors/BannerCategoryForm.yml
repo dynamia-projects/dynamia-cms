@@ -1,0 +1,17 @@
+view: form
+beanClass: tools.dynamia.cms.banners.domain.BannerCategory
+autofields: false
+
+fields:
+    name:
+    folderImages:
+        component: resourceSelector
+        params:
+          placeholder: Select folder to autocreate banners  
+    description:
+        params:
+            multiline: true
+            height: 80px    
+    
+layout:
+    columns: 1
