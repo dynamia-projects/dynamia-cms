@@ -1,4 +1,4 @@
-package tools.dynamia.cms.admin.products.actions
+package tools.dynamia.cms.products.admin.actions
 
 import org.springframework.beans.factory.annotation.Autowired
 import tools.dynamia.actions.InstallAction

@@ -1,4 +1,4 @@
-package tools.dynamia.cms.admin.products.actions
+package tools.dynamia.cms.products.admin.actions
 
 import org.apache.poi.ss.usermodel.Row
 import org.springframework.beans.factory.annotation.Autowired

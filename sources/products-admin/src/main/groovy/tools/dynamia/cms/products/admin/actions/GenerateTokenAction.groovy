@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.products.actions
+package tools.dynamia.cms.products.admin.actions
 
 import org.springframework.beans.factory.annotation.Autowired
 import tools.dynamia.actions.ActionGroup

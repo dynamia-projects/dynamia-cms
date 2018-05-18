@@ -23,6 +23,7 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.FilterType
 import org.springframework.scheduling.annotation.EnableAsync
+import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.stereotype.Controller
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
@@ -39,6 +40,7 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler
 @Configuration
 @EnableAsync
 @EnableWebMvc
+@EnableScheduling
 class SiteMainConfig extends WebMvcConfigurerAdapter {
 
     @Bean

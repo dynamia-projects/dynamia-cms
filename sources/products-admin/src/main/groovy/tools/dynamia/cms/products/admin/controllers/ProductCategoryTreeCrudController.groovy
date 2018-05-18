@@ -13,22 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.products.controllers
+package tools.dynamia.cms.products.admin.controllers
 
-import tools.dynamia.cms.products.domain.Product
-import tools.dynamia.zk.crud.CrudController
+import tools.dynamia.cms.products.domain.ProductCategory
+import tools.dynamia.zk.crud.TreeCrudController
 
 /**
- *
- * @author Mario Serrano Leones
+ * Created by Mario on 18/11/2014.
  */
-class ProductCrudController extends CrudController<Product> {
-
-    @Override
-    protected void beforeQuery() {
-        if (getParameter("active") == null) {
-            setParemeter("active", true)
-        }
-    }
-
+class ProductCategoryTreeCrudController extends TreeCrudController<ProductCategory> {
 }

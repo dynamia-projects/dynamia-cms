@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView
 import tools.dynamia.cms.core.actions.ActionEvent
 import tools.dynamia.cms.core.actions.SiteAction
 import tools.dynamia.cms.core.api.CMSAction
+import tools.dynamia.cms.products.ProductsUtil
+import tools.dynamia.cms.products.services.ProductsService
 
 /**
  *
@@ -29,7 +31,7 @@ import tools.dynamia.cms.core.api.CMSAction
 class ShowBrandsAction implements SiteAction {
 
     @Autowired
-    private tools.dynamia.cms.products.services.ProductsService service
+    private ProductsService service
 
     @Override
     String getName() {
@@ -42,7 +44,7 @@ class ShowBrandsAction implements SiteAction {
         mv.addObject("title", "Nuestras marcas")
         mv.addObject("brandlist", service.getBrands(evt.site))
 
-        tools.dynamia.cms.products.ProductsUtil.setupProductsVar(Collections.EMPTY_LIST, mv)
+        ProductsUtil.setupProductsVar(Collections.EMPTY_LIST, mv)
     }
 
 }

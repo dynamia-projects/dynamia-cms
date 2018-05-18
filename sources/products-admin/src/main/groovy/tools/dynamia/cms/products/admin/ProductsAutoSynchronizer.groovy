@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package tools.dynamia.cms.admin.products
+package tools.dynamia.cms.products.admin
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
@@ -46,7 +46,7 @@ class ProductsAutoSynchronizer {
             try {
                 synchronizer.synchronize(config)
             } catch (Throwable e) {
-                logger.error("Error autosyncrhozing Products Site: " + config.site, e)
+                logger.error("Error autosyncrhozing Products Site: $config.site", e)
                 e.printStackTrace()
             }
         }
