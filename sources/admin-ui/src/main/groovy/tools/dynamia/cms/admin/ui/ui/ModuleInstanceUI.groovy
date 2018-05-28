@@ -26,6 +26,7 @@ import tools.dynamia.cms.core.domain.ModuleInstance
 import tools.dynamia.cms.core.domain.ModuleInstanceParameter
 import tools.dynamia.cms.core.services.impl.ModulesService
 import tools.dynamia.commons.MapBuilder
+import tools.dynamia.domain.jpa.JpaParameter
 import tools.dynamia.domain.query.Parameter
 import tools.dynamia.integration.Containers
 import tools.dynamia.viewers.Field
@@ -200,7 +201,7 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
             } catch (Exception e) {
 
             }
-            cfgParameters.add(new Parameter(parameter.name, value))
+            cfgParameters.add(new JpaParameter(parameter.name, value))
         }
         return cfgParameters
     }
