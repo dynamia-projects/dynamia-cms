@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>DynamiaCMS</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Enterprise Content Managment System</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -213,7 +213,7 @@
         <dependency>
             <groupId>tools.dynamia.themes</groupId>
             <artifactId>tools.dynamia.themes.dynamical</artifactId>
-            <version>3.1.0.RC</version>
+            <version>${dynamiatools.version}</version>
         </dependency>
     </dependencies>
 

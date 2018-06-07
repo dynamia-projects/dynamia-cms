@@ -27,7 +27,6 @@ import tools.dynamia.cms.users.domain.UserSiteConfig
 import tools.dynamia.cms.users.ext.CustomerChangeListener
 import tools.dynamia.cms.users.services.UserService
 import tools.dynamia.integration.Containers
-import tools.dynamia.web.util.HttpUtils
 
 /**
  *
@@ -110,7 +109,7 @@ class UserHolder implements Serializable {
 
             String image = UserHolder.get().current.userphoto
             if (image == null) {
-                image = "/resources/images/user.png"
+                image = "/zkau/web/tools/images/no-user-photo.jpg"
             } else {
                 image = "/resources/users/images/$image"
             }

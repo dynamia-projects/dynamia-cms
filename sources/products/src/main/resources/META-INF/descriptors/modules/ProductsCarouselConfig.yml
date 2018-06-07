@@ -7,7 +7,7 @@ fields:
     component: enumbox
     required: true
     params:
-      enumClass: ProductCarouselType
+      enumClass: tools.dynamia.cms.products.modules.ProductCarouselType
       valuesAsString: true
       
     
@@ -24,7 +24,7 @@ fields:
   orderBy:  
     component: enumbox
     params:
-      enumClass: ProductOrderField
+      enumClass: tools.dynamia.cms.products.modules.ProductOrderField
       valuesAsString: true
   pageSize:
     

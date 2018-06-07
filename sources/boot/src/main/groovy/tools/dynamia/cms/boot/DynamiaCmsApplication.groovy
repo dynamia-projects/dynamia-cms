@@ -72,7 +72,7 @@ class DynamiaCmsApplication {
     ServletRegistrationBean dHtmlUpdateServlet() {
         Map<String, String> params = new HashMap<String, String>()
         params.put("update-uri", "/zkau/*")
-        ServletRegistrationBean reg = new ServletRegistrationBean(new DHtmlUpdateServlet(), "/zkau/*")
+        ServletRegistrationBean reg = new ServletRegistrationBean(new DHtmlUpdateServlet(), "/zkau/*", "/cms-admin/zkau/*")
         reg.setLoadOnStartup(2)
         reg.setInitParameters(params)
         return reg

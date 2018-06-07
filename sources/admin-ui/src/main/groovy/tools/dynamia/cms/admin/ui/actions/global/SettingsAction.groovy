@@ -9,19 +9,19 @@ import tools.dynamia.cms.admin.ui.SiteManager
 @InstallAction
 class SettingsAction extends ApplicationGlobalAction {
 
-	@Autowired
-	private SiteManager siteManager
+    @Autowired
+    private SiteManager siteManager
 
     SettingsAction() {
         name = "Settings"
         image = "cog"
         position = 2
-        setAttribute("background", "btn btn-warning btn-flat bg-yellow ")
+        setAttribute("background", "btn bg-orange btn-flat")
     }
 
-	@Override
+    @Override
     void actionPerformed(ActionEvent evt) {
-		siteManager.edit()
+        siteManager.edit()
     }
 
 }

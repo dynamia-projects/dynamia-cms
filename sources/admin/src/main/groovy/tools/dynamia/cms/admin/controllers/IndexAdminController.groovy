@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.annotation.Secured
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.servlet.ModelAndView
 import org.springframework.web.servlet.View
 import org.springframework.web.servlet.view.InternalResourceView
 import tools.dynamia.app.ApplicationInfo
@@ -21,8 +22,11 @@ class IndexAdminController {
 
     @GetMapping("/cms-admin")
     @Secured(["ROLE_ADMIN", "ROLE_EDITOR"])
-    View cmsAdmin() {
+    ModelAndView cmsAdmin() {
         ZKNavigationManager.instance.autoSyncClientURL = false
-        return new InternalResourceView("/zkau/web/templates/${applicationInfo.template.toLowerCase()}/views/index.zhtml")
+        def mv = new ModelAndView()
+        mv.view = new InternalResourceView("/zkau/web/templates/${applicationInfo.template.toLowerCase()}/views/index.zul")
+        mv.addObject("contextPath", "/cms-admin")
+        return mv
     }
 }

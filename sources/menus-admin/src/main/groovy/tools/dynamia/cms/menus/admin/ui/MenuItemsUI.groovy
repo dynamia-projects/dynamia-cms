@@ -12,6 +12,7 @@ import tools.dynamia.cms.menus.domain.MenuItem
 import tools.dynamia.cms.menus.domain.MenuItemParameter
 import tools.dynamia.cms.menus.services.MenuService
 import tools.dynamia.commons.MapBuilder
+import tools.dynamia.domain.jpa.JpaParameter
 import tools.dynamia.domain.query.Parameter
 import tools.dynamia.integration.Containers
 import tools.dynamia.viewers.Field
@@ -150,7 +151,7 @@ class MenuItemsUI extends Window implements ActionEventBuilder {
             if (parameter.extra != null && !parameter.extra.empty) {
                 value = parameter.extra
             }
-            cfgParameters.add(new Parameter(parameter.name, value))
+            cfgParameters.add(new JpaParameter(parameter.name, value))
         }
         return cfgParameters
     }

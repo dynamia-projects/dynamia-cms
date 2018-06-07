@@ -22,6 +22,7 @@ import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.templates.Template
 import tools.dynamia.cms.templates.TemplateNotFoundException
 import tools.dynamia.cms.templates.services.TemplateService
+import tools.dynamia.domain.jpa.JpaParameter
 import tools.dynamia.domain.query.Parameter
 import tools.dynamia.domain.query.Parameters
 
@@ -114,7 +115,7 @@ class TemplateServiceImpl implements TemplateService {
             if (installedTemplates.empty) {
 				throw new TemplateNotFoundException("Cannot get default template: No templates installed")
             }
-			defaultTemplate = new Parameter(paramName, installedTemplates.get(0).name, "Default Template Name")
+			defaultTemplate = new JpaParameter(paramName, installedTemplates.get(0).name, "Default Template Name")
             appParams.save(defaultTemplate)
         }
 
