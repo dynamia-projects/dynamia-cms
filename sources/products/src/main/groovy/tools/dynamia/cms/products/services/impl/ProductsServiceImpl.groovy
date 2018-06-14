@@ -28,22 +28,15 @@ import tools.dynamia.cms.mail.services.MailService
 import tools.dynamia.cms.products.ProductSearchForm
 import tools.dynamia.cms.products.ProductShareForm
 import tools.dynamia.cms.products.api.ProductReviewsConnector
-import tools.dynamia.cms.products.domain.Product
-import tools.dynamia.cms.products.domain.ProductBrand
-import tools.dynamia.cms.products.domain.ProductCategory
-import tools.dynamia.cms.products.domain.ProductCategoryDetail
-import tools.dynamia.cms.products.domain.ProductDetail
-import tools.dynamia.cms.products.domain.ProductReview
-import tools.dynamia.cms.products.domain.ProductUserStory
-import tools.dynamia.cms.products.domain.ProductsSiteConfig
-import tools.dynamia.cms.products.domain.RelatedProduct
-import tools.dynamia.cms.products.domain.Store
+import tools.dynamia.cms.products.domain.*
+import tools.dynamia.cms.products.services.ProductsService
 import tools.dynamia.cms.users.UserHolder
 import tools.dynamia.cms.users.domain.User
 import tools.dynamia.cms.users.services.UserService
 import tools.dynamia.commons.StringUtils
 import tools.dynamia.commons.collect.PagedList
 import tools.dynamia.domain.ValidationError
+import tools.dynamia.domain.jpa.JpaQuery
 import tools.dynamia.domain.query.BooleanOp
 import tools.dynamia.domain.query.QueryConditions
 import tools.dynamia.domain.query.QueryParameters
@@ -411,7 +404,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         String sql = qb.toString()
         Query query = entityManager.createQuery(sql)
         query.maxResults = getDefaultPageSize(product.site)
-        qp.applyTo(query)
+        qp.applyTo(new JpaQuery(query))
         return query.resultList
     }
 
@@ -452,7 +445,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
     }
 
     private int getDefaultPageSize(Site site) {
-        tools.dynamia.cms.products.services.ProductsService self = Containers.get().findObject(tools.dynamia.cms.products.services.ProductsService.class)
+        ProductsService self = Containers.get().findObject(ProductsService.class)
         ProductsSiteConfig config = self.getSiteConfig(site)
         if (config != null) {
             return config.productsPerPage

@@ -42,7 +42,7 @@
         <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <groovy.version>2.4.15</groovy.version>
+        <groovy.version>2.5.0</groovy.version>
     </properties>
 
     <build>
@@ -102,7 +102,7 @@
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
             <version>${groovy.version}</version>
-            <classifier>indy</classifier>
+            <type>pom</type>
         </dependency>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>

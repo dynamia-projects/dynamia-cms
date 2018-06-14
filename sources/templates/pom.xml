@@ -59,7 +59,11 @@
 			<version>${project.version}</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy</artifactId>
+			<version>${groovy.version}</version>
+		</dependency>
 
 		<!-- Thymeleaf -->
 		<dependency>
