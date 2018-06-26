@@ -20,6 +20,7 @@ import org.hibernate.annotations.LazyCollectionOption
 import tools.dynamia.cms.core.api.SiteAware
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.pages.domain.Page
+import tools.dynamia.cms.products.dto.StoreDTO
 import tools.dynamia.domain.SimpleEntity
 import tools.dynamia.domain.contraints.NotEmpty
 import tools.dynamia.domain.util.ContactInfo
@@ -147,8 +148,12 @@ class Store extends SimpleEntity implements SiteAware {
         this.contactInfo = contactInfo
     }
 
-    void sync(tools.dynamia.cms.products.dto.StoreDTO dto) {
+    void sync(StoreDTO dto) {
         name = dto.name
+        if (contactInfo == null) {
+            contactInfo = new ContactInfo()
+        }
+
         contactInfo.address = dto.address
         contactInfo.city = dto.city
         contactInfo.country = dto.country

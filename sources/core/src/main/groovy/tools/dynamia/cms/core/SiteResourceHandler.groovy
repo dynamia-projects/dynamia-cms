@@ -69,7 +69,7 @@ class SiteResourceHandler extends ResourceHttpRequestHandler {
         File file = dir.resolve(resource).toFile()
 
 
-        if (ImageUtil.isImage(file)) {
+        if (ImageUtil.isImage(file) || file.name.endsWith(".jpeg")) {
 
             if (isThumbnail(request)) {
                 file = createOrLoadThumbnail(file, resource.toString(), request)

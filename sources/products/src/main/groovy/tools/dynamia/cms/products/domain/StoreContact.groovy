@@ -2,6 +2,7 @@ package tools.dynamia.cms.products.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import tools.dynamia.cms.core.domain.SiteSimpleEntity
+import tools.dynamia.cms.products.dto.StoreContactDTO
 import tools.dynamia.commons.BeanUtils
 import tools.dynamia.domain.util.ContactInfo
 
@@ -93,7 +94,7 @@ class StoreContact extends SiteSimpleEntity {
 		this.contactInfo = contactInfo
     }
 
-    void sync(tools.dynamia.cms.products.dto.StoreContactDTO dto) {
+    void sync(StoreContactDTO dto) {
 
 		BeanUtils.setupBean(this, dto)
         BeanUtils.setupBean(this.contactInfo, dto)
