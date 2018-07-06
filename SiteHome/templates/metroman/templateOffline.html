@@ -1,227 +1,196 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
 <head>
-<title th:text="|${site.name} - ${title}|">MetroMan - Responisve
-	Multipurpose Bootstrap Template</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="template" content="metroman" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" th:content="${metaDescription}"
-	content="Responisve, Bootstrap, Html5, Css3, Multipuropose, Blog, Portfolio, Ecommerce - All in One Template" />
-<meta name="author" th:content="${metaAuthor}" content="" />
-<meta name="keywords" th:content="${metaKeywords}" content="" />
-<meta name="copyright" th:content="${metaRights}" content="" />
-<meta name="robots" content="index, follow" />
-<meta th:content="|${site.name} - ${title}|" property="og:title"
-	content="" />
-<meta th:content="${metaDescription}" property="og:description"
-	content="" />
-<th:block th:each="pi : ${pageImages}">
-	<meta th:content="${pi}" property="og:image" content="" />
-</th:block>
+    <title th:text="|${site.name} - ${title}|">MetroMan - Responisve
+        Multipurpose Bootstrap Template</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="template" content="metroman"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" th:content="${metaDescription}"
+          content="Responisve, Bootstrap, Html5, Css3, Multipuropose, Blog, Portfolio, Ecommerce - All in One Template"/>
+    <meta name="author" th:content="${metaAuthor}" content=""/>
+    <meta name="keywords" th:content="${metaKeywords}" content=""/>
+    <meta name="copyright" th:content="${metaRights}" content=""/>
+    <meta name="robots" content="index, follow"/>
+    <meta th:content="|${site.name} - ${title}|" property="og:title"
+          content=""/>
+    <meta th:content="${metaDescription}" property="og:description"
+          content=""/>
+    <th:block th:each="pi : ${pageImages}">
+        <meta th:content="${pi}" property="og:image" content=""/>
+    </th:block>
 
-<link th:href="@{/img/favicon.ico}" href="img/favicon.ico"
-	rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <link th:href="@{/img/favicon.ico}" href="img/favicon.ico"
+          rel="shortcut icon" type="image/vnd.microsoft.icon"/>
 
 
-<!-- CSS -->
-<!-- Styles -->
-<!-- Bootstrap CSS -->
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-<!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
-<link rel="stylesheet" th:href="@{/css/settings.css}" media="screen" />
-<!-- Navigation menu -->
-<link rel="stylesheet" th:href="@{/css/ddlevelsmenu-base.css}"/>
-<link rel="stylesheet" th:href="@{/css/ddlevelsmenu-topbar.css}"/>
-<!-- PrettyPhoto -->
-<link rel="stylesheet" th:href="@{/css/prettyPhoto.css}"/>
-<!-- cSlider -->
-<link rel="stylesheet" th:href="@{/css/slider.css}"/>
-<!-- Font awesome CSS -->
-<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
-<!-- Custom CSS -->
-<link th:href="@{/css/style.css}" rel="stylesheet"/>
-
+    <!-- CSS -->
+    <!-- Styles -->
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+    <link rel="stylesheet" th:href="@{/css/settings.css}" media="screen"/>
+    <!-- Navigation menu -->
+    <link rel="stylesheet" th:href="@{/css/ddlevelsmenu-base.css}"/>
+    <link rel="stylesheet" th:href="@{/css/ddlevelsmenu-topbar.css}"/>
+    <!-- PrettyPhoto -->
+    <link rel="stylesheet" th:href="@{/css/prettyPhoto.css}"/>
+    <!-- cSlider -->
+    <link rel="stylesheet" th:href="@{/css/slider.css}"/>
+    <!-- Font awesome CSS -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <!-- Custom CSS -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <th:block th:include="module::position('head_tag')"/>
 </head>
 <body>
 
 
-	<div id="fb-root"></div>
+<div id="fb-root"></div>
 
-	<div class="slidepanel">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8">
-					<div class="spara">
-						<th:block th:include="module::position('topmenu_left')" />
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="social">
-						<th:block th:include="module::position('topmenu_right')" />
-					</div>
-				</div>
-			</div>
-			<div class="clearfix"></div>
-		</div>
-	</div>
-
-
-	<!-- Header Start -->
-	<header>
-		
-
-		<div class="container">
-			<div class="row">
-				<div class="col-md-3 col-sm-4">
-
-					<!-- Logo starts -->
-
-					<div class="logo">
-						<th:block th:include="module::position('logo')" />
-						<div class="clearfix"></div>
-					</div>
-					<!-- Logo ends -->
-				</div>
-
-				<div class="col-md-9 col-sm-8">
-					<!-- Navbar starts -->
-					<div class="navi pull-right">
-						
-					</div>
-
-					<div class="navis"></div>
-					<!-- Navbar ends -->
-
-					<div class="clearfix"></div>
-				</div>
-			</div>
-		</div>
-	</header>
-	<!-- Header End -->
-
-	<div class="clearfix"></div>
-
-
-
-	<div class="container">
-		<th:block th:include="tpl_globalmessages::content" />
-	</div>
-
-
-
-	<!-- CONTENT -->
-	<div id="content" layout:fragment="content"></div>
-
-
-
-	<section id="quicklink" class="mt20"></section>
-	<!-- Footer -->
-	<footer id="footer">
-		<div class="container">
-			<div class="row">
-				<div class="widgets">
-					<th:block th:include="module::position('footer')" />
-				</div>
-			</div>
-
-
-			<div class="row">
-				<div class="col-md-12">
-					Powered by: <a href="http://www.dynamiasoluciones.com"
-						target="blank"
-						title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing"
-						class="tooltip-test">Dynamia Soluciones IT</a>
-				</div>
-			</div>
-		</div>
-
-	</footer>
-
-
-	<!-- Scroll to top -->
-	<span class="totop"><a href="#"><i class="fa fa-angle-up"></i></a></span>
-
-
-	<!-- Javascript files -->
-	<!-- jQuery -->
-	<script th:src="@{/js/jquery.js}"></script>
-	<!-- Bootstrap JS -->
-	<script th:src="@{/js/bootstrap.min.js}"></script>
-	<!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
-	<script th:src="@{/js/jquery.themepunch.tools.min.js}"></script>
-	<script th:src="@{/js/jquery.themepunch.revolution.min.js}"></script>
-	<!-- prettyPhoto -->
-	<script th:src="@{/js/jquery.prettyPhoto.js}"></script>
-	<!-- isotope -->
-	<script th:src="@{/js/jquery.isotope.js}"></script>
-	<!-- Navigation menu -->
-	<script th:src="@{/js/ddlevelsmenu.js}"></script>
-	<!-- jQuery cSlider / Extra script for cslider -->
-	<script th:src="@{/js/jquery.cslider.js}"></script>
-	<script th:src="@{/js/modernizr.custom.69985.js}"></script>
-	<!-- Support -->
-	<script th:src="@{/js/filter.js}"></script>
-	<!-- Respond JS for IE8 -->
-	<script th:src="@{/js/respond.min.js}"></script>
-	<!-- HTML5 Support for IE -->
-	<script th:src="@{/js/html5shiv.js}"></script>
-	<!-- Custom JS -->
-	<script th:src="@{/js/custom.js}"></script>
-	<!-- This page JS -->
-	<script>
-		/* JS for SLIDER REVOLUTION */
-		jQuery(document).ready(function() {
-			jQuery('.tp-banner').revolution({
-				delay : 9000,
-				startheight : 500,
-
-				hideThumbs : 10,
-
-				navigationType : "none",
-
-				hideArrowsOnMobile : "on",
-
-				touchenabled : "on",
-				onHoverStop : "on",
-
-				navOffsetHorizontal : 0,
-				navOffsetVertical : 20,
-
-				stopAtSlide : -1,
-				stopAfterLoops : -1,
-
-				shadow : 0,
-
-				fullWidth : "on",
-				fullScreen : "off"
-			});
-		});
-	</script>
+<div class="slidepanel">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="spara">
+                    <th:block th:include="module::position('topmenu_left')"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="social">
+                    <th:block th:include="module::position('topmenu_right')"/>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
 
 
 
 
 
-	<th:block layout:fragment="scripts"></th:block>
+<div class="container"style="padding: 50px">
+    <!-- Logo starts -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="logo">
+                <img th:src="${site.logoURL}" class="img-responsive"/>
 
-	<th:block th:include="tpl_googleAnalytics::content" />
+            </div>
+        </div>
+    </div>
+    <!-- Logo ends -->
 
-	<th:block th:include="tpl_webchat::content" />
+</div>
+<!-- CONTENT -->
+<div id="content" layout:fragment="content"></div>
 
-	<script>
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id))
-				return;
-			js = d.createElement(s);
-			js.id = id;
-			js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>
+
+<section id="quicklink" class="mt20"></section>
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="widgets">
+                <th:block th:include="module::position('footer')"/>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                Powered by: <a href="http://www.dynamiasoluciones.com"
+                               target="blank"
+                               title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing"
+                               class="tooltip-test">Dynamia Soluciones IT</a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+
+<!-- Scroll to top -->
+<span class="totop"><a href="#"><i class="fa fa-angle-up"></i></a></span>
+
+
+<!-- Javascript files -->
+<!-- jQuery -->
+<script th:src="@{/js/jquery.js}"></script>
+<!-- Bootstrap JS -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+<script th:src="@{/js/jquery.themepunch.tools.min.js}"></script>
+<script th:src="@{/js/jquery.themepunch.revolution.min.js}"></script>
+<!-- prettyPhoto -->
+<script th:src="@{/js/jquery.prettyPhoto.js}"></script>
+<!-- isotope -->
+<script th:src="@{/js/jquery.isotope.js}"></script>
+<!-- Navigation menu -->
+<script th:src="@{/js/ddlevelsmenu.js}"></script>
+<!-- jQuery cSlider / Extra script for cslider -->
+<script th:src="@{/js/jquery.cslider.js}"></script>
+<script th:src="@{/js/modernizr.custom.69985.js}"></script>
+<!-- Support -->
+<script th:src="@{/js/filter.js}"></script>
+<!-- Respond JS for IE8 -->
+<script th:src="@{/js/respond.min.js}"></script>
+<!-- HTML5 Support for IE -->
+<script th:src="@{/js/html5shiv.js}"></script>
+<!-- Custom JS -->
+<script th:src="@{/js/custom.js}"></script>
+<!-- This page JS -->
+<script>
+    /* JS for SLIDER REVOLUTION */
+    jQuery(document).ready(function () {
+        jQuery('.tp-banner').revolution({
+            delay: 9000,
+            startheight: 500,
+
+            hideThumbs: 10,
+
+            navigationType: "none",
+
+            hideArrowsOnMobile: "on",
+
+            touchenabled: "on",
+            onHoverStop: "on",
+
+            navOffsetHorizontal: 0,
+            navOffsetVertical: 20,
+
+            stopAtSlide: -1,
+            stopAfterLoops: -1,
+
+            shadow: 0,
+
+            fullWidth: "on",
+            fullScreen: "off"
+        });
+    });
+</script>
+
+
+<th:block layout:fragment="scripts"></th:block>
+
+<th:block th:include="tpl_googleAnalytics::content"/>
+
+<th:block th:include="tpl_webchat::content"/>
+
+<script>
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id))
+            return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 
 </body>
 </html>

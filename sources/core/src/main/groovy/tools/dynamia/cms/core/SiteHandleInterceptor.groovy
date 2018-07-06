@@ -17,6 +17,9 @@ package tools.dynamia.cms.core
 
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
+import tools.dynamia.cms.core.api.SiteRequestInterceptor
+import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.cms.core.services.SiteService
 import tools.dynamia.commons.logger.LoggingService
 import tools.dynamia.commons.logger.SLF4JLoggingService
 import tools.dynamia.integration.Containers
@@ -30,134 +33,133 @@ import javax.servlet.http.HttpServletResponse
  */
 class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 
-	private static final String SPRING_MVC_MODEL = "_springMvcModel"
-    private List<String> excludes = Arrays.asList("jpg", "gif", "png", "tiff", "css", "js", "svg", "bmp", "ttf")
+    private static final String SPRING_MVC_MODEL = "_springMvcModel"
+    private static final List<String> EXCLUDES = ["jpg", "gif", "png", "tiff", "css", "js",
+                                                  "svg", "bmp", "ttf", "jpeg", "json"]
 
     private final LoggingService logger = new SLF4JLoggingService(SiteHandleInterceptor.class)
 
     @Override
     boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+            throws Exception {
 
-		tools.dynamia.cms.core.domain.Site site = getCurrentSite(request)
-        if (site != null && site.offline) {
+        Site site = getCurrentSite(request)
+        if (site != null && site.offline && site.offlineRedirect != null && !site.offlineRedirect.empty) {
+            response.status = HttpServletResponse.SC_MOVED_PERMANENTLY
+            response.setHeader("Location", site.offlineRedirect)
+            return false
 
-			if (site.offlineRedirect != null && !site.offlineRedirect.empty) {
-                response.status = HttpServletResponse.SC_MOVED_PERMANENTLY
-                response.setHeader("Location", site.offlineRedirect)
-                return false
-            }
-			return true
         }
 
-		try {
-			if (isInterceptable(request)) {
-				for (tools.dynamia.cms.core.api.SiteRequestInterceptor interceptor : Containers.get().findObjects(tools.dynamia.cms.core.api.SiteRequestInterceptor.class)) {
-					interceptor.beforeRequest(site, request, response)
+        try {
+            if (isInterceptable(request)) {
+                for (SiteRequestInterceptor interceptor : Containers.get().findObjects(SiteRequestInterceptor.class)) {
+                    interceptor.beforeRequest(site, request, response)
                 }
-			}
-		} catch (Exception e) {
-			logger.error("Error calling Site interceptor", e)
+            }
+        } catch (Exception e) {
+            logger.error("Error calling Site interceptor", e)
             return false
         }
 
-		return true
+        return true
     }
 
-	private boolean isInterceptable(HttpServletRequest request) {
-		String uri = request.requestURI
-        for (String ext : excludes) {
-			if (uri.endsWith("exception") || uri.endsWith("." + ext)) {
-				return false
+    private static boolean isUserLogin(HttpServletRequest request) {
+        def usersURI = ["/users/login", "/users/logout", "/users/resetpassword", "/cms-admin"]
+        return usersURI.contains(request.requestURI)
+    }
+
+
+    private static boolean isInterceptable(HttpServletRequest request) {
+        String uri = request.requestURI
+        for (String ext : EXCLUDES) {
+            if (uri.endsWith("exception") || uri.endsWith("." + ext)) {
+                return false
             }
-		}
-		return true
+        }
+        return true
     }
 
-	private tools.dynamia.cms.core.domain.Site getCurrentSite(HttpServletRequest request) {
-		tools.dynamia.cms.core.services.SiteService service = Containers.get().findObject(tools.dynamia.cms.core.services.SiteService.class)
-        tools.dynamia.cms.core.domain.Site site = SiteContext.get().current
+    private static Site getCurrentSite(HttpServletRequest request) {
+        SiteService service = Containers.get().findObject(SiteService.class)
+        Site site = SiteContext.get().current
         if (site == null) {
-			site = service.getSite(request)
+            site = service.getSite(request)
             SiteContext.get().current = site
         }
-		if (site == null) {
-			site = service.mainSite
+        if (site == null) {
+            site = service.mainSite
             SiteContext.get().current = site
         }
         SiteContext.get().currentURI = request.requestURI
         SiteContext.get().currentURL = request.requestURL.toString()
         if (SiteContext.get().siteURL == null) {
-			String siteURL = "http://" + request.serverName
+            String siteURL = "http://" + request.serverName
             if (request.serverPort != 80) {
-				siteURL = siteURL + ":" + request.serverPort
+                siteURL = siteURL + ":" + request.serverPort
             }
             SiteContext.get().siteURL = siteURL
         }
-		SiteContext.get().reload()
+        SiteContext.get().reload()
         site = SiteContext.get().current
         return site
     }
 
-	@Override
+    @Override
     void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                     ModelAndView modelAndView) throws Exception {
 
-		if (modelAndView == null) {
-			return
+        if (modelAndView == null) {
+            return
         }
 
-		tools.dynamia.cms.core.domain.Site site = getCurrentSite(request)
+        Site site = getCurrentSite(request)
 
-        boolean isJson = checkJsonRequest(request, modelAndView)
+        boolean isJson = CMSUtil.isJson(request)
         if (isJson) {
-			return
+            return
         }
-		loadSiteMetadata(site, modelAndView)
+        loadSiteMetadata(site, modelAndView)
 
-        if (!site.offline) {
 
-			try {
-				if (isInterceptable(request)) {
-					for (tools.dynamia.cms.core.api.SiteRequestInterceptor interceptor : Containers.get()
-							.findObjects(tools.dynamia.cms.core.api.SiteRequestInterceptor.class)) {
-						interceptor.afterRequest(site, request, response, modelAndView)
-                    }
-				}
-			} catch (Exception e) {
-				logger.error("Error calling Site interceptor", e)
+
+        try {
+            if (isInterceptable(request)) {
+                for (SiteRequestInterceptor interceptor : Containers.get()
+                        .findObjects(SiteRequestInterceptor.class)) {
+                    interceptor.afterRequest(site, request, response, modelAndView)
+                }
             }
-		} else {
-			shutdown(site, modelAndView)
+        } catch (Exception e) {
+            logger.error("Error calling Site interceptor", e)
         }
 
-		modelAndView.addObject(SPRING_MVC_MODEL, modelAndView.model)
+        if (site.offline && !isUserLogin(request) && request.userPrincipal == null) {
+            shutdown(site, modelAndView)
+        }
+
+        modelAndView.addObject(SPRING_MVC_MODEL, modelAndView.model)
 
     }
 
-	private boolean checkJsonRequest(HttpServletRequest request, ModelAndView modelAndView) {
-		boolean json = CMSUtil.isJson(request)
-
-        return json
-    }
-
-	private void loadSiteMetadata(tools.dynamia.cms.core.domain.Site site, ModelAndView mv) {
-		if (site != null && mv != null) {
-			mv.addObject("siteKey", site.key)
+    private static void loadSiteMetadata(Site site, ModelAndView mv) {
+        if (site != null && mv != null) {
+            mv.addObject("siteKey", site.key)
             mv.addObject("site", site)
             mv.addObject("metaAuthor", site.metadataAuthor)
             mv.addObject("metaRights", site.metadataRights)
             if (!mv.model.containsKey("metaDescription")) {
-				mv.addObject("metaDescription", site.metadataDescription)
+                mv.addObject("metaDescription", site.metadataDescription)
             }
-			if (!mv.model.containsKey("metaKeywords")) {
-				mv.addObject("metaKeywords", site.metadataKeywords)
+            if (!mv.model.containsKey("metaKeywords")) {
+                mv.addObject("metaKeywords", site.metadataKeywords)
             }
 
-		}
-	}
+        }
+    }
 
-    static void shutdown(tools.dynamia.cms.core.domain.Site site, ModelAndView mv) {
+    static void shutdown(Site site, ModelAndView mv) {
         mv.viewName = "error/offline"
         mv.addObject("title", "OFFLINE!")
         mv.addObject("site", site)

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Main Menu -->
+
+<body th:fragment="module(instance)">
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menuMobile" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    <th:block th:include="module::position('logo-mobile')" ></th:block>
+    </div>
+
+<div class="navbar-collapse collapse"  id="menuMobile">
+	<ul class="nav navbar-nav">
+		<th:block th:each="mi : ${instance.model.menuitems}">
+
+			<li th:if="${not #lists.isEmpty(mi.subitems)}" class="dropdown">
+				<a href="#" th:href="@{${mi.href}}" class="dropdown-toggle" th:id="${'dropdownMenu'+mi.id}" data-toggle="dropdown"
+				 aria-haspopup="true" aria-expanded="false" th:title="${mi.title}" th:target="${mi.target}"> <i th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
+					<th:block th:text="${mi.name}" ></th:block> <span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu" data-th-attr="aria-labelledby='dropdownMenu'+${mi.id}">
+<li>
+					<a th:each="smi : ${mi.subitems}" th:href="@{${smi.href}}" th:target="${smi.target}" th:title="${smi.title}">
+						<th:block th:text="${smi.name}" ></th:block>
+					</a></li>
+
+				</ul>
+			</li>
+<li th:if="${#lists.isEmpty(mi.subitems)}">
+				<a href="#" th:href="@{${mi.href}}"  th:title="${mi.title}" th:target="${mi.target}">
+					<i th:class="${(instance.getParameter('icons')!='false'?'fa fa-'+mi.icon:'')}"></i>
+					<th:block th:text="${mi.name}" ></th:block>
+				</a>
+			</li>
+			
+		</th:block>
+
+	</ul>
+</div>
+
+</div>
+</nav>
+</body>
+
+</html>

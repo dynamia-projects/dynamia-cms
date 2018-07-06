@@ -23,6 +23,7 @@ import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.token.Sha512DigestUtils
 import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.cms.users.api.UserProfile
 import tools.dynamia.cms.users.domain.User
 import tools.dynamia.cms.users.services.UserService
 import tools.dynamia.domain.contraints.EmailValidator
@@ -35,57 +36,61 @@ import tools.dynamia.domain.services.CrudService
 
 class UsersAuthenticationProvider implements AuthenticationProvider {
 
-	@Autowired
-	private UserService userService
+    @Autowired
+    private UserService userService
 
     @Autowired
-	private CrudService crudService
+    private CrudService crudService
 
     @Override
     Authentication authenticate(Authentication a) throws AuthenticationException {
 
-		String username = a.name
+        String username = a.name
         String password = (String) a.credentials
         Site site = null
         if (a.details instanceof AuthenticationDetails) {
-			site = ((AuthenticationDetails) a.details).site
+            site = ((AuthenticationDetails) a.details).site
         }
 
-		if (site == null) {
-			throw new SiteNotFoundException("No site", null)
+        if (site == null) {
+            throw new SiteNotFoundException("No site", null)
         }
 
-		site = crudService.reload(site)
+        site = crudService.reload(site)
 
         if (site.parent != null) {
-			site = site.parent
+            site = site.parent
         }
 
-		if (username.empty || password.empty) {
-			throw new BadCredentialsException("Ingrese email y password para acceder")
+        if (username.empty || password.empty) {
+            throw new BadCredentialsException("Ingrese email y password para acceder")
         }
 
-		EmailValidator emailValidator = new EmailValidator()
+        EmailValidator emailValidator = new EmailValidator()
         if (!emailValidator.isValid(username, null)) {
-			throw new BadCredentialsException("Ingrese direccion valida de email")
+            throw new BadCredentialsException("Ingrese direccion valida de email")
         }
 
-		password = Sha512DigestUtils.shaHex(username + ":" + password)
+        password = Sha512DigestUtils.shaHex(username + ":" + password)
 
         User user = userService.getUser(site, username)
         if (user == null) {
-			throw new UserNotFoundException("Usuario [" + username + "] no encontrado en [" + site.name + "]")
+            throw new UserNotFoundException("Usuario [" + username + "] no encontrado en [" + site.name + "]")
         }
 
-		if (!user.enabled) {
-			throw new UserNotFoundException("El usuario [" + username + "] esta desactivado")
+        if (!user.enabled) {
+            throw new UserNotFoundException("El usuario [" + username + "] esta desactivado")
         }
 
-		if (!password.equals(user.password)) {
-			throw new InvalidPasswordException("Password invalido")
+        if (password != user.password) {
+            throw new InvalidPasswordException("Password invalido")
         }
 
-		Collection<? extends GrantedAuthority> authorities = user.authorities
+        if (user.profile != UserProfile.ADMIN && user.profile != UserProfile.EDITOR && site.offline) {
+            throw new UserNotFoundException("Sitio fuera de linea: $site.offlineMessage")
+        }
+
+        Collection<? extends GrantedAuthority> authorities = user.authorities
 
         Authentication auth = new SiteUsernamePasswordAuthenticationToken(site, user, password, authorities)
 
@@ -93,9 +98,9 @@ class UsersAuthenticationProvider implements AuthenticationProvider {
 
     }
 
-	@Override
+    @Override
     boolean supports(Class<?> type) {
-		return true
+        return true
     }
 
 }

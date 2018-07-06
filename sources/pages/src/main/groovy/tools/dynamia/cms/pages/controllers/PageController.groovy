@@ -106,12 +106,9 @@ class PageController {
 
         Site site = siteService.getSite(request)
 
-        if (site != null && site.offline) {
-            SiteHandleInterceptor.shutdown(site, mv)
-        } else {
-            Page page = loadPage(site, pageAlias, mv)
-            configurePageType(page, site, mv, request)
-        }
+        Page page = loadPage(site, pageAlias, mv)
+        configurePageType(page, site, mv, request)
+
         return mv
     }
 

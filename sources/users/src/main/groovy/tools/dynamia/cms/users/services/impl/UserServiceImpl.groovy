@@ -228,6 +228,7 @@ class UserServiceImpl implements UserService {
             user.password = Sha512DigestUtils.shaHex(user.username + ":admin" + site.key)
             user.site = site
             user.profile = UserProfile.ADMIN
+            user.fullName = "Admin $site.name"
             crudService.create(user)
         } else if (adminUser.profile != UserProfile.ADMIN || adminUser.password == null) {
             adminUser.profile = UserProfile.ADMIN

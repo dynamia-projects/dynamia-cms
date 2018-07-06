@@ -41,8 +41,13 @@ class ResetAdminPassword extends AbstractCrudAction {
         if (site != null) {
             String admin = "admin@" + site.key + ".login"
             User user = service.getUser(site, admin)
+            if (user == null) {
+                service.checkAdminUser(site)
+                user = service.getUser(site, admin)
+            }
+
             if (user != null) {
-                ZKUtil.showInputDialog("Enter new Password for " + admin, String.class, { e ->
+                ZKUtil.showInputDialog("Enter new Password for $admin", String.class, { e ->
                     String password = e.data as String
                     if (password != null && !password.empty) {
                         service.resetPassword(user, password, password)

@@ -8,7 +8,7 @@ if (typeof dd_domreadycheck=="undefined") //global variable to detect if DOM is 
 	var dd_domreadycheck=false
 
 var ddlevelsmenu={
-enableshim: true, //enable IFRAME shim to prevent drop down menus from being hidden below SELECT or FLASH elements? (tip: disable if not in use, for efficiency)
+enableshim: false, //enable IFRAME shim to prevent drop down menus from being hidden below SELECT or FLASH elements? (tip: disable if not in use, for efficiency)
 
 arrowpointers:{
 	downarrow: ["img/arrow-down.png", 11,7], //[path_to_down_arrow, arrowwidth, arrowheight]

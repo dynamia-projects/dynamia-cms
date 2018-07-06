@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="templateOffline">
+
+
+<div layout:fragment="content">
+
+
+    <div class="page-heading blightblue">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="text-center head-big">
+                        Offline<span class="lightblue">!</span>
+                    </h2>
+                    <div class="text-center head-big-meta">No disponible temporalmente</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+
+                    <h3 th:text="${offlineMessage}"/>
+                    <hr/>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+</html>

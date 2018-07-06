@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+<body th:fragment="content">
+
+<h4 class="heading4">Ingrese sus datos de acceso</h4>
+
+<form id="loginForm" class="form-vertical" action="#" th:action="@{/users/login}" method="post" style="min-height: 250px;background: #f3f3f3;padding-top: 10px;">
+
+    <div class="form-group ml0">
+        <label class="col-lg-12 control-label">Correo Electronico: <span class="red">*</span></label>
+        <div class="col-lg-12">
+            <input id="username" name="username" type="email" class="form-control"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-12 control-label">Password: <span class="red">*</span></label>
+        <div class="col-lg-12">
+            <input id="password" name="password" type="password" class="form-control"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-12">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="_spring_security_remember_me"/>
+                    Recuerdame
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-12">
+
+            <input type="submit" class="btn btn-primary" value="Iniciar Sesion"/>
+            <a class="btn btn-danger" th:href="@{'/users/resetpassword'}">Olvide mi password!</a>
+        </div>
+    </div>
+
+</form>
+<br/>
+</body>
+</html>

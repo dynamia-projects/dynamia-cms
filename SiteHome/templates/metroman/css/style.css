@@ -578,15 +578,14 @@ header .logo-meta{
 
 .page-heading{
     background: url("../img/heading-back.jpg") !important;
-    padding: 25px 0px;
-    border-top: 5px solid #ddd !important;
-    border-bottom: 3px solid #ddd !important;
+    padding: 20px 0px;
+
 
 }
 
 .page-heading h2{
-    font-size: 35px;
-    line-height: 35px;
+    font-size: 30px;
+    line-height: 30px;
     font-weight: 600;
 }
 
@@ -1939,7 +1938,7 @@ footer .copy{
 .totop {
     position: fixed;
     bottom: 10px;
-    right: 10px;
+    left: 10px;
     z-index: 104400;
 }
 

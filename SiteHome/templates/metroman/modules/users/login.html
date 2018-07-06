@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+
+<div layout:fragment="content">
+
+    <!-- Main Title-->
+    <div class="page-heading blightblue">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="pull-left"><i class="fa fa-arrow-right title-icon"></i> Login</h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mt40">
+
+            <!-- Account Login-->
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+
+                <h2 class="text-primary">Acceso</h2>
+                <div class="loginbox">
+                    <!-- login form -->
+                    <th:block th:include="users/components/loginform::content"/>
+                </div>
+
+
+            </div>
+            <!-- Sidebar Start-->
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt40column">
+                <h2 class="text-primary">Nuevo Cliente </h2>
+                <div class="loginbox">
+                    <!-- register form -->
+                    <th:block th:include="users/components/registerform::content"/>
+                </div>
+
+            </div>
+            <!-- Sidebar End-->
+
+        </div>
+    </div>
+    <br/>
+</div>
+
+
+</html>
