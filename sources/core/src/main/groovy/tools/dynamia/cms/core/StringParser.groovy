@@ -5,13 +5,14 @@
  */
 package tools.dynamia.cms.core
 
+import tools.dynamia.cms.core.api.TypeExtension
 import tools.dynamia.integration.Containers
 
 /**
  *
  * @author Dynamia Soluciones IT SAS and the original author or authors
  */
-interface StringParser extends tools.dynamia.cms.core.api.TypeExtension {
+interface StringParser extends TypeExtension {
 
     String parse(String template, Map<String, Object> model)
 

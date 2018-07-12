@@ -6,7 +6,7 @@ fields:
     category:
         component: entitypicker
         params:
-            entityClass: BannerCategory
+            entityClass: tools.dynamia.cms.banners.domain.BannerCategory
     
     useImagesFolder:
        

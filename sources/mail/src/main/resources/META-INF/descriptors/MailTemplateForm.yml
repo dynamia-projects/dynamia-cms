@@ -9,7 +9,7 @@ fields:
        label: Engine
        component: typeSelector
        params:
-            typeExtensionClass: StringParser
+            typeExtensionClass: tools.dynamia.cms.core.StringParser
    description:
       params:
           multiline: true

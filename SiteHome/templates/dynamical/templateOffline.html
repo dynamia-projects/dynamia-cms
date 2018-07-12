@@ -67,7 +67,7 @@
     </div>
 </nav>
 
-
+<th:block th:include="module::position('content-top')"/>
 
 <div class="container">
     <th:block th:include="tpl_globalmessages::content"/>
@@ -77,6 +77,8 @@
 <div>
     <div class="container" layout:fragment="content"></div>
 </div>
+
+<th:block th:include="module::position('content-bottom')"/>
 
 <footer id="footer" th:unless="${site.isParameter('disableFooter')}"
         th:class="${'page-footer center-on-small-only  '+#objects.nullSafe(siteParams['footer-class'],'bg-primary')}">

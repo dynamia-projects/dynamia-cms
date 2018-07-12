@@ -4,13 +4,14 @@ import tools.dynamia.actions.ActionEvent
 import tools.dynamia.actions.InstallAction
 import tools.dynamia.app.template.ApplicationGlobalAction
 import tools.dynamia.cms.admin.ui.actions.SiteResourcesManagerAction
+import tools.dynamia.commons.Messages
 import tools.dynamia.integration.Containers
 
 @InstallAction
 class ResourcesGlobalAction extends ApplicationGlobalAction {
 
 	ResourcesGlobalAction() {
-        name = "Resources"
+        name = Messages.get(ResourcesGlobalAction,"resourcesAction")
         image = "cloud"
         position = 3
         setAttribute("background", "btn btn-success btn-flat bg-green")

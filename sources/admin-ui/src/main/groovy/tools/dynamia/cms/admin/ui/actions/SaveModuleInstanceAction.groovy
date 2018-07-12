@@ -15,12 +15,15 @@
  */
 package tools.dynamia.cms.admin.ui.actions
 
+import org.zkoss.util.Locales
 import tools.dynamia.actions.AbstractAction
 import tools.dynamia.actions.ActionEvent
 import tools.dynamia.actions.ActionRenderer
 import tools.dynamia.cms.core.domain.ModuleInstance
 import tools.dynamia.cms.core.domain.ModuleInstanceParameter
+import tools.dynamia.commons.BeanMessages
 import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.actions.SaveAction
 import tools.dynamia.domain.query.Parameter
 import tools.dynamia.domain.services.CrudService
 import tools.dynamia.integration.Containers
@@ -34,7 +37,10 @@ class SaveModuleInstanceAction extends AbstractAction {
     private CrudActionEvent sourceEvent
 
     SaveModuleInstanceAction(CrudService crudService, CrudActionEvent evt) {
-        name = "Save Module"
+        def messages = new BeanMessages(ModuleInstance, Locales.current)
+        SaveAction saveAction = Containers.get().findObject(SaveAction)
+
+        name = "${saveAction.name} ${messages.localizedName}"
         image = "check"
         setAttribute("background", "#ff5722")
         setAttribute("color", "white")

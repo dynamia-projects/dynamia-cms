@@ -14,7 +14,7 @@ fields:
       label: Type
       component: typeSelector
       params:
-          typeExtensionClass: Module
+          typeExtensionClass: tools.dynamia.cms.core.api.Module
    
    position:
       component: positionSelector

@@ -15,14 +15,17 @@
  */
 package tools.dynamia.cms.core
 
+import tools.dynamia.cms.core.api.AdminModule
+import tools.dynamia.cms.core.api.AdminModuleOption
 import tools.dynamia.cms.core.api.CMSModule
+import tools.dynamia.cms.core.domain.ModuleInstance
 
 /**
  *
  * @author Mario Serrano Leones
  */
 @CMSModule
-class CoreAdminModule implements tools.dynamia.cms.core.api.AdminModule {
+class CoreAdminModule implements AdminModule {
 
     @Override
     String getGroup() {
@@ -40,9 +43,9 @@ class CoreAdminModule implements tools.dynamia.cms.core.api.AdminModule {
     }
 
     @Override
-    tools.dynamia.cms.core.api.AdminModuleOption[] getOptions() {
+    AdminModuleOption[] getOptions() {
         return [
-                new tools.dynamia.cms.core.api.AdminModuleOption("modules", "Modules", tools.dynamia.cms.core.domain.ModuleInstance.class, true, true, "cubes", true)
+                new AdminModuleOption("modules", "Modules", ModuleInstance.class, true, true, "cubes", true)
         ]
     }
 }

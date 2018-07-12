@@ -27,7 +27,7 @@ fields:
     type:
         component: typeSelector
         params:
-            typeExtensionClass: MenuItemType
+            typeExtensionClass: tools.dynamia.cms.menus.api.MenuItemType
    
     order:
       component: intbox

@@ -14,5 +14,5 @@ fields:
   templateEngine:
        component: typeSelector
        params:
-            typeExtensionClass: StringParser
+            typeExtensionClass: tools.dynamia.cms.core.StringParser
       

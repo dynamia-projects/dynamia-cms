@@ -17,22 +17,22 @@ import tools.dynamia.zk.util.ZKUtil
 @InstallAction
 class NewMenuItemAction extends NewAction {
 
-	@Autowired
-	private CrudService crudService
+    @Autowired
+    private CrudService crudService
 
     @Override
     CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ)
+        return CrudState.get(CrudState.READ)
     }
 
-	@Override
+    @Override
     ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(MenuItem.class)
+        return ApplicableClass.get(MenuItem.class)
     }
 
-	@Override
+    @Override
     void actionPerformed(CrudActionEvent evt) {
-		CrudView<MenuItem> crudView = (CrudView<MenuItem>) evt.view
+        CrudView<MenuItem> crudView = (CrudView<MenuItem>) evt.crudView
         MenuItemTreeCrudController controller = (MenuItemTreeCrudController) evt.controller
         MenuItem selectedItem = (MenuItem) evt.data
         Menu menu = controller.menu
@@ -44,7 +44,7 @@ class NewMenuItemAction extends NewAction {
 
         String title = "New Item for " + menu.name
         if (selectedItem != null) {
-			title = "New Subitem for " + menu.name + " - " + selectedItem.name
+            title = "New Subitem for " + menu.name + " - " + selectedItem.name
 
         }
 

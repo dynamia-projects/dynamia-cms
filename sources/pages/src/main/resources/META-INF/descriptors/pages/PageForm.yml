@@ -21,7 +21,7 @@ fields:
     type:
         component: typeSelector
         params:
-            typeExtensionClass: PageTypeExtension
+            typeExtensionClass: tools.dynamia.cms.core.api.TypeExtension
 
 
             
@@ -63,7 +63,7 @@ fields:
     templateEngine:
        component: typeSelector
        params:
-            typeExtensionClass: StringParser
+            typeExtensionClass: tools.dynamia.cms.core.StringParser
             
     parameters:
         component: crudview

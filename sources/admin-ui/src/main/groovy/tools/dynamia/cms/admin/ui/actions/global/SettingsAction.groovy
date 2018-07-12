@@ -5,6 +5,7 @@ import tools.dynamia.actions.ActionEvent
 import tools.dynamia.actions.InstallAction
 import tools.dynamia.app.template.ApplicationGlobalAction
 import tools.dynamia.cms.admin.ui.SiteManager
+import tools.dynamia.commons.Messages
 
 @InstallAction
 class SettingsAction extends ApplicationGlobalAction {
@@ -13,7 +14,7 @@ class SettingsAction extends ApplicationGlobalAction {
     private SiteManager siteManager
 
     SettingsAction() {
-        name = "Settings"
+        name = Messages.get(SettingsAction,"settingsAction")
         image = "cog"
         position = 2
         setAttribute("background", "btn bg-orange btn-flat")

@@ -16,6 +16,7 @@
 package tools.dynamia.cms.banners.modules
 
 import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.banners.domain.Banner
 import tools.dynamia.cms.banners.services.BannerService
 import tools.dynamia.cms.core.JavaScriptResource
 import tools.dynamia.cms.core.StyleSheetResource
@@ -27,34 +28,34 @@ import tools.dynamia.cms.core.domain.ModuleInstanceParameter
 @CMSModule
 class BannerSlidersModule extends AbstractModule {
 
-	private final static String PARAM_CATEGORY_ID = "category"
+    private final static String PARAM_CATEGORY_ID = "category"
 
     @Autowired
-	private BannerService service
+    private BannerService service
 
     BannerSlidersModule() {
-		super("banner_sliders", "Banners Slider", "banners/modules/bannersliders")
+        super("banner_sliders", "Banners Slider", "banners/modules/bannersliders")
         addResource(new JavaScriptResource("jquery.flexslider", "banners/js/jquery.flexslider.js"))
         addResource(new JavaScriptResource("banner_sliders", "banners/js/banners.sliders.js"))
         addResource(new StyleSheetResource("flexslider", "banners/css/flexslider.css"))
-        variablesNames = "banners"
+        setVariablesNames("banners")
     }
 
-	@Override
+    @Override
     void init(ModuleContext context) {
 
-		ModuleInstanceParameter categoryId = context.getParameter(PARAM_CATEGORY_ID)
+        ModuleInstanceParameter categoryId = context.getParameter(PARAM_CATEGORY_ID)
         if (categoryId != null) {
-			try {
+            try {
 
-				List<tools.dynamia.cms.banners.domain.Banner> banners = service.getBannersByCategory(new Long(categoryId.value))
+                List<Banner> banners = service.getBannersByCategory(new Long(categoryId.value))
                 context.moduleInstance.addObject("banners", banners)
 
             } catch (NumberFormatException e) {
-				// ignore
-			}
-		}
+                // ignore
+            }
+        }
 
-	}
+    }
 
 }

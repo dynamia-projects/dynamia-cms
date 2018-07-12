@@ -21,6 +21,8 @@ import tools.dynamia.cms.core.api.CMSModule
 import tools.dynamia.cms.core.api.ModuleContext
 import tools.dynamia.cms.core.domain.ModuleInstance
 import tools.dynamia.cms.menus.MenuContext
+import tools.dynamia.cms.menus.domain.Menu
+import tools.dynamia.cms.menus.domain.MenuItem
 import tools.dynamia.cms.menus.services.MenuService
 
 @CMSModule
@@ -47,7 +49,7 @@ class MenuModule extends AbstractModule {
 			menuId = "mainmenu"
         }
 
-		tools.dynamia.cms.menus.domain.Menu menu = null
+		Menu menu = null
         try {
 			menu = service.getMenu(context.site, new Long(menuId))
         } catch (NumberFormatException e) {
@@ -55,8 +57,8 @@ class MenuModule extends AbstractModule {
         }
 
 		if (menu != null) {
-			List<tools.dynamia.cms.menus.domain.MenuItem> itemsToDisplay = new ArrayList<>()
-            for (tools.dynamia.cms.menus.domain.MenuItem menuItem : service.getItems(menu)) {
+			List<MenuItem> itemsToDisplay = new ArrayList<>()
+            for (MenuItem menuItem : service.getItems(menu)) {
 				menuItem.subitems.size()
                 MenuContext menuContext = service.setupMenuItem(menuItem)
                 itemsToDisplay.add(menuContext.menuItem)

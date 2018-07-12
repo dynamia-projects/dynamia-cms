@@ -16,6 +16,7 @@
 package tools.dynamia.cms.admin.ui
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.zkoss.util.Locales
 import tools.dynamia.cms.core.api.AdminModule
 import tools.dynamia.cms.core.api.AdminModuleOption
 import tools.dynamia.cms.core.api.ConfigAdminModuleOption
@@ -65,6 +66,7 @@ class AdminModulesInstaller {
         @Override
         Module getModule() {
             Module module = new Module(am.group, am.name)
+            module.setBaseClass(am.getClass())
             module.position = 1
             if (am.image != null) {
                 module.icon = am.image
@@ -82,7 +84,9 @@ class AdminModulesInstaller {
                 } else {
                     page = new CrudPage(option.id, option.name, option.coreClass)
                 }
-                page.longName = module.name + " " + page.name
+                page.longNameSupplier = {
+                    return "${module.getLocalizedName(Locales.current)} / ${page.getLocalizedName(Locales.current)}".toString()
+                }
                 page.addAttribute("OPTION", option)
                 module.addPage(page)
 

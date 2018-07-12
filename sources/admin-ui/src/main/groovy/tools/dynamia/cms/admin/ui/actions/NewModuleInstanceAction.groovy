@@ -16,11 +16,13 @@
 package tools.dynamia.cms.admin.ui.actions
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.zkoss.util.Locales
 import tools.dynamia.actions.InstallAction
 import tools.dynamia.cms.admin.ui.ui.ModuleInstanceUI
 import tools.dynamia.cms.core.SiteContext
 import tools.dynamia.cms.core.domain.ModuleInstance
 import tools.dynamia.commons.ApplicableClass
+import tools.dynamia.commons.BeanMessages
 import tools.dynamia.crud.CrudActionEvent
 import tools.dynamia.crud.CrudState
 import tools.dynamia.crud.actions.NewAction
@@ -31,32 +33,33 @@ import tools.dynamia.zk.navigation.ZKNavigationManager
 @InstallAction
 class NewModuleInstanceAction extends NewAction {
 
-	@Autowired
-	private CrudService crudService
+    @Autowired
+    private CrudService crudService
 
     NewModuleInstanceAction() {
-		setAttribute("background", "#ff5722")
+        setAttribute("background", "#ff5722")
         setAttribute("color", "white")
     }
 
-	@Override
+    @Override
     CrudState[] getApplicableStates() {
-		return CrudState.get(CrudState.READ)
+        return CrudState.get(CrudState.READ)
     }
 
-	@Override
+    @Override
     ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(ModuleInstance.class)
+        return ApplicableClass.get(ModuleInstance.class)
     }
 
-	@Override
+    @Override
     void actionPerformed(CrudActionEvent evt) {
-		ModuleInstance moduleInstance = new ModuleInstance()
+        def moduleInstance = new ModuleInstance()
         moduleInstance.site = SiteContext.get().current
+        def messages = new BeanMessages(ModuleInstance, Locales.current)
 
-        ModuleInstanceUI ui = new ModuleInstanceUI(moduleInstance)
+        def ui = new ModuleInstanceUI(moduleInstance)
         ui.addAction(new SaveModuleInstanceAction(crudService, evt))
-        ZKNavigationManager.instance.currentPage = new ComponentPage("newModule" + System.currentTimeMillis(), "New Module Instance", ui)
+        ZKNavigationManager.instance.currentPage = new ComponentPage("newModule" + System.currentTimeMillis(), "${super.getName()} ${messages.localizedName}", ui)
 
     }
 }

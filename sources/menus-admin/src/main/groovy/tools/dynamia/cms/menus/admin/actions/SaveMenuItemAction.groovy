@@ -1,24 +1,31 @@
 package tools.dynamia.cms.menus.admin.actions
 
+import org.zkoss.util.Locales
 import tools.dynamia.actions.AbstractAction
 import tools.dynamia.actions.ActionEvent
 import tools.dynamia.actions.ActionRenderer
 import tools.dynamia.cms.menus.admin.ui.MenuItemsUI
 import tools.dynamia.cms.menus.domain.MenuItem
 import tools.dynamia.cms.menus.domain.MenuItemParameter
+import tools.dynamia.commons.BeanMessages
 import tools.dynamia.crud.CrudActionEvent
+import tools.dynamia.crud.actions.SaveAction
 import tools.dynamia.domain.query.Parameter
 import tools.dynamia.domain.services.CrudService
+import tools.dynamia.integration.Containers
 import tools.dynamia.ui.UIMessages
 import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer
 
 class SaveMenuItemAction extends AbstractAction {
 
-	private CrudService crudService
+    private CrudService crudService
     private CrudActionEvent sourceEvent
 
     SaveMenuItemAction(CrudService crudService, CrudActionEvent evt) {
-        name = "Save Menu Item"
+        def messages = new BeanMessages(MenuItem, Locales.current)
+        SaveAction saveAction = Containers.get().findObject(SaveAction)
+
+        name = "${saveAction.name} ${messages.localizedName}"
         image = "save"
         setAttribute("background", "#ff5722")
         setAttribute("color", "white")
@@ -26,56 +33,56 @@ class SaveMenuItemAction extends AbstractAction {
         this.sourceEvent = evt
     }
 
-	@Override
+    @Override
     void actionPerformed(ActionEvent evt) {
-		List<Parameter> parameters = (List<Parameter>) evt.data
+        List<Parameter> parameters = (List<Parameter>) evt.data
 
         MenuItemsUI ui = (MenuItemsUI) evt.source
         MenuItem menuItem = ui.menuItem
 
         if (needSave(menuItem)) {
-			crudService.save(menuItem)
+            crudService.save(menuItem)
         }
 
-		if (parameters != null) {
-			for (Parameter parameter : parameters) {
-				MenuItemParameter itemParameter = menuItem.getParameter(parameter.name)
+        if (parameters != null) {
+            for (Parameter parameter : parameters) {
+                MenuItemParameter itemParameter = menuItem.getParameter(parameter.name)
                 if (itemParameter == null) {
-					String value = parameter.value
+                    String value = parameter.value
                     if (value != null && !value.empty) {
-						itemParameter = new MenuItemParameter(parameter.name, parameter.value)
+                        itemParameter = new MenuItemParameter(parameter.name, parameter.value)
                         itemParameter.enabled = true
                         itemParameter.menuItem = menuItem
                         if (needSave(menuItem)) {
-							crudService.save(itemParameter)
+                            crudService.save(itemParameter)
                         }
-					}
-				} else {
+                    }
+                } else {
                     itemParameter.value = parameter.value
                     if (needSave(menuItem)) {
-						crudService.save(itemParameter)
+                        crudService.save(itemParameter)
                     }
-				}
-			}
-		}
+                }
+            }
+        }
 
-		UIMessages.showMessage("Menu item saved")
+        UIMessages.showMessage("Menu item saved")
 
         if (sourceEvent != null) {
-			sourceEvent.controller.doQuery()
+            sourceEvent.controller.doQuery()
         }
 
         ui.parent.detach()
 
     }
 
-	private boolean needSave(MenuItem menuItem) {
-		return true
+    private boolean needSave(MenuItem menuItem) {
+        return true
     }
 
-	@Override
+    @Override
     ActionRenderer getRenderer() {
-		return new ToolbarbuttonActionRenderer(true)
+        return new ToolbarbuttonActionRenderer(true)
     }
 
 }

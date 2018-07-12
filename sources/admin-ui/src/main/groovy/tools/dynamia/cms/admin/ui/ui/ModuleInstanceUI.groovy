@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.admin.ui.ui
 
+import org.zkoss.util.Locales
 import org.zkoss.zk.ui.Component
 import org.zkoss.zk.ui.event.Events
 import org.zkoss.zul.*
@@ -25,6 +26,7 @@ import tools.dynamia.cms.core.api.Module
 import tools.dynamia.cms.core.domain.ModuleInstance
 import tools.dynamia.cms.core.domain.ModuleInstanceParameter
 import tools.dynamia.cms.core.services.impl.ModulesService
+import tools.dynamia.commons.BeanMessages
 import tools.dynamia.commons.MapBuilder
 import tools.dynamia.domain.jpa.JpaParameter
 import tools.dynamia.domain.query.Parameter
@@ -54,6 +56,7 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
     private Borderlayout layout
     private FormView<ModuleInstance> formView
     private Listbox variables
+    private BeanMessages messages = new BeanMessages(ModuleInstance, Locales.current)
 
     ModuleInstanceUI(ModuleInstance moduleInstance) {
         super()
@@ -79,7 +82,7 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
 
         top.appendChild(toolbar)
 
-        layout.center.title = "Configuration"
+        layout.center.title = messages.getMessage("configuration")
         layout.center.autoscroll = true
 
         formView = (FormView<ModuleInstance>) Viewers.getView(ModuleInstance.class, "form", moduleInstance)
@@ -93,7 +96,7 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
         variables.vflex = "1"
         variables.hflex = "1"
         variables.emptyMessage = "No variables"
-        layout.east.title = "Module's View Variables"
+        layout.east.title = messages.getMessage("variables")
         layout.east.width = "20%"
         layout.east.splittable = true
         layout.east.collapsible = true
