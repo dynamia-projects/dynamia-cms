@@ -5,45 +5,54 @@
 <body th:fragment="frag (prd)">
 
 
-    <div class="card card-block store product">
-        <div><small th:text="${prd.reference}"></small> 
-                <img class="noshadow" style="display: inline;float: right;" th:src="@{'/resources/products/brands/thumbnails/'+${prd.brand.image}(w=60,h=60)}" 
-                    th:alt="${prd.brand}" th:if="${prd.brand!=null}" />
-        </div>
-        
-        <div class="image">
-            <a th:href="@{'/store/products/'+${prd.id}}">
-                <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=200,h=200)}" th:alt="${prd.name}" th:if="${prd.image!=null}"
-                    class="img-fluid center-block" />
-                <img src="/resources/products/images/thumbnails/no_image.png?w=200&h=200" th:if="${prd.image==null}" class="img-fluid center-block"
-                />
+<div class="card card-body store product">
+    <div>
+        <small th:text="${prd.reference}"></small>
+        <img class="noshadow" style="display: inline;float: right; max-width: 50px"
+             th:src="@{'/resources/products/brands/thumbnails/'+${prd.brand.image}(w=60,h=60)}"
+             th:alt="${prd.brand}" th:if="${prd.brand!=null}"/>
+    </div>
 
-            </a>
-        </div>
+    <div class="image">
+        <a th:href="@{'/store/products/'+${prd.id}}">
+            <img th:src="@{'/resources/products/images/thumbnails/'+${prd.image}(w=200,h=200)}" th:alt="${prd.name}"
+                 th:if="${prd.image!=null}"
+                 class="img-fluid center-block"/>
+            <img src="/resources/products/images/thumbnails/no_image.png?w=200&h=200" th:if="${prd.image==null}"
+                 class="img-fluid center-block"
+            />
 
-        <h5 class="card-title d-flex justify-content-center">
-            <a th:href="@{'/store/products/'+${prd.id}}" data-toggle="tooltip" data-placement="top" th:title="${cmsUtil.cropText(prd.description,140)}"
-                th:text="${prd.name}" href="#">Product Name</a>
-        </h5>
-        <div class="card-footer">
-            <span class="left" th:text="${cmsUtil.formatNumber(prd.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"></span>
-            <span class="right">       
-                 <form th:id="addCart" th:if="${prd.stock gt prd_config.minStock and prd_config.shopEnabled and prd.sellInWeb}"
-                          th:action="@{'/shoppingcart/shop/add/'+${prd.id}}" method="get">
-                        <a onclick="$(this).closest('form').submit()" data-toggle="tooltip" data-placement="top" title="Add to Cart"
-                                >
+        </a>
+    </div>
+
+    <h5 class="card-title d-flex justify-content-center">
+        <a th:href="@{'/store/products/'+${prd.id}}" data-toggle="tooltip" data-placement="top"
+           th:title="${cmsUtil.cropText(prd.description,140)}"
+           th:text="${prd.name}" href="#">Product Name</a>
+    </h5>
+    <div class="card-footer">
+        <span class="left"
+              th:text="${cmsUtil.formatNumber(prd.realPrice,prd_config.pricePattern+' '+prd_config.defaultCurrency)}"></span>
+        <span class="right">
+                 <form th:id="addCart"
+                       th:if="${prd.stock gt prd_config.minStock and prd_config.shopEnabled and prd.sellInWeb}"
+                       th:action="@{'/shoppingcart/shop/add/'+${prd.id}}" method="get">
+                        <a onclick="$(this).closest('form').submit()" data-toggle="tooltip" data-placement="top"
+                           title="Add to Cart"
+                        >
                             <i class="fa fa-shopping-cart"></i>
                         </a>
-                        <input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}" />
-                    </form>     
-                
-                    </a>
-                      <a data-toggle="tooltip" data-placement="top" title="Share" target="_blank" th:href="${'http://www.facebook.com/sharer.php?u='+@siteContext.siteURL+'/store/products/'+prd.id}">
+                        <input type="hidden" name="currentURI" id="currentURI" th:value="${currentURI}"/>
+                    </form>
+
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Share" target="_blank"
+               th:href="${'http://www.facebook.com/sharer.php?u='+@siteContext.siteURL+'/store/products/'+prd.id}">
                         <i class="fa fa-share-alt"></i>
                     </a>                                     
                 </span>
-        </div>
     </div>
+</div>
 
 </body>
 

@@ -4,12 +4,11 @@ autofields: false
 
 fields:
     title:
-        params:
-            span: 2
-            
+    titleVisible:
     
     subtitle:
-    buttonLabel:    
+    buttonLabel:
+    buttonStyleClass:
     category:
     enabled:
     description:
@@ -37,6 +36,12 @@ fields:
         params:
             span: 3
             placeholder: When user click the banner go to this url 
-    
+    styleClass:
+    useHtmlContent:
+    htmlContent:
+      component: cmseditor
+      params:
+        span: 3
+        height: 300px
 layout:
     columns: 3

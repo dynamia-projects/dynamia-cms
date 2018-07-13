@@ -19,7 +19,7 @@
 
 
 
-                <div class="card card-block">
+                <div class="card card-body">
                     <a th:if="${prd_product.brand}" th:href="@{'/store/brands/'+${prd_product.brand.alias}}">
                         <img class="animated flip time3" th:if="${prd_product.brand}" th:src="@{'/resources/products/brands/thumbnails/'+${prd_product.brand.image}(w=100,h=100)}"
                             th:title="${prd_product.brand.name}" th:alt="${prd_product.brand.name}" />
@@ -80,7 +80,7 @@
 
             <!-- Right Details-->
             <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                <div class=" card card-block">
+                <div class=" card card-body">
 
                     <!--Title  -->
                     <h3 th:text="${prd_product.name}" class="card-title">Page title</h3>
@@ -168,7 +168,7 @@
                         </a>
                     </div>
 
-                    <div id="details" class="collapse card-block">
+                    <div id="details" class="collapse card-body">
                         <ul class="list-simple details">
                             <li th:each="det : ${prd_product.details}">
                                 <strong th:text="${det.name}">Detail: </strong> <span th:text="${det.value}"></span>

@@ -21,8 +21,11 @@ import tools.dynamia.cms.core.api.SiteAware
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.domain.SimpleEntity
 
+import javax.persistence.Basic
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.FetchType
+import javax.persistence.Lob
 import javax.persistence.OneToOne
 import javax.persistence.Table
 import javax.validation.constraints.NotNull
@@ -32,124 +35,41 @@ import javax.validation.constraints.NotNull
 @BatchSize(size = 10)
 class Banner extends SimpleEntity implements SiteAware, Orderable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2090565396360605396L
+    /**
+     *
+     */
+    static final long serialVersionUID = 2090565396360605396L
 
-	@OneToOne
-	@NotNull
-	private Site site
+    @OneToOne
+    @NotNull
+    Site site
 
-	private String title
-	private String subtitle
-	private String description
-	private boolean enabled = true
-	private String url = "#"
-	private String imageURL
-	private String alternateImageURL
-	@Column(name = "bannerOrder")
-	private int order
-	private String buttonLabel
+    String title
+    String subtitle
+    String description
+    boolean enabled = true
+    String url = "#"
+    String imageURL
+    String alternateImageURL
+    @Column(name = "bannerOrder")
+    int order
+    String buttonLabel
+    String buttonStyleClass
+    boolean titleVisible = true
+    String styleClass
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    String htmlContent
+    boolean  useHtmlContent
 
-	@OneToOne
-	@NotNull
-	private BannerCategory category
+    @OneToOne
+    @NotNull
+    BannerCategory category
 
-	String getButtonLabel() {
-		return buttonLabel
-	}
-
-	void setButtonLabel(String buttonLabel) {
-		this.buttonLabel = buttonLabel
-	}
-
-	String getSubtitle() {
-		return subtitle
-	}
-
-	void setSubtitle(String subtitle) {
-		this.subtitle = subtitle
-	}
-
-	String getDescription() {
-		return description
-	}
-
-	void setDescription(String description) {
-		this.description = description
-	}
-
-	String getAlternateImageURL() {
-		return alternateImageURL
-	}
-
-	void setAlternateImageURL(String alternateImageURL) {
-		this.alternateImageURL = alternateImageURL
-	}
-
-	Site getSite() {
-		return site
-	}
-
-	void setSite(Site site) {
-		this.site = site
-	}
-
-	String getTitle() {
-		return title
-	}
-
-	void setTitle(String title) {
-		this.title = title
-	}
-
-	boolean isEnabled() {
-		return enabled
-	}
-
-	void setEnabled(boolean enabled) {
-		this.enabled = enabled
-	}
-
-	String getUrl() {
-		return url
-	}
-
-	void setUrl(String url) {
-		this.url = url
-	}
-
-	String getImageURL() {
-		return imageURL
-	}
-
-	void setImageURL(String imageURL) {
-		this.imageURL = imageURL
-	}
-
-	BannerCategory getCategory() {
-		return category
-	}
-
-	void setCategory(BannerCategory category) {
-		this.category = category
-	}
-
-	@Override
-	int getOrder() {
-		return order
-	}
-
-	@Override
-	void setOrder(int order) {
-		this.order = order
-	}
-
-	@Override
-	String toString() {
-		return title
-	}
+    @Override
+    String toString() {
+        return title
+    }
 
 
 }

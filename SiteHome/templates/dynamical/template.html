@@ -53,13 +53,14 @@
 
 <!--Navbar-->
 
-<th:block th:include="module::position('navbar-top')"/>
+<header>
+    <nav th:unless="${site.isParameter('disableHeader')}"
+         th:class="${'navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}">
 
-<nav th:unless="${site.isParameter('disableHeader')}"
-     th:class="${'main-nav navbar navbar-toggleable-md navbar-dark '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}">
-    <div class="container">
-
-        <div class="hidden-md-up pull-right" style="margin-right: 60px">
+        <a class="navbar-brand" href="/">
+            <th:block th:include="module::position('logo')"/>
+        </a>
+        <div class="d-block d-sm-none pull-right" style="margin-right: 60px">
             <th:block
                     th:include="shoppingcart/components/topcart::content(${@shoppingCartHolder.getCart('shop','Cart')},'fa fa-shopping-cart')"/>
         </div>
@@ -70,14 +71,11 @@
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="/">
-            <th:block
-                    th:include="module::position('logo')"/>
-        </a>
 
-        <div class="collapse navbar-collapse" id="navbarNav1">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <th:block th:include="module::position('navbar')"/>
-            <ul class="navbar-nav ml-auto"></ul>
+
             <th:block th:include="module::position('navbar-right')"/>
 
 
@@ -86,22 +84,19 @@
             <th:block th:include="site/searchform::content"
                       th:if="${site.searchEnabled}"/>
         </div>
-    </div>
-</nav>
+    </nav>
+    <th:block th:include="module::position('navbar-bottom')"/>
+</header>
 
-<th:block th:include="module::position('navbar-bottom')"/>
+<th:block th:include="tpl_globalmessages::content"/>
 
-<div class="container">
-    <th:block th:include="tpl_globalmessages::content"/>
-</div>
 
 <th:block th:include="module::position('banners')"/>
 
-<th:block th:include="module::position('content-top')"/>
 
-<div>
-    <div class="container" layout:fragment="content"></div>
-</div>
+<th:block th:include="module::position('content-top')"/>
+<div layout:fragment="content"></div>
+
 
 <th:block th:include="module::position('content-bottom')"/>
 
@@ -127,7 +122,8 @@
 
 
 <!-- JQuery -->
-<script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
 
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" th:src="@{/js/tether.min.js}"></script>
