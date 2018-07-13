@@ -16,7 +16,6 @@
 package tools.dynamia.cms.admin.ui.ui
 
 import org.zkforge.ckez.CKeditor
-import org.zkoss.lang.Objects
 import org.zkoss.zk.ui.WrongValueException
 import org.zkoss.zk.ui.event.Event
 import org.zkoss.zk.ui.event.Events
@@ -24,16 +23,15 @@ import org.zkoss.zul.*
 import tools.dynamia.actions.ActionEvent
 import tools.dynamia.actions.ActionEventBuilder
 import tools.dynamia.actions.ActionLoader
+import tools.dynamia.actions.FastAction
 import tools.dynamia.cms.admin.ui.actions.AbstractCMSEditorAction
-import tools.dynamia.cms.core.CMSUtil
+import tools.dynamia.ui.UIMessages
 import tools.dynamia.zk.BindingComponentIndex
 import tools.dynamia.zk.ComponentAliasIndex
 import tools.dynamia.zk.actions.ActionToolbar
 
 class CMSeditor extends Div implements ActionEventBuilder {
 
-    private boolean unescape
-    private boolean spellchek
     private Textbox contentArea
     private ActionToolbar toolbar
 
@@ -56,7 +54,6 @@ class CMSeditor extends Div implements ActionEventBuilder {
         contentArea.width = "100%"
         contentArea.height = "100%"
         contentArea.setClientDataAttribute("ace-code-editor", "{theme:'ace/theme/eclipse', mode:'ace/mode/html'}")
-
         toolbar = new ActionToolbar(this)
 
         Borderlayout layout = new Borderlayout()
@@ -73,45 +70,26 @@ class CMSeditor extends Div implements ActionEventBuilder {
     }
 
     private void loadActions() {
+        toolbar.addAction(new FastAction("Save", "save", {
+            Events.postEvent(new Event(Events.ON_CHANGE, this, contentArea.getValue()))
+            UIMessages.showMessage("OK")
+        }))
+
+
+
         ActionLoader<AbstractCMSEditorAction> loader = new ActionLoader<>(AbstractCMSEditorAction.class)
         loader.load().forEach { a -> toolbar.addAction(a) }
 
     }
 
     void setValue(String value) throws WrongValueException {
-        if (!Objects.equals(value, contentArea.value)) {
-            contentArea.value = value
-            contentArea.invalidate()
-            Events.postEvent(new Event(Events.ON_CHANGE, this, value))
-        }
-
+        contentArea.value = value
     }
 
     String getValue() {
-        if (!unescape) {
-            return CMSUtil.escapeHtmlContent(contentArea.value)
-        } else {
-            return contentArea.value
-        }
+        return contentArea.value
     }
 
-    boolean isUnescape() {
-        return unescape
-    }
-
-    void setUnescape(boolean unescape) {
-        this.unescape = unescape
-    }
-
-    boolean isSpellchek() {
-        return spellchek
-    }
-
-    void setSpellchek(boolean spellchek) {
-        this.spellchek = spellchek
-        contentArea.setDynamicProperty("spellcheck", spellchek)
-
-    }
 
     Textbox getContentArea() {
         return contentArea

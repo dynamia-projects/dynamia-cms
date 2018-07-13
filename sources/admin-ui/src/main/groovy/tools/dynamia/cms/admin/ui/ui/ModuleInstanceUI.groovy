@@ -35,6 +35,7 @@ import tools.dynamia.viewers.Field
 import tools.dynamia.viewers.ViewDescriptor
 import tools.dynamia.viewers.ViewDescriptorNotFoundException
 import tools.dynamia.viewers.util.Viewers
+import tools.dynamia.zk.actions.ActionPanel
 import tools.dynamia.zk.actions.ActionToolbar
 import tools.dynamia.zk.crud.cfg.ConfigView
 import tools.dynamia.zk.crud.cfg.ConfigViewRender
@@ -50,7 +51,7 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
      *
      */
     private static final long serialVersionUID = -3032514789042367569L
-    private ActionToolbar toolbar
+    private ActionPanel toolbar
     private ModuleInstance moduleInstance
     private Component configurationUI
     private Borderlayout layout
@@ -69,7 +70,7 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
         hflex = "1"
         vflex = "1"
 
-        toolbar = new ActionToolbar(this)
+        toolbar = new ActionPanel(this)
 
         layout = new Borderlayout()
         layout.parent = this

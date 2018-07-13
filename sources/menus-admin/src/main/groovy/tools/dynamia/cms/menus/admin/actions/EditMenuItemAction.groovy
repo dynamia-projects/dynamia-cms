@@ -34,7 +34,7 @@ class EditMenuItemAction extends EditAction {
 
 	@Override
     void actionPerformed(CrudActionEvent evt) {
-		CrudView<MenuItem> crudView = (CrudView<MenuItem>) evt.view
+
         MenuItemTreeCrudController controller = (MenuItemTreeCrudController) evt.controller
         Menu menu = controller.menu
 

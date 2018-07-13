@@ -21,7 +21,6 @@ fields:
    content:      
       component: cmseditor
       params:
-          unescape: true
           height: 400px
           span: 2
           

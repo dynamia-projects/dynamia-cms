@@ -9,7 +9,6 @@ fields:
       span: 2
       height: 500px
       copyFrom: contentPlain
-      unescape: true
       showLabel: false
       
   templateEngine:
