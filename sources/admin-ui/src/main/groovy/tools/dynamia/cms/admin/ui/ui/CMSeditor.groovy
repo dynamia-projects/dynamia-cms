@@ -17,14 +17,10 @@ package tools.dynamia.cms.admin.ui.ui
 
 import org.zkforge.ckez.CKeditor
 import org.zkoss.lang.Objects
-import org.zkoss.zhtml.Textarea
 import org.zkoss.zk.ui.WrongValueException
 import org.zkoss.zk.ui.event.Event
 import org.zkoss.zk.ui.event.Events
-import org.zkoss.zul.Borderlayout
-import org.zkoss.zul.Center
-import org.zkoss.zul.Div
-import org.zkoss.zul.North
+import org.zkoss.zul.*
 import tools.dynamia.actions.ActionEvent
 import tools.dynamia.actions.ActionEventBuilder
 import tools.dynamia.actions.ActionLoader
@@ -38,7 +34,7 @@ class CMSeditor extends Div implements ActionEventBuilder {
 
     private boolean unescape
     private boolean spellchek
-    private Textarea contentArea
+    private Textbox contentArea
     private ActionToolbar toolbar
 
     /**
@@ -55,13 +51,11 @@ class CMSeditor extends Div implements ActionEventBuilder {
     }
 
     CMSeditor() {
-        contentArea = new Textarea()
-        contentArea.sclass = "cms-editor"
-        contentArea.style = "width: 100%; height: 100%"
-        contentArea.setDynamicProperty("spellcheck", spellchek)
-        contentArea.setDynamicProperty("onkeydown",
-                "if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}")
-        contentArea.addEventListener(Events.ON_CHANGE, { e -> Events.postEvent(this, e) })
+        sclass = "cms-editor"
+        contentArea = new Textbox()
+        contentArea.width = "100%"
+        contentArea.height = "100%"
+        contentArea.setClientDataAttribute("ace-code-editor", "{theme:'ace/theme/eclipse', mode:'ace/mode/html'}")
 
         toolbar = new ActionToolbar(this)
 
@@ -119,7 +113,7 @@ class CMSeditor extends Div implements ActionEventBuilder {
 
     }
 
-    Textarea getContentArea() {
+    Textbox getContentArea() {
         return contentArea
     }
 

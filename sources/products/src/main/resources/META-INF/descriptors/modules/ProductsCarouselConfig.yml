@@ -14,7 +14,7 @@ fields:
   category:
     component: entitypicker
     params:
-      entityClass: ProductCategory
+      entityClass: tools.dynamia.cms.products.domain.ProductCategory
   
   status:
     description: Only for CUSTOM type

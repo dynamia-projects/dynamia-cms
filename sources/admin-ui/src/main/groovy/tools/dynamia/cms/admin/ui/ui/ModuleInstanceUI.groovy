@@ -73,16 +73,18 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
 
         layout = new Borderlayout()
         layout.parent = this
-        layout.appendChild(new North())
+        layout.appendChild(new West())
         layout.appendChild(new Center())
         layout.appendChild(new East())
 
         Vlayout top = new Vlayout()
-        layout.north.appendChild(top)
+        layout.west.appendChild(top)
+        layout.west.width = "34%"
+        layout.west.splittable = true
+        layout.west.collapsible = true
+        layout.west.autoscroll = true
 
-        top.appendChild(toolbar)
 
-        layout.center.title = messages.getMessage("configuration")
         layout.center.autoscroll = true
 
         formView = (FormView<ModuleInstance>) Viewers.getView(ModuleInstance.class, "form", moduleInstance)
@@ -91,13 +93,14 @@ class ModuleInstanceUI extends Div implements ActionEventBuilder {
         typeSelector.addEventListener(Events.ON_SELECT, { evt -> initConfigurationUI() })
 
         top.appendChild(formView)
-
+        top.appendChild(toolbar)
         variables = new Listbox()
         variables.vflex = "1"
         variables.hflex = "1"
         variables.emptyMessage = "No variables"
         layout.east.title = messages.getMessage("variables")
         layout.east.width = "20%"
+        layout.east.open = false
         layout.east.splittable = true
         layout.east.collapsible = true
         layout.east.appendChild(variables)

@@ -8,12 +8,12 @@ fields:
     label: Brand (optional)
     component: entitypicker
     params:
-      entityClass: ProductBrand
+      entityClass: tools.dynamia.cms.products.domain.ProductBrand
       
   parentCategory:
     label: Parent Category (optional)
     component: entitypicker
     params:
-      entityClass: ProductCategory
+      entityClass: tools.dynamia.cms.products.domain.ProductCategory
  
     

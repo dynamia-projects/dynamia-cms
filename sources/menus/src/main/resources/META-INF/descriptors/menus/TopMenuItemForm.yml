@@ -15,7 +15,7 @@ fields:
         component: entitypicker
         label: Page (optional)
         params:
-            entityClass: Page
+            entityClass: tools.dynamia.cms.pages.domain.Page
             
     
     href:
