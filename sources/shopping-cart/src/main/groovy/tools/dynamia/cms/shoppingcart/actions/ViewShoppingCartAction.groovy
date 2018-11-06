@@ -19,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView
 import tools.dynamia.cms.core.actions.ActionEvent
 import tools.dynamia.cms.core.actions.SiteAction
 import tools.dynamia.cms.core.api.CMSAction
+import tools.dynamia.cms.shoppingcart.ShoppingCartUtils
+import tools.dynamia.cms.shoppingcart.domain.ShoppingCart
 
 /**
  *
@@ -37,7 +39,7 @@ class ViewShoppingCartAction implements SiteAction {
 		ModelAndView mv = evt.modelAndView
         mv.viewName = "shoppingcart/details"
 
-        tools.dynamia.cms.shoppingcart.domain.ShoppingCart shoppingCart = tools.dynamia.cms.shoppingcart.ShoppingCartUtils.getShoppingCart(mv)
+        ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv)
         if (shoppingCart != null) {
 			mv.addObject("title", shoppingCart.title)
         }

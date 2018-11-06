@@ -675,10 +675,6 @@ class ProductsServiceImpl extends AbstractService implements ProductsService {
             int result = entityManager.createQuery(sql).setParameter("site", site).executeUpdate()
             log(result + " subcategories updated")
 
-            sql = "update ProductCategory pc set pc.productsCount = (select sum(sub.productsCount) from ProductCategory sub where sub.parent.id = pc.id and sub.site = :site) where pc.site = :site and pc.parent.id is null"
-            result = entityManager.createQuery(sql).setParameter("site", site).executeUpdate()
-
-            log(result + " parente categories updated")
             return result
         }
         return 0

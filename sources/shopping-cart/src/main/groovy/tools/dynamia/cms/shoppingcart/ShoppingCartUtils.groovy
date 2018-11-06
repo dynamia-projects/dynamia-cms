@@ -18,33 +18,34 @@ package tools.dynamia.cms.shoppingcart
 import org.springframework.web.servlet.ModelAndView
 import tools.dynamia.cms.core.api.SiteAware
 import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.cms.shoppingcart.domain.ShoppingCart
+import tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig
 import tools.dynamia.cms.shoppingcart.services.ShoppingCartService
 import tools.dynamia.cms.users.UserHolder
 import tools.dynamia.integration.Containers
 
 class ShoppingCartUtils {
 
-	static tools.dynamia.cms.shoppingcart.domain.ShoppingCart getShoppingCart(ModelAndView mv) {
-		String cartName = (String) mv.model.get("cartName")
-        tools.dynamia.cms.shoppingcart.domain.ShoppingCart cart = ShoppingCartHolder.get().getCart(cartName)
+    static ShoppingCart getShoppingCart(ModelAndView mv) {
+        String cartName = (String) mv.model.get("cartName")
+        ShoppingCart cart = ShoppingCartHolder.get().getCart(cartName)
         mv.addObject("cart", cart)
         return cart
     }
 
     static void loadConfig(Site site, ModelAndView mv) {
-		ShoppingCartService service = Containers.get().findObject(ShoppingCartService.class)
+        ShoppingCartService service = Containers.get().findObject(ShoppingCartService.class)
 
-        tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig config = service.getConfiguration(site)
+        ShoppingSiteConfig config = service.getConfiguration(site)
         SiteAware shoppingCart = getShoppingCart(mv)
         mv.addObject("shoppingConfig", config)
         boolean paymentEnabled = false
         if (config != null) {
-			paymentEnabled = config.paymentEnabled || UserHolder.get().admin
+            paymentEnabled = config.paymentEnabled || UserHolder.get().admin
         }
-		mv.addObject("paymentEnabled", paymentEnabled)
+        mv.addObject("paymentEnabled", paymentEnabled)
 
     }
-	
-	
+
 
 }

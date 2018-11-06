@@ -102,7 +102,7 @@ class ConfirmShoppingOrderAction implements SiteAction {
 			paymentType = ""
         }
 
-		if (paymentType.equals("later")) {
+		if (paymentType == "later") {
             order.payLater = true
         }
 
@@ -119,6 +119,7 @@ class ConfirmShoppingOrderAction implements SiteAction {
             if (!order.payLater) {
 				try {
 					PaymentGateway gateway = paymentService.findGateway(order.transaction.gatewayId)
+
                     form = gateway.createForm(order.transaction)
                     PaymentHolder.get().currentPaymentForm = form
                 } catch (PaymentException e) {

@@ -4,11 +4,14 @@ autofields: false
 
 fields:
   paymentGatewayAccount:
+    component: combobox
+    params:
+      automodel: true
   paymentEnabled:
   allowEmptyPayment:
   billingAddressRequired:
   shippingAddressRequired:
-  
+
   minPaymentAmount:
   maxPaymentAmount:
   shipmentPercent:
@@ -16,17 +19,17 @@ fields:
   minShipmentAmount:
   defaultCurrency:
   paymentTypes:
-  
+
   autoSendOrders:
   orderSenderURL:
     label: Order Sender URL
   orderStatusURL:
     label: Order Status URL
-    
+
   autoSendPayments:
   paymentsSenderURL:
     label: Payments Sender URL
-  
+
   descriptionTemplate:
   notificationEmails:
     description: You can use multiple emails address separated by comma
@@ -36,32 +39,32 @@ fields:
   mailAccount:
   minQuantityByProducts:
   minQuantityByCart:
-  
+
   parameters:
-        component: crudview
+    component: crudview
 groups:
-    values:
-       fields:
-       - minPaymentAmount
-       - maxPaymentAmount
-       - shipmentPercent
-       - minShipmentAmount
-       - minQuantityByProducts
-       - minQuantityByCart
-    remote:
-       - orderSenderURL
-       - orderStatusURL
-       - paymentsSenderURL
-       - autoSendOrders
-       - autoSendPayments
-    notifications:
-       fields:
-       - notificationEmails  
-       - orderCompletedMailTemplate
-       - orderShippedMailTemplate
-       - notificationMailTemplate
-       - mailAccount  
-  
- 
+  values:
+    fields:
+    - minPaymentAmount
+    - maxPaymentAmount
+    - shipmentPercent
+    - minShipmentAmount
+    - minQuantityByProducts
+    - minQuantityByCart
+  remote:
+  - orderSenderURL
+  - orderStatusURL
+  - paymentsSenderURL
+  - autoSendOrders
+  - autoSendPayments
+  notifications:
+    fields:
+    - notificationEmails
+    - orderCompletedMailTemplate
+    - orderShippedMailTemplate
+    - notificationMailTemplate
+    - mailAccount
+
+
 layout:
   columns: 4

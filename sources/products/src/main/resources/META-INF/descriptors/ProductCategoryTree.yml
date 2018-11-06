@@ -16,6 +16,7 @@ fields:
   alternateTemplate:
   productsCount:
     label: Products
+  tags:
   active:
   externalRef:
   id:

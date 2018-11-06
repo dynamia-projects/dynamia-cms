@@ -226,9 +226,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
             order.syncTransaction()
             order.shoppingCart.status = ShoppingCartStatus.COMPLETED
-
-            order.transaction.description = "Orden No. " + order.number + ". Compra de "
-            +order.shoppingCart.quantity + " producto(s)"
+            order.transaction.account = config.paymentGatewayAccount
+            order.transaction.description = "Orden No. $order.number. Compra de $order.shoppingCart.quantity producto(s)"
 
             if (order.billingAddress != null) {
                 order.transaction.payerPhoneNumber = order.billingAddress.info.phoneNumber
@@ -292,7 +291,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
         PaymentTransaction tx = evt.transaction
         if (tx.status == PaymentTransactionStatus.COMPLETED) {
             ShoppingOrder order = crudService.findSingle(ShoppingOrder.class, "transaction", tx)
-                if (order != null) {
+            if (order != null) {
                 notifyOrderCompleted(order)
             } else {
                 logger.error("No shopping order found for transaction " + tx.uuid)

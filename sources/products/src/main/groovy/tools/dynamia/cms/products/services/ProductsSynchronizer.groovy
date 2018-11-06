@@ -106,7 +106,11 @@ class ProductsSynchronizer {
         service.disableRelatedProductsNoInList(siteCfg, relatedProducts)
 
         logger.info("Compute product count by category")
-        productsService.computeProductCountByCategory(siteCfg.site)
+        try {
+            productsService.computeProductCountByCategory(siteCfg.site)
+        } catch (Exception e) {
+            logger.error("Error computing product count", e)
+        }
 
         if (siteCfg.syncProductImages) {
             SchedulerUtil.run(new Task("Images Downloader") {
