@@ -3,10 +3,7 @@ beanClass: tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig
 autofields: false
 
 fields:
-  paymentGatewayId:
-    label: Gateway ID
-  paymentGatewayName:
-    label: Gateway Name
+  paymentGatewayAccount:
   paymentEnabled:
   allowEmptyPayment:
   billingAddressRequired:

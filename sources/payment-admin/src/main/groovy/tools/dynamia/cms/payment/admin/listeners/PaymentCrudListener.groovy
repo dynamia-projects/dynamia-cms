@@ -1,4 +1,4 @@
-package tools.dynamia.cms.shoppingcart.admin.listeners
+package tools.dynamia.cms.payment.admin.listeners
 
 import tools.dynamia.cms.core.SiteContext
 import tools.dynamia.cms.payment.api.Payment

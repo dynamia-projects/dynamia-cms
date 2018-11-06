@@ -24,7 +24,7 @@ class SiteAwareFieldCustomizer implements FieldCustomizer {
 
     @Override
     void customize(String view, Field field) {
-        if (field.name.equals("site")) {
+        if (field.name == "site") {
             field.visible = false
         }
     }

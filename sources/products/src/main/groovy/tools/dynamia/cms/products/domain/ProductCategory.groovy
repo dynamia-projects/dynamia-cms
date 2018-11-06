@@ -20,6 +20,7 @@ import org.hibernate.annotations.BatchSize
 import tools.dynamia.cms.core.Orderable
 import tools.dynamia.cms.core.api.SiteAware
 import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.cms.products.dto.ProductCategoryDTO
 import tools.dynamia.domain.SimpleEntity
 import tools.dynamia.domain.contraints.NotEmpty
 
@@ -35,184 +36,65 @@ import javax.validation.constraints.NotNull
 @BatchSize(size = 50)
 class ProductCategory extends SimpleEntity implements SiteAware, Orderable {
 
-	@OneToOne
-	@NotNull
-	private Site site
+    @OneToOne
+    @NotNull
+    Site site
 
     @ManyToOne
-	@JsonIgnore
-	private ProductCategory parent
-    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
-	private List<ProductCategory> subcategories = new ArrayList<>()
+    @JsonIgnore
+    ProductCategory parent
+    @OneToMany(mappedBy = "parent")
+    List<ProductCategory> subcategories = new ArrayList<>()
+
     @NotNull
-	@NotEmpty(message = "Enter product category name")
+    @NotEmpty(message = "Enter product category name")
+    String name
+    String alternateName
 
-	private String name
-    private String alternateName
     @Column(name = "catAlias")
+    String alias
+    String description
+    boolean active = true
 
-	private String alias
+    Long externalRef
 
-    private String description
-
-    private boolean active = true
-
-    private Long externalRef
-    @OneToOne
-	@JsonIgnore
-	private ProductCategory relatedCategory
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    ProductCategory relatedCategory
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-	@OrderBy("order")
-	@JsonIgnore
-	private List<ProductCategoryDetail> details = new ArrayList<>()
+    @OrderBy("order")
+    @JsonIgnore
+    List<ProductCategoryDetail> details = new ArrayList<>()
 
     @Column(name = "catOrder")
-	private int order
+    int order
 
-    @OneToOne
-	@JsonIgnore
-	private ProductTemplate template
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    ProductTemplate template
 
-    @OneToOne
-	@JsonIgnore
-	private ProductTemplate alternateTemplate
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    ProductTemplate alternateTemplate
 
-    private Long productsCount
+    @Column(length = 5000)
+    String tags
+    Long productsCount
 
-    Long getProductsCount() {
-		return productsCount
-    }
-
-    void setProductsCount(Long productsCount) {
-		this.productsCount = productsCount
-    }
-
-    ProductTemplate getAlternateTemplate() {
-		return alternateTemplate
-    }
-
-    void setAlternateTemplate(ProductTemplate alternateTemplate) {
-		this.alternateTemplate = alternateTemplate
-    }
-
-    ProductTemplate getTemplate() {
-		return template
-    }
-
-    void setTemplate(ProductTemplate template) {
-		this.template = template
-    }
-
-    int getOrder() {
-		return order
-    }
-
-    void setOrder(int order) {
-		this.order = order
-    }
-
-    String getAlternateName() {
-		return alternateName
-    }
-
-    void setAlternateName(String alternateName) {
-		this.alternateName = alternateName
-    }
-
-    ProductCategory getRelatedCategory() {
-		return relatedCategory
-    }
-
-    void setRelatedCategory(ProductCategory relatedCategory) {
-		this.relatedCategory = relatedCategory
-    }
-
-    String getAlias() {
-		return alias
-    }
-
-    void setAlias(String alias) {
-		this.alias = alias
-    }
-
-    Site getSite() {
-		return site
-    }
-
-    void setSite(Site site) {
-		this.site = site
-    }
-
-    List<ProductCategoryDetail> getDetails() {
-		return details
-    }
-
-    void setDetails(List<ProductCategoryDetail> details) {
-		this.details = details
-    }
-
-    Long getExternalRef() {
-		return externalRef
-    }
-
-    void setExternalRef(Long externalRef) {
-		this.externalRef = externalRef
-    }
-
-    boolean isActive() {
-		return active
-    }
-
-    void setActive(boolean active) {
-		this.active = active
-    }
-
-    ProductCategory getParent() {
-		return parent
-    }
-
-    void setParent(ProductCategory parent) {
-		this.parent = parent
-    }
-
-    List<ProductCategory> getSubcategories() {
-		return subcategories
-    }
-
-    void setSubcategories(List<ProductCategory> subcategories) {
-		this.subcategories = subcategories
-    }
-
-    String getName() {
-		return name
-    }
-
-    void setName(String name) {
-		this.name = name
-    }
-
-    String getDescription() {
-		return description
-    }
-
-    void setDescription(String description) {
-		this.description = description
-    }
-
-    void sync(tools.dynamia.cms.products.dto.ProductCategoryDTO dto) {
-		name = dto.name
+    void sync(ProductCategoryDTO dto) {
+        name = dto.name
         order = dto.order
         alternateName = dto.alternateName
         active = dto.active
         description = dto.description
         externalRef = dto.externalRef
-
+        tags = dto.tags
     }
 
-	@Override
+    @Override
     String toString() {
-		return name
+        return name
     }
 
 }

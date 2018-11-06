@@ -15,32 +15,15 @@
  */
 package tools.dynamia.cms.products.services.impl
 
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 import tools.dynamia.cms.core.DynamiaCMS
-import tools.dynamia.cms.products.domain.Product
-import tools.dynamia.cms.products.domain.ProductBrand
-import tools.dynamia.cms.products.domain.ProductCategory
-import tools.dynamia.cms.products.domain.ProductCategoryDetail
-import tools.dynamia.cms.products.domain.ProductCreditPrice
-import tools.dynamia.cms.products.domain.ProductDetail
-import tools.dynamia.cms.products.domain.ProductStock
-import tools.dynamia.cms.products.domain.ProductsSiteConfig
-import tools.dynamia.cms.products.domain.RelatedProduct
-import tools.dynamia.cms.products.domain.Store
-import tools.dynamia.cms.products.domain.StoreContact
-import tools.dynamia.cms.products.dto.ProductBrandDTO
-import tools.dynamia.cms.products.dto.ProductCategoryDTO
-import tools.dynamia.cms.products.dto.ProductCategoryDetailDTO
-import tools.dynamia.cms.products.dto.ProductCreditPriceDTO
-import tools.dynamia.cms.products.dto.ProductDTO
-import tools.dynamia.cms.products.dto.ProductDetailDTO
-import tools.dynamia.cms.products.dto.ProductStockDTO
-import tools.dynamia.cms.products.dto.RelatedProductDTO
-import tools.dynamia.cms.products.dto.StoreContactDTO
-import tools.dynamia.cms.products.dto.StoreDTO
+import tools.dynamia.cms.products.api.ProductsDatasource
+import tools.dynamia.cms.products.domain.*
+import tools.dynamia.cms.products.dto.*
 import tools.dynamia.cms.products.services.ProductsSyncService
 import tools.dynamia.commons.logger.LoggingService
 import tools.dynamia.commons.logger.SLF4JLoggingService
@@ -60,6 +43,7 @@ import java.nio.file.StandardCopyOption
  * @author Mario Serrano Leones
  */
 @Service
+@CompileStatic
 class ProductsSyncServiceImpl implements ProductsSyncService {
 
     private static final String PRODUCTS_FOLDER = "products"
@@ -78,19 +62,26 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
     List<ProductCategoryDTO> synchronizeCategories(ProductsSiteConfig siteCfg) {
         logger.debug(">>>> STARTING PRODUCT'S CATEGORIES SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
 
-        tools.dynamia.cms.products.api.ProductsDatasource ds = getDatasource(siteCfg)
+        ProductsDatasource ds = getDatasource(siteCfg)
 
         List<ProductCategoryDTO> categories = ds.getCategories(siteCfg.parametersAsMap)
 
-        for (ProductCategoryDTO remoteCategory : categories) {
-            synchronizeCategory(siteCfg, remoteCategory)
-        }
+        if (categories) {
+            def fields = [:]
+            fields["parent"] = null
+            fields["active"] = false
+            crudService.batchUpdate(ProductCategory, fields, QueryParameters.with("site", siteCfg.site))
 
-        //subcategories
-        for (ProductCategoryDTO remoteCategory : categories) {
-            if (remoteCategory.subcategories != null && !remoteCategory.subcategories.empty) {
-                for (ProductCategoryDTO subcategory : (remoteCategory.subcategories)) {
-                    synchronizeCategory(siteCfg, subcategory)
+            for (ProductCategoryDTO remoteCategory : categories) {
+                synchronizeCategory(siteCfg, remoteCategory)
+            }
+
+            //subcategories
+            for (ProductCategoryDTO remoteCategory : categories) {
+                if (remoteCategory.subcategories != null && !remoteCategory.subcategories.empty) {
+                    for (ProductCategoryDTO subcategory : (remoteCategory.subcategories)) {
+                        synchronizeCategory(siteCfg, subcategory)
+                    }
                 }
             }
         }
@@ -110,6 +101,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
 
         localCategory.sync(remoteCategory)
 
+
         if (remoteCategory.parent != null) {
             localCategory.parent = getLocalEntity(ProductCategory.class, remoteCategory.parent.externalRef, siteCfg)
         } else {
@@ -123,10 +115,6 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
         }
 
         crudService.save(localCategory)
-
-        syncCategoryDetails(siteCfg, localCategory, remoteCategory)
-
-
     }
 
     @Override
@@ -266,6 +254,21 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
         }
     }
 
+    @Override
+    void syncCategoriesDetails(ProductsSiteConfig siteCfg, List<ProductCategoryDTO> remoteCategories) {
+        remoteCategories.each { dto ->
+            ProductCategory localCat = getLocalEntity(ProductCategory, dto.externalRef, siteCfg)
+            if (localCat) {
+                crudService.executeWithinTransaction {
+                    syncCategoryDetails(siteCfg, localCat, dto)
+                }
+                if (dto.subcategories) {
+                    syncCategoriesDetails(siteCfg, dto.subcategories)
+                }
+            }
+        }
+    }
+
     private void syncCategoryDetails(ProductsSiteConfig siteCfg, ProductCategory localCategory,
                                      ProductCategoryDTO remoteCategory) {
 
@@ -276,6 +279,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
                 if (localDetail == null) {
                     localDetail = new ProductCategoryDetail()
                 }
+                println "=== SYNC CAT DETAIL $localCategory.name --> $remoteDetail.name"
                 localDetail.site = localCategory.site
                 localDetail.category = localCategory
                 localDetail.sync(remoteDetail)
@@ -289,7 +293,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
     List<ProductBrandDTO> synchronizeBrands(ProductsSiteConfig siteCfg) {
         logger.debug(">>>> STARTING PRODUCT'S BRANDS SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
 
-        tools.dynamia.cms.products.api.ProductsDatasource ds = getDatasource(siteCfg)
+        ProductsDatasource ds = getDatasource(siteCfg)
         List<ProductBrandDTO> brands = ds.getBrands(siteCfg.parametersAsMap)
         for (ProductBrandDTO remoteBrand : brands) {
             synchronizeBrand(siteCfg, remoteBrand)
@@ -316,7 +320,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
     List<StoreDTO> synchronizeStores(ProductsSiteConfig siteCfg) {
         logger.debug(">>>> STARTING STORE SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
 
-        tools.dynamia.cms.products.api.ProductsDatasource ds = getDatasource(siteCfg)
+        ProductsDatasource ds = getDatasource(siteCfg)
         List<StoreDTO> stores = ds.getStores(siteCfg.parametersAsMap)
         for (StoreDTO remoteStroe : stores) {
             synchronizeStore(siteCfg, remoteStroe)
@@ -357,7 +361,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
     List<RelatedProductDTO> synchronizeRelatedProducts(ProductsSiteConfig siteCfg) {
         logger.debug(">>>> STARTING RELATED PRODUCTS SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
 
-        tools.dynamia.cms.products.api.ProductsDatasource ds = getDatasource(siteCfg)
+        ProductsDatasource ds = getDatasource(siteCfg)
         List<RelatedProductDTO> related = ds.getRelatedProducts(siteCfg.parametersAsMap)
         if (related != null) {
             for (RelatedProductDTO remoteRelated : related) {

@@ -15,12 +15,9 @@
  */
 package tools.dynamia.cms.products.services
 
-import tools.dynamia.cms.products.dto.ProductBrandDTO
-import tools.dynamia.cms.products.dto.ProductCategoryDTO
-import tools.dynamia.cms.products.dto.ProductDTO
-import tools.dynamia.cms.products.dto.RelatedProductDTO
-import tools.dynamia.cms.products.dto.StoreDTO
+import tools.dynamia.cms.products.api.ProductsDatasource
 import tools.dynamia.cms.products.domain.ProductsSiteConfig
+import tools.dynamia.cms.products.dto.*
 
 /**
  *
@@ -33,6 +30,8 @@ interface ProductsSyncService {
 
     List<ProductDTO> synchronizeProducts(ProductsSiteConfig siteCfg)
 
+    void syncCategoriesDetails(ProductsSiteConfig siteCfg, List<ProductCategoryDTO> remoteCategories)
+
     List<ProductBrandDTO> synchronizeBrands(ProductsSiteConfig siteCfg)
 
     void synchronizeProduct(ProductsSiteConfig siteCfg, ProductDTO product)
@@ -41,7 +40,7 @@ interface ProductsSyncService {
 
     void synchronizeBrand(ProductsSiteConfig config, ProductBrandDTO dto)
 
-    tools.dynamia.cms.products.api.ProductsDatasource getDatasource(ProductsSiteConfig cfg)
+    ProductsDatasource getDatasource(ProductsSiteConfig cfg)
 
     void disableCategoriesNoInList(ProductsSiteConfig siteCfg, List<ProductCategoryDTO> categories)
 

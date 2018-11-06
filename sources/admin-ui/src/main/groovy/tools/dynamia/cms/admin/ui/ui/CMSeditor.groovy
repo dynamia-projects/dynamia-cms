@@ -29,10 +29,11 @@ import tools.dynamia.ui.UIMessages
 import tools.dynamia.zk.BindingComponentIndex
 import tools.dynamia.zk.ComponentAliasIndex
 import tools.dynamia.zk.actions.ActionToolbar
+import tools.dynamia.zk.addons.Aceditor
 
 class CMSeditor extends Div implements ActionEventBuilder {
 
-    private Textbox contentArea
+    private Aceditor contentArea
     private ActionToolbar toolbar
 
     /**
@@ -50,10 +51,12 @@ class CMSeditor extends Div implements ActionEventBuilder {
 
     CMSeditor() {
         sclass = "cms-editor"
-        contentArea = new Textbox()
+        contentArea = new Aceditor()
         contentArea.width = "100%"
         contentArea.height = "100%"
-        contentArea.setClientDataAttribute("ace-code-editor", "{theme:'ace/theme/eclipse', mode:'ace/mode/html'}")
+        contentArea.theme = "eclipse"
+        contentArea.mode = "html"
+        contentArea.addEventListener(Events.ON_CHANGE, { e -> Events.postEvent(Events.ON_CHANGE, this, e) })
         toolbar = new ActionToolbar(this)
 
         Borderlayout layout = new Borderlayout()
@@ -91,7 +94,7 @@ class CMSeditor extends Div implements ActionEventBuilder {
     }
 
 
-    Textbox getContentArea() {
+    Aceditor getContentArea() {
         return contentArea
     }
 

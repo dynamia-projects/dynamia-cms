@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.mail.services.impl
 
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mail.MailSender
 import org.springframework.mail.javamail.JavaMailSenderImpl
@@ -29,9 +30,11 @@ import tools.dynamia.cms.core.StringParsers
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.mail.MailMessage
 import tools.dynamia.cms.mail.MailServiceException
+import tools.dynamia.cms.mail.MailServiceListener
 import tools.dynamia.cms.mail.domain.MailAccount
 import tools.dynamia.cms.mail.domain.MailTemplate
 import tools.dynamia.cms.mail.domain.MailingContact
+import tools.dynamia.cms.mail.services.MailService
 import tools.dynamia.commons.logger.LoggingService
 import tools.dynamia.commons.logger.SLF4JLoggingService
 import tools.dynamia.domain.query.QueryParameters
@@ -46,14 +49,15 @@ import javax.mail.internet.MimeMessage
  * @author ronald
  */
 @Service
-class MailServiceImpl implements tools.dynamia.cms.mail.services.MailService {
+@CompileStatic
+class MailServiceImpl implements MailService {
 
 
     @Autowired
     private CrudService crudService
     private Map<Long, MailSenderHolder> senderCache = new HashMap<>()
 
-    private final LoggingService logger = new SLF4JLoggingService(tools.dynamia.cms.mail.services.MailService.class)
+    private final LoggingService logger = new SLF4JLoggingService(MailService.class)
 
     @Override
     @Async
@@ -245,22 +249,22 @@ class MailServiceImpl implements tools.dynamia.cms.mail.services.MailService {
     }
 
     private void fireOnMailSending(MailMessage message) {
-        Collection<tools.dynamia.cms.mail.MailServiceListener> listeners = Containers.get().findObjects(tools.dynamia.cms.mail.MailServiceListener.class)
-        for (tools.dynamia.cms.mail.MailServiceListener listener : listeners) {
+        Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class)
+        for (MailServiceListener listener : listeners) {
             listener.onMailSending(message)
         }
     }
 
     private void fireOnMailSended(MailMessage message) {
-        Collection<tools.dynamia.cms.mail.MailServiceListener> listeners = Containers.get().findObjects(tools.dynamia.cms.mail.MailServiceListener.class)
-        for (tools.dynamia.cms.mail.MailServiceListener listener : listeners) {
+        Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class)
+        for (MailServiceListener listener : listeners) {
             listener.onMailSended(message)
         }
     }
 
     private void fireOnMailSendFail(MailMessage message, Throwable cause) {
-        Collection<tools.dynamia.cms.mail.MailServiceListener> listeners = Containers.get().findObjects(tools.dynamia.cms.mail.MailServiceListener.class)
-        for (tools.dynamia.cms.mail.MailServiceListener listener : listeners) {
+        Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class)
+        for (MailServiceListener listener : listeners) {
             listener.onMailSendFail(message, cause)
         }
     }

@@ -312,7 +312,7 @@ class UserServiceImpl implements UserService {
             msg.to = user.username
             msg.mailAccount = config.mailAccount
 
-            mailService.send(msg)
+            mailService.sendAsync(msg)
 
         }
     }
@@ -337,7 +337,7 @@ class UserServiceImpl implements UserService {
                 msg.to = user.username
             }
 
-            mailService.send(msg)
+            mailService.sendAsync(msg)
 
         }
 

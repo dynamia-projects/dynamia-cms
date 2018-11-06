@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.core.services.impl
 
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
 import tools.dynamia.cms.core.api.Module
@@ -29,6 +30,7 @@ import tools.dynamia.integration.Containers
 import tools.dynamia.integration.sterotypes.Service
 
 @Service
+@CompileStatic
 class ModulesServiceImpl implements ModulesService {
 
 	private static final String CACHE_NAME = "modules"

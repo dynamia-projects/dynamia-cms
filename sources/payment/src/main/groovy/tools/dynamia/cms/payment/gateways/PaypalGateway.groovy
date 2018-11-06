@@ -21,13 +21,17 @@ import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 import tools.dynamia.cms.payment.PaymentException
 import tools.dynamia.cms.payment.PaymentForm
+import tools.dynamia.cms.payment.PaymentGateway
 import tools.dynamia.cms.payment.ResponseType
 import tools.dynamia.cms.payment.api.PaymentTransactionStatus
+import tools.dynamia.cms.payment.domain.PaymentGatewayAccount
+import tools.dynamia.cms.payment.domain.PaymentTransaction
+import tools.dynamia.cms.payment.services.PaymentService
 import tools.dynamia.commons.logger.LoggingService
 import tools.dynamia.commons.logger.SLF4JLoggingService
 
 @Service
-class PaypalGateway implements tools.dynamia.cms.payment.PaymentGateway {
+class PaypalGateway implements PaymentGateway {
 
     private static final String SANBOX_MODE = "sanboxMode"
 
@@ -51,12 +55,12 @@ class PaypalGateway implements tools.dynamia.cms.payment.PaymentGateway {
 
     private static final String SANBOX_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr"
 
-    private tools.dynamia.cms.payment.services.PaymentService service
+    private PaymentService service
 
     private LoggingService logger = new SLF4JLoggingService(PaypalGateway.class, "[PAYPAL] ")
 
     @Autowired
-    PaypalGateway(tools.dynamia.cms.payment.services.PaymentService service) {
+    PaypalGateway(PaymentService service) {
         super()
         this.service = service
 
@@ -93,9 +97,9 @@ class PaypalGateway implements tools.dynamia.cms.payment.PaymentGateway {
     }
 
     @Override
-    tools.dynamia.cms.payment.domain.PaymentTransaction newTransaction(String source, String baseURL) {
-        tools.dynamia.cms.payment.domain.PaymentTransaction tx = new tools.dynamia.cms.payment.domain.PaymentTransaction(source)
-
+    PaymentTransaction newTransaction(PaymentGatewayAccount account, String baseURL) {
+        PaymentTransaction tx = new PaymentTransaction(account.source)
+        tx.account = account
         if (!baseURL.endsWith("/")) {
             baseURL += "/"
         }
@@ -107,14 +111,14 @@ class PaypalGateway implements tools.dynamia.cms.payment.PaymentGateway {
     }
 
     @Override
-    PaymentForm createForm(tools.dynamia.cms.payment.domain.PaymentTransaction tx) {
-        Map<String, String> params = service.getGatewayConfigMap(this, tx.source)
+    PaymentForm createForm(PaymentTransaction tx) {
+        Map<String, String> params = tx.account.configurationMap
         PaymentForm form = new PaymentForm()
         form.httpMethod = "post"
 
         String sanboxMode = params.get(SANBOX_MODE)
 
-        if ("true".equals(sanboxMode) || "1".equals(sanboxMode)) {
+        if ("true" == sanboxMode || "1" == sanboxMode) {
             form.url = SANBOX_URL
         } else {
             form.setUrl(URL)
@@ -147,7 +151,7 @@ class PaypalGateway implements tools.dynamia.cms.payment.PaymentGateway {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    boolean processResponse(tools.dynamia.cms.payment.domain.PaymentTransaction tx, Map<String, String> response, ResponseType type) {
+    boolean processResponse(PaymentTransaction tx, Map<String, String> response, ResponseType type) {
 
         logger.info("Procesing response for " + tx.uuid)
         logger.info("Response Params:" + response)
@@ -164,8 +168,8 @@ class PaypalGateway implements tools.dynamia.cms.payment.PaymentGateway {
         String invoice = response.get(INVOICE)
         String business = response.get(BUSINESS)
 
-        if (business.equals(accountName) && amount.equals(tx.amount.toString())
-                && currency.equals(tx.currency)) {
+        if (business == accountName && amount == tx.amount.toString()
+                && currency == tx.currency) {
             tx.reference = txId
             tx.reference2 = invoice
             tx.reference3 = uuid

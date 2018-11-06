@@ -3,11 +3,8 @@ beanClass: tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig
 autofields: false
 
 fields:
-  paymentGatewayId:
-    label: Gateway ID
-  paymentGatewayName:
-    label: Gateway Name
-  paymentEnabled:    
+  paymentGatewayAccount:
+  paymentEnabled:
   minPaymentAmount:
     params:
       converter: converters.Decimal

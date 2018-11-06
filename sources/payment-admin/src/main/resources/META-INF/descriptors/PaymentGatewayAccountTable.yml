@@ -1,0 +1,11 @@
+view: table
+beanClass: tools.dynamia.cms.payment.domain.PaymentGatewayAccount
+autofields: false
+
+fields:
+  name:
+  gatewayId:
+    label: Gateway
+  enabled:
+  source:
+  uuid:

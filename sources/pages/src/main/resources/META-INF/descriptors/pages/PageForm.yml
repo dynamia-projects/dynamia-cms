@@ -34,7 +34,7 @@ fields:
         component: cmseditor
         params:
             span: 3
-            height: 400px
+            height: 600px
             showLabel: false
             
     imageURL:

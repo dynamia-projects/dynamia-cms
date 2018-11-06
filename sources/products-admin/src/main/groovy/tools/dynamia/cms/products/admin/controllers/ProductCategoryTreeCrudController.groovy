@@ -16,10 +16,23 @@
 package tools.dynamia.cms.products.admin.controllers
 
 import tools.dynamia.cms.products.domain.ProductCategory
+import tools.dynamia.domain.query.QueryConditions
+import tools.dynamia.domain.query.QueryParameters
 import tools.dynamia.zk.crud.TreeCrudController
 
 /**
  * Created by Mario on 18/11/2014.
  */
 class ProductCategoryTreeCrudController extends TreeCrudController<ProductCategory> {
+
+
+    @Override
+    protected Collection<ProductCategory> loadRoots() {
+        return crudService.find(ProductCategory, QueryParameters.with("active", true).add("parent", QueryConditions.isNull()).orderBy("name"))
+    }
+
+    @Override
+    protected Collection<ProductCategory> loadChildren(ProductCategory parent) {
+        return crudService.find(ProductCategory, QueryParameters.with("active", true).add("parent", parent).orderBy("name"))
+    }
 }

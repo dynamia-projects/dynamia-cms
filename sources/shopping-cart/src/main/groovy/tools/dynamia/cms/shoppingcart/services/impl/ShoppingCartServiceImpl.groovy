@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.shoppingcart.services.impl
 
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.transaction.annotation.Propagation
@@ -34,6 +35,14 @@ import tools.dynamia.cms.payment.PaymentTransactionListener
 import tools.dynamia.cms.payment.api.PaymentTransactionStatus
 import tools.dynamia.cms.payment.domain.PaymentTransaction
 import tools.dynamia.cms.payment.services.PaymentService
+import tools.dynamia.cms.shoppingcart.ShoppingCartHolder
+import tools.dynamia.cms.shoppingcart.ShoppingCartItemProvider
+import tools.dynamia.cms.shoppingcart.ShoppingException
+import tools.dynamia.cms.shoppingcart.domain.ShoppingCart
+import tools.dynamia.cms.shoppingcart.domain.ShoppingCartItem
+import tools.dynamia.cms.shoppingcart.domain.ShoppingOrder
+import tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig
+import tools.dynamia.cms.shoppingcart.domain.enums.ShoppingCartStatus
 import tools.dynamia.cms.shoppingcart.services.ShoppingCartService
 import tools.dynamia.cms.users.UserHolder
 import tools.dynamia.cms.users.api.UserProfile
@@ -59,6 +68,7 @@ import toosl.dynamia.cms.shoppingcart.dto.ShoppingOrderDTO
  * @author Mario Serrano Leones
  */
 @Service
+@CompileStatic
 class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransactionListener {
 
     private static final String CACHE_NAME = "shopping"
@@ -82,9 +92,9 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     private ClassMessages classMessages
 
     @Override
-    tools.dynamia.cms.shoppingcart.domain.ShoppingCartItem getItem(Site site, String code) {
-        for (tools.dynamia.cms.shoppingcart.ShoppingCartItemProvider provider : Containers.get().findObjects(tools.dynamia.cms.shoppingcart.ShoppingCartItemProvider.class)) {
-            tools.dynamia.cms.shoppingcart.domain.ShoppingCartItem item = provider.getItem(site, code)
+    ShoppingCartItem getItem(Site site, String code) {
+        for (ShoppingCartItemProvider provider : Containers.get().findObjects(ShoppingCartItemProvider.class)) {
+            ShoppingCartItem item = provider.getItem(site, code)
             if (item != null) {
                 return item
             }
@@ -95,10 +105,10 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Cacheable(value = ShoppingCartServiceImpl.CACHE_NAME, key = "'cfg'+#site.key")
-    tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig getConfiguration(Site site) {
-        tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig config = crudService.findSingle(tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig.class, "site", site)
+    ShoppingSiteConfig getConfiguration(Site site) {
+        ShoppingSiteConfig config = crudService.findSingle(ShoppingSiteConfig.class, "site", site)
         if (config == null) {
-            config = new tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig()
+            config = new ShoppingSiteConfig()
             config.site = site
             crudService.create(config)
         }
@@ -108,7 +118,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     }
 
     @Override
-    tools.dynamia.cms.shoppingcart.domain.ShoppingOrder createOrder(tools.dynamia.cms.shoppingcart.domain.ShoppingCart shoppingCart, tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig config) {
+    ShoppingOrder createOrder(ShoppingCart shoppingCart, ShoppingSiteConfig config) {
         shoppingCart.shipmentPercent = config.shipmentPercent
         shoppingCart.compute()
 
@@ -125,7 +135,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
         }
 
         if (config.minQuantityByProducts > 0) {
-            for (tools.dynamia.cms.shoppingcart.domain.ShoppingCartItem item : (shoppingCart.items)) {
+            for (ShoppingCartItem item : (shoppingCart.items)) {
                 if (item.quantity < config.minQuantityByProducts) {
                     throw new ValidationError("You should buy at least " + config.minQuantityByProducts + " " + item.name)
                 }
@@ -142,9 +152,9 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
         PaymentTransaction tx = null
 
-        if (config.paymentGatewayId != null) {
-            PaymentGateway gateway = paymentService.findGateway(config.paymentGatewayId)
-            tx = gateway.newTransaction(config.site.key, CMSUtil.getSiteURL(config.site, "/"))
+        if (config.paymentGatewayAccount != null) {
+            PaymentGateway gateway = paymentService.findGateway(config.paymentGatewayAccount.gatewayId)
+            tx = gateway.newTransaction(config.paymentGatewayAccount, CMSUtil.getSiteURL(config.site, "/"))
             tx.gatewayId = gateway.id
         } else {
             tx = newLocalPaymentTransaction()
@@ -163,7 +173,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
             tx.payerCode = user.code
         }
 
-        tools.dynamia.cms.shoppingcart.domain.ShoppingOrder order = new tools.dynamia.cms.shoppingcart.domain.ShoppingOrder()
+        ShoppingOrder order = new ShoppingOrder()
         order.shoppingCart = shoppingCart
         order.transaction = tx
         order.sync()
@@ -183,10 +193,10 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    void saveOrder(tools.dynamia.cms.shoppingcart.domain.ShoppingOrder order) {
+    void saveOrder(ShoppingOrder order) {
         if (order.id == null) {
             SiteParameter param = siteService.getSiteParameter(order.site, LAST_SHOPPING_ORDER_NUMBER, "0")
-            tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig config = getConfiguration(order.site)
+            ShoppingSiteConfig config = getConfiguration(order.site)
 
             long lastNumber = Long.parseLong(param.value)
             lastNumber++
@@ -215,7 +225,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
             }
 
             order.syncTransaction()
-            order.shoppingCart.status = tools.dynamia.cms.shoppingcart.domain.enums.ShoppingCartStatus.COMPLETED
+            order.shoppingCart.status = ShoppingCartStatus.COMPLETED
 
             order.transaction.description = "Orden No. " + order.number + ". Compra de "
             +order.shoppingCart.quantity + " producto(s)"
@@ -234,36 +244,36 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    void cancelOrder(tools.dynamia.cms.shoppingcart.domain.ShoppingOrder order) {
+    void cancelOrder(ShoppingOrder order) {
         if (order.id != null) {
 
             if (order.transaction.status == PaymentTransactionStatus.COMPLETED) {
-                throw new tools.dynamia.cms.shoppingcart.ShoppingException(
+                throw new ShoppingException(
                         "No se puede cancelar order No. " + order.number + " porque ya fue COMPLETADA y PAGADA")
             }
 
             if (order.transaction.status == PaymentTransactionStatus.PROCESSING) {
-                throw new tools.dynamia.cms.shoppingcart.ShoppingException(
+                throw new ShoppingException(
                         "No se puede cancelar order No. " + order.number + " porque ya esta siendo PROCESADA")
             }
 
             if (order.transaction.status == PaymentTransactionStatus.REJECTED) {
-                throw new tools.dynamia.cms.shoppingcart.ShoppingException(
+                throw new ShoppingException(
                         "No se puede cancelar order No. " + order.number + " porque ya fue RECHAZADA")
             }
 
             order.transaction.status = PaymentTransactionStatus.CANCELLED
-            order.shoppingCart.status = tools.dynamia.cms.shoppingcart.domain.enums.ShoppingCartStatus.CANCELLED
+            order.shoppingCart.status = ShoppingCartStatus.CANCELLED
             crudService.update(order)
 
             recreateShoppingCart(order.shoppingCart)
         }
     }
 
-    private void recreateShoppingCart(tools.dynamia.cms.shoppingcart.domain.ShoppingCart shoppingCart) {
-        tools.dynamia.cms.shoppingcart.domain.ShoppingCart newsc = tools.dynamia.cms.shoppingcart.ShoppingCartHolder.get().getCart("shop")
-        for (tools.dynamia.cms.shoppingcart.domain.ShoppingCartItem oldItem : (shoppingCart.items)) {
-            tools.dynamia.cms.shoppingcart.domain.ShoppingCartItem newItem = oldItem.clone()
+    private void recreateShoppingCart(ShoppingCart shoppingCart) {
+        ShoppingCart newsc = ShoppingCartHolder.get().getCart("shop")
+        for (ShoppingCartItem oldItem : (shoppingCart.items)) {
+            ShoppingCartItem newItem = oldItem.clone()
             newsc.addItem(newItem, newItem.quantity)
         }
 
@@ -271,7 +281,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
     }
 
-    private Map<String, Object> getDescriptionsVars(tools.dynamia.cms.shoppingcart.domain.ShoppingCart shoppingCart) {
+    private Map<String, Object> getDescriptionsVars(ShoppingCart shoppingCart) {
         Map<String, Object> vars = new HashMap<String, Object>()
         vars.put("QUANTITY", shoppingCart.quantity)
         return vars
@@ -281,8 +291,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     void onStatusChanged(PaymentTransactionEvent evt) {
         PaymentTransaction tx = evt.transaction
         if (tx.status == PaymentTransactionStatus.COMPLETED) {
-            tools.dynamia.cms.shoppingcart.domain.ShoppingOrder order = crudService.findSingle(tools.dynamia.cms.shoppingcart.domain.ShoppingOrder.class, "transaction", tx)
-            if (order != null) {
+            ShoppingOrder order = crudService.findSingle(ShoppingOrder.class, "transaction", tx)
+                if (order != null) {
                 notifyOrderCompleted(order)
             } else {
                 logger.error("No shopping order found for transaction " + tx.uuid)
@@ -292,9 +302,9 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     }
 
     @Override
-    void notifyOrderCompleted(tools.dynamia.cms.shoppingcart.domain.ShoppingOrder order) {
+    void notifyOrderCompleted(ShoppingOrder order) {
 
-        tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig config = getConfiguration(order.site)
+        ShoppingSiteConfig config = getConfiguration(order.site)
         logger.info("Order Completed " + order.number)
 
         notifyOrderCustomer(config, order)
@@ -302,7 +312,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
     }
 
-    private void notifyOrderInternal(tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig config, tools.dynamia.cms.shoppingcart.domain.ShoppingOrder order) {
+    private void notifyOrderInternal(ShoppingSiteConfig config, ShoppingOrder order) {
         try {
             if (config.notificationMailTemplate != null) {
                 logger.info("Sending notification email " + config.notificationEmails)
@@ -328,7 +338,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
         }
     }
 
-    private void notifyOrderCustomer(tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig config, tools.dynamia.cms.shoppingcart.domain.ShoppingOrder order) {
+    private void notifyOrderCustomer(ShoppingSiteConfig config, ShoppingOrder order) {
         try {
             if (config.orderCompletedMailTemplate != null) {
                 logger.info("Sending customer email " + order.shoppingCart.user.username)
@@ -357,7 +367,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    void shipOrder(tools.dynamia.cms.shoppingcart.domain.ShoppingOrder shoppingOrder) {
+    void shipOrder(ShoppingOrder shoppingOrder) {
 
         if (!shoppingOrder.completed || !shoppingOrder.transaction.confirmed) {
             throw new ValidationError(msg("OrderNotConfirmed", shoppingOrder.number))
@@ -391,12 +401,12 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     }
 
     @Override
-    void notifyOrderShipped(tools.dynamia.cms.shoppingcart.domain.ShoppingOrder order) {
+    void notifyOrderShipped(ShoppingOrder order) {
         if (!order.shipped) {
             throw new ValidationError("Order " + order.number + " is not shipped cannot be notify it")
         }
 
-        tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig config = getConfiguration(order.site)
+        ShoppingSiteConfig config = getConfiguration(order.site)
         logger.info("Order Shipped " + order.number)
         try {
             if (config.orderShippedMailTemplate != null) {
@@ -419,27 +429,27 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
         }
     }
 
-    private MailMessage createMailMessage(MailTemplate template, MailAccount mailAccount, tools.dynamia.cms.shoppingcart.domain.ShoppingOrder order) {
+    private MailMessage createMailMessage(MailTemplate template, MailAccount mailAccount, ShoppingOrder order) {
         MailMessage message = new MailMessage()
         message.mailAccount = mailAccount
         message.template = template
         message.templateModel.put("order", order)
 
-        tools.dynamia.cms.shoppingcart.domain.ShoppingCart cart = crudService.reload(order.shoppingCart)
+        ShoppingCart cart = crudService.reload(order.shoppingCart)
 
-        message.templateModel.put("cart", cart)
-        message.templateModel.put("itemsTable", buildShoppingCartTable(cart))
-        message.templateModel.put("items", cart.items)
-        message.templateModel.put("shippingAddress", getShippingAddress(order))
-        message.templateModel.put("billingAddress", order.billingAddress)
-        message.templateModel.put("tx", order.transaction)
-        message.templateModel.put("user", order.shoppingCart.user)
-        message.templateModel.put("identification", order.shoppingCart.user.identification)
-        message.templateModel.put("deliveryType", order.payAtDelivery ? "Pago Envio Contraentrega" : "")
+        message.templateModel["cart"] = cart
+        message.templateModel["itemsTable"] = buildShoppingCartTable(cart)
+        message.templateModel["items"] = cart.items
+        message.templateModel["shippingAddress"] = getShippingAddress(order)
+        message.templateModel["billingAddress"] = order.billingAddress
+        message.templateModel["tx"] = order.transaction
+        message.templateModel["user"] = order.shoppingCart.user
+        message.templateModel["identification"] = order.shoppingCart.user.identification
+        message.templateModel["deliveryType"] = order.payAtDelivery ? "Pago Envio Contraentrega" : ""
         return message
     }
 
-    private Object getShippingAddress(tools.dynamia.cms.shoppingcart.domain.ShoppingOrder order) {
+    private Object getShippingAddress(ShoppingOrder order) {
         UserContactInfo address = order.shippingAddress
         if (order.pickupAtStore) {
             address = new UserContactInfo()
@@ -455,14 +465,14 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
         return address
     }
 
-    private String buildShoppingCartTable(tools.dynamia.cms.shoppingcart.domain.ShoppingCart shoppingCart) {
+    private String buildShoppingCartTable(ShoppingCart shoppingCart) {
         HtmlTableBuilder htb = new HtmlTableBuilder()
 
         htb.addColumnHeader("")
 
         htb.addColumnHeader(msg("ItemSKU"), msg("ItemName"), msg("ItemUnitPrice"), msg("ItemQuantity"),
                 msg("ItemPrice"))
-        for (tools.dynamia.cms.shoppingcart.domain.ShoppingCartItem item : (shoppingCart.items)) {
+        for (ShoppingCartItem item : (shoppingCart.items)) {
             htb.addRow()
             htb.addData(htb.rowCount, item.sku, item.name, item.unitPrice, item.quantity,
                     item.totalPrice)
@@ -485,10 +495,10 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     }
 
     @Override
-    void sendOrder(tools.dynamia.cms.shoppingcart.domain.ShoppingOrder order) {
+    void sendOrder(ShoppingOrder order) {
 
         order = crudService.reload(order)
-        tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig cfg = getConfiguration(order.site)
+        ShoppingSiteConfig cfg = getConfiguration(order.site)
 
         if (cfg.orderSenderURL == null || cfg.orderSenderURL.empty) {
             throw new ValidationError("Cannot send order " + order.number + " because no sender is configured")
@@ -516,8 +526,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
     }
 
     @Override
-    List<tools.dynamia.cms.shoppingcart.domain.ShoppingOrder> getOrders(User user) {
-        return crudService.find(tools.dynamia.cms.shoppingcart.domain.ShoppingOrder.class,
+    List<ShoppingOrder> getOrders(User user) {
+        return crudService.find(ShoppingOrder.class,
                 QueryParameters
                         .with("transaction.status",
                         QueryConditions.in(PaymentTransactionStatus.COMPLETED,
@@ -531,7 +541,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
         try {
             List<Site> sites = crudService.find(Site.class, "offline", false)
             for (Site site : sites) {
-                tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig cfg = getConfiguration(site)
+                ShoppingSiteConfig cfg = getConfiguration(site)
                 if (cfg != null && cfg.autoSendOrders && cfg.orderSenderURL != null
                         && !cfg.orderSenderURL.empty) {
                     ShoppingOrderSender sender = HttpRemotingServiceClient.build(ShoppingOrderSender.class)
@@ -541,7 +551,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
                     crudService.executeWithinTransaction {
 
-                        List<tools.dynamia.cms.shoppingcart.domain.ShoppingOrder> orders = crudService.find(tools.dynamia.cms.shoppingcart.domain.ShoppingOrder.class,
+                        List<ShoppingOrder> orders = crudService.find(ShoppingOrder.class,
                                 QueryParameters.with("sended", false)
                                         .add("transaction.status", PaymentTransactionStatus.COMPLETED)
                                         .add("site", site))
@@ -559,7 +569,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
         }
     }
 
-    private void sendOrders(ShoppingOrderSender sender, List<tools.dynamia.cms.shoppingcart.domain.ShoppingOrder> orders, tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig cfg) {
+    private void sendOrders(ShoppingOrderSender sender, List<ShoppingOrder> orders, ShoppingSiteConfig cfg) {
         List<ShoppingOrderDTO> dtos = orders.collect { it.toDTO() }
 
         if (!dtos.empty) {
@@ -569,7 +579,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
                 if (response != null) {
                     logger.info("Sending response recieved. " + response.size())
-                    for (tools.dynamia.cms.shoppingcart.domain.ShoppingOrder order : orders) {
+                    for (ShoppingOrder order : orders) {
                         Response resp = Response.find(response, order.number)
                         if (resp != null) {
                             if (resp.error) {

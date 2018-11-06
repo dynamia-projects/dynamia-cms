@@ -4,18 +4,23 @@ autofields: false
 
 
 fields:
-    id:
-    name:
-      params:
-        header:
-          width: 200px
-    relatedCategory:
-       label: Related
-    description:
-    template:
-        description: Product Template    
-    alternateTemplate:
-    productsCount:
-      label: Products
-    active:
-    externalRef:
+  name:
+    params:
+      header:
+        width: 200px
+  relatedCategory:
+    label: Related
+  description:
+  template:
+    description: Product Template
+  alternateTemplate:
+  productsCount:
+    label: Products
+  active:
+  externalRef:
+  id:
+  order:
+
+params:
+  orderBy: name
+  mold: default

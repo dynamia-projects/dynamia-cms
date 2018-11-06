@@ -25,98 +25,17 @@ class ProductCategoryDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = 6391246496268751494L
 
-    private ProductCategoryDTO parent
+    ProductCategoryDTO parent
 
-    private List<ProductCategoryDTO> subcategories = new ArrayList<>()
+    String name
+    String alternateName
+    String description
+    boolean active
+    Long externalRef
+    Long relatedCategoryExternalRef
+    String tags
+    int order
 
-    private String name
-    private String alternateName
-    private String description
-    private boolean active
-    private Long externalRef
-    private Long relatedCategoryExternalRef
-    private int order
-
-    int getOrder() {
-		return order
-    }
-
-    void setOrder(int order) {
-		this.order = order
-    }
-
-    String getAlternateName() {
-		return alternateName
-    }
-
-    void setAlternateName(String alternateName) {
-		this.alternateName = alternateName
-    }
-
-	private List<ProductCategoryDetailDTO> details = new ArrayList<>()
-
-    Long getRelatedCategoryExternalRef() {
-		return relatedCategoryExternalRef
-    }
-
-    void setRelatedCategoryExternalRef(Long relatedCategoryExternalRef) {
-		this.relatedCategoryExternalRef = relatedCategoryExternalRef
-    }
-
-    List<ProductCategoryDetailDTO> getDetails() {
-		return details
-    }
-
-    void setDetails(List<ProductCategoryDetailDTO> details) {
-		this.details = details
-    }
-
-    Long getExternalRef() {
-		return externalRef
-    }
-
-    void setExternalRef(Long externalRef) {
-		this.externalRef = externalRef
-    }
-
-    boolean isActive() {
-		return active
-    }
-
-    void setActive(boolean active) {
-		this.active = active
-    }
-
-    ProductCategoryDTO getParent() {
-		return parent
-    }
-
-    void setParent(ProductCategoryDTO parent) {
-		this.parent = parent
-    }
-
-    List<ProductCategoryDTO> getSubcategories() {
-		return subcategories
-    }
-
-    void setSubcategories(List<ProductCategoryDTO> subcategories) {
-		this.subcategories = subcategories
-    }
-
-    String getName() {
-		return name
-    }
-
-    void setName(String name) {
-		this.name = name
-    }
-
-    String getDescription() {
-		return description
-    }
-
-    void setDescription(String description) {
-		this.description = description
-    }
-
+    List<ProductCategoryDTO> subcategories = new ArrayList<>()
+    List<ProductCategoryDetailDTO> details = new ArrayList<>()
 }

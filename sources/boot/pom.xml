@@ -30,8 +30,9 @@
         <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <hibernate.version>5.2.10.Final</hibernate.version>
-        <groovy.version>2.5.0</groovy.version>
+        <spring.version>4.3.18.RELEASE</spring.version>
+        <hibernate.version>5.2.17.Final</hibernate.version>
+        <groovy.version>2.5.2</groovy.version>
         <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
         <thymeleaf.layout.version>2.2.2</thymeleaf.layout.version>
     </properties>
@@ -181,6 +182,18 @@
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.shopping.admin</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.payment</artifactId>
+            <version>3.0.0.Beta</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.payment.admin</artifactId>
             <version>3.0.0.Beta</version>
         </dependency>
 

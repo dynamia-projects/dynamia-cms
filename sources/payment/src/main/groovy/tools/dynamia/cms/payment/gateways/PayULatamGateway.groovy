@@ -21,8 +21,12 @@ import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 import tools.dynamia.cms.payment.PaymentException
 import tools.dynamia.cms.payment.PaymentForm
+import tools.dynamia.cms.payment.PaymentGateway
 import tools.dynamia.cms.payment.ResponseType
 import tools.dynamia.cms.payment.api.PaymentTransactionStatus
+import tools.dynamia.cms.payment.domain.PaymentGatewayAccount
+import tools.dynamia.cms.payment.domain.PaymentTransaction
+import tools.dynamia.cms.payment.services.PaymentService
 import tools.dynamia.commons.logger.LoggingService
 import tools.dynamia.commons.logger.SLF4JLoggingService
 
@@ -33,7 +37,7 @@ import static tools.dynamia.cms.payment.PaymentUtils.mapToString
 import static tools.dynamia.cms.payment.PaymentUtils.md5
 
 @Service
-class PayULatamGateway implements tools.dynamia.cms.payment.PaymentGateway {
+class PayULatamGateway implements PaymentGateway {
 
     private static final String SHIPPING_CITY = "shippingCity"
     private static final String SHIPPING_ADDRESS = "shippingAddress"
@@ -74,12 +78,12 @@ class PayULatamGateway implements tools.dynamia.cms.payment.PaymentGateway {
     private static final String PRODUCTION_URL = "productionUrl"
     private static final String RES_STATE_POL = "state_pol"
 
-    private tools.dynamia.cms.payment.services.PaymentService service
+    private PaymentService service
 
     private LoggingService logger = new SLF4JLoggingService(PayULatamGateway.class, "[PAYULATAM] ")
 
     @Autowired
-    PayULatamGateway(tools.dynamia.cms.payment.services.PaymentService service) {
+    PayULatamGateway(PaymentService service) {
         super()
         this.service = service
 
@@ -123,22 +127,28 @@ class PayULatamGateway implements tools.dynamia.cms.payment.PaymentGateway {
     }
 
     @Override
-    tools.dynamia.cms.payment.domain.PaymentTransaction newTransaction(String source, String baseURL) {
-        tools.dynamia.cms.payment.domain.PaymentTransaction tx = new tools.dynamia.cms.payment.domain.PaymentTransaction(source)
-
+    PaymentTransaction newTransaction(PaymentGatewayAccount account, String baseURL) {
+        if (account == null) {
+            throw new PaymentException("No account for new transaction")
+        }
+        PaymentTransaction tx = new PaymentTransaction(account.source)
+        tx.account = account
         tx.responseURL = baseURL + "payment/" + id + "/response"
         tx.confirmationURL = baseURL + "payment/" + id + "/confirmation"
         return tx
     }
 
     @Override
-    PaymentForm createForm(tools.dynamia.cms.payment.domain.PaymentTransaction tx) {
-        Map<String, String> params = service.getGatewayConfigMap(this, tx.source)
+    PaymentForm createForm(PaymentTransaction tx) {
+        if (tx.account == null) {
+            throw new PaymentException("Cannot create payment form because transaction need an Account")
+        }
+        Map<String, String> params = tx.account.configurationMap
         PaymentForm form = new PaymentForm()
         form.httpMethod = "post"
 
         boolean test = false
-        if (!"1".equals(params.get(TEST))) {
+        if ("1" != params.get(TEST)) {
             test = tx.test
         } else {
             test = true
@@ -151,7 +161,7 @@ class PayULatamGateway implements tools.dynamia.cms.payment.PaymentGateway {
 
         DecimalFormat formatter = new DecimalFormat("######")
 
-        if (!"1".equals(params.get(TEST))) {
+        if ("1" != params.get(TEST)) {
             form.addParam(TEST, tx.test ? "1" : "0")
         } else {
             form.addParam(TEST, "1")
@@ -190,7 +200,7 @@ class PayULatamGateway implements tools.dynamia.cms.payment.PaymentGateway {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    boolean processResponse(tools.dynamia.cms.payment.domain.PaymentTransaction tx, Map<String, String> response, ResponseType type) {
+    boolean processResponse(PaymentTransaction tx, Map<String, String> response, ResponseType type) {
         Map<String, String> params = service.getGatewayConfigMap(this, tx.source)
 
         if (tx.endDate == null) {
@@ -257,7 +267,7 @@ class PayULatamGateway implements tools.dynamia.cms.payment.PaymentGateway {
             tx.reference = response.get(RES_REFERENCE_POL)
             tx.reference2 = response.get(RES_CUS)
             tx.reference3 = response.get(RES_PSE_REFERENCE1) + " " + response.get(RES_PSE_REFERENCE2) + " "
-                    + response.get(RES_PSE_REFERENCE3)
+            +response.get(RES_PSE_REFERENCE3)
             tx.gatewayResponse = mapToString(response)
             service.saveTransaction(tx)
             return true

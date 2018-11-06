@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.products.services.impl
 
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.remoting.RemoteConnectFailureException
@@ -40,7 +41,7 @@ import tools.dynamia.domain.jpa.JpaQuery
 import tools.dynamia.domain.query.BooleanOp
 import tools.dynamia.domain.query.QueryConditions
 import tools.dynamia.domain.query.QueryParameters
-import tools.dynamia.domain.services.CrudService
+import tools.dynamia.domain.services.AbstractService
 import tools.dynamia.domain.util.QueryBuilder
 import tools.dynamia.integration.Containers
 import tools.dynamia.web.util.HttpRemotingServiceClient
@@ -56,12 +57,11 @@ import static tools.dynamia.domain.query.QueryConditions.*
  * @author Mario Serrano Leones
  */
 @Service
-class ProductsServiceImpl implements tools.dynamia.cms.products.services.ProductsService {
+@CompileStatic
+class ProductsServiceImpl extends AbstractService implements ProductsService {
 
     private static final String CACHE_NAME = "products"
 
-    @Autowired
-    private CrudService crudService
 
     @PersistenceContext
     private EntityManager entityManager
@@ -79,7 +79,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
 
     @Override
     ProductsSiteConfig getSiteConfig(String token) {
-        return crudService.findSingle(ProductsSiteConfig.class, "token", token)
+        return crudService().findSingle(ProductsSiteConfig.class, "token", token)
     }
 
     @Override
@@ -89,13 +89,13 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         qp.add("active", true)
         qp.add("alias", QueryConditions.eq(alias))
 
-        return crudService.findSingle(ProductCategory.class, qp)
+        return crudService().findSingle(ProductCategory.class, qp)
     }
 
     @Override
     @Cacheable(value = ProductsServiceImpl.CACHE_NAME, key = "'cat'+#categoryId")
     ProductCategory getCategoryById(Long categoryId) {
-        return crudService.find(ProductCategory.class, categoryId)
+        return crudService().find(ProductCategory.class, categoryId)
     }
 
     @Override
@@ -106,7 +106,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         qp.add("active", true)
         qp.orderBy("order", true)
 
-        return crudService.find(ProductCategory.class, qp)
+        return crudService().find(ProductCategory.class, qp)
     }
 
     @Override
@@ -117,7 +117,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         qp.add("active", true)
         qp.orderBy("order", true)
 
-        return crudService.find(ProductCategory.class, qp)
+        return crudService().find(ProductCategory.class, qp)
     }
 
     @Override
@@ -168,7 +168,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         qp.paginate(getDefaultPageSize(category.site))
         qp.orderBy(orderfield, asc)
 
-        return crudService.find(Product.class, qp)
+        return crudService().find(Product.class, qp)
     }
 
     @Override
@@ -177,14 +177,14 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         qp.add("brand", brand)
         qp.orderBy("price", true)
         qp.paginate(getDefaultPageSize(brand.site))
-        return crudService.find(Product.class, qp)
+        return crudService().find(Product.class, qp)
     }
 
     @Override
     List<Product> filterProducts(Site site, QueryParameters params) {
         params.add("site", site)
 
-        return crudService.find(Product.class, params)
+        return crudService().find(Product.class, params)
     }
 
     @Override
@@ -241,7 +241,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
 
         if (params.size() > 0) {
             params.paginate(getDefaultPageSize(site))
-            return crudService.executeQuery(builder, params)
+            return crudService().executeQuery(builder, params)
         } else {
             return null
         }
@@ -274,7 +274,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         qp.add("featured", true)
         qp.paginate(getDefaultPageSize(site) + 2)
         qp.orderBy("brand.name, price", true)
-        PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp)
+        PagedList<Product> list = (PagedList<Product>) crudService().find(Product.class, qp)
         return list.dataSource.pageData
     }
 
@@ -285,7 +285,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         qp.add("sale", true)
         qp.paginate(getDefaultPageSize(site) + 2)
         qp.orderBy("brand.name, price", true)
-        PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp)
+        PagedList<Product> list = (PagedList<Product>) crudService().find(Product.class, qp)
         return list.dataSource.pageData
     }
 
@@ -294,7 +294,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         QueryParameters qp = QueryParameters.with("active", true).add("site", site)
         qp.paginate(getDefaultPageSize(site) + 2)
         qp.orderBy("views", false)
-        PagedList<Product> list = (PagedList<Product>) crudService.find(Product.class, qp)
+        PagedList<Product> list = (PagedList<Product>) crudService().find(Product.class, qp)
         return list.dataSource.pageData
     }
 
@@ -302,7 +302,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
     Product getProductBySku(Site site, String sku) {
         QueryParameters qp = QueryParameters.with("active", true).add("site", site).add("sku", sku)
 
-        return crudService.findSingle(Product.class, qp)
+        return crudService().findSingle(Product.class, qp)
 
     }
 
@@ -310,7 +310,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
     Product getProductById(Site site, Long id) {
         QueryParameters qp = QueryParameters.with("active", true).add("site", site).add("id", id)
 
-        return crudService.findSingle(Product.class, qp)
+        return crudService().findSingle(Product.class, qp)
 
     }
 
@@ -318,7 +318,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
     List<Product> getProductsById(List<Long> ids) {
         QueryParameters qp = QueryParameters.with("active", true)
         qp.add("id", QueryConditions.in(ids))
-        return crudService.find(Product.class, qp)
+        return crudService().find(Product.class, qp)
     }
 
     @Override
@@ -354,13 +354,13 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         QueryParameters qp = QueryParameters.with("site", site)
         qp.add("alias", QueryConditions.eq(alias))
 
-        return crudService.findSingle(ProductBrand.class, qp)
+        return crudService().findSingle(ProductBrand.class, qp)
     }
 
     @Override
     @Cacheable(value = ProductsServiceImpl.CACHE_NAME, key = "'cfg'+#site.key")
     ProductsSiteConfig getSiteConfig(Site site) {
-        return crudService.findSingle(ProductsSiteConfig.class, "site", site)
+        return crudService().findSingle(ProductsSiteConfig.class, "site", site)
     }
 
     @Override
@@ -369,18 +369,28 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
             return Collections.EMPTY_LIST
         }
 
+        List<Long> idCategories = crudService().executeQuery("select c.id from ProductCategory c where c.site = :site and c.active = true and c.parent is null and (c.name like :param or c.tags like :param)",
+                QueryParameters.with("site", site).add("param", param))
+        String cats = ""
+        if (!idCategories.empty) {
+            cats = " or p.category.parent.id in (:idsCategories) "
+        }
+
         QueryBuilder query = QueryBuilder.select(Product.class, "p")
                 .leftJoin("p.brand brd").where("p.active = true").and("p.site = :site")
-                .and("(p.name like :param or p.category.name like :param or brd.name like :param "
-                + "or p.description like :param or p.sku like :param )")
+                .and("(p.name like :param or p.category.name like :param or p.category.tags like :param or brd.name like :param "
+                + "or p.description like :param or p.sku like :param $cats )")
                 .orderBy("p.price")
 
         QueryParameters qp = new QueryParameters()
         qp.add("param", param)
         qp.add("site", site)
+        if (!idCategories.empty) {
+            qp.add("idsCategories", idCategories)
+        }
         qp.paginate(getDefaultPageSize(site))
 
-        return crudService.executeQuery(query, qp)
+        return crudService().executeQuery(query, qp)
     }
 
     @Override
@@ -417,7 +427,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
     List<RelatedProduct> getRelatedProducts(Product product, boolean requires) {
         List<RelatedProduct> relateds = new ArrayList<>()
 
-        relateds.addAll(crudService.find(RelatedProduct.class, QueryParameters.with("active", true)
+        relateds.addAll(crudService().find(RelatedProduct.class, QueryParameters.with("active", true)
                 .add("targetProduct", product).add("required", requires).orderBy("price", false)))
 
         List<ProductCategory> categories = new ArrayList<>()
@@ -430,7 +440,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
             }
         }
         if (!categories.isEmpty()) {
-            relateds.addAll(crudService.find(RelatedProduct.class,
+            relateds.addAll(crudService().find(RelatedProduct.class,
                     QueryParameters.with("active", true).add("targetCategory", QueryConditions.in(categories))
                             .add("required", requires).orderBy("price", false)))
         }
@@ -441,7 +451,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void updateViewsCount(Product product) {
-        crudService.updateField(product, "views", product.views + 1L)
+        crudService().updateField(product, "views", product.views + 1L)
     }
 
     private int getDefaultPageSize(Site site) {
@@ -465,7 +475,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         qp.add("category", category)
         qp.paginate(getDefaultPageSize(category.site))
 
-        return crudService.executeQuery(query, qp)
+        return crudService().executeQuery(query, qp)
 
     }
 
@@ -480,7 +490,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         qp.add("site", site)
         qp.paginate(getDefaultPageSize(site) * 2)
 
-        PagedList list = (PagedList) crudService.executeQuery(query, qp)
+        PagedList list = (PagedList) crudService().executeQuery(query, qp)
         List<Product> products = list.dataSource.pageData
 
         return products
@@ -497,7 +507,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         qp.add("site", site)
         qp.paginate(getDefaultPageSize(site))
 
-        PagedList list = (PagedList) crudService.executeQuery(query, qp)
+        PagedList list = (PagedList) crudService().executeQuery(query, qp)
         return list.dataSource.pageData
     }
 
@@ -512,7 +522,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
                 }
                 story.lastView = new Date()
                 story.views = story.views + 1
-                crudService.save(story)
+                crudService().save(story)
             }
         } catch (Exception e) {
         }
@@ -529,7 +539,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
                 }
                 story.lastShop = new Date()
                 story.shops = story.shops + 1
-                crudService.save(story)
+                crudService().save(story)
             }
         } catch (Exception e) {
         }
@@ -543,7 +553,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
 
         QueryParameters qp = QueryParameters.with("product", product).add("user", user)
 
-        ProductUserStory userStory = crudService.findSingle(ProductUserStory.class, qp)
+        ProductUserStory userStory = crudService().findSingle(ProductUserStory.class, qp)
         if (userStory == null) {
             userStory = new ProductUserStory()
             userStory.product = product
@@ -567,14 +577,14 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
     @Override
     List<ProductDetail> getProductsDetails(List<Product> products) {
         QueryParameters qp = QueryParameters.with("product", QueryConditions.in(products))
-        return crudService.find(ProductDetail.class, qp)
+        return crudService().find(ProductDetail.class, qp)
     }
 
     @Override
     List<Store> getStores(Site site) {
         QueryParameters qp = QueryParameters.with("site", site).orderBy("contactInfo.city", true)
 
-        return crudService.find(Store.class, qp)
+        return crudService().find(Store.class, qp)
     }
 
     @Override
@@ -620,7 +630,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         qp.add("active", true)
         qp.add("site", category.site)
         qp.orderBy("order", true)
-        return crudService.find(ProductCategory.class, qp)
+        return crudService().find(ProductCategory.class, qp)
     }
 
     @Override
@@ -657,12 +667,18 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     int computeProductCountByCategory(Site site) {
         if (site != null) {
-            String sql = "update ProductCategory pc set pc.productsCount = (select count(p) from Product p where p.active=true and p.site = :site and p.category.id = pc.id) where pc.site = :site "
+            log("Computing products count from Site " + site)
+            String sql = "update ProductCategory pc set pc.productsCount = (select count(p) from Product p where p.active=true and p.site = :site and p.category.id = pc.id) where pc.site = :site and pc.parent is not  null"
             int result = entityManager.createQuery(sql).setParameter("site", site).executeUpdate()
+            log(result + " subcategories updated")
 
+            sql = "update ProductCategory pc set pc.productsCount = (select sum(sub.productsCount) from ProductCategory sub where sub.parent.id = pc.id and sub.site = :site) where pc.site = :site and pc.parent.id is null"
+            result = entityManager.createQuery(sql).setParameter("site", site).executeUpdate()
+
+            log(result + " parente categories updated")
             return result
         }
         return 0
@@ -688,17 +704,17 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
         rev.comment = comment
         rev.stars = rate
         rev.incomplete = false
-        crudService.save(rev)
+        crudService().save(rev)
     }
 
     @Override
     ProductReview getUserReview(Product product, User user) {
-        return crudService.findSingle(ProductReview.class, QueryParameters.with("product", product).add("user", user))
+        return crudService().findSingle(ProductReview.class, QueryParameters.with("product", product).add("user", user))
     }
 
     @Override
     List<ProductReview> getIncompleteProductReviews(User user) {
-        List<ProductReview> reviews = crudService.find(ProductReview.class, QueryParameters.with("user", user).add("incomplete", true))
+        List<ProductReview> reviews = crudService().find(ProductReview.class, QueryParameters.with("user", user).add("incomplete", true))
 
         return reviews
     }
@@ -706,40 +722,40 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
     @Override
     @Transactional
     void computeProductStars(Product product) {
-        product = crudService.find(Product.class, product.id)
+        product = crudService().find(Product.class, product.id)
 
-        Double stars = crudService.executeProjection(Double.class,
+        Double stars = crudService().executeProjection(Double.class,
                 "select avg(r.stars) from ProductReview r where r.product = :product and r.incomplete=false",
                 QueryParameters.with("product", product))
 
         if (stars == null) {
-            stars = 0.0
+            stars = 0.0d
         }
 
-        product.reviews = crudService.count(ProductReview.class, QueryParameters.with("product", product))
-        product.stars1Count = crudService.count(ProductReview.class,
+        product.reviews = crudService().count(ProductReview.class, QueryParameters.with("product", product))
+        product.stars1Count = crudService().count(ProductReview.class,
                 QueryParameters.with("product", product).add("incomplete", false).add("stars", 1))
-        product.stars2Count = crudService.count(ProductReview.class,
+        product.stars2Count = crudService().count(ProductReview.class,
                 QueryParameters.with("product", product).add("incomplete", false).add("stars", 2))
-        product.stars3Count = crudService.count(ProductReview.class,
+        product.stars3Count = crudService().count(ProductReview.class,
                 QueryParameters.with("product", product).add("incomplete", false).add("stars", 3))
-        product.stars4Count = crudService.count(ProductReview.class,
+        product.stars4Count = crudService().count(ProductReview.class,
                 QueryParameters.with("product", product).add("incomplete", false).add("stars", 4))
-        product.stars5Count = crudService.count(ProductReview.class,
+        product.stars5Count = crudService().count(ProductReview.class,
                 QueryParameters.with("product", product).add("incomplete", false).add("stars", 5))
 
         if (stars != null && stars > 0) {
             product.stars = stars
         } else {
-            product.stars = 0.0
+            product.stars = 0.0d
         }
 
-        crudService.update(product)
+        crudService().update(product)
     }
 
     @Override
     List<ProductReview> getTopReviews(Product product, int max) {
-        List<ProductReview> result = crudService.find(ProductReview.class, QueryParameters.with("product", product)
+        List<ProductReview> result = crudService().find(ProductReview.class, QueryParameters.with("product", product)
                 .add("incomplete", false).orderBy("creationDate", false).paginate(max))
 
         if (result instanceof PagedList) {
@@ -803,7 +819,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
             user.identification = response.identification
             user.externalRef = response.externalRef
             userService.setupPassword(user, response.identification)
-            user = crudService.create(user)
+            user = crudService().create(user)
         }
         return user
     }
@@ -814,12 +830,12 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
 
         if (dto != null) {
             if (dto.externalRef != null) {
-                product = crudService.findSingle(Product.class, QueryParameters.with("site", site).add("active", true)
+                product = crudService().findSingle(Product.class, QueryParameters.with("site", site).add("active", true)
                         .add("externalRef", dto.externalRef))
             }
 
             if (product == null && dto.sku != null && !dto.sku.empty) {
-                product = crudService.findSingle(Product.class, QueryParameters.with("site", site).add("active", true)
+                product = crudService().findSingle(Product.class, QueryParameters.with("site", site).add("active", true)
                         .add("sku", dto.sku).setAutocreateSearcheableStrings(false))
             }
         }
@@ -846,7 +862,7 @@ class ProductsServiceImpl implements tools.dynamia.cms.products.services.Product
 
                         review.incomplete = true
                         if (getUserReview(product, user) == null) {
-                            review = crudService.create(review)
+                            review = crudService().create(review)
                         }
                     }
 

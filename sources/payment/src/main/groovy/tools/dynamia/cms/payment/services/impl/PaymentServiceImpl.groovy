@@ -15,29 +15,23 @@
  */
 package tools.dynamia.cms.payment.services.impl
 
-import org.springframework.beans.factory.annotation.Autowired
+import groovy.transform.CompileStatic
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 import tools.dynamia.cms.payment.PaymentException
 import tools.dynamia.cms.payment.PaymentGateway
-import tools.dynamia.cms.payment.api.PaymentSender
-import tools.dynamia.cms.payment.api.PaymentSenderException
-import tools.dynamia.cms.payment.api.PaymentSource
-import tools.dynamia.cms.payment.api.PaymentSourceProvider
-import tools.dynamia.cms.payment.api.PaymentTransactionStatus
-import tools.dynamia.cms.payment.api.Response
+import tools.dynamia.cms.payment.api.*
 import tools.dynamia.cms.payment.api.dto.ManualPaymentDTO
 import tools.dynamia.cms.payment.api.dto.PaymentDTO
 import tools.dynamia.cms.payment.domain.ManualPayment
-import tools.dynamia.cms.payment.domain.PaymentGatewayConfig
+import tools.dynamia.cms.payment.domain.PaymentGatewayAccount
 import tools.dynamia.cms.payment.domain.PaymentTransaction
+import tools.dynamia.cms.payment.services.PaymentService
 import tools.dynamia.commons.BeanUtils
-import tools.dynamia.commons.logger.LoggingService
-import tools.dynamia.commons.logger.SLF4JLoggingService
 import tools.dynamia.domain.query.ApplicationParameters
 import tools.dynamia.domain.query.QueryConditions
 import tools.dynamia.domain.query.QueryParameters
-import tools.dynamia.domain.services.CrudService
+import tools.dynamia.domain.services.AbstractService
 import tools.dynamia.domain.util.DomainUtils
 import tools.dynamia.integration.Containers
 import tools.dynamia.integration.sterotypes.Service
@@ -47,79 +41,33 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 @Service
-class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentService {
+@CompileStatic
+class PaymentServiceImpl extends AbstractService implements PaymentService {
 
     private static final String LAST_MANUAL_PAYMENT_NUMBER = "lastManualPaymentNumber-"
-
-    @Autowired
-    private CrudService crudService
 
     @PersistenceContext
     private EntityManager em
 
-    private LoggingService logger = new SLF4JLoggingService(tools.dynamia.cms.payment.services.PaymentService.class)
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.dynamia.cms.site.payment.services.impl.PaymentGatewayService#
-     * getGatewayConfigMap(com.dynamia.cms.site.payment.PaymentGateway,
-     * java.lang.String)
-     */
 
     @Override
-    Map<String, String> getGatewayConfigMap(PaymentGateway gateway, String source) {
-        List<PaymentGatewayConfig> configs = crudService.find(PaymentGatewayConfig.class,
-                QueryParameters.with("gatewayId", gateway.id).add("source", source))
-
-        Map<String, String> map = new HashMap<String, String>()
-
-        for (PaymentGatewayConfig pgc : configs) {
-            map.put(pgc.name, pgc.value)
-        }
-
-        return map
+    PaymentGatewayAccount getDefaultAccount(String source) {
+        return crudService().findSingle(PaymentGatewayAccount, "source", QueryConditions.eq(source))
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.dynamia.cms.site.payment.services.impl.PaymentGatewayService#
-     * getConfig (com.dynamia.cms.site.payment.PaymentGateway, java.lang.String,
-     * java.lang.String)
-     */
-
-    @Override
-    PaymentGatewayConfig getConfig(PaymentGateway gateway, String name, String source) {
-        return crudService.findSingle(PaymentGatewayConfig.class,
-                QueryParameters.with("gatewayId", gateway.id).add("name", name).add("source", source))
+    List<PaymentGatewayAccount> findAccounts(String source) {
+        return crudService().find(PaymentGatewayAccount, "source", QueryConditions.eq(source))
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.dynamia.cms.site.payment.services.impl.PaymentGatewayService#
-     * addGatewayConfig(com.dynamia.cms.site.payment.PaymentGateway,
-     * java.lang.String, java.lang.String, java.lang.String)
-     */
-
-    @Override
-    @Transactional
-    void addGatewayConfig(PaymentGatewayConfig cfg) {
-        PaymentGateway gateway = findGateway(cfg.gatewayId)
-        PaymentGatewayConfig config = getConfig(gateway, cfg.name, cfg.source)
-        if (config == null) {
-            config = cfg
-        } else {
-            config.value = cfg.value
-        }
-        crudService.save(config)
+    List<PaymentGatewayAccount> findAccounts(PaymentGateway gateway, String source) {
+        return crudService().find(PaymentGatewayAccount, QueryParameters.with("source", QueryConditions.eq(source))
+                .add("gatewayId", QueryConditions.eq(gateway.id)))
     }
 
     @Override
     PaymentGateway findGateway(String gatewayId) {
         for (PaymentGateway gateway : Containers.get().findObjects(PaymentGateway.class)) {
-            if (gateway.id.equals(gatewayId)) {
+            if (gateway.id == gatewayId) {
                 return gateway
             }
         }
@@ -133,7 +81,7 @@ class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentSe
             throw new PaymentException("No UUID for transaction found " + gateway.id)
         }
 
-        PaymentTransaction tx = crudService.findSingle(PaymentTransaction.class, QueryParameters
+        PaymentTransaction tx = crudService().findSingle(PaymentTransaction.class, QueryParameters
                 .with("uuid", QueryConditions.eq(uuid)).add("gatewayId", QueryConditions.eq(gateway.id)))
 
         if (tx == null) {
@@ -156,7 +104,7 @@ class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentSe
 
     @Override
     void saveTransaction(PaymentTransaction tx) {
-        crudService.save(tx)
+        crudService().save(tx)
 
     }
 
@@ -173,7 +121,7 @@ class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentSe
             String number = DomainUtils.formatNumberWithZeroes(lastNumber, 10000)
             payment.number = number
         }
-        crudService.save(payment)
+        crudService().save(payment)
     }
 
     /**
@@ -184,7 +132,7 @@ class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentSe
      */
     @Override
     List<ManualPayment> findManualPayments(String source, String registratorCode, String payerCode) {
-        return crudService.find(ManualPayment.class,
+        return crudService().find(ManualPayment.class,
                 QueryParameters.with("source", source).add("registratorCode", registratorCode)
                         .add("payerCode", payerCode).setAutocreateSearcheableStrings(false))
 
@@ -192,7 +140,7 @@ class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentSe
 
     @Override
     List<ManualPayment> findManualPaymentsByPayerId(String source, String payerId) {
-        return crudService.find(ManualPayment.class,
+        return crudService().find(ManualPayment.class,
                 QueryParameters.with("source", source).add("payerId", payerId).setAutocreateSearcheableStrings(false))
 
     }
@@ -204,7 +152,7 @@ class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentSe
      */
     @Override
     List<ManualPayment> findManualPaymentsByPayerCode(String source, String payerCode) {
-        return crudService.find(ManualPayment.class, QueryParameters.with("source", source).add("payerCode", payerCode)
+        return crudService().find(ManualPayment.class, QueryParameters.with("source", source).add("payerCode", payerCode)
                 .setAutocreateSearcheableStrings(false))
 
     }
@@ -212,56 +160,56 @@ class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentSe
     @Override
     void sendManualPayments(String source, String serviceUrl, Map<String, String> params) {
         try {
-            logger.info("Sending all manual Payments")
+            log("Sending all manual Payments")
 
             if (serviceUrl != null && !serviceUrl.empty) {
                 PaymentSender sender = HttpRemotingServiceClient.build(PaymentSender.class)
                         .setServiceURL(serviceUrl)
                         .getProxy()
 
-                crudService.executeWithinTransaction {
+                crudService().executeWithinTransaction {
 
-                    List<ManualPayment> payments = crudService.find(ManualPayment.class, QueryParameters
+                    List<ManualPayment> payments = crudService().find(ManualPayment.class, QueryParameters
                             .with("sended", false).add("source", source).setAutocreateSearcheableStrings(false))
-                    logger.info("Sending " + payments.size() + " manual payments for source " + source)
+                    log("Sending " + payments.size() + " manual payments for source " + source)
 
                     sendPayments(sender, payments, params)
                 }
 
             }
-            logger.info("Manual payments Sended")
+            log("Manual payments Sended")
         } catch (Exception e) {
-            logger.error("Error sending manual payments. Source: " + source + ", Service URL: " + serviceUrl, e)
+            log("Error sending manual payments. Source: " + source + ", Service URL: " + serviceUrl, e)
         }
     }
 
     @Override
     void sendPayments(String source, String serviceUrl, Map<String, String> params) {
         try {
-            logger.info("Sending all auto Payments")
+            log("Sending all auto Payments")
 
             if (serviceUrl != null && !serviceUrl.empty) {
                 PaymentSender sender = HttpRemotingServiceClient.build(PaymentSender.class)
                         .setServiceURL(serviceUrl)
                         .getProxy()
 
-                crudService.executeWithinTransaction {
+                crudService().executeWithinTransaction {
 
-                    List<PaymentTransaction> payments = crudService.find(PaymentTransaction.class, QueryParameters
+                    List<PaymentTransaction> payments = crudService().find(PaymentTransaction.class, QueryParameters
                             .with("sended", false).add("source", source)
                             .add("status", PaymentTransactionStatus.COMPLETED)
                             .add("confirmed", true)
                             .add("test", false)
                             .setAutocreateSearcheableStrings(false))
-                    logger.info("Sending " + payments.size() + " auto payments for source " + source)
+                    log("Sending " + payments.size() + " auto payments for source " + source)
 
                     sendPaymentsTransaction(sender, payments, params)
                 }
 
             }
-            logger.info("Automatic payments Sended")
+            log("Automatic payments Sended")
         } catch (Exception e) {
-            logger.error("Error sending auto payments. Source: " + source + ", Service URL: " + serviceUrl, e)
+            log("Error sending auto payments. Source: " + source + ", Service URL: " + serviceUrl, e)
         }
 
     }
@@ -270,12 +218,12 @@ class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentSe
         List<ManualPaymentDTO> dtos = payments.collect { createDTO(it) }
 
         if (!dtos.empty) {
-            logger.info("Calling Payment Sender " + sender)
+            log("Calling Payment Sender " + sender)
             try {
                 List<Response> response = sender.sendManualPayments(dtos, params)
 
                 if (response != null) {
-                    logger.info("Sending response recieved. " + response.size())
+                    log("Sending response recieved. " + response.size())
                     for (ManualPayment payment : payments) {
                         Response resp = Response.find(response, payment.number)
                         if (resp != null) {
@@ -289,12 +237,12 @@ class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentSe
                                 payment.sended = true
                             }
                         }
-                        crudService.update(payment)
-                        logger.info("==> Updating payment " + payment.number + " ==> " + resp)
+                        crudService().update(payment)
+                        log("==> Updating payment " + payment.number + " ==> " + resp)
                     }
                 }
             } catch (PaymentSenderException e) {
-                logger.error("Error", e)
+                log("Error", e)
             }
         }
     }
@@ -303,12 +251,12 @@ class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentSe
         List<PaymentDTO> dtos = payments.collect { createDTO(it) }
 
         if (!dtos.empty) {
-            logger.info("Calling Payment Sender " + sender)
+            log("Calling Payment Sender " + sender)
             try {
                 List<Response> response = sender.sendPayments(dtos, params)
 
                 if (response != null) {
-                    logger.info("Sending response recieved. " + response.size())
+                    log("Sending response recieved. " + response.size())
                     for (PaymentTransaction payment : payments) {
                         Response resp = Response.find(response, payment.uuid)
                         if (resp != null) {
@@ -322,12 +270,12 @@ class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentSe
                                 payment.sended = true
                             }
                         }
-                        crudService.update(payment)
-                        logger.info("==> Updating payment " + payment.uuid + " ==> " + resp)
+                        crudService().update(payment)
+                        log("==> Updating payment " + payment.uuid + " ==> " + resp)
                     }
                 }
             } catch (PaymentSenderException e) {
-                logger.error("Error", e)
+                log("Error", e)
             }
         }
     }
@@ -352,5 +300,10 @@ class PaymentServiceImpl implements tools.dynamia.cms.payment.services.PaymentSe
         } else {
             return null
         }
+    }
+
+    @Override
+    def findAccount(String id) {
+        return null
     }
 }

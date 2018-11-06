@@ -16,9 +16,12 @@
 package tools.dynamia.cms.payment.domain
 
 import tools.dynamia.cms.payment.PaymentGateway
+import tools.dynamia.commons.StringUtils
+import tools.dynamia.domain.Reference
 import tools.dynamia.domain.SimpleEntity
 
 import javax.persistence.Entity
+import javax.persistence.ManyToOne
 import javax.persistence.Table
 import javax.validation.constraints.NotNull
 
@@ -26,37 +29,43 @@ import javax.validation.constraints.NotNull
 @Table(name = "pay_gateway_config")
 class PaymentGatewayConfig extends SimpleEntity {
 
-	@NotNull
-	String gatewayId
-	String name
-	String value
-	String source
-	String label
 
-	PaymentGatewayConfig() {
-		// TODO Auto-generated constructor stub
-	}
+    @ManyToOne
+    PaymentGatewayAccount account
+    @NotNull
+    @Reference("PaymenteGateway")
+    String gatewayId
+    String name
+    String value
+    String source
+    String label
 
-	PaymentGatewayConfig(PaymentGateway gateway, String name, String value) {
-		this.gatewayId = gateway.id
-		this.name = name
-		this.value = value
-	}
+    PaymentGatewayConfig() {
+        // TODO Auto-generated constructor stub
+    }
 
-	PaymentGatewayConfig(PaymentGateway gateway, String name, String value, String source) {
-		this.gatewayId = gateway.id
-		this.name = name
-		this.value = value
-		this.source = source
-	}
+    PaymentGatewayConfig(PaymentGateway gateway, String name, String value) {
+        this.gatewayId = gateway.id
+        this.name = name
+        this.value = value
+        this.label = StringUtils.capitalizeAllWords(StringUtils.addSpaceBetweenWords(name))
+    }
 
-	PaymentGatewayConfig(PaymentGateway gateway, String name, String value, String source, String label) {
-		super()
-		this.gatewayId = gateway.id
-		this.name = name
-		this.value = value
-		this.source = source
-		this.label = label
-	}
+    PaymentGatewayConfig(PaymentGateway gateway, String name, String value, String source) {
+        this.gatewayId = gateway.id
+        this.name = name
+        this.value = value
+        this.source = source
+        this.label = StringUtils.capitalizeAllWords(StringUtils.addSpaceBetweenWords(name))
+    }
+
+    PaymentGatewayConfig(PaymentGateway gateway, String name, String value, String source, String label) {
+        super()
+        this.gatewayId = gateway.id
+        this.name = name
+        this.value = value
+        this.source = source
+        this.label = label
+    }
 
 }

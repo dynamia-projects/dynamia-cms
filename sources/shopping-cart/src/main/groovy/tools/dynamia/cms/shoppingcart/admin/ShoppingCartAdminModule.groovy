@@ -19,6 +19,7 @@ import tools.dynamia.cms.core.api.AdminModule
 import tools.dynamia.cms.core.api.AdminModuleOption
 import tools.dynamia.cms.core.api.CMSModule
 import tools.dynamia.cms.payment.domain.ManualPayment
+import tools.dynamia.cms.payment.domain.PaymentGatewayAccount
 import tools.dynamia.cms.payment.domain.PaymentGatewayConfig
 import tools.dynamia.cms.payment.domain.PaymentTransaction
 import tools.dynamia.cms.shoppingcart.domain.ShippingCompany
@@ -47,13 +48,9 @@ class ShoppingCartAdminModule implements AdminModule {
     AdminModuleOption[] getOptions() {
         return [
                 new AdminModuleOption("shopConfig", "Configuration", ShoppingSiteConfig.class, false, true),
-                new AdminModuleOption("paymentConfig", "Payment Gateway Config", PaymentGatewayConfig.class, false,
-                        true),
                 new AdminModuleOption("shoppingOrders", "Orders", ShoppingOrder.class, true, true, "shopping-cart",
                         true),
-                new AdminModuleOption("shippingCompany", "Shipping Company", ShippingCompany.class),
-                new AdminModuleOption("payments", "Payments Transaction", PaymentTransaction.class),
-                new AdminModuleOption("manualPayments", "Manual Payments", ManualPayment.class)
+                new AdminModuleOption("shippingCompany", "Shipping Company", ShippingCompany.class)
 
         ]
     }

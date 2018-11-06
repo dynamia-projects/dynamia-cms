@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import tools.dynamia.cms.core.Orderable
 import tools.dynamia.cms.core.api.SiteAware
 import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.cms.products.dto.ProductCategoryDetailDTO
 import tools.dynamia.commons.BeanUtils
 import tools.dynamia.domain.SimpleEntity
 import tools.dynamia.domain.contraints.NotEmpty
@@ -38,7 +39,7 @@ class ProductCategoryDetail extends SimpleEntity implements SiteAware, Orderable
     private Site site
     @NotEmpty
     private String name
-    @Column(name = "detvalues")
+    @Column(name = "detvalues", length = 2000)
     private String values
     private Long externalRef
     @Column(name = "detorder")
@@ -139,7 +140,7 @@ class ProductCategoryDetail extends SimpleEntity implements SiteAware, Orderable
         this.values = values
     }
 
-    void sync(tools.dynamia.cms.products.dto.ProductCategoryDetailDTO dto) {
+    void sync(ProductCategoryDetailDTO dto) {
         this.name = dto.name
         this.values = dto.values
         this.externalRef = dto.externalRef

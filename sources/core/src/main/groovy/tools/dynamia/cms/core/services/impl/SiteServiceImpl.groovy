@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.core.services.impl
 
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.orm.jpa.EntityManagerFactoryInfo
@@ -25,6 +26,7 @@ import tools.dynamia.cms.core.Orderable
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.core.domain.SiteDomain
 import tools.dynamia.cms.core.domain.SiteParameter
+import tools.dynamia.cms.core.services.SiteService
 import tools.dynamia.commons.BeanUtils
 import tools.dynamia.commons.logger.LoggingService
 import tools.dynamia.commons.logger.SLF4JLoggingService
@@ -41,7 +43,8 @@ import javax.servlet.http.HttpServletRequest
  * @author Mario Serrano Leones
  */
 @Service("siteService")
-class SiteServiceImpl implements tools.dynamia.cms.core.services.SiteService {
+@CompileStatic
+class SiteServiceImpl implements SiteService {
 
     private static final String CACHE_NAME = "sites"
 
@@ -54,7 +57,7 @@ class SiteServiceImpl implements tools.dynamia.cms.core.services.SiteService {
     @Autowired
     private Parameters appParams
 
-    private LoggingService logger = new SLF4JLoggingService(tools.dynamia.cms.core.services.SiteService.class)
+    private LoggingService logger = new SLF4JLoggingService(SiteService.class)
 
     @PostConstruct
     void init() {
@@ -95,7 +98,7 @@ class SiteServiceImpl implements tools.dynamia.cms.core.services.SiteService {
     Site getSite(HttpServletRequest request) {
         Site site = null
         if (request != null) {
-            tools.dynamia.cms.core.services.SiteService thisServ = Containers.get().findObject(tools.dynamia.cms.core.services.SiteService.class)
+            SiteService thisServ = Containers.get().findObject(SiteService.class)
             site = thisServ.getSiteByDomain(request.serverName)
         }
 

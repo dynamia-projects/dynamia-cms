@@ -18,6 +18,7 @@ package tools.dynamia.cms.core
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
+import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.domain.query.Parameters
 import tools.dynamia.integration.Containers
 
@@ -108,7 +109,7 @@ class SiteContext implements Serializable {
 
     void reload() {
 		if (current != null) {
-			tools.dynamia.cms.core.domain.Site reloaded = service.getSite(current.key)
+			Site reloaded = service.getSite(current.key)
             if (reloaded != null) {
 				current = reloaded
             }

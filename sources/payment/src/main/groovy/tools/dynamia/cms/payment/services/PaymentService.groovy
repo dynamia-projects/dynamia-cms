@@ -18,35 +18,18 @@ package tools.dynamia.cms.payment.services
 import tools.dynamia.cms.payment.PaymentGateway
 import tools.dynamia.cms.payment.api.PaymentSource
 import tools.dynamia.cms.payment.domain.ManualPayment
+import tools.dynamia.cms.payment.domain.PaymentGatewayAccount
 import tools.dynamia.cms.payment.domain.PaymentGatewayConfig
 import tools.dynamia.cms.payment.domain.PaymentTransaction
 
 interface PaymentService {
 
     /**
-     * @param gateway
-     * @param source
-     * @return
-     */
-    abstract Map<String, String> getGatewayConfigMap(PaymentGateway gateway, String source)
-
-    /**
-     * @param gateway
-     * @param name
-     * @param source
-     * @return
-     */
-    abstract PaymentGatewayConfig getConfig(PaymentGateway gateway, String name, String source)
-
-    /**
-     * @param config
-     */
-    abstract void addGatewayConfig(PaymentGatewayConfig config)
-
-    /**
      * @param gatewayId
      * @return
      */
+    PaymentGatewayAccount getDefaultAccount(String source)
+
     abstract PaymentGateway findGateway(String gatewayId)
 
     /**
@@ -108,4 +91,6 @@ interface PaymentService {
     void sendPayments(String source, String serviceUrl, Map<String, String> params)
 
     PaymentSource findPaymentSource(Object request)
+
+    def findAccount(String id);
 }

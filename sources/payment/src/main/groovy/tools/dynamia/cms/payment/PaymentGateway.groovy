@@ -15,6 +15,7 @@
  */
 package tools.dynamia.cms.payment
 
+import tools.dynamia.cms.payment.domain.PaymentGatewayAccount
 import tools.dynamia.cms.payment.domain.PaymentTransaction
 
 interface PaymentGateway {
@@ -27,7 +28,7 @@ interface PaymentGateway {
 
     String[] getResponseParams()
 
-    PaymentTransaction newTransaction(String source, String baseURL)
+    PaymentTransaction newTransaction(PaymentGatewayAccount account, String baseURL)
 
     PaymentForm createForm(PaymentTransaction tx)
 

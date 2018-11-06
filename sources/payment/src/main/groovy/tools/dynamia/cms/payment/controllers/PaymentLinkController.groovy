@@ -13,7 +13,9 @@ import tools.dynamia.cms.payment.PaymentGateway
 import tools.dynamia.cms.payment.PaymentHolder
 import tools.dynamia.cms.payment.api.PaymentSource
 import tools.dynamia.cms.payment.api.PaymentTransactionStatus
+import tools.dynamia.cms.payment.domain.PaymentGatewayAccount
 import tools.dynamia.cms.payment.domain.PaymentTransaction
+import tools.dynamia.cms.payment.services.PaymentService
 
 import javax.servlet.http.HttpServletRequest
 
@@ -22,11 +24,10 @@ import javax.servlet.http.HttpServletRequest
 class PaymentLinkController {
 
     @Autowired
-    private tools.dynamia.cms.payment.services.PaymentService paymentService
+    private PaymentService paymentService
 
-    @GetMapping(value = "/link/{gatewayId}")
-    ModelAndView link(@PathVariable String gatewayId,
-                      @RequestParam(value = "doc", required = false) String document,
+    @GetMapping(value = "/link")
+    ModelAndView link(@RequestParam(value = "doc", required = false) String document,
                       @RequestParam("v") BigDecimal value,
                       @RequestParam("i") String identification,
                       @RequestParam("n") String name,
@@ -35,15 +36,23 @@ class PaymentLinkController {
                       @RequestParam(value = "ph", required = false) String phone,
                       @RequestParam(value = "mb", required = false) String mobile,
                       @RequestParam(value = "cr", required = false) String currency,
+                      @RequestParam(value = "aid", required = false) String accountId,
                       HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("payment/link")
 
+        ModelAndView mv = new ModelAndView("payment/link")
         PaymentSource source = paymentService.findPaymentSource(request)
+
         if (source != null) {
-            PaymentGateway gateway = paymentService.findGateway(gatewayId)
-            PaymentTransaction tx = gateway.newTransaction(source.name, source.baseURL)
+            PaymentGatewayAccount account = accountId == null ? paymentService.getDefaultAccount(source.name) : paymentService.findAccount(accountId)
+
+            if (account == null) {
+                throw new PaymentException("No account found for payment link")
+            }
+
+            PaymentGateway gateway = paymentService.findGateway(account.gatewayId)
+            PaymentTransaction tx = gateway.newTransaction(account, source.baseURL)
             tx.status = PaymentTransactionStatus.NEW
-            tx.gatewayId = gatewayId
+            tx.gatewayId = account.gatewayId
             tx.amount = value
             tx.description = document + " - " + description
             tx.email = email
@@ -71,7 +80,7 @@ class PaymentLinkController {
             PaymentHolder.get().currentPaymentForm = form
             PaymentHolder.get().currentPaymentTransaction = tx
         } else {
-            throw new PaymentException("No payment gateway found: " + gatewayId)
+            throw new PaymentException("No payment gateway found for source $source ")
         }
 
         return mv

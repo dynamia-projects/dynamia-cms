@@ -28,143 +28,140 @@ import javax.validation.constraints.NotNull
 @Table(name = "pay_transactions")
 class PaymentTransaction extends BaseEntity implements Payment {
 
-	/**
-	 * 
-	 */
-	static final long serialVersionUID = 6395335361885553112L
+    /**
+     *
+     */
+    static final long serialVersionUID = 6395335361885553112L
 
-	String uuid = StringUtils.randomString().toUpperCase()
+    String uuid = StringUtils.randomString().toUpperCase()
 
-	@NotNull
-	String gatewayId
+    @NotNull
+    String gatewayId
+    @OneToOne
+    @NotNull
+    PaymentGatewayAccount account
+    @Enumerated(EnumType.ORDINAL)
+    PaymentTransactionStatus status = PaymentTransactionStatus.NEW
+    String statusText
+    @Temporal(TemporalType.TIMESTAMP)
+    Date statusDate
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @JsonIgnore
+    String gatewayResponse
 
-	@Enumerated(EnumType.ORDINAL)
-	PaymentTransactionStatus status = PaymentTransactionStatus.NEW
-	String statusText
-	@Temporal(TemporalType.TIMESTAMP)
-	Date statusDate
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	@JsonIgnore
-	String gatewayResponse
+    @Temporal(TemporalType.TIMESTAMP)
+    Date startDate = new Date()
+    @Temporal(TemporalType.TIMESTAMP)
+    Date endDate
 
-	@Temporal(TemporalType.TIMESTAMP)
-	Date startDate = new Date()
-	@Temporal(TemporalType.TIMESTAMP)
-	Date endDate
+    BigDecimal amount
+    BigDecimal taxes
+    BigDecimal taxesBase
+    String paymentMethod
+    String currency
+    String responseCode
+    @JsonIgnore
+    String signature
+    @Column(length = 1000)
+    String description
+    String document
+    String payerFullname
+    String payerDocument
+    String payerCode
+    String payerPhoneNumber
+    String payerMobileNumber
+    String email
+    String source
+    String bank
+    String reference
+    String reference2
+    String reference3
+    String clientIP
+    @Column(length = 1000)
+    String responseURL
+    @Column(length = 1000)
+    String confirmationURL
+    boolean test = false
+    boolean confirmed
+    String baseURL
 
-	BigDecimal amount
-	BigDecimal taxes
-	BigDecimal taxesBase
-	String paymentMethod
-	String currency
-	String responseCode
-	@JsonIgnore
-	String signature
-	@Column(length = 1000)
-	String description
-	String document
-	String payerFullname
-	String payerDocument
-	String payerCode
-	String payerPhoneNumber
-	String payerMobileNumber
-	String email
-	String source
-	String bank
-	String reference
-	String reference2
-	String reference3
-	String clientIP
-	@Column(length = 1000)
-	String responseURL
-	@Column(length = 1000)
-	String confirmationURL
-	boolean test = false
-	boolean confirmed
-	String baseURL
+    int responseTries
+    String lastStatusText
+    PaymentTransactionStatus lastStatus
+    @Temporal(TemporalType.TIMESTAMP)
+    Date lastStatusDate
 
-	int responseTries
-	String lastStatusText
-	PaymentTransactionStatus lastStatus
-	@Temporal(TemporalType.TIMESTAMP)
-	Date lastStatusDate
+    boolean sended
+    String errorCode
+    String errorMessage
+    String externalRef
 
-	boolean sended
-	String errorCode
-	String errorMessage
-	String externalRef
+    String shippingAddress
+    String shippingCity
+    String shippingCountry
 
-	String shippingAddress
-	String shippingCity
-	String shippingCountry
+    PaymentTransaction() {
+        // TODO Auto-generated constructor stub
+    }
 
-	PaymentTransaction() {
-		// TODO Auto-generated constructor stub
-	}
+    PaymentTransaction(String source) {
+        super()
+        this.source = source
+    }
 
-	PaymentTransaction(String source) {
-		super()
-		this.source = source
-	}
 
-	
+    void setStatus(PaymentTransactionStatus status) {
+        if (this.status != status) {
+            lastStatus = this.status
+            lastStatusDate = this.statusDate
+            this.statusDate = new Date()
+        }
 
-	void setStatus(PaymentTransactionStatus status) {
-		if (this.status != status) {
-			lastStatus = this.status
-			lastStatusDate = this.statusDate
-			this.statusDate = new Date()
-		}
+        this.status = status
+    }
 
-		this.status = status
-	}
 
-	
-	void setStatusText(String statusText) {
-		if (this.statusText != statusText) {
-			this.lastStatusText = this.statusText
-		}
+    void setStatusText(String statusText) {
+        if (this.statusText != statusText) {
+            this.lastStatusText = this.statusText
+        }
 
-		this.statusText = statusText
-	}
+        this.statusText = statusText
+    }
 
-	
 
-	BigDecimal getAmount() {
-		if (amount == null) {
-			amount = BigDecimal.ZERO
-		}
-		return amount
-	}
+    BigDecimal getAmount() {
+        if (amount == null) {
+            amount = BigDecimal.ZERO
+        }
+        return amount
+    }
 
-	
-	BigDecimal getTaxes() {
-		if (taxes == null) {
-			taxes = BigDecimal.ZERO
-		}
-		return taxes
-	}
 
-	
+    BigDecimal getTaxes() {
+        if (taxes == null) {
+            taxes = BigDecimal.ZERO
+        }
+        return taxes
+    }
 
-	BigDecimal getTaxesBase() {
-		if (taxesBase == null) {
-			taxesBase = BigDecimal.ZERO
-		}
-		return taxesBase
-	}
 
-	
+    BigDecimal getTaxesBase() {
+        if (taxesBase == null) {
+            taxesBase = BigDecimal.ZERO
+        }
+        return taxesBase
+    }
 
-	
-	@Override
-	String toString() {
-		return "PaymentTransaction from " + source + " --> [uuid=" + uuid + ", gatewayId=" + gatewayId + ", status="
-				+ status + ", statusText=" + statusText + ", amount=" + amount + ", taxes=" + taxes + ", taxesBase="
-				+ taxesBase + ", paymentMethod=" + paymentMethod + ", currency=" + currency + ", responseCode="
-				+ responseCode + ", signature=" + signature + ", description=" + description + ", test=" + test
-				+ ", email=" + email + "]"
-	}
+
+    @Override
+    String toString() {
+        return "PaymentTransaction from " + source + " --> [uuid=" + uuid + ", gatewayId=" + gatewayId + ", status="
+        +status + ", statusText=" + statusText + ", amount=" + amount + ", taxes=" + taxes + ", taxesBase="
+        +taxesBase + ", paymentMethod=" + paymentMethod + ", currency=" + currency + ", responseCode="
+        +responseCode + ", signature=" + signature + ", description=" + description + ", test=" + test
+        +", email=" + email + "]"
+    }
 
 }

@@ -15,11 +15,15 @@
  */
 package tools.dynamia.cms.menus.services.impl
 
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.menus.MenuContext
+import tools.dynamia.cms.menus.api.MenuItemType
+import tools.dynamia.cms.menus.domain.Menu
+import tools.dynamia.cms.menus.domain.MenuItem
 import tools.dynamia.cms.menus.services.MenuService
 import tools.dynamia.domain.query.QueryConditions
 import tools.dynamia.domain.query.QueryParameters
@@ -31,6 +35,7 @@ import tools.dynamia.integration.Containers
  * @author Mario Serrano Leones
  */
 @Service
+@CompileStatic
 class MenuServiceImpl implements MenuService {
 
 	@Autowired
@@ -38,29 +43,29 @@ class MenuServiceImpl implements MenuService {
 
 	@Override
 	@Cacheable(value = "menus", key = "#site.key")
-	tools.dynamia.cms.menus.domain.Menu getMainMenu(Site site) {
+	Menu getMainMenu(Site site) {
 		QueryParameters qp = QueryParameters.with("site", site)
-		return crudService.findSingle(tools.dynamia.cms.menus.domain.Menu.class, qp)
+		return crudService.findSingle(Menu.class, qp)
 	}
 
 	@Override
 	@Cacheable(value = "menus", key = "#site.key+#alias")
-	tools.dynamia.cms.menus.domain.Menu getMenu(Site site, String alias) {
+	Menu getMenu(Site site, String alias) {
 		QueryParameters qp = QueryParameters.with("site", site).add("alias", alias)
-		return crudService.findSingle(tools.dynamia.cms.menus.domain.Menu.class, qp)
+		return crudService.findSingle(Menu.class, qp)
 	}
 
 	@Override
 	@Cacheable(value = "menus", key = "#site.key+#id")
-	tools.dynamia.cms.menus.domain.Menu getMenu(Site site, Long id) {
+	Menu getMenu(Site site, Long id) {
 		QueryParameters qp = QueryParameters.with("site", site).add("id", id)
-		return crudService.findSingle(tools.dynamia.cms.menus.domain.Menu.class, qp)
+		return crudService.findSingle(Menu.class, qp)
 	}
 
 	@Override
-	MenuContext setupMenuItem(tools.dynamia.cms.menus.domain.MenuItem menuItem) {
+	MenuContext setupMenuItem(MenuItem menuItem) {
 
-		tools.dynamia.cms.menus.api.MenuItemType typeExtension = getMenuItemType(menuItem)
+		MenuItemType typeExtension = getMenuItemType(menuItem)
 		MenuContext context = new MenuContext(menuItem, menuItem.menu)
 		if (typeExtension != null) {
 			typeExtension.setupMenuItem(context)
@@ -70,10 +75,10 @@ class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	tools.dynamia.cms.menus.api.MenuItemType getMenuItemType(tools.dynamia.cms.menus.domain.MenuItem menuItem) {
+	MenuItemType getMenuItemType(MenuItem menuItem) {
 		String type = menuItem.type
 		if (type != null && !type.empty) {
-			for (tools.dynamia.cms.menus.api.MenuItemType typeExtension : Containers.get().findObjects(tools.dynamia.cms.menus.api.MenuItemType.class)) {
+			for (MenuItemType typeExtension : Containers.get().findObjects(MenuItemType.class)) {
 				if (type.equals(typeExtension.id)) {
 					return typeExtension
 				}
@@ -83,8 +88,8 @@ class MenuServiceImpl implements MenuService {
 	}
 	
 	@Override
-	List<tools.dynamia.cms.menus.domain.MenuItem> getItems(tools.dynamia.cms.menus.domain.Menu menu){
-		return crudService.find(tools.dynamia.cms.menus.domain.MenuItem.class, QueryParameters.with("menu", menu)
+	List<MenuItem> getItems(Menu menu){
+		return crudService.find(MenuItem.class, QueryParameters.with("menu", menu)
 				.add("parentItem", QueryConditions.isNull())
 				.orderBy("order"))
 	}

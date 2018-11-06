@@ -1,0 +1,5 @@
+view: crud
+beanClass: tools.dynamia.cms.payment.domain.PaymentGatewayAccount
+controller: tools.dynamia.cms.payment.admin.controllers.PaymentGatewayAccountCrudController
+autofields: false
+

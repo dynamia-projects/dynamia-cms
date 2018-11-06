@@ -1,6 +1,9 @@
 package tools.dynamia.cms.core.services.impl
 
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
+import tools.dynamia.cms.core.dto.CountryDTO
+import tools.dynamia.cms.core.dto.RegionDTO
 import tools.dynamia.cms.core.services.DynamiaSiteConnectorService
 import tools.dynamia.cms.core.api.DynamiaSiteConnector
 import tools.dynamia.cms.core.domain.City
@@ -48,13 +51,13 @@ class DynamiaSiteConnectorServiceImpl implements DynamiaSiteConnectorService {
 
     private void syncLocations(Site site, DynamiaSiteConnector connector) {
 
-        List<tools.dynamia.cms.core.dto.CountryDTO> countries = connector.countries
+        List<CountryDTO> countries = connector.countries
         if (countries != null) {
 
             countries.forEach { countryDTO ->
                 Country country = getOrCreate(site, countryDTO)
                 System.out.println("Loading Country: " + country)
-                List<tools.dynamia.cms.core.dto.RegionDTO> regions = connector.getRegions(countryDTO)
+                List<RegionDTO> regions = connector.getRegions(countryDTO)
                 regions.forEach { regionDTO ->
 
                     Region region = getOrCreate(site, regionDTO, country)
