@@ -30,12 +30,12 @@ import javax.servlet.http.HttpServletResponse
 @Controller
 class AdminUsersController {
 
-	@Autowired
-	private SiteService service
+    @Autowired
+    private SiteService service
 
     @RequestMapping("/login")
     ModelAndView login(HttpServletRequest request) {
-		Initializer initializer = Containers.get().findObject(Initializer.class)
+        Initializer initializer = Containers.get().findObject(Initializer.class)
         initializer.init(request)
 
         Site site = service.getSite(request)
@@ -47,13 +47,13 @@ class AdminUsersController {
         return mv
     }
 
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/cms-admin/logout", method = [RequestMethod.GET, RequestMethod.POST])
     ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.context.authentication
+        Authentication auth = SecurityContextHolder.context.authentication
         if (auth != null) {
-			new SecurityContextLogoutHandler().logout(request, response, auth)
+            new SecurityContextLogoutHandler().logout(request, response, auth)
         }
-		ModelAndView mv = new ModelAndView()
+        ModelAndView mv = new ModelAndView()
         mv.view = new RedirectView("/", false, true, false)
         return mv
     }

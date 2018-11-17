@@ -55,7 +55,7 @@
 
 <header>
     <nav th:unless="${site.isParameter('disableHeader')}"
-         th:class="${'navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar '+#objects.nullSafe(siteParams['navbar-class'],'bg-primary')}">
+         th:class="${'navbar fixed-top navbar-expand-lg scrolling-navbar '+#objects.nullSafe(siteParams['navbar-class'],'navbar-dark  bg-primary')}">
 
         <a class="navbar-brand" href="/">
             <th:block th:include="module::position('logo')"/>

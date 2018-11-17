@@ -20,6 +20,7 @@ import org.springframework.security.access.annotation.Secured
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler
+import org.springframework.security.web.savedrequest.DefaultSavedRequest
 import org.springframework.stereotype.Controller
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.PathVariable
@@ -33,7 +34,6 @@ import tools.dynamia.cms.core.actions.SiteActionManager
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.core.services.SiteService
 import tools.dynamia.cms.users.UserForm
-import tools.dynamia.cms.users.UserHolder
 import tools.dynamia.cms.users.domain.User
 import tools.dynamia.cms.users.domain.UserContactInfo
 import tools.dynamia.cms.users.domain.UserSiteConfig
@@ -65,8 +65,12 @@ class UsersController {
 
     @RequestMapping(value = ["/login", "/save"], method = RequestMethod.GET)
     ModelAndView login(HttpServletRequest request) {
-        ModelAndView mv = new ModelAndView("users/login")
+        DefaultSavedRequest savedRequest = (DefaultSavedRequest) request.session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+
+        def path = savedRequest?.requestURI
+        ModelAndView mv = new ModelAndView(path == "/cms-admin" ? "users/loginAdmin" : "users/login")
         mv.addObject("title", "Inicio de Sesion")
+
         SiteActionManager.performAction("loginUser", mv, request)
 
         return mv

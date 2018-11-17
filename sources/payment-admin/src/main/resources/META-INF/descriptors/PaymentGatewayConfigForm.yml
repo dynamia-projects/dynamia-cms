@@ -1,0 +1,15 @@
+view: form
+beanClass: tools.dynamia.cms.payment.domain.PaymentGatewayConfig
+autofields: false
+
+fields:
+
+  gatewayId:
+    label: Gateway
+    
+  label:
+  name:
+  value:
+ 
+ 
+  

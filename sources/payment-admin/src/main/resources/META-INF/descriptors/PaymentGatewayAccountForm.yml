@@ -1,0 +1,24 @@
+view: form
+beanClass: tools.dynamia.cms.payment.domain.PaymentGatewayAccount
+customizer: tools.dynamia.cms.payment.admin.customizers.PaymentGatewayAccountCustomizer
+autofields: false
+
+fields:
+  name:
+  gatewayId:
+    label: Gateway
+    component: providerpickerbox
+    params:
+      className: tools.dynamia.cms.payment.PaymentGateway
+  enabled:
+  configuration:
+    component: viewer
+    params:
+      beanClass: tools.dynamia.cms.payment.domain.PaymentGatewayConfig
+      viewType: table
+      inplace: true
+      span: 3
+      height: 300px
+
+layout:
+  columns: 3
