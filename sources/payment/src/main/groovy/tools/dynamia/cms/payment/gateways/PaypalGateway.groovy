@@ -99,7 +99,7 @@ class PaypalGateway implements PaymentGateway {
     @Override
     PaymentTransaction newTransaction(PaymentGatewayAccount account, String baseURL) {
         PaymentTransaction tx = new PaymentTransaction(account.source)
-        tx.account = account
+        tx.paymentAccount = account
         if (!baseURL.endsWith("/")) {
             baseURL += "/"
         }
@@ -112,7 +112,7 @@ class PaypalGateway implements PaymentGateway {
 
     @Override
     PaymentForm createForm(PaymentTransaction tx) {
-        Map<String, String> params = tx.account.configurationMap
+        Map<String, String> params = tx.paymentAccount.configurationMap
         PaymentForm form = new PaymentForm()
         form.httpMethod = "post"
 

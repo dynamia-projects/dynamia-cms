@@ -132,7 +132,7 @@ class PayULatamGateway implements PaymentGateway {
             throw new PaymentException("No account for new transaction")
         }
         PaymentTransaction tx = new PaymentTransaction(account.source)
-        tx.account = account
+        tx.paymentAccount = account
         tx.responseURL = baseURL + "payment/" + id + "/response"
         tx.confirmationURL = baseURL + "payment/" + id + "/confirmation"
         return tx
@@ -140,10 +140,10 @@ class PayULatamGateway implements PaymentGateway {
 
     @Override
     PaymentForm createForm(PaymentTransaction tx) {
-        if (tx.account == null) {
+        if (tx.paymentAccount == null) {
             throw new PaymentException("Cannot create payment form because transaction need an Account")
         }
-        Map<String, String> params = tx.account.configurationMap
+        Map<String, String> params = tx.paymentAccount.configurationMap
         PaymentForm form = new PaymentForm()
         form.httpMethod = "post"
 

@@ -42,7 +42,7 @@
         <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <groovy.version>2.5.2</groovy.version>
+        <groovy.version>2.5.4</groovy.version>
     </properties>
 
     <build>

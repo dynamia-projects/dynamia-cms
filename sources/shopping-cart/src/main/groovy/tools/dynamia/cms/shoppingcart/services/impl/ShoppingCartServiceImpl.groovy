@@ -226,7 +226,7 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
 
             order.syncTransaction()
             order.shoppingCart.status = ShoppingCartStatus.COMPLETED
-            order.transaction.account = config.paymentGatewayAccount
+            order.transaction.paymentAccount = config.paymentGatewayAccount
             order.transaction.description = "Orden No. $order.number. Compra de $order.shoppingCart.quantity producto(s)"
 
             if (order.billingAddress != null) {

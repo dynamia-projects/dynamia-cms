@@ -39,7 +39,7 @@ class PaymentTransaction extends BaseEntity implements Payment {
     String gatewayId
     @OneToOne
     @NotNull
-    PaymentGatewayAccount account
+    PaymentGatewayAccount paymentAccount
     @Enumerated(EnumType.ORDINAL)
     PaymentTransactionStatus status = PaymentTransactionStatus.NEW
     String statusText
