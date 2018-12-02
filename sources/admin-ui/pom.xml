@@ -57,6 +57,11 @@
             <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>tools.dynamia.zk.addons</groupId>
+            <artifactId>aceditor-zk</artifactId>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
