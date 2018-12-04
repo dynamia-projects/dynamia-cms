@@ -81,15 +81,16 @@ class AdminModulesInstaller {
                 if (option instanceof ConfigAdminModuleOption) {
                     ConfigAdminModuleOption cfg = (ConfigAdminModuleOption) option
                     page = new ConfigPage(cfg.id, cfg.name, cfg.descriptorID)
-                } else {
+                } else if(option.coreClass!=null){
                     page = new CrudPage(option.id, option.name, option.coreClass)
+                }else{
+                    page = new Page(option.id,option.name,option.path)
                 }
                 page.longNameSupplier = {
                     return "${module.getLocalizedName(Locales.current)} / ${page.getLocalizedName(Locales.current)}".toString()
                 }
                 page.addAttribute("OPTION", option)
                 module.addPage(page)
-
             }
 
             return module

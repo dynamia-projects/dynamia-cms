@@ -41,14 +41,18 @@ class ViewOrderDetailsAction extends ViewDataAction {
         if (shoppingOrder != null) {
 			shoppingOrder = crudService.reload(shoppingOrder)
 
-            ShoppingOrderDetailsUI ui = new ShoppingOrderDetailsUI(shoppingOrder)
-            ui.vflex = "1"
-            ui.style = "overflow: auto"
-            ZKUtil.showDialog("Shopping Order No. " + shoppingOrder.number, ui, "90%", "90%")
+            view(shoppingOrder)
         }
 	}
-	
-	@Override
+
+    void view(ShoppingOrder shoppingOrder) {
+        ShoppingOrderDetailsUI ui = new ShoppingOrderDetailsUI(shoppingOrder)
+        ui.vflex = "1"
+        ui.style = "overflow: auto"
+        ZKUtil.showDialog("Shopping Order No. " + shoppingOrder.number, ui, "90%", "90%")
+    }
+
+    @Override
     ActionRenderer getRenderer() {
 		return new ToolbarbuttonActionRenderer(true)
     }

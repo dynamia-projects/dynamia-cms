@@ -20,10 +20,10 @@ package tools.dynamia.cms.core.api
  */
 class AdminModuleOption implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8763631027547751496L
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8763631027547751496L
     private String id
     private String name
     private Class coreClass
@@ -35,21 +35,21 @@ class AdminModuleOption implements Serializable {
 
     AdminModuleOption() {
 
-	}
+    }
 
     AdminModuleOption(String id, String name) {
-		this.id = id
+        this.id = id
         this.name = name
     }
 
     AdminModuleOption(String id, String name, Class coreClass) {
-		this.id = id
+        this.id = id
         this.name = name
         this.coreClass = coreClass
     }
 
     AdminModuleOption(String id, String name, Class coreClass, boolean editorAllowed, boolean adminAllowed) {
-		super()
+        super()
         this.id = id
         this.name = name
         this.coreClass = coreClass
@@ -59,7 +59,7 @@ class AdminModuleOption implements Serializable {
 
     AdminModuleOption(String id, String name, Class coreClass, boolean editorAllowed, boolean adminAllowed, String image,
                       boolean shortcut) {
-		super()
+        super()
         this.id = id
         this.name = name
         this.coreClass = coreClass
@@ -69,68 +69,79 @@ class AdminModuleOption implements Serializable {
         this.shortcut = shortcut
     }
 
+    AdminModuleOption(String id, String name, String path, boolean editorAllowed, boolean adminAllowed, String image, boolean shortcut) {
+        super()
+        this.id = id
+        this.name = name
+        this.path = path
+        this.editorAllowed = editorAllowed
+        this.adminAllowed = adminAllowed
+        this.image = image
+        this.shortcut = shortcut
+    }
+
     String getId() {
-		return id
+        return id
     }
 
     void setId(String id) {
-		this.id = id
+        this.id = id
     }
 
     String getName() {
-		return name
+        return name
     }
 
     void setName(String name) {
-		this.name = name
+        this.name = name
     }
 
     Class getCoreClass() {
-		return coreClass
+        return coreClass
     }
 
     void setCoreClass(Class coreClass) {
-		this.coreClass = coreClass
+        this.coreClass = coreClass
     }
 
     boolean isEditorAllowed() {
-		return editorAllowed
+        return editorAllowed
     }
 
     void setEditorAllowed(boolean editorAllowed) {
-		this.editorAllowed = editorAllowed
+        this.editorAllowed = editorAllowed
     }
 
     boolean isAdminAllowed() {
-		return adminAllowed
+        return adminAllowed
     }
 
     void setAdminAllowed(boolean adminAllowed) {
-		this.adminAllowed = adminAllowed
+        this.adminAllowed = adminAllowed
     }
 
     String getImage() {
-		return image
+        return image
     }
 
     void setImage(String image) {
-		this.image = image
+        this.image = image
     }
 
     boolean isShortcut() {
-		return shortcut
+        return shortcut
     }
 
     void setShortcut(boolean shortcut) {
-		this.shortcut = shortcut
+        this.shortcut = shortcut
     }
 
     String getPath() {
-		return path
+        return path
     }
 
     void setPath(String path) {
-		this.path = path
+        this.path = path
     }
 
 }

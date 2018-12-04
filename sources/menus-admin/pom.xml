@@ -5,12 +5,12 @@
 	<parent>
 		<artifactId>tools.dynamia.cms.parent</artifactId>
 		<groupId>tools.dynamia.cms</groupId>
-		<version>3.0.0.Beta</version>
+		<version>3.0.0.RC</version>
 	</parent>
 
 	<name>DynamiaCMS - Menus Admin (${project.version})</name>
 	<artifactId>tools.dynamia.cms.menus.admin</artifactId>
-	<version>3.0.0.Beta</version>
+	<version>3.0.0.RC</version>
 	<url>http://www.dynamiasoluciones.com</url>
 
 	<build>
@@ -39,12 +39,12 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>tools.dynamia.cms.menus</artifactId>
-			<version>3.0.0.Beta</version>
+			<version>3.0.0.RC</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>tools.dynamia.cms.admin.ui</artifactId>
-			<version>3.0.0.Beta</version>
+			<version>3.0.0.RC</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

@@ -14,11 +14,11 @@
     <parent>
         <artifactId>tools.dynamia.cms.parent</artifactId>
         <groupId>tools.dynamia.cms</groupId>
-        <version>3.0.0.Beta</version>
+        <version>3.0.0.RC</version>
     </parent>
     <artifactId>tools.dynamia.cms.templates</artifactId>
     <name>DynamiaCMS - Templates (${project.version})</name>
-    <version>3.0.0.Beta</version>
+    <version>3.0.0.RC</version>
     <url>http://www.dynamiasoluciones.com</url>
     <build>
         <plugins>
@@ -44,8 +44,8 @@
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -74,7 +74,7 @@
         </dependency>
         <dependency>
             <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring4</artifactId>
+            <artifactId>thymeleaf-spring5</artifactId>
             <version>${thymeleaf.version}</version>
         </dependency>
 

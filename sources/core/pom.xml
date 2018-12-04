@@ -14,11 +14,11 @@
 	<parent>
 		<artifactId>tools.dynamia.cms.parent</artifactId>
 		<groupId>tools.dynamia.cms</groupId>
-		<version>3.0.0.Beta</version>
+		<version>3.0.0.RC</version>
 	</parent>
     <name>DynamiaCMS - Core (${project.version})</name>
     <artifactId>tools.dynamia.cms.core</artifactId>
-	<version>3.0.0.Beta</version>
+	<version>3.0.0.RC</version>
 	<url>http://www.dynamiasoluciones.com</url>
 
 	<build>
@@ -51,7 +51,7 @@
 		<dependency>
 			<groupId>tools.dynamia.cms</groupId>
 			<artifactId>tools.dynamia.cms.core.api</artifactId>
-			<version>3.0.0.Beta</version>
+			<version>3.0.0.RC</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
-			<version>2.10.3</version>
+			<version>${ehcache.version}</version>
 		</dependency>
 
 

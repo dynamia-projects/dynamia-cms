@@ -28,8 +28,8 @@ class TemplateSelectorRenderer implements ComboitemRenderer<Template> {
     @Override
     void render(Comboitem cmbtm, Template t, int i) throws Exception {
         cmbtm.value = t.directoryName
-        cmbtm.label = String.format("%s (%s)", t.name, t.version)
-        cmbtm.description = t.description
+        cmbtm.label = "$t.name - $t.version (/${t.directoryName})"
+        cmbtm.description = "$t.description "
     }
 
 }

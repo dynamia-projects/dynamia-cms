@@ -55,11 +55,9 @@ class ProductDTO implements Serializable {
     private String image4
     private String videoURL
     private String videoURL2
-
+    private Date creationDate
     private String tags
-
     private ProductCategoryDTO category
-
     private ProductBrandDTO brand
 
     private List<ProductDetailDTO> details = new ArrayList<>()
@@ -478,5 +476,13 @@ class ProductDTO implements Serializable {
 
     void setCurrency(String currency) {
         this.currency = currency
+    }
+
+    Date getCreationDate() {
+        return creationDate
+    }
+
+    void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate
     }
 }

@@ -14,12 +14,12 @@
     <parent>
         <artifactId>tools.dynamia.cms.parent</artifactId>
         <groupId>tools.dynamia.cms</groupId>
-        <version>3.0.0.Beta</version>
+        <version>3.0.0.RC</version>
     </parent>
 
     <name>DynamiaCMS - Users (3.0.0.Beta)</name>
     <artifactId>tools.dynamia.cms.users</artifactId>
-    <version>3.0.0.Beta</version>
+    <version>3.0.0.RC</version>
     <url>http://www.dynamiasoluciones.com</url>
     
     <build>
@@ -47,17 +47,17 @@
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.core</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.users.api</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.mail</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>

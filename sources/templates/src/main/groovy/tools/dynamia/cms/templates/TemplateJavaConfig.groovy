@@ -26,14 +26,10 @@ import org.springframework.web.accept.PathExtensionContentNegotiationStrategy
 import org.springframework.web.servlet.ViewResolver
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver
-import org.springframework.web.servlet.view.InternalResourceViewResolver
-import org.springframework.web.servlet.view.UrlBasedViewResolver
-import org.thymeleaf.spring4.SpringTemplateEngine
-import org.thymeleaf.spring4.view.ThymeleafViewResolver
+import org.thymeleaf.spring5.SpringTemplateEngine
+import org.thymeleaf.spring5.view.ThymeleafViewResolver
 import org.thymeleaf.templatemode.TemplateMode
 import tools.dynamia.app.ApplicationInfo
-import tools.dynamia.app.template.ChainableUrlBasedViewResolver
-import tools.dynamia.app.template.TemplateViewResolver
 
 /**
  *

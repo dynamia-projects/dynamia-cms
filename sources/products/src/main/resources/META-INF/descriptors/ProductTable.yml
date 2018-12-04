@@ -3,74 +3,77 @@ beanClass: tools.dynamia.cms.products.domain.Product
 autofields: false
 
 fields:
-   sku:
-   
-   name:
-   brand:
-   category:
-   unit:
-   template:
-   alternateTemplate:
-   price:
-      params:      
-          converter: converters.Integer
-          header:
-             align: right
-   price2:
-      params:      
-          converter: converters.Integer
-          header:
-             align: right
-   cost:
-      params:      
-          converter: converters.Integer
-          header:
-             align: right
-   lastPrice:
-      params:
-          converter: converters.Integer
-          header:
-             align: right
-   storePrice:
-      params:
-          converter: converters.Integer
-          header:
-             align: right
-   
+  sku:
 
-   stock:
-      params:
-         header:
-            align: center
-   views:
-      params:
-         header:
-            align: center
-   taxName:      
-   taxPercent:
-      params:          
-          header:
-             align: center
-   active:
-   taxable:
-   featured:
-   sale:
-   newproduct:
-      label: New
-   status:
-   reviews:
-   stars:
-   promoEnabled:
-       label: Promo
-   promoValue:
-       label: Value
-   promoValueType:
-       label: Type
-   promoStartDate:
-       label: Start Date
-       params:
-           converter: converters.Date
-   promoEndDate:
-       label: End Date
-       params:
-           converter: converters.Date
+  name:
+  brand:
+  category:
+  unit:
+  template:
+  alternateTemplate:
+  price:
+    params:
+      converter: converters.Integer
+      header:
+        align: right
+  price2:
+    params:
+      converter: converters.Integer
+      header:
+        align: right
+  cost:
+    params:
+      converter: converters.Integer
+      header:
+        align: right
+  lastPrice:
+    params:
+      converter: converters.Integer
+      header:
+        align: right
+  storePrice:
+    params:
+      converter: converters.Integer
+      header:
+        align: right
+
+
+  stock:
+    params:
+      header:
+        align: center
+  views:
+    params:
+      header:
+        align: center
+  taxName:
+  taxPercent:
+    params:
+      header:
+        align: center
+  active:
+  taxable:
+  featured:
+  sale:
+  newproduct:
+    label: New
+  status:
+  reviews:
+  stars:
+  promoEnabled:
+    label: Promo
+  promoValue:
+    label: Value
+  promoValueType:
+    label: Type
+  promoStartDate:
+    label: Start Date
+    params:
+      converter: converters.Date
+  promoEndDate:
+    label: End Date
+    params:
+      converter: converters.Date
+  creationDate:
+    params:
+      converter: converters.Date

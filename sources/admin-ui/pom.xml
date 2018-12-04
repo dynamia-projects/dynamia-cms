@@ -13,13 +13,13 @@
     <parent>
         <artifactId>tools.dynamia.cms.parent</artifactId>
         <groupId>tools.dynamia.cms</groupId>
-        <version>3.0.0.Beta</version>
+        <version>3.0.0.RC</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <name>DynamiaCMS - Core Admin UI (${project.version})</name>
     <artifactId>tools.dynamia.cms.admin.ui</artifactId>
-    <version>3.0.0.Beta</version>
+    <version>3.0.0.RC</version>
     <url>http://www.dynamiasoluciones.com</url>
 
     <dependencies>
@@ -37,18 +37,41 @@
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.admin</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.templates</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.modules</groupId>
             <artifactId>tools.dynamia.modules.filemanager</artifactId>
             <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.products</artifactId>
+            <version>3.0.0.RC</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.shoppingcart</artifactId>
+            <version>3.0.0.RC</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.shopping.admin</artifactId>
+            <version>3.0.0.RC</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.zk.addons</groupId>
+            <artifactId>chartjs-zk</artifactId>
+            <version>2.7.2_R1</version>
         </dependency>
 
         <dependency>

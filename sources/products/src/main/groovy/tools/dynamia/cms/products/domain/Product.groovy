@@ -18,6 +18,8 @@ package tools.dynamia.cms.products.domain
 import com.fasterxml.jackson.annotation.JsonIgnore
 import tools.dynamia.cms.core.api.SiteAware
 import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.cms.products.api.ValueType
+import tools.dynamia.cms.products.dto.ProductDTO
 import tools.dynamia.commons.BeanUtils
 import tools.dynamia.domain.SimpleEntity
 import tools.dynamia.domain.contraints.NotEmpty
@@ -88,6 +90,8 @@ class Product extends SimpleEntity implements SiteAware {
     String externalLink
 
     String quality
+    @Temporal(TemporalType.DATE)
+    Date creationDate = new Date()
 
     @OneToOne
     @NotNull(message = "Select product category")
@@ -118,7 +122,7 @@ class Product extends SimpleEntity implements SiteAware {
     // Promotion config
     boolean promoEnabled
     BigDecimal promoValue
-    tools.dynamia.cms.products.api.ValueType promoValueType = tools.dynamia.cms.products.api.ValueType.PERCENT
+    ValueType promoValueType = ValueType.PERCENT
     Date promoStartDate
     Date promoEndDate
     String promoName
@@ -145,9 +149,9 @@ class Product extends SimpleEntity implements SiteAware {
     String getPromoValueFormatted() {
         if (promoValue != null) {
             switch (promoValueType) {
-                case CURRENCY:
+                case ValueType.CURRENCY:
                     return "-" + NumberFormat.currencyInstance.format(promoValue)
-                case PERCENT:
+                case ValueType.PERCENT:
                     return "-" + promoValue.intValue() + "%"
             }
         }
@@ -205,7 +209,7 @@ class Product extends SimpleEntity implements SiteAware {
         return name
     }
 
-    void sync(tools.dynamia.cms.products.dto.ProductDTO dto) {
+    void sync(ProductDTO dto) {
         BeanUtils.setupBean(this, dto)
 
         active = dto.active

@@ -5,12 +5,12 @@
     <parent>
         <artifactId>tools.dynamia.cms.parent</artifactId>
         <groupId>tools.dynamia.cms</groupId>
-        <version>3.0.0.Beta</version>
+        <version>3.0.0.RC</version>
     </parent>
 
     <name>DynamiaCMS - Core Admin (${project.version})</name>
     <artifactId>tools.dynamia.cms.admin</artifactId>
-    <version>3.0.0.Beta</version>
+    <version>3.0.0.RC</version>
     <url>http://www.dynamiasoluciones.com</url>
     <build>
         <plugins>
@@ -44,12 +44,12 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>tools.dynamia.cms.core</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.users</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

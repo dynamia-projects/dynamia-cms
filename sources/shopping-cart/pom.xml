@@ -14,12 +14,12 @@
     <parent>
         <groupId>tools.dynamia.cms</groupId>
         <artifactId>tools.dynamia.cms.parent</artifactId>
-        <version>3.0.0.Beta</version>
+        <version>3.0.0.RC</version>
     </parent>
     <groupId>tools.dynamia.cms</groupId>
     <artifactId>tools.dynamia.cms.shoppingcart</artifactId>
     <name>DynamiaCMS - ShoppingCart (${project.version})</name>
-    <version>3.0.0.Beta</version>
+    <version>3.0.0.RC</version>
 
     <packaging>jar</packaging>
     <build>
@@ -47,27 +47,27 @@
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.core</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.users</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.payment</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.shoppingcart.api</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.payment.api</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -80,7 +80,7 @@
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.mail</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
     </dependencies>
 </project>

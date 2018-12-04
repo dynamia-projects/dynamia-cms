@@ -86,7 +86,7 @@ class TemplateServiceImpl implements TemplateService {
 	@Override
     Template getTemplate(String templateName) {
 		for (Template template : loadTemplates()) {
-			if (template.directoryName.equals(templateName)) {
+			if (template.directoryName == templateName) {
 				return template
             }
 		}

@@ -92,5 +92,10 @@ interface PaymentService {
 
     PaymentSource findPaymentSource(Object request)
 
-    def findAccount(String id);
+    /**
+     * Find a payment gateway account by its UUID
+     * @param uuid
+     * @return
+     */
+    PaymentGatewayAccount findAccount(String uuid);
 }

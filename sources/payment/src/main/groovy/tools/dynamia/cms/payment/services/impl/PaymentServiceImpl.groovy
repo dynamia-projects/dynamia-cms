@@ -303,7 +303,7 @@ class PaymentServiceImpl extends AbstractService implements PaymentService {
     }
 
     @Override
-    def findAccount(String id) {
-        return null
+    PaymentGatewayAccount findAccount(String uuid) {
+        return crudService().findSingle(PaymentGatewayAccount,"uuid",QueryConditions.eq(uuid))
     }
 }

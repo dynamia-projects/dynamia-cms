@@ -14,12 +14,12 @@
     <parent>
         <artifactId>tools.dynamia.cms.parent</artifactId>
         <groupId>tools.dynamia.cms</groupId>
-        <version>3.0.0.Beta</version>
+        <version>3.0.0.RC</version>
     </parent>
     <groupId>tools.dynamia.cms</groupId>
     <artifactId>tools.dynamia.cms.banners</artifactId>
     <name>DynamiaCMS - Banners (${project.version})</name>
-    <version>3.0.0.Beta</version>
+    <version>3.0.0.RC</version>
     <url>http://www.dynamiasoluciones.com</url>
     <build>
         <plugins>

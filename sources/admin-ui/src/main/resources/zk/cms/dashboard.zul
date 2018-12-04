@@ -1,0 +1,182 @@
+<zk xmlns:n="native">
+
+    <div viewModel="@id('vm') @init('tools.dynamia.cms.admin.ui.AdminDashboardVM')">
+
+        <div sclass="row">
+            <div sclass="col-xs-12 col-sm-6 col-md-3">
+                <infobox text="Enabled Modules" number="@load(vm.modulesCount)" icon="fa fa-cubes" sclass="info-box-sm"
+                         background="bg-blue"/>
+            </div>
+            <div sclass="col-xs-12 col-sm-6 col-md-3">
+                <infobox text="Published Pages" number="@load(vm.pagesCount)" icon="fa fa-files-o" sclass="info-box-sm"
+                         background="bg-green"/>
+            </div>
+            <div sclass="col-xs-12 col-sm-6 col-md-3">
+                <infobox text="Last Month Users Logins" number="@load(vm.usersCountLastMonth)" icon="fa fa-calendar"
+                         sclass="info-box-sm" background="bg-red"/>
+            </div>
+            <div sclass="col-xs-12 col-sm-6 col-md-3">
+                <infobox text="Registered Users" number="@load(vm.usersCountLastMonth)" icon="fa fa-users"
+                         sclass="info-box-sm"
+                         background="bg-orange"/>
+            </div>
+        </div>
+
+        <div sclass="row">
+            <div sclass="col-xs-12 col-sm-6 col-md-3">
+                <infobox text="Products" number="@load(vm.productsCount)" icon="fa fa-server" sclass="info-box-sm"
+                         iconBackground="bg-blue"/>
+            </div>
+            <div sclass="col-xs-12 col-sm-6 col-md-3">
+                <infobox text="Products Categories" number="@load(vm.categoriesCount)" icon="fa fa-tags"
+                         iconBackground="bg-green"
+                         sclass="info-box-sm"/>
+            </div>
+            <div sclass="col-xs-12 col-sm-6 col-md-3">
+                <infobox text="Last Week Shops" number="@load(vm.lastWeekShoppings)" icon="fa fa-cart-arrow-down"
+                         iconBackground="bg-red" sclass="info-box-sm"/>
+            </div>
+            <div sclass="col-xs-12 col-sm-6 col-md-3">
+                <infobox text="Today Shops" number="@load(vm.todayShoppings)" icon="fa fa-shopping-cart"
+                         iconBackground="bg-orange" sclass="info-box-sm"/>
+            </div>
+        </div>
+
+
+        <div sclass="row">
+            <div sclass="col-sm-12 col-md-4">
+                <div sclass="panel panel-color panel-success">
+                    <div sclass="panel-heading">
+
+                        <n:i class="fa fa-cubes"/>
+                        <label value="New Products" zclass="none"/>
+                        <label value="@load(vm.lastStoreUpdate) @converter('converters.DateTime')"
+                               tooltiptext="Last Store Sync" style="float: right"/>
+
+                    </div>
+
+                    <div sclass="panel-body">
+                        <listbox height="300px" model="@load(vm.newProducts)">
+                            <listhead>
+                                <listheader label="Name"/>
+                                <listheader label="Category"/>
+                                <listheader label="SKU"/>
+                                <listheader label="Stock" align="center"/>
+                                <listheader label="Price" align="right"/>
+                                <listheader label="Created"/>
+                            </listhead>
+
+                            <template name="model" var="p">
+                                <listitem>
+                                    <listcell label="@load(p.name)"/>
+                                    <listcell label="@load(p.category.name)"/>
+                                    <listcell label="@load(p.sku)"/>
+                                    <listcell label="@load(p.stock)"/>
+                                    <listcell label="@load(p.price) @converter('converters.CurrencySimple')"/>
+                                    <listcell label="@load(p.creationDate) @converter('converters.Date')"/>
+                                </listitem>
+                            </template>
+                        </listbox>
+
+                    </div>
+                </div>
+            </div>
+
+            <div sclass="col-sm-12 col-md-8">
+                <div sclass="panel panel-colored panel-primary">
+                    <div sclass="panel-heading">
+                        <n:i class="fa fa-shopping-cart"/>
+                        <label value="New Shopping Orders" zclass="none"/>
+                    </div>
+
+                    <div sclass="panel-body">
+                        <listbox height="300px" model="@load(vm.newShoppingrOrders)">
+                            <listhead>
+                                <listheader label="Order" width="50px"/>
+                                <listheader label="Date" width="80px"/>
+                                <listheader label="Customer" width="30%"/>
+                                <listheader label="Identification"/>
+                                <listheader label="Email"/>
+                                <listheader label="Phone Number"/>
+                                <listheader label="Mobile Number"/>
+                                <listheader label="Status" width="100px"/>
+                                <listheader label="Qty" align="center" width="40px"/>
+                                <listheader label="Total" align="right" width="100px"/>
+                            </listhead>
+
+                            <template name="model" var="s">
+                                <listitem>
+                                    <listcell>
+                                        <a label="@load(s.number)" onClick="@command('viewOrder', order=s)" tooltiptext="View Order Details"/>
+                                    </listcell>
+                                    <listcell label="@load(s.creationDate)  @converter('converters.Date')"/>
+                                    <listcell label="@load(s.shoppingCart.user.fullName)"/>
+                                    <listcell label="@load(s.shoppingCart.user.identification)"/>
+                                    <listcell label="@load(s.shoppingCart.user.username)"/>
+                                    <listcell label="@load(s.shippingAddress.info.phoneNumber)"/>
+                                    <listcell label="@load(s.shippingAddress.info.mobileNumber)"/>
+                                    <listcell label="@load(s.transaction.status)"/>
+                                    <listcell label="@load(s.shoppingCart.quantity)"/>
+                                    <listcell
+                                            label="@load(s.shoppingCart.totalPrice) @converter('converters.CurrencySimple')"/>
+                                </listitem>
+                            </template>
+                        </listbox>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div sclass="row">
+            <div sclass="col-sm-12 col-md-4">
+                <div sclass="panel panel-color panel-warning">
+                    <div sclass="panel-heading">
+                        <n:i class="fa fa-users"/>
+                        <label value="New Users" zclass="none"/>
+                    </div>
+
+                    <div sclass="panel-body">
+                        <listbox height="300px" model="@load(vm.newProducts)">
+                            <listhead>
+                                <listheader label="Name"/>
+                                <listheader label="Email"/>
+                                <listheader label="Identification"/>
+                                <listheader label="City"/>
+                                <listheader label="Phone"/>
+                                <listheader label="Created"/>
+                            </listhead>
+
+                            <template name="model" var="p">
+                                <listitem>
+                                    <listcell label="@load(p.fullName)"/>
+                                    <listcell label="@load(p.username)"/>
+                                    <listcell label="@load(p.identification)"/>
+                                    <listcell label="@load(p.contactInfo.city)"/>
+                                    <listcell label="@load(p.contactInfo.phoneNumber)"/>
+                                    <listcell label="@load(p.creationDate) @converter('converters.Date')"/>
+                                </listitem>
+                            </template>
+                        </listbox>
+
+                    </div>
+                </div>
+            </div>
+            <div sclass="col-sm-12 col-md-8">
+                <div sclass="panel panel-color panel-warning">
+                    <div sclass="panel-heading">
+                        <n:i class="fa fa-bar"/>
+                        <label value="Last Month Logins" zclass="none"/>
+                    </div>
+                    <div sclass="panel-body">
+                        <chartjs type="bar" data="@load(vm.lastMonthLogins)"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</zk>

@@ -23,44 +23,18 @@ import java.nio.file.Path
  */
 class Template implements Serializable {
 
-	private String name
-    private String directoryName
-    private String description
-    private String author
-    private String date
-    private String version
-    private List<String> positions
+	String name
+    String directoryName
+    String description
+    String author
+    String date
+    String version
+    List<String> positions
 
     private Template() {
 	}
 
-    String getName() {
-		return name
-    }
 
-    String getDescription() {
-		return description
-    }
-
-    String getAuthor() {
-		return author
-    }
-
-    String getDate() {
-		return date
-    }
-
-    String getVersion() {
-		return version
-    }
-
-    List<String> getPositions() {
-		return positions
-    }
-
-    String getDirectoryName() {
-		return directoryName
-    }
 
     static Template build(Properties prop, Path directory) {
 		Template t = new Template()

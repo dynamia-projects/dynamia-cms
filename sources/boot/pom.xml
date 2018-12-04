@@ -6,7 +6,7 @@
 
     <groupId>tools.dynamia.cms</groupId>
     <artifactId>DynamiaCMS</artifactId>
-    <version>3.0.0.Beta</version>
+    <version>3.0.0.RC</version>
     <packaging>jar</packaging>
 
     <name>DynamiaCMS</name>
@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.13.RELEASE</version>
+        <version>2.1.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -25,16 +25,20 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <dynamiatools.version>3.1.0.Final</dynamiatools.version>
+        <dynamiatools.version>3.2.0.Final</dynamiatools.version>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <spring.version>4.3.18.RELEASE</spring.version>
-        <hibernate.version>5.2.17.Final</hibernate.version>
-        <groovy.version>2.5.4</groovy.version>
-        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
-        <thymeleaf.layout.version>2.2.2</thymeleaf.layout.version>
+        <spring.version>5.1.3.RELEASE</spring.version>
+        <spring.security.version>5.1.2.RELEASE</spring.security.version>
+
+        <hibernate.version>5.3.7.Final</hibernate.version>
+        <hibernatevalidator.version>6.0.13.Final</hibernatevalidator.version>
+
+        <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
+        <thymeleaf.layout.version>2.3.0</thymeleaf.layout.version>
+
     </properties>
 
     <dependencies>
@@ -69,10 +73,13 @@
             <type>pom</type>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>2.3.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -92,7 +99,7 @@
         </dependency>
         <dependency>
             <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring4</artifactId>
+            <artifactId>thymeleaf-spring5</artifactId>
             <version>${thymeleaf.version}</version>
         </dependency>
 
@@ -110,124 +117,124 @@
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.core</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.admin</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.admin.ui</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.users</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.users.admin</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.pages</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.pages.admin</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.menus</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.menus.admin</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.mail</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.mail.admin</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.shoppingcart</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.shopping.admin</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.payment</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.payment.admin</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.templates</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.banners</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.contacts</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.products</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.products.admin</artifactId>
-            <version>3.0.0.Beta</version>
+            <version>3.0.0.RC</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.themes</groupId>
             <artifactId>tools.dynamia.themes.dynamical</artifactId>
-            <version>${dynamiatools.version}</version>
+            <version>3.1.0.Final</version>
         </dependency>
     </dependencies>
 
@@ -250,7 +257,7 @@
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <version>1.6</version>
+                <version>1.6.2</version>
                 <executions>
                     <execution>
                         <goals>

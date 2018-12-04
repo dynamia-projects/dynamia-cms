@@ -16,7 +16,6 @@
 package tools.dynamia.cms.products.services.impl
 
 import groovy.transform.CompileStatic
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
@@ -28,7 +27,7 @@ import tools.dynamia.cms.products.services.ProductsSyncService
 import tools.dynamia.commons.logger.LoggingService
 import tools.dynamia.commons.logger.SLF4JLoggingService
 import tools.dynamia.domain.query.QueryParameters
-import tools.dynamia.domain.services.CrudService
+import tools.dynamia.domain.services.AbstractService
 import tools.dynamia.web.util.HttpRemotingServiceClient
 
 import javax.persistence.EntityManager
@@ -44,15 +43,14 @@ import java.nio.file.StandardCopyOption
  */
 @Service
 @CompileStatic
-class ProductsSyncServiceImpl implements ProductsSyncService {
+class ProductsSyncServiceImpl extends AbstractService implements ProductsSyncService {
 
     private static final String PRODUCTS_FOLDER = "products"
     private static final String STORES_FOLDER = "stores"
 
     private LoggingService logger = new SLF4JLoggingService(ProductsSyncService.class)
 
-    @Autowired
-    private CrudService crudService
+  
 
     @PersistenceContext
     private EntityManager entityMgr
@@ -60,7 +58,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     List<ProductCategoryDTO> synchronizeCategories(ProductsSiteConfig siteCfg) {
-        logger.debug(">>>> STARTING PRODUCT'S CATEGORIES SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
+        log(">>>> STARTING PRODUCT'S CATEGORIES SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
 
         ProductsDatasource ds = getDatasource(siteCfg)
 
@@ -70,7 +68,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
             def fields = [:]
             fields["parent"] = null
             fields["active"] = false
-            crudService.batchUpdate(ProductCategory, fields, QueryParameters.with("site", siteCfg.site))
+            crudService().batchUpdate(ProductCategory, fields, QueryParameters.with("site", siteCfg.site))
 
             for (ProductCategoryDTO remoteCategory : categories) {
                 synchronizeCategory(siteCfg, remoteCategory)
@@ -114,21 +112,21 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
             localCategory.relatedCategory = null
         }
 
-        crudService.save(localCategory)
+        crudService().save(localCategory)
     }
 
     @Override
     List<ProductDTO> synchronizeProducts(ProductsSiteConfig siteCfg) {
-        logger.debug(">>>> STARTING PRODUCTS SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
-        tools.dynamia.cms.products.api.ProductsDatasource ds = getDatasource(siteCfg)
+        log(">>>> STARTING PRODUCTS SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
+        ProductsDatasource ds = getDatasource(siteCfg)
         List<ProductDTO> products = ds.getProducts(siteCfg.parametersAsMap)
 
         for (ProductDTO remoteProduct : products) {
-            logger.debug("Synchronizing product. Site:  $siteCfg.site.name Name:$remoteProduct.name")
+            log("Synchronizing product. Site:  $siteCfg.site.name Name:$remoteProduct.name")
             try {
-                crudService.executeWithinTransaction { synchronizeProduct(siteCfg, remoteProduct) }
+                crudService().executeWithinTransaction { synchronizeProduct(siteCfg, remoteProduct) }
             } catch (Exception e) {
-                logger.error("Error Synchronizing Product: " + remoteProduct.name, e)
+                log("Error Synchronizing Product: " + remoteProduct.name, e)
                 e.printStackTrace()
             }
         }
@@ -159,10 +157,10 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
         }
 
         if (localProduct.category != null) {
-            logger.info("Saving product $localProduct.name")
-            crudService.save(localProduct)
+            log("Saving product $localProduct.name")
+            crudService().save(localProduct)
         } else {
-            logger.warn("Cannot save product $localProduct.name. Category is null")
+            logWarn("Cannot save product $localProduct.name. Category is null")
         }
 
     }
@@ -172,7 +170,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
 
         Product localProduct = getLocalProduct(siteCfg, remoteProduct)
         if (localProduct == null) {
-            logger.warn(":: Local Product is NULL - Remote Product $remoteProduct.name --> $remoteProduct.externalRef")
+            log(":: Local Product is NULL - Remote Product $remoteProduct.name --> $remoteProduct.externalRef")
             return
         }
         deleteProductsDetails(localProduct)
@@ -185,7 +183,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
                 localDetail.site = localProduct.site
                 localDetail.product = localProduct
                 localDetail.sync(remoteDetail)
-                crudService.save(localDetail)
+                crudService().save(localDetail)
             }
         }
     }
@@ -195,7 +193,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
         if (remoteProduct.externalRef != null) {
             localProduct = getLocalEntity(Product.class, remoteProduct.externalRef, siteCfg)
         } else if (remoteProduct.sku != null) {
-            localProduct = crudService.findSingle(Product.class,
+            localProduct = crudService().findSingle(Product.class,
                     QueryParameters.with("sku", remoteProduct.sku).add("site", siteCfg.site))
         }
         return localProduct
@@ -205,7 +203,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
     void syncProductStockDetails(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
         Product localProduct = getLocalProduct(siteCfg, remoteProduct)
         if (localProduct == null) {
-            logger.warn(":: Local Product is NULL - Remote Product $remoteProduct.name --> $remoteProduct.externalRef")
+            log(":: Local Product is NULL - Remote Product $remoteProduct.name --> $remoteProduct.externalRef")
             return
         }
         deleteProductsStockDetails(localProduct)
@@ -220,10 +218,10 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
                     localDetail.store = getLocalEntity(Store.class, remoteDetail.storeExternalRef, siteCfg)
                     localDetail.sync(remoteDetail)
                     if (localDetail.product != null && localDetail.store != null) {
-                        crudService.save(localDetail)
+                        crudService().save(localDetail)
                     }
                 } catch (Exception e) {
-                    logger.error("Error creando stock de producto $localProduct.name, Store External ID: $remoteDetail.storeExternalRef")
+                    log("Error creando stock de producto $localProduct.name, Store External ID: $remoteDetail.storeExternalRef")
                 }
             }
         }
@@ -235,7 +233,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
 
         Product localProduct = getLocalProduct(siteCfg, remoteProduct)
         if (localProduct == null) {
-            logger.warn(":: Local Product is NULL - Remote Product $remoteProduct.name --> $remoteProduct.externalRef")
+            log(":: Local Product is NULL - Remote Product $remoteProduct.name --> $remoteProduct.externalRef")
             return
         }
         deleteProductsCreditPrices(localProduct)
@@ -248,7 +246,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
                     localPrice.site = localProduct.site
                     localPrice.product = localProduct
                     localPrice.sync(remotePrice)
-                    crudService.save(localPrice)
+                    crudService().save(localPrice)
                 }
             }
         }
@@ -259,7 +257,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
         remoteCategories.each { dto ->
             ProductCategory localCat = getLocalEntity(ProductCategory, dto.externalRef, siteCfg)
             if (localCat) {
-                crudService.executeWithinTransaction {
+                crudService().executeWithinTransaction {
                     syncCategoryDetails(siteCfg, localCat, dto)
                 }
                 if (dto.subcategories) {
@@ -283,7 +281,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
                 localDetail.site = localCategory.site
                 localDetail.category = localCategory
                 localDetail.sync(remoteDetail)
-                crudService.save(localDetail)
+                crudService().save(localDetail)
             }
         }
     }
@@ -291,7 +289,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     List<ProductBrandDTO> synchronizeBrands(ProductsSiteConfig siteCfg) {
-        logger.debug(">>>> STARTING PRODUCT'S BRANDS SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
+        log(">>>> STARTING PRODUCT'S BRANDS SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
 
         ProductsDatasource ds = getDatasource(siteCfg)
         List<ProductBrandDTO> brands = ds.getBrands(siteCfg.parametersAsMap)
@@ -311,14 +309,14 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
         }
         localBrand.sync(remoteBrand)
 
-        crudService.save(localBrand)
+        crudService().save(localBrand)
 
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     List<StoreDTO> synchronizeStores(ProductsSiteConfig siteCfg) {
-        logger.debug(">>>> STARTING STORE SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
+        log(">>>> STARTING STORE SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
 
         ProductsDatasource ds = getDatasource(siteCfg)
         List<StoreDTO> stores = ds.getStores(siteCfg.parametersAsMap)
@@ -338,7 +336,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
         }
         localStore.sync(remoteStore)
 
-        crudService.save(localStore)
+        crudService().save(localStore)
 
         if (siteCfg.syncStoreContacts && remoteStore.contacts != null) {
             for (StoreContactDTO remoteContact : (remoteStore.contacts)) {
@@ -350,7 +348,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
                 }
                 localStoreContact.store = localStore
                 localStoreContact.sync(remoteContact)
-                crudService.save(localStoreContact)
+                crudService().save(localStoreContact)
             }
 
         }
@@ -359,7 +357,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     List<RelatedProductDTO> synchronizeRelatedProducts(ProductsSiteConfig siteCfg) {
-        logger.debug(">>>> STARTING RELATED PRODUCTS SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
+        log(">>>> STARTING RELATED PRODUCTS SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
 
         ProductsDatasource ds = getDatasource(siteCfg)
         List<RelatedProductDTO> related = ds.getRelatedProducts(siteCfg.parametersAsMap)
@@ -383,7 +381,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
 
                 localRelated.sync(remoteRelated)
                 if (localRelated.product != null) {
-                    crudService.save(localRelated)
+                    crudService().save(localRelated)
                 }
             }
         }
@@ -402,7 +400,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
 
 
         } catch (Exception ex) {
-            logger.error("Error downloading image from product $store.name for Site: $siteCfg.site.name", ex)
+            log("Error downloading image from product $store.name for Site: $siteCfg.site.name", ex)
         }
 
         try {
@@ -412,7 +410,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
                         .resolve(STORES_FOLDER + File.separator + "contacts").toString()
 
                 for (StoreContactDTO contact : (store.contacts)) {
-                    logger.info("Downloading image for store contact $contact.name")
+                    log("Downloading image for store contact $contact.name")
                     downloadImage(siteCfg.datasourceStoreContactImagesURL, contact.image, folder)
                 }
             }
@@ -433,7 +431,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
             downloadImage(siteCfg.datasourceImagesURL, product.image4, folder)
 
         } catch (Exception ex) {
-            logger.error("Error downloading image from product $product.name for Site: $siteCfg.site.name", ex)
+            log("Error downloading image from product $product.name for Site: $siteCfg.site.name", ex)
         }
     }
 
@@ -445,7 +443,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
                     .resolve(PRODUCTS_FOLDER + File.separator + "brands").toString()
             downloadImage(siteCfg.datasourceBrandImagesURL, brand.image, folder)
         } catch (Exception ex) {
-            logger.error("Error downloading image for product's brand $brand", ex)
+            log("Error downloading image for product's brand $brand", ex)
         }
     }
 
@@ -453,7 +451,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
     void downloadImage(String baseURL, final String imageName, final String localFolder) throws Exception {
 
         if (baseURL == null || baseURL.empty) {
-            logger.info("-No base URL  to download images")
+            log("-No base URL  to download images")
             return
         }
 
@@ -476,10 +474,10 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
                     Files.copy(it, localFile, StandardCopyOption.REPLACE_EXISTING)
                 }
             } catch (IOException ex) {
-                logger.error("-Error downloading image $imageName", ex)
+                log("-Error downloading image $imageName", ex)
             }
         } else {
-            logger.info("-No image to download")
+            log("-No image to download")
         }
     }
 
@@ -497,10 +495,10 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
         if (product.id == null) {
             return
         }
-        List<ProductDetail> details = crudService.find(ProductDetail.class, "product", product)
+        List<ProductDetail> details = crudService().find(ProductDetail.class, "product", product)
         if (details != null) {
             for (ProductDetail productDetail : details) {
-                crudService.delete(productDetail)
+                crudService().delete(productDetail)
             }
         }
     }
@@ -509,10 +507,10 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
         if (product.id == null) {
             return
         }
-        List<ProductStock> details = crudService.find(ProductStock.class, "product", product)
+        List<ProductStock> details = crudService().find(ProductStock.class, "product", product)
         if (details != null) {
             for (ProductStock stock : details) {
-                crudService.delete(stock)
+                crudService().delete(stock)
             }
         }
     }
@@ -521,10 +519,10 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
         if (product.id == null) {
             return
         }
-        List<ProductCreditPrice> details = crudService.find(ProductCreditPrice.class, "product", product)
+        List<ProductCreditPrice> details = crudService().find(ProductCreditPrice.class, "product", product)
         if (details != null) {
             for (ProductCreditPrice price : details) {
-                crudService.delete(price)
+                crudService().delete(price)
             }
         }
     }
@@ -617,10 +615,10 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
                     }
                 }
 
-                int r = crudService.execute("delete from StoreContact s where s.externalRef not in (:ids) and s.site = :site",
+                int r = crudService().execute("delete from StoreContact s where s.externalRef not in (:ids) and s.site = :site",
                         QueryParameters.with("site", siteCfg.site)
                                 .add("ids", ids))
-                logger.info(r + " store contacts deleted from stores ")
+                log(r + " store contacts deleted from stores ")
             }
         }
     }
@@ -629,7 +627,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     void update(ProductsSiteConfig siteCfg) {
         siteCfg.lastSync = new Date()
-        crudService.update(siteCfg)
+        crudService().update(siteCfg)
     }
 
     def <T> T getLocalEntity(Class<T> clazz, Long externalRef, ProductsSiteConfig cfg) {
@@ -638,7 +636,7 @@ class ProductsSyncServiceImpl implements ProductsSyncService {
         }
         QueryParameters qp = QueryParameters.with("externalRef", externalRef).add("site", cfg.site)
 
-        return crudService.findSingle(clazz, qp)
+        return crudService().findSingle(clazz, qp)
     }
 
 }

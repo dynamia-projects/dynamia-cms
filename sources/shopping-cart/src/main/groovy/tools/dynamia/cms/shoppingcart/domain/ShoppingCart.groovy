@@ -17,6 +17,7 @@ package tools.dynamia.cms.shoppingcart.domain
 
 import tools.dynamia.cms.core.api.SiteAware
 import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.cms.shoppingcart.domain.enums.ShoppingCartStatus
 import tools.dynamia.cms.users.domain.User
 import tools.dynamia.domain.SimpleEntity
 
@@ -55,7 +56,7 @@ class ShoppingCart extends SimpleEntity implements SiteAware {
     List<ShoppingCartItem> items = new ArrayList<>()
 
     @Enumerated(EnumType.ORDINAL)
-    tools.dynamia.cms.shoppingcart.domain.enums.ShoppingCartStatus status = tools.dynamia.cms.shoppingcart.domain.enums.ShoppingCartStatus.NEW
+    ShoppingCartStatus status = ShoppingCartStatus.NEW
 
     BigDecimal totalDiscount
 
