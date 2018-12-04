@@ -58,10 +58,10 @@
                     <div sclass="panel-body">
                         <listbox height="300px" model="@load(vm.newProducts)">
                             <listhead>
-                                <listheader label="Name"/>
-                                <listheader label="Category"/>
+                                <listheader label="Name" width="30%"/>
+
                                 <listheader label="SKU"/>
-                                <listheader label="Stock" align="center"/>
+                                <listheader label="Stk" align="center" width="50px"/>
                                 <listheader label="Price" align="right"/>
                                 <listheader label="Created"/>
                             </listhead>
@@ -69,7 +69,6 @@
                             <template name="model" var="p">
                                 <listitem>
                                     <listcell label="@load(p.name)"/>
-                                    <listcell label="@load(p.category.name)"/>
                                     <listcell label="@load(p.sku)"/>
                                     <listcell label="@load(p.stock)"/>
                                     <listcell label="@load(p.price) @converter('converters.CurrencySimple')"/>
@@ -131,7 +130,7 @@
         </div>
 
         <div sclass="row">
-            <div sclass="col-sm-12 col-md-4">
+            <div sclass="col-sm-12 col-md-6">
                 <div sclass="panel panel-color panel-warning">
                     <div sclass="panel-heading">
                         <n:i class="fa fa-users"/>
@@ -139,9 +138,9 @@
                     </div>
 
                     <div sclass="panel-body">
-                        <listbox height="300px" model="@load(vm.newProducts)">
+                        <listbox height="300px" model="@load(vm.newUsers)">
                             <listhead>
-                                <listheader label="Name"/>
+                                <listheader label="Name" width="30%"/>
                                 <listheader label="Email"/>
                                 <listheader label="Identification"/>
                                 <listheader label="City"/>
@@ -164,7 +163,7 @@
                     </div>
                 </div>
             </div>
-            <div sclass="col-sm-12 col-md-8">
+            <div sclass="col-sm-12 col-md-6">
                 <div sclass="panel panel-color panel-warning">
                     <div sclass="panel-heading">
                         <n:i class="fa fa-bar"/>

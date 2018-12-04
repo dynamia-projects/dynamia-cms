@@ -68,7 +68,7 @@ class AdminDashboardVM extends AbstractService {
         newProducts = crudService().find(Product, QueryParameters.with("active", true)
                 .add("creationDate", QueryConditions.geqt(sinceLastMonth))
                 .add("site", SiteContext.get().current)
-                .orderBy("id", false))
+                .orderBy("creationDate", false))
     }
 
     private void loadUsersData() {
