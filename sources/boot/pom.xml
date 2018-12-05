@@ -131,6 +131,16 @@
             <version>${dynamiatools.version}</version>
         </dependency>
         <dependency>
+            <groupId>tools.dynamia</groupId>
+            <artifactId>tools.dynamia.zk</artifactId>
+            <version>${dynamiatools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>tools.dynamia</groupId>
+            <artifactId>tools.dynamia.zk.crud</artifactId>
+            <version>${dynamiatools.version}</version>
+        </dependency>
+        <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.core</artifactId>
             <version>3.0.0.RC</version>

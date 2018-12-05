@@ -40,6 +40,10 @@ import tools.dynamia.integration.Containers
 import tools.dynamia.zk.addons.chartjs.CategoryChartjsData
 import tools.dynamia.zk.navigation.ZKNavigationManager
 
+/**
+ * Simple VisualModel for admin dashboard
+ * @author Mario Serrano Leones
+ */
 class AdminDashboardVM extends AbstractService {
 
     private ProductsService productsService = Containers.get().findObject(ProductsService)

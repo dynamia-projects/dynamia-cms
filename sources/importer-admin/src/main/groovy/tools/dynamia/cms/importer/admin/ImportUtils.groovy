@@ -28,7 +28,7 @@ import tools.dynamia.integration.ProgressMonitor
 
 /**
  *
- * @author mario_2
+ * @author Mario Serrano Leones
  */
 class ImportUtils {
 

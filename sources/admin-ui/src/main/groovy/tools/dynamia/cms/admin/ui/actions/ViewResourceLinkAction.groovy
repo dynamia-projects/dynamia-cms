@@ -34,8 +34,9 @@ class ViewResourceLinkAction extends FileManagerAction {
     ViewResourceLinkAction() {
         image = "link"
         name = "View Link"
-        position = Double.MAX_VALUE
+        position = 20
         menuSupported = true
+
     }
 
     @Override

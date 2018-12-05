@@ -34,7 +34,7 @@ import java.util.logging.Logger
 
 /**
  *
- * @author mario
+ * @author Mario Serrano Leones
  */
 class ResourceUploadLink extends Uploadlink {
 

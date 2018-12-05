@@ -22,7 +22,7 @@
 package tools.dynamia.cms.core
 /**
  *
- * @author mario
+ * @author Mario Serrano Leones
  */
 interface SiteInitializer {
 

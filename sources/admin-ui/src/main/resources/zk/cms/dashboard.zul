@@ -74,18 +74,15 @@
                     <div sclass="panel-body">
                         <listbox height="300px" model="@load(vm.newProducts)">
                             <listhead>
-                                <listheader label="Name" width="30%"/>
-
-                                <listheader label="SKU"/>
+                                <listheader label="Name"/>
                                 <listheader label="Stk" align="center" width="50px"/>
-                                <listheader label="Price" align="right"/>
-                                <listheader label="Created"/>
+                                <listheader label="Price" align="right" width="100px"/>
+                                <listheader label="Created" width="100px"/>
                             </listhead>
 
                             <template name="model" var="p">
                                 <listitem>
                                     <listcell label="@load(p.name)"/>
-                                    <listcell label="@load(p.sku)"/>
                                     <listcell label="@load(p.stock)"/>
                                     <listcell label="@load(p.price) @converter('converters.CurrencySimple')"/>
                                     <listcell label="@load(p.creationDate) @converter('converters.Date')"/>
@@ -122,7 +119,8 @@
                             <template name="model" var="s">
                                 <listitem>
                                     <listcell>
-                                        <a label="@load(s.number)" onClick="@command('viewOrder', order=s)" tooltiptext="View Order Details"/>
+                                        <a label="@load(s.number)" onClick="@command('viewOrder', order=s)"
+                                           tooltiptext="View Order Details"/>
                                     </listcell>
                                     <listcell label="@load(s.creationDate)  @converter('converters.Date')"/>
                                     <listcell label="@load(s.shoppingCart.user.fullName)"/>

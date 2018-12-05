@@ -27,7 +27,7 @@ import tools.dynamia.integration.sterotypes.Listener
 
 /**
  *
- * @author mario
+ * @author Mario Serrano Leones
  */
 @Listener
 class MailAccountCrudListener extends CrudServiceListenerAdapter<MailAccount> {

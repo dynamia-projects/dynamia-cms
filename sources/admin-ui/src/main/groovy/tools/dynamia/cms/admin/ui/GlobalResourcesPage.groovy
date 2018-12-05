@@ -28,7 +28,7 @@ import tools.dynamia.zk.navigation.ComponentPage
 
 /**
  *
- * @author mario
+ * @author Mario Serrano Leones
  */
 class GlobalResourcesPage extends ComponentPage {
 

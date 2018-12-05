@@ -29,7 +29,7 @@ import tools.dynamia.integration.sterotypes.Listener
 
 /**
  *
- * @author mario
+ * @author Mario Serrano Leones
  */
 @Listener
 class SiteCrudListener extends CrudServiceListenerAdapter<Site> {

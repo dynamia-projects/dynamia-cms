@@ -19,7 +19,10 @@ import org.zkforge.ckez.CKeditor
 import org.zkoss.zk.ui.WrongValueException
 import org.zkoss.zk.ui.event.Event
 import org.zkoss.zk.ui.event.Events
-import org.zkoss.zul.*
+import org.zkoss.zul.Borderlayout
+import org.zkoss.zul.Center
+import org.zkoss.zul.Div
+import org.zkoss.zul.North
 import tools.dynamia.actions.ActionEvent
 import tools.dynamia.actions.ActionEventBuilder
 import tools.dynamia.actions.ActionLoader
@@ -54,7 +57,7 @@ class CMSeditor extends Div implements ActionEventBuilder {
         contentArea = new Aceditor()
         contentArea.width = "100%"
         contentArea.height = "100%"
-        contentArea.theme = "eclipse"
+
         contentArea.mode = "html"
         contentArea.addEventListener(Events.ON_CHANGE, { e -> Events.postEvent(Events.ON_CHANGE, this, e) })
         toolbar = new ActionToolbar(this)

@@ -30,7 +30,7 @@ import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer
 
 /**
  *
- * @author mario_2
+ * @author Mario Serrano Leones
  */
 abstract class ImportAction extends AbstractAction {
 

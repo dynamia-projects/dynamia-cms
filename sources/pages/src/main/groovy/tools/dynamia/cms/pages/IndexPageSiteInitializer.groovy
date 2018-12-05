@@ -31,7 +31,7 @@ import tools.dynamia.domain.services.CrudService
 
 /**
  *
- * @author mario
+ * @author Mario Serrano Leones
  */
 @CMSExtension
 class IndexPageSiteInitializer implements SiteInitializer {

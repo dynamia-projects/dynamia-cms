@@ -30,6 +30,7 @@ class DashboardGlobalAction extends ApplicationGlobalAction {
         image = "tachometer"
         name = "Dashboard"
         position = -1
+        
     }
 
 
@@ -39,7 +40,7 @@ class DashboardGlobalAction extends ApplicationGlobalAction {
     }
 
     @PostConstruct
-    def autoshow(){
+    def autoshow() {
         AdminDashboardVM.show()
     }
 }

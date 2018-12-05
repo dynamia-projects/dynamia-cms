@@ -37,7 +37,7 @@ import tools.dynamia.zk.util.ZKUtil
 
 /**
  *
- * @author mario
+ * @author Mario Serrano Leones
  */
 @InstallAction
 class ViewTemplateVarsAction extends AbstractCrudAction {

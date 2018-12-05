@@ -29,7 +29,7 @@ import tools.dynamia.cms.templates.services.TemplateService
 
 /**
  *
- * @author mario
+ * @author Mario Serrano Leones
  */
 @CMSExtension
 class DefaultTemplateSiteInitializer implements SiteInitializer {
