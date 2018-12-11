@@ -22,7 +22,7 @@ import org.zkoss.zul.*
 import tools.dynamia.actions.Action
 import tools.dynamia.actions.ActionEvent
 import tools.dynamia.actions.ActionEventBuilder
-import tools.dynamia.cms.admin.ui.ui.TypeSelector
+import tools.dynamia.cms.admin.ui.TypeSelector
 import tools.dynamia.cms.menus.api.MenuItemType
 import tools.dynamia.cms.menus.domain.MenuItem
 import tools.dynamia.cms.menus.domain.MenuItemParameter

@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package tools.dynamia.cms.admin.ui
+package tools.dynamia.cms.admin.ui.vm
 
 import org.zkoss.bind.annotation.BindingParam
 import org.zkoss.bind.annotation.Command
@@ -44,7 +44,7 @@ import tools.dynamia.zk.navigation.ZKNavigationManager
  * Simple VisualModel for admin dashboard
  * @author Mario Serrano Leones
  */
-class AdminDashboardVM extends AbstractService {
+class AdminDashboardViewModel extends AbstractService {
 
     private ProductsService productsService = Containers.get().findObject(ProductsService)
 

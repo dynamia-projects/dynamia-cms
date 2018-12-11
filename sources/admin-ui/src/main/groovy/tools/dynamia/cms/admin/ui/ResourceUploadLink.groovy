@@ -19,7 +19,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools.dynamia.cms.admin.ui.ui
+package tools.dynamia.cms.admin.ui
 
 import tools.dynamia.cms.core.DynamiaCMS
 import tools.dynamia.cms.core.SiteContext

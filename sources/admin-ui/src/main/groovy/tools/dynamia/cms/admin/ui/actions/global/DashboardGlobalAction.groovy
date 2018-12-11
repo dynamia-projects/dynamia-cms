@@ -19,7 +19,8 @@ package tools.dynamia.cms.admin.ui.actions.global
 import tools.dynamia.actions.ActionEvent
 import tools.dynamia.actions.InstallAction
 import tools.dynamia.app.template.ApplicationGlobalAction
-import tools.dynamia.cms.admin.ui.AdminDashboardVM
+import tools.dynamia.cms.admin.ui.vm.AdminDashboardViewModel
+import tools.dynamia.zk.navigation.ZKNavigationManager
 
 import javax.annotation.PostConstruct
 
@@ -30,17 +31,19 @@ class DashboardGlobalAction extends ApplicationGlobalAction {
         image = "tachometer"
         name = "Dashboard"
         position = -1
-        
+
     }
 
 
     @Override
     void actionPerformed(ActionEvent evt) {
-        AdminDashboardVM.show()
+        AdminDashboardViewModel.show()
     }
 
     @PostConstruct
     def autoshow() {
-        AdminDashboardVM.show()
+        if (ZKNavigationManager.instance.getCurrentPage() == null) {
+            AdminDashboardViewModel.show()
+        }
     }
 }

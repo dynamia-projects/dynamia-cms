@@ -13,12 +13,13 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package tools.dynamia.cms.admin.ui.ui
+package tools.dynamia.cms.admin.ui
 
 import org.zkoss.zk.ui.Component
 import org.zkoss.zul.Combobox
 import org.zkoss.zul.Comboitem
-import tools.dynamia.cms.core.api.TypeExtension
+import tools.dynamia.cms.templates.Template
+import tools.dynamia.cms.templates.services.TemplateService
 import tools.dynamia.integration.Containers
 import tools.dynamia.zk.ComponentAliasIndex
 
@@ -26,43 +27,28 @@ import tools.dynamia.zk.ComponentAliasIndex
  *
  * @author Mario Serrano Leones
  */
-class TypeSelector extends Combobox {
-
-    private Class<? extends TypeExtension> typeExtensionClass = TypeExtension.class
+class TemplateSelector extends Combobox {
 
     static {
-        ComponentAliasIndex.instance.add(TypeSelector.class)
+        ComponentAliasIndex.instance.add(TemplateSelector.class)
     }
 
-    TypeSelector() {
-        itemRenderer = new TypeSelectorRenderer()
-    }
-
-    Class<? extends TypeExtension> getTypeExtensionClass() {
-        return typeExtensionClass
-    }
-
-    @SuppressWarnings("unchecked")
-    void setTypeExtensionClass(String className) throws ClassNotFoundException {
-        typeExtensionClass = (Class<? extends TypeExtension>) Class.forName(className)
-    }
-
-    void setTypeExtensionClass(Class<? extends TypeExtension> typeExtensionClass) {
-        this.typeExtensionClass = typeExtensionClass
+    TemplateSelector() {
+        itemRenderer = new TemplateSelectorRenderer()
     }
 
     void init() {
         children.clear()
         readonly = true
-
-        Collection<? extends TypeExtension> types = Containers.get().findObjects(typeExtensionClass)
-        if (types != null && !types.empty) {
+        TemplateService service = Containers.get().findObject(TemplateService.class)
+        List<Template> templates = service.installedTemplates
+        if (templates != null && !templates.empty) {
             int i = 0
-            for (TypeExtension typeExtension : types) {
+            for (Template template : templates) {
                 Comboitem item = new Comboitem()
                 item.parent = this
                 try {
-                    itemRenderer.render(item, typeExtension, i)
+                    itemRenderer.render(item, template, i)
                 } catch (Exception ex) {
                     ex.printStackTrace()
                 }

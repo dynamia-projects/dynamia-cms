@@ -21,7 +21,7 @@ import org.zkoss.zhtml.Form
 import tools.dynamia.actions.ActionEvent
 import tools.dynamia.actions.ActionRenderer
 import tools.dynamia.actions.InstallAction
-import tools.dynamia.cms.admin.ui.ui.CMSeditor
+import tools.dynamia.cms.admin.ui.CMSeditor
 import tools.dynamia.zk.actions.ToolbarbuttonActionRenderer
 import tools.dynamia.zk.util.ZKUtil
 

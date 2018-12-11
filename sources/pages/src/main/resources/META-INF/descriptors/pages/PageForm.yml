@@ -4,80 +4,87 @@ customizer: tools.dynamia.cms.pages.admin.PageFormCustomizer
 autofields: false
 
 fields:
-    
-    title:
-        params: 
-            span: 2
-    alias:
-    subtitle:
-    category:
-        params:
-            fields: name,description
-            
-    author:
-        params:
-            fields: firstName,lastName,email
-    
-    type:
-        component: typeSelector
-        params:
-            typeExtensionClass: tools.dynamia.cms.core.api.TypeExtension
+
+  title:
+    params:
+      span: 2
+  alias:
+  subtitle:
+  category:
+    params:
+      fields: name,description
+
+  author:
+    params:
+      fields: firstName,lastName,email
+
+  type:
+    component: typeSelector
+    params:
+      typeExtensionClass: tools.dynamia.cms.pages.api.PageTypeExtension
 
 
-            
-    layout:
-        component: combobox
-        
-   
-        
-    content:
-        component: cmseditor
-        params:
-            span: 3
-            height: 600px
-            showLabel: false
-            
-    imageURL:
-        label: Image URL
-        component: resourceSelector
-        params:
-            span: 3
-            
-    summary:
-        description: Max 2000 characters
-        params:
-            span: 3
-            multiline: true
-            height: 80px
-            
-            
-    tags:        
-  
-    icon:        
-    styleClass:
-    startDate:
-    endDate:
-    showTitle:
-    published:
-    neverExpire:
-    templateEngine:
-       component: typeSelector
-       params:
-            typeExtensionClass: tools.dynamia.cms.core.StringParser
-            
-    parameters:
-        component: crudview
-        
-        
+
+  layout:
+    component: combobox
+
+
+
+  content:
+    component: cmseditor
+    params:
+      span: 3
+      height: 600px
+      showLabel: false
+
+  imageURL:
+    label: Image URL
+    component: resourceSelector
+    params:
+      span: 3
+
+  summary:
+    description: Max 2000 characters
+    params:
+      span: 3
+      multiline: true
+      height: 80px
+
+
+  tags:
+
+  icon:
+  styleClass:
+  startDate:
+  endDate:
+  showTitle:
+  published:
+  neverExpire:
+  templateEngine:
+    component: typeSelector
+    params:
+      typeExtensionClass: tools.dynamia.cms.core.StringParser
+
+  parameters:
+    component: crudview
+
+
 groups:
-   
-    content:
-      fields: [content]
-      
-    summary:
-      fields: [imageURL,summary]
-      
-    advanced:
-      fields: [type,layout,tags, icon,styleClass, startDate,endDate,templateEngine,neverExpire,published, showTitle]
+
+  content:
+    fields: [content]
+
+  summary:
+    fields: [imageURL,summary]
+
+  advanced:
+    fields: [type,layout,tags, icon,styleClass, startDate,endDate,templateEngine,neverExpire,published, showTitle]
+
 layout:
-    columns: 3
+  columns: 3
+
+
+#params:
+ # customView: classpath:/zk/cms/views/pageForm.zul
+ # vflex: "1"
+ # height: "500px"

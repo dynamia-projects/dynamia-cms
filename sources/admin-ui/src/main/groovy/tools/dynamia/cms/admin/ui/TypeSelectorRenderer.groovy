@@ -13,23 +13,23 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package tools.dynamia.cms.admin.ui
 
-import tools.dynamia.cms.admin.ui.vm.AdminDashboardViewModel
-import tools.dynamia.cms.users.LoginListener
-import tools.dynamia.cms.users.api.UserProfile
-import tools.dynamia.cms.users.domain.User
-import tools.dynamia.integration.sterotypes.Listener
-import tools.dynamia.zk.util.ZKUtil
+import org.zkoss.zul.Comboitem
+import org.zkoss.zul.ComboitemRenderer
+import tools.dynamia.cms.core.api.TypeExtension
 
-@Listener
-class ShowDashboardLoginListener implements LoginListener {
+/**
+ *
+ * @author Mario Serrano Leones
+ */
+class TypeSelectorRenderer implements ComboitemRenderer<TypeExtension> {
 
-    @Override
-    void onLoginSuccess(User user) {
-        if (ZKUtil.inEventListener && (user.profile == UserProfile.EDITOR || user.profile == UserProfile.ADMIN)) {
-            AdminDashboardViewModel.show()
-        }
+	@Override
+    void render(Comboitem cmbtm, TypeExtension t, int i) throws Exception {
+        cmbtm.value = t.id
+        cmbtm.label = t.name
+        cmbtm.description = t.description
     }
+
 }

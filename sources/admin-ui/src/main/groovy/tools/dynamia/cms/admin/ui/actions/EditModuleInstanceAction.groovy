@@ -17,7 +17,7 @@ package tools.dynamia.cms.admin.ui.actions
 
 import org.springframework.beans.factory.annotation.Autowired
 import tools.dynamia.actions.InstallAction
-import tools.dynamia.cms.admin.ui.ui.ModuleInstanceUI
+import tools.dynamia.cms.admin.ui.ModuleInstanceUI
 import tools.dynamia.cms.core.domain.ModuleInstance
 import tools.dynamia.commons.ApplicableClass
 import tools.dynamia.crud.CrudActionEvent

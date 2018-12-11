@@ -32,262 +32,265 @@ import javax.validation.constraints.NotNull
 @Table(name = "pg_pages")
 class Page extends Content implements SiteAware, Aliasable {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1980497517680583352L
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1980497517680583352L
     @NotEmpty(message = "Enter page title")
-	private String title
+    private String title
     @Column(length = 1000)
-	private String subtitle
+    private String subtitle
     @Basic(fetch = FetchType.LAZY)
-	@Lob
-	private String content
+    @Lob
+    private String content
     @Column(length = 2000)
-	private String summary
+    private String summary
     private String imageURL
     @OneToOne
-	private PageCategory category
+    private PageCategory category
     private String layout
     private String type = "default"
 
     @Column(name = "pageAlias")
-	private String alias
+    private String alias
     @OneToOne
-	@NotNull(message = "Select content author")
-	private ContentAuthor author
+    @NotNull(message = "Select content author")
+    private ContentAuthor author
     @Temporal(TemporalType.TIMESTAMP)
-	private Date creationDate = new Date()
+    private Date creationDate = new Date()
     @Temporal(TemporalType.DATE)
-	private Date startDate = new Date()
+    private Date startDate = new Date()
     @Temporal(TemporalType.DATE)
-	private Date endDate
+    private Date endDate
     private boolean published = true
     private boolean neverExpire = true
     @Column(length = 2000)
-	private String tags
+    private String tags
     private String icon
     @OneToMany(mappedBy = "page", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<PageParameter> parameters = new ArrayList<>()
+    private List<PageParameter> parameters = new ArrayList<>()
     private boolean showTitle = true
     @Temporal(TemporalType.TIMESTAMP)
-	private Date lastUpdate
+    private Date lastUpdate
     private String templateEngine
 
     private String styleClass
 
     String getTemplateEngine() {
-		return templateEngine
+        return templateEngine
     }
 
     void setTemplateEngine(String templateEngine) {
-		this.templateEngine = templateEngine
+        this.templateEngine = templateEngine
     }
 
     String getStyleClass() {
-		return styleClass
+        return styleClass
     }
 
     void setStyleClass(String styleClass) {
-		this.styleClass = styleClass
+        this.styleClass = styleClass
     }
 
     Date getLastUpdate() {
-		return lastUpdate
+        return lastUpdate
     }
 
     void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate
+        this.lastUpdate = lastUpdate
     }
 
     String getImageURL() {
-		return imageURL
+        return imageURL
     }
 
     void setImageURL(String imageURL) {
-		this.imageURL = imageURL
+        this.imageURL = imageURL
     }
 
     String getSummary() {
-		return summary
+        return summary
     }
 
     void setSummary(String summary) {
-		this.summary = summary
+        this.summary = summary
     }
 
     boolean isNeverExpire() {
-		return neverExpire
+        return neverExpire
     }
 
     void setNeverExpire(boolean neverExpire) {
-		this.neverExpire = neverExpire
+        this.neverExpire = neverExpire
     }
 
     boolean isShowTitle() {
-		return showTitle
+        return showTitle
     }
 
     void setShowTitle(boolean showTitle) {
-		this.showTitle = showTitle
+        this.showTitle = showTitle
     }
 
     String getType() {
-		if (type == null) {
+        if (type == null) {
 
-			type = "default"
+            type = "default"
         }
-		return type
+        return type
     }
 
     void setType(String type) {
-		this.type = type
+        this.type = type
     }
 
     String getIcon() {
-		return icon
+        return icon
     }
 
     void setIcon(String icon) {
-		this.icon = icon
+        this.icon = icon
     }
 
     String getSubtitle() {
-		return subtitle
+        return subtitle
     }
 
     void setSubtitle(String subtitle) {
-		this.subtitle = subtitle
+        this.subtitle = subtitle
     }
 
     String getAlias() {
-		return alias
+        return alias
     }
 
     void setAlias(String alias) {
-		this.alias = alias
+        this.alias = alias
     }
 
     ContentAuthor getAuthor() {
-		return author
+        return author
     }
 
     void setAuthor(ContentAuthor author) {
-		this.author = author
+        this.author = author
     }
 
     Date getCreationDate() {
-		return creationDate
+        return creationDate
     }
 
     void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate
+        this.creationDate = creationDate
     }
 
     Date getStartDate() {
-		return startDate
+        return startDate
     }
 
     void setStartDate(Date startDate) {
-		this.startDate = startDate
+        this.startDate = startDate
     }
 
     Date getEndDate() {
-		return endDate
+        return endDate
     }
 
     void setEndDate(Date endDate) {
-		this.endDate = endDate
+        this.endDate = endDate
     }
 
     boolean isPublished() {
-		return published
+        return published
     }
 
     void setPublished(boolean published) {
-		this.published = published
+        this.published = published
     }
 
     String getTags() {
-		return tags
+        return tags
     }
 
     void setTags(String tags) {
-		this.tags = tags
+        this.tags = tags
     }
 
     String getLayout() {
-		return layout
+        return layout
     }
 
     void setLayout(String layout) {
-		this.layout = layout
+        this.layout = layout
     }
 
     String getTitle() {
-		return title
+        return title
     }
 
     void setTitle(String title) {
-		this.title = title
+        this.title = title
     }
 
     String getContent() {
 
-		return content
+        return content
     }
 
     void setContent(String content) {
-		this.content = content
+        this.content = content
     }
 
     PageCategory getCategory() {
-		return category
+        return category
     }
 
     void setCategory(PageCategory category) {
-		this.category = category
+        this.category = category
     }
 
     List<PageParameter> getParameters() {
-		return parameters
+        return parameters
     }
 
     void setParameters(List<PageParameter> parameters) {
-		this.parameters = parameters
+        this.parameters = parameters
     }
 
     PageParameter getParam(String name) {
-		if (parameters != null) {
-			for (PageParameter pageParameter : parameters) {
-				if (pageParameter.name.equals(name)) {
-					return pageParameter
+        if (parameters != null) {
+            for (PageParameter pageParameter : parameters) {
+                if (pageParameter.name.equals(name)) {
+                    return pageParameter
                 }
-			}
-		}
-		return null
+            }
+        }
+        return null
     }
 
-	@Override
+    @Override
     String toString() {
-		return title
+        if (title == null) {
+            return "empty page"
+        }
+        return title
     }
 
     Date getPublishedDate() {
-		if (startDate != null && startDate.after(creationDate)) {
-			return startDate
+        if (startDate != null && startDate.after(creationDate)) {
+            return startDate
         } else {
-			return creationDate
+            return creationDate
         }
-	}
-
-    boolean hasImage() {
-		return imageURL != null && !imageURL.empty
     }
 
-	@Override
+    boolean hasImage() {
+        return imageURL != null && !imageURL.empty
+    }
+
+    @Override
     String aliasSource() {
-		return title
+        return title
     }
 
 }

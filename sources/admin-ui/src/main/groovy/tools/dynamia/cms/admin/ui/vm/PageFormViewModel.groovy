@@ -14,22 +14,21 @@
  *  limitations under the License.
  */
 
-package tools.dynamia.cms.admin.ui
+package tools.dynamia.cms.admin.ui.vm
 
-import tools.dynamia.cms.admin.ui.vm.AdminDashboardViewModel
-import tools.dynamia.cms.users.LoginListener
-import tools.dynamia.cms.users.api.UserProfile
-import tools.dynamia.cms.users.domain.User
-import tools.dynamia.integration.sterotypes.Listener
-import tools.dynamia.zk.util.ZKUtil
+import org.zkoss.bind.annotation.Init
+import org.zkoss.zk.ui.Executions
+import tools.dynamia.cms.pages.domain.Page
 
-@Listener
-class ShowDashboardLoginListener implements LoginListener {
+class PageFormViewModel {
 
-    @Override
-    void onLoginSuccess(User user) {
-        if (ZKUtil.inEventListener && (user.profile == UserProfile.EDITOR || user.profile == UserProfile.ADMIN)) {
-            AdminDashboardViewModel.show()
-        }
+    final Page model = Executions.current.getArg().get("value") as Page
+
+    @Init
+    def init() {
+
     }
+
+
+
 }

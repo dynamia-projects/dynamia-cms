@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package tools.dynamia.cms.admin.ui.ui
+package tools.dynamia.cms.admin.ui
 
 import org.zkoss.zk.ui.event.Event
 import org.zkoss.zk.ui.event.EventListener

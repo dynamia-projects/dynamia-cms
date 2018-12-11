@@ -16,7 +16,7 @@
 
 <zk xmlns:n="native">
 
-    <div viewModel="@id('vm') @init('tools.dynamia.cms.admin.ui.AdminDashboardVM')">
+    <div viewModel="@id('vm') @init('tools.dynamia.cms.admin.ui.vm.AdminDashboardViewModel')">
 
         <div sclass="row">
             <div sclass="col-xs-12 col-sm-6 col-md-3">
