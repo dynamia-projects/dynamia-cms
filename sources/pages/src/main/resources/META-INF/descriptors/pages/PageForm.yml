@@ -26,9 +26,6 @@ fields:
 
 
   layout:
-    component: combobox
-
-
 
   content:
     component: cmseditor
@@ -84,7 +81,7 @@ layout:
   columns: 3
 
 
-#params:
- # customView: classpath:/zk/cms/views/pageForm.zul
- # vflex: "1"
- # height: "500px"
+  #params:
+  # customView: classpath:/zk/cms/views/pageForm.zul
+  # vflex: "1"
+  # height: "500px"
