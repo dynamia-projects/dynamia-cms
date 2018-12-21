@@ -34,6 +34,8 @@ import tools.dynamia.cms.products.ProductSearchForm
 import tools.dynamia.cms.products.ProductShareForm
 import tools.dynamia.cms.products.api.ProductReviewsConnector
 import tools.dynamia.cms.products.domain.*
+import tools.dynamia.cms.products.dto.ProductDTO
+import tools.dynamia.cms.products.dto.ProductsReviewResponse
 import tools.dynamia.cms.products.services.ProductsService
 import tools.dynamia.cms.users.UserHolder
 import tools.dynamia.cms.users.domain.User
@@ -235,6 +237,7 @@ class ProductsServiceImpl extends AbstractService implements ProductsService {
         }
 
         Map<String, String> map = new HashMap<>()
+        builder.build()
         filterByDetail(form.detail, "1", params, builder, map)
         filterByDetail(form.detail2, "2", params, builder, map)
         filterByDetail(form.detail3, "3", params, builder, map)
@@ -649,19 +652,26 @@ class ProductsServiceImpl extends AbstractService implements ProductsService {
         query.setParameter("site", category.site)
         query.setParameter("category", category)
 
-        List<ProductCategoryDetail> details = query.resultList
+        List<ProductCategoryDetail> details = (List<ProductCategoryDetail>) query.resultList
 
 
         String sqlValues = "select det.name, det.value from ProductDetail det inner join det.product p inner join p.category c where (c = :category or c.parent = :category)  and p.active=true group by det.value order by det.value"
         List values = entityManager.createQuery(sqlValues).setParameter("category", category).resultList
 
         for (ProductCategoryDetail det : details) {
+            det.currentValues.clear()
             for (Object objet : values) {
-                Object[] catValue = (Object[]) objet
 
-                if (det.name.trim().equals(catValue[0].toString().trim())) {
-                    if (catValue[1] != null && !catValue[1].toString().empty) {
-                        det.currentValues.add(catValue[1].toString())
+                Object[] productDetail = (Object[]) objet
+                def name = productDetail[0] as String
+                def value = productDetail[1] as String
+
+                if (name && value) {
+                    name = name.trim()
+                    value = value.trim()
+
+                    if (name && value && det.name.equalsIgnoreCase(name) && !det.currentValues.contains(value)) {
+                        det.currentValues << value
                     }
                 }
             }
@@ -844,11 +854,11 @@ class ProductsServiceImpl extends AbstractService implements ProductsService {
     }
 
     @Override
-    List<ProductReview> getExternalProductReviews(Site site, tools.dynamia.cms.products.dto.ProductsReviewResponse response, User user) {
+    List<ProductReview> getExternalProductReviews(Site site, ProductsReviewResponse response, User user) {
         List<ProductReview> reviews = new ArrayList<>()
 
         if (response.products != null) {
-            for (tools.dynamia.cms.products.dto.ProductDTO dto : (response.products)) {
+            for (ProductDTO dto : (response.products)) {
                 Product product = getProduct(site, dto)
                 if (product != null) {
                     ProductReview review = getUserReview(product, user)

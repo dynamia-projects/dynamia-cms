@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView
 import tools.dynamia.cms.core.api.CMSExtension
 import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
 import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.cms.products.ProductsUtil
 
 /**
  *
@@ -33,7 +34,7 @@ class ProductsInterceptor extends SiteRequestInterceptorAdapter {
 
     @Override
     protected void afterRequest(Site site, ModelAndView mv) {
-        tools.dynamia.cms.products.ProductsUtil.setupDefaultVars(site, mv)
+        ProductsUtil.setupDefaultVars(site, mv)
     }
 
 }

@@ -27,6 +27,7 @@ import tools.dynamia.cms.core.actions.SiteAction
 import tools.dynamia.cms.core.api.CMSAction
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.products.ProductSearchForm
+import tools.dynamia.cms.products.ProductsUtil
 import tools.dynamia.cms.products.domain.Product
 import tools.dynamia.cms.products.domain.ProductCategory
 import tools.dynamia.domain.services.CrudService
@@ -82,7 +83,7 @@ class SearchProductsAction implements SiteAction {
         }
 
         products = CMSUtil.setupPagination(products, evt.request, mv)
-        tools.dynamia.cms.products.ProductsUtil.setupProductsVar(products, mv)
+        ProductsUtil.setupProductsVar(products, mv)
 
     }
 

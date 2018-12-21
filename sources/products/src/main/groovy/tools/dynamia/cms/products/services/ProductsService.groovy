@@ -24,16 +24,9 @@ import org.springframework.transaction.annotation.Transactional
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.products.ProductSearchForm
 import tools.dynamia.cms.products.ProductShareForm
-import tools.dynamia.cms.products.domain.Product
-import tools.dynamia.cms.products.domain.ProductBrand
-import tools.dynamia.cms.products.domain.ProductCategory
-import tools.dynamia.cms.products.domain.ProductCategoryDetail
-import tools.dynamia.cms.products.domain.ProductDetail
-import tools.dynamia.cms.products.domain.ProductReview
-import tools.dynamia.cms.products.domain.ProductUserStory
-import tools.dynamia.cms.products.domain.ProductsSiteConfig
-import tools.dynamia.cms.products.domain.RelatedProduct
-import tools.dynamia.cms.products.domain.Store
+import tools.dynamia.cms.products.domain.*
+import tools.dynamia.cms.products.dto.ProductDTO
+import tools.dynamia.cms.products.dto.ProductsReviewResponse
 import tools.dynamia.cms.users.domain.User
 import tools.dynamia.domain.query.QueryParameters
 
@@ -132,13 +125,14 @@ interface ProductsService {
 
     List<ProductReview> getTopReviews(Product product, int max)
 
-    tools.dynamia.cms.products.dto.ProductsReviewResponse requestExternalReviews(ProductsSiteConfig config, String requestUuid)
+    ProductsReviewResponse requestExternalReviews(ProductsSiteConfig config, String requestUuid)
 
-    User findUserForReview(Site site, tools.dynamia.cms.products.dto.ProductsReviewResponse response)
+    User findUserForReview(Site site, ProductsReviewResponse response)
 
-    Product getProduct(Site site, tools.dynamia.cms.products.dto.ProductDTO dto)
+    Product getProduct(Site site, ProductDTO dto)
 
     List<ProductReview> getIncompleteProductReviews(User user)
 
-    List<ProductReview> getExternalProductReviews(Site site, tools.dynamia.cms.products.dto.ProductsReviewResponse response, User user)
+    List<ProductReview> getExternalProductReviews(Site site, ProductsReviewResponse response, User user)
+
 }

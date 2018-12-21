@@ -26,12 +26,11 @@ import tools.dynamia.cms.core.SiteCache
 import tools.dynamia.cms.core.actions.ActionEvent
 import tools.dynamia.cms.core.actions.SiteAction
 import tools.dynamia.cms.core.api.CMSAction
+import tools.dynamia.cms.products.ProductCategoryGroup
 import tools.dynamia.cms.products.ProductSearchForm
-import tools.dynamia.cms.products.domain.Product
-import tools.dynamia.cms.products.domain.ProductBrand
-import tools.dynamia.cms.products.domain.ProductCategory
-import tools.dynamia.cms.products.domain.ProductCategoryDetail
-import tools.dynamia.cms.products.domain.ProductsSiteConfig
+import tools.dynamia.cms.products.ProductsUtil
+import tools.dynamia.cms.products.domain.*
+import tools.dynamia.cms.products.services.ProductsService
 import tools.dynamia.domain.query.BooleanOp
 import tools.dynamia.domain.query.QueryConditions
 import tools.dynamia.domain.query.QueryParameters
@@ -48,7 +47,7 @@ class LoadProductCategoryAction implements SiteAction {
             .unmodifiableList(Arrays.asList("name", "price", "brand.name", "views"))
 
     @Autowired
-    private tools.dynamia.cms.products.services.ProductsService service
+    private ProductsService service
 
     @Autowired
     private CrudService crudService
@@ -152,6 +151,19 @@ class LoadProductCategoryAction implements SiteAction {
         List<ProductCategoryDetail> details = service.getCategoryDetails(category)
         List<ProductCategoryDetail> finalDetails = details.collect { it.clone() }
 
+        finalDetails.each { filter ->
+            filter.currentValues.clear()
+            products.each { p ->
+                p.details.each { pd ->
+                    if (pd.name.equalsIgnoreCase(filter.name) && !filter.currentValues.contains(pd.value)) {
+                        filter.currentValues << pd.value
+                    }
+                }
+            }
+        }
+
+
+
         if (filteredDetails != null) {
 
             filteredDetails.forEach { k, v ->
@@ -163,8 +175,13 @@ class LoadProductCategoryAction implements SiteAction {
             }
         }
 
+        def emptyFilters = finalDetails.findAll { it.currentValues.empty && !it.selected }
+        if (emptyFilters) {
+            finalDetails.removeAll(emptyFilters)
+        }
 
-        mv.addObject("prd_groups", tools.dynamia.cms.products.ProductCategoryGroup.groupByCategory(products))
+
+        mv.addObject("prd_groups", ProductCategoryGroup.groupByCategory(products))
         mv.addObject("prd_category", category)
         mv.addObject("prd_category_details", finalDetails)
         mv.addObject("prd_subcategories", subcategories)
@@ -178,7 +195,7 @@ class LoadProductCategoryAction implements SiteAction {
             mv.addObject("filteredDetails", Collections.EMPTY_LIST)
         }
         products = CMSUtil.setupPagination(products, evt.request, mv)
-        tools.dynamia.cms.products.ProductsUtil.setupProductsVar(products, mv)
+        ProductsUtil.setupProductsVar(products, mv)
     }
 
 }
