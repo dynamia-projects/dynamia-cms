@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.cms.core.services.SiteService
 import tools.dynamia.domain.query.Parameters
 import tools.dynamia.integration.Containers
 
@@ -38,13 +39,13 @@ class SiteContext implements Serializable {
 	private Parameters appParams
 
     @Autowired
-	private tools.dynamia.cms.core.services.SiteService service
+	private SiteService service
 
     /**
 	 *
 	 */
 	private static final long serialVersionUID = 8050753619943744770L
-    private tools.dynamia.cms.core.domain.Site current
+    private Site current
     private String siteURL
     private String currentURI
     private String currentURL
@@ -56,11 +57,11 @@ class SiteContext implements Serializable {
 		return Containers.get().findObject(SiteContext.class)
     }
 
-    tools.dynamia.cms.core.domain.Site getCurrent() {
+    Site getCurrent() {
 		return current
     }
 
-    void setCurrent(tools.dynamia.cms.core.domain.Site current) {
+    void setCurrent(Site current) {
 		this.current = current
     }
 

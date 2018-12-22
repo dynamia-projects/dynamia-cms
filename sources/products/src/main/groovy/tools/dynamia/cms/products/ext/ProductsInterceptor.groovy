@@ -34,7 +34,9 @@ class ProductsInterceptor extends SiteRequestInterceptorAdapter {
 
     @Override
     protected void afterRequest(Site site, ModelAndView mv) {
-        ProductsUtil.setupDefaultVars(site, mv)
+        if (mv.model.keySet().find { it.startsWith("prd_") || mv.model.keySet().find { it.contains("product") } }) {
+            ProductsUtil.setupDefaultVars(site, mv)
+        }
     }
 
 }
