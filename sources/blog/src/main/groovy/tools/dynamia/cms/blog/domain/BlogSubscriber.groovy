@@ -28,6 +28,8 @@ import tools.dynamia.domain.contraints.NotEmpty
 import javax.persistence.*
 import javax.validation.constraints.NotNull
 
+@Entity
+@Table(name="blg_subscribers")
 class BlogSubscriber extends SiteBaseEntity implements BlogElement{
 
 
