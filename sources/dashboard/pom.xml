@@ -25,31 +25,32 @@
     <parent>
         <artifactId>tools.dynamia.cms.parent</artifactId>
         <groupId>tools.dynamia.cms</groupId>
-        <version>3.0.0.RC</version>
+        <version>3.0.0.RC2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <name>DynamiaCMS - Dashboard (${project.version})</name>
     <artifactId>tools.dynamia.cms.dashboard</artifactId>
+    <version>3.0.0.RC2</version>
 
-<dependencies>
-    <dependency>
-        <groupId>tools.dynamia.cms</groupId>
-        <artifactId>tools.dynamia.cms.shoppingcart</artifactId>
-        <version>3.0.0.RC</version>
-    </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.shoppingcart</artifactId>
+            <version>3.0.0.RC2</version>
+        </dependency>
 
-    <dependency>
-        <groupId>tools.dynamia.cms</groupId>
-        <artifactId>tools.dynamia.cms.products</artifactId>
-        <version>3.0.0.RC</version>
-    </dependency>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.products</artifactId>
+            <version>3.0.0.RC2</version>
+        </dependency>
 
-    <dependency>
-        <groupId>tools.dynamia.cms</groupId>
-        <artifactId>tools.dynamia.cms.users</artifactId>
-        <version>3.0.0.RC</version>
-    </dependency>
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.users</artifactId>
+            <version>3.0.0.RC2</version>
+        </dependency>
 
 
-</dependencies>
+    </dependencies>
 </project>

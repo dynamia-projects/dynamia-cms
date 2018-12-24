@@ -25,7 +25,7 @@
     <artifactId>tools.dynamia.cms.parent</artifactId>
     <name>DynamiaCMS ${project.version})</name>
     <packaging>pom</packaging>
-    <version>3.0.0.RC</version>
+    <version>3.0.0.RC2</version>
     <url>http://www.dynamiasoluciones.com</url>
 
     <properties>
