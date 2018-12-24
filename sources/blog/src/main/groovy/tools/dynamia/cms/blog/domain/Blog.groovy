@@ -65,7 +65,7 @@ class Blog extends SiteBaseEntity implements Aliasable, URIable {
 
     @Override
     String toString() {
-        return name
+        return title
     }
 
     @Override
@@ -75,6 +75,6 @@ class Blog extends SiteBaseEntity implements Aliasable, URIable {
 
     @Override
     String toURI() {
-        return "$alias"
+        return "blogs/$alias"
     }
 }

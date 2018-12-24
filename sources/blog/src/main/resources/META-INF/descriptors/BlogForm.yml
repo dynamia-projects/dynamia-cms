@@ -4,6 +4,8 @@ autofields: false
 
 fields:
   title:
+    params:
+      span: 2
   alias:
 
   mainAuthor:
@@ -21,9 +23,10 @@ fields:
     component: crudview
     params:
       inplace: true
-      height: 200px
+      height: 300px
+      span: 4
 
-  subcribers:
+  subscribers:
     component: crudview
 
 layout:

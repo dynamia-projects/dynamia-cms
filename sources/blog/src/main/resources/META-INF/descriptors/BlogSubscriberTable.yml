@@ -1,0 +1,22 @@
+view: table
+beanClass: tools.dynamia.cms.blog.domain.BlogSubscriber
+autofields: false
+
+fields:
+  name:
+  email:
+  status:
+  statusDate:
+    params: converters.Date
+  creationDate:
+    params:
+      converters: converter.Date
+  lastUpdate:
+    params:
+      converters: converter.Date
+
+
+
+
+params:
+  columns: 1

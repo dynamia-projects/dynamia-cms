@@ -81,7 +81,7 @@ class CMSUtil {
     }
 
     static String getSiteURL(Site site, URIable urIable) {
-        String uri = URIable.toURI()
+        String uri = urIable.toURI()
         if (uri.startsWith("/")) {
             uri = uri.substring(1)
         }
@@ -108,7 +108,7 @@ class CMSUtil {
     }
 
     static String getSiteURL(SiteDomain siteDomain, URIable urIable) {
-        String uri = URIable.toURI()
+        String uri = urIable.toURI()
         if (uri.startsWith("/")) {
             uri = uri.substring(1)
         }

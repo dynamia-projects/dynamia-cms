@@ -1,0 +1,12 @@
+view: form
+beanClass: tools.dynamia.cms.blog.domain.BlogSubscriber
+autofields: false
+
+fields:
+  name:
+  email:
+  status:
+
+
+params:
+  columns: 1

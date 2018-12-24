@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Products Filter Form-->
+
+<body th:fragment="module(instance)">
+
+
+	<div class="card store" th:if="${prd_categoryBrands!=null and not #lists.isEmpty(prd_categoryBrands)}">
+
+		<div th:class="${'card-header '+#objects.nullSafe(instance.styleClass,'primary-color-dark white-text')}" th:text="${instance.title}">
+			Brands
+		</div>
+
+		<div class="card-body">
+
+			<ul class="categories ">
+				<li th:each="brd : ${prd_categoryBrands}">
+				
+
+					<a th:href="@{'/store/categories/'+${prd_category.id}+'/'+${prd_category.alias}+'/'+${brd.alias}}" th:class="${(prd_brand!=null and brd.id==prd_brand.id?'active':'')}">
+						<i class="fa fa-square-o" th:unless="${prd_brand!=null and brd.id==prd_brand.id}"></i>
+						<i class="fa fa-check-square-o" th:if="${prd_brand!=null and brd.id==prd_brand.id}"></i>
+						<span th:text="${brd.name}">Submenu</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+</body>
+
+</html>

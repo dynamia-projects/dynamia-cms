@@ -52,7 +52,7 @@ class ProductCategoryDetail extends SimpleEntity implements SiteAware, Orderable
     private long totalRef
 
     @Transient
-    private List<String> currentValues
+    private List<ProductCategoryDetailValue> currentValues
 
     @Transient
     private boolean selected
@@ -65,9 +65,9 @@ class ProductCategoryDetail extends SimpleEntity implements SiteAware, Orderable
 
     private boolean filterable = true
 
-    List<String> getCurrentValues() {
+    List<ProductCategoryDetailValue> getCurrentValues() {
         if (currentValues == null) {
-            currentValues = new ArrayList<String>()
+            currentValues = new ArrayList<ProductCategoryDetailValue>()
         }
         return currentValues
     }
@@ -176,5 +176,27 @@ class ProductCategoryDetail extends SimpleEntity implements SiteAware, Orderable
         BeanUtils.setupBean(clone, this)
 
         return clone
+    }
+
+    boolean containsValue(String value) {
+        return findValue(value) != null
+    }
+
+    ProductCategoryDetailValue findValue(String value) {
+        return currentValues.find {it.value == value}
+    }
+}
+
+class ProductCategoryDetailValue {
+    String value
+    long stock
+
+    ProductCategoryDetailValue(String value) {
+        this.value = value
+    }
+
+    @Override
+    String toString() {
+        return value
     }
 }

@@ -20,7 +20,7 @@ fields:
   creationDate:
     params:
       converter: converters.Date
-  lasUpdate:
+  lastUpdate:
     params:
       converter: converters.Date
   creator:

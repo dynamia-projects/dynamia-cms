@@ -5,12 +5,12 @@ autofields: false
 fields:
 
   uuid:
-    label: TX Reference  
+    label: TX Reference
   gatewayId:
-    label: Gateway  
+    label: Gateway
   status:
-  statusText:  
-  startDate:      
+  statusText:
+  startDate:
   endDate:
   amount:
   taxes:
@@ -18,7 +18,7 @@ fields:
   paymentMethod:
   currency:
   responseCode:
-  signature:  
+  signature:
   description:
   payerFullname:
   payerDocument:
@@ -33,13 +33,13 @@ fields:
   clientIP:
   confirmed:
   sended:
-  
- 
+
+
 params:
   readonly: true
 
 layout:
-  columns: 3
+  columns: 4
  
  
   

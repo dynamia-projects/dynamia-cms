@@ -33,30 +33,29 @@ import tools.dynamia.zk.crud.actions.ViewDataAction
 @InstallAction
 class OrderPaymentDetailAction extends ViewDataAction {
 
-	OrderPaymentDetailAction() {
+    OrderPaymentDetailAction() {
         name = "Payment"
         menuSupported = true
 
     }
 
-	@Override
+    @Override
     ActionRenderer getRenderer() {
-		return new ToolbarbuttonActionRenderer(true)
+        return new ToolbarbuttonActionRenderer(true)
     }
 
-	@Override
+    @Override
     ApplicableClass[] getApplicableClasses() {
-		return ApplicableClass.get(ShoppingOrder.class)
+        return ApplicableClass.get(ShoppingOrder.class)
     }
 
-	@Override
+    @Override
     void actionPerformed(CrudActionEvent evt) {
-		ShoppingOrder order = (ShoppingOrder) evt.data
+        ShoppingOrder order = (ShoppingOrder) evt.data
         if (order != null) {
-			super.actionPerformed(
-					new CrudActionEvent(order.transaction, evt.source, evt.view, evt.controller))
+            super.actionPerformed(new CrudActionEvent(order.transaction, evt.source, evt.crudView, evt.controller))
         } else {
-			UIMessages.showMessage("Select order", MessageType.WARNING)
+            UIMessages.showMessage("Select order", MessageType.WARNING)
         }
-	}
+    }
 }

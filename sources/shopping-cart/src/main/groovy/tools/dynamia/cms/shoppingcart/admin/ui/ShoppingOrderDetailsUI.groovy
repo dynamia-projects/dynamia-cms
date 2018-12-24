@@ -32,16 +32,16 @@ import tools.dynamia.zk.viewers.table.TableView
 
 class ShoppingOrderDetailsUI extends Div {
 
-	private ShoppingOrder shoppingOrder
+    private ShoppingOrder shoppingOrder
 
     ShoppingOrderDetailsUI(ShoppingOrder order) {
-		this.shoppingOrder = order
+        this.shoppingOrder = order
         createUI()
     }
 
-	private void createUI() {
+    private void createUI() {
 
-		FormView<ShoppingOrder> orderFormView = (FormView<ShoppingOrder>) Viewers.getView(ShoppingOrder.class, "form", shoppingOrder)
+        FormView<ShoppingOrder> orderFormView = (FormView<ShoppingOrder>) Viewers.getView(ShoppingOrder.class, "form", shoppingOrder)
         orderFormView.readOnly = true
 
         FormView<PaymentTransaction> txFormView = (FormView<PaymentTransaction>) Viewers.getView(PaymentTransaction.class, "form",
@@ -54,6 +54,8 @@ class ShoppingOrderDetailsUI extends Div {
 
         itemTableView.vflex = null
         itemTableView.height = "400px"
+        itemTableView.hflex = null
+        itemTableView.width = "100%"
 
         orderFormView.parent = this
 

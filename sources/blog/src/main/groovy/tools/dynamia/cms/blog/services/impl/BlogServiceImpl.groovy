@@ -27,12 +27,10 @@ import tools.dynamia.cms.blog.BlogPostCommentTree
 import tools.dynamia.cms.blog.domain.*
 import tools.dynamia.cms.blog.services.BlogService
 import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.domain.query.QueryConditions
 import tools.dynamia.domain.query.QueryParameters
 import tools.dynamia.domain.services.AbstractService
 import tools.dynamia.integration.sterotypes.Service
 
-import static tools.dynamia.domain.query.QueryConditions.gt
 import static tools.dynamia.domain.query.QueryConditions.like
 
 @Service
@@ -135,7 +133,7 @@ class BlogServiceImpl extends AbstractService implements BlogService {
 
     @Override
     List<BlogCategory> getCategories(Blog blog) {
-        return crudService().find(BlogCategory, QueryParameters.with("blog", blog).add("postCount", gt(0)))
+        return crudService().find(BlogCategory, QueryParameters.with("blog", blog))
     }
 
     @Override

@@ -226,7 +226,7 @@ class ProductsServiceImpl extends AbstractService implements ProductsService {
             params.orderBy("price", true)
         }
 
-        QueryBuilder builder = QueryBuilder.fromParameters(Product.class, "p", params)
+        QueryBuilder builder = QueryBuilder.fromParameters(Product.class, "p", params).build()
         if (form.brandId != null) {
             builder.and("p.brand.id = :brandId")
             params.add("brandId", form.brandId)
@@ -671,7 +671,7 @@ class ProductsServiceImpl extends AbstractService implements ProductsService {
                     value = value.trim()
 
                     if (name && value && det.name.equalsIgnoreCase(name) && !det.currentValues.contains(value)) {
-                        det.currentValues << value
+                        det.currentValues << new ProductCategoryDetailValue(value)
                     }
                 }
             }

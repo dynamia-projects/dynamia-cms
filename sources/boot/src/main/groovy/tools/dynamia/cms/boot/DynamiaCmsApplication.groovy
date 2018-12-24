@@ -105,7 +105,7 @@ class DynamiaCmsApplication {
 
     @Bean
     RequestContextListener requestContextListener() {
-        return new RequestContextListener();
+        return new RequestContextListener()
     }
 
     @Bean

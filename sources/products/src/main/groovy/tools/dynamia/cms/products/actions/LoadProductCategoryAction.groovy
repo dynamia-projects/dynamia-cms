@@ -152,11 +152,17 @@ class LoadProductCategoryAction implements SiteAction {
         List<ProductCategoryDetail> finalDetails = details.collect { it.clone() }
 
         finalDetails.each { filter ->
+            filter.stock = 0
             filter.currentValues.clear()
             products.each { p ->
+
                 p.details.each { pd ->
-                    if (pd.name.equalsIgnoreCase(filter.name) && !filter.currentValues.contains(pd.value) && pd.value) {
-                        filter.currentValues << pd.value
+                    filter.stock++
+                    if (pd.name.equalsIgnoreCase(filter.name) && pd.value) {
+                        if (!filter.containsValue(pd.value)) {
+                            filter.currentValues << new ProductCategoryDetailValue(pd.value)
+                        }
+                        filter.findValue(pd.value)?.stock++
                     }
                 }
             }
