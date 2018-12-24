@@ -32,6 +32,7 @@ import org.springframework.web.context.request.ServletRequestAttributes
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import org.springframework.web.servlet.view.RedirectView
+import tools.dynamia.cms.core.api.URIable
 import tools.dynamia.cms.core.api.URLProvider
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.core.domain.SiteDomain
@@ -63,7 +64,7 @@ import java.text.NumberFormat
 class CMSUtil {
 
     private static final String _PAGINATION = "_pagination"
-    private tools.dynamia.cms.core.domain.Site site
+    private Site site
     private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher()
     private static final String PAGINATION_DATASOURCE = "paginationDatasource"
 
@@ -79,10 +80,19 @@ class CMSUtil {
         return getSiteURL(domain, uri)
     }
 
+    static String getSiteURL(Site site, URIable urIable) {
+        String uri = URIable.toURI()
+        if (uri.startsWith("/")) {
+            uri = uri.substring(1)
+        }
+        return getSiteURL(site, uri)
+    }
+
     static String getSiteURL(SiteDomain domain, String uri) {
         if (uri == null) {
             uri = ""
         }
+
 
         String context = ""
         if (domain.context != null && !domain.context.empty) {
@@ -95,6 +105,14 @@ class CMSUtil {
         }
 
         return urltext
+    }
+
+    static String getSiteURL(SiteDomain siteDomain, URIable urIable) {
+        String uri = URIable.toURI()
+        if (uri.startsWith("/")) {
+            uri = uri.substring(1)
+        }
+        return getSiteURL(siteDomain, uri)
     }
 
     static void addSuccessMessage(String string, RedirectAttributes ra) {
@@ -289,7 +307,7 @@ class CMSUtil {
         }
     }
 
-    static String getResourceURL(tools.dynamia.cms.core.domain.Site site, File file) {
+    static String getResourceURL(Site site, File file) {
 
         if (file == null) {
             throw new NullPointerException("Resource is null")
@@ -297,7 +315,7 @@ class CMSUtil {
 
         String url = null
         if (file instanceof URLProvider) {
-            url = ((URLProvider) file).URL
+            url = ((URLProvider) file).toURL()
         } else {
 
             String baseUrl = getSiteURL(site, "resources")

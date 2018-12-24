@@ -28,164 +28,125 @@ import javax.xml.bind.annotation.XmlTransient
 @XmlAccessorType(XmlAccessType.FIELD)
 class SiteMapURL implements Serializable {
 
-	public static float MINIMUM = 0.0f
+    public static float MINIMUM = 0.0f
     public static float LOW = 0.3f
     public static float MEDIUM = 0.5f
     public static float HIGH = 1.0f
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L
+     *
+     */
+    static final long serialVersionUID = 1L
     @XmlElement(name = "loc")
-	private String location
+    String location
     @XmlElement(name = "lastmod")
-	private Date lastModification
+    Date lastModification
     @XmlElement(name = "changefreq")
-	private SiteMapFrecuency changeFrequency
+    SiteMapFrecuency changeFrequency
     @XmlElement
-	private Float priority
+    Float priority
     @XmlTransient
-	private String name
+    String name
     @XmlTransient
-	private String description
+    String description
     @XmlTransient
-	private String category
+    String category
     @XmlTransient
-	private String imageURL
+    String imageURL
     @XmlTransient
-	private String videoURL
+    String videoURL
 
     SiteMapURL() {
-		// TODO Auto-generated constructor stub
-	}
+        // Default
+    }
 
-	/**
-	 * 
-	 * @param location
-	 */
-	SiteMapURL(String location) {
-		super()
+    /**
+     *
+     * @param location
+     */
+    SiteMapURL(String location) {
+        super()
         this.location = location
     }
 
-	/**
-	 * 
-	 * @param location
-	 * @param lastModification
-	 */
-	SiteMapURL(String location, Date lastModification) {
-		super()
+    /**
+     *
+     * @param location
+     * @param lastModification
+     */
+    SiteMapURL(String location, Date lastModification) {
+        super()
         this.location = location
         this.lastModification = lastModification
     }
 
-	/**
-	 * 
-	 * @param location
-	 * @param lastModification
-	 * @param changeFrecuency
-	 */
-	SiteMapURL(String location, Date lastModification, SiteMapFrecuency changeFrecuency) {
-		super()
+    /**
+     *
+     * @param location
+     * @param lastModification
+     * @param changeFrecuency
+     */
+    SiteMapURL(String location, Date lastModification, SiteMapFrecuency changeFrecuency) {
+        super()
         this.location = location
         this.lastModification = lastModification
         this.changeFrequency = changeFrecuency
     }
 
-	/**
-	 * 
-	 * @param location
-	 * @param lastModification
-	 * @param changeFrecuency
-	 * @param priority
-	 */
-	SiteMapURL(String location, Date lastModification, SiteMapFrecuency changeFrecuency, float priority) {
-		super()
+    /**
+     *
+     * @param location
+     * @param lastModification
+     * @param changeFrecuency
+     * @param priority
+     */
+    SiteMapURL(String location, Date lastModification, SiteMapFrecuency changeFrecuency, float priority) {
+        super()
         this.location = location
         this.lastModification = lastModification
         this.changeFrequency = changeFrecuency
         this.priority = priority
     }
 
-    String getName() {
-		return name
+    SiteMapURL name(String name) {
+        this.name = name
+        return this
     }
 
-    void setName(String name) {
-		this.name = name
+
+    SiteMapURL description(String description) {
+        this.description = description
+        return this
     }
 
-    String getDescription() {
-		return description
+
+
+    SiteMapURL category(String category) {
+        this.category = category
+        return this
     }
 
-    void setDescription(String description) {
-		this.description = description
+
+    SiteMapURL imageURL(String imageURL) {
+        this.imageURL = imageURL
+        return this
+    }  
+
+    SiteMapURL videoURL(String videoURL) {
+        this.videoURL = videoURL
+        return this
     }
 
-    String getCategory() {
-		return category
-    }
-
-    void setCategory(String category) {
-		this.category = category
-    }
-
-    String getImageURL() {
-		return imageURL
-    }
-
-    void setImageURL(String imageURL) {
-		this.imageURL = imageURL
-    }
-
-    String getVideoURL() {
-		return videoURL
-    }
-
-    void setVideoURL(String videoURL) {
-		this.videoURL = videoURL
-    }
-
-    String getLocation() {
-		return location
-    }
-
-    void setLocation(String location) {
-		this.location = location
-    }
-
-    Date getLastModification() {
-		return lastModification
-    }
-
-    void setLastModification(Date lastModification) {
-		this.lastModification = lastModification
-    }
-
-    SiteMapFrecuency getChangeFrequency() {
-		return changeFrequency
-    }
-
-    void setChangeFrequency(SiteMapFrecuency changeFrequency) {
-		this.changeFrequency = changeFrequency
-    }
-
-    float getPriority() {
-		return priority
-    }
-
-	/**
-	 * From 0.0 to 1.0
-	 * 
-	 * @param priority
-	 */
-	void setPriority(float priority) {
-		this.priority = priority
+    /**
+     * From 0.0 to 1.0
+     *
+     * @param priority
+     */
+    void setPriority(float priority) {
+        this.priority = priority
         if (priority > HIGH || priority < MINIMUM) {
-			priority = MEDIUM
+            priority = MEDIUM
         }
-	}
+    }
 
 }

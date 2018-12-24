@@ -17,10 +17,13 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
+
 package tools.dynamia.cms.core.api
 
-interface URLProvider {
+/**
+ * This is an interface which allows an object to perform its own uri creation
+ */
+interface URIable {
 
-	String toURL()
-
+    String toURI()
 }
