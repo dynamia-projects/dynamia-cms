@@ -26,12 +26,14 @@ import tools.dynamia.cms.core.api.CMSExtension
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.core.sitemap.SiteMapProvider
 import tools.dynamia.cms.core.sitemap.SiteMapURL
+import tools.dynamia.cms.products.domain.ProductBrand
+import tools.dynamia.cms.products.services.ProductsService
 
 @CMSExtension
 class ProductBrandSiteMapProvider implements SiteMapProvider {
 
     @Autowired
-    private tools.dynamia.cms.products.services.ProductsService service
+    private ProductsService service
 
     @Override
     List<SiteMapURL> get(Site site) {
@@ -47,7 +49,7 @@ class ProductBrandSiteMapProvider implements SiteMapProvider {
 
     }
 
-    private SiteMapURL createURL(Site site, tools.dynamia.cms.products.domain.ProductBrand b) {
+    private SiteMapURL createURL(Site site, ProductBrand b) {
         SiteMapURL url = new SiteMapURL(CMSUtil.getSiteURL(site, String.format("store/brands/%s", b.alias)))
         url.name = b.name
         url.description = b.description

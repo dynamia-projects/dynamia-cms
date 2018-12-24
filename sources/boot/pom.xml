@@ -149,19 +149,11 @@
             <artifactId>tools.dynamia.cms.core</artifactId>
             <version>3.0.0.RC</version>
         </dependency>
-
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.admin</artifactId>
             <version>3.0.0.RC</version>
         </dependency>
-
-        <dependency>
-            <groupId>tools.dynamia.cms</groupId>
-            <artifactId>tools.dynamia.cms.admin.ui</artifactId>
-            <version>3.0.0.RC</version>
-        </dependency>
-
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.users</artifactId>
@@ -169,22 +161,9 @@
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
-            <artifactId>tools.dynamia.cms.users.admin</artifactId>
-            <version>3.0.0.RC</version>
-        </dependency>
-
-        <dependency>
-            <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.pages</artifactId>
             <version>3.0.0.RC</version>
         </dependency>
-
-        <dependency>
-            <groupId>tools.dynamia.cms</groupId>
-            <artifactId>tools.dynamia.cms.pages.admin</artifactId>
-            <version>3.0.0.RC</version>
-        </dependency>
-
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.menus</artifactId>
@@ -193,41 +172,19 @@
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
-            <artifactId>tools.dynamia.cms.menus.admin</artifactId>
-            <version>3.0.0.RC</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.mail</artifactId>
             <version>3.0.0.RC</version>
         </dependency>
-
-        <dependency>
-            <groupId>tools.dynamia.cms</groupId>
-            <artifactId>tools.dynamia.cms.mail.admin</artifactId>
-            <version>3.0.0.RC</version>
-        </dependency>
-
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.shoppingcart</artifactId>
             <version>3.0.0.RC</version>
         </dependency>
-
-        <dependency>
-            <groupId>tools.dynamia.cms</groupId>
-            <artifactId>tools.dynamia.cms.shopping.admin</artifactId>
-            <version>3.0.0.RC</version>
-        </dependency>
-
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.payment</artifactId>
             <version>3.0.0.RC</version>
         </dependency>
-
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.payment.admin</artifactId>
@@ -256,16 +213,26 @@
             <artifactId>tools.dynamia.cms.products</artifactId>
             <version>3.0.0.RC</version>
         </dependency>
+
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
-            <artifactId>tools.dynamia.cms.products.admin</artifactId>
+            <artifactId>tools.dynamia.cms.blog</artifactId>
             <version>3.0.0.RC</version>
         </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.dashboard</artifactId>
+            <version>3.0.0.RC</version>
+        </dependency>
+
         <dependency>
             <groupId>tools.dynamia.themes</groupId>
             <artifactId>tools.dynamia.themes.dynamical</artifactId>
             <version>3.1.0.Final</version>
         </dependency>
+
+
     </dependencies>
 
     <build>

@@ -70,7 +70,16 @@
 			<artifactId>tools.dynamia.cms.pages</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>tools.dynamia</groupId>
+			<artifactId>tools.dynamia.zk.viewers</artifactId>
+			<version>${dynatools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>tools.dynamia.cms</groupId>
+			<artifactId>tools.dynamia.cms.admin</artifactId>
+			<version>3.0.0.RC</version>
+		</dependency>
 	</dependencies>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

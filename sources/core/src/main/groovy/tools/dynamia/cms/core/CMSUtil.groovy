@@ -315,7 +315,7 @@ class CMSUtil {
 
         String url = null
         if (file instanceof URLProvider) {
-            url = ((URLProvider) file).toURL()
+            url = ((URLProvider) file).getURL()
         } else {
 
             String baseUrl = getSiteURL(site, "resources")

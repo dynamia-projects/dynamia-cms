@@ -27,27 +27,28 @@ import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.core.sitemap.SiteMapFrecuency
 import tools.dynamia.cms.core.sitemap.SiteMapProvider
 import tools.dynamia.cms.core.sitemap.SiteMapURL
+import tools.dynamia.cms.products.domain.ProductCategory
+import tools.dynamia.cms.products.services.ProductsService
 
 @CMSExtension
 class ProductCategorySiteMapProvider implements SiteMapProvider {
 
     @Autowired
-    private tools.dynamia.cms.products.services.ProductsService service
+    private ProductsService service
 
     @Override
     List<SiteMapURL> get(Site site) {
         return service.getCategories(site).findResults { it.active ? createURL(site, it) : null }
     }
 
-    private SiteMapURL createURL(Site site, tools.dynamia.cms.products.domain.ProductCategory c) {
-        SiteMapURL url = new SiteMapURL(
-                CMSUtil.getSiteURL(site, String.format("store/categories/%s/%s", c.id, c.alias)))
+    private SiteMapURL createURL(Site site, ProductCategory category) {
+        SiteMapURL url = new SiteMapURL(CMSUtil.getSiteURL(site, category))
         url.changeFrequency = SiteMapFrecuency.daily
         url.priority = SiteMapURL.HIGH
-        url.name = c.name
-        url.description = c.description
-        if (c.parent != null) {
-            url.category = c.parent.name
+        url.name = category.name
+        url.description = category.description
+        if (category.parent != null) {
+            url.category = category.parent.name
         }
         return url
     }

@@ -28,36 +28,28 @@
         <version>3.0.0.RC</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <name>DynamiaCMS - Blog (${project.version})</name>
-    <artifactId>tools.dynamia.cms.blog</artifactId>
+    <name>DynamiaCMS - Dashboard (${project.version})</name>
+    <artifactId>tools.dynamia.cms.dashboard</artifactId>
 
-    <dependencies>
+<dependencies>
+    <dependency>
+        <groupId>tools.dynamia.cms</groupId>
+        <artifactId>tools.dynamia.cms.shoppingcart</artifactId>
+        <version>3.0.0.RC</version>
+    </dependency>
 
-        <dependency>
-            <groupId>tools.dynamia.cms</groupId>
-            <artifactId>tools.dynamia.cms.core</artifactId>
-            <version>3.0.0.RC</version>
-        </dependency>
-        <dependency>
-            <groupId>tools.dynamia.cms</groupId>
-            <artifactId>tools.dynamia.cms.users</artifactId>
-            <version>3.0.0.RC</version>
-        </dependency>
+    <dependency>
+        <groupId>tools.dynamia.cms</groupId>
+        <artifactId>tools.dynamia.cms.products</artifactId>
+        <version>3.0.0.RC</version>
+    </dependency>
 
-        <dependency>
-            <groupId>tools.dynamia</groupId>
-            <artifactId>tools.dynamia.zk.crud</artifactId>
-            <version>${dynatools.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-    </dependencies>
+    <dependency>
+        <groupId>tools.dynamia.cms</groupId>
+        <artifactId>tools.dynamia.cms.users</artifactId>
+        <version>3.0.0.RC</version>
+    </dependency>
 
 
+</dependencies>
 </project>

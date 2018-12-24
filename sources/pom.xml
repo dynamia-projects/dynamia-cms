@@ -143,7 +143,9 @@
         <module>shopping-cart-api</module>
         <module>payment-api</module>
 
+
         <module>core</module>
+        <module>admin</module>
         <module>users</module>
         <module>templates</module>
         <module>pages</module>
@@ -154,20 +156,13 @@
         <module>banners</module>
         <module>contacts</module>
         <module>payment</module>
-
-        <module>admin</module>
-        <module>admin-ui</module>
-        <module>importer-admin</module>
-        <module>users-admin</module>
-        <module>pages-admin</module>
-        <module>menus-admin</module>
-        <module>mail-admin</module>
-        <module>products-admin</module>
-        <module>shopping-admin</module>
         <module>payment-admin</module>
-
-        <module>boot</module>
+        <module>importer-admin</module>
         <module>blog</module>
+        <module>dashboard</module>
+        <module>boot</module>
+
+
 
     </modules>
 

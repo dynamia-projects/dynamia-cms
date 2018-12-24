@@ -1,4 +1,4 @@
 view: crud
 beanClass: tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig
-controller: tools.dynamia.cms.shopping.admin.controllers.ShoppingSiteConfigController
+controller: tools.dynamia.cms.shoppingcart.admin.controllers.ShoppingSiteConfigController
 autofields: false

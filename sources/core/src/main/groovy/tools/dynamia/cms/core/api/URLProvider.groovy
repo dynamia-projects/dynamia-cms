@@ -21,6 +21,6 @@ package tools.dynamia.cms.core.api
 
 interface URLProvider {
 
-	String toURL()
+	String getURL()
 
 }

@@ -56,21 +56,16 @@
     </build>
     <dependencies>
         <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.core</artifactId>
+            <version>3.0.0.RC</version>
+        </dependency>
+        <dependency>
             <groupId>tools.dynamia</groupId>
             <artifactId>tools.dynamia.zk</artifactId>
             <version>${dynatools.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>tools.dynamia.cms.core</artifactId>
-            <version>3.0.0.RC</version>
-        </dependency>
-        <dependency>
-            <groupId>tools.dynamia.cms</groupId>
-            <artifactId>tools.dynamia.cms.users</artifactId>
-            <version>3.0.0.RC</version>
-        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -81,6 +76,32 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
             <version>${spring.security.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia</groupId>
+            <artifactId>tools.dynamia.zk.viewers</artifactId>
+            <version>${dynatools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.modules</groupId>
+            <artifactId>tools.dynamia.modules.filemanager</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>tools.dynamia.zk.addons</groupId>
+            <artifactId>chartjs-zk</artifactId>
+            <version>2.7.2_R1</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>tools.dynamia.zk.addons</groupId>
+            <artifactId>aceditor-zk</artifactId>
+            <version>1.0.1</version>
         </dependency>
     </dependencies>
     <properties>

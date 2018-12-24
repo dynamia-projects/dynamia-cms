@@ -93,5 +93,16 @@
             <artifactId>tools.dynamia.cms.mail</artifactId>
             <version>3.0.0.RC</version>
         </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia.cms</groupId>
+            <artifactId>tools.dynamia.cms.admin</artifactId>
+            <version>3.0.0.RC</version>
+        </dependency>
+        <dependency>
+            <groupId>tools.dynamia</groupId>
+            <artifactId>tools.dynamia.zk.crud</artifactId>
+            <version>${dynatools.version}</version>
+        </dependency>
     </dependencies>
 </project>

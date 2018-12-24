@@ -25,6 +25,8 @@ import org.springframework.cache.Cache
 import org.springframework.cache.Cache.ValueWrapper
 import org.springframework.cache.CacheManager
 import org.springframework.stereotype.Component
+import tools.dynamia.cms.core.actions.ActionEvent
+import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.commons.StringUtils
 
 import javax.servlet.http.HttpServletRequest
@@ -38,7 +40,7 @@ class SiteCache {
 
     public static final String CACHE_NAME = "sitesCache"
 
-    Object get(tools.dynamia.cms.core.domain.Site site, String key) {
+    Object get(Site site, String key) {
 		Cache cache = cacheManager.getCache(CACHE_NAME)
         ValueWrapper wrapper = cache.get(key(site, key))
         if (wrapper != null) {
@@ -48,17 +50,17 @@ class SiteCache {
 		return null
     }
 
-    Object get(tools.dynamia.cms.core.actions.ActionEvent evt, String keysalt) {
+    Object get(ActionEvent evt, String keysalt) {
 		String key = key(evt, keysalt)
         return get(evt.site, key)
     }
 
-    Object get(tools.dynamia.cms.core.domain.Site site, HttpServletRequest request, String keysalt) {
+    Object get(Site site, HttpServletRequest request, String keysalt) {
 		String key = key(site,request, keysalt)
         return get(site, key)
     }
 
-    void put(tools.dynamia.cms.core.domain.Site site, String key, Object object) {
+    void put(Site site, String key, Object object) {
 		Cache cache = cacheManager.getCache(CACHE_NAME)
         cache.put(key(site, key), object)
     }
@@ -71,8 +73,8 @@ class SiteCache {
 	 * @param keysalt
 	 * @param object
 	 */
-	void put(tools.dynamia.cms.core.actions.ActionEvent evt, String keysalt, Object object) {
-		tools.dynamia.cms.core.domain.Site site = evt.site
+	void put(ActionEvent evt, String keysalt, Object object) {
+		Site site = evt.site
         String key = key(evt, keysalt)
         put(site, key, object)
     }
@@ -87,7 +89,7 @@ class SiteCache {
 	 * @param keysalt
 	 * @param object
 	 */
-	void put(tools.dynamia.cms.core.domain.Site site, HttpServletRequest request, String keysalt, Object object) {
+	void put(Site site, HttpServletRequest request, String keysalt, Object object) {
 		String key = key(site, request, keysalt)
         put(site, key, object)
     }
@@ -100,7 +102,7 @@ class SiteCache {
 	 * @param keysalt
 	 * @return
 	 */
-	String key(tools.dynamia.cms.core.domain.Site site, HttpServletRequest request, String keysalt) {
+	String key(Site site, HttpServletRequest request, String keysalt) {
 		StringBuilder keybuilder = new StringBuilder()
 
         keybuilder.append(keysalt)
@@ -122,7 +124,7 @@ class SiteCache {
 	 * @param keysalt
 	 * @return
 	 */
-	String key(tools.dynamia.cms.core.actions.ActionEvent evt, String keysalt) {
+	String key(ActionEvent evt, String keysalt) {
 		StringBuilder keybuilder = new StringBuilder()
 
         keybuilder.append(keysalt)
@@ -147,7 +149,7 @@ class SiteCache {
         return key(evt.site, key)
     }
 
-    String key(tools.dynamia.cms.core.domain.Site site, String key) {
+    String key(Site site, String key) {
 		return site.id + site.key + ":" + key
     }
 }

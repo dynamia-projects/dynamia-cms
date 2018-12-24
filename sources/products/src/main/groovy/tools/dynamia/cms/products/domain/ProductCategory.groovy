@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.BatchSize
 import tools.dynamia.cms.core.Orderable
 import tools.dynamia.cms.core.api.SiteAware
+import tools.dynamia.cms.core.api.URIable
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.products.dto.ProductCategoryDTO
 import tools.dynamia.domain.SimpleEntity
@@ -38,7 +39,7 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(name = "prd_categories")
 @BatchSize(size = 50)
-class ProductCategory extends SimpleEntity implements SiteAware, Orderable {
+class ProductCategory extends SimpleEntity implements SiteAware, Orderable, URIable {
 
     @OneToOne
     @NotNull
@@ -101,4 +102,8 @@ class ProductCategory extends SimpleEntity implements SiteAware, Orderable {
         return name
     }
 
+    @Override
+    String toURI() {
+        "store/categories/$id/$alias"
+    }
 }
