@@ -18,27 +18,24 @@
  *
  */
 
-package tools.dynamia.cms.blog.ext
+package tools.dynamia.cms.blog.admin.actions
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.blog.domain.Blog
-import tools.dynamia.cms.blog.services.BlogService
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.actions.ActionEvent
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.zk.viewers.table.TableViewRowAction
 
-@CMSExtension
-class BlogSiteIntereceptor extends SiteRequestInterceptorAdapter {
-    @Autowired
-    private BlogService blogService
+@InstallAction
+class SpamBlogPostCommentAction extends TableViewRowAction {
 
+    SpamBlogPostCommentAction() {
+        id = "SpamBlogComment"
+        image = "shield"
+        background = ".bg-warning"
+        color = ".color-white"
+    }
 
     @Override
-    protected void afterRequest(Site site, ModelAndView modelAndView) {
-        Blog blog = modelAndView.getModel().get("blog")
-        if (blog != null) {
-            modelAndView.addObject("blog_categories",blogService.getCategories(blog))
-        }
+    void actionPerformed(ActionEvent evt) {
+//TODO
     }
 }

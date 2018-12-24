@@ -1,0 +1,27 @@
+view: form
+beanClass: tools.dynamia.cms.blog.domain.Blog
+autofields: false
+
+fields:
+  title:
+  alias:
+  language:
+  mainAuthor:
+  commentsEnabled:
+  useDisqusComments:
+  disqusSite:
+  postCount:
+    label: Posts
+  subcribersCount:
+    label: Subscribers
+  categoriesCount:
+    label: Categories
+  commentsCount:
+    label: Comments
+  creationDate:
+    params:
+      converter: converters.Date
+  lasUpdate:
+    params:
+      converter: converters.Date
+  creator:

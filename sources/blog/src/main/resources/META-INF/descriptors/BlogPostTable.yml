@@ -1,0 +1,27 @@
+view: form
+beanClass: tools.dynamia.cms.blog.domain.BlogPost
+autofields: false
+
+fields:
+  blog:
+  author:
+  category:
+  title:
+    params:
+      header:
+        width: 50%
+  published:
+  postDate:
+    params:
+      converter: converters.Date
+  year:
+  month:
+  commentsDisabled:
+  lastUpdate:
+    params:
+      converter: converters.Date
+
+
+params:
+  orderBy: postDate desc
+

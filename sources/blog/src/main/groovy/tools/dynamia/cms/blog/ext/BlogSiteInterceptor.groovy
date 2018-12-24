@@ -18,45 +18,27 @@
  *
  */
 
-package tools.dynamia.cms.blog.domain
+package tools.dynamia.cms.blog.ext
 
-import tools.dynamia.cms.blog.BlogElement
-import tools.dynamia.cms.core.Aliasable
-import tools.dynamia.cms.core.api.URIable
-import tools.dynamia.cms.core.domain.SiteBaseEntity
-import tools.dynamia.domain.contraints.NotEmpty
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.blog.domain.Blog
+import tools.dynamia.cms.blog.services.BlogService
+import tools.dynamia.cms.core.api.CMSExtension
+import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
+import tools.dynamia.cms.core.domain.Site
 
-import javax.persistence.Entity
-import javax.persistence.ManyToOne
-import javax.persistence.Table
+@CMSExtension
+class BlogSiteInterceptor extends SiteRequestInterceptorAdapter {
+    @Autowired
+    private BlogService blogService
 
-@Entity
-@Table(name = "blg_categories")
-class BlogCategory extends SiteBaseEntity implements BlogElement, Aliasable, URIable {
-
-    @ManyToOne
-    Blog blog
-
-    @NotEmpty
-    String name
-    String alias
-    String description
-    String language
-
-    long postCount
 
     @Override
-    String toString() {
-        return name
-    }
-
-    @Override
-    String aliasSource() {
-        return name
-    }
-
-    @Override
-    String toURI() {
-        return "${blog.toURI()}/${alias}"
+    protected void afterRequest(Site site, ModelAndView modelAndView) {
+        Blog blog = modelAndView.getModel().get("blog") as Blog
+        if (blog != null) {
+            modelAndView.addObject("blog_categories",blogService.getCategories(blog))
+        }
     }
 }

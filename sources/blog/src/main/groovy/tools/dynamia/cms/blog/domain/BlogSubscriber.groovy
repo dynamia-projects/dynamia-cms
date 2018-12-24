@@ -25,18 +25,13 @@ import tools.dynamia.cms.core.domain.SiteBaseEntity
 import tools.dynamia.domain.contraints.Email
 import tools.dynamia.domain.contraints.NotEmpty
 
-import javax.persistence.EnumType
-import javax.persistence.Enumerated
-import javax.persistence.OneToOne
-import javax.persistence.Temporal
-import javax.persistence.TemporalType
+import javax.persistence.*
 import javax.validation.constraints.NotNull
 
 class BlogSubscriber extends SiteBaseEntity implements BlogElement{
 
 
-    @OneToOne
-    @NotNull
+    @ManyToOne
     Blog blog
 
     @NotEmpty

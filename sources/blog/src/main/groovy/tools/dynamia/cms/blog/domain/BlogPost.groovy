@@ -23,17 +23,21 @@ package tools.dynamia.cms.blog.domain
 import org.apache.poi.ss.usermodel.DateUtil
 import tools.dynamia.cms.blog.BlogElement
 import tools.dynamia.cms.core.Aliasable
+import tools.dynamia.cms.core.api.URIable
 import tools.dynamia.cms.core.domain.Content
 import tools.dynamia.cms.core.domain.ContentAuthor
 import tools.dynamia.commons.DateTimeUtils
+import tools.dynamia.commons.StringUtils
 import tools.dynamia.domain.OrderBy
 import tools.dynamia.domain.contraints.NotEmpty
 
 import javax.persistence.Basic
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.FetchType
 import javax.persistence.Lob
+import javax.persistence.OneToMany
 import javax.persistence.OneToOne
 import javax.persistence.Table
 import javax.persistence.Temporal
@@ -43,7 +47,7 @@ import javax.validation.constraints.NotNull
 @Entity
 @Table(name = "blg_posts")
 @OrderBy("postDate desc")
-class BlogPost extends Content implements Aliasable, BlogElement {
+class BlogPost extends Content implements Aliasable, BlogElement, URIable {
 
     @OneToOne
     @NotNull
@@ -79,7 +83,11 @@ class BlogPost extends Content implements Aliasable, BlogElement {
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     Date postDate = new Date()
+    @Temporal(TemporalType.TIMESTAMP)
+    Date lastUpdate = new Date()
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<BlogPostComment> comments = []
     boolean commentsDisabled
     long commentsCount
 
@@ -89,7 +97,7 @@ class BlogPost extends Content implements Aliasable, BlogElement {
 
     @Column(name = "postYear")
     int year
-    @Column(name="postMonth")
+    @Column(name = "postMonth")
     int month
 
     BlogPost() {
@@ -107,5 +115,23 @@ class BlogPost extends Content implements Aliasable, BlogElement {
     @Override
     String aliasSource() {
         title
+    }
+
+    List<String> getTagsList() {
+        if (tags) {
+            return Arrays.asList(StringUtils.split(tags, ","))
+        } else {
+            return Collections.emptyList()
+        }
+    }
+
+    @Override
+    String toString() {
+        title
+    }
+
+    @Override
+    String toURI() {
+        return "${blog.toURI()}/$year/$month/$alias"
     }
 }

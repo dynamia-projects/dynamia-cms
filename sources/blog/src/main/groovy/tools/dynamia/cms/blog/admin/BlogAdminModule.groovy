@@ -18,45 +18,37 @@
  *
  */
 
-package tools.dynamia.cms.blog.domain
+package tools.dynamia.cms.blog.admin
 
-import tools.dynamia.cms.blog.BlogElement
-import tools.dynamia.cms.core.Aliasable
-import tools.dynamia.cms.core.api.URIable
-import tools.dynamia.cms.core.domain.SiteBaseEntity
-import tools.dynamia.domain.contraints.NotEmpty
+import tools.dynamia.cms.blog.domain.Blog
+import tools.dynamia.cms.blog.domain.BlogPost
+import tools.dynamia.cms.blog.domain.BlogPostComment
+import tools.dynamia.cms.core.api.AdminModule
+import tools.dynamia.cms.core.api.AdminModuleOption
+import tools.dynamia.cms.core.api.CMSModule
 
-import javax.persistence.Entity
-import javax.persistence.ManyToOne
-import javax.persistence.Table
-
-@Entity
-@Table(name = "blg_categories")
-class BlogCategory extends SiteBaseEntity implements BlogElement, Aliasable, URIable {
-
-    @ManyToOne
-    Blog blog
-
-    @NotEmpty
-    String name
-    String alias
-    String description
-    String language
-
-    long postCount
+@CMSModule
+class BlogAdminModule implements AdminModule {
 
     @Override
-    String toString() {
-        return name
+    String getGroup() {
+        return "blogs"
     }
 
     @Override
-    String aliasSource() {
-        return name
+    String getName() {
+        return "Blogs"
     }
 
     @Override
-    String toURI() {
-        return "${blog.toURI()}/${alias}"
+    String getImage() {
+        return "fa-rss-square"
+    }
+
+    @Override
+    AdminModuleOption[] getOptions() {
+        return [new AdminModuleOption("config", "Configuration", Blog, false, true),
+                new AdminModuleOption("content", "Content", BlogPost),
+                new AdminModuleOption("comments", "Moderation", BlogPostComment)]
     }
 }

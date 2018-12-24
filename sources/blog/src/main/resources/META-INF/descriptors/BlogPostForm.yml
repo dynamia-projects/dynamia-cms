@@ -1,0 +1,40 @@
+view: form
+beanClass: tools.dynamia.cms.blog.domain.BlogPost
+autofields: false
+
+fields:
+  blog:
+  author:
+  category:
+  published:
+
+  title:
+    params:
+      span: 4
+
+  content:
+    component: cmseditor
+    params:
+      height: 400px
+
+  summary:
+    params:
+      multilinte: true
+      height:  80px
+
+  imageURL:
+    component: resourceSelector
+    params:
+      span: 2
+  imageTitle:
+    params:
+      span: 2
+
+  tags:
+    params:
+      span: 2
+      placeholder: comma separated tags
+  postDate:
+  commentsDisabled:
+
+

@@ -1,0 +1,13 @@
+view: form
+beanClass: tools.dynamia.cms.blog.domain.BlogCategory
+autofields: false
+
+fields:
+  name:
+  description:
+    params:
+      span: 2
+  language:
+
+layout:
+  columns: 3

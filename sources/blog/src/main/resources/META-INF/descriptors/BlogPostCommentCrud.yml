@@ -1,0 +1,4 @@
+view: crud
+beanClass: tools.dynamia.cms.blog.domain.BlogPostComment
+autofields: false
+

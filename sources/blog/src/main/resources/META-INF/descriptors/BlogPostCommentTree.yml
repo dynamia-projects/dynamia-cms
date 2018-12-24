@@ -1,0 +1,14 @@
+view: tree
+beanClass: tools.dynamia.cms.blog.domain.BlogPostComment
+autofields: false
+
+fields:
+  userName:
+    label: Name
+  content:
+    label: Comment
+  userEmail:
+    label: Email
+  userWebSite:
+    label: Website
+  status:

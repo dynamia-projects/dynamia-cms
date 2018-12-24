@@ -43,6 +43,13 @@
             <artifactId>tools.dynamia.cms.users</artifactId>
             <version>3.0.0.RC</version>
         </dependency>
+
+        <dependency>
+            <groupId>tools.dynamia</groupId>
+            <artifactId>tools.dynamia.zk.crud</artifactId>
+            <version>${dynatools.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>

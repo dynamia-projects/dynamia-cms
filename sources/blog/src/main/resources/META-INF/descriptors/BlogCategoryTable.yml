@@ -1,0 +1,19 @@
+view: table
+beanClass: tools.dynamia.cms.blog.domain.BlogCategory
+autofields: false
+
+fields:
+  name:
+  description:
+  language:
+  postCount:
+    params:
+      footer:
+        function: sum
+  creationDate:
+    params:
+      converter: converters.Date
+  lasUpdate:
+    params:
+      converter: converters.Date
+  creator:

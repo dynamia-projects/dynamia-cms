@@ -1,0 +1,28 @@
+view: form
+beanClass: tools.dynamia.cms.blog.domain.Blog
+autofields: false
+
+fields:
+  title:
+  alias:
+  language:
+  mainAuthor:
+  description:
+    params:
+      span: 4
+  tags:
+    params:
+      span: 4
+  commentsEnabled:
+  useDisqusComments:
+  disqusSite:
+
+  categories:
+    component: crudview
+    params:
+      inplace: true
+      height: 200px
+
+  subcribers:
+    component: crudview
+

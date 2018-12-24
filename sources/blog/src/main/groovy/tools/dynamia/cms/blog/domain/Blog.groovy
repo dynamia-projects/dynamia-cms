@@ -20,26 +20,29 @@
 
 package tools.dynamia.cms.blog.domain
 
+
 import tools.dynamia.cms.core.Aliasable
+import tools.dynamia.cms.core.api.URIable
 import tools.dynamia.cms.core.domain.ContentAuthor
 import tools.dynamia.cms.core.domain.SiteBaseEntity
 import tools.dynamia.domain.contraints.NotEmpty
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.OneToOne
-import javax.persistence.Table
+import javax.persistence.*
+import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "blg_blogs")
-class Blog extends SiteBaseEntity implements Aliasable {
+class Blog extends SiteBaseEntity implements Aliasable, URIable {
 
     @NotEmpty
     String alias
     @OneToOne
+    @NotNull(message = "Select main author")
     ContentAuthor mainAuthor
-    boolean  commentsEnabled = true
+    boolean commentsEnabled = true
+
     String disqusSite
+    boolean useDisqusComments
     @Column(length = 500)
     @NotEmpty
     String title
@@ -54,6 +57,12 @@ class Blog extends SiteBaseEntity implements Aliasable {
     long categoriesCount
     long commentsCount
 
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<BlogCategory> categories = []
+
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<BlogSubscriber> subscribers = []
+
     @Override
     String toString() {
         return name
@@ -62,5 +71,10 @@ class Blog extends SiteBaseEntity implements Aliasable {
     @Override
     String aliasSource() {
         return title
+    }
+
+    @Override
+    String toURI() {
+        return "$alias"
     }
 }

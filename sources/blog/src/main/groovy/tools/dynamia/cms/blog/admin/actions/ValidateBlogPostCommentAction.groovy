@@ -18,45 +18,24 @@
  *
  */
 
-package tools.dynamia.cms.blog.domain
+package tools.dynamia.cms.blog.admin.actions
 
-import tools.dynamia.cms.blog.BlogElement
-import tools.dynamia.cms.core.Aliasable
-import tools.dynamia.cms.core.api.URIable
-import tools.dynamia.cms.core.domain.SiteBaseEntity
-import tools.dynamia.domain.contraints.NotEmpty
+import tools.dynamia.actions.ActionEvent
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.zk.viewers.table.TableViewRowAction
 
-import javax.persistence.Entity
-import javax.persistence.ManyToOne
-import javax.persistence.Table
+@InstallAction
+class ValidateBlogPostCommentAction extends TableViewRowAction {
 
-@Entity
-@Table(name = "blg_categories")
-class BlogCategory extends SiteBaseEntity implements BlogElement, Aliasable, URIable {
-
-    @ManyToOne
-    Blog blog
-
-    @NotEmpty
-    String name
-    String alias
-    String description
-    String language
-
-    long postCount
-
-    @Override
-    String toString() {
-        return name
+    ValidateBlogPostCommentAction() {
+        id = "ValidateBlogComment"
+        image = "check"
+        background = ".bg-success"
+        color = ".color-white"
     }
 
     @Override
-    String aliasSource() {
-        return name
-    }
-
-    @Override
-    String toURI() {
-        return "${blog.toURI()}/${alias}"
+    void actionPerformed(ActionEvent evt) {
+//TODO
     }
 }

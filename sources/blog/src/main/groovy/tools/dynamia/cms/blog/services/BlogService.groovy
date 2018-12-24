@@ -52,4 +52,8 @@ interface BlogService {
     BlogPost findPost(Blog blog, int year, int month, String alias)
 
     List<BlogCategory> getCategories(Blog blog)
+
+    List<Blog> getBlogs(Site site)
+
+    BlogCategory findCategory(Blog blog, String alias)
 }

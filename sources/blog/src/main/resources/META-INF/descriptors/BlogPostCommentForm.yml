@@ -1,0 +1,22 @@
+view: form
+beanClass: tools.dynamia.cms.blog.domain.BlogPostComment
+autofields: false
+
+fields:
+  post:
+  userName:
+    label: Name
+  userEmail:
+    label: Email
+  userWebSite:
+    label: Website
+  user:
+  content:
+    label: Comment
+    params:
+      span: 4
+      height: 300px
+      multiline: true
+  status:
+  notifyNewReplies:
+  notifyNewComments:

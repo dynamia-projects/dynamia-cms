@@ -100,18 +100,23 @@ class BlogServiceImpl extends AbstractService implements BlogService {
     void updateStatistics(Blog blog) {
 
 
-        crudService().execute("update $BlogPost.name p set p.commentsCount = (select count(c) from $BlogPostComment.name c where c.post.id = p.id and c.statud = :status where p.blog = :blog ",
-                QueryParameters.with("blog", "blog").add("status", CommentStatus.VALID))
-        crudService().execute("update $BlogCategory.name c set c.postCount = (select count(p) from $BlogPost.name p where p.category.id = c.id and p.published = true) and c.blog = :blog", QueryParameters.with("blog", blog))
+        crudService().execute("update $BlogPost.name p set p.lastUpdate = :lastUpdate, p.commentsCount = (select count(c) from $BlogPostComment.name c where c.post.id = p.id and c.statud = :status where p.blog = :blog ",
+                QueryParameters.with("blog", "blog")
+                        .add("status", CommentStatus.VALID)
+                        .add("lastUpdate", new Date()))
+        crudService().execute("update $BlogCategory.name c set c.lastUpdate = :lastUpdate, c.postCount = (select count(p) from $BlogPost.name p where p.category.id = c.id and p.published = true) and c.blog = :blog",
+                QueryParameters.with("blog", blog)
+                        .add("lastUpdate", new Date()))
 
         crudService().execute("""
-                            update $Blog.name b set b.categoriesCount = (select count(c) from $BlogCategory.name c where c.blog = b),
+                            update $Blog.name b set b.lastUpdate = :lastUpdate, b.categoriesCount = (select count(c) from $BlogCategory.name c where c.blog = b),
                                                     b.postCount = (select count(p) from $BlogPost.name p where p.blog = b),
                                                     b.commentsCount = (select count(c) from $BlogPostComment.name c where c.blog = b),
                                                     b.subscriberCount = (select coun(s) $BlogSubscriber.name s were s.blog = b)
                             where b.id = :id                            
                             """,
-                QueryParameters.with("id", blog.id))
+                QueryParameters.with("id", blog.id)
+                        .add("lastUpdate", new Date()))
     }
 
     @Override
@@ -131,5 +136,15 @@ class BlogServiceImpl extends AbstractService implements BlogService {
     @Override
     List<BlogCategory> getCategories(Blog blog) {
         return crudService().find(BlogCategory, QueryParameters.with("blog", blog).add("postCount", gt(0)))
+    }
+
+    @Override
+    List<Blog> getBlogs(Site site) {
+        return crudService().find(Blog, "site", site)
+    }
+
+    @Override
+    BlogCategory findCategory(Blog blog, String alias) {
+        return crudService().findSingle(BlogCategory, "alias", alias)
     }
 }

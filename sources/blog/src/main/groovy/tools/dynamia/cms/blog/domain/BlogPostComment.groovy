@@ -22,6 +22,7 @@ package tools.dynamia.cms.blog.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import tools.dynamia.cms.blog.BlogElement
+import tools.dynamia.cms.core.api.URIable
 import tools.dynamia.cms.core.domain.SiteBaseEntity
 import tools.dynamia.cms.users.domain.User
 import tools.dynamia.domain.contraints.NotEmpty
@@ -30,20 +31,20 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.ManyToOne
 import javax.persistence.OneToOne
 import javax.persistence.Table
 import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "blg_comments")
-class BlogPostComment extends SiteBaseEntity implements BlogElement{
+class BlogPostComment extends SiteBaseEntity implements BlogElement, URIable {
 
     @OneToOne
     @NotNull
     Blog blog
 
-    @OneToOne
-    @NotNull
+    @ManyToOne
     @JsonIgnore
     BlogPost post
 
@@ -71,14 +72,19 @@ class BlogPostComment extends SiteBaseEntity implements BlogElement{
     CommentStatus status = CommentStatus.NEW
     boolean notifyNewReplies
     boolean notifyNewComments
+    boolean reply
 
+    void setPost(BlogPost post) {
+        this.post = post
+        this.blog = post?.blog
+    }
 
     BlogPostComment newReply(User replyUser) {
-        def reply = new BlogPostComment(blog: blog, post: post, depth: depth + 1, path: path + ",$id")
+        def reply = new BlogPostComment(blog: blog, post: post, depth: depth + 1, path: path + ",$id", reply: true)
 
-        if(depth==0){
+        if (depth == 0) {
             reply.thread = id
-        }else{
+        } else {
             reply.thread = thread
         }
 
@@ -93,6 +99,11 @@ class BlogPostComment extends SiteBaseEntity implements BlogElement{
 
     BlogPostComment newReply() {
         return newReply(null)
+    }
+
+    @Override
+    String toURI() {
+        return "${post.toURI()}#${id}"
     }
 }
 
