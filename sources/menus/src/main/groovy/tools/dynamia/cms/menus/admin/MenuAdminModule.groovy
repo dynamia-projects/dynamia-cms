@@ -17,26 +17,40 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
+package tools.dynamia.cms.menus.admin
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+import tools.dynamia.cms.core.api.AdminModule
+import tools.dynamia.cms.core.api.AdminModuleOption
+import tools.dynamia.cms.core.api.CMSModule
+import tools.dynamia.cms.menus.domain.Menu
 
 /**
  *
  * @author Mario Serrano Leones
  */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+@CMSModule
+class MenuAdminModule implements AdminModule {
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+    String getGroup() {
+        return "content"
+    }
 
-        ProductsUtil.setupDefaultVars(site, mv)
+    @Override
+    String getName() {
+        return "Content"
+    }
 
+    @Override
+    String getImage() {
+        return null
+    }
+
+    @Override
+    AdminModuleOption[] getOptions() {
+        return [
+            new AdminModuleOption("menus", "Menus", Menu.class,true,true,"indent",true)
+        ]
     }
 
 }

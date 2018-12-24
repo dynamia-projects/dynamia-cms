@@ -17,26 +17,23 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
+package tools.dynamia.cms.admin.ui
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+import org.zkoss.zul.Comboitem
+import org.zkoss.zul.ComboitemRenderer
+import tools.dynamia.cms.core.api.TypeExtension
 
 /**
  *
  * @author Mario Serrano Leones
  */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+class TypeSelectorRenderer implements ComboitemRenderer<TypeExtension> {
 
-    @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
-
-        ProductsUtil.setupDefaultVars(site, mv)
-
+	@Override
+    void render(Comboitem cmbtm, TypeExtension t, int i) throws Exception {
+        cmbtm.value = t.id
+        cmbtm.label = t.name
+        cmbtm.description = t.description
     }
 
 }

@@ -17,26 +17,26 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
+package tools.dynamia.cms.products.admin.controllers
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+import tools.dynamia.cms.products.domain.ProductCategory
+import tools.dynamia.domain.query.QueryConditions
+import tools.dynamia.domain.query.QueryParameters
+import tools.dynamia.zk.crud.TreeCrudController
 
 /**
- *
- * @author Mario Serrano Leones
+ * Created by Mario on 18/11/2014.
  */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+class ProductCategoryTreeCrudController extends TreeCrudController<ProductCategory> {
+
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
-
-        ProductsUtil.setupDefaultVars(site, mv)
-
+    protected Collection<ProductCategory> loadRoots() {
+        return crudService.find(ProductCategory, QueryParameters.with("active", true).add("parent", QueryConditions.isNull()).orderBy("name"))
     }
 
+    @Override
+    protected Collection<ProductCategory> loadChildren(ProductCategory parent) {
+        return crudService.find(ProductCategory, QueryParameters.with("active", true).add("parent", parent).orderBy("name"))
+    }
 }

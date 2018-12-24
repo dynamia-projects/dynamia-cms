@@ -17,26 +17,32 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
+package tools.dynamia.cms.admin.ui
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
+import org.springframework.stereotype.Component
 import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+import tools.dynamia.crud.CrudPage
+import tools.dynamia.navigation.Module
+import tools.dynamia.navigation.ModuleProvider
+import tools.dynamia.ui.icons.IconSize
+import tools.dynamia.zk.crud.cfg.ConfigPage
 
 /**
- *
  * @author Mario Serrano Leones
  */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+@Component("CMSInstallerConfigModule")
+class InstallerConfig implements ModuleProvider {
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+    Module getModule() {
+        Module module = new Module("system", "System")
+        module.icon = "fa-cogs"
+        module.iconSize = IconSize.NORMAL
+        module.addPage(new CrudPage("sites", "Sites", Site.class))
+        module.addPage(new ConfigPage("cmsconfig", "Configuration", "CMSConfig"))
+        module.addPage(new GlobalResourcesPage("globalResources", "Global Resources"))
 
-        ProductsUtil.setupDefaultVars(site, mv)
-
+        return module
     }
 
 }

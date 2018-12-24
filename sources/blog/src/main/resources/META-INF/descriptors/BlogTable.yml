@@ -1,11 +1,10 @@
-view: form
+view: table
 beanClass: tools.dynamia.cms.blog.domain.Blog
 autofields: false
 
 fields:
   title:
   alias:
-  language:
   mainAuthor:
   commentsEnabled:
   useDisqusComments:

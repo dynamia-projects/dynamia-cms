@@ -17,26 +17,29 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+package tools.dynamia.cms.admin.ui
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+import tools.dynamia.cms.core.domain.City
+import tools.dynamia.cms.core.domain.Country
+import tools.dynamia.cms.core.domain.Region
+import tools.dynamia.crud.CrudPage
+import tools.dynamia.integration.sterotypes.Provider
+import tools.dynamia.navigation.Module
+import tools.dynamia.navigation.ModuleProvider
+
+@Provider
+class LocationInstaller implements ModuleProvider {
+
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
-
-        ProductsUtil.setupDefaultVars(site, mv)
-
+    Module getModule() {
+        Module m = new Module("location", "Locations")
+        m.addPage(new CrudPage("countries", "Countries", Country.class))
+        m.addPage(new CrudPage("regions", "Regions", Region.class))
+        m.addPage(new CrudPage("cities", "Countries", City.class))
+        m.icon = "fa-map-marker"
+        m.position = 3
+        return m
     }
-
 }

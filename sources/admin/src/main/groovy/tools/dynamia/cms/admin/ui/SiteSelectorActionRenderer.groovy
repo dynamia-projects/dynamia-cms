@@ -17,26 +17,33 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
+package tools.dynamia.cms.admin.ui
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+import org.zkoss.zk.ui.event.Event
+import org.zkoss.zk.ui.event.EventListener
+import org.zkoss.zk.ui.event.Events
+import tools.dynamia.actions.Action
+import tools.dynamia.actions.ActionEventBuilder
+import tools.dynamia.actions.ActionRenderer
 
 /**
  *
  * @author Mario Serrano Leones
  */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+class SiteSelectorActionRenderer implements ActionRenderer<SiteSelector> {
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+    SiteSelector render(final Action action, final ActionEventBuilder evtBuilder) {
+        final SiteSelector selector = new SiteSelector()
+        selector.addEventListener(Events.ON_SELECT, new EventListener<Event>() {
 
-        ProductsUtil.setupDefaultVars(site, mv)
+            @Override
+            void onEvent(Event event) throws Exception {
+                action.actionPerformed(evtBuilder.buildActionEvent(selector.selectedItem.value, null))
+            }
+        })
 
+        return selector
     }
 
 }

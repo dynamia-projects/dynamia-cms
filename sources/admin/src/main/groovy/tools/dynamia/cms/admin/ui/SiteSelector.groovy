@@ -17,25 +17,35 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
+package tools.dynamia.cms.admin.ui
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
+import org.zkoss.zul.Combobox
 import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+import tools.dynamia.domain.services.CrudService
+import tools.dynamia.integration.Containers
+import tools.dynamia.zk.ComponentAliasIndex
+import tools.dynamia.zk.util.ZKUtil
 
 /**
  *
  * @author Mario Serrano Leones
  */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+class SiteSelector extends Combobox {
 
-    @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+    static {
+        ComponentAliasIndex.instance.add(SiteSelector.class)
+    }
 
-        ProductsUtil.setupDefaultVars(site, mv)
+    SiteSelector() {
+        init()
+    }
+
+    void init() {
+        children.clear()
+        readonly = true
+        CrudService crudService = Containers.get().findObject(CrudService.class)
+        Collection<Site> sites = crudService.findAll(Site.class, "name")
+        ZKUtil.fillCombobox(this, sites, true)
 
     }
 

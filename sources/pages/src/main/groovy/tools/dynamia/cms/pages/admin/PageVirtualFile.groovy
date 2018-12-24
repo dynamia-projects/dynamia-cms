@@ -17,26 +17,42 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
+package tools.dynamia.cms.pages.admin
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+import tools.dynamia.cms.core.CMSUtil
+import tools.dynamia.cms.core.api.URLProvider
+import tools.dynamia.cms.pages.domain.Page
+import tools.dynamia.io.VirtualFile
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+class PageVirtualFile extends VirtualFile implements URLProvider {
 
-    @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L
+    private Page page
 
-        ProductsUtil.setupDefaultVars(site, mv)
+    PageVirtualFile(Page page) {
+		super(page.alias)
+        this.page = page
+        name = page.title +".html"
+        canWrite = false
+        directory = false
 
     }
 
+	@Override
+    String getURL() {
+		return CMSUtil.getSiteURL(page.site, page.alias)
+    }
+
+	@Override
+    boolean isFile() {
+		return true
+    }
+	
+	@Override
+    long lastModified() {
+		return page.creationDate.time
+    }
 }

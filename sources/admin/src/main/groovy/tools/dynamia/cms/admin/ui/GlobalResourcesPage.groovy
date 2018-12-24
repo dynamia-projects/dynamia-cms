@@ -17,26 +17,33 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package tools.dynamia.cms.admin.ui
+
+import org.zkoss.zk.ui.Component
+import tools.dynamia.cms.core.DynamiaCMS
+import tools.dynamia.modules.filemanager.FileManager
+import tools.dynamia.zk.navigation.ComponentPage
 
 /**
  *
  * @author Mario Serrano Leones
  */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+class GlobalResourcesPage extends ComponentPage {
+
+    GlobalResourcesPage(String id, String name) {
+        super(id, name, null)
+    }
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
-
-        ProductsUtil.setupDefaultVars(site, mv)
-
+    Component renderPage() {
+        FileManager fileManager = new FileManager(DynamiaCMS.homePath)
+        return fileManager
     }
 
 }

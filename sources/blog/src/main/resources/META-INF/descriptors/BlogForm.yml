@@ -5,7 +5,7 @@ autofields: false
 fields:
   title:
   alias:
-  language:
+
   mainAuthor:
   description:
     params:
@@ -25,4 +25,7 @@ fields:
 
   subcribers:
     component: crudview
+
+layout:
+  columns: 4
 

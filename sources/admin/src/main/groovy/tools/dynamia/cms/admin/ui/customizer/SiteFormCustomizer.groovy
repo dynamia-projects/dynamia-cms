@@ -17,25 +17,20 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
+package tools.dynamia.cms.admin.ui.customizer
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
+import tools.dynamia.cms.core.SiteContext
 import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+import tools.dynamia.viewers.ViewCustomizer
+import tools.dynamia.zk.crud.ui.EntityPickerBox
+import tools.dynamia.zk.viewers.form.FormView
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+class SiteFormCustomizer implements ViewCustomizer<FormView<Site>> {
 
-    @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
-
-        ProductsUtil.setupDefaultVars(site, mv)
+	@Override
+    void customize(FormView<Site> view) {
+		EntityPickerBox parentPicker = (EntityPickerBox) view.getFieldComponent("parent").inputComponent
+        parentPicker.disabled = !SiteContext.get().superAdmin
 
     }
 

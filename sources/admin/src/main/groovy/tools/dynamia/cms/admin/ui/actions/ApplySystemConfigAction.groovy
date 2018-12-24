@@ -17,25 +17,30 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
+package tools.dynamia.cms.admin.ui.actions
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+import tools.dynamia.actions.ActionEvent
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.cms.core.DynamiaCMS
+import tools.dynamia.ui.UIMessages
+import tools.dynamia.zk.crud.cfg.SaveConfigAction
+import tools.dynamia.zk.navigation.ZKNavigationManager
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+@InstallAction
+class ApplySystemConfigAction extends SaveConfigAction {
+
+    ApplySystemConfigAction() {
+        name = "Apply"
+        image = "refresh"
+        position = 1
+    }
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
-
-        ProductsUtil.setupDefaultVars(site, mv)
+    void actionPerformed(ActionEvent evt) {
+        super.actionPerformed(evt)
+        DynamiaCMS.reloadHomePath()
+        ZKNavigationManager.instance.refresh()
+        UIMessages.showMessage("Done")
 
     }
 

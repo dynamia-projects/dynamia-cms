@@ -17,26 +17,30 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+package tools.dynamia.cms.shoppingcart.admin.controllers
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+import tools.dynamia.cms.payment.api.PaymentTransactionStatus
+import tools.dynamia.cms.shoppingcart.domain.ShoppingOrder
+import tools.dynamia.domain.query.QueryConditions
+import tools.dynamia.zk.crud.CrudController
+
+class ShoppingOrderController extends CrudController<ShoppingOrder> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 113285947809724489L
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+	protected void beforeQuery() {
+		if (!params.containsKey("transaction.status")) {
+			setParemeter("transaction.status", QueryConditions.in(PaymentTransactionStatus.COMPLETED, PaymentTransactionStatus.PROCESSING))
+        }
 
-        ProductsUtil.setupDefaultVars(site, mv)
-
-    }
+		if (!params.containsKey("shipped")) {
+			setParemeter("shipped", false)
+        }
+	}
 
 }

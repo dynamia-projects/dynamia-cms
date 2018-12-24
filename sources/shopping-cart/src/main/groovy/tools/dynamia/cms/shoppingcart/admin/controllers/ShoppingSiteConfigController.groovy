@@ -17,26 +17,21 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+package tools.dynamia.cms.shoppingcart.admin.controllers
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+import tools.dynamia.cms.core.SiteContext
+import tools.dynamia.cms.shoppingcart.domain.ShoppingSiteConfig
+import tools.dynamia.cms.shoppingcart.services.ShoppingCartService
+import tools.dynamia.integration.Containers
+import tools.dynamia.zk.crud.CrudController
 
-    @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+class ShoppingSiteConfigController extends CrudController<ShoppingSiteConfig> {
 
-        ProductsUtil.setupDefaultVars(site, mv)
-
+	@Override
+	protected void beforeQuery() {
+		ShoppingCartService service = Containers.get().findObject(ShoppingCartService.class)
+        service.getConfiguration(SiteContext.get().current)
     }
 
 }

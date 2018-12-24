@@ -1,4 +1,4 @@
-view: form
+view: table
 beanClass: tools.dynamia.cms.blog.domain.BlogPost
 autofields: false
 

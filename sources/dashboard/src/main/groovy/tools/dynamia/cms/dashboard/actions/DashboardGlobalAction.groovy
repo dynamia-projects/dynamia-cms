@@ -17,26 +17,38 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+package tools.dynamia.cms.dashboard.actions
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
 
-    @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+import tools.dynamia.actions.ActionEvent
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.app.template.ApplicationGlobalAction
+import tools.dynamia.cms.dashboard.vm.AdminDashboardViewModel
+import tools.dynamia.zk.navigation.ZKNavigationManager
 
-        ProductsUtil.setupDefaultVars(site, mv)
+import javax.annotation.PostConstruct
+
+@InstallAction
+class DashboardGlobalAction extends ApplicationGlobalAction {
+
+    DashboardGlobalAction() {
+        image = "tachometer"
+        name = "Dashboard"
+        position = -1
 
     }
 
+
+    @Override
+    void actionPerformed(ActionEvent evt) {
+        AdminDashboardViewModel.show()
+    }
+
+    @PostConstruct
+    def autoshow() {
+        if (ZKNavigationManager.instance.getCurrentPage() == null) {
+            AdminDashboardViewModel.show()
+        }
+    }
 }

@@ -1,0 +1,150 @@
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+
+<?page title="${applicationInfo.name} - ${accountContext.account.name}"?>
+
+<?meta charset="utf-8"?>
+<?meta http-equiv="X-UA-Compatible" content="IE=edge"?>
+<?meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"?>
+<?meta name="name" content="${applicationInfo.name}"?>
+<?meta name="description" content="${applicationInfo.description}"?>
+<?meta name="author" content="${applicationInfo.author}"?>
+<?meta name="version" content="${applicationInfo.version}"?>
+<?meta name="build" content="${applicationInfo.build}"?>
+
+<?link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet"?>
+<?link href="${contextPath}/zkau/web/tools/app/css/zkbootstrap.css" rel="stylesheet" type="text/css"?>
+<!--
+  ~ Copyright (C) 2009 - 2019 Dynamia Soluciones IT S.A.S - NIT 900302344-1
+  ~ Colombia - South America
+  ~ All Rights Reserved.
+  ~
+  ~ DynamiaCMS is free software: you can redistribute it and/or modify it
+  ~ under the terms of the GNU Lesser General Public License (LGPL v3) as
+  ~ published by the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ DynamiaCMS is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<!-- Custom fonts for this template-->
+<?link href="${contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css"?>
+<!-- Custom styles for this template-->
+<?link href="${contextPath}/css/AdminLTE.min.css" rel="stylesheet"?>
+
+<?link rel="shortcut icon" href="${contextPath}/zkau/web/favicon.ico"?>
+<?link rel="icon" type="image/vnd.microsoft.icon" href="${contextPath}/zkau/web/favicon.ico"?>
+
+<?link href="${contextPath}/css/skins/${appTemplate.skin.filename}" rel="stylesheet" type="text/css"?>
+<?link href="${contextPath}/css/skins/dynamical-${appTemplate.skin.id}.css" rel="stylesheet" type="text/css"?>
+
+
+<?link href="${contextPath}/css/tooltipster.bundle.min.css" rel="stylesheet" type="text/css"?>
+<?link href="${contextPath}/css/jquery.growl.css" rel="stylesheet" type="text/css"?>
+
+<?link href="${contextPath}/css/login.css" rel="stylesheet" type="text/css"?>
+
+<zk xmlns:n="http://www.zkoss.org/2005/zk/native">
+
+    <n:div class="logo">
+        <n:img src="${appTemplate.logoURL}" class="imglogo img-responsive"
+               title="${applicationInfo.name} - ${accountContext.account.name}"/>
+    </n:div>
+
+    <n:div class="login-box">
+        <n:div class="login-logo">
+            <n:a href="${contextPath}">
+                <n:b>${applicationInfo.name}</n:b>
+                ${accountContext.account.name}
+            </n:a>
+        </n:div>
+        <!-- /.login-logo -->
+        <n:div class="login-box-body">
+            <n:p class="login-box-msg">Inicio de Sesion</n:p>
+            <n:form action="${contextPath}/login" method="post">
+
+                <n:div class="input-group" style="margin-bottom: 10px">
+                    <n:input type="text" class="form-control"
+                             name="username" placeholder="Usuario"/>
+                    <n:span class="input-group-addon">
+                        <n:i class="fa fa-user fa-fw"/>
+                    </n:span>
+                </n:div>
+
+                <n:div class="input-group" style="margin-bottom: 10px">
+                    <n:input type="password" class="form-control"
+                             name="password" placeholder="Password"/>
+                    <n:span class="input-group-addon">
+                        <n:i class="fa fa-lock fa-fw"/>
+                    </n:span>
+                </n:div>
+
+
+                <n:div class="row">
+                    <n:div class="col-xs-8">
+                        <n:div>
+                            <n:label>
+                                <n:input type="checkbox" name="remember-me"/>
+                                Recuerdame
+                            </n:label>
+                        </n:div>
+                    </n:div>
+                    <!-- /.col -->
+                    <n:div class="col-xs-4">
+                        <n:button type="submit"
+                                  class="btn btn-primary btn-block btn-flat">
+                            Entrar
+                        </n:button>
+                    </n:div>
+                    <!-- /.col -->
+                </n:div>
+                <n:input type="hidden"
+                         name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </n:form>
+
+
+            <!-- /.social-auth-links -->
+
+            <n:a href="${contextPath}/login/recovery">
+                No recuerdo mi clave
+            </n:a>
+            <n:p>
+                <div sclass="callout callout-danger"
+                     if="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
+                    <n:p>
+                        ${SPRING_SECURITY_LAST_EXCEPTION.localizedMessage}
+                    </n:p>
+                </div>
+            </n:p>
+
+        </n:div>
+        <!-- /.login-box-body -->
+    </n:div>
+    <!-- /.login-box -->
+
+
+    <!-- jQuery 3 -->
+    <script src="${contextPath}/js/jquery-3.3.1.min.js"/>
+    <script src="${contextPath}/js/jquery.growl.js"/>
+
+    <!-- Bootstrap 3.3.7 -->
+    <script src="${contextPath}/js/bootstrap.min.js"/>
+    <!-- SlimScroll -->
+    <script src="${contextPath}/js/jquery.slimscroll.min.js"/>
+    <!-- FastClick -->
+    <script src="${contextPath}/js/fastclick.min.js"/>
+    <!-- AdminLTE App -->
+    <script src="${contextPath}/js/adminlte.min.js"/>
+    <!-- Dynamical -->
+    <script src="${contextPath}/js/dynamical-login-3.1.0.Final.js" type="text/javascript"/>
+
+    <!-- Tooltipster -->
+    <script src="${contextPath}/js/tooltipster.bundle.min.js" type="text/javascript"/>
+
+</zk>

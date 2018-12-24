@@ -17,26 +17,13 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+package tools.dynamia.cms.admin.ui.actions
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+import tools.dynamia.actions.AbstractAction
 
-    @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+abstract class AbstractCMSEditorAction extends AbstractAction {
 
-        ProductsUtil.setupDefaultVars(site, mv)
-
-    }
+	
 
 }

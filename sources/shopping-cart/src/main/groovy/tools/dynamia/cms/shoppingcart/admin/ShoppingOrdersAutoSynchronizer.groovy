@@ -17,26 +17,22 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+package tools.dynamia.cms.shoppingcart.admin
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.scheduling.annotation.Scheduled
+import org.springframework.stereotype.Service
+import tools.dynamia.cms.shoppingcart.services.ShoppingCartService
 
-    @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+@Service
+class ShoppingOrdersAutoSynchronizer {
 
-        ProductsUtil.setupDefaultVars(site, mv)
+	@Autowired
+	private ShoppingCartService service
 
-    }
-
+	@Scheduled(fixedRate = 300000L)
+	void sync() {
+		service.sendAllOrders()
+	}
 }

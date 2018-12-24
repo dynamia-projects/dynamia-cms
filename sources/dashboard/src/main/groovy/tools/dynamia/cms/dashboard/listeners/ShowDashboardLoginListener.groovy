@@ -17,26 +17,24 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+package tools.dynamia.cms.dashboard.listeners
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+
+import tools.dynamia.cms.dashboard.vm.AdminDashboardViewModel
+import tools.dynamia.cms.users.LoginListener
+import tools.dynamia.cms.users.api.UserProfile
+import tools.dynamia.cms.users.domain.User
+import tools.dynamia.integration.sterotypes.Listener
+import tools.dynamia.zk.util.ZKUtil
+
+@Listener
+class ShowDashboardLoginListener implements LoginListener {
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
-
-        ProductsUtil.setupDefaultVars(site, mv)
-
+    void onLoginSuccess(User user) {
+        if (ZKUtil.inEventListener && (user.profile == UserProfile.EDITOR || user.profile == UserProfile.ADMIN)) {
+            AdminDashboardViewModel.show()
+        }
     }
-
 }

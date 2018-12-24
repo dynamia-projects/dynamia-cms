@@ -17,25 +17,25 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
+package tools.dynamia.cms.pages.admin
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+import tools.dynamia.cms.pages.domain.Page
+import tools.dynamia.cms.users.UserHolder
+import tools.dynamia.viewers.ViewCustomizer
+import tools.dynamia.zk.viewers.form.FormView
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+class PageFormCustomizer implements ViewCustomizer<FormView<Page>> {
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+    void customize(final FormView<Page> view) {
 
-        ProductsUtil.setupDefaultVars(site, mv)
+        if (UserHolder.get().authenticated) {
+            view.addEventListener(FormView.ON_VALUE_CHANGED, {
+                if (view.value.author == null) {
+                    view.value.author = UserHolder.get().current.relatedAuthor
+                }
+            })
+        }
 
     }
 

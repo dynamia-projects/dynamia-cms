@@ -17,26 +17,30 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+package tools.dynamia.cms.admin.ui.actions.global
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+import tools.dynamia.actions.ActionEvent
+import tools.dynamia.actions.InstallAction
+import tools.dynamia.app.template.ApplicationGlobalAction
+import tools.dynamia.cms.admin.ui.actions.SiteResourcesManagerAction
+import tools.dynamia.commons.Messages
+import tools.dynamia.integration.Containers
 
-    @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+@InstallAction
+class ResourcesGlobalAction extends ApplicationGlobalAction {
 
-        ProductsUtil.setupDefaultVars(site, mv)
+	ResourcesGlobalAction() {
+        name = Messages.get(ResourcesGlobalAction,"resourcesAction")
+        image = "cloud"
+        position = 3
+        setAttribute("background", "btn btn-success btn-flat bg-green")
+    }
 
+	@Override
+    void actionPerformed(ActionEvent evt) {
+		SiteResourcesManagerAction action = Containers.get().findObject(SiteResourcesManagerAction.class)
+        action.show()
     }
 
 }

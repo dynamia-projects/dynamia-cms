@@ -17,26 +17,24 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+package tools.dynamia.cms.admin.ui.controllers
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+import tools.dynamia.cms.core.domain.ModuleInstance
+import tools.dynamia.zk.crud.CrudController
+
+class ModuleInstanceCrudController extends CrudController<ModuleInstance> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9219694872612901136L
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
-
-        ProductsUtil.setupDefaultVars(site, mv)
-
-    }
+	protected void beforeQuery() {
+		if (getParameter("enabled") == null) {
+			setParemeter("enabled", true)
+        }
+	}
 
 }

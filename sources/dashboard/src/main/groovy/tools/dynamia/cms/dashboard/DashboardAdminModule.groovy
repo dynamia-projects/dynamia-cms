@@ -17,26 +17,35 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
 
-import org.springframework.web.servlet.ModelAndView
-import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+package tools.dynamia.cms.dashboard
 
-/**
- *
- * @author Mario Serrano Leones
- */
-@CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+import tools.dynamia.cms.core.api.AdminModule
+import tools.dynamia.cms.core.api.AdminModuleOption
+import tools.dynamia.cms.core.api.CMSModule
+
+@CMSModule
+class DashboardAdminModule implements AdminModule {
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
-
-        ProductsUtil.setupDefaultVars(site, mv)
-
+    String getGroup() {
+        return "content"
     }
 
+    @Override
+    String getName() {
+        return "Content"
+    }
+
+    @Override
+    String getImage() {
+        return null
+    }
+
+    @Override
+    AdminModuleOption[] getOptions() {
+        return [
+                new AdminModuleOption("dashboard", "Dashboard", "classpath:/zk/cms/dashboard.zul", true, true, "tachometer", true)
+        ]
+    }
 }

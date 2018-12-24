@@ -17,26 +17,22 @@
  * along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
-package tools.dynamia.cms.products.ext
+package tools.dynamia.cms.admin.ui
 
-import org.springframework.web.servlet.ModelAndView
 import tools.dynamia.cms.core.api.CMSExtension
-import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
-import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.cms.products.ProductsUtil
+import tools.dynamia.ui.icons.AbstractIconsProvider
 
-/**
- *
- * @author Mario Serrano Leones
- */
 @CMSExtension
-class ProductsInterceptor extends SiteRequestInterceptorAdapter {
+class CMSIconsProvider extends AbstractIconsProvider {
 
-    @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+	@Override
+    String getExtension() {
+		return "png"
+    }
 
-        ProductsUtil.setupDefaultVars(site, mv)
-
+	@Override
+    String getPrefix() {
+		return "cms/icons"
     }
 
 }
