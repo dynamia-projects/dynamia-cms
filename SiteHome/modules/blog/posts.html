@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+<th:block layout:fragment="stylesheets">
+    <link th:href="@{'/$mods/blog/css/blog.css'}" href="css/blog.css" rel="stylesheet"/>
+</th:block>
+
+
+<div class="page" layout:fragment="content">
+
+    <div class="container blog">
+
+        <div class="row">
+
+            <!-- Blog Entries Column -->
+            <div class="col-md-9">
+                <h1 class="blog-title" th:text="${title}">
+                    <small th:text="${description}"></small>
+                </h1>
+
+                <th:block th:each="post : ${blog_posts}" th:include="blog/components/postpanel::frag(${post})"/>
+
+                <!-- Pagination -->
+                <ul class="pagination justify-content-center mb-4">
+                    <li class="page-item">
+                        <a class="page-link" href="#">&larr; Older</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Newer &rarr;</a>
+                    </li>
+                </ul>
+
+            </div>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-3">
+                <th:block th:include="blog/components/searchform::frag"/>
+                <th:block th:include="blog/components/categorylist::load(${blog_categories})"/>
+                <th:block th:include="blog/components/authorlist::load(${blog_authors})"/>
+                <th:block th:include="blog/components/archive::load(${blog_archive})"/>
+                <th:block th:include="module::position('blog-sidebar')"/>
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+</div>
+
+</html>

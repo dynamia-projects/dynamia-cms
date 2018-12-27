@@ -9,13 +9,14 @@ fields:
   title:
     params:
       header:
-        width: 50%
+        width: 500px
   published:
   postDate:
     params:
       converter: converters.Date
   year:
   month:
+  tags:
   commentsDisabled:
   lastUpdate:
     params:

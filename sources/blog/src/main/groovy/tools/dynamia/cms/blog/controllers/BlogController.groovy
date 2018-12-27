@@ -54,7 +54,7 @@ class BlogController {
 
         mv.addObject("blogs", blogService.getBlogs(site))
         mv.addObject("main_posts", blogService.findMainPosts(site))
-
+        mv.addObject("title", "Blogs")
         return mv
     }
 
@@ -71,11 +71,18 @@ class BlogController {
         }
 
         ModelAndView mv = new ModelAndView("blog/post")
-        mv.addObject("blog", "blog")
+        mv.addObject("blog", blog)
         mv.addObject("blog_post", blogPost)
         mv.addObject("blog_year", year)
         mv.addObject("blog_month", month)
         mv.addObject("blog_comments", blogService.getComments(blogPost))
+        mv.addObject("title", "$blogPost.title")
+        mv.addObject("metaDescription", blogPost.summary)
+        if (blogPost.tags) {
+            mv.addObject("metaKeywords", blogPost.tags)
+        }
+        mv.addObject("metaAuthor", blogPost.author.toString())
+        mv.addObject("pageImage", blogPost.imageURL)
 
         return mv
 
@@ -91,11 +98,11 @@ class BlogController {
 
 
         ModelAndView mv = new ModelAndView("blog/posts")
-        mv.addObject("blog", "blog")
+        mv.addObject("blog", blog)
         mv.addObject("blog_year", year)
         mv.addObject("blog_month", month)
         mv.addObject("blog_posts", blogService.findBlogArchive(blog, year, month))
-
+        mv.addObject("title", blog.title + " $year / $month")
 
         return mv
 
@@ -109,11 +116,30 @@ class BlogController {
         BlogCategory category = blogService.findCategory(blog, categoyAlias)
 
         ModelAndView mv = new ModelAndView("blog/posts")
-        mv.addObject("blog", "blog")
+        mv.addObject("blog", blog)
         mv.addObject("blog_category", category)
         mv.addObject("blog_posts", blogService.findByTilleAndTagAndCategory(blog, null, null, category))
+        mv.addObject("title", "$blog.title - $category.name")
+        mv.addObject("description", category.description)
         return mv
     }
+
+
+    @GetMapping("/{blog}")
+    ModelAndView blogPosts(@PathVariable("blog") String blogAlias, HttpServletRequest request) {
+
+        Site site = siteService.getSite(request)
+        Blog blog = getBlog(site, blogAlias)
+
+
+        ModelAndView mv = new ModelAndView("blog/posts")
+        mv.addObject("blog", blog)
+        mv.addObject("blog_posts", blogService.findRecentPost(blog))
+        mv.addObject("title", "$blog.title")
+        mv.addObject("description", blog.description)
+        return mv
+    }
+
 
     @GetMapping("/{blog}/tag/{tag}")
     ModelAndView tagPosts(@PathVariable("blog") String blogAlias, @PathVariable("tag") String tag, HttpServletRequest request) {
@@ -123,9 +149,11 @@ class BlogController {
 
 
         ModelAndView mv = new ModelAndView("blog/posts")
-        mv.addObject("blog", "blog")
+        mv.addObject("blog", blog)
         mv.addObject("blog_tag", tag)
         mv.addObject("blog_posts", blogService.findByTilleAndTagAndCategory(blog, null, tag, null))
+        mv.addObject("title", "$blog.title - Tag $tag")
+        mv.addObject("description", blog.description)
         return mv
     }
 

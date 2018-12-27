@@ -20,7 +20,7 @@
 
 package tools.dynamia.cms.blog.domain
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore
 import tools.dynamia.cms.core.Aliasable
 import tools.dynamia.cms.core.api.URIable
 import tools.dynamia.cms.core.domain.ContentAuthor
@@ -57,9 +57,11 @@ class Blog extends SiteBaseEntity implements Aliasable, URIable {
     long categoriesCount
     long commentsCount
 
+    @JsonIgnore
     @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
     List<BlogCategory> categories = []
 
+    @JsonIgnore
     @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
     List<BlogSubscriber> subscribers = []
 

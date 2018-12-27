@@ -1,0 +1,55 @@
+<!--
+  ~ Copyright (C) 2009 - 2019 Dynamia Soluciones IT S.A.S - NIT 900302344-1
+  ~ Colombia - South America
+  ~ All Rights Reserved.
+  ~
+  ~ DynamiaCMS is free software: you can redistribute it and/or modify it
+  ~ under the terms of the GNU Lesser General Public License (LGPL v3) as
+  ~ published by the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ DynamiaCMS is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License
+  ~ along with DynamiaCMS.  If not, see <https://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<body th:fragment="load (author)">
+
+<!-- Categories Widget -->
+
+<div class="blog-author row">
+    <div class="col-md-2">
+        <img th:src="'/resources/authors/photos/'+${author.photo}" class="img-circle img-responsive">
+    </div>
+    <div class="col-md-10">
+        <div class="blog-author-title">Acerca de <a th:href="@{'/'+${author.toURI()}}" th:text="${author}"></a></div>
+        <div class="blog-author-text" th:text="${author.bio}"></div>
+        <div class="blog-author-links">
+            <a class="btn btn-primary" target="_blank" th:href="${author.website}"
+               th:unless="${#strings.isEmpty(author.website)}"><i
+                    class="fa fa-globe"></i> </a>
+
+            <a class="btn btn-info" target="_blank" th:href="${'https://www.twitter.com/'+author.twitter}"
+               th:unless="${#strings.isEmpty(author.twitter)}"><i
+                    class="fa fa-twitter"></i> </a>
+
+            <a class="btn btn-indigo" target="_blank" th:href="${'https://www.facebook.com/'+author.facebook}"
+               th:unless="${#strings.isEmpty(author.facebook)}"><i
+                    class="fa fa-facebook"></i> </a>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>

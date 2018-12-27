@@ -23,10 +23,12 @@ package tools.dynamia.cms.blog.services
 import org.springframework.scheduling.annotation.Async
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
+import tools.dynamia.cms.blog.BlogArchive
 import tools.dynamia.cms.blog.BlogPostCommentTree
 import tools.dynamia.cms.blog.domain.Blog
 import tools.dynamia.cms.blog.domain.BlogCategory
 import tools.dynamia.cms.blog.domain.BlogPost
+import tools.dynamia.cms.core.domain.ContentAuthor
 import tools.dynamia.cms.core.domain.Site
 
 interface BlogService {
@@ -56,4 +58,8 @@ interface BlogService {
     List<Blog> getBlogs(Site site)
 
     BlogCategory findCategory(Blog blog, String alias)
+
+    List<ContentAuthor> findAuthors(Blog blog)
+
+    List<BlogArchive> getArchiveSummary(Blog blog)
 }

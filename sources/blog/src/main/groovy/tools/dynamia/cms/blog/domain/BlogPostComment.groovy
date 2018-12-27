@@ -42,6 +42,7 @@ class BlogPostComment extends SiteBaseEntity implements BlogElement, URIable {
 
     @OneToOne
     @NotNull
+    @JsonIgnore
     Blog blog
 
     @ManyToOne

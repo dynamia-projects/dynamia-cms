@@ -9,20 +9,25 @@ fields:
   published:
 
   title:
+    label: Post - Title and Content
     params:
       span: 4
 
   content:
-    component: cmseditor
+    component: ckeditor
     params:
       height: 400px
+      span: 4
+      showLabel: false
 
   summary:
     params:
-      multilinte: true
+      multiline: true
       height:  80px
+      span: 4
 
   imageURL:
+    label: Image URL
     component: resourceSelector
     params:
       span: 2
@@ -36,5 +41,8 @@ fields:
       placeholder: comma separated tags
   postDate:
   commentsDisabled:
+
+layout:
+  columns: 4
 
 

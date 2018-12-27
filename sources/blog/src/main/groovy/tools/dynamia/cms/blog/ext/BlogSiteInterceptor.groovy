@@ -38,7 +38,9 @@ class BlogSiteInterceptor extends SiteRequestInterceptorAdapter {
     protected void afterRequest(Site site, ModelAndView modelAndView) {
         Blog blog = modelAndView.getModel().get("blog") as Blog
         if (blog != null) {
-            modelAndView.addObject("blog_categories",blogService.getCategories(blog))
+            modelAndView.addObject("blog_categories", blogService.getCategories(blog))
+            modelAndView.addObject("blog_authors", blogService.findAuthors(blog))
+            modelAndView.addObject("blog_archive", blogService.getArchiveSummary(blog))
         }
     }
 }

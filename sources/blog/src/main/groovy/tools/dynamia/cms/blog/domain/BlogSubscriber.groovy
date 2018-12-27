@@ -20,6 +20,7 @@
 
 package tools.dynamia.cms.blog.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import tools.dynamia.cms.blog.BlogElement
 import tools.dynamia.cms.core.domain.SiteBaseEntity
 import tools.dynamia.domain.contraints.Email
@@ -34,6 +35,7 @@ class BlogSubscriber extends SiteBaseEntity implements BlogElement{
 
 
     @ManyToOne
+    @JsonIgnore
     Blog blog
 
     @NotEmpty

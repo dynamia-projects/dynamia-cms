@@ -23,14 +23,19 @@ package tools.dynamia.cms.blog.services.impl
 import org.springframework.scheduling.annotation.Async
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
+import tools.dynamia.cms.blog.BlogArchive
 import tools.dynamia.cms.blog.BlogPostCommentTree
 import tools.dynamia.cms.blog.domain.*
 import tools.dynamia.cms.blog.services.BlogService
+import tools.dynamia.cms.core.domain.ContentAuthor
 import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.domain.query.QueryConditions
 import tools.dynamia.domain.query.QueryParameters
 import tools.dynamia.domain.services.AbstractService
+import tools.dynamia.domain.util.QueryBuilder
 import tools.dynamia.integration.sterotypes.Service
 
+import static tools.dynamia.domain.query.QueryConditions.eq
 import static tools.dynamia.domain.query.QueryConditions.like
 
 @Service
@@ -144,5 +149,22 @@ class BlogServiceImpl extends AbstractService implements BlogService {
     @Override
     BlogCategory findCategory(Blog blog, String alias) {
         return crudService().findSingle(BlogCategory, "alias", alias)
+    }
+
+    @Override
+    List<ContentAuthor> findAuthors(Blog blog) {
+        def list = crudService().executeQuery(QueryBuilder.select("p.author").from(BlogPost, "p").where("blog", eq(blog)).groupBy("p.author"))
+        return list as List<ContentAuthor>
+    }
+
+    @Override
+    List<BlogArchive> getArchiveSummary(Blog blog) {
+        def query = QueryBuilder.select("year", "month", "count(p.id)").from(BlogPost, "p")
+                .where("published", eq(true)).and("blog", eq(blog))
+                .groupBy("year", "month")
+                .orderBy("postDate desc")
+                .resultType(BlogArchive)
+
+        return crudService().executeQuery(query)
     }
 }

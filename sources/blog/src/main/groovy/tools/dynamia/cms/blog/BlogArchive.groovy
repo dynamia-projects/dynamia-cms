@@ -18,47 +18,51 @@
  *
  */
 
-package tools.dynamia.cms.blog.domain
+package tools.dynamia.cms.blog
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-import tools.dynamia.cms.blog.BlogElement
-import tools.dynamia.cms.core.Aliasable
 import tools.dynamia.cms.core.api.URIable
-import tools.dynamia.cms.core.domain.SiteBaseEntity
-import tools.dynamia.domain.contraints.NotEmpty
 
-import javax.persistence.Entity
-import javax.persistence.ManyToOne
-import javax.persistence.Table
+import java.time.Month
+import java.time.format.TextStyle
 
-@Entity
-@Table(name = "blg_categories")
-class BlogCategory extends SiteBaseEntity implements BlogElement, Aliasable, URIable {
+class BlogArchive implements URIable {
 
-    @ManyToOne
-    @JsonIgnore
-    Blog blog
 
-    @NotEmpty
-    String name
-    String alias
-    String description
-    String language
+    private String monthName
+    private int year
+    private int month
+    private long count
 
-    long postCount
+    BlogArchive(int year, int month, long count) {
+        this.year = year
+        this.month = month
+        this.count = count
+        this.monthName = Month.of(month).getDisplayName(TextStyle.FULL, Locale.getDefault())?.capitalize()
+    }
 
-    @Override
-    String toString() {
-        return name
+    String getMonthName() {
+        return monthName
+    }
+
+    int getMonth() {
+        return month
+    }
+
+    int getYear() {
+        return year
+    }
+
+    long getCount() {
+        return count
     }
 
     @Override
-    String aliasSource() {
-        return name
+    String toString() {
+        return "$monthName $year"
     }
 
     @Override
     String toURI() {
-        return "${blog.toURI()}/${alias}"
+        return "$year/$month"
     }
 }

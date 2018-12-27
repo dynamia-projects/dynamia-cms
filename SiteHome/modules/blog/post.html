@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+<th:block layout:fragment="stylesheets">
+    <link th:href="@{'/$mods/blog/css/blog.css'}" href="css/blog.css" rel="stylesheet"/>
+</th:block>
+
+
+<div class="page" layout:fragment="content">
+
+    <div class="container blog blog-post">
+
+        <div class="row">
+
+            <!-- Blog Entries Column -->
+            <div class="col-md-9">
+                <h1 class="blog-post-title" th:text="${blog_post.title}"></h1>
+                <h4 class="blog-post-date">Publicado el <span
+                        th:text="${#dates.format(blog_post.postDate,'dd MMMM YYYY ')}"></span> por <a
+                        th:href="@{'/'+${blog_post.author.toURI()}}" th:text="${blog_post.author}"></a>
+                </h4>
+                <hr/>
+
+                <img class="blog-post-img" th:src="${blog_post.imageURL}" alt="${post.title}"
+                     th:unless="${#strings.isEmpty(blog_post.imageURL)}"/>
+
+
+                <div class="blog-post-content" th:utext="${blog_post.content}">
+
+                </div>
+
+                <span>Esta entrada fue publicada en la categoria <a th:href="@{'/'+${blog_post.category.toURI()}}"
+                                                                    th:text="${blog_post.category}"></a> de <a
+                        th:href="@{'/'+${blog.toURI()}}"
+                        th:text="${blog.title}"></a> </span>
+                <div class="blog-post-footer">
+
+
+                    <th:block th:include="blog/components/authorpanel::load(${blog_post.author})"/>
+
+                    <th:block th:include="blog/components/taglist::load(${blog_post.getTagsList()})"/>
+
+                </div>
+
+
+            </div>
+
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-3">
+
+                <th:block th:include="blog/components/searchform::frag"/>
+
+                <th:block th:include="blog/components/categorylist::load(${blog_categories})"/>
+                <th:block th:include="blog/components/authorlist::load(${blog_authors})"/>
+                <th:block th:include="blog/components/archive::load(${blog_archive})"/>
+                <th:block th:include="module::position('blog-sidebar')"/>
+
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+</div>
+
+</html>

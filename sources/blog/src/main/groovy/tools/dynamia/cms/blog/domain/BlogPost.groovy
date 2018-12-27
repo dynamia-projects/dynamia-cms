@@ -20,28 +20,17 @@
 
 package tools.dynamia.cms.blog.domain
 
-import org.apache.poi.ss.usermodel.DateUtil
+import com.fasterxml.jackson.annotation.JsonIgnore
 import tools.dynamia.cms.blog.BlogElement
 import tools.dynamia.cms.core.Aliasable
 import tools.dynamia.cms.core.api.URIable
 import tools.dynamia.cms.core.domain.Content
 import tools.dynamia.cms.core.domain.ContentAuthor
 import tools.dynamia.commons.DateTimeUtils
-import tools.dynamia.commons.StringUtils
 import tools.dynamia.domain.OrderBy
 import tools.dynamia.domain.contraints.NotEmpty
 
-import javax.persistence.Basic
-import javax.persistence.CascadeType
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.FetchType
-import javax.persistence.Lob
-import javax.persistence.OneToMany
-import javax.persistence.OneToOne
-import javax.persistence.Table
-import javax.persistence.Temporal
-import javax.persistence.TemporalType
+import javax.persistence.*
 import javax.validation.constraints.NotNull
 
 @Entity
@@ -51,6 +40,7 @@ class BlogPost extends Content implements Aliasable, BlogElement, URIable {
 
     @OneToOne
     @NotNull
+    @JsonIgnore
     Blog blog
 
     @OneToOne
@@ -119,7 +109,11 @@ class BlogPost extends Content implements Aliasable, BlogElement, URIable {
 
     List<String> getTagsList() {
         if (tags) {
-            return Arrays.asList(StringUtils.split(tags, ","))
+            if (tags.contains(",")) {
+                return Arrays.asList(tags.split(",")).collect { it.trim() }
+            } else {
+                return Arrays.asList(tags)
+            }
         } else {
             return Collections.emptyList()
         }

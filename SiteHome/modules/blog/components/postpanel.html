@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<body th:fragment="frag (post)">
+
+<!-- Blog Post -->
+<div class="blog-post-card mb-4">
+    <a th:href="@{'/'+${post.toURI()}}">
+        <img class="blog-post-card-img-top" th:src="${post.imageURL}" alt="${post.title}"
+             th:unless="${#strings.isEmpty(post.imageURL)}">
+    </a>
+    <div class="blog-post-card-body">
+        <h2 class="blog-post-card-title">
+            <a th:href="@{'/'+${post.toURI()}}" th:text="${post.title}">Post Title</a>
+        </h2>
+        <p class="blog-post-card-text" th:text="${post.summary}">Lorem ipsum dolor sit amet, consectetur adipisicing
+        </p>
+        <a th:href="@{'/'+${post.toURI()}}">Leer mas &rarr;</a>
+    </div>
+    <div class="blog-post-card-footer text-muted">
+        Publicado el <span th:text="${#dates.format(post.postDate,'dd MMMM  YYYY')}"></span> por
+        <a th:href="@{'/'+${post.author.toURI()}}" th:text="${post.author}">Start Bootstrap</a>
+
+        <a th:href="@{'/'+${post.category.toURI()}}" th:text="${post.category.name}" class="pull-right"/>
+    </div>
+</div>
+
+
+</body>
+
+</html>
