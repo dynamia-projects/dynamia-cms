@@ -263,8 +263,8 @@ class ProductsServiceImpl extends AbstractService implements ProductsService {
                 String value = "detvalue" + suffix
                 builder.and(
                         "p.id in (select det.product.id from ProductDetail det where det.name = :" + name + " and det.value = :" + value + ")")
-                params.add(name, QueryConditions.eq(detail[0].trim()))
-                params.add(value, QueryConditions.eq(detail[1].trim()))
+                params.add(name, eq(detail[0].trim()))
+                params.add(value, eq(detail[1].trim()))
                 map.put(detail[0], detail[1])
                 return detail[0].trim()
             }

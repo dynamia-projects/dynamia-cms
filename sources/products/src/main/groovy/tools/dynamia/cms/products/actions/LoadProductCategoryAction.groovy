@@ -150,6 +150,9 @@ class LoadProductCategoryAction implements SiteAction {
 
         List<ProductCategoryDetail> details = service.getCategoryDetails(category)
         List<ProductCategoryDetail> finalDetails = details.collect { it.clone() }
+        if (finalDetails.find { it.name == config.brandLabel } == null) {
+            finalDetails.add(0, new ProductCategoryDetail(name: config.brandLabel))
+        }
 
         finalDetails.each { filter ->
             filter.stock = 0

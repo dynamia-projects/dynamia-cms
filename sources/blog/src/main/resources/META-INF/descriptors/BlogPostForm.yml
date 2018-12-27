@@ -14,7 +14,7 @@ fields:
       span: 4
 
   content:
-    component: ckeditor
+    component: cmseditor
     params:
       height: 400px
       span: 4

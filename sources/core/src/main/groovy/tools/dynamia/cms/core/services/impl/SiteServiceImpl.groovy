@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service
 import tools.dynamia.cms.core.CMSUtil
 import tools.dynamia.cms.core.DynamiaCMS
 import tools.dynamia.cms.core.Orderable
+import tools.dynamia.cms.core.domain.ContentAuthor
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.core.domain.SiteDomain
 import tools.dynamia.cms.core.domain.SiteParameter
@@ -227,4 +228,8 @@ class SiteServiceImpl implements SiteService {
         }
     }
 
+    @Override
+    ContentAuthor findAuthor(Site site, String alias) {
+        return crudService.findSingle(ContentAuthor, QueryParameters.with("site", site).add("alias", alias))
+    }
 }

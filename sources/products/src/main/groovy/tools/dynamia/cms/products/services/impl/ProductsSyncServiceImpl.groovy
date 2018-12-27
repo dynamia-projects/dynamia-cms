@@ -54,7 +54,6 @@ class ProductsSyncServiceImpl extends AbstractService implements ProductsSyncSer
 
     private LoggingService logger = new SLF4JLoggingService(ProductsSyncService.class)
 
-  
 
     @PersistenceContext
     private EntityManager entityMgr
@@ -182,14 +181,23 @@ class ProductsSyncServiceImpl extends AbstractService implements ProductsSyncSer
 
             for (ProductDetailDTO remoteDetail : (remoteProduct.details)) {
 
-                ProductDetail localDetail = new ProductDetail()
+                syncProductDetail(localProduct, remoteDetail)
+            }
 
-                localDetail.site = localProduct.site
-                localDetail.product = localProduct
-                localDetail.sync(remoteDetail)
-                crudService().save(localDetail)
+            if (localProduct.brand) {
+                def brandDetail = new ProductDetailDTO(name: siteCfg.brandLabel, value: localProduct.brand.name, order: -1, filterable: true)
+                syncProductDetail(localProduct, brandDetail)
             }
         }
+    }
+
+    private void syncProductDetail(Product localProduct, ProductDetailDTO remoteDetail) {
+        ProductDetail localDetail = new ProductDetail()
+
+        localDetail.site = localProduct.site
+        localDetail.product = localProduct
+        localDetail.sync(remoteDetail)
+        crudService().save(localDetail)
     }
 
     private Product getLocalProduct(ProductsSiteConfig siteCfg, ProductDTO remoteProduct) {
@@ -275,19 +283,25 @@ class ProductsSyncServiceImpl extends AbstractService implements ProductsSyncSer
                                      ProductCategoryDTO remoteCategory) {
 
         if (remoteCategory.details != null) {
-            for (ProductCategoryDetailDTO remoteDetail : (remoteCategory.details)) {
-                ProductCategoryDetail localDetail = getLocalEntity(ProductCategoryDetail.class,
-                        remoteDetail.externalRef, siteCfg)
-                if (localDetail == null) {
-                    localDetail = new ProductCategoryDetail()
-                }
-                println "=== SYNC CAT DETAIL $localCategory.name --> $remoteDetail.name"
-                localDetail.site = localCategory.site
-                localDetail.category = localCategory
-                localDetail.sync(remoteDetail)
-                crudService().save(localDetail)
+
+            for (ProductCategoryDetailDTO remoteDetail : remoteCategory.details) {
+                synCategoryDetail(remoteDetail, siteCfg, localCategory)
             }
+            def brandDetail = new ProductCategoryDetailDTO(name: siteCfg.brandLabel, values: "", filterable: true, externalRef: -1L, order: -1)
+            synCategoryDetail(brandDetail, siteCfg, localCategory)
         }
+    }
+
+    private void synCategoryDetail(ProductCategoryDetailDTO remoteDetail, ProductsSiteConfig siteCfg, ProductCategory localCategory) {
+        ProductCategoryDetail localDetail = getLocalEntity(ProductCategoryDetail.class, remoteDetail.externalRef, siteCfg)
+        if (localDetail == null) {
+            localDetail = new ProductCategoryDetail()
+        }
+        println "=== SYNC CAT DETAIL $localCategory.name --> $remoteDetail.name"
+        localDetail.site = localCategory.site
+        localDetail.category = localCategory
+        localDetail.sync(remoteDetail)
+        crudService().save(localDetail)
     }
 
     @Override
@@ -367,8 +381,7 @@ class ProductsSyncServiceImpl extends AbstractService implements ProductsSyncSer
         List<RelatedProductDTO> related = ds.getRelatedProducts(siteCfg.parametersAsMap)
         if (related != null) {
             for (RelatedProductDTO remoteRelated : related) {
-                RelatedProduct localRelated = getLocalEntity(RelatedProduct.class, remoteRelated.externalRef,
-                        siteCfg)
+                RelatedProduct localRelated = getLocalEntity(RelatedProduct.class, remoteRelated.externalRef, siteCfg)
                 if (localRelated == null) {
                     localRelated = new RelatedProduct()
                     localRelated.site = siteCfg.site

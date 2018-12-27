@@ -37,6 +37,8 @@ interface BlogService {
 
     List<BlogPost> findRecentPost(Blog blog)
 
+    List<BlogPost> findRecentPost(ContentAuthor author)
+
     List<BlogPost> findMainPosts(Site site)
 
     List<BlogPost> findByTilleAndTagAndCategory(Blog blog, String title, String tag, BlogCategory category)

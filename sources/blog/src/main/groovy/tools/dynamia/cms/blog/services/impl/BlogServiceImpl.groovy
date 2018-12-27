@@ -55,6 +55,12 @@ class BlogServiceImpl extends AbstractService implements BlogService {
     }
 
     @Override
+    List<BlogPost> findRecentPost(ContentAuthor author) {
+        return crudService().find(BlogPost, QueryParameters.with("author", author).paginate(PAGINATION_SIZE))
+    }
+
+
+    @Override
     List<BlogPost> findMainPosts(Site site) {
         return crudService().find(BlogPost, QueryParameters.with("blog.site", site).paginate(PAGINATION_SIZE * 2))
     }

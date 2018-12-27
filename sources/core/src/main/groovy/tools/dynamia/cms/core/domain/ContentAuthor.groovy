@@ -70,7 +70,7 @@ class ContentAuthor extends SiteSimpleEntity implements URIable, Aliasable {
 
     @Override
     String toURI() {
-        return "/authors/$id/$alias"
+        return "authors/$alias"
     }
 
     @Override
@@ -78,3 +78,5 @@ class ContentAuthor extends SiteSimpleEntity implements URIable, Aliasable {
         return "$firstName $lastName"
     }
 }
+
+

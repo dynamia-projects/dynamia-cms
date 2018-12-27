@@ -19,6 +19,7 @@
  */
 package tools.dynamia.cms.core.services
 
+import tools.dynamia.cms.core.domain.ContentAuthor
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.core.domain.SiteParameter
 
@@ -48,4 +49,5 @@ interface SiteService {
 
     List<Site> getOnlineSites()
 
+    ContentAuthor findAuthor(Site site, String alias)
 }

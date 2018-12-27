@@ -1,75 +1,75 @@
 view: form
 beanClass: tools.dynamia.cms.products.domain.ProductsSiteConfig
 hidden: [id,lastSync,token,parametersAsMap]
-sortFields: [pricePattern,defaultCurrency,productsPerPage,productsStockToShow,synchronizationEnabled,showEnabled,quoteEnabled,showBadges, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceStoreContactImagesURL,datasourceUsername,datasourcePassword,mailAccount,shareProductMailTemplate,orderCompletedMailTemplate]
+sortFields: [pricePattern,defaultCurrency,productsPerPage,productsStockToShow,synchronizationEnabled,showEnabled,quoteEnabled,showBadges, datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceStoreContactImagesURL,datasourceUsername,datasourcePassword,mailAccount,shareProductMailTemplate,orderCompletedMailTemplate,brandLabel]
 
-fields:            
-    
-    datasourceURL:
-        label: URL
-    
-    datasourceImagesURL:
-        label: Images URL
-        
-    datasourceBrandImagesURL:
-        label: Brands Images URL
-    
-    datasourceStoreImagesURL:
-        label: Stores Images URL
-        
-    datasourceStoreContactImagesURL:
-        label: Stores Contacts Images URL
-    
-    datasourceUsername:
-        label: Username
-    
-    datasourcePassword:
-        label: Password
-                        
-    parameters:
-        component: crudview
-  
-  
-    mailAccount:
-        label: Account   
-   
-   
-    shareProductMailTemplate:   
-        label: Share Product Template
-   
-    orderCompletedMailTemplate:   
-        label: Order Completed Template
-        
-    synchronizationEnabled:
-        label: Enabled
-        
-    priceUserGroup:
-      label: Price
-    price2UserGroup:
-      label: Price 2
-    costUserGroup:
-      label: Cost
-      
-    reviewsConnectorURL:
+fields:
+
+  datasourceURL:
+    label: URL
+
+  datasourceImagesURL:
+    label: Images URL
+
+  datasourceBrandImagesURL:
+    label: Brands Images URL
+
+  datasourceStoreImagesURL:
+    label: Stores Images URL
+
+  datasourceStoreContactImagesURL:
+    label: Stores Contacts Images URL
+
+  datasourceUsername:
+    label: Username
+
+  datasourcePassword:
+    label: Password
+
+  parameters:
+    component: crudview
+
+
+  mailAccount:
+    label: Account
+
+
+  shareProductMailTemplate:
+    label: Share Product Template
+
+  orderCompletedMailTemplate:
+    label: Order Completed Template
+
+  synchronizationEnabled:
+    label: Enabled
+
+  priceUserGroup:
+    label: Price
+  price2UserGroup:
+    label: Price 2
+  costUserGroup:
+    label: Cost
+
+  reviewsConnectorURL:
 groups:
-    
-    general:
-        label: Basic Settings
-        fields: [site,pricePattern,defaultCurrency,productsPerPage,productsStockToShow,shopEnabled,quoteEnabled,showBadges,minStock]
-            
-    priceUsersGroups:
-        fields: [priceUserGroup,price2UserGroup,costUserGroup]
-    
-    datasource:
-        label: Datasource Settings
-        fields: [datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceStoreContactImagesURL,datasourceUsername,datasourcePassword,reviewsConnectorURL]
-    
-    synchronization:
-        fields: [synchronizationEnabled, syncProductImages,syncProductDetails, syncStockDetails, syncProductCreditPrices, syncStoreContacts]
-    
-    email:
-        label: Mail Settings
-        fields: [mailAccount,shareProductMailTemplate,orderCompletedMailTemplate]
-        
+
+  general:
+    label: Basic Settings
+    fields: [site,pricePattern,defaultCurrency,productsPerPage,productsStockToShow,shopEnabled,quoteEnabled,showBadges,minStock,brandLabel]
+
+  priceUsersGroups:
+    fields: [priceUserGroup,price2UserGroup,costUserGroup]
+
+  datasource:
+    label: Datasource Settings
+    fields: [datasourceURL,datasourceImagesURL,datasourceBrandImagesURL,datasourceStoreImagesURL,datasourceStoreContactImagesURL,datasourceUsername,datasourcePassword,reviewsConnectorURL]
+
+  synchronization:
+    fields: [synchronizationEnabled, syncProductImages,syncProductDetails, syncStockDetails, syncProductCreditPrices, syncStoreContacts]
+
+  email:
+    label: Mail Settings
+    fields: [mailAccount,shareProductMailTemplate,orderCompletedMailTemplate]
+
 layout:
-    columns: 3
+  columns: 3

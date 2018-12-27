@@ -32,6 +32,7 @@ import tools.dynamia.cms.blog.domain.Blog
 import tools.dynamia.cms.blog.domain.BlogCategory
 import tools.dynamia.cms.blog.domain.BlogPost
 import tools.dynamia.cms.blog.services.BlogService
+import tools.dynamia.cms.core.domain.ContentAuthor
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.core.services.SiteService
 
@@ -154,6 +155,26 @@ class BlogController {
         mv.addObject("blog_posts", blogService.findByTilleAndTagAndCategory(blog, null, tag, null))
         mv.addObject("title", "$blog.title - Tag $tag")
         mv.addObject("description", blog.description)
+        return mv
+    }
+
+    @GetMapping("/authors/{author}")
+    ModelAndView blogAuthorPosts(@PathVariable("author") String authorAlias, HttpServletRequest request) {
+
+        Site site = siteService.getSite(request)
+
+        ContentAuthor contentAuthor = siteService.findAuthor(site, authorAlias)
+
+        if (contentAuthor == null) {
+            throw new BlogException("Author not found")
+        }
+
+
+        ModelAndView mv = new ModelAndView("blog/posts")
+
+        mv.addObject("blog_posts", blogService.findRecentPost(contentAuthor))
+        mv.addObject("title", "$contentAuthor")
+
         return mv
     }
 
