@@ -32,6 +32,7 @@
     <!-- Styles -->
     <!-- Bootstrap CSS -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+
     <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
     <link rel="stylesheet" th:href="@{/css/settings.css}" media="screen"/>
     <!-- Navigation menu -->
@@ -50,6 +51,7 @@
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link th:href="@{/css/template.css}" rel="stylesheet"/>
     <th:block th:include="module::position('head_tag')"/>
+    <th:block layout:fragment="stylesheets"/>
 </head>
 <body>
 
@@ -123,6 +125,7 @@
 
 <!-- CONTENT -->
 <div class="clearfix"></div>
+<th:block layout:fragment="error"></th:block>
 <th:block layout:fragment="content"></th:block>
 
 <section id="quicklink" class="mt20"></section>

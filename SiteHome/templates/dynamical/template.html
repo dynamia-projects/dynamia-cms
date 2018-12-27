@@ -45,6 +45,9 @@
     <th:block th:include="module::position('head-tag')"/>
 
     <th:block th:include="module::stylesheets"/>
+
+    <th:block layout:fragment="stylesheets"/>
+
 </head>
 
 <body>
@@ -95,7 +98,8 @@
 
 
 <th:block th:include="module::position('content-top')"/>
-<div layout:fragment="content"></div>
+<th:block layout:fragment="error"/>
+<th:block  layout:fragment="content"/>
 
 
 <th:block th:include="module::position('content-bottom')"/>

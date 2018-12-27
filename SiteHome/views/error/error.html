@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--
+error/exception.
+[[${statusCode}]]
+[[${uri}]]
+[[${exception}]]
+[[${causes}]]
+
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+
+<div layout:fragment="error" class="alert alert-danger">
+    <h1 th:text="|Error ${statusCode}|"></h1>
+    <p th:text="${uri}"></p>
+    <ul>
+        <li th:text="${c}" th:each="c : ${causes}"></li>
+    </ul>
+</div>
+
+
+</html>
