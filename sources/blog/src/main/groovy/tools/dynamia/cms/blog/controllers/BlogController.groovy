@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
 import tools.dynamia.cms.blog.BlogException
 import tools.dynamia.cms.blog.domain.Blog
@@ -176,6 +177,19 @@ class BlogController {
         mv.addObject("title", "$contentAuthor")
 
         return mv
+    }
+
+    @GetMapping("/search")
+    ModelAndView searchGlobal(@RequestParam("q") String query) {
+
+    }
+
+    @GetMapping("/{blog}/search")
+    ModelAndView searchGlobal(@PathVariable("blog") String blogAlias, @RequestParam("q") String query, HttpServletRequest request) {
+        Site site = siteService.getSite(request)
+        def blog = getBlog(site, blogAlias)
+
+
     }
 
     private Blog getBlog(Site site, String blogAlias) {

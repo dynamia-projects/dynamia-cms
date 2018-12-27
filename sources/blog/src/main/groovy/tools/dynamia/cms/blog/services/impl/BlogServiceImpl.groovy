@@ -29,14 +29,13 @@ import tools.dynamia.cms.blog.domain.*
 import tools.dynamia.cms.blog.services.BlogService
 import tools.dynamia.cms.core.domain.ContentAuthor
 import tools.dynamia.cms.core.domain.Site
-import tools.dynamia.domain.query.QueryConditions
+import tools.dynamia.domain.query.BooleanOp
 import tools.dynamia.domain.query.QueryParameters
 import tools.dynamia.domain.services.AbstractService
 import tools.dynamia.domain.util.QueryBuilder
 import tools.dynamia.integration.sterotypes.Service
 
-import static tools.dynamia.domain.query.QueryConditions.eq
-import static tools.dynamia.domain.query.QueryConditions.like
+import static tools.dynamia.domain.query.QueryConditions.*
 
 @Service
 class BlogServiceImpl extends AbstractService implements BlogService {
@@ -172,5 +171,46 @@ class BlogServiceImpl extends AbstractService implements BlogService {
                 .resultType(BlogArchive)
 
         return crudService().executeQuery(query)
+    }
+
+    @Override
+    List<BlogPost> getRelatedPosts(BlogPost post) {
+        def tags = post.tagsList
+
+        String subquery = ""
+        if (tags) {
+            tags.each { t ->
+                subquery += "p.tags like '%${t}%' or "
+            }
+        }
+
+        def query = QueryBuilder.select().from(BlogPost, "p").where("site", eq(post.site))
+                .and("($subquery p.category.name like :category)")
+                .and("p.id <> :id")
+
+        return crudService().executeQuery(query, QueryParameters.with("category", post.category.name)
+                .add("id", post.id).setMaxResults(5))
+    }
+
+    @Override
+    BlogPost getNextPost(BlogPost post) {
+
+        def conditions = QueryParameters.with("postDate", gt(post.postDate, BooleanOp.OR))
+                .add("id", gt(post.id))
+
+
+        return crudService().findSingle(BlogPost, QueryParameters.with("blog", post.blog)
+                .addGroup(conditions, BooleanOp.AND))
+    }
+
+    @Override
+    BlogPost getPreviousPost(BlogPost post) {
+
+        def conditions = QueryParameters.with("postDate", lt(post.postDate, BooleanOp.OR))
+                .add("id", lt(post.id))
+
+
+        return crudService().findSingle(BlogPost, QueryParameters.with("blog", post.blog)
+                .addGroup(conditions, BooleanOp.AND))
     }
 }

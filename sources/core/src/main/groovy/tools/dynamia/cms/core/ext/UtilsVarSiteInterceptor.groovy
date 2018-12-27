@@ -25,6 +25,10 @@ import tools.dynamia.cms.core.CMSModules
 import tools.dynamia.cms.core.CMSUtil
 import tools.dynamia.cms.core.api.CMSExtension
 import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
+import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.cms.core.domain.SiteParameter
+import tools.dynamia.cms.core.services.SiteService
+import tools.dynamia.cms.core.services.impl.ModulesService
 
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -37,14 +41,14 @@ import javax.servlet.http.HttpServletResponse
 class UtilsVarSiteInterceptor extends SiteRequestInterceptorAdapter {
 
 	@Autowired
-	private tools.dynamia.cms.core.services.SiteService service
+	private SiteService service
 
     @Autowired
-	private tools.dynamia.cms.core.services.impl.ModulesService modulesService
+	private ModulesService modulesService
 
     @Override
-    void afterRequest(tools.dynamia.cms.core.domain.Site site, HttpServletRequest request, HttpServletResponse response,
-                      ModelAndView modelAndView) {
+    void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response,
+					  ModelAndView modelAndView) {
 		if (modelAndView == null) {
 			return
         }
@@ -67,10 +71,10 @@ class UtilsVarSiteInterceptor extends SiteRequestInterceptorAdapter {
 
 	}
 
-	private Object createParams(tools.dynamia.cms.core.domain.Site site) {
+	private Object createParams(Site site) {
 		Map<String, String> map = new HashMap<>()
         try {
-			for (tools.dynamia.cms.core.domain.SiteParameter p : service.getSiteParameters(site)) {
+			for (SiteParameter p : service.getSiteParameters(site)) {
 				map.put(p.name, p.value)
             }
 		} catch (Exception e) {

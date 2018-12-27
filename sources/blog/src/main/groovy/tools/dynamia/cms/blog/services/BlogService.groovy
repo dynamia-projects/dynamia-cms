@@ -64,4 +64,10 @@ interface BlogService {
     List<ContentAuthor> findAuthors(Blog blog)
 
     List<BlogArchive> getArchiveSummary(Blog blog)
+
+    List<BlogPost> getRelatedPosts(BlogPost post)
+
+    BlogPost getNextPost(BlogPost post)
+
+    BlogPost getPreviousPost(BlogPost post)
 }

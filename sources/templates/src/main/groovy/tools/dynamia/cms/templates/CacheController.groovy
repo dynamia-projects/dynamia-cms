@@ -69,14 +69,13 @@ class CacheController {
             }
         }
         lastCacheClear = System.currentTimeMillis()
+        clearTemplate()
     }
 
     @RequestMapping("/clear/template")
     @ResponseStatus(HttpStatus.OK)
     void clearTemplate() {
-        if (templateEngine != null) {
-            templateEngine.clearTemplateCache()
-        }
+        templateEngine?.clearTemplateCache()
     }
 
     long getLastCacheClear() {

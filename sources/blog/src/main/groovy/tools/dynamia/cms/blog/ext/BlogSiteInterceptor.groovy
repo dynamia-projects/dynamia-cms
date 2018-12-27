@@ -23,6 +23,7 @@ package tools.dynamia.cms.blog.ext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.servlet.ModelAndView
 import tools.dynamia.cms.blog.domain.Blog
+import tools.dynamia.cms.blog.domain.BlogPost
 import tools.dynamia.cms.blog.services.BlogService
 import tools.dynamia.cms.core.api.CMSExtension
 import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
@@ -36,11 +37,18 @@ class BlogSiteInterceptor extends SiteRequestInterceptorAdapter {
 
     @Override
     protected void afterRequest(Site site, ModelAndView modelAndView) {
-        Blog blog = modelAndView.getModel().get("blog") as Blog
+        def blog = modelAndView.getModel().get("blog") as Blog
         if (blog != null) {
             modelAndView.addObject("blog_categories", blogService.getCategories(blog))
             modelAndView.addObject("blog_authors", blogService.findAuthors(blog))
             modelAndView.addObject("blog_archive", blogService.getArchiveSummary(blog))
+        }
+
+        def post = modelAndView.getModel().get("blog_post") as BlogPost
+        if (post) {
+            modelAndView.addObject("blog_post_next", blogService.getNextPost(post))
+            modelAndView.addObject("blog_post_prev", blogService.getPreviousPost(post))
+            modelAndView.addObject("blog_post_related", blogService.getRelatedPosts(post))
         }
     }
 }
