@@ -20,6 +20,8 @@
 package tools.dynamia.cms.core.controllers
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.web.servlet.error.ErrorController
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RequestMapping
@@ -40,14 +42,14 @@ import javax.servlet.http.HttpServletResponse
  * @author Mario Serrano Leones
  */
 @Controller
-class ExceptionsController {
+class ExceptionsController implements ErrorController {
 
     private LoggingService logger = new SLF4JLoggingService(DynamiaCMS.class)
 
     @Autowired
     private SiteService siteService
 
-    @RequestMapping("/exception")
+    @RequestMapping(["/exception", "/error"])
     @ExceptionHandler(Exception.class)
     ModelAndView error(HttpServletRequest request, HttpServletResponse response, Exception exception) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code")
@@ -72,7 +74,8 @@ class ExceptionsController {
         } else {
             logger.warn(String.format("Error 404 - Resource [%s] not found in site [%s]", requestUri, request.serverName))
         }
-        ModelAndView mv = new ModelAndView("error/exception")
+        ModelAndView mv = new ModelAndView("error/error")
+        mv.setStatus(HttpStatus.valueOf(statusCode))
         if (statusCode != null && statusCode == 404) {
             mv.viewName = "error/404"
             mv.addObject("pageAlias", requestUri)
@@ -108,5 +111,8 @@ class ExceptionsController {
 
     }
 
-
+    @Override
+    String getErrorPath() {
+        return "/error"
+    }
 }

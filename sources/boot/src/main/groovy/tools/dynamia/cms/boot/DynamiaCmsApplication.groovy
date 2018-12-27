@@ -24,12 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 import org.springframework.boot.web.servlet.ServletRegistrationBean
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.ComponentScan
-import org.springframework.context.annotation.FilterType
-import org.springframework.context.annotation.Import
-import org.springframework.context.annotation.Primary
+import org.springframework.context.annotation.*
 import org.springframework.web.context.request.RequestContextListener
 import org.springframework.web.servlet.ViewResolver
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping
@@ -40,7 +37,6 @@ import org.zkoss.zk.ui.http.DHtmlLayoutServlet
 import org.zkoss.zk.ui.http.HttpSessionListener
 import tools.dynamia.app.ApplicationInfo
 import tools.dynamia.app.RootAppConfiguration
-import tools.dynamia.app.template.ChainableUrlBasedViewResolver
 import tools.dynamia.app.template.TemplateResourceHandler
 import tools.dynamia.app.template.TemplateViewResolver
 import tools.dynamia.cms.core.SiteMainConfig

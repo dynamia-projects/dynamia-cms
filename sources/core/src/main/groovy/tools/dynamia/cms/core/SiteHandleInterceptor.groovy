@@ -19,6 +19,7 @@
  */
 package tools.dynamia.cms.core
 
+import org.springframework.lang.Nullable
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import tools.dynamia.cms.core.api.SiteRequestInterceptor
@@ -137,6 +138,7 @@ class SiteHandleInterceptor extends HandlerInterceptorAdapter {
             }
         } catch (Exception e) {
             logger.error("Error calling Site interceptor", e)
+            modelAndView.addObject("exception", e)
         }
 
         if (site.offline && !isUserLogin(request) && request.userPrincipal == null) {
@@ -173,4 +175,8 @@ class SiteHandleInterceptor extends HandlerInterceptorAdapter {
 
     }
 
+    @Override
+    void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
+        super.afterCompletion(request, response, handler, ex)
+    }
 }

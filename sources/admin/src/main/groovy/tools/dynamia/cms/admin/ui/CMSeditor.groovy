@@ -43,6 +43,7 @@ class CMSeditor extends Div implements ActionEventBuilder {
     private Aceditor contentArea
     private ActionToolbar toolbar
 
+
     /**
      *
      */

@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView
 import tools.dynamia.cms.core.api.SiteRequestInterceptor
 import tools.dynamia.cms.core.domain.Site
 import tools.dynamia.cms.core.services.SiteService
+import tools.dynamia.cms.pages.PageNotFoundException
 import tools.dynamia.integration.Containers
 
 import javax.servlet.http.HttpServletRequest
@@ -45,10 +46,9 @@ class PageErrorController {
     private SiteService siteService
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(tools.dynamia.cms.pages.PageNotFoundException.class)
+    @ExceptionHandler(PageNotFoundException.class)
     @RequestMapping("/404")
-    ModelAndView handleException(HttpServletRequest request, HttpServletResponse response,
-                                 tools.dynamia.cms.pages.PageNotFoundException exception) {
+    ModelAndView handleException(HttpServletRequest request, HttpServletResponse response, PageNotFoundException exception) {
         ModelAndView mv = new ModelAndView("error/404")
         mv.addObject("exception", exception)
         if (exception.pageAlias != null) {
