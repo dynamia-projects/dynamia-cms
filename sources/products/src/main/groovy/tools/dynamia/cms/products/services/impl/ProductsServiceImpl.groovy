@@ -396,7 +396,7 @@ class ProductsServiceImpl extends AbstractService implements ProductsService {
             qp.add("idsCategories", idCategories)
         }
         qp.paginate(getDefaultPageSize(site))
-
+        System.err.println("QUERY: $query")
         return crudService().executeQuery(query, qp)
     }
 
