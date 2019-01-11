@@ -24,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
-import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 import org.springframework.boot.web.servlet.ServletRegistrationBean
 import org.springframework.context.annotation.*
 import org.springframework.web.context.request.RequestContextListener
@@ -37,17 +36,18 @@ import org.zkoss.zk.ui.http.DHtmlLayoutServlet
 import org.zkoss.zk.ui.http.HttpSessionListener
 import tools.dynamia.app.ApplicationInfo
 import tools.dynamia.app.RootAppConfiguration
+import tools.dynamia.app.controllers.PageNavigationController
+import tools.dynamia.app.controllers.RestNavigationController
 import tools.dynamia.app.template.TemplateResourceHandler
 import tools.dynamia.app.template.TemplateViewResolver
 import tools.dynamia.cms.core.SiteMainConfig
 import tools.dynamia.domain.jpa.JpaCrudService
 import tools.dynamia.domain.services.CrudService
-import tools.dynamia.zk.navigation.ZKNavigationController
 
 @SpringBootApplication
 @EntityScan("tools.dynamia")
 @ComponentScan(basePackages = "tools.dynamia", excludeFilters = [
-        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ZKNavigationController.class)
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = [PageNavigationController, RestNavigationController])
 ])
 @Import([RootAppConfiguration.class, SiteMainConfig.class])
 class DynamiaCmsApplication {

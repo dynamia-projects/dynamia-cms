@@ -91,7 +91,7 @@ class PaymentServiceImpl extends AbstractService implements PaymentService {
         if (tx == null) {
             throw new PaymentException("No transaction found for gateway " + gateway.id + " uuid: " + uuid)
         }
-
+        tx.paymentAccount.configurationMap
         return tx
 
     }
@@ -308,6 +308,6 @@ class PaymentServiceImpl extends AbstractService implements PaymentService {
 
     @Override
     PaymentGatewayAccount findAccount(String uuid) {
-        return crudService().findSingle(PaymentGatewayAccount,"uuid",QueryConditions.eq(uuid))
+        return crudService().findSingle(PaymentGatewayAccount, "uuid", QueryConditions.eq(uuid))
     }
 }

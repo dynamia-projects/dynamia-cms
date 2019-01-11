@@ -205,7 +205,7 @@ class PayULatamGateway implements PaymentGateway {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     boolean processResponse(PaymentTransaction tx, Map<String, String> response, ResponseType type) {
-        Map<String, String> params = service.getGatewayConfigMap(this, tx.source)
+        Map<String, String> params = tx.paymentAccount.configurationMap
 
         if (tx.endDate == null) {
             tx.endDate = new Date()

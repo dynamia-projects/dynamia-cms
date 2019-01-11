@@ -160,7 +160,7 @@ class PaypalGateway implements PaymentGateway {
         logger.info("Procesing response for " + tx.uuid)
         logger.info("Response Params:" + response)
 
-        Map<String, String> params = service.getGatewayConfigMap(this, tx.source)
+        Map<String, String> params =   tx.paymentAccount.configurationMap
 
         String accountName = params.get(ACCOUNT_NAME)
 
