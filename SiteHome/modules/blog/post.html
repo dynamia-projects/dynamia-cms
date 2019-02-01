@@ -6,6 +6,25 @@
 
 <th:block layout:fragment="stylesheets">
     <link th:href="@{'/$mods/blog/css/blog.css'}" href="css/blog.css" rel="stylesheet"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/atom-one-dark.min.css"/>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/groovy.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/languages/dart.min.js"></script>
+
+</th:block>
+
+<th:block layout:fragment="scripts">
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+        $(document).ready(function () {
+            $('pre code').each(function (i, block) {
+                hljs.highlightBlock(block);
+            });
+        });
+    </script>
 </th:block>
 
 
@@ -44,18 +63,28 @@
                     <th:block th:include="blog/components/taglist::load(${blog_post.getTagsList()})"/>
 
                 </div>
+                <!-- Pagination -->
+                <div class="blog-post-pagination">
+                    <a class="blog-post-prev" th:if="${blog_post_prev!=null}" th:href="${'/'+blog_post_prev.toURI()}">&larr;
+                        [[${blog_post_prev.title}]]</a>
 
+
+                    <a class="blog-post-next" th:if="${blog_post_next!=null}" th:href="${'/'+blog_post_next.toURI()}">[[${blog_post_next.title}]]
+                        &rarr;</a>
+                </div>
 
             </div>
 
             <!-- Sidebar Widgets Column -->
             <div class="col-md-3">
 
-                <th:block th:include="blog/components/searchform::frag"/>
+                <th:block th:include="blog/components/searchform::frag(${blog.toURI()})"/>
 
                 <th:block th:include="blog/components/categorylist::load(${blog_categories})"/>
                 <th:block th:include="blog/components/authorlist::load(${blog_authors})"/>
+                <th:block th:include="blog/components/postlist::load(${'Relacionados'}, ${blog_post_related})"/>
                 <th:block th:include="blog/components/archive::load(${blog_archive})"/>
+
                 <th:block th:include="module::position('blog-sidebar')"/>
 
             </div>

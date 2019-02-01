@@ -1,0 +1,85 @@
+@font-face {
+    font-family: 'Tw Cen MT';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tw Cen MT'), url('/fonts/TwCenMT.woff') format('woff');
+}
+
+body {
+    font-size: 19px;
+    font-family: "Tw Cen MT", sans-serif;
+    background-color: #f4f4f4;
+
+}
+
+.page-heading h2 {
+    color: #ff5722 !important;
+    border-color: #00709c !important;
+}
+
+.page-heading {
+    text-align: center;
+    background: #ffffff6e !important;
+
+}
+
+.page-heading .heading-meta {
+    color: #00709c;
+}
+
+.flexslider {
+    background: none !important;
+}
+
+footer {
+    font-size: 14px;
+}
+
+.section .img-responsive, .blog-post-img, .blog-post-card {
+    -webkit-box-shadow: -2px 10px 35px -16px rgba(0, 0, 0, 0.72) !important;;
+    -moz-box-shadow: -2px 10px 35px -16px rgba(0, 0, 0, 0.72) !important;;
+    box-shadow: -2px 10px 35px -16px rgba(0, 0, 0, 0.72) !important;
+    margin-bottom: 20px;
+}
+
+.img-responsive.plain {
+    box-shadow: none !important;
+}
+
+.slidepanel p {
+    font-size: 16px;
+}
+
+.slidepanel .social i.fa {
+    font-size: 15px;
+}
+
+.blog-post-content, .blog-post-card-text {
+    line-height: 1.2 !important;
+    font-size: 1.2em !important;
+}
+
+.blog-widget-header, .blog-widget a:link {
+    font-size: 1em !important;
+}
+
+.blog-widget {
+    margin-bottom: 35px !important;
+}
+
+.blog-post-footer {
+    background-color: white !important;
+}
+
+.blog-tags ul li {
+    margin: 0 !important;
+}
+
+.blog-tags ul li a {
+    font-size: 15px !important;
+    text-transform: capitalize !important;
+}
+
+.blog {
+    padding: 30px;
+}

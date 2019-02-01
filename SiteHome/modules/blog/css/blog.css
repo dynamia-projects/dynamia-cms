@@ -54,7 +54,7 @@
 
 .blog-post-card-title {
     margin-bottom: 0.75rem;
-    font-size: 3em;
+    font-size: 2em;
 }
 
 .blog-post-card-subtitle {
@@ -69,7 +69,7 @@
 .blog-post-card-text {
     font-size: 1.4em;
     margin-bottom: 1em;
-    color: #212529
+    color: #464d54
 }
 
 .blog-post-card-link:hover {
@@ -183,7 +183,7 @@
 
 .blog-post-content {
     font-size: 1.5em;
-    color: #212529
+    color: #464d54
 }
 
 .blog-post-content p {
@@ -262,6 +262,10 @@
     font-weight: bold;
 }
 
+.blog-author-img {
+    margin: auto;
+}
+
 .blog-widget {
     margin-bottom: 20px;
 }
@@ -282,4 +286,31 @@
 
 .blog-widget a:link {
     font-size: 1.2em;
+}
+
+.blog-post pre {
+    padding: 0;
+    margin: 0 -10px;
+    border: 0;
+
+}
+
+.blog-post pre code {
+    white-space: pre;
+    border-radius: 5px;
+}
+
+.blog-post-pagination {
+    display: flex;
+}
+
+a.blog-post-prev {
+    justify-content: flex-start;
+    flex: auto;
+}
+
+a.blog-post-next {
+    justify-content: flex-end;
+    flex: auto;
+    text-align: right;
 }

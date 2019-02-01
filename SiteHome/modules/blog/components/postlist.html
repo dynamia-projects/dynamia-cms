@@ -22,16 +22,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 
-<body th:fragment="load (authors)">
+<body th:fragment="load (title,posts)">
 
 <!-- Categories Widget -->
-<div class="blog-widget my-4" th:unless="${#lists.isEmpty(authors)}">
-    <h5 class="blog-widget-header">Autores</h5>
+<div class="blog-widget my-4" th:unless="${#lists.isEmpty(posts)}">
+    <h5 class="blog-widget-header" th:text="${title}">Posts</h5>
     <div class="blog-widget-body">
 
         <ul class="blog-author">
-            <li th:each="author : ${authors}">
-                <a th:href="@{'/blogs/'+${author.toURI()}}" th:text="${author}"></a>
+            <li th:each="post : ${posts}">
+                <a th:href="@{'/'+${post.toURI()}}" th:text="${post.title}"></a>
             </li>
         </ul>
     </div>

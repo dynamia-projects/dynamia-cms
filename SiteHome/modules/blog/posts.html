@@ -37,7 +37,7 @@
 
             <!-- Sidebar Widgets Column -->
             <div class="col-md-3">
-                <th:block th:include="blog/components/searchform::frag"/>
+                <th:block th:include="blog/components/searchform::frag(${#objects.nullSafe(blog?.toURI(),'/blogs')})"/>
                 <th:block th:include="blog/components/categorylist::load(${blog_categories})"/>
                 <th:block th:include="blog/components/authorlist::load(${blog_authors})"/>
                 <th:block th:include="blog/components/archive::load(${blog_archive})"/>

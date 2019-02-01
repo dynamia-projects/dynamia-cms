@@ -40,45 +40,41 @@
     <link rel="stylesheet" th:href="@{/css/ddlevelsmenu-topbar.css}"/>
     <!-- PrettyPhoto -->
     <link rel="stylesheet" th:href="@{/css/prettyPhoto.css}"/>
-    <link rel="stylesheet" th:href="@{/css/owl.carousel.css}"/>
-    <link rel="stylesheet" th:href="@{/css/owl.theme.default.css}"/>
 
 
     <!-- Font awesome CSS -->
     <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
 
 
     <!-- Custom CSS -->
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link th:href="@{/css/template.css}" rel="stylesheet"/>
-    <link th:href="@{/css/2018.css}" rel="stylesheet"/>
     <th:block th:include="module::position('head_tag')"/>
     <th:block layout:fragment="stylesheets"/>
 
+    <style>
+        body {
+            height: 100vh;
+            background: rgba(255, 255, 255, 1);
+            background: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(179, 179, 179, 1) 100%);
+            background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(179, 179, 179, 1)));
+            background: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(179, 179, 179, 1) 100%);
+            background: -o-linear-gradient(-45deg, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(179, 179, 179, 1) 100%);
+            background: -ms-linear-gradient(-45deg, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(179, 179, 179, 1) 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(179, 179, 179, 1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#b3b3b3', GradientType=
+        }
+
+        h1 {
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
 
 <div id="fb-root"></div>
-
-<div class="slidepanel">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="spara">
-                    <th:block th:include="module::position('topmenu_left')"></th:block>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="social">
-                    <th:block th:include="module::position('topmenu_right')"></th:block>
-                </div>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-</div>
 
 
 <!-- Header Start -->
@@ -87,24 +83,12 @@
 
     <div class="container">
         <div class="row">
-            <div class="visible-xs visible-sm col-xs-12">
-                <th:block th:include="module::position('mainmenu-mobile')"></th:block>
-            </div>
-            <div class="col-md-3 hidden-xs hidden-sm">
 
-                <!-- Logo starts -->
-
-                <div class="logo">
-                    <th:block th:include="module::position('logo')"></th:block>
-                    <div class="clearfix"></div>
-                </div>
-                <!-- Logo ends -->
-            </div>
 
             <div class="col-md-9 hidden-xs hidden-sm">
                 <!-- Navbar starts -->
                 <div class="navi pull-right">
-                    <th:block th:include="module::position('mainmenu')"></th:block>
+
 
                 </div>
 
@@ -125,41 +109,32 @@
 </div>
 
 
-<th:block th:include="module::position('banners')"></th:block>
-
 <!-- CONTENT -->
 <div class="clearfix"></div>
 <th:block layout:fragment="error"></th:block>
-<th:block layout:fragment="content"></th:block>
+<div class="container">
+    <div class="row mt40">
+
+        <!-- Account Login-->
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+
+            <h2 class="text-primary">DynamiaCMS - Login</h2>
+            <div class="loginbox">
+                <!-- login form -->
+                <th:block th:include="users/components/loginform::content"/>
+            </div>
+
+
+        </div>
+        <!-- Sidebar Start-->
+
+        <!-- Sidebar End-->
+
+    </div>
+</div>
 
 <section id="quicklink" class="mt20"></section>
-<!-- Footer -->
-<footer id="footer">
-    <div class="container">
-        <div class="row">
-            <div class="widgets">
-                <th:block th:include="module::position('footer')"></th:block>
-            </div>
-        </div>
 
-
-        <div class="row">
-            <div class="col-md-12">
-                Powered by: <a href="https://www.dynamiasoluciones.com"
-                               target="blank"
-                               title="Ingenieria de Software, diseño web, outsourcing, capacitaciones y cloud computing"
-                               class="tooltip-test">Dynamia Soluciones IT</a>
-            </div>
-        </div>
-    </div>
-
-</footer>
-
-
-<!-- Scroll to top -->
-<span class="totop"><a href="#"><i class="fa fa-angle-up"></i></a></span>
-
-<th:block th:include="module::stylesheets"></th:block>
 
 <!-- Javascript files -->
 <!-- jQuery -->
@@ -178,14 +153,9 @@
 <script th:src="@{/js/respond.min.js}"></script>
 <!-- HTML5 Support for IE -->
 <script th:src="@{/js/html5shiv.js}"></script>
-
 <!-- Custom JS -->
 <script th:src="@{/js/template.js}"></script>
 
-
-<th:block layout:fragment="scripts"></th:block>
-<th:block th:include="tpl_googleAnalytics::content"></th:block>
-<th:block th:include="tpl_webchat::content"></th:block>
 
 <script>
     (function (d, s, id) {
@@ -197,10 +167,8 @@
         js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-
-
 </script>
 
-<th:block th:include="module::position('custom_scripts')"></th:block>
+
 </body>
 </html>

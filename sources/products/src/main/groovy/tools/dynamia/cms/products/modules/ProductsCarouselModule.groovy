@@ -25,6 +25,7 @@ import tools.dynamia.cms.core.api.CMSModule
 import tools.dynamia.cms.core.api.ModuleContext
 import tools.dynamia.cms.core.domain.ModuleInstance
 import tools.dynamia.cms.products.domain.Product
+import tools.dynamia.cms.products.services.ProductsService
 import tools.dynamia.commons.collect.PagedList
 import tools.dynamia.domain.query.BooleanOp
 import tools.dynamia.domain.query.QueryConditions
@@ -43,6 +44,8 @@ class ProductsCarouselModule extends AbstractModule {
 
     private static final String PARAM_STATUS = "status"
 
+    private static final String PARAM_STATUS_2 = "status2"
+
     private static final String PARAM_CATEGORY = "category"
 
     private static final String PARAM_COLUMNS = "columns"
@@ -50,7 +53,7 @@ class ProductsCarouselModule extends AbstractModule {
     private static final String PARAM_TYPE = "type"
 
     @Autowired
-    private tools.dynamia.cms.products.services.ProductsService service
+    private ProductsService service
 
     @Autowired
     private CrudService crudService
@@ -79,6 +82,7 @@ class ProductsCarouselModule extends AbstractModule {
 
         String category = getParameter(context, PARAM_CATEGORY)
         String status = getParameter(context, PARAM_STATUS)
+        String status2 = getParameter(context, PARAM_STATUS_2)
         String orderBy = null
         try {
             ProductOrderField orderField = ProductOrderField
@@ -121,6 +125,9 @@ class ProductsCarouselModule extends AbstractModule {
                 break
             case ProductCarouselType.CUSTOM:
                 params.add(PARAM_STATUS, status)
+                if (status2) {
+                    params.add(PARAM_STATUS_2, status2)
+                }
                 break
         }
 

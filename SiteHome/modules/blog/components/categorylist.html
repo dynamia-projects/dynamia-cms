@@ -25,7 +25,7 @@
 <body th:fragment="load (categories)">
 
 <!-- Categories Widget -->
-<div class="blog-widget my-4">
+<div class="blog-widget my-4" th:unless="${#lists.isEmpty(categories)}">
     <h5 class="blog-widget-header">Categorias</h5>
     <div class="blog-widget-body">
 

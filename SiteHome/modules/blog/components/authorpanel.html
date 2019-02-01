@@ -28,13 +28,14 @@
 
 <div class="blog-author row">
     <div class="col-md-2">
-        <img th:src="'/resources/authors/photos/'+${author.photo}" class="img-circle img-responsive">
+        <img th:src="'/resources/authors/photos/'+${author.photo}" class="img-circle img-responsive blog-author-img">
     </div>
     <div class="col-md-10">
-        <div class="blog-author-title">Acerca de <a th:href="@{'/'+${author.toURI()}}" th:text="${author}"></a></div>
+        <div class="blog-author-title">Acerca de <a th:href="@{'/blogs/'+${author.toURI()}}" th:text="${author}"></a>
+        </div>
         <div class="blog-author-text" th:text="${author.bio}"></div>
         <div class="blog-author-links">
-            <a class="btn btn-primary" target="_blank" th:href="${author.website}"
+            <a class="btn btn-warning" target="_blank" th:href="${author.website}"
                th:unless="${#strings.isEmpty(author.website)}"><i
                     class="fa fa-globe"></i> </a>
 
@@ -42,9 +43,13 @@
                th:unless="${#strings.isEmpty(author.twitter)}"><i
                     class="fa fa-twitter"></i> </a>
 
-            <a class="btn btn-indigo" target="_blank" th:href="${'https://www.facebook.com/'+author.facebook}"
+            <a class="btn btn-primary" target="_blank" th:href="${'https://www.facebook.com/'+author.facebook}"
                th:unless="${#strings.isEmpty(author.facebook)}"><i
                     class="fa fa-facebook"></i> </a>
+
+            <a class="btn btn-primary" target="_blank" th:href="${'https://www.linkedin.com/in/'+author.linkedin}"
+               th:unless="${#strings.isEmpty(author.linkedin)}"><i
+                    class="fa fa-linkedin-square"></i> </a>
         </div>
     </div>
 </div>

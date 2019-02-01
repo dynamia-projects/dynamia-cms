@@ -1,20 +1,21 @@
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 
-<body th:fragment="frag">
+<body th:fragment="frag(source)">
 
 <!-- Search Widget -->
 <div class="blog-widget my-4">
     <h5 class="blog-widget-header">Busqueda</h5>
     <div class="blog-widget-body">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="buscar en el blog">
-            <span class="input-group-btn">
+        <form method="get" th:action="@{${source}+'/search'}">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="buscar en el blog">
+                <span class="input-group-btn">
                   <button class="btn btn-secondary" type="button">Ir</button>
                 </span>
-        </div>
+            </div>
+        </form>
     </div>
 </div>
 

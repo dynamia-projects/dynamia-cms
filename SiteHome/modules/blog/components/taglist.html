@@ -25,7 +25,7 @@
 <body th:fragment="load (tags)">
 
 <!-- Categories Widget -->
-<div class="blog-tags">
+<div class="blog-tags" th:unless="${#lists.isEmpty(tags)}">
     <ul>
         <li th:each="tag : ${tags}">
             <a class="blog-tag" th:href="@{'/'+${blog.toURI()}+'/tag/'+${tag}}" th:text="${tag}"></a>

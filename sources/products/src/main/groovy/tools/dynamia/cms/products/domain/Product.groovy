@@ -71,6 +71,7 @@ class Product extends SimpleEntity implements SiteAware {
     boolean newproduct
 
     String status
+    String status2
     String image
     String image2
     String image3
@@ -243,6 +244,7 @@ class Product extends SimpleEntity implements SiteAware {
         stock = dto.stock
         tags = dto.tags
         status = dto.status
+        status2 = dto.status2
         externalLink = dto.externalLink
         newproduct = dto.newproduct
         showCreditPrices = dto.showCreditPrices

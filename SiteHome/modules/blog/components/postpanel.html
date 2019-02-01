@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
@@ -21,7 +20,7 @@
     </div>
     <div class="blog-post-card-footer text-muted">
         Publicado el <span th:text="${#dates.format(post.postDate,'dd MMMM  YYYY')}"></span> por
-        <a th:href="@{'/'+${post.author.toURI()}}" th:text="${post.author}">Start Bootstrap</a>
+        <a th:href="@{'/blogs/'+${post.author.toURI()}}" th:text="${post.author}">Start Bootstrap</a>
 
         <a th:href="@{'/'+${post.category.toURI()}}" th:text="${post.category.name}" class="pull-right"/>
     </div>

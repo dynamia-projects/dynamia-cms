@@ -25,7 +25,7 @@
 <body th:fragment="load (archive)">
 
 <!-- Categories Widget -->
-<div class="blog-widget my-4">
+<div class="blog-widget my-4" th:unless="${#lists.isEmpty(archive)}">
     <h5 class="blog-widget-header">Archivo</h5>
     <div class="blog-widget-body">
 

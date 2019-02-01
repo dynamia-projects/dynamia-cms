@@ -1,27 +1,33 @@
 view: config
 id: module_products_carousel
 
-fields:            
+fields:
 
-  type:        
+  type:
     component: enumbox
     required: true
     params:
       enumClass: tools.dynamia.cms.products.modules.ProductCarouselType
       valuesAsString: true
-      
-    
+
+
   category:
     component: entitypicker
     params:
       entityClass: tools.dynamia.cms.products.domain.ProductCategory
-  
+
   status:
     description: Only for CUSTOM type
-  
+
+  status2:
+    description: Only for CUSTOM type
+    params:
+      placeholder: Alternate status value
+
+
   columns:
-  
-  orderBy:  
+
+  orderBy:
     component: enumbox
     params:
       enumClass: tools.dynamia.cms.products.modules.ProductOrderField
