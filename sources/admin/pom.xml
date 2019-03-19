@@ -25,12 +25,12 @@
     <parent>
         <artifactId>tools.dynamia.cms.parent</artifactId>
         <groupId>tools.dynamia.cms</groupId>
-        <version>3.0.0.RC2</version>
+        <version>3.0.0.RC3</version>
     </parent>
 
     <name>DynamiaCMS - Core Admin (${project.version})</name>
     <artifactId>tools.dynamia.cms.admin</artifactId>
-    <version>3.0.0.RC2</version>
+    <version>3.0.0.RC3</version>
     <url>http://www.dynamiasoluciones.com</url>
     <build>
         <plugins>
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.core</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia</groupId>

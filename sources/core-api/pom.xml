@@ -26,12 +26,12 @@
     <parent>
         <groupId>tools.dynamia.cms</groupId>
         <artifactId>tools.dynamia.cms.parent</artifactId>
-        <version>3.0.0.RC2</version>
+        <version>3.0.0.RC3</version>
     </parent>
 
     <groupId>tools.dynamia.cms</groupId>
     <artifactId>tools.dynamia.cms.core.api</artifactId>
-    <version>3.0.0.RC2</version>
+    <version>3.0.0.RC3</version>
     <name>DynamiaCMS - Core API (${project.version})</name>
     <url>http://maven.apache.org</url>
     <properties>

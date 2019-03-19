@@ -52,8 +52,6 @@ class LoadProductCategoryAction implements SiteAction {
     @Autowired
     private CrudService crudService
 
-    @Autowired
-    private SiteCache siteCache
 
     @Override
     String getName() {
@@ -170,7 +168,6 @@ class LoadProductCategoryAction implements SiteAction {
                 }
             }
         }
-
 
 
         if (filteredDetails != null) {

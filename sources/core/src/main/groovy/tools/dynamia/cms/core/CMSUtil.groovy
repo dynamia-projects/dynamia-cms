@@ -376,7 +376,7 @@ class CMSUtil {
         }
 
         if (datasource != null) {
-
+            datasource.activePage = 1
             if (request.getParameter("page") != null) {
                 try {
                     int page = Integer.parseInt(request.getParameter("page"))

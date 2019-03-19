@@ -172,6 +172,7 @@ class ProductsServiceImpl extends AbstractService implements ProductsService {
         }
 
         qp.paginate(getDefaultPageSize(category.site))
+        qp.getPaginator().page = 1
         qp.orderBy(orderfield, asc)
 
         return crudService().find(Product.class, qp)

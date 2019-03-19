@@ -20,83 +20,80 @@
   -->
 
 <ehcache>
-	<diskStore path="java.io.tmpdir" />
+    <diskStore path="java.io.tmpdir"/>
 
-	<defaultCache eternal="false" timeToIdleSeconds="120"
-		timeToLiveSeconds="120" />
-
+    <defaultCache eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120"/>
 
 
+    <cache name="thymeleafTemplateCache" maxElementsInMemory="100"
+           eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120"
+           overflowToDisk="true" maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
 
-	<cache name="thymeleafTemplateCache" maxElementsInMemory="200"
-		eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120"
-		overflowToDisk="true" maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
+    <cache name="thymeleafFragmentCache" maxElementsInMemory="100"
+           eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120"
+           overflowToDisk="true" maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
 
-	<cache name="thymeleafFragmentCache" maxElementsInMemory="200"
-		eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120"
-		overflowToDisk="true" maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
+    <cache name="thymeleafMessageCache" maxElementsInMemory="100"
+           eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120"
+           overflowToDisk="true" maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
 
-	<cache name="thymeleafMessageCache" maxElementsInMemory="500"
-		eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120"
-		overflowToDisk="true" maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
-
-	<cache name="thymeleafExpressionCache" maxElementsInMemory="500"
-		eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120"
-		overflowToDisk="true" maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
-
-
-	<cache name="sitesCache" maxElementsInMemory="10000" eternal="false"
-		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
-		maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
-
-	<cache name="sites" maxElementsInMemory="100" eternal="false"
-		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
-		maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
-
-	<cache name="menus" maxElementsInMemory="1000" eternal="false"
-		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
-		maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
-
-	<cache name="pages" maxElementsInMemory="1000" eternal="false"
-		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
-		maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
-
-	<cache name="products" maxElementsInMemory="10000" eternal="false"
-		timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
-		maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
-
-	<cache name="modules" maxElementsInMemory="10000" eternal="false"
-		timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
-		maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
-
-	<cache name="banners" maxElementsInMemory="2000" eternal="false"
-		timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
-		maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
-
-	<cache name="shopping" maxElementsInMemory="2000" eternal="false"
-		timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
-		maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
+    <cache name="thymeleafExpressionCache" maxElementsInMemory="100"
+           eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120"
+           overflowToDisk="true" maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
 
 
-	<cache name="velocity" maxElementsInMemory="100" eternal="false"
-		timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
-		maxElementsOnDisk="1000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
+    <cache name="sitesCache" maxElementsInMemory="200" eternal="false"
+           timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
+           maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
 
-	<cache name="users" maxElementsInMemory="10000" eternal="false"
-		timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
-		maxElementsOnDisk="1000000" diskPersistent="false"
-		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
+    <cache name="sites" maxElementsInMemory="100" eternal="false"
+           timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
+           maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="menus" maxElementsInMemory="100" eternal="false"
+           timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
+           maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="pages" maxElementsInMemory="100" eternal="false"
+           timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"
+           maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="products" maxElementsInMemory="200" eternal="false"
+           timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
+           maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="modules" maxElementsInMemory="200" eternal="false"
+           timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
+           maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="banners" maxElementsInMemory="100" eternal="false"
+           timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
+           maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="shopping" maxElementsInMemory="100" eternal="false"
+           timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
+           maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
+
+
+    <cache name="velocity" maxElementsInMemory="100" eternal="false"
+           timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
+           maxElementsOnDisk="1000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="users" maxElementsInMemory="100" eternal="false"
+           timeToIdleSeconds="3600" timeToLiveSeconds="3600" overflowToDisk="true"
+           maxElementsOnDisk="10000" diskPersistent="false"
+           diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU"/>
 </ehcache>

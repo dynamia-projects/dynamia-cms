@@ -486,6 +486,12 @@ class ProductsSyncServiceImpl extends AbstractService implements ProductsSyncSer
             if (Files.notExists(folder)) {
                 Files.createDirectories(folder)
             }
+
+            if (Files.exists(localFile)) {
+                log("$imageName already dowloaded from $url")
+                return
+            }
+
             try {
                 url.openStream().withCloseable {
                     Files.copy(it, localFile, StandardCopyOption.REPLACE_EXISTING)
@@ -499,8 +505,8 @@ class ProductsSyncServiceImpl extends AbstractService implements ProductsSyncSer
     }
 
     @Override
-    tools.dynamia.cms.products.api.ProductsDatasource getDatasource(ProductsSiteConfig cfg) {
-        def client = HttpRemotingServiceClient.build(tools.dynamia.cms.products.api.ProductsDatasource.class)
+    ProductsDatasource getDatasource(ProductsSiteConfig cfg) {
+        def client = HttpRemotingServiceClient.build(ProductsDatasource.class)
         client.serviceURL = cfg.datasourceURL
         client.username = cfg.datasourceUsername
         client.password = cfg.datasourcePassword

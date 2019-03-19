@@ -25,11 +25,11 @@
     <parent>
         <artifactId>tools.dynamia.cms.parent</artifactId>
         <groupId>tools.dynamia.cms</groupId>
-        <version>3.0.0.RC2</version>
+        <version>3.0.0.RC3</version>
     </parent>
     <artifactId>tools.dynamia.cms.templates</artifactId>
     <name>DynamiaCMS - Templates (${project.version})</name>
-    <version>3.0.0.RC2</version>
+    <version>3.0.0.RC3</version>
     <url>http://www.dynamiasoluciones.com</url>
     <build>
         <plugins>

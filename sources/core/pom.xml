@@ -25,11 +25,11 @@
 	<parent>
 		<artifactId>tools.dynamia.cms.parent</artifactId>
 		<groupId>tools.dynamia.cms</groupId>
-		<version>3.0.0.RC2</version>
+		<version>3.0.0.RC3</version>
 	</parent>
     <name>DynamiaCMS - Core (${project.version})</name>
     <artifactId>tools.dynamia.cms.core</artifactId>
-	<version>3.0.0.RC2</version>
+	<version>3.0.0.RC3</version>
 	<url>http://www.dynamiasoluciones.com</url>
 
 	<build>
@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>tools.dynamia.cms</groupId>
 			<artifactId>tools.dynamia.cms.core.api</artifactId>
-			<version>3.0.0.RC2</version>
+			<version>3.0.0.RC3</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -83,13 +83,12 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernatevalidator.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
+
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
 			<version>${ehcache.version}</version>
 		</dependency>
-
 
 
 		<!-- DynamiaTools -->

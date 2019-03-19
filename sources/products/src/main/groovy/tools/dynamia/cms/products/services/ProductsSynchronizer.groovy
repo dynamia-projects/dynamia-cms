@@ -140,6 +140,8 @@ class ProductsSynchronizer {
             })
         }
 
+        productsService.computeProductCountByCategory(siteCfg.site)
+
         service.update(siteCfg)
         logger.info("Sync Completed for " + siteCfg.site)
 

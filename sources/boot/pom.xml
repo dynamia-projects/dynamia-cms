@@ -26,7 +26,7 @@
 
     <groupId>tools.dynamia.cms</groupId>
     <artifactId>DynamiaCMS</artifactId>
-    <version>3.0.0.RC</version>
+    <version>3.0.0.RC3</version>
     <packaging>jar</packaging>
 
     <name>DynamiaCMS</name>
@@ -35,7 +35,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.1.RELEASE</version>
+        <version>2.1.3.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -50,12 +50,12 @@
         <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <spring.version>5.1.3.RELEASE</spring.version>
-        <spring.security.version>5.1.2.RELEASE</spring.security.version>
+        <spring.version>5.1.5.RELEASE</spring.version>
+        <spring.security.version>5.1.4.RELEASE</spring.security.version>
 
-        <groovy.version>2.5.5</groovy.version>
-        <hibernate.version>5.4.0.Final</hibernate.version>
-        <hibernatevalidator.version>6.0.13.Final</hibernatevalidator.version>
+        <groovy.version>2.5.6</groovy.version>
+        <hibernate.version>5.4.1.Final</hibernate.version>
+        <hibernatevalidator.version>6.0.15.Final</hibernatevalidator.version>
 
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
         <thymeleaf.layout.version>2.3.0</thymeleaf.layout.version>
@@ -98,7 +98,7 @@
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>2.3.0</version>
+            <version>2.4.1</version>
         </dependency>
 
         <dependency>
@@ -148,89 +148,89 @@
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.core</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.admin</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.users</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.pages</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.menus</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.mail</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.shoppingcart</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.payment</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.payment.admin</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.templates</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.banners</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.contacts</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.products</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.blog</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.dashboard</artifactId>
-            <version>3.0.0.RC2</version>
+            <version>3.0.0.RC3</version>
         </dependency>
 
         <dependency>
             <groupId>tools.dynamia.themes</groupId>
             <artifactId>tools.dynamia.themes.dynamical</artifactId>
-            <version>3.1.0.Final</version>
+            <version>3.2.0.Final</version>
         </dependency>
 
 

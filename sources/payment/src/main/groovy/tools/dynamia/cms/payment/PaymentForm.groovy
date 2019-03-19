@@ -21,8 +21,12 @@ package tools.dynamia.cms.payment
 
 class PaymentForm {
 
-	private String url
-    private String httpMethod
+	String url
+    String httpMethod
+    boolean scriptMode
+    String scriptSrc
+
+
     private Map<String, String> parameters = new HashMap<>()
 
     void addParam(String name, String value) {
@@ -33,28 +37,5 @@ class PaymentForm {
 		parameters.putAll(params)
     }
 
-    String getUrl() {
-		return url
-    }
-
-    void setUrl(String url) {
-		this.url = url
-    }
-
-    String getHttpMethod() {
-		return httpMethod
-    }
-
-    void setHttpMethod(String httpMethod) {
-		this.httpMethod = httpMethod
-    }
-
-    Map<String, String> getParameters() {
-		return parameters
-    }
-
-    void setParameters(Map<String, String> parameters) {
-		this.parameters = parameters
-    }
 
 }
