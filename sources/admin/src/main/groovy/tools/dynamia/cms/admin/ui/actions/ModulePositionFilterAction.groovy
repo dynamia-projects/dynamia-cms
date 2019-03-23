@@ -75,6 +75,7 @@ class ModulePositionFilterAction extends AbstractCrudAction {
     ActionRenderer getRenderer() {
 
         List<String> positions = new ArrayList<>(service.getAllUsedPositions(SiteContext.get().current))
+        positions.sort()
         positions.add(0, all)
         ComboboxActionRenderer renderer = new ComboboxActionRenderer(positions, all)
 

@@ -187,7 +187,7 @@ class ProductCategoryDetail extends SimpleEntity implements SiteAware, Orderable
     }
 }
 
-class ProductCategoryDetailValue {
+class ProductCategoryDetailValue implements Serializable{
     String value
     long stock
 
