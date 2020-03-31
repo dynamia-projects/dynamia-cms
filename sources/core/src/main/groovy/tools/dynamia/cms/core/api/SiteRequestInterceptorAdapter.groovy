@@ -20,6 +20,7 @@
 package tools.dynamia.cms.core.api
 
 import org.springframework.web.servlet.ModelAndView
+import tools.dynamia.cms.core.domain.Site
 
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -31,19 +32,19 @@ import javax.servlet.http.HttpServletResponse
 class SiteRequestInterceptorAdapter implements SiteRequestInterceptor {
 
     @Override
-    void beforeRequest(tools.dynamia.cms.core.domain.Site site, HttpServletRequest request, HttpServletResponse response) {
+    void beforeRequest(Site site, HttpServletRequest request, HttpServletResponse response) {
         beforeRequest(site)
     }
 
     @Override
-    void afterRequest(tools.dynamia.cms.core.domain.Site site, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) {
+    void afterRequest(Site site, HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView) {
         afterRequest(site, modelAndView)
     }
 
-    protected void beforeRequest(tools.dynamia.cms.core.domain.Site site) {
+    void beforeRequest(Site site) {
     }
 
-    protected void afterRequest(tools.dynamia.cms.core.domain.Site site, ModelAndView modelAndView) {
+    void afterRequest(Site site, ModelAndView modelAndView) {
     }
 
 }

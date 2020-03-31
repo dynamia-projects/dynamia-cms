@@ -33,7 +33,7 @@ import tools.dynamia.cms.products.ProductsUtil
 class ProductsInterceptor extends SiteRequestInterceptorAdapter {
 
     @Override
-    protected void afterRequest(Site site, ModelAndView mv) {
+    void afterRequest(Site site, ModelAndView mv) {
 
         ProductsUtil.setupDefaultVars(site, mv)
 

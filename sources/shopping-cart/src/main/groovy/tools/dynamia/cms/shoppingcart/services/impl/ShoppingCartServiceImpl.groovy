@@ -38,6 +38,7 @@ import tools.dynamia.cms.payment.PaymentGateway
 import tools.dynamia.cms.payment.PaymentTransactionEvent
 import tools.dynamia.cms.payment.PaymentTransactionListener
 import tools.dynamia.cms.payment.api.PaymentTransactionStatus
+import tools.dynamia.cms.payment.domain.PaymentGatewayAccount
 import tools.dynamia.cms.payment.domain.PaymentTransaction
 import tools.dynamia.cms.payment.services.PaymentService
 import tools.dynamia.cms.shoppingcart.ShoppingCartHolder
@@ -158,8 +159,9 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
         PaymentTransaction tx = null
 
         if (config.paymentGatewayAccount != null) {
-            PaymentGateway gateway = paymentService.findGateway(config.paymentGatewayAccount.gatewayId)
-            tx = gateway.newTransaction(config.paymentGatewayAccount, CMSUtil.getSiteURL(config.site, "/"))
+            PaymentGatewayAccount paymentGatewayAccount = crudService.reload(config.paymentGatewayAccount)
+            PaymentGateway gateway = paymentService.findGateway(paymentGatewayAccount.gatewayId)
+            tx = gateway.newTransaction(paymentGatewayAccount, CMSUtil.getSiteURL(config.site, "/"))
             tx.gatewayId = gateway.id
         } else {
             tx = newLocalPaymentTransaction()
@@ -534,8 +536,8 @@ class ShoppingCartServiceImpl implements ShoppingCartService, PaymentTransaction
         return crudService.find(ShoppingOrder.class,
                 QueryParameters
                         .with("transaction.status",
-                        QueryConditions.in(PaymentTransactionStatus.COMPLETED,
-                                PaymentTransactionStatus.PROCESSING))
+                                QueryConditions.in(PaymentTransactionStatus.COMPLETED,
+                                        PaymentTransactionStatus.PROCESSING))
                         .add("shoppingCart.user", user).orderBy("id", false))
     }
 

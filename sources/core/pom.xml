@@ -25,11 +25,11 @@
 	<parent>
 		<artifactId>tools.dynamia.cms.parent</artifactId>
 		<groupId>tools.dynamia.cms</groupId>
-		<version>3.0.0.RC3</version>
+		<version>3.0.0.Final</version>
 	</parent>
     <name>DynamiaCMS - Core (${project.version})</name>
     <artifactId>tools.dynamia.cms.core</artifactId>
-	<version>3.0.0.RC3</version>
+	<version>3.0.0.Final</version>
 	<url>http://www.dynamiasoluciones.com</url>
 
 	<build>
@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>tools.dynamia.cms</groupId>
 			<artifactId>tools.dynamia.cms.core.api</artifactId>
-			<version>3.0.0.RC3</version>
+			<version>3.0.0.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

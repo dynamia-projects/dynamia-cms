@@ -38,7 +38,7 @@ class UserCustomersInterceptor extends SiteRequestInterceptorAdapter {
 	private UserService service
 
     @Override
-	protected void afterRequest(Site site, ModelAndView modelAndView) {
+	void afterRequest(Site site, ModelAndView modelAndView) {
 		if (UserHolder.get().seller && modelAndView.modelMap.get("userCustomers") == null) {
 			modelAndView.addObject("userCustomers", service.getUserCustomers(UserHolder.get().current))
         }

@@ -1,31 +1,42 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
 
 <div class="container" layout:fragment="content">
 
 	<h3>Iniciando Pago..</h3>
 	<form id="autoPaymentForm" role="form" class="form-horizontal" th:action="${paymentForm.url}"
-		th:method="${paymentForm.httpMethod}">
+		  th:unless="${paymentForm.scriptMode}"
+		  th:method="${paymentForm.httpMethod}">
 
 		<input type="hidden" th:each="payp : ${paymentForm.parameters}" th:name="${payp.key}"
-			th:value="${payp.value}" />
+			   th:value="${payp.value}"/>
 
 
 		<p>
 			Si el navegador no redirecciona, presione en <input type="submit" value="Continuar"
-				class="btn btn-success btn-sm" />
+																class="btn btn-success btn-sm"/>
 		</p>
+	</form>
 
+	<form th:if="${paymentForm.scriptMode}">
+		<th:block th:each="r : ${paymentForm.scriptResources}" th:if="${paymentForm.scriptResources}">
+			<script type="text/javascript" th:src="${r}"></script>
+		</th:block>
+		<script type="application/javascript" th:utext="${paymentForm.scriptSrc}">
 
+		</script>
 	</form>
 
 
+	<div style="padding: 100px"></div>
+
 </div>
 
+
 <th:block layout:fragment="scripts">
-	<script type="text/javascript">
-		$(document).ready(function() {
+	<script type="text/javascript" th:unless="${paymentForm.scriptMode}">
+		$(document).ready(function () {
 			$("#autoPaymentForm").submit();
 		});
 	</script>

@@ -27,6 +27,7 @@ import tools.dynamia.domain.contraints.NotEmpty
 
 import javax.persistence.CascadeType
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.OneToMany
 import javax.persistence.Table
 import javax.validation.constraints.NotNull
@@ -54,7 +55,7 @@ class PaymentGatewayAccount extends SimpleEntity {
     }
 
     Map<String, String> getConfigurationMap() {
-        def map = new HashMap<String,String>()
+        def map = new HashMap<String, String>()
         configuration.each { map[it.name] = it.value }
         return map
     }

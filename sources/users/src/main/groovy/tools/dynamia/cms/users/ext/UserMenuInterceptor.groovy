@@ -40,7 +40,7 @@ class UserMenuInterceptor extends SiteRequestInterceptorAdapter {
 	private List<UserMenuAction> allActions
 
     @Override
-	protected void afterRequest(Site site, ModelAndView modelAndView) {
+	void afterRequest(Site site, ModelAndView modelAndView) {
 		List<UserMenuAction> orderedActions = new ArrayList<>()
 
         if (UserHolder.get().authenticated) {

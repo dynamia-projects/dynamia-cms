@@ -98,6 +98,7 @@ class PaymentController {
         PaymentTransaction tx = PaymentHolder.get().currentPaymentTransaction
         PaymentForm form = PaymentHolder.get().currentPaymentForm
         ModelAndView mv = new ModelAndView("payment/start")
+        mv.addObject("title", "Starting Payment")
         if (tx != null && tx.status == PaymentTransactionStatus.NEW && form != null) {
             logger.info("Processing transaction " + tx.uuid + " from " + tx.source)
             tx.status = PaymentTransactionStatus.PROCESSING

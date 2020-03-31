@@ -36,7 +36,7 @@ class BlogSiteInterceptor extends SiteRequestInterceptorAdapter {
 
 
     @Override
-    protected void afterRequest(Site site, ModelAndView modelAndView) {
+    void afterRequest(Site site, ModelAndView modelAndView) {
         def blog = modelAndView.getModel().get("blog") as Blog
         if (blog != null) {
             modelAndView.addObject("blog_categories", blogService.getCategories(blog))

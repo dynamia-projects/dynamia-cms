@@ -1,0 +1,12 @@
+<zk>
+
+    <config-name>DynamiaCMS Boot</config-name>
+
+    <preference>
+        <name>org.zkoss.zk.ui.WebApp.name</name>
+        <value>DynamiaCMS</value>
+    </preference>
+
+
+
+</zk>

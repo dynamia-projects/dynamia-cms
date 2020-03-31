@@ -56,7 +56,8 @@ class PaymentServiceImpl extends AbstractService implements PaymentService {
 
     @Override
     PaymentGatewayAccount getDefaultAccount(String source) {
-        return crudService().findSingle(PaymentGatewayAccount, "source", QueryConditions.eq(source))
+        return crudService().findSingle(PaymentGatewayAccount, QueryParameters.with("source", QueryConditions.eq(source))
+                .add("enabled", true))
     }
 
     List<PaymentGatewayAccount> findAccounts(String source) {

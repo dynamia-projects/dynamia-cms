@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView
 import tools.dynamia.cms.core.api.CMSExtension
 import tools.dynamia.cms.core.api.SiteRequestInterceptorAdapter
 import tools.dynamia.cms.core.domain.Site
+import tools.dynamia.cms.pages.SearchForm
 
 /**
  *
@@ -32,9 +33,9 @@ import tools.dynamia.cms.core.domain.Site
 class SearchSiteInterceptor extends SiteRequestInterceptorAdapter {
 
 	@Override
-	protected void afterRequest(Site site, ModelAndView mv) {
+	void afterRequest(Site site, ModelAndView mv) {
 		if (mv != null && mv.model.get("searchForm") == null) {
-			mv.addObject("searchForm", new tools.dynamia.cms.pages.SearchForm())
+			mv.addObject("searchForm", new SearchForm())
         }
 	}
 

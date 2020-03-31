@@ -26,11 +26,11 @@
     <parent>
         <groupId>tools.dynamia.cms</groupId>
         <artifactId>tools.dynamia.cms.parent</artifactId>
-        <version>3.0.0.RC3</version>
+        <version>3.0.0.Final</version>
     </parent>
     <groupId>tools.dynamia.cms</groupId>
     <artifactId>tools.dynamia.cms.products</artifactId>
-    <version>3.0.0.RC3</version>
+    <version>3.0.0.Final</version>
     <name>DynamiaCMS - Products (${project.version})</name>
     <url>http://maven.apache.org</url>
     <properties>
@@ -106,12 +106,12 @@
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.admin</artifactId>
-            <version>3.0.0.RC3</version>
+            <version>3.0.0.Final</version>
         </dependency>
         <dependency>
             <groupId>tools.dynamia.cms</groupId>
             <artifactId>tools.dynamia.cms.importer.admin</artifactId>
-            <version>3.0.0.RC3</version>
+            <version>3.0.0.Final</version>
         </dependency>
     </dependencies>
 </project>

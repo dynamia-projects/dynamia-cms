@@ -25,12 +25,12 @@
     <parent>
         <artifactId>tools.dynamia.cms.parent</artifactId>
         <groupId>tools.dynamia.cms</groupId>
-        <version>3.0.0.RC3</version>
+        <version>3.0.0.Final</version>
     </parent>
     <groupId>tools.dynamia.cms</groupId>
     <artifactId>tools.dynamia.cms.mail</artifactId>
     <name>DynamiaCMS - Notifications(${project.version})</name>
-    <version>3.0.0.RC3</version>
+    <version>3.0.0.Final</version>
     <url>http://www.dynamiasoluciones.com</url>
     <build>
         <plugins>

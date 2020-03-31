@@ -25,6 +25,7 @@ class PaymentForm {
     String httpMethod
     boolean scriptMode
     String scriptSrc
+    List<String> scriptResources = []
 
 
     private Map<String, String> parameters = new HashMap<>()

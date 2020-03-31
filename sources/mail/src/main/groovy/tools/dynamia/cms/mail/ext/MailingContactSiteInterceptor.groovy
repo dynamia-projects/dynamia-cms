@@ -31,7 +31,7 @@ class MailingContactSiteInterceptor extends SiteRequestInterceptorAdapter {
 	
 	
 	@Override
-	protected void afterRequest(Site site, ModelAndView mv) {
+	void afterRequest(Site site, ModelAndView mv) {
 
 		mv.addObject("mailingContact", new MailingContact())
 
