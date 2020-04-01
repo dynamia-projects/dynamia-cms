@@ -47,6 +47,17 @@ class AddItemToCartAction implements SiteAction {
 
     @Override
     void actionPerformed(ActionEvent evt) {
+        def config = service.getConfiguration(evt.site)
+        if (config && !config.paymentEnabled) {
+            def msg = "Los pagos estan desactivados temporalmente"
+            if (config.paymentDisabledMessage) {
+                msg = config.paymentDisabledMessage
+            }
+            CMSUtil.addWarningMessage(msg, evt.redirectAttributes)
+            return
+        }
+
+
         ModelAndView mv = evt.modelAndView
         String code = evt.data as String
         int qty = 1
@@ -56,6 +67,7 @@ class AddItemToCartAction implements SiteAction {
             // TODO: handle exception
         }
 
+
         ShoppingCartItem item = service.getItem(evt.site, code)
         if (item != null) {
             ShoppingCart shoppingCart = ShoppingCartUtils.getShoppingCart(mv)
@@ -64,12 +76,10 @@ class AddItemToCartAction implements SiteAction {
                 if (item.children != null && !item.children.empty) {
                     item.children.forEach { c -> shoppingCart.addItem(c) }
                 }
-                CMSUtil.addSuccessMessage(item.name.toUpperCase() + " agregado exitosamente al carrito",
-                        evt.redirectAttributes)
+                CMSUtil.addSuccessMessage(item.name.toUpperCase() + " agregado exitosamente al carrito", evt.redirectAttributes)
             }
         } else {
-            CMSUtil.addSuccessMessage("No encontrado item con codigo $code",
-                    evt.redirectAttributes)
+            CMSUtil.addSuccessMessage("No encontrado item con codigo $code", evt.redirectAttributes)
         }
 
     }

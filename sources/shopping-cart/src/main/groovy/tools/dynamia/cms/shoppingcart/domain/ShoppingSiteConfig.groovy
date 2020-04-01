@@ -73,6 +73,9 @@ class ShoppingSiteConfig extends SimpleEntity implements SiteAware {
     @Column(length = 3000)
 	String paymentTypes
 
+    @Column(length = 1000)
+    String paymentDisabledMessage
+
 
     BigDecimal getMinShipmentAmount() {
 		if (minShipmentAmount == null) {

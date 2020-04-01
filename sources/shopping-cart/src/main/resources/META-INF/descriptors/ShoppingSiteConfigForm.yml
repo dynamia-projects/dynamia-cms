@@ -7,10 +7,6 @@ fields:
     component: combobox
     params:
       automodel: true
-  paymentEnabled:
-  allowEmptyPayment:
-  billingAddressRequired:
-  shippingAddressRequired:
 
   minPaymentAmount:
   maxPaymentAmount:
@@ -20,17 +16,31 @@ fields:
   defaultCurrency:
   paymentTypes:
 
-  autoSendOrders:
+
   orderSenderURL:
     label: Order Sender URL
   orderStatusURL:
     label: Order Status URL
 
-  autoSendPayments:
+
   paymentsSenderURL:
     label: Payments Sender URL
 
   descriptionTemplate:
+  paymentDisabledMessage:
+    params:
+      span: 4
+
+
+  paymentEnabled:
+  allowEmptyPayment:
+
+  billingAddressRequired:
+  shippingAddressRequired:
+
+  autoSendPayments:
+  autoSendOrders:
+
   notificationEmails:
     description: You can use multiple emails address separated by comma
   orderCompletedMailTemplate:
