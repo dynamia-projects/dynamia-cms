@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 - 2019 Dynamia Soluciones IT S.A.S - NIT 900302344-1
+ * Copyright (C) 2009 - 2020 Dynamia Soluciones IT S.A.S - NIT 900302344-1
  * Colombia - South America
  * All Rights Reserved.
  *

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (C) 2009 - 2019 Dynamia Soluciones IT S.A.S - NIT 900302344-1
+  ~ Copyright (C) 2009 - 2020 Dynamia Soluciones IT S.A.S - NIT 900302344-1
   ~ Colombia - South America
   ~ All Rights Reserved.
   ~
@@ -35,14 +35,14 @@
         <dynamia.icons.version>1.0</dynamia.icons.version>
         <hsql.version>1.8.0.10</hsql.version>
 
-        <spring.version>5.1.5.RELEASE</spring.version>
-        <spring.security.version>5.1.4.RELEASE</spring.security.version>
+        <spring.version>5.1.14.RELEASE</spring.version>
+        <spring.security.version>5.1.9.RELEASE</spring.security.version>
 
-        <hibernate.version>5.4.1.Final</hibernate.version>
-        <hibernatevalidator.version>6.0.15.Final</hibernatevalidator.version>
+        <hibernate.version>5.4.14.Final</hibernate.version>
+        <hibernatevalidator.version>6.0.19.Final</hibernatevalidator.version>
 
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
-        <thymeleaf.layout.version>2.3.0</thymeleaf.layout.version>
+        <thymeleaf.layout.version>2.4.1</thymeleaf.layout.version>
 
         <mustache.version>0.9.5</mustache.version>
         <jsoup.version>1.11.2</jsoup.version>
@@ -56,7 +56,7 @@
         <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <groovy.version>2.5.6</groovy.version>
+        <groovy.version>2.5.11</groovy.version>
         <java.version>1.8</java.version>
     </properties>
 
@@ -90,7 +90,7 @@
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <version>1.6.2</version>
+                <version>1.8.1</version>
                 <executions>
                     <execution>
                         <goals>

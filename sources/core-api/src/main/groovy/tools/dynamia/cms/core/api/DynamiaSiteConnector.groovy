@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 - 2019 Dynamia Soluciones IT S.A.S - NIT 900302344-1
+ * Copyright (C) 2009 - 2020 Dynamia Soluciones IT S.A.S - NIT 900302344-1
  * Colombia - South America
  * All Rights Reserved.
  *
@@ -20,13 +20,17 @@
 
 package tools.dynamia.cms.core.api
 
+import tools.dynamia.cms.core.dto.CityDTO
+import tools.dynamia.cms.core.dto.CountryDTO
+import tools.dynamia.cms.core.dto.RegionDTO
+
 interface DynamiaSiteConnector {
 
-	List<tools.dynamia.cms.core.dto.CountryDTO> getCountries()
+	List<CountryDTO> getCountries()
 
-    List<tools.dynamia.cms.core.dto.RegionDTO> getRegions(tools.dynamia.cms.core.dto.CountryDTO country)
+    List<RegionDTO> getRegions(CountryDTO country)
 
-    List<tools.dynamia.cms.core.dto.CityDTO> getCities(tools.dynamia.cms.core.dto.CountryDTO country, tools.dynamia.cms.core.dto.RegionDTO region)
+    List<CityDTO> getCities(CountryDTO country, RegionDTO region)
 
 
 }
