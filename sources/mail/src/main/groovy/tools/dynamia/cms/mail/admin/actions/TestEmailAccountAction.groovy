@@ -67,6 +67,7 @@ class TestEmailAccountAction extends AbstractCrudAction implements MailServiceLi
 
     @Override
     void actionPerformed(CrudActionEvent evt) {
+
         MailAccount cuenta = (MailAccount) evt.data
         if (cuenta != null) {
             Viewer viewer = createView(cuenta)
@@ -74,6 +75,7 @@ class TestEmailAccountAction extends AbstractCrudAction implements MailServiceLi
         } else {
             UIMessages.showMessage("Select account to test", MessageType.WARNING)
         }
+
     }
 
     @Override
@@ -106,17 +108,23 @@ class TestEmailAccountAction extends AbstractCrudAction implements MailServiceLi
 
     @Override
     void onMailSending(MailMessage message) {
-        UIMessages.showMessage("Sending " + message, MessageType.WARNING)
+        if (ZKUtil.isInEventListener()) {
+            UIMessages.showMessage("Sending " + message, MessageType.WARNING)
+        }
     }
 
     @Override
     void onMailSended(MailMessage message) {
-        UIMessages.showMessage("Test OK: Mail sended successfull " + message)
+        if (ZKUtil.isInEventListener()) {
+            UIMessages.showMessage("Test OK: Mail sended successfull " + message)
+        }
     }
 
     @Override
     void onMailSendFail(MailMessage message, Throwable cause) {
-        Messagebox.show("Error performing test: " + cause.message, "Error", Messagebox.OK, Messagebox.ERROR)
+        if (ZKUtil.isInEventListener()) {
+            Messagebox.show("Error performing test: " + cause.message, "Error", Messagebox.OK, Messagebox.ERROR)
+        }
     }
 
     private static class SendTestEmailAction extends AbstractAction {

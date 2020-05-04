@@ -255,21 +255,33 @@ class MailServiceImpl implements MailService {
     private void fireOnMailSending(MailMessage message) {
         Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class)
         for (MailServiceListener listener : listeners) {
-            listener.onMailSending(message)
+            try {
+                listener.onMailSending(message)
+            } catch (Exception e) {
+                logger.error("Error firing listener OnMailSending: $listener", e)
+            }
         }
     }
 
     private void fireOnMailSended(MailMessage message) {
         Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class)
         for (MailServiceListener listener : listeners) {
-            listener.onMailSended(message)
+            try {
+                listener.onMailSended(message)
+            } catch (Exception e) {
+                logger.error("Error firing listener OnMailSended: $listener", e)
+            }
         }
     }
 
     private void fireOnMailSendFail(MailMessage message, Throwable cause) {
         Collection<MailServiceListener> listeners = Containers.get().findObjects(MailServiceListener.class)
         for (MailServiceListener listener : listeners) {
-            listener.onMailSendFail(message, cause)
+            try {
+                listener.onMailSendFail(message, cause)
+            } catch (Exception e) {
+                logger.error("Error firing listener OnMailSendFail: $listener", e)
+            }
         }
     }
 
