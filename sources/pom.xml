@@ -31,7 +31,7 @@
     <properties>
         <name>DynamiaCMS</name>
 
-        <dynatools.version>3.5.0.Final</dynatools.version>
+        <dynatools.version>3.6.1.Final</dynatools.version>
         <dynamia.icons.version>1.0</dynamia.icons.version>
         <hsql.version>1.8.0.10</hsql.version>
 
