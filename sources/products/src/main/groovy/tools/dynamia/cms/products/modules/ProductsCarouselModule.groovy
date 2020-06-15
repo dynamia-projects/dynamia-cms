@@ -120,6 +120,12 @@ class ProductsCarouselModule extends AbstractModule {
             case ProductCarouselType.SALE:
                 params.add("sale", true)
                 break
+            case ProductCarouselType.CORPORATE:
+                params.add("corporate",true)
+                break
+            case ProductCarouselType.SPECIAL:
+                params.add("special",true)
+                break
             case ProductCarouselType.MOST_VIEWED:
                 params.orderBy("views", false)
                 break

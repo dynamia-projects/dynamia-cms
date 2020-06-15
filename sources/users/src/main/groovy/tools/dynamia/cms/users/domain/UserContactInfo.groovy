@@ -30,7 +30,7 @@ import javax.persistence.*
 import javax.validation.constraints.NotNull
 
 @Entity
-@Table(name = "usr_users_contacts", uniqueConstraints = [@UniqueConstraint(columnNames = ["site_id", "user_id"])])
+@Table(name = "usr_users_contacts")
 class UserContactInfo extends SimpleEntity implements SiteAware {
 
     @OneToOne

@@ -52,6 +52,8 @@ class ProductDTO implements Serializable {
     boolean featured
     boolean sale
     boolean newproduct
+    boolean corporate
+    boolean special
     String status
     String status2
     String image

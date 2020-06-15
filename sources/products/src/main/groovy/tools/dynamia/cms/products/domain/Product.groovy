@@ -69,6 +69,8 @@ class Product extends SimpleEntity implements SiteAware {
     boolean featured
     boolean sale
     boolean newproduct
+    boolean corporate
+    boolean special
 
     String status
     String status2
@@ -265,6 +267,8 @@ class Product extends SimpleEntity implements SiteAware {
         quality = dto.quality
         currency = dto.currency
         taxable = dto.taxable
+        corporate = dto.corporate
+        special = dto.special
         checkPromo()
     }
 

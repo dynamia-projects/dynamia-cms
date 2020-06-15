@@ -23,5 +23,5 @@ package tools.dynamia.cms.products.modules
  * Created by Mario on 18/11/2014.
  */
 enum ProductCarouselType {
-	FEATURED, NEW, SALE, MOST_VIEWED, ALL, CUSTOM
+	FEATURED, NEW, SALE, MOST_VIEWED, ALL, CUSTOM, CORPORATE, SPECIAL
 }
