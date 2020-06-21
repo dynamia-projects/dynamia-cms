@@ -65,6 +65,7 @@ class Product extends SimpleEntity implements SiteAware {
 
     String priceDescription
     Long stock
+    Long futureStock
     boolean active = true
     boolean featured
     boolean sale
@@ -244,6 +245,7 @@ class Product extends SimpleEntity implements SiteAware {
         sale = dto.sale
         sku = dto.sku
         stock = dto.stock
+        futureStock = dto.futureStock
         tags = dto.tags
         status = dto.status
         status2 = dto.status2
@@ -321,4 +323,17 @@ class Product extends SimpleEntity implements SiteAware {
         return reviews
     }
 
+    Long getStock() {
+        if(stock==null){
+            stock=0
+        }
+        return stock
+    }
+
+    Long getFutureStock() {
+        if(futureStock==null){
+            futureStock = 0
+        }
+        return futureStock
+    }
 }

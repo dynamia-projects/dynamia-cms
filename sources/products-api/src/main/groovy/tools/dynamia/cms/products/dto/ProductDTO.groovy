@@ -48,6 +48,7 @@ class ProductDTO implements Serializable {
     BigDecimal storePrice
     String priceDescription
     long stock
+    long futureStock
     boolean active
     boolean featured
     boolean sale
@@ -95,6 +96,7 @@ class ProductDTO implements Serializable {
     String unit
     String quality
     String currency
+
 
     @Override
     String toString() {

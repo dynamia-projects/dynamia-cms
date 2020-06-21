@@ -37,7 +37,9 @@ import tools.dynamia.cms.payment.PaymentTransactionEvent
 import tools.dynamia.cms.payment.PaymentTransactionListener
 import tools.dynamia.cms.payment.ResponseType
 import tools.dynamia.cms.payment.api.PaymentTransactionStatus
+import tools.dynamia.cms.payment.domain.PaymentGatewayAccount
 import tools.dynamia.cms.payment.domain.PaymentTransaction
+import tools.dynamia.cms.payment.services.PaymentService
 import tools.dynamia.commons.logger.LoggingService
 import tools.dynamia.commons.logger.SLF4JLoggingService
 import tools.dynamia.domain.services.CrudService
@@ -50,7 +52,7 @@ import javax.servlet.http.HttpServletRequest
 class PaymentController {
 
     @Autowired
-    private tools.dynamia.cms.payment.services.PaymentService service
+    private PaymentService service
 
     @Autowired
     private CrudService crudService
@@ -67,6 +69,7 @@ class PaymentController {
             mv.addObject("title", tx.statusText)
             mv.addObject("subtitle", tx.reference)
             mv.addObject("transaction", tx)
+            mv.addObject("status",tx.status)
             mv.addObject("gateway", service.findGateway(gatewayId))
         } catch (Exception e) {
             e.printStackTrace()

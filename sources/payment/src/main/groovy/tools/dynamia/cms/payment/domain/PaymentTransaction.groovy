@@ -168,4 +168,9 @@ class PaymentTransaction extends BaseEntity implements Payment {
         +", email=" + email + "]"
     }
 
+    void checkStatusText() {
+        if (statusText == null || statusText.empty) {
+            statusText = status?.toString()
+        }
+    }
 }
