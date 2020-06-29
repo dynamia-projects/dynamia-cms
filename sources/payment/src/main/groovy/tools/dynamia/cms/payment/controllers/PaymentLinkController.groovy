@@ -49,14 +49,15 @@ class PaymentLinkController {
     @GetMapping(value = "/link")
     ModelAndView link(@RequestParam(value = "doc", required = false) String document,
                       @RequestParam("v") BigDecimal value,
-                      @RequestParam("i") String identification,
-                      @RequestParam("n") String name,
-                      @RequestParam(value = "d", required = false) String description,
-                      @RequestParam("e") String email,
+                      @RequestParam(value = "i", required = false) String identification,
+                      @RequestParam(value = "n", required = false) String name,
+                      @RequestParam(value = "d") String description,
+                      @RequestParam(value = "e", required = false) String email,
                       @RequestParam(value = "ph", required = false) String phone,
                       @RequestParam(value = "mb", required = false) String mobile,
                       @RequestParam(value = "cr", required = false) String currency,
                       @RequestParam(value = "aid", required = false) String accountId,
+                      @RequestParam(value = "from", required = false) String from,
                       HttpServletRequest request) {
 
         ModelAndView mv = new ModelAndView("payment/link")
@@ -81,6 +82,7 @@ class PaymentLinkController {
             tx.document = document
             tx.payerMobileNumber = mobile
             tx.payerPhoneNumber = phone
+            tx.from = from
             if (currency == null || currency.empty) {
                 currency = source.currency
             }
@@ -99,6 +101,10 @@ class PaymentLinkController {
 
             PaymentHolder.get().currentPaymentForm = form
             PaymentHolder.get().currentPaymentTransaction = tx
+
+            if (tx.payerDocument == null || tx.payerFullname == null || tx.email == null) {
+                mv.setViewName("payment/linkForm")
+            }
         } else {
             throw new PaymentException("No payment gateway found for source $source ")
         }

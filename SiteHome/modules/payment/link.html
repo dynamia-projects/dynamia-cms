@@ -51,6 +51,10 @@
                         <td><span th:text="${transaction.description}"></span></td>
                     </tr>
                     <tr>
+                        <td><label class="orange">Vendedor</label></td>
+                        <td><span th:text="${transaction.from}"></span></td>
+                    </tr>
+                    <tr>
                         <td><label class="orange">Valor</label></td>
                         <td><span th:text="${#numbers.formatDecimal(transaction.amount, 0, 'COMMA', 2, 'POINT')}"></span></td>
                     </tr>
@@ -60,7 +64,7 @@
                     </tr>
                 </table>
 
-                <div>
+                <div style="margin-bottom: 40px">
                     <a th:href="@{/payment/start}" class="btn btn-success btn-lg">Pagar</a>
                 </div>
 

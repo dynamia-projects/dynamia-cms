@@ -104,6 +104,8 @@ class PaymentTransaction extends BaseEntity implements Payment {
     String shippingAddress
     String shippingCity
     String shippingCountry
+    @Column(name = "txfrom")
+    String from
 
     PaymentTransaction() {
         // TODO Auto-generated constructor stub

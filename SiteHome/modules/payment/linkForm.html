@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template">
+
+<div class="maincontainer" layout:fragment="content">
+
+
+    <div class="container">
+        <!-- Main Title-->
+        <div class="titles animated fadeInUp time3">
+            <div class="pull-left">
+                <h1 class="headinglefttitle">Link de Pago</h1>
+                <div th:text="${subtitle}" class="headingsubtitle"></div>
+            </div>
+            <i class="icon-check"></i>
+        </div>
+
+        <div class="row mt40">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40column">
+                <form th:action="@{/payment/link}" method="get">
+                    <div class="alert alert-info">
+                        Ingrese los datos faltantes
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <td><label class="orange">Identificacion</label></td>
+                            <td><input id="i" name="i" th:value="${transaction.payerDocument}" class="form-control"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="orange">Cliente</label></td>
+                            <td><input id="n" name="n" th:value="${transaction.payerFullname}" class="form-control"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="orange">Telefono</label></td>
+                            <td><input id="ph" name="ph" th:value="${transaction.payerPhoneNumber}"
+                                       class="form-control"/></td>
+                        </tr>
+                        <tr>
+                            <td><label class="orange">Celular</label></td>
+                            <td><input id="mb" name="mb" th:value="${transaction.payerMobileNumber}"
+                                       class="form-control"/></td>
+                        </tr>
+                        <tr>
+                            <td><label class="orange">Email</label></td>
+                            <td><input id="e" name="e" type="email" th:value="${transaction.email}"
+                                       class="form-control"/></td>
+                        </tr>
+                        <tr>
+                            <td><label class="orange">Documento</label></td>
+                            <td><span th:text="${transaction.document}"></span>
+                                <input name="doc" id="doc" type="hidden" th:value="${transaction.document}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="orange">Descripcion</label></td>
+                            <td>
+                                <span th:text="${transaction.description}"></span>
+                                <input type="hidden" name="d" id="d" th:value="${transaction.description}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="orange">Vendedor</label></td>
+                            <td>
+                                <span th:text="${transaction.from}"></span>
+                                <input type="hidden" name="from" id="from" th:value="${transaction.from}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="orange">Valor</label></td>
+                            <td><span
+                                    th:text="${#numbers.formatDecimal(transaction.amount, 0, 'COMMA', 2, 'POINT')}"></span>
+                                <input name="v" id="v" type="hidden" th:value="${transaction.amount}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label class="orange">Moneda</label></td>
+                            <td>
+                                <span th:text="${transaction.currency}"></span>
+                                <input name="cr" id="cr" type="hidden" th:value="${transaction.currency}"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div style="margin-bottom: 40px">
+                        <button type="submit" class="btn btn-primary btn-lg">Continuar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+</html>
