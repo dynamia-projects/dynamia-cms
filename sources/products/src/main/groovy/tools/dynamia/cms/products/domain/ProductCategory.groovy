@@ -21,6 +21,7 @@ package tools.dynamia.cms.products.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.BatchSize
+import org.zkoss.zhtml.Col
 import tools.dynamia.cms.core.Orderable
 import tools.dynamia.cms.core.api.SiteAware
 import tools.dynamia.cms.core.api.URIable
@@ -87,6 +88,9 @@ class ProductCategory extends SimpleEntity implements SiteAware, Orderable, URIa
     String tags
     Long productsCount
 
+    @Column(name = "catVirtual")
+    Boolean virtual
+
     void sync(ProductCategoryDTO dto) {
         name = dto.name
         order = dto.order
@@ -95,6 +99,14 @@ class ProductCategory extends SimpleEntity implements SiteAware, Orderable, URIa
         description = dto.description
         externalRef = dto.externalRef
         tags = dto.tags
+        virtual = dto.virtual
+    }
+
+    Boolean getVirtual() {
+        if (virtual == null) {
+            virtual = false
+        }
+        return virtual
     }
 
     @Override

@@ -43,6 +43,7 @@ import tools.dynamia.commons.collect.CollectionsUtils
 import tools.dynamia.commons.collect.PagedList
 import tools.dynamia.commons.collect.PagedListDataSource
 import tools.dynamia.domain.query.DataPaginator
+import tools.dynamia.domain.query.DataPaginatorPagedListDataSource
 import tools.dynamia.domain.services.CrudService
 import tools.dynamia.domain.util.ContactInfo
 import tools.dynamia.integration.Containers
@@ -373,6 +374,8 @@ class CMSUtil {
         if (paginableList instanceof PagedList) {
             datasource = ((PagedList) paginableList).dataSource
             request.session.setAttribute(PAGINATION_DATASOURCE, datasource)
+        } else {
+            datasource = null
         }
 
         if (datasource != null) {
@@ -393,6 +396,9 @@ class CMSUtil {
             }
 
             paginableList = datasource.pageData
+        } else if (!isJson(request)) {
+
+            mv.addObject(PAGINATION_DATASOURCE, new DataPaginatorPagedListDataSource(new DataPaginator(paginableList.size(), paginableList.size(), 1)))
         }
         return paginableList
     }

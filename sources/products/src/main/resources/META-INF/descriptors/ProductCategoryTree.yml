@@ -17,6 +17,7 @@ fields:
   productsCount:
     label: Products
   tags:
+  virtual:
   active:
   externalRef:
   id:

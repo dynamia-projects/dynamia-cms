@@ -135,4 +135,5 @@ interface ProductsService {
 
     List<ProductReview> getExternalProductReviews(Site site, ProductsReviewResponse response, User user)
 
+    List<Product> findVirtualProducts(ProductCategory category, String orderby)
 }

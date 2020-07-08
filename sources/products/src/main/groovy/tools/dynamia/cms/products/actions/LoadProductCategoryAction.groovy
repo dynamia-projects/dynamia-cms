@@ -88,7 +88,9 @@ class LoadProductCategoryAction implements SiteAction {
         List<Product> products = null
         QueryParameters qp = QueryParameters.with("active", true).add("site", evt.site)
 
-        if (category.parent == null) {
+        if (category.virtual) {
+            products = service.findVirtualProducts(category, orderfield)
+        } else if (category.parent == null) {
             qp.addGroup(QueryParameters.with("category.parent", QueryConditions.eq(category, BooleanOp.OR))
                     .add("category", QueryConditions.eq(category, BooleanOp.OR)), BooleanOp.AND)
         } else {
@@ -103,42 +105,51 @@ class LoadProductCategoryAction implements SiteAction {
 
         String title = category.name
         Map<String, String> filteredDetails = null
-        if (evt.request.parameterMap.containsKey("featured")) {
-            qp.add("featured", true)
-            products = crudService.find(Product.class, qp)
-        } else if (evt.request.parameterMap.containsKey("sale")) {
-            qp.add("sale", true)
-            products = crudService.find(Product.class, qp)
-        } else if (evt.request.parameterMap.containsKey("new")) {
-            qp.add("newproduct", true)
-            products = crudService.find(Product.class, qp)
-        } else if (evt.request.parameterMap.containsKey("views")) {
-            qp.orderBy("views", false)
-            products = crudService.find(Product.class, qp)
-        } else if (evt.request.getParameter("q") != null) {
-            ProductSearchForm form = new ProductSearchForm()
-            form.categoryId = category.id
-            form.detail = evt.request.getParameter("q")
-            form.detail2 = evt.request.getParameter("q2")
-            form.detail3 = evt.request.getParameter("q3")
-            form.detail4 = evt.request.getParameter("q4")
-            form.maxPrice = CMSUtil.toBigDecimal(evt.request.getParameter("max"))
-            form.minPrice = CMSUtil.toBigDecimal(evt.request.getParameter("min"))
-            try {
-                ProductBrand brand = service.getBrandByAlias(evt.site, evt.request.getParameter("brand"))
-                form.brandId = brand.id
-                title = title + " " + brand.name
-            } catch (Exception e) {
-            }
-            form.order = null
-            if (form.detail != null) {
-                title = title + " " + form.detail.replaceAll("=", " ")
-            }
-            products = service.filterProducts(evt.site, form)
-            filteredDetails = (Map<String, String>) form.getAttribute("filteredDetails")
+        if (!category.virtual) {
 
-        } else {
-            products = service.getProducts(category, orderfield, asc)
+            if (evt.request.parameterMap.containsKey("featured")) {
+                qp.add("featured", true)
+                products = crudService.find(Product.class, qp)
+            } else if (evt.request.parameterMap.containsKey("sale")) {
+                qp.add("sale", true)
+                products = crudService.find(Product.class, qp)
+            } else if (evt.request.parameterMap.containsKey("new")) {
+                qp.add("newproduct", true)
+                products = crudService.find(Product.class, qp)
+            } else if (evt.request.parameterMap.containsKey("views")) {
+                qp.orderBy("views", false)
+                products = crudService.find(Product.class, qp)
+            } else if (evt.request.parameterMap.containsKey("corporate")) {
+                qp.add("corporate", true)
+                products = crudService.find(Product.class, qp)
+            } else if (evt.request.parameterMap.containsKey("special")) {
+                qp.add("special", true)
+                products = crudService.find(Product.class, qp)
+            } else if (evt.request.getParameter("q") != null) {
+                ProductSearchForm form = new ProductSearchForm()
+                form.categoryId = category.id
+                form.detail = evt.request.getParameter("q")
+                form.detail2 = evt.request.getParameter("q2")
+                form.detail3 = evt.request.getParameter("q3")
+                form.detail4 = evt.request.getParameter("q4")
+                form.maxPrice = CMSUtil.toBigDecimal(evt.request.getParameter("max"))
+                form.minPrice = CMSUtil.toBigDecimal(evt.request.getParameter("min"))
+                try {
+                    ProductBrand brand = service.getBrandByAlias(evt.site, evt.request.getParameter("brand"))
+                    form.brandId = brand.id
+                    title = title + " " + brand.name
+                } catch (Exception e) {
+                }
+                form.order = null
+                if (form.detail != null) {
+                    title = title + " " + form.detail.replaceAll("=", " ")
+                }
+                products = service.filterProducts(evt.site, form)
+                filteredDetails = (Map<String, String>) form.getAttribute("filteredDetails")
+
+            } else {
+                products = service.getProducts(category, orderfield, asc)
+            }
         }
         // List<Product> specialProducts = service.getSpecialProducts(category);
         List<ProductCategory> subcategories = service.getSubcategories(category)
@@ -200,7 +211,9 @@ class LoadProductCategoryAction implements SiteAction {
         if (mv.model.get("filteredDetails") == null) {
             mv.addObject("filteredDetails", Collections.EMPTY_LIST)
         }
+
         products = CMSUtil.setupPagination(products, evt.request, mv)
+
         ProductsUtil.setupProductsVar(products, mv)
     }
 

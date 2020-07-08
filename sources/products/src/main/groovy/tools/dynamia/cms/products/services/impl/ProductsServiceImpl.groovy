@@ -48,6 +48,7 @@ import tools.dynamia.domain.query.BooleanOp
 import tools.dynamia.domain.query.QueryConditions
 import tools.dynamia.domain.query.QueryParameters
 import tools.dynamia.domain.services.AbstractService
+import tools.dynamia.domain.util.DomainUtils
 import tools.dynamia.domain.util.QueryBuilder
 import tools.dynamia.integration.Containers
 import tools.dynamia.web.util.HttpRemotingServiceClient
@@ -56,6 +57,7 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 import javax.persistence.Query
 import java.nio.file.Path
+import java.util.stream.Collectors
 
 import static tools.dynamia.domain.query.QueryConditions.*
 
@@ -387,7 +389,7 @@ class ProductsServiceImpl extends AbstractService implements ProductsService {
         QueryBuilder query = QueryBuilder.select(Product.class, "p")
                 .leftJoin("p.brand brd").where("p.active = true").and("p.site = :site")
                 .and("(p.name like :param or p.category.name like :param or p.category.tags like :param or brd.name like :param "
-                + "or p.description like :param or p.sku like :param $cats )")
+                        + "or p.description like :param or p.sku like :param $cats )")
                 .orderBy("p.price")
 
         QueryParameters qp = new QueryParameters()
@@ -887,4 +889,49 @@ class ProductsServiceImpl extends AbstractService implements ProductsService {
         return reviews
     }
 
+    @Override
+    List<Product> findVirtualProducts(ProductCategory category, String orderby) {
+        if (!category.virtual) {
+            return Collections.emptyList()
+        }
+
+
+        String[] tags = null
+        if (category.tags.contains(",")) {
+            tags = category.tags.split(",")
+        } else {
+            tags = new String[1]
+            tags[0] = category.tags
+
+        }
+
+        StringBuilder sb = new StringBuilder("select p from Product p where p.site = :site and p.active = true and (")
+        QueryParameters params = new QueryParameters()
+        params.add("site", category.site)
+        for (int i = 0; i < tags.length; i++) {
+            String key = tags[i]
+            String field = "key" + i
+            sb.append("p.name like :").append(field)
+            params.add(field, DomainUtils.buildSearcheableString(key))
+
+            if (i + 1 < tags.length) {
+                sb.append(" or ")
+            }
+        }
+        sb.append(")")
+
+        if (category.relatedCategory != null) {
+            sb.append(" and p.category = :category")
+            params.add("category", category.relatedCategory)
+        }
+        sb.append(" order by p." + orderby)
+
+        Query query = entityManager.createQuery(sb.toString())
+        params.applyTo(new JpaQuery(query))
+
+        List<Product> products =  query.getResultList()
+
+
+        return products
+    }
 }

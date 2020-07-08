@@ -39,7 +39,9 @@ class ProductCategoryDTO implements Serializable {
     Long relatedCategoryExternalRef
     String tags
     int order
+    boolean virtual
 
     List<ProductCategoryDTO> subcategories = new ArrayList<>()
     List<ProductCategoryDetailDTO> details = new ArrayList<>()
+
 }
