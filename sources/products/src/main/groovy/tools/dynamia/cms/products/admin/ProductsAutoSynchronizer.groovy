@@ -42,8 +42,8 @@ class ProductsAutoSynchronizer {
 
     private LoggingService logger = new SLF4JLoggingService(ProductsAutoSynchronizer.class)
 
-    //each 45 minutes
-    @Scheduled(fixedDelay = 2700000L)
+    //each 90 minutes
+    @Scheduled(fixedDelay = 5400000L)
     void sync() {
         List<ProductsSiteConfig> configs = crudService.find(ProductsSiteConfig.class, "site.offline", false)
         for (ProductsSiteConfig config : configs) {

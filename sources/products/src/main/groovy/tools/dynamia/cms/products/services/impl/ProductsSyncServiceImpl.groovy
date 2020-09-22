@@ -20,6 +20,10 @@
 package tools.dynamia.cms.products.services.impl
 
 import groovy.transform.CompileStatic
+import org.apache.http.client.methods.HttpPost
+import org.springframework.remoting.httpinvoker.HttpComponentsHttpInvokerRequestExecutor
+import org.springframework.remoting.httpinvoker.HttpInvokerClientConfiguration
+import org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
@@ -68,7 +72,7 @@ class ProductsSyncServiceImpl extends AbstractService implements ProductsSyncSer
         List<ProductCategoryDTO> categories = ds.getCategories(siteCfg.parametersAsMap)
 
         if (categories) {
-            def fields = [:]
+            def fields = new HashMap()
             fields["parent"] = null
             fields["active"] = false
             crudService().batchUpdate(ProductCategory, fields, QueryParameters.with("site", siteCfg.site))
@@ -121,8 +125,11 @@ class ProductsSyncServiceImpl extends AbstractService implements ProductsSyncSer
     @Override
     List<ProductDTO> synchronizeProducts(ProductsSiteConfig siteCfg) {
         log(">>>> STARTING PRODUCTS SYNCHRONIZATION FOR SITE $siteCfg.site.name <<<<")
+        long start = System.currentTimeMillis()
         ProductsDatasource ds = getDatasource(siteCfg)
         List<ProductDTO> products = ds.getProducts(siteCfg.parametersAsMap)
+        long end = System.currentTimeMillis()
+        log("${products.size()} products loaded in ${end - start}ms")
 
         for (ProductDTO remoteProduct : products) {
             log("Synchronizing product. Site:  $siteCfg.site.name Name:$remoteProduct.name")
@@ -506,12 +513,19 @@ class ProductsSyncServiceImpl extends AbstractService implements ProductsSyncSer
 
     @Override
     ProductsDatasource getDatasource(ProductsSiteConfig cfg) {
-        def client = HttpRemotingServiceClient.build(ProductsDatasource.class)
-        client.serviceURL = cfg.datasourceURL
-        client.username = cfg.datasourceUsername
-        client.password = cfg.datasourcePassword
+        log("Creating datasource invoker for $cfg.datasourceURL")
+        def invoker = new HttpInvokerProxyFactoryBean()
+        invoker.serviceInterface = ProductsDatasource
+        invoker.serviceUrl = cfg.datasourceURL
 
-        return client.proxy
+        def executor = new HttpComponentsHttpInvokerRequestExecutor()
+        executor.readTimeout = 10 * 60000
+        invoker.httpInvokerRequestExecutor = executor
+
+        invoker.afterPropertiesSet()
+        def datasource = invoker.getObject() as ProductsDatasource
+        log("Datasource builded: $datasource")
+        return datasource
     }
 
     private void deleteProductsDetails(Product product) {

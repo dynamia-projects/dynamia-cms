@@ -113,5 +113,10 @@
             <artifactId>tools.dynamia.cms.importer.admin</artifactId>
             <version>3.0.0.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
     </dependencies>
 </project>
